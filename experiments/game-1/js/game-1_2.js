@@ -54,9 +54,9 @@ function make_slides(f) {
       and for each of these, present_handle will be run.) */
     
     present : _.shuffle([
-      {subject: "wug1", object: "question"},
-      {subject: "wug2", object: "question"},
-      {subject: "wug3", object: "question"}
+      {subject: 'wug1', object: "question"},
+      {subject: 'wug2', object: "question"},
+      {subject: 'wug3', object: "question"}
       // ...
     ]),
 
@@ -68,11 +68,12 @@ function make_slides(f) {
 
       this.stim = stim; //I like to store this information in the slide so I can record it later.
 
-
       $("#bird").append(
         "<svg id='" + stim.subject + "'></svg>");
-        $(".prompt").html("This is a " + (stim.subject).substring(0, str.length - 1) + ". " + stim.object); // + "s like " + stim.object + "s.");
+        
+      $(".prompt").html("This is a " + (stim.subject).substring(0, stim.subject.length - 1) + ". " + stim.object); // + "s like " + stim.object + "s.");
     
+      
       $('input[type=radio]').attr('checked', false);
     },
     
@@ -85,6 +86,7 @@ function make_slides(f) {
         $(".err").show();
       } else {
         this.log_responses();
+        $("#" + this.stim.subject).hide();
         _stream.apply(this); //make sure this is at the *end*, after you log your data
         // exp.go(); //will jump the critter
       }
@@ -182,7 +184,7 @@ function init() {
       screenUW: exp.width
     };
   //blocks of the experiment:
-  exp.structure=["i0", "instructions", "welcome_critterLand", "single_trial", "chatbox", 'subj_info', 'thanks'];
+  exp.structure=["single_trial", "i0", "instructions", "welcome_critterLand", "chatbox", 'subj_info', 'thanks'];
 
   exp.data_trials = [];
   //make corresponding slides:
