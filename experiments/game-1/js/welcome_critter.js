@@ -5,10 +5,23 @@ var svg_array = [];
 for (var i=0; i<18; i++) {
 	// imgs the variable that will get displayed on the screen
 	// we append the names of all the images we want
-	svg_array.push(
-		"<svg id='crit" + i.toString() +
-		"'></svg>");
+	if (var i < 6) {
+		svg_array.push(
+			"<svg id='wug" + i.toString() +
+			"'></svg>");
+	}
+	if (var i < 12) {
+		svg_array.push(
+			"<svg id='blicket" + i.toString() +
+			"'></svg>");
+	}
+	if (var i < 18) {
+		svg_array.push(
+			"<svg id='rambo" + i.toString() +
+			"'></svg>");
+	}
 }
+
 // change id as needed
 $("#imgs").append(_.shuffle(svg_array));
 var scale = 0.5;
@@ -53,16 +66,17 @@ var ramboOpts = _.where(creatureOpts, {name: "rambo"})[0];
 var wug = new Ecosystem.Genus("bird", {"col1": wugOpts.crest_col, "col2": wugOpts.body_col, "col3": wugOpts.wing_col});
 
 for (var i=0; i<6; i++) {
-	wug.draw("crit"+i, {}, scale);
+	wug.draw("wug"+i, {}, scale);
 }
 // since draw is called with no other arguments, the features of these fish will be random
 // however, they will share a similar color due to taking from the same sample
 var blicket = new Ecosystem.Genus("bird", {"col1": blicketOpts.crest_col, "col2": blicketOpts.body_col});
 for (var i=6; i<12; i++) {
-	blicket.draw("crit"+i, {tar1:blicketOpts.tail, tar:blicketOpts.crest}, scale);
+	blicket.draw("blicket"+i, {tar1:blicketOpts.tail, tar:blicketOpts.crest}, scale);
 }
 
 var rambo = new Ecosystem.Genus("bird", {"col2": ramboOpts.body_col});
 for (var i=12; i<18; i++) {
-	rambo.draw("crit"+i, {tar1:rambo.tail}, scale);
+	rambo.draw("rambo"+i, {tar1:rambo.tail}, scale);
+}
 }
