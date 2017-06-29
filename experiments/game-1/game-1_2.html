@@ -10,7 +10,7 @@
     <script src="../_shared/full-projects/jquery-ui/jquery-ui.min.js"></script>
     <script src="../_shared/js/underscore-min.js"></script>
     <!-- if you want to draw stuff: -->
-    <!-- <script src="../_shared/js/raphael-min.js"></script> -->
+    <script src="../_shared/js/raphael-min.js"></script>
 
     <!-- cocolab experiment logic -->
     <script src="../_shared/js/exp-V2.js"></script>
@@ -21,7 +21,7 @@
     <script src="../_shared/js/browserCheck.js"></script>
     <script src="../_shared/js/utils.js"></script>
     <!-- if you want to draw cute creatures (depends on raphael): -->
-    <!-- <script src="../_shared/js/ecosystem.js"></script> -->
+    <script src="../_shared/js/ecosystem.js"></script>
 
     <!-- experiment specific helper functions -->
     <!-- <script src="js/local-utils.js"></script> -->
@@ -33,6 +33,7 @@
 
     <!-- experiment file -->
     <script src="js/game-1_2.js"></script>
+    <script src="js/welcome_critter.js"></script>
 
 </head>
 
@@ -62,12 +63,10 @@
 
   <div class="slide" id="single_trial">
     <p>Here is a single trial. Depending on the condition, you'll see different words below:</p>
-    <p class="display_condition">{{}}</p>
+    <div id="bird"></div>
     <p>Boolean question here?</p>
-    <!-- <select id="trial_response"> -->
-      <label><input type="radio"  name="trial_response" value="Yes"/>Yes</label>
-      <label><input type="radio"  name="trial_response" value="No"/>No</label><br>
-    <!-- </select> -->
+    <label><input type="radio"  name="trial_response" value="Yes"/>Yes</label>
+    <label><input type="radio"  name="trial_response" value="No"/>No</label><br>
     <button onclick="_s.button()">Continue</button>
     <p class="err">Please select something.</p>
   </div>

@@ -45,47 +45,6 @@ function make_slides(f) {
     },
   });
 
-  /**
-  slides.critter_page = slide({
-    name: "critter_page",
-    start: function() {
-
-      $(".err").hide();
-
-      for (var i=0; i<20; i++) {
-           $("#imgs").append(
-            "<svg id='svg" + i.toString() +
-            "'></svg>");
-
-            var scale = 0.5;
-            // increasing height decreasing fat - see prop1/2
-            Ecosystem.draw(
-              "bird", {"col1":"#ff0000",
-                 "col2":"#00ff00",
-                 "col3":"#0000ff",
-                 "tar1":false,
-                 "tar2":true,
-                 "prop1":i*(1/20),
-                 "prop2":(20-i)*(1/20)},
-              "svg"+i, scale)
-      }  
-    },
-
-    button : function() {
-      response = $("#critter_response").val();
-      if (response.length == 0) {
-        $(".err").show();
-      } else {
-        exp.data_trials.push({
-          "trial_type" : "critter_page",
-          "response" : response
-        });
-        
-        exp.go(); //make sure this is at the *end*, after you log your data
-      }
-    },
-  });
-  */
 
   slides.single_trial = slide({
     name: "single_trial",
@@ -94,51 +53,54 @@ function make_slides(f) {
      (the variable 'stim' will change between each of these values,
       and for each of these, present_handle will be run.) */
     
-    present : [ //change later to present 18
-      {subject: "Wug", object: "ball"},
-      {subject: "Blick", object: "windowsill"},
-      {subject: "Rambo", object: "shiny object"},
-      //***double check if this is right
-      /**
-      for(i=0; i<1; i++){
-        {subject: "some animal** change later to pick one of the 3", object: "some object"},
-      }
-      */
-      
-    ],
-    /**
+    present : _.shuffle([
+      {subject: "wug1", object: "question"},
+      {subject: "wug2", object: "question"},
+      {subject: "wug3", object: "question"}
+      // ...
+    ]),
+
+
+    
+    
     present_handle : function(stim) {
       $(".err").hide();
 
       this.stim = stim; //I like to store this information in the slide so I can record it later.
 
 
-      $(".prompt").html(stim.subject + "s like " + stim.object + "s.");
-      this.init_sliders();
-      exp.sliderPost = null; //erase current slider value
-    }
-    */
+      $("#bird").append(
+        "<svg id='" + stim.subject + "'></svg>");
+        $(".prompt").html("This is a " + (stim.subject).substring(0, str.length - 1) + ". " + stim.object); // + "s like " + stim.object + "s.");
     
-    start: function() {
-      $(".err").hide();
-      //$(".display_condition").html("You are in " + exp.condition + ".");
+      $('input[type=radio]').attr('checked', false);
     },
     
+   
 
+    
     button : function() {
       boolResponse = ($('input[type=radio]:checked').size() != 0);
-      response = $("#trial_response").val();
       if (!boolResponse) { //change later?
         $(".err").show();
       } else {
-        exp.data_trials.push({
-          "trial_type" : "single_trial",
-          "response" : response
-        });
-        exp.go(); //make sure this is at the *end*, after you log your data
-        //exp.go(); will jump the critter
+        this.log_responses();
+        _stream.apply(this); //make sure this is at the *end*, after you log your data
+        // exp.go(); //will jump the critter
       }
     },
+
+
+    log_responses: function(){
+
+      exp.data_trials.push({
+          "trial_type" : "single_trial",
+          "response" : $("#trial_response").val()
+        });
+    }
+    
+
+
 
   });
 
