@@ -10,7 +10,7 @@ for (var i=0; i<18; i++) {
 		"'></svg>");
 }
 // change id as needed
-$("#imgs").append(_.shuffle(svg_array));
+$("#all_critters").append(_.shuffle(svg_array));
 var scale = 0.5;
 
 var creatureOpts = [
