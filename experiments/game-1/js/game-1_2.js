@@ -18,16 +18,17 @@ function make_slides(f) {
   slides.welcome_critterLand = slide({
     name : "welcome_critterLand",
     start : function() {
+      var shuffledCritters = _.shuffle(allCreatures)
       for (var i=0; i<18; i++) {
            $("#all_critters").append(
             "<svg id='critter" + i.toString() +
             "'></svg>");
             var scale = 0.5;
             Ecosystem.draw(
-              "bird", {},
+              "bird", shuffledCritters[i],
               "critter"+i, scale)
       }
-      /**  
+      /**
       for (var j=9; j<18; j++) {
            $("#all_critters").append(
             "<svg id='critter" + j.toString() +
@@ -37,7 +38,7 @@ function make_slides(f) {
             Ecosystem.draw(
               "bug", {},
               "critter"+j, scale)
-      } 
+      }
       */
     },
     button : function() {
@@ -52,41 +53,36 @@ function make_slides(f) {
     /* trial information for this block
      (the variable 'stim' will change between each of these values,
       and for each of these, present_handle will be run.) */
-    
-    present : _.shuffle([
-      {subject: 'wug1', object: "question"},
-      {subject: 'wug2', object: "question"},
-      {subject: 'wug3', object: "question"}
-      // ...
-    ]),
 
+    present : _.shuffle(allCreatures),
 
-    
-    
     present_handle : function(stim) {
+      $("#birdSVG").empty();
       $(".err").hide();
 
       this.stim = stim; //I like to store this information in the slide so I can record it later.
 
-      $("#bird").append(
-        "<svg id='" + stim.subject + "'></svg>");
-        
-      $(".prompt").html("This is a " + (stim.subject).substring(0, stim.subject.length - 1) + ". " + stim.object); // + "s like " + stim.object + "s.");
-    
-      
+
+      var scale = 0.5;
+      Ecosystem.draw(
+        "bird", stim,
+        "birdSVG", scale)
+
+      $(".prompt").html("This is a " + stim.creatureName + ". <br>" + stim.query); // + "s like " + stim.object + "s.");
+
+
       $('input[type=radio]').attr('checked', false);
     },
-    
-   
 
-    
+
+
+
     button : function() {
       boolResponse = ($('input[type=radio]:checked').size() != 0);
       if (!boolResponse) { //change later?
         $(".err").show();
       } else {
         this.log_responses();
-        $("#" + this.stim.subject).hide();
         _stream.apply(this); //make sure this is at the *end*, after you log your data
         // exp.go(); //will jump the critter
       }
@@ -100,7 +96,7 @@ function make_slides(f) {
           "response" : $("#trial_response").val()
         });
     }
-    
+
 
 
 
@@ -130,7 +126,7 @@ function make_slides(f) {
 
   });
 
-  
+
 
   slides.subj_info =  slide({
     name : "subj_info",
@@ -184,7 +180,7 @@ function init() {
       screenUW: exp.width
     };
   //blocks of the experiment:
-  exp.structure=["single_trial", "i0", "instructions", "welcome_critterLand", "chatbox", 'subj_info', 'thanks'];
+  exp.structure=["welcome_critterLand","single_trial", "i0", "instructions",  "chatbox", 'subj_info', 'thanks'];
 
   exp.data_trials = [];
   //make corresponding slides:
