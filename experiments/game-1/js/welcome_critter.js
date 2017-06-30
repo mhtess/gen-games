@@ -24,6 +24,15 @@
 
 // change id as needed
 // $("#all_critters").append(_.shuffle(svg_array));
+
+var flip = function(p){
+	return p > Math.random()
+}
+
+var generateAttentionQuestion = function(){
+	return flip(0.5) ? "tail" : "crest"
+}
+
 var scale = 0.5;
 
 var creatureOpts = [
@@ -38,7 +47,8 @@ var creatureOpts = [
 		height: null,
 		fatness: null,
 		tail: 0.5, //  approximately half of these have tails
-		crest: 0.2
+		crest: 0.2,
+		pepsin: 0.8
 	},
 	{ creature: "bird",
 		name: "blicket",
@@ -51,7 +61,8 @@ var creatureOpts = [
 		height: null,
 		fatness: null,
 		tail: 0,
-		crest: 1
+		crest: 1,
+		pepsin: 0.2,
 	},
 	{ creature: "bird",
 		name: "rambo",
@@ -64,7 +75,8 @@ var creatureOpts = [
 		height: null,
 		fatness: null,
 		tail: 1,
-		crest: 0.2
+		crest: 0.2,
+		pepsin: 0
 	}
 ]
 
@@ -73,52 +85,60 @@ var blicketOpts = _.where(creatureOpts, {name: "blicket"})[0];
 var ramboOpts = _.where(creatureOpts, {name: "rambo"})[0];
 
 var allCreatures = [];
-
+var creatureN = 6;
+var creatureTypesN = 3;
+var exemplarN = creatureN/creatureTypesN;
 // var wug = new Ecosystem.Genus("bird", {"col1": wugOpts.crest_col, "col2": wugOpts.body_col, "col3": wugOpts.wing_col});
-
-for (var i=0; i<6; i++) {
+var i=0;
+while (i<exemplarN) {
 	allCreatures.push({
 		"col1": wugOpts.crest_col,
 		"col2": wugOpts.body_col,
 		"col3": wugOpts.wing_col,
-		"tar1": wugOpts.tail > Math.random(),
-		"tar2": wugOpts.crest > Math.random(),
+		"tar1": flip(wugOpts.tail),
+		"tar2": flip(wugOpts.crest),
 		"creatureName": "wug",
 		"query": "question",
-		"stimID": i
+		"stimID": i,
+		"pepsin": flip(wugOpts.pepsin),
+		"attentionCheck": generateAttentionQuestion()
 	})
-
-	// wug.draw("wug"+i, {}, scale);
+  i++;
 }
 // since draw is called with no other arguments, the features of these fish will be random
 // however, they will share a similar color due to taking from the same sample
 // var blicket = new Ecosystem.Genus("bird", {"col1": blicketOpts.crest_col, "col2": blicketOpts.body_col});
 
-for (var i=6; i<12; i++) {
+while (i<2*exemplarN) {
 	allCreatures.push({
 		"col1": blicketOpts.crest_col,
 		"col2": blicketOpts.body_col,
 		"col3": blicketOpts.wing_col,
-		"tar1": blicketOpts.tail > Math.random(),
-		"tar2": blicketOpts.crest > Math.random(),
+		"tar1": flip(blicketOpts.tail),
+		"tar2": flip(blicketOpts.crest),
 		"creatureName": "blicket",
 		"query": "question",
-		"stimID": i
+		"stimID": i,
+		"pepsin": flip(blicketOpts.pepsin),
+		"attentionCheck": generateAttentionQuestion()
 	})
-	// blicket.draw("blicket"+i, {tar1:blicketOpts.tail, tar2:blicketOpts.crest}, scale);
+ 	i++
 }
 
 // var rambo = new Ecosystem.Genus("bird", {"col2": ramboOpts.body_col});
-for (var i=12; i<18; i++) {
+while (i<3*exemplarN) {
 	allCreatures.push({
 		"col1": ramboOpts.crest_col,
 		"col2": ramboOpts.body_col,
 		"col3": ramboOpts.wing_col,
-		"tar1": ramboOpts.tail > Math.random(),
-		"tar2": ramboOpts.crest > Math.random(),
+		"tar1": flip(ramboOpts.tail),
+		"tar2": flip(ramboOpts.crest),
 		"creatureName": "rambo",
 		"query": "question",
-		"stimID": i
+		"stimID": i,
+		"pepsin": flip(ramboOpts.pepsin),
+		"attentionCheck": generateAttentionQuestion()
 	})
+	i++;
 	// rambo.draw("rambo"+i, {tar1:ramboOpts.tail}, scale);
 }

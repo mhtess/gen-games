@@ -62,14 +62,18 @@ function make_slides(f) {
 
       this.stim = stim; //I like to store this information in the slide so I can record it later.
 
-
       var scale = 0.5;
       Ecosystem.draw(
         "bird", stim,
         "birdSVG", scale)
 
-      $(".prompt").html("This is a " + stim.creatureName + ". <br>" + stim.query); // + "s like " + stim.object + "s.");
+      stim.pepsin ?
+        pepsinString = "<strong>has pepsin</strong> in its bones" :
+        pepsinString = "<strong>does not have pepsin</strong> in its bones"
 
+      $(".prompt").html("This is a " + stim.creatureName + ". <br>" + "It " + pepsinString + ".");
+
+      $(".attentionCheck").html("Does it have a " +stim.attentionCheck + "?")
 
       $('input[type=radio]').attr('checked', false);
     },
@@ -180,7 +184,7 @@ function init() {
       screenUW: exp.width
     };
   //blocks of the experiment:
-  exp.structure=["welcome_critterLand","single_trial", "i0", "instructions",  "chatbox", 'subj_info', 'thanks'];
+  exp.structure=["i0","instructions", "welcome_critterLand", "single_trial",    "chatbox",'subj_info', 'thanks'];
 
   exp.data_trials = [];
   //make corresponding slides:
