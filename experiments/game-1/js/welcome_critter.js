@@ -33,17 +33,46 @@ var generateAttentionQuestion = function(){
 	return flip(0.5) ? "tail" : "crest"
 }
 
+// this will generate random colors - trying to create ability to not be so random
+var genColor = function(color, variance) {
+	console.log(color)
+	console.log(variance)
+	function shuffle(v) { newarray = v.slice(0);for(var j, x, i = newarray.length; i; j = parseInt(Math.random() * i), x = newarray[--i], newarray[i] = newarray[j], newarray[j] = x);return newarray;} // non-destructive.
+	var n = 10; // this is the default in ecosystem.js see line 12
+	if (color == null) {
+		var h = [];
+		var offset = Math.random() * .99 / n;
+	    for (var i=0;i<n-1;i++) {
+	   		h.push((i/n)+offset);
+	  	}
+	  	h = shuffle(h);
+	    h = h.shift();
+	      console.log(h)
+		var s = Ecosystem.uniformAroundMean(.99, .1);
+		console.log(s)
+	    var v = Ecosystem.uniformAroundMean(.99, .1);
+	    console.log(v)
+
+	    console.log(Raphael.hsb2rgb(h, s, v).hex);
+		color = Raphael.hsb2rgb(h, s, v).hex;
+	}
+	else
+		color = Ecosystem.myColor(color, variance);
+	return color;
+//    return Raphael.hsb2rgb(h, s, v).hex;
+}
+
 var scale = 0.5;
 
 var creatureOpts = [
 	{ creature: "bird",
 		name: "wug",
-		// crest_col: {"mean": "#00ff00"}, "var": 0.2,
-		// body_col: {"mean": "#00ff1a"}, "var": 0.001,
-		// wing_col: {"mean": "#006400"}, "var": 0.3,
-		crest_col: "#00ff00",
-		body_col: "#00ff1a",
-		wing_col:  "#006400",
+		crest_col_mean: "#00ff00", 
+		crest_col_var: 0.5,
+		body_col_mean: "#00ff1a",
+		body_col_var: 0.001,
+		wing_col_mean: "#006400",
+		wing_col_var: 0.3,
 		height: null,
 		fatness: null,
 		tail: 0.5, //  approximately half of these have tails
@@ -52,12 +81,18 @@ var creatureOpts = [
 	},
 	{ creature: "bird",
 		name: "blicket",
+		crest_col_mean: "#ff4500", 
+		crest_col_var: 0.2,
+		body_col_mean: "#ff4500",
+		body_col_var: 0.001,
+		wing_col_mean: "#ff4500",
+		wing_col_var: 1.2,
 		// crest_col: {"mean": "#ff4500"}, "var": 0.2,
 		// body_col: {"mean": "#ff4500"}, "var": 0.001,
 		// wing_col: {"mean": "#ff4500"}, "var": 1.2,
-		crest_col: "#ff4500",
-		body_col:  "#ff4500",
-		wing_col: "#ff4500",
+		// crest_col: "#ff4500",
+		// body_col:  "#ff4500",
+		// wing_col: "#ff4500",
 		height: null,
 		fatness: null,
 		tail: 0,
@@ -66,6 +101,12 @@ var creatureOpts = [
 	},
 	{ creature: "bird",
 		name: "rambo",
+		crest_col_mean: "#ffff00", 
+		crest_col_var: 0.2,
+		body_col_mean: "#ffff00",
+		body_col_var: 0.001,
+		wing_col_mean: "#ffff00",
+		wing_col_var: 1.2,
 		// crest_col: null,
 		// body_col: {"mean": "#ffff00"}, "var": 0.001,
 		// wing_col: null,
@@ -92,9 +133,9 @@ var exemplarN = creatureN/creatureTypesN;
 var i=0;
 while (i<exemplarN) {
 	allCreatures.push({
-		"col1": wugOpts.crest_col,
-		"col2": wugOpts.body_col,
-		"col3": wugOpts.wing_col,
+		"col1": genColor(wugOpts.crest_col_mean, wugOpts.crest_col_var),
+		"col2": genColor(wugOpts.body_col_mean, wugOpts.body_col_var),
+		"col3": genColor(wugOpts.wing_col_mean, wugOpts.wing_col_var),
 		"tar1": flip(wugOpts.tail),
 		"tar2": flip(wugOpts.crest),
 		"creatureName": "wug",
@@ -111,9 +152,9 @@ while (i<exemplarN) {
 
 while (i<2*exemplarN) {
 	allCreatures.push({
-		"col1": blicketOpts.crest_col,
-		"col2": blicketOpts.body_col,
-		"col3": blicketOpts.wing_col,
+		"col1": genColor(blicketOpts.crest_col_mean, wugOpts.crest_col_var),
+		"col2": genColor(blicketOpts.body_col_mean, wugOpts.body_col_var),
+		"col3": genColor(blicketOpts.wing_col_mean, wugOpts.wing_col_var),
 		"tar1": flip(blicketOpts.tail),
 		"tar2": flip(blicketOpts.crest),
 		"creatureName": "blicket",
@@ -128,9 +169,9 @@ while (i<2*exemplarN) {
 // var rambo = new Ecosystem.Genus("bird", {"col2": ramboOpts.body_col});
 while (i<3*exemplarN) {
 	allCreatures.push({
-		"col1": ramboOpts.crest_col,
-		"col2": ramboOpts.body_col,
-		"col3": ramboOpts.wing_col,
+		"col1": genColor(ramboOpts.crest_col_mean, wugOpts.crest_col_var),
+		"col2": genColor(ramboOpts.body_col_mean, wugOpts.body_col_var),
+		"col3": genColor(ramboOpts.wing_col_mean, wugOpts.wing_col_var),
 		"tar1": flip(ramboOpts.tail),
 		"tar2": flip(ramboOpts.crest),
 		"creatureName": "rambo",
