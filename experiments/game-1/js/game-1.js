@@ -8,36 +8,6 @@ function make_slides(f) {
      }
   });
 
-  slides.waiting_room = slide({
-    name : "waiting_room",
-    //change button show that it only shows up after both players have connected
-    /**
-    if(num_players == 1){
-      $(".waiting").show();
-      document.getElementById('after_waiting').style.visibility = 'hidden';
-    } else {
-      $(".waiting").hide();
-      document.getElementById('after_waiting').style.visibility = 'visible';
-    }
-
-    */
-    
-    start : function() {
-      //while(document.getElementById("after_waiting").onclick == false);
-      for(var i=0; i<1000; i++){
-        $(".waiting_message").html("Waiting for another player to join...").fadeOut(500);
-        $(".waiting_message").html("Waiting for another player to join...").fadeIn(500);
-      }
-    },
-
-
-
-    button : function() {
-      exp.go(); //after both players have connected
-    },
-  })
-
-
   slides.instructions = slide({
     name : "instructions",
     button : function() {
@@ -216,11 +186,13 @@ function init() {
       screenUW: exp.width
     };
   //blocks of the experiment:
-  exp.structure=[ "i0",
-  // "waiting_room",
-  "instructions","welcome_critterLand", "learning_trial",
+<<<<<<< HEAD
+  exp.structure=[ "i0", "waiting_room", "instructions","welcome_critterLand", "learning_trial",
   // "chatbox",
   'subj_info', 'thanks'];
+=======
+  exp.structure=["i0","instructions", "welcome_critterLand", "single_trial",    "chatbox",'subj_info', 'thanks'];
+>>>>>>> 30b27711ce4aa88c35165f13e0558e63d456aac7
 
   exp.data_trials = [];
   //make corresponding slides:
