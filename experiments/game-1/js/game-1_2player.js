@@ -187,10 +187,7 @@ function init() {
     };
   //blocks of the experiment:
 <<<<<<< HEAD
-  exp.structure=[ "i0", 
-  // "waiting_room",
-  "instructions","welcome_critterLand", "learning_trial",
-  // "chatbox",
+  exp.structure=[ "i0", "waiting_room", "instructions","welcome_critterLand", "learning_trial", "chatbox",
   'subj_info', 'thanks'];
 =======
   exp.structure=["i0","instructions", "welcome_critterLand", "single_trial",    "chatbox",'subj_info', 'thanks'];
