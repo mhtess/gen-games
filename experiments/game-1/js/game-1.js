@@ -77,8 +77,8 @@ function make_slides(f) {
   });
 
 
-  slides.single_trial = slide({
-    name: "single_trial",
+  slides.learning_trial = slide({
+    name: "learning_trial",
 
     /* trial information for this block
      (the variable 'stim' will change between each of these values,
@@ -135,6 +135,8 @@ function make_slides(f) {
 
 
   });
+
+
 
   slides.chatbox = slide({
     name: "chatbox",
@@ -214,7 +216,9 @@ function init() {
       screenUW: exp.width
     };
   //blocks of the experiment:
-  exp.structure=[ "i0","waiting_room", "instructions","welcome_critterLand", "single_trial",
+  exp.structure=[ "i0",
+  // "waiting_room",
+  "instructions","welcome_critterLand", "learning_trial",
   // "chatbox",
   'subj_info', 'thanks'];
 
