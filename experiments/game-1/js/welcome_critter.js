@@ -35,8 +35,8 @@ var generateAttentionQuestion = function(){
 
 // this will generate random colors - trying to create ability to not be so random
 var genColor = function(color, variance) {
-	console.log(color)
-	console.log(variance)
+	// console.log(color)
+	// console.log(variance)
 	function shuffle(v) { newarray = v.slice(0);for(var j, x, i = newarray.length; i; j = parseInt(Math.random() * i), x = newarray[--i], newarray[i] = newarray[j], newarray[j] = x);return newarray;} // non-destructive.
 	var n = 10; // this is the default in ecosystem.js see line 12
 	if (color == null) {
@@ -47,13 +47,13 @@ var genColor = function(color, variance) {
 	  	}
 	  	h = shuffle(h);
 	    h = h.shift();
-	      console.log(h)
+	      // console.log(h)
 		var s = Ecosystem.uniformAroundMean(.99, .1);
-		console.log(s)
+		// console.log(s)
 	    var v = Ecosystem.uniformAroundMean(.99, .1);
-	    console.log(v)
-
-	    console.log(Raphael.hsb2rgb(h, s, v).hex);
+	    // console.log(v)
+			//
+	    // console.log(Raphael.hsb2rgb(h, s, v).hex);
 		color = Raphael.hsb2rgb(h, s, v).hex;
 	}
 	else
@@ -67,7 +67,7 @@ var scale = 0.5;
 var creatureOpts = [
 	{ creature: "bird",
 		name: "wug",
-		crest_col_mean: "#00ff00", 
+		crest_col_mean: "#00ff00",
 		crest_col_var: 0.5,
 		body_col_mean: "#00ff1a",
 		body_col_var: 0.001,
@@ -81,7 +81,7 @@ var creatureOpts = [
 	},
 	{ creature: "bird",
 		name: "blicket",
-		crest_col_mean: "#ff4500", 
+		crest_col_mean: "#ff4500",
 		crest_col_var: 0.2,
 		body_col_mean: "#ff4500",
 		body_col_var: 0.001,
@@ -101,7 +101,7 @@ var creatureOpts = [
 	},
 	{ creature: "bird",
 		name: "rambo",
-		crest_col_mean: "#ffff00", 
+		crest_col_mean: "#ffff00",
 		crest_col_var: 0.2,
 		body_col_mean: "#ffff00",
 		body_col_var: 0.001,

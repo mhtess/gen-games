@@ -96,7 +96,7 @@ function make_slides(f) {
     log_responses: function(){
 
       exp.data_trials.push({
-          "trial_type" : "single_trial",
+          "trial_type" : "learning_trial",
           "response" : $("#trial_response").val()
         });
     }
@@ -186,7 +186,7 @@ function init() {
       screenUW: exp.width
     };
   //blocks of the experiment:
-  exp.structure=[ "i0", 
+  exp.structure=[ "i0",
   // "waiting_room",
   "instructions","welcome_critterLand", "learning_trial",
   // "chatbox",
