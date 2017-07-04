@@ -97,6 +97,7 @@ function make_slides(f) {
 
       exp.data_trials.push({
           "trial_type" : "learning_trial",
+          "condition": exp.condition,
           "response" : $("#trial_response").val()
         });
     }
@@ -176,7 +177,7 @@ function init() {
   exp.trials = [];
   exp.catch_trials = [];
   //exp.all_stimuli = _.shuffle(all_stimuli); // all_stimuli
-  exp.condition = _.sample(["CONDITION 1", "condition 2"]); //can randomize between subject conditions here
+  exp.condition = _.sample(["label_book", "pepsin_detector"]); //can randomize between subject conditions here
   exp.system = {
       Browser : BrowserDetect.browser,
       OS : BrowserDetect.OS,
@@ -189,7 +190,7 @@ function init() {
   exp.structure=[ "i0",
   // "waiting_room",
   "instructions","welcome_critterLand", "learning_trial",
-  // "chatbox",
+  "chatbox",
   'subj_info', 'thanks'];
 
 
