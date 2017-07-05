@@ -142,13 +142,13 @@ function make_slides(f) {
         // also need to fix progress bar
         "col1" : this.stim["col1"],
         "col2" : this.stim["col2"],
-        "col3" : this.stim["col3"],
-        "col4" : this.stim["col4"],
-        "col5" : this.stim["col5"],
-        "prop1" : this.stim["prop1"],
-        "prop2" : this.stim["prop2"],
-        "tar1" : this.stim["tar1"],
-        "tar2" : this.stim["tar2"]
+        "col3" : this.stim["col3"] == null ? "-99" : this.stim["col3"],
+        "col4" : this.stim["col4"] == null ? "-99" : this.stim["col4"],
+        "col5" : this.stim["col5"] == null ? "-99" : this.stim["col5"],
+        "prop1" : this.stim["prop1"] == null ? "-99" : this.stim["prop1"],
+        "prop2" : this.stim["prop2"] == null ? "-99" : this.stim["prop2"],
+        "tar1" : this.stim["tar1"] ? 1 : 0,
+        "tar2" : this.stim["tar2"] ? 1 : 0
       });
   }
 

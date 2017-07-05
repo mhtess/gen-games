@@ -204,8 +204,8 @@ var critFeatures = [
 		col1: "crest",
 		col2: "body",
 		col3: "wing",
-    	col4: null,
-   		col5: null,
+    	col4: "-99",
+   		col5: "-99",
 		prop1: "height",
 		prop2: "fatness",
 		tar1: "tail", //  approximately half of these have tails
@@ -215,9 +215,9 @@ var critFeatures = [
 	{ creature: "fish",
 		col1: "body",
 		col2: "fins",
-		col3: null,
-    	col4: null,
-   		col5: null,
+		col3: "-99",
+    	col4: "-99",
+   		col5: "-99",
 		prop1: "bodysize (short->tall)",
 		prop2: "tailsize",
 		tar1: "fangs", //  approximately half of these have tails
@@ -241,7 +241,7 @@ var critFeatures = [
 		col2: "spots",
 		col3: "petals",
     	col4: "center",
-   		col5: null,
+   		col5: "-99",
 		prop1: "centersize",
 		prop2: "petallength",
 		tar1: "thorns", //  approximately half of these have tails
@@ -252,10 +252,10 @@ var critFeatures = [
 		col1: "berries",
 		col2: "leaves",
 		col3: "trunk",
-    	col4: null,
-   		col5: null,
-		prop1: null,
-		prop2: null,
+    	col4: "-99",
+   		col5: "-99",
+		prop1: "-99",
+		prop2: "-99",
 		tar1: "berries", //  approximately half of these have tails
 		tar2: "leaves",
 		internal_prop: "--"
