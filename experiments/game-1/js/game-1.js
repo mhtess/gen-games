@@ -24,8 +24,9 @@ function make_slides(f) {
             "<svg id='critter" + i.toString() +
             "'></svg>");
             var scale = 0.5;
+            // needs to be generalized
             Ecosystem.draw(
-              "bird", shuffledCritters[i],
+              shuffledCritters[i]["critter"], shuffledCritters[i],
               "critter"+i, scale)
       }
       /**
@@ -74,8 +75,9 @@ function make_slides(f) {
     trial_num: 0,
 
     present_handle : function(stim) {
-      $("#birdSVG").empty();
+      $("#critterSVG").empty();
       $(".err").hide();
+      this.critOpts = _.where(critFeatures, {creature: stim.critter})[0];
 
       this.stim = stim; //I like to store this information in the slide so I can record it later.
 
@@ -83,8 +85,8 @@ function make_slides(f) {
 
       var scale = 0.5;
       Ecosystem.draw(
-        "bird", stim,
-        "birdSVG", scale)
+        stim.critter, stim,
+        "critterSVG", scale)
 
       stim.internal_prop ?
         pepsinString = "<strong>has pepsin</strong> in its bones" :
@@ -92,7 +94,7 @@ function make_slides(f) {
 
       $(".prompt").html("This is a " + stim.creatureName + ". <br>" + "It " + pepsinString + ".");
 
-      $(".attentionCheck").html("Does it have a " +stim.attentionCheck + "?")
+      $(".attentionCheck").html("Does it have a " + this.critOpts[stim.attentionCheck] + "?")
 
       $('input[type=radio]').attr('checked', false);
 
@@ -115,7 +117,7 @@ function make_slides(f) {
 
 
     log_responses: function(){
-    var critOpts = _.where(critFeatures, {creatureName: this.stim["creature"]})[0];    
+    //this.critOpts = _.where(critFeatures, {creatureName: this.stim["creature"]})[0];    
     exp.catch_trials.push({
         "trial_type" : "learning_trial",
         "trial_num" : this.trial_num,
@@ -126,15 +128,15 @@ function make_slides(f) {
         "critter" : this.stim["critter"],
 
         // need to make this more variable - this is only for birds
-        "col1_crit" : critOpts.col1, //_.where(critFeatures, {creatureName: this.stim["critter"]}[0], //want it to say crest/tail,
-        "col2_crit" : critOpts.col2,
-        "col3_crit" : critOpts.col3,
-        "col4_crit" : critOpts.col4,
-        "col5_crit" : critOpts.col5,
-        "prop1_crit" : critOpts.prop1,
-        "prop2_crit" : critOpts.prop2,
-        "tar1_crit" : critOpts.tar1,
-        "tar2_crit" : critOpts.tar2,
+        "col1_crit" : this.critOpts.col1, //_.where(critFeatures, {creatureName: this.stim["critter"]}[0], //want it to say crest/tail,
+        "col2_crit" : this.critOpts.col2,
+        "col3_crit" : this.critOpts.col3,
+        "col4_crit" : this.critOpts.col4,
+        "col5_crit" : this.critOpts.col5,
+        "prop1_crit" : this.critOpts.prop1,
+        "prop2_crit" : this.critOpts.prop2,
+        "tar1_crit" : this.critOpts.tar1,
+        "tar2_crit" : this.critOpts.tar2,
 
         // fix the properties as they don't work
         // also need to fix progress bar
@@ -236,9 +238,9 @@ function init() {
       screenUW: exp.width
     };
   //blocks of the experiment:
-  exp.structure=[ "i0",
+  exp.structure=["i0",
   // "waiting_room",
-  "instructions","welcome_critterLand", "condition", "learning_trial",
+  "instructions","welcome_critterLand", "condition",  "learning_trial",
   "chatbox",
   'subj_info', 'thanks'];
 

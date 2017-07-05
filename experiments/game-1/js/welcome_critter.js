@@ -30,7 +30,7 @@ var flip = function(p){
 }
 
 var generateAttentionQuestion = function(){
-	return flip(0.5) ? "tail" : "crest"
+	return flip(0.5) ? "tar1" : "tar2"//"tail" : "crest"
 }
 
 // this will generate random colors - trying to create ability to not be so random
@@ -64,6 +64,7 @@ var genColor = function(color, variance) {
 
 var scale = 0.5;
 
+// this is the only thing one has to change 
 var creatureOpts = [
 	{ creature: "bird",
 		name: "wug",
@@ -89,8 +90,8 @@ var creatureOpts = [
 		col1_var: 0.2,
 		col2_mean: "#ff4500", //col2 = body
 		col2_var: 0.001,
-		col3_mean: "#ff4500", //col3 = wing
-		col3_var: 1.2,
+		col3_mean: null,//"#ff4500", //col3 = wing
+		col3_var: null,//1.2,
     	col4_mean: null,
 	    col4_var: null,
 	    col5_mean: null,
@@ -135,7 +136,7 @@ while (i<exemplarN) {
 	allCreatures.push({
 		"col1": genColor(wugOpts.col1_mean, wugOpts.col1_var),
 		"col2": genColor(wugOpts.col2_mean, wugOpts.col2_var),
-		"col3": genColor(wugOpts.col3_mean, wugOpts.col3_var),
+		"col3": wugOpts.col3_mean == null ? null : genColor(wugOpts.col3_mean, wugOpts.col3_var),
     	"col4" : wugOpts.col4_mean == null ? null : genColor(wugOpts.col4_mean, wugOpts.col4_var),
     	"col5" : wugOpts.col5_mean == null ? null : genColor(wugOpts.col5_mean, wugOpts.col5_var),
 		"prop1": wugOpts.prop1 == null ? Ecosystem.randProp() : wugOpts.prop1,
