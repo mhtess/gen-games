@@ -71,7 +71,7 @@ function make_slides(f) {
       and for each of these, present_handle will be run.) */
 
     present : _.shuffle(allCreatures),
-    trial_num: 1,
+    trial_num: 0,
 
     present_handle : function(stim) {
       $("#birdSVG").empty();
@@ -86,7 +86,7 @@ function make_slides(f) {
         "bird", stim,
         "birdSVG", scale)
 
-      stim.pepsin ?
+      stim.internal_prop ?
         pepsinString = "<strong>has pepsin</strong> in its bones" :
         pepsinString = "<strong>does not have pepsin</strong> in its bones"
 
@@ -115,35 +115,40 @@ function make_slides(f) {
 
 
     log_responses: function(){
-      exp.catch_trials.push({
-          "trial_type" : "learning_trial",
-          "trial_num" : this.trial_num,
-          "condition": exp.condition,
-          "response" : $('input[type=radio]:checked').val(),
-          "question" : this.stim["attentionCheck"],
-          "time_in_seconds" : this.time_spent/1000,
+    var critOpts = _.where(critFeatures, {creatureName: this.stim["creature"]})[0];    
+    exp.catch_trials.push({
+        "trial_type" : "learning_trial",
+        "trial_num" : this.trial_num,
+        "condition": exp.condition,
+        "response" : $('input[type=radio]:checked').val(),
+        "question" : this.stim["attentionCheck"],
+        "time_in_seconds" : this.time_spent/1000,
+        "critter" : this.stim["critter"],
 
-          "col1_crit" : "crest/tail",
-          "col2_crit" : "body",
-          "col3_crit" : "wing",
-          "col4_crit" : null,
-          "col5_crit" : null,
-          "prop1_crit" : "height",
-          "prop2_crit" : "bodysize(narrow->fat)",
-          "tar1_crit" : "tail",
-          "tar2_crit" : "crest",
+        // need to make this more variable - this is only for birds
+        "col1_crit" : critOpts.col1, //_.where(critFeatures, {creatureName: this.stim["critter"]}[0], //want it to say crest/tail,
+        "col2_crit" : critOpts.col2,
+        "col3_crit" : critOpts.col3,
+        "col4_crit" : critOpts.col4,
+        "col5_crit" : critOpts.col5,
+        "prop1_crit" : critOpts.prop1,
+        "prop2_crit" : critOpts.prop2,
+        "tar1_crit" : critOpts.tar1,
+        "tar2_crit" : critOpts.tar2,
 
-          "col1" : this.stim["col1"],
-          "col2" : this.stim["col2"],
-          "col3" : this.stim["col3"],
-          "col4" : null,
-          "col5" : null,
-          "prop1" : this.stim["prop1"],
-          "prop2" : this.stim["prop2"],
-          "tar1" : this.stim["tar1"],
-          "tar2" : this.stim["tar2"],
-        });
-    }
+        // fix the properties as they don't work
+        // also need to fix progress bar
+        "col1" : this.stim["col1"],
+        "col2" : this.stim["col2"],
+        "col3" : this.stim["col3"],
+        "col4" : this.stim["col4"],
+        "col5" : this.stim["col5"],
+        "prop1" : this.stim["prop1"],
+        "prop2" : this.stim["prop2"],
+        "tar1" : this.stim["tar1"],
+        "tar2" : this.stim["tar2"]
+      });
+  }
 
 
 
@@ -242,7 +247,7 @@ function init() {
   //make corresponding slides:
   exp.slides = make_slides(exp);
 
-  exp.nQs = utils.get_exp_length(); //this does not work if there are stacks of stims (but does work for an experiment with this structure)
+  exp.nQs = utils.get_exp_length() - 1; //this does not work if there are stacks of stims (but does work for an experiment with this structure)
                     //relies on structure and slides being defined
 
   $('.slide').hide(); //hide everything
