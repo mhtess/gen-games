@@ -67,57 +67,57 @@ var scale = 0.5;
 var creatureOpts = [
 	{ creature: "bird",
 		name: "wug",
-		crest_col_mean: "#00ff00",
-		crest_col_var: 0.5,
-		body_col_mean: "#00ff1a",
-		body_col_var: 0.001,
-		wing_col_mean: "#006400",
-		wing_col_var: 0.3,
-		height: null,
-		fatness: null,
-		tail: 0.5, //  approximately half of these have tails
-		crest: 0.2,
-		pepsin: 0.8
+		col1_mean: "#00ff00", //col1 = crest
+		col1_var: 0.5,
+		col2_mean: "#00ff1a", //col2 = body
+		col2_var: 0.001,
+		col3_mean: "#006400", //col3 = wing
+		col3_var: 0.3,
+	    col4_mean: null,
+	    col4_var: null,
+	    col5_mean: null,
+	    col5_var: null,
+		prop1: null, //height
+		prop2: null, //fatness
+		tar1: 0.5, // tails, approximately half of these have tails
+		tar2: 0.2, //crest
+		internal_prop: 0.8 //pepsin
 	},
 	{ creature: "bird",
 		name: "blicket",
-		crest_col_mean: "#ff4500",
-		crest_col_var: 0.2,
-		body_col_mean: "#ff4500",
-		body_col_var: 0.001,
-		wing_col_mean: "#ff4500",
-		wing_col_var: 1.2,
-		// crest_col: {"mean": "#ff4500"}, "var": 0.2,
-		// body_col: {"mean": "#ff4500"}, "var": 0.001,
-		// wing_col: {"mean": "#ff4500"}, "var": 1.2,
-		// crest_col: "#ff4500",
-		// body_col:  "#ff4500",
-		// wing_col: "#ff4500",
-		height: null,
-		fatness: null,
-		tail: 0,
-		crest: 1,
-		pepsin: 0.2,
+		col1_mean: "#ff4500", //col1 = crest
+		col1_var: 0.2,
+		col2_mean: "#ff4500", //col2 = body
+		col2_var: 0.001,
+		col3_mean: "#ff4500", //col3 = wing
+		col3_var: 1.2,
+    	col4_mean: null,
+	    col4_var: null,
+	    col5_mean: null,
+	    col5_var: null,
+		prop1: null, //height
+		prop2: null, //fatness
+		tar1: 0, // tails
+		tar1: 1, //crest
+		internal_prop: 0.2, //pepsin
 	},
 	{ creature: "bird",
 		name: "rambo",
-		crest_col_mean: "#ffff00",
-		crest_col_var: 0.2,
-		body_col_mean: "#ffff00",
-		body_col_var: 0.001,
-		wing_col_mean: "#ffff00",
-		wing_col_var: 1.2,
-		// crest_col: null,
-		// body_col: {"mean": "#ffff00"}, "var": 0.001,
-		// wing_col: null,
-		crest_col:"#ffff00",
-		body_col:  "#ffff00",
-		wing_col: "#ffff00",
-		height: null,
-		fatness: null,
-		tail: 1,
-		crest: 0.2,
-		pepsin: 0
+		col1_mean: "#ffff00", //col1 = crest
+		col1_var: 0.2,
+		col2_mean: "#ffff00", //col2 = body
+		col2_var: 0.001,
+		col3_mean: "#ffff00", //col3 = wing
+		col3_var: 1.2,
+	    col4_mean: null,
+	    col4_var: null,
+	    col5_mean: null,
+	    col5_var: null,
+		prop1: null, //height
+		prop2: null, //fatness
+		tar1: 1, // tails
+		tar1: 0.2, //crest
+		internal_prop: 0 //pepsin
 	}
 ]
 
@@ -129,19 +129,24 @@ var allCreatures = [];
 var creatureN = 6;
 var creatureTypesN = 3;
 var exemplarN = creatureN/creatureTypesN;
-// var wug = new Ecosystem.Genus("bird", {"col1": wugOpts.crest_col, "col2": wugOpts.body_col, "col3": wugOpts.wing_col});
+
 var i=0;
 while (i<exemplarN) {
 	allCreatures.push({
-		"col1": genColor(wugOpts.crest_col_mean, wugOpts.crest_col_var),
-		"col2": genColor(wugOpts.body_col_mean, wugOpts.body_col_var),
-		"col3": genColor(wugOpts.wing_col_mean, wugOpts.wing_col_var),
-		"tar1": flip(wugOpts.tail),
-		"tar2": flip(wugOpts.crest),
+		"col1": genColor(wugOpts.col1_mean, wugOpts.col1_var),
+		"col2": genColor(wugOpts.col2_mean, wugOpts.col2_var),
+		"col3": genColor(wugOpts.col3_mean, wugOpts.col3_var),
+    	"col4" : wugOpts.col4_mean == null ? null : genColor(wugOpts.col4_mean, wugOpts.col4_var),
+    	"col5" : wugOpts.col5_mean == null ? null : genColor(wugOpts.col5_mean, wugOpts.col5_var),
+		"prop1": wugOpts.prop1 == null ? Ecosystem.randProp() : wugOpts.prop1,
+		"prop2": wugOpts.prop2 == null ? Ecosystem.randProp() : wugOpts.prop2,
+		"tar1": flip(wugOpts.tar1),
+		"tar2": flip(wugOpts.tar2),
 		"creatureName": "wug",
+		"critter" : wugOpts.creature,
 		"query": "question",
 		"stimID": i,
-		"pepsin": flip(wugOpts.pepsin),
+		"internal_prop": flip(wugOpts.internal_prop),
 		"attentionCheck": generateAttentionQuestion()
 	})
   i++;
@@ -152,15 +157,20 @@ while (i<exemplarN) {
 
 while (i<2*exemplarN) {
 	allCreatures.push({
-		"col1": genColor(blicketOpts.crest_col_mean, wugOpts.crest_col_var),
-		"col2": genColor(blicketOpts.body_col_mean, wugOpts.body_col_var),
-		"col3": genColor(blicketOpts.wing_col_mean, wugOpts.wing_col_var),
-		"tar1": flip(blicketOpts.tail),
-		"tar2": flip(blicketOpts.crest),
+		"col1": genColor(blicketOpts.col1_mean, blicketOpts.col1_var),
+		"col2": genColor(blicketOpts.col2_mean, blicketOpts.col2_var),
+		"col3": genColor(blicketOpts.col3_mean, blicketOpts.col3_var),
+    	"col4" : blicketOpts.col4_mean == null ? null : genColor(blicketOpts.col4_mean, blicketOpts.col4_var),
+    	"col5" : blicketOpts.col5_mean == null ? null : genColor(blicketOpts.col5_mean, blicketOpts.col5_var),
+		"prop1": blicketOpts.prop1 == null ? Ecosystem.randProp() : blicketOpts.prop1,
+		"prop2": blicketOpts.prop2 == null ? Ecosystem.randProp() : blicketOpts.prop2,
+		"tar1": flip(blicketOpts.tar1),
+		"tar2": flip(blicketOpts.tar2),
 		"creatureName": "blicket",
+		"critter" : blicketOpts.creature,
 		"query": "question",
 		"stimID": i,
-		"pepsin": flip(blicketOpts.pepsin),
+		"internal_prop": flip(blicketOpts.internal_prop),
 		"attentionCheck": generateAttentionQuestion()
 	})
  	i++
@@ -169,17 +179,84 @@ while (i<2*exemplarN) {
 // var rambo = new Ecosystem.Genus("bird", {"col2": ramboOpts.body_col});
 while (i<3*exemplarN) {
 	allCreatures.push({
-		"col1": genColor(ramboOpts.crest_col_mean, wugOpts.crest_col_var),
-		"col2": genColor(ramboOpts.body_col_mean, wugOpts.body_col_var),
-		"col3": genColor(ramboOpts.wing_col_mean, wugOpts.wing_col_var),
-		"tar1": flip(ramboOpts.tail),
-		"tar2": flip(ramboOpts.crest),
+		"col1": genColor(ramboOpts.col1_mean, ramboOpts.col1_var),
+		"col2": genColor(ramboOpts.col2_mean, ramboOpts.col2_var),
+		"col3": genColor(ramboOpts.col3_mean, ramboOpts.col3_var),
+   		"col4" : ramboOpts.col4_mean == null ? null : genColor(ramboOpts.col4_mean, ramboOpts.col4_var),
+    	"col5" : ramboOpts.col5_mean == null ? null : genColor(ramboOpts.col5_mean, ramboOpts.col5_var),
+		"prop1": ramboOpts.prop1 == null ? Ecosystem.randProp() : ramboOpts.prop1,
+		"prop2": ramboOpts.prop2 == null ? Ecosystem.randProp() : ramboOpts.prop2,
+		"tar1": flip(ramboOpts.tar1),
+		"tar2": flip(ramboOpts.tar2),
 		"creatureName": "rambo",
+		"critter" : ramboOpts.creature,
 		"query": "question",
 		"stimID": i,
-		"pepsin": flip(ramboOpts.pepsin),
+		"internal_prop": flip(ramboOpts.internal_prop),
 		"attentionCheck": generateAttentionQuestion()
 	})
 	i++;
-	// rambo.draw("rambo"+i, {tar1:ramboOpts.tail}, scale);
 }
+
+var critFeatures = [
+	{ creature: "bird",
+		col1: "crest",
+		col2: "body",
+		col3: "wing",
+    	col4: "-99",
+   		col5: "-99",
+		prop1: "height",
+		prop2: "fatness",
+		tar1: "tail", //  approximately half of these have tails
+		tar2: "crest",
+		internal_prop: "pepsin"
+	},
+	{ creature: "fish",
+		col1: "body",
+		col2: "fins",
+		col3: "-99",
+    	col4: "-99",
+   		col5: "-99",
+		prop1: "bodysize (short->tall)",
+		prop2: "tailsize",
+		tar1: "fangs", //  approximately half of these have tails
+		tar2: "whiskers",
+		internal_prop: "--"
+	},
+	{ creature: "bug",
+		col1: "legs",
+		col2: "head",
+		col3: "body",
+    	col4: "antennae",
+   		col5: "wings",
+		prop1: "headsize(small->wide)",
+		prop2: "bodysize(narrow->fat)",
+		tar1: "antennae", //  approximately half of these have tails
+		tar2: "wings",
+		internal_prop: "--"
+	},
+  { creature: "flower",
+		col1: "stem",
+		col2: "spots",
+		col3: "petals",
+    	col4: "center",
+   		col5: "-99",
+		prop1: "centersize",
+		prop2: "petallength",
+		tar1: "thorns", //  approximately half of these have tails
+		tar2: "spots",
+		internal_prop: "--"
+	},
+  { creature: "tree",
+		col1: "berries",
+		col2: "leaves",
+		col3: "trunk",
+    	col4: "-99",
+   		col5: "-99",
+		prop1: "-99",
+		prop2: "-99",
+		tar1: "berries", //  approximately half of these have tails
+		tar2: "leaves",
+		internal_prop: "--"
+	}
+]

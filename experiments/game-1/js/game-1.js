@@ -46,6 +46,22 @@ function make_slides(f) {
     },
   });
 
+  slides.condition = slide({
+    name: "condition",
+    start : function() {
+      var cond_sentence = "You are the only one on your team equipped with a "
+      exp.condition == "pepsin_detector" ?
+        cond_sentence += "pepsin detector." :
+        cond_sentence += "book that will help you identify species."
+      $("#get_cond").append(
+        "<p>"+cond_sentence+"</p>");
+    },
+    button : function() {
+      exp.go();
+    },
+
+  });
+
 
   slides.learning_trial = slide({
     name: "learning_trial",
@@ -55,6 +71,7 @@ function make_slides(f) {
       and for each of these, present_handle will be run.) */
 
     present : _.shuffle(allCreatures),
+    trial_num: 0,
 
     present_handle : function(stim) {
       $("#birdSVG").empty();
@@ -62,12 +79,14 @@ function make_slides(f) {
 
       this.stim = stim; //I like to store this information in the slide so I can record it later.
 
+      this.start_time = Date.now()
+
       var scale = 0.5;
       Ecosystem.draw(
         "bird", stim,
         "birdSVG", scale)
 
-      stim.pepsin ?
+      stim.internal_prop ?
         pepsinString = "<strong>has pepsin</strong> in its bones" :
         pepsinString = "<strong>does not have pepsin</strong> in its bones"
 
@@ -76,16 +95,18 @@ function make_slides(f) {
       $(".attentionCheck").html("Does it have a " +stim.attentionCheck + "?")
 
       $('input[type=radio]').attr('checked', false);
+
+      this.trial_num++;
+      
     },
 
-
-
-
     button : function() {
+      var end_time = Date.now();
       boolResponse = ($('input[type=radio]:checked').size() != 0);
       if (!boolResponse) { //change later?
         $(".err").show();
       } else {
+        this.time_spent = end_time - this.start_time;
         this.log_responses();
         _stream.apply(this); //make sure this is at the *end*, after you log your data
         // exp.go(); //will jump the critter
@@ -94,13 +115,40 @@ function make_slides(f) {
 
 
     log_responses: function(){
+    var critOpts = _.where(critFeatures, {creatureName: this.stim["creature"]})[0];    
+    exp.catch_trials.push({
+        "trial_type" : "learning_trial",
+        "trial_num" : this.trial_num,
+        "condition": exp.condition,
+        "response" : $('input[type=radio]:checked').val(),
+        "question" : this.stim["attentionCheck"],
+        "time_in_seconds" : this.time_spent/1000,
+        "critter" : this.stim["critter"],
 
-      exp.data_trials.push({
-          "trial_type" : "learning_trial",
-          "condition": exp.condition,
-          "response" : $("#trial_response").val()
-        });
-    }
+        // need to make this more variable - this is only for birds
+        "col1_crit" : critOpts.col1, //_.where(critFeatures, {creatureName: this.stim["critter"]}[0], //want it to say crest/tail,
+        "col2_crit" : critOpts.col2,
+        "col3_crit" : critOpts.col3,
+        "col4_crit" : critOpts.col4,
+        "col5_crit" : critOpts.col5,
+        "prop1_crit" : critOpts.prop1,
+        "prop2_crit" : critOpts.prop2,
+        "tar1_crit" : critOpts.tar1,
+        "tar2_crit" : critOpts.tar2,
+
+        // fix the properties as they don't work
+        // also need to fix progress bar
+        "col1" : this.stim["col1"],
+        "col2" : this.stim["col2"],
+        "col3" : this.stim["col3"] == null ? "-99" : this.stim["col3"],
+        "col4" : this.stim["col4"] == null ? "-99" : this.stim["col4"],
+        "col5" : this.stim["col5"] == null ? "-99" : this.stim["col5"],
+        "prop1" : this.stim["prop1"] == null ? "-99" : this.stim["prop1"],
+        "prop2" : this.stim["prop2"] == null ? "-99" : this.stim["prop2"],
+        "tar1" : this.stim["tar1"] ? 1 : 0,
+        "tar2" : this.stim["tar2"] ? 1 : 0
+      });
+  }
 
 
 
@@ -124,6 +172,7 @@ function make_slides(f) {
       } else {
         exp.data_trials.push({
           "trial_type" : "chatbox",
+          "condition" : exp.condition,
           "response" : response
         });
         exp.go(); //make sure this is at the *end*, after you log your data
@@ -189,7 +238,7 @@ function init() {
   //blocks of the experiment:
   exp.structure=[ "i0",
   // "waiting_room",
-  "instructions","welcome_critterLand", "learning_trial",
+  "instructions","welcome_critterLand", "condition", "learning_trial",
   "chatbox",
   'subj_info', 'thanks'];
 
@@ -198,7 +247,7 @@ function init() {
   //make corresponding slides:
   exp.slides = make_slides(exp);
 
-  exp.nQs = utils.get_exp_length(); //this does not work if there are stacks of stims (but does work for an experiment with this structure)
+  exp.nQs = utils.get_exp_length() - 1; //this does not work if there are stacks of stims (but does work for an experiment with this structure)
                     //relies on structure and slides being defined
 
   $('.slide').hide(); //hide everything
