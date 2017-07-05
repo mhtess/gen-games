@@ -98,11 +98,7 @@ function make_slides(f) {
 
       this.trial_num++;
       
-
     },
-
-
-
 
     button : function() {
       var end_time = Date.now();
@@ -124,7 +120,28 @@ function make_slides(f) {
           "trial_num" : this.trial_num,
           "condition": exp.condition,
           "response" : $('input[type=radio]:checked').val(),
-          "time_in_seconds" : this.time_spent/1000
+          "question" : this.stim["attentionCheck"],
+          "time_in_seconds" : this.time_spent/1000,
+
+          "col1_crit" : "crest/tail",
+          "col2_crit" : "body",
+          "col3_crit" : "wing",
+          "col4_crit" : null,
+          "col5_crit" : null,
+          "prop1_crit" : "height",
+          "prop2_crit" : "bodysize(narrow->fat)",
+          "tar1_crit" : "tail",
+          "tar2_crit" : "crest",
+
+          "col1" : this.stim["col1"],
+          "col2" : this.stim["col2"],
+          "col3" : this.stim["col3"],
+          "col4" : null,
+          "col5" : null,
+          "prop1" : this.stim["prop1"],
+          "prop2" : this.stim["prop2"],
+          "tar1" : this.stim["tar1"],
+          "tar2" : this.stim["tar2"],
         });
     }
 

@@ -129,13 +129,15 @@ var allCreatures = [];
 var creatureN = 6;
 var creatureTypesN = 3;
 var exemplarN = creatureN/creatureTypesN;
-// var wug = new Ecosystem.Genus("bird", {"col1": wugOpts.crest_col, "col2": wugOpts.body_col, "col3": wugOpts.wing_col});
+
 var i=0;
 while (i<exemplarN) {
 	allCreatures.push({
 		"col1": genColor(wugOpts.crest_col_mean, wugOpts.crest_col_var),
 		"col2": genColor(wugOpts.body_col_mean, wugOpts.body_col_var),
 		"col3": genColor(wugOpts.wing_col_mean, wugOpts.wing_col_var),
+		"height": wugOpts.height == null ? Ecosystem.randProp() : wugOpts.height,
+		"fatness": wugOpts.fatness == null ? Ecosystem.randProp() : wugOpts.fatness,
 		"tar1": flip(wugOpts.tail),
 		"tar2": flip(wugOpts.crest),
 		"creatureName": "wug",
@@ -152,9 +154,9 @@ while (i<exemplarN) {
 
 while (i<2*exemplarN) {
 	allCreatures.push({
-		"col1": genColor(blicketOpts.crest_col_mean, wugOpts.crest_col_var),
-		"col2": genColor(blicketOpts.body_col_mean, wugOpts.body_col_var),
-		"col3": genColor(blicketOpts.wing_col_mean, wugOpts.wing_col_var),
+		"col1": genColor(blicketOpts.crest_col_mean, blicketOpts.crest_col_var),
+		"col2": genColor(blicketOpts.body_col_mean, blicketOpts.body_col_var),
+		"col3": genColor(blicketOpts.wing_col_mean, blicketOpts.wing_col_var),
 		"tar1": flip(blicketOpts.tail),
 		"tar2": flip(blicketOpts.crest),
 		"creatureName": "blicket",
@@ -169,9 +171,9 @@ while (i<2*exemplarN) {
 // var rambo = new Ecosystem.Genus("bird", {"col2": ramboOpts.body_col});
 while (i<3*exemplarN) {
 	allCreatures.push({
-		"col1": genColor(ramboOpts.crest_col_mean, wugOpts.crest_col_var),
-		"col2": genColor(ramboOpts.body_col_mean, wugOpts.body_col_var),
-		"col3": genColor(ramboOpts.wing_col_mean, wugOpts.wing_col_var),
+		"col1": genColor(ramboOpts.crest_col_mean, ramboOpts.crest_col_var),
+		"col2": genColor(ramboOpts.body_col_mean, ramboOpts.body_col_var),
+		"col3": genColor(ramboOpts.wing_col_mean, ramboOpts.wing_col_var),
 		"tar1": flip(ramboOpts.tail),
 		"tar2": flip(ramboOpts.crest),
 		"creatureName": "rambo",
