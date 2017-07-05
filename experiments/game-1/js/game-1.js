@@ -19,7 +19,8 @@ function make_slides(f) {
     name : "welcome_critterLand",
     start : function() {
       var shuffledCritters = _.shuffle(allCreatures)
-      for (var i=0; i<18; i++) {
+      // change 18
+      for (var i=0; i<shuffledCritters.length; i++) {
            $("#all_critters").append(
             "<svg id='critter" + i.toString() +
             "'></svg>");
