@@ -35,6 +35,48 @@
     <script src="js/game-1_2player.js"></script>
     <script src="js/welcome_critter.js"></script>
 
+
+    <!-- <link href="../../../reference_games_ours/experiments/tangrams/tangrams_sequential/index.css" media="screen" rel="stylesheet" type="text/css">
+     -->
+    <!-- Notice the URL, this is handled by socket.io on the server automatically, via express -->
+    <script type="text/javascript" src="../../../reference_games/experiments/node_modules/socket.io-client/socket.io.js"></script>
+
+    <!-- Include some extra functional programming tools -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.2/underscore-min.js"> </script>
+
+    <!-- Load mmturkey for submit HITs -->
+    <script type="text/javascript" src="../_shared/js/mmturkey.js"></script>
+    
+    <!-- Load the common game code. -->
+    <script type="text/javascript" src="../../../reference_games_ours/experiments/tangrams/tangrams_sequential/game.core.js"></script>
+    
+
+    <!-- Finally, Load the game client code. -->
+    <script type="text/javascript" src="../../../reference_games/experiments/sharedUtils/clientBase.js"></script>    
+    <script type="text/javascript" src="../../../reference_games_ours/experiments/tangrams/tangrams_sequential/game.client.js"></script>
+    <script type="text/javascript" src="../../../reference_games_ours/experiments/tangrams/tangrams_sequential/drawing.js"></script>
+
+    <script src="../_shared/full-projects/jquery-ui/jquery-ui.min.js"></script>
+    <script src="../_shared/js/underscore-min.js"></script>
+    <!-- if you want to draw stuff: -->
+    <script src="../_shared/js/raphael-min.js"></script>
+
+    <!-- cocolab experiment logic -->
+    <script src="../_shared/js/exp-V2.js"></script>
+    <script src="../_shared/js/stream-V2.js"></script>
+
+    <!-- cocolab general utilities -->
+    <script src="../_shared/js/mmturkey.js "></script>
+    <script src="../_shared/js/browserCheck.js"></script>
+    <script src="../_shared/js/utils.js"></script>
+    <!-- if you want to draw cute creatures (depends on raphael): -->
+    <script src="../../../stimuli/ecosystem.js"></script>
+    <!-- <script src="../_shared/js/ecosystem.js"></script> -->
+
+    <!-- experiment specific helper functions -->
+    <!-- <script src="js/local-utils.js"></script> -->
+
+
 </head>
 
 <body onload="init();">
@@ -48,6 +90,21 @@
     <p id="legal">Legal information: By answering the following questions, you are participating in a study being performed by cognitive scientists in the Stanford Department of Psychology. If you have questions about this research, please contact Erin Bennett at <a href="mailto://erindb@stanford.edu">erindb@stanford.edu</a> or Noah Goodman, at ngoodman@stanford.edu. You must be  at least 18 years old to participate. Your participation in this research is voluntary. You may decline to answer any or all of the following questions. You may decline further participation, at any time, without adverse consequences. Your anonymity is assured; the researchers who have requested your participation will not receive any personal information about you.</p>
   </div>
 
+  <div class ="slide" id="chat" >
+      <span>
+      <div id='message_panel'>
+          <ul id="messages"></ul>
+          <hr>
+          <div id="chatarea">
+              <form action="">
+                  <input id="chatbox" autocomplete="off" />
+                  <button id="chatbutton">Send</button>
+              </form>
+          </div>
+      </div>
+  </div>
+
+
   <div class="slide" id="waiting_room">
      <h3>Waiting Room</h3>
      <p>This is the waiting room.</p>
@@ -59,6 +116,13 @@
     <h3>Instructions</h3>
     <p>You will explore CritterLand and learn about the critters on CritterLand. At the end of the experiment, you will be asked to help the next turker better understand CritterLand.</p>
     <button onclick="_s.button()">Continue</button>
+  </div>
+
+<div class="slide" id="lobby">
+    <h3>Please Wait</h3>
+    <p>
+      Please excuse us while we wait for data to be generated - this should only take a moment
+    </p>
   </div>
 
   <div class="slide" id="welcome_critterLand">

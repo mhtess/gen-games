@@ -8,6 +8,37 @@ function make_slides(f) {
      }
   });
 
+  slides.lobby = slide({
+    name: "lobby",
+    start: function(){
+      socket.emit('request data', param('workerId'))
+      socket.on('assignment', function(assignment_packet){
+        exp.condition = assignment_packet.condition
+        exp.gen = assignment_packet.gen
+        exp.chain = assignment_packet.chain
+        if(assignment_packet.data.length == 0 || exp.condition == 'language'){
+          //if we're the firs gen, we won't receive anything so we generate new things
+          //additionally, if we're in language condition, we sample randomly from the true fn
+          exp.training_stims = _.range(0, exp.nTrainingTrials).map(
+            function(x){ return makeDataPoint(functionsToLearn[exp.targetFn]) }
+          )
+          if(exp.condition == 'language' && exp.gen != 1){
+            // exp.structure[2] = 'language_instructions' //use the language instructions slide instead of the regular instructions slide
+            exp.posteriorMessage = assignment_packet.data
+          }
+        }else{
+          //otherwise, we're in the data_incidental condition and use the given data
+          exp.training_stims = assignment_packet.data
+        }
+        slides.fn_learning_train.present = exp.training_stims
+        // console.log('condition', exp.condition)
+        // console.log('generation', exp.gen)
+        // console.log('chain', exp.chain)
+        exp.go()
+      })
+    }
+  })
+
   slides.waiting_room = slide({
      name : "waiting_room",
      //change button show that it only shows up after both players have connected
@@ -43,6 +74,12 @@ function make_slides(f) {
       exp.go(); //use exp.go() if and only if there is no "present" data.
     },
   });
+
+  // slides.chat = slide({
+  //   name: "chat"
+    
+
+  // })
 
   slides.welcome_critterLand = slide({
     name : "welcome_critterLand",
@@ -212,13 +249,13 @@ function init() {
       screenUW: exp.width
     };
   //blocks of the experiment:
-  exp.structure=["i0", "waiting_room", "instructions", "welcome_critterLand", "single_trial", "chatbox",'subj_info', 'thanks'];
+  exp.structure=["i0", "chat", "waiting_room", "instructions", "chatbox","welcome_critterLand", "lobby", "single_trial", 'subj_info', 'thanks'];
 
   exp.data_trials = [];
   //make corresponding slides:
   exp.slides = make_slides(exp);
 
-  exp.nQs = utils.get_exp_length(); //this does not work if there are stacks of stims (but does work for an experiment with this structure)
+  // exp.nQs = utils.get_exp_length(); //this does not work if there are stacks of stims (but does work for an experiment with this structure)
                     //relies on structure and slides being defined
 
   $('.slide').hide(); //hide everything

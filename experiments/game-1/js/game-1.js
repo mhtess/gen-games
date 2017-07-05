@@ -46,6 +46,22 @@ function make_slides(f) {
     },
   });
 
+  slides.condition = slide({
+    name: "condition",
+    start : function() {
+      var cond_sentence = "You are the only one on your team equipped with a "
+      exp.condition == "pepsin_detector" ?
+        cond_sentence += "pepsin detector." :
+        cond_sentence += "book that will help you identify species."
+      $("#get_cond").append(
+        "<p>"+cond_sentence+"</p>");
+    },
+    button : function() {
+      exp.go();
+    },
+
+  });
+
 
   slides.learning_trial = slide({
     name: "learning_trial",
@@ -55,12 +71,15 @@ function make_slides(f) {
       and for each of these, present_handle will be run.) */
 
     present : _.shuffle(allCreatures),
+    trial_num: 1,
 
     present_handle : function(stim) {
       $("#birdSVG").empty();
       $(".err").hide();
 
       this.stim = stim; //I like to store this information in the slide so I can record it later.
+
+      this.start_time = Date.now()
 
       var scale = 0.5;
       Ecosystem.draw(
@@ -76,16 +95,22 @@ function make_slides(f) {
       $(".attentionCheck").html("Does it have a " +stim.attentionCheck + "?")
 
       $('input[type=radio]').attr('checked', false);
+
+      this.trial_num++;
+      
+
     },
 
 
 
 
     button : function() {
+      var end_time = Date.now();
       boolResponse = ($('input[type=radio]:checked').size() != 0);
       if (!boolResponse) { //change later?
         $(".err").show();
       } else {
+        this.time_spent = end_time - this.start_time;
         this.log_responses();
         _stream.apply(this); //make sure this is at the *end*, after you log your data
         // exp.go(); //will jump the critter
@@ -94,11 +119,12 @@ function make_slides(f) {
 
 
     log_responses: function(){
-
-      exp.data_trials.push({
+      exp.catch_trials.push({
           "trial_type" : "learning_trial",
+          "trial_num" : this.trial_num,
           "condition": exp.condition,
-          "response" : $("#trial_response").val()
+          "response" : $('input[type=radio]:checked').val(),
+          "time_in_seconds" : this.time_spent/1000
         });
     }
 
@@ -124,6 +150,7 @@ function make_slides(f) {
       } else {
         exp.data_trials.push({
           "trial_type" : "chatbox",
+          "condition" : exp.condition,
           "response" : response
         });
         exp.go(); //make sure this is at the *end*, after you log your data
@@ -189,7 +216,7 @@ function init() {
   //blocks of the experiment:
   exp.structure=[ "i0",
   // "waiting_room",
-  "instructions","welcome_critterLand", "learning_trial",
+  "instructions","welcome_critterLand", "condition", "learning_trial",
   "chatbox",
   'subj_info', 'thanks'];
 
