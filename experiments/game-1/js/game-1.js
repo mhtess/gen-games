@@ -24,6 +24,8 @@ function make_slides(f) {
             "<svg id='critter" + i.toString() +
             "'></svg>");
             var scale = 0.5;
+            console.log(allCreatures.length)
+            console.log(shuffledCritters.length)
             // needs to be generalized
             Ecosystem.draw(
               shuffledCritters[i]["critter"], shuffledCritters[i],
