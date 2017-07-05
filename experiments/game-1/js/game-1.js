@@ -101,7 +101,7 @@ function make_slides(f) {
       $('input[type=radio]').attr('checked', false);
 
       this.trial_num++;
-      
+
     },
 
     button : function() {
@@ -119,7 +119,7 @@ function make_slides(f) {
 
 
     log_responses: function(){
-    //this.critOpts = _.where(critFeatures, {creatureName: this.stim["creature"]})[0];    
+    //this.critOpts = _.where(critFeatures, {creatureName: this.stim["creature"]})[0];
     exp.catch_trials.push({
         "trial_type" : "learning_trial",
         "trial_num" : this.trial_num,
@@ -227,6 +227,15 @@ function make_slides(f) {
 
 /// init ///
 function init() {
+
+  (function(){
+      var ut_id = "csli-gengame1-indiv-170706";
+      if (UTWorkerLimitReached(ut_id)) {
+          document.getElementById('mturk_form').style.display = 'none';
+          document.getElementsByTagName('body')[0].innerHTML = "You have already completed the maximum number of HITs allowed by this requester. Please click 'Return HIT' to avoid any impact on your approval rating.";
+      }
+  })();
+
   exp.trials = [];
   exp.catch_trials = [];
   //exp.all_stimuli = _.shuffle(all_stimuli); // all_stimuli
