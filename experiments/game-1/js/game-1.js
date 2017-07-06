@@ -37,9 +37,9 @@ function make_slides(f) {
   slides.condition = slide({
     name: "condition",
     start : function() {
-      var cond_sentence = "You are the only one on your team equipped with a "
+      var cond_sentence = "To help you learn about the critters, you have been given a "
       exp.condition == "pepsin_detector" ?
-        cond_sentence += "pepsin detector." :
+        cond_sentence += "device that can detect a substance called pepsin." :
         cond_sentence += "book that will help you identify species."
       $("#get_cond").append(
         "<p>"+cond_sentence+"</p>");
@@ -212,6 +212,7 @@ function init() {
   exp.catch_trials = [];
   //exp.all_stimuli = _.shuffle(all_stimuli); // all_stimuli
   exp.condition = _.sample(["label_book", "pepsin_detector"]); //can randomize between subject conditions here
+  console.log(exp.condition)
   exp.system = {
       Browser : BrowserDetect.browser,
       OS : BrowserDetect.OS,
