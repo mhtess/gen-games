@@ -93,7 +93,7 @@ var creatureOpts = [
 
 var uniqueCreatures = _.uniq(_.pluck(creatureOpts, "name"))
 var allCreatures = [];
-var creatureN = 6; // change to 12
+var creatureN = 12; // change to 12
 var creatureTypesN = 3;
 var exemplarN = creatureN/creatureTypesN;
 var count = exemplarN
