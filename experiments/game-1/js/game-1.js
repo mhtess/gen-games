@@ -11,7 +11,7 @@ function make_slides(f) {
   slides.instructions = slide({
     name : "instructions",
     button : function() {
-      exp.go(); //use exp.go() if and only if there is no "present" data.
+      exp.go(); // use exp.go() if and only if there is no "present" data.
     },
   });
 
@@ -19,34 +19,18 @@ function make_slides(f) {
     name : "welcome_critterLand",
     start : function() {
       var shuffledCritters = _.shuffle(allCreatures)
-      // change 18
       for (var i=0; i<shuffledCritters.length; i++) {
            $("#all_critters").append(
             "<svg id='critter" + i.toString() +
             "'></svg>");
             var scale = 0.5;
-            console.log(allCreatures.length)
-            console.log(shuffledCritters.length)
-            // needs to be generalized
             Ecosystem.draw(
               shuffledCritters[i]["critter"], shuffledCritters[i],
               "critter"+i, scale)
       }
-      /**
-      for (var j=9; j<18; j++) {
-           $("#all_critters").append(
-            "<svg id='critter" + j.toString() +
-            "'></svg>");
-
-            var scale = 0.5;
-            Ecosystem.draw(
-              "bug", {},
-              "critter"+j, scale)
-      }
-      */
     },
     button : function() {
-      exp.go(); //use exp.go() if and only if there is no "present" data.
+      exp.go(); // use exp.go() if and only if there is no "present" data.
     },
   });
 
@@ -66,7 +50,6 @@ function make_slides(f) {
 
   });
 
-
   slides.learning_trial = slide({
     name: "learning_trial",
 
@@ -81,6 +64,7 @@ function make_slides(f) {
       $("#critterSVG").empty();
       $(".err").hide();
       this.critOpts = _.where(critFeatures, {creature: stim.critter})[0];
+      this.question = _.where(question_phrase, {creature: stim.critter})[0];
 
       this.stim = stim; //I like to store this information in the slide so I can record it later.
 
@@ -91,13 +75,14 @@ function make_slides(f) {
         stim.critter, stim,
         "critterSVG", scale)
 
+      // would need to change if you want a different internal property
       stim.internal_prop ?
-        pepsinString = "<strong>has pepsin</strong> in its bones" :
-        pepsinString = "<strong>does not have pepsin</strong> in its bones"
+        internalString = "<strong>has pepsin</strong> in its bones" :
+        internalString = "<strong>does not have pepsin</strong> in its bones"
 
-      $(".prompt").html("This is a " + stim.creatureName + ". <br>" + "It " + pepsinString + ".");
+      $(".prompt").html("This is a <strong>" + stim.creatureName + "</strong>. <br>" + "It " + internalString + ".");
 
-      $(".attentionCheck").html("Does it have a " + this.critOpts[stim.attentionCheck] + "?")
+      $(".attentionCheck").html("Does it have " + this.question[stim.attentionCheck] + "?")
 
       $('input[type=radio]').attr('checked', false);
 
@@ -108,59 +93,48 @@ function make_slides(f) {
     button : function() {
       var end_time = Date.now();
       boolResponse = ($('input[type=radio]:checked').size() != 0);
-      if (!boolResponse) { //change later?
+      if (!boolResponse) {
         $(".err").show();
       } else {
         this.time_spent = end_time - this.start_time;
         this.log_responses();
         _stream.apply(this); //make sure this is at the *end*, after you log your data
-        // exp.go(); //will jump the critter
       }
     },
 
-
     log_responses: function(){
-    //this.critOpts = _.where(critFeatures, {creatureName: this.stim["creature"]})[0];
-    exp.catch_trials.push({
-        "trial_type" : "learning_trial",
-        "trial_num" : this.trial_num,
-        "condition": exp.condition,
-        "response" : $('input[type=radio]:checked').val(),
-        "question" : this.stim["attentionCheck"],
-        "time_in_seconds" : this.time_spent/1000,
-        "critter" : this.stim["critter"],
+      exp.catch_trials.push({
+          "trial_type" : "learning_trial",
+          "trial_num" : this.trial_num,
+          "condition": exp.condition,
+          "response" : $('input[type=radio]:checked').val(),
+          "question" : this.stim["attentionCheck"],
+          "time_in_seconds" : this.time_spent/1000,
+          "critter" : this.stim["critter"],
+          "species" : this.stim["creatureName"],
 
-        // need to make this more variable - this is only for birds
-        "col1_crit" : this.critOpts.col1, //_.where(critFeatures, {creatureName: this.stim["critter"]}[0], //want it to say crest/tail,
-        "col2_crit" : this.critOpts.col2,
-        "col3_crit" : this.critOpts.col3,
-        "col4_crit" : this.critOpts.col4,
-        "col5_crit" : this.critOpts.col5,
-        "prop1_crit" : this.critOpts.prop1,
-        "prop2_crit" : this.critOpts.prop2,
-        "tar1_crit" : this.critOpts.tar1,
-        "tar2_crit" : this.critOpts.tar2,
+          "col1_crit" : this.critOpts.col1,
+          "col2_crit" : this.critOpts.col2,
+          "col3_crit" : this.critOpts.col3,
+          "col4_crit" : this.critOpts.col4,
+          "col5_crit" : this.critOpts.col5,
+          "prop1_crit" : this.critOpts.prop1,
+          "prop2_crit" : this.critOpts.prop2,
+          "tar1_crit" : this.critOpts.tar1,
+          "tar2_crit" : this.critOpts.tar2,
 
-        // fix the properties as they don't work
-        // also need to fix progress bar
-        "col1" : this.stim["col1"],
-        "col2" : this.stim["col2"],
-        "col3" : this.stim["col3"] == null ? "-99" : this.stim["col3"],
-        "col4" : this.stim["col4"] == null ? "-99" : this.stim["col4"],
-        "col5" : this.stim["col5"] == null ? "-99" : this.stim["col5"],
-        "prop1" : this.stim["prop1"] == null ? "-99" : this.stim["prop1"],
-        "prop2" : this.stim["prop2"] == null ? "-99" : this.stim["prop2"],
-        "tar1" : this.stim["tar1"] ? 1 : 0,
-        "tar2" : this.stim["tar2"] ? 1 : 0
-      });
-  }
-
-
-
-
+          "col1" : this.stim["col1"],
+          "col2" : this.stim["col2"],
+          "col3" : this.stim["col3"] == null ? "-99" : this.stim["col3"],
+          "col4" : this.stim["col4"] == null ? "-99" : this.stim["col4"],
+          "col5" : this.stim["col5"] == null ? "-99" : this.stim["col5"],
+          "prop1" : this.stim["prop1"] == null ? "-99" : this.stim["prop1"],
+          "prop2" : this.stim["prop2"] == null ? "-99" : this.stim["prop2"],
+          "tar1" : this.stim["tar1"] ? 1 : 0,
+          "tar2" : this.stim["tar2"] ? 1 : 0
+        });
+    }
   });
-
-
 
   slides.chatbox = slide({
     name: "chatbox",
@@ -172,7 +146,7 @@ function make_slides(f) {
 
     button : function() {
       response = $("#chat_response").val();
-      if (response == "") { //change later?
+      if (response == "") {
         $(".err").show();
       } else {
         exp.data_trials.push({
@@ -181,13 +155,10 @@ function make_slides(f) {
           "response" : response
         });
         exp.go(); //make sure this is at the *end*, after you log your data
-        //exp.go(); will jump the critter
       }
     },
 
   });
-
-
 
   slides.subj_info =  slide({
     name : "subj_info",
@@ -249,11 +220,8 @@ function init() {
       screenW: screen.width,
       screenUW: exp.width
     };
-  //blocks of the experiment:
-  exp.structure=["i0",
-  // "waiting_room",
-  "instructions","welcome_critterLand", "condition",  "learning_trial",
-  "chatbox",
+  //Change order of slides here, blocks of the experiment:
+  exp.structure=["i0", "instructions", "welcome_critterLand", "condition",  "learning_trial", "chatbox",
   'subj_info', 'thanks'];
 
 
@@ -261,7 +229,7 @@ function init() {
   //make corresponding slides:
   exp.slides = make_slides(exp);
 
-  exp.nQs = utils.get_exp_length() - 1; //this does not work if there are stacks of stims (but does work for an experiment with this structure)
+  exp.nQs = utils.get_exp_length(); //this does not work if there are stacks of stims (but does work for an experiment with this structure)
                     //relies on structure and slides being defined
 
   $('.slide').hide(); //hide everything
@@ -274,7 +242,6 @@ function init() {
       $("#start_button").click(function() {$("#mustaccept").show();});
       exp.go();
     }
-    //$('slides.multi_slider').hide();
   });
   exp.go(); //show first slide
 
