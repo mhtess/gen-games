@@ -1,0 +1,3 @@
+workerid,trial_type,response,condition
+0,chatbox,Wugs are green. Blickets are red. Rambos are yellow.,pepsin_detector
+1,chatbox,Rambos dont have pepsin. Half of the wugs have pepsin. Most of the blickets have pepsin too. Blickets are red. Wugs are green. Rambos are yellow. They&quotecharre all birds.,pepsin_detector

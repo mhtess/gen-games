@@ -1,1 +1,7 @@
 experiments/node_modules/
+*.results
+*.question
+*.success
+*.properties
+*.input
+*.csv
