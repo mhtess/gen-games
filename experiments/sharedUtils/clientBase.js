@@ -18,6 +18,8 @@ var ondisconnect = function(data) {
   // Redirect to exit survey
   console.log("server booted");
   this.viewport.style.display="none";
+
+
   if(globalGame.roundNum + 2 > globalGame.numRounds) {
       $('#instructs').html('Thanks for participating in our experiment! ' +
         "Before you submit your HIT, we'd like to ask you a few questions.");
@@ -34,7 +36,8 @@ var ondisconnect = function(data) {
   $('#exit_survey').show();
   $('#sketchpad').hide(); // this is from sketchpad experiment (jefan 4/23/17)
   $('#loading').hide(); // this is from sketchpad experiment (jefan 4/23/17)
-};
+
+  };
 
 var onconnect = function(data) {
   console.log('on connect')
@@ -46,7 +49,18 @@ var onconnect = function(data) {
   // console.log(this.my_id,this.players[0].id);
   console.log(this);
   // console.log(this.get_player(this.my_id));
-  drawScreen(this, this.get_player(this.my_id));
+  // $('#message_panel').hide();
+  // $('#submitbutton').hide();
+  // $('#roleLabel').hide();
+  // //$('#textInfo').hide();
+  // $('#viewport').hide();
+  // $('#score').hide();
+  // $('#roundnumber').hide();
+  // $('#exit_survey').hide();
+  // $('#sketchpad').hide(); // this is from sketchpad experiment (jefan 4/23/17)
+  // $('#loading').hide(); // this is from sketchpad experiment (jefan 4/23/17)
+  // $('#i0').show();
+  //drawScreen(this, this.get_player(this.my_id));
 };
 
 // Associates callback functions corresponding to different socket messages

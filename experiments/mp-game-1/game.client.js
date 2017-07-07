@@ -167,7 +167,7 @@ var customSetup = function(game) {
   });
 
   // initialize experiment_template
-  init();
+  init()
 };
 
 var client_onjoingame = function(num_players, role) {
