@@ -330,12 +330,8 @@ function init() {
       screenUW: exp.width
     };
   //Change order of slides here, blocks of the experiment:
-<<<<<<< HEAD
   exp.structure=["i0", "instructions", "welcome_critterLand",
   "learning_trial","test_trial", "chatbox",
-=======
-  exp.structure=["welcome_critterLand","learning_trial","i0", "instructions",  "condition",   "chatbox",
->>>>>>> 97849680092d155b45d6ad25ee15bdbe20873e42
   'subj_info', 'thanks'];
 
 
