@@ -63,6 +63,10 @@ function make_slides(f) {
     present_handle : function(stim) {
       $("#critterSVG").empty();
       $(".err").hide();
+      $("#continueButton").hide();
+      $("#detectorButton").show();
+      $("#participantNote").hide();
+
       this.critOpts = _.where(critFeatures, {creature: stim.critter})[0];
       this.question = _.where(question_phrase, {creature: stim.critter})[0];
 
@@ -80,13 +84,23 @@ function make_slides(f) {
         internalString = "<strong>has pepsin</strong> in its bones" :
         internalString = "<strong>does not have pepsin</strong> in its bones"
 
-      $(".prompt").html("This is a <strong>" + stim.creatureName + "</strong>. <br>" + "It " + internalString + ".");
+      // $(".prompt").html("This is a <strong>" + stim.creatureName + "</strong>. <br>" + "It " + internalString + ".");
 
-      $(".attentionCheck").html("Does it have " + this.question[stim.attentionCheck] + "?")
+      // $(".attentionCheck").html("Does it have " + this.question[stim.attentionCheck] + "?")
 
-      $('input[type=radio]').attr('checked', false);
+      // $('input[type=radio]').attr('checked', false);
 
       this.trial_num++;
+
+    },
+
+    detector: function(){
+      $("#detectorButton").hide();
+      $(".prompt").html(this.stim.creatureName);
+      $(".notePrompt").html("Write yourself a note to help you remember.");
+
+      $("#participantNote").show();
+      $("#continueButton").show();
 
     },
 
@@ -222,7 +236,7 @@ function init() {
       screenUW: exp.width
     };
   //Change order of slides here, blocks of the experiment:
-  exp.structure=["i0", "instructions", "welcome_critterLand", "condition",  "learning_trial", "chatbox",
+  exp.structure=["learning_trial","i0", "instructions", "welcome_critterLand", "condition",   "chatbox",
   'subj_info', 'thanks'];
 
 
