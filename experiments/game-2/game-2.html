@@ -55,12 +55,13 @@
       You will explore a new world called Critter Country.
       You are part of a team of turkers and <strong>you are tasked with learning about the species in this world and teaching others about them</strong>.
       <br><br>
-      After exploring the world, you will be asked to teach another turker about the world.
-      You will do this by writing a message to them, and we will send the message to them on your behalf.
-      The turker who receives your message will have to move through the world, interact with critters, and complete various tasks.
+      You have a special device (a <strong>CritterDex</strong>) that can detect the critter you see and tell you what it's called.
+      After exploring the world, you will be tested to see what you've learned about the critters.
       <br><br>
-      What you learn in this task will be helpful to them.
-      At the end of the experiment, you will send a message to the next turker.
+      Then, you will teach another turker about the critters.
+      You will do this by writing a message to them, and we will send the message to them on your behalf.
+      The turker who receives your message will have to identify the critters but won't have the CritterDex.
+      <br>
     </p>
     <button onclick="_s.button()">Continue</button>
   </div>
@@ -80,6 +81,8 @@
   </div>
 
   <div class="slide" id="learning_trial">
+    <p class="critterInfo"></p>
+
     <div><svg id="critterSVG"></svg></div>
     <p class="prompt"></p>
 

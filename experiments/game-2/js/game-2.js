@@ -88,11 +88,11 @@ function make_slides(f) {
         "critterSVG", scale)
 
       // would need to change if you want a different internal property
-      stim.internal_prop ?
-        internalString = "<strong>has pepsin</strong> in its bones" :
-        internalString = "<strong>does not have pepsin</strong> in its bones"
+      stim.environment == "trees" ?
+        environmentString = "in the <strong>trees</strong>" :
+        environmentString = "on the <strong>ground</strong>"
 
-      // $(".prompt").html("This is a <strong>" + stim.creatureName + "</strong>. <br>" + "It " + internalString + ".");
+      $(".critterInfo").html("You see this creature " + environmentString);
 
       // $(".attentionCheck").html("Does it have " + this.question[stim.attentionCheck] + "?")
 
@@ -330,7 +330,8 @@ function init() {
       screenUW: exp.width
     };
   //Change order of slides here, blocks of the experiment:
-  exp.structure=["test_trial","learning_trial","i0", "instructions", "welcome_critterLand", "condition",   "chatbox",
+  exp.structure=["i0", "instructions", "welcome_critterLand",
+  "learning_trial","test_trial", "chatbox",
   'subj_info', 'thanks'];
 
 
