@@ -43,14 +43,14 @@ var creatureOpts = [
 			{
 				p: 0.99,
 				props: {
-					color_mean: "blue", 
+					color_mean: "blue",
 					color_var: 0.001,
 					location: "ground"
 				}
 			}, {
 				p: 0.01,
 				props: {
-					color_mean: "red", 
+					color_mean: "green",
 					color_var: 0.001,
 					location: "trees"
 				}
@@ -76,15 +76,15 @@ var creatureOpts = [
 			{
 				p: 1,
 				props: {
-					color_mean: "yellow", 
-					color_var: 0.001, 
+					color_mean: "yellow",
+					color_var: 0.001,
 					location: "ground"
 				}
 			}, {
 				p: 0,
 				props: {
-					color_mean: "red", 
-					color_var: 0.001, 
+					color_mean: "red",
+					color_var: 0.001,
 					location: "trees"
 				}
 			}],
@@ -111,14 +111,14 @@ var creatureOpts = [
 			{
 				p: 0.5,
 				props: {
-					color_mean: "red", 
+					color_mean: "red",
 					color_var: 0.001,
 					location: "ground"
 				}
 			}, {
 				p: 0.5,
 				props: {
-					color_mean: "green", 
+					color_mean: "green",
 					color_var: 0.001,
 					location: "trees"}
 			}],
@@ -141,7 +141,7 @@ var creatureOpts = [
 ]
 
 // Change this to desired critter count / distribution
-var creatureTypesN = 3;
+var creatureTypesN = 2;
 var exemplarN = 6;
 var creatureN = creatureTypesN*exemplarN;
 
@@ -150,10 +150,10 @@ var allCreatures = [];
 var j=0;
 
 var color_dict = {
-	blue: "#0000FF",
-	red: "#FF0000",
-	yellow: "#FFFF00",
-	green: "#008000"
+	blue: "#5da5db",
+	red: "#f42935",
+	yellow: "#eec900",
+	green: "#228b22"
 }
 
 var fillArray = function(n, fillVal){
@@ -161,7 +161,7 @@ var fillArray = function(n, fillVal){
 }
 
 var probToCount = function(p, n){
-	return Math.floor(p*n);
+	return Math.round(p*n);
 }
 
 
@@ -178,15 +178,15 @@ var createCreatureColors = function(creatureLabel){
 			colorProps.p, exemplarN
 		);
 
-	var ncrit =	n_creatures_of_this_color == 0 ? 
+	var ncrit =	n_creatures_of_this_color == 0 ?
 			((colorProps.p > 0) && (nRemaining > 0)) ? 1 : 0 :
 			n_creatures_of_this_color
 
 		creatureColors = creatureColors.concat(
-			fillArray(ncrit, 
+			fillArray(ncrit,
 				genColor(
 				color_dict[colorProps["props"]["color_mean"]],
-				colorProps["props"]["color_var"]	
+				colorProps["props"]["color_var"]
 			))
 		)
 		creatureLocation = creatureLocation.concat(
@@ -198,54 +198,35 @@ var createCreatureColors = function(creatureLabel){
 	return {color: creatureColors, location: creatureLocation}
 }
 
-
-// var wug_colors = Array(exemplarN - 1).fill(color_dict["blue"])
-// wug_colors.push(color_dict["red"])
-
-// var fep_colors = Array(exemplarN).fill(color_dict["yellow"])
-
-// var lorch_colors = Array(exemplarN/2).fill(color_dict["red"]),
-
-// lorch_colors = lorch_colors.concat(
-// 	Array(exemplarN/2).fill(color_dict["green"])
-// 	);
-
-// var creatureColors = {
-// 	wug: wug_colors,
-// 	fep: fep_colors,
-// 	lorch: lorch_colors
-// }
-
-// Generates the characteristics for each critter
-for (var i = 0; i < uniqueCreatures.length; i++){
-	var creatureName = uniqueCreatures[i]
-	var creatOpts = _.where(creatureOpts, {name: creatureName})[0];
-	var creatureColor = createCreatureColors(creatureName);
-
-	var localCounter = 0;
+var createFeatureArray = function(creatureLabel, p){
+	var probs = [p, 1-p]
+	var creatOpts = _.where(creatureOpts, {name: creatureLabel})[0];
+	var creatureColors = [];
+	var creatureLocation = [];
 	// debugger;
-	while (j<(exemplarN*(i+1))) {
-		allCreatures.push({
-			"col1": creatureColor["color"][localCounter],
-			"col2": creatureColor["color"][localCounter],
-			"col3": creatureColor["color"][localCounter] == null ? null : creatureColor["color"][localCounter] ,
-	    	"col4" : creatOpts.col4_mean == null ? null : genColor(creatOpts.col4_mean, creatOpts.col4_var),
-	    	"col5" : creatOpts.col5_mean == null ? null : genColor(creatOpts.col5_mean, creatOpts.col5_var),
-			"prop1": creatOpts.prop1 == null ? Ecosystem.randProp() : creatOpts.prop1,
-			"prop2": creatOpts.prop2 == null ? Ecosystem.randProp() : creatOpts.prop2,
-			"tar1": flip(creatOpts.tar1),
-			"tar2": flip(creatOpts.tar2),
-			"creatureName": uniqueCreatures[i],
-			"critter" : creatOpts.creature,
-			"query": "question",
-			"stimID": j,
-			"internal_prop": flip(creatOpts.internal_prop),
-			"attentionCheck": generateAttentionQuestion(),
-			"location":creatureColor.location[localCounter]
-		})
-		localCounter++;
-  		j++;
+	var nRemaining = exemplarN;
+	for (var i=0; i<2; i++ ){
+		var colorProps = creatOpts.globalColors[i];
+
+		var n_creatures_of_this_color =  probToCount(
+			probs[i], exemplarN
+		);
+
+	var ncrit =	n_creatures_of_this_color == 0 ?
+			((probs[i] > 0) && (nRemaining > 0)) ? 1 : 0 :
+			n_creatures_of_this_color
+
+		creatureColors = creatureColors.concat(
+			fillArray(ncrit,
+				genColor(
+				color_dict[colorProps["props"]["color_mean"]],
+				colorProps["props"]["color_var"]
+			))
+		)
+		creatureLocation = 0;
+	  nRemaining = nRemaining-ncrit;
 	}
+	return {color: creatureColors, location: creatureLocation}
 }
 
 // This outlines the features of all critters defined in ecosystem.js

@@ -34,22 +34,6 @@ function make_slides(f) {
     },
   });
 
-  slides.condition = slide({
-    name: "condition",
-    start : function() {
-      var cond_sentence = "To help you learn about the critters, you have been given a "
-      exp.condition == "pepsin_detector" ?
-        cond_sentence += "device that can detect a substance called pepsin." :
-        cond_sentence += "book that will help you identify species."
-      $("#get_cond").append(
-        "<p>"+cond_sentence+"</p>");
-    },
-    button : function() {
-      exp.go();
-    },
-
-  });
-
   slides.learning_trial = slide({
     name: "learning_trial",
 
@@ -133,7 +117,8 @@ function make_slides(f) {
       exp.catch_trials.push({
           "trial_type" : "learning_trial",
           "trial_num" : this.trial_num,
-          "condition": exp.condition,
+          "question": exp.question,
+          "distribution": JSON.stringify(exp.distribution),
           "response" : $("#participantNote").val(),
           // "response" : $('input[type=radio]:checked').val(),
           "question" : this.stim["attentionCheck"],
@@ -213,8 +198,8 @@ function make_slides(f) {
       exp.catch_trials.push({
           "trial_type" : "test_trial",
           "trial_num" : this.trial_num,
-          "condition": exp.condition,
-          "response" : $("#testFreeResponse").val(),
+          "question": exp.question,
+          "distribution": JSON.stringify(exp.distribution),          "response" : $("#testFreeResponse").val(),
           // "response" : $('input[type=radio]:checked').val(),
           "question" : this.stim["attentionCheck"],
           "time_in_seconds" : this.time_spent/1000,
@@ -249,7 +234,6 @@ function make_slides(f) {
 
     start: function() {
       $(".err").hide();
-      //$(".display_condition").html("You are in " + exp.condition + ".");
     },
 
     button : function() {
@@ -259,8 +243,8 @@ function make_slides(f) {
       } else {
         exp.data_trials.push({
           "trial_type" : "chatbox",
-          "condition" : exp.condition,
-          "response" : response
+          "question": exp.question,
+          "distribution": JSON.stringify(exp.distribution),          "response" : response
         });
         exp.go(); //make sure this is at the *end*, after you log your data
       }
@@ -294,8 +278,8 @@ function make_slides(f) {
           "trials" : exp.data_trials,
           "catch_trials" : exp.catch_trials,
           "system" : exp.system,
-          "condition" : exp.condition,
-          "subject_information" : exp.subj_data,
+          "question": exp.question,
+          "distribution": JSON.stringify(exp.distribution),          "subject_information" : exp.subj_data,
           "time_in_minutes" : (Date.now() - exp.startT)/60000
       };
       setTimeout(function() {turk.submit(exp.data);}, 1000);
@@ -319,8 +303,62 @@ function init() {
   exp.trials = [];
   exp.catch_trials = [];
   //exp.all_stimuli = _.shuffle(all_stimuli); // all_stimuli
-  exp.condition = _.sample(["label_book", "pepsin_detector"]); //can randomize between subject conditions here
-  console.log(exp.condition)
+  exp.question = _.sample([
+    "find creatures",
+    "find all of the creatures"
+  ]); //can randomize between subject conditions here
+  // exp.distribution is probability of binary feature
+  // p( color | category1), p( color | category2 )
+  // color is binary (but may have different binary values for two categories)
+
+  // inside shuffle is to randomize between the two colors
+  exp.distribution = _.sample([
+    _.shuffle([1, 0.33]),
+    _.shuffle([1, 0.15])
+  ])
+
+  // TO DO:
+  // - "Find wugs" vs "Find all of the wugs"
+  // - test trials: 2 x each category (perhaps one of each color)
+
+
+  // Generates the characteristics for each critter
+  for (var i = 0; i < creatureTypesN; i++){
+  // for (var i = 0; i < uniqueCreatures.length; i++){
+  	var creatureName = uniqueCreatures[i]
+  	var creatOpts = _.where(creatureOpts, {name: creatureName})[0];
+  	var creatureColor = createFeatureArray(
+      creatureName, exp.distribution[i]
+    );
+
+  	var localCounter = 0;
+  	// debugger;
+  	while (j<(exemplarN*(i+1))) {
+  		allCreatures.push({
+  			"col1": creatureColor["color"][localCounter],
+  			"col2": creatureColor["color"][localCounter],
+  			"col3": creatureColor["color"][localCounter] == null ? null : creatureColor["color"][localCounter] ,
+  	    	"col4" : creatOpts.col4_mean == null ? null : genColor(creatOpts.col4_mean, creatOpts.col4_var),
+  	    	"col5" : creatOpts.col5_mean == null ? null : genColor(creatOpts.col5_mean, creatOpts.col5_var),
+  			"prop1": creatOpts.prop1 == null ? Ecosystem.randProp() : creatOpts.prop1,
+  			"prop2": creatOpts.prop2 == null ? Ecosystem.randProp() : creatOpts.prop2,
+  			"tar1": flip(creatOpts.tar1),
+  			"tar2": flip(creatOpts.tar2),
+  			"creatureName": uniqueCreatures[i],
+  			"critter" : creatOpts.creature,
+  			"query": "question",
+  			"stimID": j,
+  			"internal_prop": flip(creatOpts.internal_prop),
+  			"attentionCheck": generateAttentionQuestion(),
+  			"location":creatureColor.location[localCounter]
+  		})
+  		localCounter++;
+    		j++;
+  	}
+  }
+
+
+
   exp.system = {
       Browser : BrowserDetect.browser,
       OS : BrowserDetect.OS,
@@ -330,9 +368,16 @@ function init() {
       screenUW: exp.width
     };
   //Change order of slides here, blocks of the experiment:
-  exp.structure=["i0", "instructions", "welcome_critterLand",
-  "learning_trial","test_trial", "chatbox",
-  'subj_info', 'thanks'];
+  exp.structure=[
+    "welcome_critterLand",
+    "i0",
+    "instructions",
+    "learning_trial",
+    "chatbox",
+    "test_trial",
+    'subj_info',
+    'thanks'
+  ];
 
 
   exp.data_trials = [];
