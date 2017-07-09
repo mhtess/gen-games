@@ -92,6 +92,11 @@ function make_slides(f) {
         internalString = "<strong>has pepsin</strong> in its bones" :
         internalString = "<strong>does not have pepsin</strong> in its bones"
 
+      stim.location ?
+        locationStr = " in the trees." : 
+        locationStr = " on the ground."
+
+
       // $(".prompt").html("This is a <strong>" + stim.creatureName + "</strong>. <br>" + "It " + internalString + ".");
 
       // $(".attentionCheck").html("Does it have " + this.question[stim.attentionCheck] + "?")
@@ -250,7 +255,7 @@ function init() {
       screenUW: exp.width
     };
   //Change order of slides here, blocks of the experiment:
-  exp.structure=["learning_trial","i0", "instructions", "welcome_critterLand", "condition",   "chatbox",
+  exp.structure=["welcome_critterLand","learning_trial","i0", "instructions",  "condition",   "chatbox",
   'subj_info', 'thanks'];
 
 
