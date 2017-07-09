@@ -38,6 +38,23 @@ var scale = 0.5;
 var creatureOpts = [
 	{ creature: "bird",
 		name: "wug",
+		// list by decreasing probabilities ( highest first )
+		globalColors: [
+			{
+				p: 0.99,
+				props: {
+					color_mean: "blue", 
+					color_var: 0.001,
+					location: "ground"
+				}
+			}, {
+				p: 0.01,
+				props: {
+					color_mean: "red", 
+					color_var: 0.001,
+					location: "trees"
+				}
+			}],
 		col1_mean: "#00ff00", // col1 = crest
 		col1_var: 0.5,
 		col2_mean: "#00ff1a", // col2 = body
@@ -55,6 +72,22 @@ var creatureOpts = [
 		internal_prop: 0.8 // pepsin
 	},
 	{ creature: "bird",
+		globalColors: [
+			{
+				p: 1,
+				props: {
+					color_mean: "yellow", 
+					color_var: 0.001, 
+					location: "ground"
+				}
+			}, {
+				p: 0,
+				props: {
+					color_mean: "red", 
+					color_var: 0.001, 
+					location: "trees"
+				}
+			}],
 		name: "fep",
 		col1_mean: "#ff4500", // col1 = crest
 		col1_var: 0.2,
@@ -70,10 +103,25 @@ var creatureOpts = [
 		prop2: null, // fatness
 		tar1: 0, // tails
 		tar1: 0, // crest
-		internal_prop: 0.2, // pepsin
+		internal_prop: 1, // pepsin
 	},
 	{ creature: "bird",
 		name: "lorch",
+		globalColors: [
+			{
+				p: 0.5,
+				props: {
+					color_mean: "red", 
+					color_var: 0.001,
+					location: "ground"
+				}
+			}, {
+				p: 0.5,
+				props: {
+					color_mean: "green", 
+					color_var: 0.001,
+					location: "trees"}
+			}],
 		col1_mean: "#ffff00", // col1 = crest
 		col1_var: 0,
 		col2_mean: "#ffff00", // col2 = body
@@ -108,37 +156,79 @@ var color_dict = {
 	green: "#008000"
 }
 
-
-
-var wug_colors = Array(exemplarN - 1).fill(color_dict["blue"])
-wug_colors.push(color_dict["red"])
-
-var fep_colors = Array(exemplarN).fill(color_dict["yellow"])
-
-var lorch_colors = Array(exemplarN/2).fill(color_dict["red"]),
-
-lorch_colors = lorch_colors.concat(
-	Array(exemplarN/2).fill(color_dict["green"])
-	);
-
-var creatureColors = {
-	wug: wug_colors,
-	fep: fep_colors,
-	lorch: lorch_colors
+var fillArray = function(n, fillVal){
+	return Array(n).fill(fillVal)
 }
+
+var probToCount = function(p, n){
+	return Math.floor(p*n);
+}
+
+
+var createCreatureColors = function(creatureLabel){
+	var creatOpts = _.where(creatureOpts, {name: creatureLabel})[0];
+	var creatureColors = [];
+	var creatureLocation = [];
+	// debugger;
+	var nRemaining = exemplarN;
+	for (var i=0; i<creatOpts.globalColors.length; i++ ){
+		var colorProps = creatOpts.globalColors[i];
+
+		var n_creatures_of_this_color =  probToCount(
+			colorProps.p, exemplarN
+		);
+
+	var ncrit =	n_creatures_of_this_color == 0 ? 
+			((colorProps.p > 0) && (nRemaining > 0)) ? 1 : 0 :
+			n_creatures_of_this_color
+
+		creatureColors = creatureColors.concat(
+			fillArray(ncrit, 
+				genColor(
+				color_dict[colorProps["props"]["color_mean"]],
+				colorProps["props"]["color_var"]	
+			))
+		)
+		creatureLocation = creatureLocation.concat(
+			fillArray(ncrit, colorProps["props"]["location"]
+			)
+		)
+	  nRemaining = nRemaining-ncrit;
+	}
+	return {color: creatureColors, location: creatureLocation}
+}
+
+
+// var wug_colors = Array(exemplarN - 1).fill(color_dict["blue"])
+// wug_colors.push(color_dict["red"])
+
+// var fep_colors = Array(exemplarN).fill(color_dict["yellow"])
+
+// var lorch_colors = Array(exemplarN/2).fill(color_dict["red"]),
+
+// lorch_colors = lorch_colors.concat(
+// 	Array(exemplarN/2).fill(color_dict["green"])
+// 	);
+
+// var creatureColors = {
+// 	wug: wug_colors,
+// 	fep: fep_colors,
+// 	lorch: lorch_colors
+// }
 
 // Generates the characteristics for each critter
 for (var i = 0; i < uniqueCreatures.length; i++){
 	var creatureName = uniqueCreatures[i]
 	var creatOpts = _.where(creatureOpts, {name: creatureName})[0];
-	var creatureColor = creatureColors[creatureName];
+	var creatureColor = createCreatureColors(creatureName);
+
 	var localCounter = 0;
 	// debugger;
 	while (j<(exemplarN*(i+1))) {
 		allCreatures.push({
-			"col1": creatureColor[localCounter],
-			"col2": creatureColor[localCounter],
-			"col3": creatureColor[localCounter] == null ? null : creatureColor[localCounter] ,
+			"col1": creatureColor["color"][localCounter],
+			"col2": creatureColor["color"][localCounter],
+			"col3": creatureColor["color"][localCounter] == null ? null : creatureColor["color"][localCounter] ,
 	    	"col4" : creatOpts.col4_mean == null ? null : genColor(creatOpts.col4_mean, creatOpts.col4_var),
 	    	"col5" : creatOpts.col5_mean == null ? null : genColor(creatOpts.col5_mean, creatOpts.col5_var),
 			"prop1": creatOpts.prop1 == null ? Ecosystem.randProp() : creatOpts.prop1,
@@ -150,7 +240,8 @@ for (var i = 0; i < uniqueCreatures.length; i++){
 			"query": "question",
 			"stimID": j,
 			"internal_prop": flip(creatOpts.internal_prop),
-			"attentionCheck": generateAttentionQuestion()
+			"attentionCheck": generateAttentionQuestion(),
+			"location":creatureColor.location[localCounter]
 		})
 		localCounter++;
   		j++;
