@@ -61,11 +61,19 @@ function make_slides(f) {
     trial_num: 0,
 
     present_handle : function(stim) {
+      // reset critter & note
       $("#critterSVG").empty();
+      $("#participantNote").val('');
+      $(".prompt").html('');
+
+      // hide stuff
       $(".err").hide();
       $("#continueButton").hide();
-      $("#detectorButton").show();
+      $(".notePrompt").hide();
       $("#participantNote").hide();
+
+      // show stuff
+      $("#detectorButton").show();
 
       this.critOpts = _.where(critFeatures, {creature: stim.critter})[0];
       this.question = _.where(question_phrase, {creature: stim.critter})[0];
@@ -95,19 +103,24 @@ function make_slides(f) {
     },
 
     detector: function(){
+      // hide stuff
       $("#detectorButton").hide();
-      $(".prompt").html(this.stim.creatureName);
+
+      // present stuff
+      $(".prompt").html("CritterDex output: " + this.stim.creatureName);
       $(".notePrompt").html("Write yourself a note to help you remember.");
 
+      // show stuff
       $("#participantNote").show();
       $("#continueButton").show();
+      $(".notePrompt").show();
 
     },
 
     button : function() {
       var end_time = Date.now();
-      boolResponse = ($('input[type=radio]:checked').size() != 0);
-      if (!boolResponse) {
+      response = $("#participantNote").val();
+      if (response == "") {
         $(".err").show();
       } else {
         this.time_spent = end_time - this.start_time;
@@ -121,7 +134,8 @@ function make_slides(f) {
           "trial_type" : "learning_trial",
           "trial_num" : this.trial_num,
           "condition": exp.condition,
-          "response" : $('input[type=radio]:checked').val(),
+          "response" : $("#participantNote").val(),
+          // "response" : $('input[type=radio]:checked').val(),
           "question" : this.stim["attentionCheck"],
           "time_in_seconds" : this.time_spent/1000,
           "critter" : this.stim["critter"],
