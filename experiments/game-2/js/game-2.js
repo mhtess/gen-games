@@ -163,6 +163,86 @@ function make_slides(f) {
         });
     }
   });
+  slides.test_trial = slide({
+    name: "test_trial",
+
+    /* trial information for this block
+     (the variable 'stim' will change between each of these values,
+      and for each of these, present_handle will be run.) */
+
+    present : _.shuffle(allCreatures),
+    trial_num: 0,
+
+    present_handle : function(stim) {
+      // reset critter & note
+      $("#critterTestSVG").empty();
+      $("#testFreeResponse").val('');
+
+      // hide stuff
+      $(".err").hide();
+
+      this.critOpts = _.where(critFeatures, {creature: stim.critter})[0];
+      this.question = _.where(question_phrase, {creature: stim.critter})[0];
+
+      this.stim = stim; //I like to store this information in the slide so I can record it later.
+
+      this.start_time = Date.now()
+
+      var scale = 0.5;
+      Ecosystem.draw(
+        stim.critter, stim,
+        "critterTestSVG", scale)
+
+      this.trial_num++;
+
+    },
+
+    button : function() {
+      var end_time = Date.now();
+      response = $("#testFreeResponse").val();
+      if (response == "") {
+        $(".err").show();
+      } else {
+        this.time_spent = end_time - this.start_time;
+        this.log_responses();
+        _stream.apply(this); //make sure this is at the *end*, after you log your data
+      }
+    },
+
+    log_responses: function(){
+      exp.catch_trials.push({
+          "trial_type" : "test_trial",
+          "trial_num" : this.trial_num,
+          "condition": exp.condition,
+          "response" : $("#testFreeResponse").val(),
+          // "response" : $('input[type=radio]:checked').val(),
+          "question" : this.stim["attentionCheck"],
+          "time_in_seconds" : this.time_spent/1000,
+          "critter" : this.stim["critter"],
+          "species" : this.stim["creatureName"],
+
+          "col1_crit" : this.critOpts.col1,
+          "col2_crit" : this.critOpts.col2,
+          "col3_crit" : this.critOpts.col3,
+          "col4_crit" : this.critOpts.col4,
+          "col5_crit" : this.critOpts.col5,
+          "prop1_crit" : this.critOpts.prop1,
+          "prop2_crit" : this.critOpts.prop2,
+          "tar1_crit" : this.critOpts.tar1,
+          "tar2_crit" : this.critOpts.tar2,
+
+          "col1" : this.stim["col1"],
+          "col2" : this.stim["col2"],
+          "col3" : this.stim["col3"] == null ? "-99" : this.stim["col3"],
+          "col4" : this.stim["col4"] == null ? "-99" : this.stim["col4"],
+          "col5" : this.stim["col5"] == null ? "-99" : this.stim["col5"],
+          "prop1" : this.stim["prop1"] == null ? "-99" : this.stim["prop1"],
+          "prop2" : this.stim["prop2"] == null ? "-99" : this.stim["prop2"],
+          "tar1" : this.stim["tar1"] ? 1 : 0,
+          "tar2" : this.stim["tar2"] ? 1 : 0
+        });
+    }
+  });
 
   slides.chatbox = slide({
     name: "chatbox",
@@ -250,7 +330,7 @@ function init() {
       screenUW: exp.width
     };
   //Change order of slides here, blocks of the experiment:
-  exp.structure=["learning_trial","i0", "instructions", "welcome_critterLand", "condition",   "chatbox",
+  exp.structure=["test_trial","learning_trial","i0", "instructions", "welcome_critterLand", "condition",   "chatbox",
   'subj_info', 'thanks'];
 
 
