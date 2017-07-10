@@ -121,7 +121,7 @@ function make_slides(f) {
           "distribution": JSON.stringify(exp.distribution),
           "response" : $("#participantNote").val(),
           // "response" : $('input[type=radio]:checked').val(),
-          "question" : this.stim["attentionCheck"],
+          // "question" : this.stim["attentionCheck"],
           "time_in_seconds" : this.time_spent/1000,
           "critter" : this.stim["critter"],
           "species" : this.stim["creatureName"],
@@ -155,7 +155,7 @@ function make_slides(f) {
      (the variable 'stim' will change between each of these values,
       and for each of these, present_handle will be run.) */
 
-    present : _.shuffle(allCreatures),
+    present : _.shuffle(exp.test_critters),
     trial_num: 0,
 
     present_handle : function(stim) {
@@ -229,26 +229,56 @@ function make_slides(f) {
     }
   });
 
-  slides.chatbox = slide({
-    name: "chatbox",
+  slides.messagePassing = slide({
+    name: "messagePassing",
 
-    start: function() {
+    present : _.shuffle(exp.creatureCategories),
+    trial_num: 0,
+
+    present_handle : function(stim) {
+      this.stim = stim;
+      this.start_time = Date.now();
       $(".err").hide();
+
+      // N.B.: Creature Names expected to have regular +"s" plural
+      var messageQuestion = (exp.question == "find creatures") ?
+        "find " + stim + "s":
+        "find all of the " + stim + "s"
+
+      $("#messageInstructions").html("You have been matched with another turker.<br> You can send that turker a single message. <br>" +
+      "That turker will have to <strong>" + messageQuestion  + "</strong>, but they won't have access to your CritterDex. " + "<br><br> Enter your message below:")
+
+      this.trial_num++;
+      //
+      // " "++"
+      // The next turker will have to explore CritterLand but won't be provided any information about the critters. Please tell them about the species in order to best guide them:")
     },
 
     button : function() {
       response = $("#chat_response").val();
+
       if (response == "") {
         $(".err").show();
       } else {
-        exp.data_trials.push({
-          "trial_type" : "chatbox",
-          "question": exp.question,
-          "distribution": JSON.stringify(exp.distribution),          "response" : response
-        });
-        exp.go(); //make sure this is at the *end*, after you log your data
+        this.log_responses();
+        _stream.apply(this); //make sure this is at the *end*, after you log your data
       }
     },
+
+    log_responses: function(){
+      var end_time = Date.now();
+      this.time_spent = end_time - this.start_time;
+      response = $("#chat_response").val();
+
+      exp.data_trials.push({
+        "trial_type" : "chatbox",
+        "question": exp.question,
+        "time_in_seconds" : this.time_spent/1000,
+        "species" : this.stim,
+        "distribution": JSON.stringify(exp.distribution),
+        "response" : response
+      });
+    }
 
   });
 
@@ -318,9 +348,7 @@ function init() {
   ])
 
   // TO DO:
-  // - "Find wugs" vs "Find all of the wugs"
   // - test trials: 2 x each category (perhaps one of each color)
-
 
   // Generates the characteristics for each critter
   for (var i = 0; i < creatureTypesN; i++){
@@ -357,7 +385,20 @@ function init() {
   	}
   }
 
+  exp.creatureCategories = _.uniq(_.pluck(allCreatures, "creatureName"))
 
+  // exp.test_critters = _.uniq(_.map(allCreatures, function(stim){
+  //   _.omit(stim, ["col4", "col5","stimID", "internal_prop",
+  // "attentionCheck", "location"])
+  // }
+
+// ))
+
+  exp.test_critters = _.uniq(allCreatures, function(stim){
+    return _.values(_.pick(stim,
+      "col1", "col2","col3", "creatureName", "tar1","tar2"
+    )).join('')
+  })
 
   exp.system = {
       Browser : BrowserDetect.browser,
@@ -369,11 +410,11 @@ function init() {
     };
   //Change order of slides here, blocks of the experiment:
   exp.structure=[
-    "welcome_critterLand",
     "i0",
     "instructions",
+    "welcome_critterLand",
     "learning_trial",
-    "chatbox",
+    "messagePassing",
     "test_trial",
     'subj_info',
     'thanks'
