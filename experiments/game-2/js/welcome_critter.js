@@ -111,14 +111,14 @@ var creatureOpts = [
 			{
 				p: 0.5,
 				props: {
-					color_mean: "red",
+					color_mean: "yellow",
 					color_var: 0.001,
 					location: "ground"
 				}
 			}, {
 				p: 0.5,
 				props: {
-					color_mean: "green",
+					color_mean: "purple",
 					color_var: 0.001,
 					location: "trees"}
 			}],
@@ -141,8 +141,8 @@ var creatureOpts = [
 ]
 
 // Change this to desired critter count / distribution
-var creatureTypesN = 2;
-var exemplarN = 6;
+var creatureTypesN = 3;
+var exemplarN = 4;
 var creatureN = creatureTypesN*exemplarN;
 
 var uniqueCreatures = _.uniq(_.pluck(creatureOpts, "name"))
@@ -153,7 +153,9 @@ var color_dict = {
 	blue: "#5da5db",
 	red: "#f42935",
 	yellow: "#eec900",
-	green: "#228b22"
+	green: "#228b22",
+	orange: "#ff8c00",
+	purple: "#dda0dd"
 }
 
 var fillArray = function(n, fillVal){

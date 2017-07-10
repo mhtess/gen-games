@@ -41,7 +41,7 @@ function make_slides(f) {
      (the variable 'stim' will change between each of these values,
       and for each of these, present_handle will be run.) */
 
-    present : _.shuffle(allCreatures),
+    present : exp.learning_critters,
     trial_num: 0,
 
     present_handle : function(stim) {
@@ -76,7 +76,8 @@ function make_slides(f) {
         environmentString = "in the <strong>trees</strong>" :
         environmentString = "on the <strong>ground</strong>"
 
-      $(".critterInfo").html("You see this creature " + environmentString);
+      // $(".critterInfo").html("You see this creature " + environmentString);
+      $(".critterInfo").html("You see this creature.");
 
       // $(".attentionCheck").html("Does it have " + this.question[stim.attentionCheck] + "?")
 
@@ -239,14 +240,16 @@ function make_slides(f) {
       this.stim = stim;
       this.start_time = Date.now();
       $(".err").hide();
-
+      $("#chat_response").val('');
+      var critterPlural = stim == "lorch" ?
+        "lorches" : stim + "s"
       // N.B.: Creature Names expected to have regular +"s" plural
       var messageQuestion = (exp.question == "find creatures") ?
-        "find " + stim + "s":
-        "find all of the " + stim + "s"
+        "find " + critterPlural:
+        "find all of the " + critterPlural
 
-      $("#messageInstructions").html("You have been matched with another turker.<br> You can send that turker a single message. <br>" +
-      "That turker will have to <strong>" + messageQuestion  + "</strong>, but they won't have access to your CritterDex. " + "<br><br> Enter your message below:")
+      $("#messageInstructions").html("You can now send a message to a turker who will complete a different HIT.<br> <br>" +
+      "That turker will explore CritterLand and have to <strong>" + messageQuestion  + "</strong>, but they won't have access to your CritterDex. " + "<br><br> Enter your message below:")
 
       this.trial_num++;
       //
@@ -343,10 +346,10 @@ function init() {
 
   // inside shuffle is to randomize between the two colors
   exp.distribution = _.sample([
-    _.shuffle([1, 0.33]),
-    _.shuffle([1, 0.15])
+    [1, 1, 0.5],
+    [1, 1, 0.25]
   ])
-
+  // console.log(exp.distribution)
   // TO DO:
   // - test trials: 2 x each category (perhaps one of each color)
 
@@ -393,7 +396,7 @@ function init() {
   // }
 
 // ))
-
+  exp.learning_critters = _.shuffle(allCreatures);
   exp.test_critters = _.uniq(allCreatures, function(stim){
     return _.values(_.pick(stim,
       "col1", "col2","col3", "creatureName", "tar1","tar2"
