@@ -29,10 +29,17 @@ summary(text_data)
 
 
 # Adjusting MechTurk/Punctuation Errors
-text_df <- data_frame(line = 1:105, condition=text_data[,3], distribution=text_data[,6], species=text_data[,5],text=text_data[,7])
+text_df <- data_frame(line = 1:108, 
+                      condition=text_data[,3], 
+                      distribution=text_data[,6], 
+                      species=text_data[,5],text=text_data[,7]
+                      )
 text_df$text <- gsub("&quotechar", "'", text_df$text)
 #text_df$text <- gsub("DON'T.NONE", "DON'T. NONE", text_df$text)
 text_df$text <- as.character(text_df$text)
+text_df$text <- gsub("wugs", "wug", text_df$text, ignore.case=TRUE)
+text_df$text <- gsub("feps", "fep", text_df$text, ignore.case=TRUE)
+text_df$text <- gsub("lorches", "lorch", text_df$text, ignore.case=TRUE)
 str(text_df)
 
 ```
@@ -43,12 +50,12 @@ str(text_df)
 
 
 wordTypeDictionary <- list(
-  quantifier_words = c("all","each","most","many","some","few","none"),
-  probability_words = c("always","usually","often","likely","sometimes","never"),
-  conditional_words = c("if","when","while"),
+  quantifier = c("all","each","most","many","some","few","none"),
+  probability = c("always","usually","often","likely","sometimes","never"),
+  conditionals = c("if","when","while"),
   #category_types = c("pepsin","tail","head","species","color","size")
-  species_types = c("wug","wugs","fep","feps","lorch","lorches"),
-  color_types = c("orange","yellow","green","blue","purple","pink")
+  species = c("wug","wugs","fep","feps","lorch","lorches"),
+  color = c("orange","yellow","green","blue","purple","pink")
 )
 
 wordTypeDict <- utils::stack(wordTypeDictionary)
@@ -66,30 +73,140 @@ tokenized <- text_df %>%
 tokenized_ungrouped <- text_df %>%
   unnest_tokens(word, text) %>%
   count(word, sort=TRUE)
-tokenized_ungrouped
-
 
 # Make plots for these!!!
 tokenized %>%
   group_by(wordType) %>%
-  summarize(n = sum(n))
+  summarize(n = sum(n)) %>%
+  ungroup() %>%
+  mutate(wordType = ifelse(is.na(wordType), "other", wordType),
+         wordType  = factor(wordType, levels = wordType[order(n)]) ) %>%
+  ggplot(., aes( x = wordType, y = n ))+
+  geom_col()+
+  theme(axis.text.x = element_text(angle = 90))
 
 tokenized %>%
-  group_by(condition, distribution, wordType) %>%
-  summarize(n = sum(n))
-  
- #convert sentence string to tokens
-#tokenized
+  group_by(condition, wordType) %>%
+  summarize(n = sum(n)) %>%
+  ungroup() %>%
+  mutate(wordType = ifelse(is.na(wordType), "other", wordType),
+         wordType  = factor(wordType, levels = wordType[order(n)]) ) %>%
+  ggplot(., aes( x = wordType, y = n ))+
+  geom_col()+
+  facet_wrap(~condition, scales = 'free')+
+  theme(axis.text.x = element_text(angle = 0))+
+  coord_flip()
 
-#Create subset of tokenized data frame by condition
-# tokenized_findCreat_50 <- subset(tokenized, tokenized$condition=="find creatures" & tokenized$distribution=="[1,1,0.5]")
-# tokenized_findAll_50 <- subset(tokenized, tokenized$condition=="find all of the creatures" & tokenized$distribution=="[1,1,0.5]")
-# tokenized_findCreat_25 <- subset(tokenized, tokenized$condition=="find creatures" & tokenized$distribution=="[1,1,0.25]")
-# tokenized_findAll_25 <- subset(tokenized, tokenized$condition=="find all of the creatures" & tokenized$distribution=="[1,1,0.25]")
-
-count_all_words_byCond <- tokenized
-count_all_words <- tokenized
 ```
+
+# Context Word Count
+
+## Both Conditions Combined
+
+```{r}
+count_context_words <-  text_df %>%
+  unnest_tokens(word, text) %>%
+  anti_join(stop_words) %>% #remove function words
+  count(word, sort=TRUE) %>%
+  rowwise() %>%
+  mutate(wordType = f(word),
+         word = factor(word, levels= word[order(-n)]))
+
+ggplot(count_context_words %>% filter(n > 2), aes(x=word, y=n)) +
+  geom_bar(stat="identity", fill="black") +
+  scale_x_discrete("Word Used in Response") +
+  ggtitle("Context Words - Unfiltered") +
+  coord_flip()
+
+ggsave("~/Documents/research/talks/general/")
+
+count_context_words_type <-  text_df %>%
+  unnest_tokens(word, text) %>%
+  anti_join(stop_words) %>% #remove function words
+  count(word, sort=TRUE) %>%
+  rowwise() %>%
+  mutate(wordType = f(word),
+         wordType = factor(wordType)) %>%
+  ungroup() %>%
+  group_by(wordType) %>%
+  summarize(total = sum(n)) %>%
+  ungroup() %>%
+  mutate(wordType = factor(wordType, levels= wordType[order(-total)]))
+
+ggplot(count_context_words_type, aes(x=wordType, y=total)) +
+  geom_bar(stat="identity", fill="black")
+
+
+
+```
+
+Content words by condition
+```{r}
+  
+count_context_words_byCondition <-  text_df %>%
+  unnest_tokens(word, text) %>%
+  anti_join(stop_words) %>% #remove function words
+  group_by(condition) %>%
+  count(word, sort=TRUE) %>%
+  rowwise() %>%
+  mutate(wordType = f(word),
+         word = factor(word, levels= word[order(-n)]))
+
+ggplot(count_context_words_byCondition %>% filter(n > 2), aes(x=word, y=n)) +
+  geom_bar(stat="identity", fill="black") +
+  scale_x_discrete("Word Used in Response") +
+  coord_flip()+
+  facet_wrap(~condition)
+
+count_context_words_type <-  text_df %>%
+  unnest_tokens(word, text) %>%
+  anti_join(stop_words) %>% #remove function words
+  group_by(condition, distribution) %>%
+  count(word, sort=TRUE) %>%
+  rowwise() %>%
+  mutate(wordType = f(word),
+         wordType = factor(wordType)) %>%
+  ungroup() %>%
+  group_by(wordType, condition, distribution) %>%
+  summarize(total = sum(n)) %>%
+  ungroup() %>%
+  mutate(wordType = factor(wordType, levels= wordType[order(-total)]))
+
+ggplot(count_context_words_type, aes(x=wordType, y=total)) +
+  geom_bar(stat="identity", fill="black")+
+  facet_grid(condition~distribution)
+
+  
+```
+
+Content words by distribution
+```{r}
+
+
+count_context_words_byDist<-  text_df %>%
+  unnest_tokens(word, text) %>%
+  anti_join(stop_words) %>% #remove function words
+  group_by(distribution) %>%
+  count(word, sort=TRUE) %>%
+  rowwise() %>%
+  mutate(wordType = f(word),
+         word = factor(word, levels= word[order(-n)]))
+
+ggplot(count_context_words_byDist %>% filter(n > 2), aes(x=word, y=n)) +
+  geom_bar(stat="identity", fill="black") +
+  scale_x_discrete("Word Used in Response") +
+  coord_flip()+
+  facet_wrap(~distribution)
+  
+  
+# first 15 words - no change to singular/plural
+
+#context_count_unfiltered
+
+```
+
+
+
 
 # All Words Count
 
@@ -334,28 +451,6 @@ conditional_count_byDistr
 ```
 
 
-# Context Word Count
-
-## Both Conditions Combined
-
-```{r}
-count_context_words <- tokenized %>%
-  anti_join(stop_words) %>% #remove function words
-  count(word, sort=TRUE)
-count_context_words
-
-# first 15 words - no change to singular/plural
-context_count_unfiltered <- ggplot(count_context_words[1:15,], aes(x=word, y=n)) +
-  geom_bar(stat="identity", fill="black") +
-  scale_x_discrete("Word Used in Response", limits=c(count_context_words$word[1:15])) +
-  scale_y_continuous("Frequency", limits=c(0,18)) + 
-  ggtitle("Context Words - Unfiltered") +
-  theme_minimal() +
-  theme(axis.text.x=element_text(angle=60, hjust=1),
-        plot.title = element_text(hjust=0.5))
-#context_count_unfiltered
-
-```
 
 ## By Condition
 
