@@ -1,0 +1,172 @@
+---
+title: "Critter Game - Data - Catch Trial"
+author: "Lauren Oey"
+date: "7/10/2017"
+output: github_document
+---
+
+```{r preamble, tidy=TRUE}
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(data.table)
+#library(xtable)
+library(langcog)
+
+
+#setting the directory
+setwd("../../mturk/game-2/")
+
+
+catch_trial_data <- read.csv("game-2-catch_trials.csv")
+
+#View(catch_trial_data)
+
+str(catch_trial_data)
+summary(catch_trial_data)
+
+catch_test <- subset(catch_trial_data, catch_trial_data$trial_type=="test_trial")
+#catch_test$response <- grep(catch_test$response)
+
+summary(catch_test$col1)
+
+catch_test$Correct <- ifelse(
+  catch_test$species==tolower(catch_test$response), TRUE, FALSE)
+
+#catch_test_wug <- subset(catch_test, catch_test$species=="wug" & Correct == FALSE)
+
+#wug.color = #4f9fda
+#fep.color = #eec900
+#lorch.color = #edc901 (yellow) or #dc74dc (purple)
+
+purple <- c("#dc74dc","#dc74dd","#dd74dc","#dd74dd")
+
+catch_test$Color <- ifelse(catch_test$species=="wug", "blue",
+                           ifelse(catch_test$col1 %in% purple, "purple", "yellow"
+  )
+)
+
+catch_test$Response.edit <- tolower(catch_test$response)
+
+catch_test$Response.cat <- ifelse(catch_test$Response.edit == "wug", "wug",
+                                  ifelse(catch_test$Response.edit == "fep", "fep",
+                                         ifelse(catch_test$Response.edit == "lorch", "lorch", "other")))
+
+#data frame structure
+# data.frame(
+#   distribution = c( ... ),
+#   question = c( ... ),
+#   targetColor = c("blue", "yellow", "purple", "blue", ... ),
+#   codedResponse = c("fep", "lorch", "other", "wug", ...) # only four categories: fep, lorch, wug, other
+# )
+
+
+catch_test_reduced <- catch_test %>%
+  select(workerid, trial_num, species, question, distribution, response, Response.cat, Correct, Color)
+#View(catch_test_reduced)
+```
+
+
+# Proportion Correct By Subject
+
+```{r, results='asis'}
+catch_test_reduced_by_subj <- catch_test_reduced %>%
+  group_by(workerid, trial_num, question, distribution) %>%
+  distinct() %>%
+  summarise(Total = 1, Correct_trial = ifelse(Correct==TRUE, 1, 0)) %>%
+  group_by(workerid, question, distribution) %>%
+  summarise(Total_trials = sum(Total), Correct_trials = sum(Correct_trial)) %>%
+  mutate(Percentage_correct = Correct_trials/Total_trials) %>%
+  select(workerid, Percentage_correct, question, distribution)
+
+catch_test_reduced_by_subj
+
+graph_by_subj <- ggplot(catch_test_reduced_by_subj, aes(x=workerid, y=Percentage_correct, colour=distribution, fill=distribution)) +
+  geom_bar(stat="identity") +
+  scale_x_discrete("Subjects") +
+  scale_y_continuous("Percentage of Trials Correct") +
+  scale_colour_discrete(guide=guide_legend("Distribution")) +
+  scale_fill_discrete(guide=guide_legend("Distribution")) +
+  #facet_wrap(~distribution) +
+  ggtitle("Accuracy on Catch Trials by Subject") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust=0.5, size=18, face="bold"),
+        strip.background = element_rect(fill="skyblue"),
+        strip.text = element_text(size=12, face="bold"))
+graph_by_subj
+
+#ggsave("graph_by_subj.pdf")
+```
+
+
+# Proportion Correct By Species
+
+```{r, results='asis'}
+catch_test_reduced_by_species <- catch_test_reduced %>%
+  group_by(workerid, trial_num, species, distribution) %>%
+  distinct() %>%
+  summarise(Total = 1, Correct_trial = ifelse(Correct==TRUE, 1, 0)) %>%
+  group_by(species, distribution) %>%
+  summarise(Total_trials = sum(Total), Correct_trials = sum(Correct_trial)) %>%
+  mutate(Percentage_correct = Correct_trials/Total_trials) %>%
+  select(Percentage_correct, species, distribution)
+
+catch_test_reduced_by_species
+
+graph_by_species <- ggplot(catch_test_reduced_by_species, aes(x=species, y=Percentage_correct)) +
+  geom_bar(stat="identity") +
+  scale_x_discrete("Species") +
+  scale_y_continuous("Percentage of Trials Correct", limits=c(0,1)) +
+  scale_colour_discrete(guide=guide_legend("Distribution")) +
+  scale_fill_discrete(guide=guide_legend("Distribution")) +
+  facet_wrap(~distribution) +
+  ggtitle("Accuracy on Catch Trials by Species") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust=0.5, size=18, face="bold"),
+        strip.background = element_rect(fill="skyblue"),
+        strip.text = element_text(size=12, face="bold"))
+graph_by_species
+
+#ggsave("Graph_by_Species.pdf")
+
+
+```
+
+
+# Proportion of Species by Color
+
+```{r, results='asis'}
+catch_test_reduced_species_by_color <- catch_test_reduced %>%
+  group_by(workerid, trial_num, species, distribution, Response.cat, Color) %>%
+  distinct() %>%
+  summarise(Total = 1) %>%
+  group_by(Response.cat, Color) %>%
+  summarise(Total_trials = sum(Total)) %>%
+  #mutate(Percentage_correct = Correct_trials/Total_trials) %>%
+  select(Total_trials, Response.cat, Color)
+
+catch_test_reduced_species_by_color
+
+graph_species_by_color <- ggplot(catch_test_reduced_species_by_color, aes(x=Response.cat, y=Total_trials)) +
+  geom_bar(stat="identity") +
+  scale_x_discrete("Species") +
+  scale_y_continuous("Count") +
+  #scale_colour_discrete(guide=guide_legend("Distribution")) +
+  #scale_fill_discrete(guide=guide_legend("Distribution")) +
+  facet_wrap(~Color) +
+  ggtitle("Accuracy on Catch Trials by Species") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust=0.5, size=18, face="bold"),
+        strip.background = element_rect(fill="skyblue"),
+        strip.text = element_text(size=12, face="bold"))
+graph_species_by_color
+
+#ggsave("Graph_by_Species.pdf")
+
+
+```
+
+
+
+
+
