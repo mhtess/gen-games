@@ -164,6 +164,57 @@ slides.learning_trial = slide({
         });
     }
   });
+
+  slides.robertPage = slide({
+    name: "robertPage",
+  
+    start: function() {
+      console.log('start of robert page')
+      $(".err").hide();
+      // $('#exit_survey').hide();
+      // $('#message_panel').show();
+      // $('#main').show();
+      // $('#submitbutton').show();
+      // $('#roleLabel').show();
+      // $('#textInfo').show();
+      // $('#viewport').show();
+      // $('#score').show();
+      // $('#roundnumber').show();
+      // $('#exit_survey').show();
+      // $('#sketchpad').show(); // this is from sketchpad experiment (jefan 4/23/17)
+      // $('#loading').show();
+    },
+  
+    button : function() {
+      response = $("#chat_response").val();
+      if (response == "") {
+        $(".err").show();
+      } else {
+        exp.data_trials.push({
+          "trial_type" : "chatbox",
+          "response" : response
+        });
+
+        // $('#message_panel').hide();
+        // $('#main').hide();
+        // $('#submitbutton').hide();
+        // $('#roleLabel').hide();
+        // $('#textInfo').hide();
+        // $('#viewport').hide();
+        // $('#score').hide();
+        // $('#roundnumber').hide();
+        // $('#exit_survey').hide();
+        // $('#sketchpad').hide(); // this is from sketchpad experiment (jefan 4/23/17)
+        // $('#loading').hide();
+        // $('#exit_survey').show();
+
+        exp.go(); //make sure this is at the *end*, after you log your data
+        //exp.go(); will jump the critter
+      }
+    },
+  
+  });
+  
   
   slides.chatbox = slide({
     name: "chatbox",
@@ -258,19 +309,19 @@ slides.learning_trial = slide({
 
 /// init ///
 function init() {
-  $('#message_panel').hide();
-  $('#main').hide();
-  $('#submitbutton').hide();
-  $('#roleLabel').hide();
-  $('#textInfo').hide();
-  $('#viewport').hide();
-  $('#score').hide();
-  $('#roundnumber').hide();
-  $('#exit_survey').hide();
-  $('#sketchpad').hide(); // this is from sketchpad experiment (jefan 4/23/17)
-  $('#loading').hide();
-   // this is from sketchpad experiment (jefan 4/23/17)
-   $('#contButton').hide();
+  // $('#message_panel').hide();
+  // $('#main').hide();
+  // $('#submitbutton').hide();
+  // $('#roleLabel').hide();
+  // $('#textInfo').hide();
+  // $('#viewport').hide();
+  // $('#score').hide();
+  // $('#roundnumber').hide();
+  // $('#exit_survey').hide();
+  // $('#sketchpad').hide(); // this is from sketchpad experiment (jefan 4/23/17)
+  // $('#loading').hide();
+  //  // this is from sketchpad experiment (jefan 4/23/17)
+  //  $('#contButton').hide();
 
 
   exp.trials = [];
@@ -286,7 +337,8 @@ function init() {
       screenUW: exp.width
     };
   //blocks of the experiment:
-  exp.structure=["i0", "instructions", "chatbox", "welcome_critterLand", "learning_trial", "condition", 'subj_info', 'thanks'] 
+  exp.structure=["i0", "instructions", "robertPage", "welcome_critterLand", "learning_trial", 
+  "condition", 'subj_info', 'thanks'] 
     // "chatbox", 'subj_info', 'thanks'];//,
   // "waiting_room", "instructions", "welcome_critterLand", "single_trial", "chatbox",];
 
