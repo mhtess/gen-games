@@ -18,6 +18,8 @@ setwd("../mturk/game-2/")
 
 text_data <- read.csv("game-2-trials.csv")
 
+figure.path <-"~/Documents/research/gengames/talks/sll_labmtg_071017/img/"
+
 reorder_size <- function(x) {
   factor(x, levels = names(sort(table(x), decreasing = TRUE)))
 }
@@ -85,6 +87,10 @@ tokenized %>%
   geom_col()+
   theme(axis.text.x = element_text(angle = 90))
 
+
+ggsave(paste(figure.path, "type_of_words.pdf", sep = ""))
+
+
 tokenized %>%
   group_by(condition, wordType) %>%
   summarize(n = sum(n)) %>%
@@ -97,7 +103,30 @@ tokenized %>%
   theme(axis.text.x = element_text(angle = 0))+
   coord_flip()
 
+
+
 ```
+
+
+# Top words
+
+```{r}
+count_words <-  text_df %>%
+  unnest_tokens(word, text) %>%
+  count(word) %>%
+  rowwise() %>%
+  ungroup() %>%
+  mutate(wordType = f(word),
+         word = factor(word, levels= word[order(n)]))
+
+ggplot(count_words %>% filter(n > 5), aes(x=word, y=n)) +
+  geom_bar(stat="identity", fill="black") +
+  scale_x_discrete("Word Used in Response") +
+  ggtitle("Top Content Words") +
+  coord_flip()
+
+```
+
 
 # Context Word Count
 
@@ -107,18 +136,19 @@ tokenized %>%
 count_context_words <-  text_df %>%
   unnest_tokens(word, text) %>%
   anti_join(stop_words) %>% #remove function words
-  count(word, sort=TRUE) %>%
+  count(word) %>%
   rowwise() %>%
+  ungroup() %>%
   mutate(wordType = f(word),
-         word = factor(word, levels= word[order(-n)]))
+         word = factor(word, levels= word[order(n)]))
 
 ggplot(count_context_words %>% filter(n > 2), aes(x=word, y=n)) +
   geom_bar(stat="identity", fill="black") +
   scale_x_discrete("Word Used in Response") +
-  ggtitle("Context Words - Unfiltered") +
+  ggtitle("Top Content Words") +
   coord_flip()
 
-ggsave("~/Documents/research/talks/general/")
+ggsave(paste(figure.path, "content_words.pdf", sep = ""))
 
 count_context_words_type <-  text_df %>%
   unnest_tokens(word, text) %>%
@@ -131,7 +161,7 @@ count_context_words_type <-  text_df %>%
   group_by(wordType) %>%
   summarize(total = sum(n)) %>%
   ungroup() %>%
-  mutate(wordType = factor(wordType, levels= wordType[order(-total)]))
+  mutate(wordType = factor(wordType, levels= wordType[order(total)]))
 
 ggplot(count_context_words_type, aes(x=wordType, y=total)) +
   geom_bar(stat="identity", fill="black")
@@ -147,7 +177,7 @@ count_context_words_byCondition <-  text_df %>%
   unnest_tokens(word, text) %>%
   anti_join(stop_words) %>% #remove function words
   group_by(condition) %>%
-  count(word, sort=TRUE) %>%
+  count(word) %>%
   rowwise() %>%
   mutate(wordType = f(word),
          word = factor(word, levels= word[order(-n)]))
