@@ -9,9 +9,6 @@ function make_slides(f) {
       exp.startT = Date.now();
 //      socket.emit('connection')
      }
-    //  button : function() {
-    //   exp.go(); //use exp.go() if and only if there is no "present" data.
-    // },
   });
   
   // slides.waiting_room = slide({
@@ -54,151 +51,207 @@ function make_slides(f) {
     name : "welcome_critterLand",
     start : function() {
       var shuffledCritters = _.shuffle(allCreatures)
-      for (var i=0; i<18; i++) {
+      for (var i=0; i<shuffledCritters.length; i++) {
            $("#all_critters").append(
             "<svg id='critter" + i.toString() +
             "'></svg>");
             var scale = 0.5;
             Ecosystem.draw(
-              "bird", shuffledCritters[i],
+              shuffledCritters[i]["critter"], shuffledCritters[i],
               "critter"+i, scale)
       }
-      /**
-      for (var j=9; j<18; j++) {
-           $("#all_critters").append(
-            "<svg id='critter" + j.toString() +
-            "'></svg>");
-  
-            var scale = 0.5;
-            Ecosystem.draw(
-              "bug", {},
-              "critter"+j, scale)
-      }
-      */
     },
     button : function() {
-      exp.go(); //use exp.go() if and only if there is no "present" data.
+      exp.go(); // use exp.go() if and only if there is no "present" data.
+    },
+  });
+
+  slides.condition = slide({
+    name: "condition",
+    start : function() {
+      var cond_sentence = "To help you learn about the critters, you have been given a "
+      exp.condition == "pepsin_detector" ?
+        cond_sentence += "device that can detect a substance called pepsin." :
+        cond_sentence += "book that will help you identify species."
+      $("#get_cond").append(
+        "<p>"+cond_sentence+"</p>");
+    },
+    button : function() {
+      exp.go();
     },
   });
   
+slides.learning_trial = slide({
+    name: "learning_trial",
+
+    /* trial information for this block
+     (the variable 'stim' will change between each of these values,
+      and for each of these, present_handle will be run.) */
+
+    present : _.shuffle(allCreatures),
+    trial_num: 0,
+
+    present_handle : function(stim) {
+      $("#critterSVG").empty();
+      $(".err").hide();
+      this.critOpts = _.where(critFeatures, {creature: stim.critter})[0];
+      this.question = _.where(question_phrase, {creature: stim.critter})[0];
+
+      this.stim = stim; //I like to store this information in the slide so I can record it later.
+
+      this.start_time = Date.now()
+
+      var scale = 0.5;
+      // debugger;
+      Ecosystem.draw(
+        stim.critter, stim,
+        "critterSVG", scale)
+
+      // would need to change if you want a different internal property
+      stim.internal_prop ?
+        internalString = "<strong>has pepsin</strong> in its bones" :
+        internalString = "<strong>does not have pepsin</strong> in its bones"
+
+      $(".prompt").html("This is a <strong>" + stim.creatureName + "</strong>. <br>" + "It " + internalString + ".");
+
+      $(".attentionCheck").html("Does it have " + this.question[stim.attentionCheck] + "?")
+
+      $('input[type=radio]').attr('checked', false);
+
+      this.trial_num++;
+    },
+    button : function() {
+      var end_time = Date.now();
+      boolResponse = ($('input[type=radio]:checked').size() != 0);
+      if (!boolResponse) {
+        $(".err").show();
+      } else {
+        this.time_spent = end_time - this.start_time;
+        this.log_responses();
+        _stream.apply(this); //make sure this is at the *end*, after you log your data
+      }
+    },
+    log_responses: function(){
+      exp.catch_trials.push({
+          "trial_type" : "learning_trial",
+          "trial_num" : this.trial_num,
+          "condition": exp.condition,
+          "response" : $('input[type=radio]:checked').val(),
+          "question" : this.stim["attentionCheck"],
+          "time_in_seconds" : this.time_spent/1000,
+          "critter" : this.stim["critter"],
+          "species" : this.stim["creatureName"],
+
+          "col1_crit" : this.critOpts.col1,
+          "col2_crit" : this.critOpts.col2,
+          "col3_crit" : this.critOpts.col3,
+          "col4_crit" : this.critOpts.col4,
+          "col5_crit" : this.critOpts.col5,
+          "prop1_crit" : this.critOpts.prop1,
+          "prop2_crit" : this.critOpts.prop2,
+          "tar1_crit" : this.critOpts.tar1,
+          "tar2_crit" : this.critOpts.tar2,
+
+          "col1" : this.stim["col1"],
+          "col2" : this.stim["col2"],
+          "col3" : this.stim["col3"] == null ? "-99" : this.stim["col3"],
+          "col4" : this.stim["col4"] == null ? "-99" : this.stim["col4"],
+          "col5" : this.stim["col5"] == null ? "-99" : this.stim["col5"],
+          "prop1" : this.stim["prop1"] == null ? "-99" : this.stim["prop1"],
+          "prop2" : this.stim["prop2"] == null ? "-99" : this.stim["prop2"],
+          "tar1" : this.stim["tar1"] ? 1 : 0,
+          "tar2" : this.stim["tar2"] ? 1 : 0
+        });
+    }
+  });
   
-//   slides.single_trial = slide({
-//     name: "single_trial",
+  slides.chatbox = slide({
+    name: "chatbox",
   
-//     /* trial information for this block
-//      (the variable 'stim' will change between each of these values,
-//       and for each of these, present_handle will be run.) */
+    start: function() {
+      $(".err").hide();
+      $('#exit_survey').hide();
+      $('#message_panel').show();
+      $('#main').show();
+      $('#submitbutton').show();
+      $('#roleLabel').show();
+      $('#textInfo').show();
+      $('#viewport').show();
+      $('#score').show();
+      $('#roundnumber').show();
+      $('#exit_survey').show();
+      $('#sketchpad').show(); // this is from sketchpad experiment (jefan 4/23/17)
+      $('#loading').show();
+    },
   
-//     present : _.shuffle(allCreatures),
+    button : function() {
+      response = $("#chat_response").val();
+      if (response == "") {
+        $(".err").show();
+      } else {
+        exp.data_trials.push({
+          "trial_type" : "chatbox",
+          "response" : response
+        });
+
+        $('#message_panel').hide();
+        $('#main').hide();
+        $('#submitbutton').hide();
+        $('#roleLabel').hide();
+        $('#textInfo').hide();
+        $('#viewport').hide();
+        $('#score').hide();
+        $('#roundnumber').hide();
+        $('#exit_survey').hide();
+        $('#sketchpad').hide(); // this is from sketchpad experiment (jefan 4/23/17)
+        $('#loading').hide();
+        // $('#exit_survey').show();
+
+        exp.go(); //make sure this is at the *end*, after you log your data
+        //exp.go(); will jump the critter
+      }
+    },
   
-//     present_handle : function(stim) {
-//       $("#birdSVG").empty();
-//       $(".err").hide();
-  
-//       this.stim = stim; //I like to store this information in the slide so I can record it later.
-  
-//       var scale = 0.5;
-//       Ecosystem.draw(
-//         "bird", stim,
-//         "birdSVG", scale)
-  
-//       stim.pepsin ?
-//         pepsinString = "<strong>has pepsin</strong> in its bones" :
-//         pepsinString = "<strong>does not have pepsin</strong> in its bones"
-  
-//       $(".prompt").html("This is a " + stim.creatureName + ". <br>" + "It " + pepsinString + ".");
-  
-//       $(".attentionCheck").html("Does it have a " +stim.attentionCheck + "?")
-  
-//       $('input[type=radio]').attr('checked', false);
-//     },
-  
-  
-  
-  
-//     button : function() {
-//       boolResponse = ($('input[type=radio]:checked').size() != 0);
-//       if (!boolResponse) { //change later?
-//         $(".err").show();
-//       } else {
-//         this.log_responses();
-//         _stream.apply(this); //make sure this is at the *end*, after you log your data
-//         // exp.go(); //will jump the critter
-//       }
-//     },
-  
-  
-//     log_responses: function(){
-  
-//       exp.data_trials.push({
-//           "trial_type" : "single_trial",
-//           "response" : $("#trial_response").val()
-//         });
-//     }
+  });
   
   
   
+  slides.subj_info =  slide({
+    name : "subj_info",
+    submit : function(e){
+      //if (e.preventDefault) e.preventDefault(); // I don't know what this means.
+      exp.subj_data = {
+        language : $("#language").val(),
+        enjoyment : $("#enjoyment").val(),
+        asses : $('input[name="assess"]:checked').val(),
+        age : $("#age").val(),
+        gender : $("#gender").val(),
+        education : $("#education").val(),
+        comments : $("#comments").val(),
+        problems: $("#problems").val(),
+        fairprice: $("#fairprice").val()
+      };
+    },
+    button : function() {
+      exp.go();
+    } //use exp.go() if and only if there is no "present" data.
+    
+  });
   
-//   });
-  
-//   slides.chatbox = slide({
-//     name: "chatbox",
-  
-//     start: function() {
-//       $(".err").hide();
-//     },
-  
-//     button : function() {
-//       response = $("#chat_response").val();
-//       if (response == "") { //change later?
-//         $(".err").show();
-//       } else {
-//         exp.data_trials.push({
-//           "trial_type" : "chatbox",
-//           "response" : response
-//         });
-//         exp.go(); //make sure this is at the *end*, after you log your data
-//         //exp.go(); will jump the critter
-//       }
-//     },
-  
-//   });
-  
-  
-  
-//   slides.subj_info =  slide({
-//     name : "subj_info",
-//     submit : function(e){
-//       //if (e.preventDefault) e.preventDefault(); // I don't know what this means.
-//       exp.subj_data = {
-//         language : $("#language").val(),
-//         enjoyment : $("#enjoyment").val(),
-//         asses : $('input[name="assess"]:checked').val(),
-//         age : $("#age").val(),
-//         gender : $("#gender").val(),
-//         education : $("#education").val(),
-//         comments : $("#comments").val(),
-//         problems: $("#problems").val(),
-//         fairprice: $("#fairprice").val()
-//       };
-//       exp.go(); //use exp.go() if and only if there is no "present" data.
-//     }
-//   });
-  
-//   slides.thanks = slide({
-//     name : "thanks",
-//     start : function() {
-//       exp.data= {
-//           "trials" : exp.data_trials,
-//           "catch_trials" : exp.catch_trials,
-//           "system" : exp.system,
-//           "condition" : exp.condition,
-//           "subject_information" : exp.subj_data,
-//           "time_in_minutes" : (Date.now() - exp.startT)/60000
-//       };
-//       setTimeout(function() {turk.submit(exp.data);}, 1000);
-//     }
-//   });
+  slides.thanks = slide({
+    name : "thanks",
+    start : function() {
+      exp.data= {
+          "trials" : exp.data_trials,
+          "catch_trials" : exp.catch_trials,
+          "system" : exp.system,
+          "condition" : exp.condition,
+          "subject_information" : exp.subj_data,
+          "time_in_minutes" : (Date.now() - exp.startT)/60000
+      };
+      setTimeout(function() {turk.submit(exp.data);}, 1000);
+    }
+  });
 
    return slides;
 }
@@ -206,6 +259,7 @@ function make_slides(f) {
 /// init ///
 function init() {
   $('#message_panel').hide();
+  $('#main').hide();
   $('#submitbutton').hide();
   $('#roleLabel').hide();
   $('#textInfo').hide();
@@ -214,7 +268,9 @@ function init() {
   $('#roundnumber').hide();
   $('#exit_survey').hide();
   $('#sketchpad').hide(); // this is from sketchpad experiment (jefan 4/23/17)
-  $('#loading').hide(); // this is from sketchpad experiment (jefan 4/23/17)
+  $('#loading').hide();
+   // this is from sketchpad experiment (jefan 4/23/17)
+   $('#contButton').hide();
 
 
   exp.trials = [];
@@ -230,8 +286,9 @@ function init() {
       screenUW: exp.width
     };
   //blocks of the experiment:
-  exp.structure=["i0", "instructions", "welcome_critterLand"];//,
-  // "waiting_room", "instructions", "welcome_critterLand", "single_trial", "chatbox",'subj_info', 'thanks'];
+  exp.structure=["i0", "instructions", "chatbox", "welcome_critterLand", "learning_trial", "condition", 'subj_info', 'thanks'] 
+    // "chatbox", 'subj_info', 'thanks'];//,
+  // "waiting_room", "instructions", "welcome_critterLand", "single_trial", "chatbox",];
 
   exp.data_trials = [];
   //make corresponding slides:
@@ -239,7 +296,6 @@ function init() {
 
   exp.nQs = utils.get_exp_length(); //this does not work if there are stacks of stims (but does work for an experiment with this structure)
                     //relies on structure and slides being defined
-
   $('.slide').hide(); //hide everything
   // debugger;
   //make sure turkers have accepted HIT (or you're not in mturk)
@@ -247,7 +303,6 @@ function init() {
     if (turk.previewMode) {
       $("#mustaccept").show();
     } else {
-      console.log('else')
       $("#start_button").click(function() {$("#mustaccept").show();});
       exp.go();
     }
