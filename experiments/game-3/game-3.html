@@ -36,7 +36,7 @@
 
     <script src="../_shared/js/uniqueturker.js"></script>
 
-</head>
+</head>s
 
 <body onload="init();">
   <noscript>This task requires JavaScript.</noscript>
@@ -66,10 +66,106 @@
     <button onclick="_s.button()">Continue</button>
   </div>
 
-  <div class="slide" id="welcome_critterLand">
+  <!-- <div class="slide" id="welcome_critterLand">
     <h3>Welcome to Critter Country</h3>
     <p>Meet the Critters of Critter Country. These are some examples of the different critters you may encounter:</p>
     <div id="all_critters"></div>
+    <button onclick="_s.button()">Continue</button>
+  </div> -->
+
+  <div class="slide" id="welcome_critterLand">
+    <h3>Welcome to Critter Country</h3>
+    <p>Meet the Critters of Critter Country. These are some examples of the different critters you may encounter:</p>
+
+    <br>
+    <table>
+      <tr>
+        <td>
+              <table class="ipTable" id='table0p' onclick="mark(table0p,['table1p','table2p','table3p','table4p','table5p','table6p','table7p','table8p','table9p','table10p','table11p'])">
+                  
+                  <td><svg id="critter0" style="max-width:128px;max-height:128px"></svg></td>
+                  <tr><div id="table0pcritname"></div></tr>
+<!-- 
+                  <tr><div class="critname"></div></tr> -->
+
+              </table>
+            </td>
+            <td>
+              <table class="ipTable" id='table1p' onclick="mark(table1p,['table0p','table2p','table3p','table4p','table5p','table6p','table7p','table8p','table9p','table10p','table11p'])">
+                  <td><svg id="critter1" style="max-width:128px;max-height:128px"></svg></td>
+                  <tr><div id="table1pcritname"></div></tr>
+              </table>
+            </td>
+            <td>
+              <table class="ipTable" id='table2p' onclick="mark(table2p,['table0p','table1p','table3p','table4p','table5p','table6p','table7p','table8p','table9p','table10p','table11p'])">
+                  <td><svg id="critter2" style="max-width:128px;max-height:128px"></svg></td>
+                  <tr><div id="table2pcritname"></div></tr>
+              </table>
+            </td>
+            <td>
+              <table class="ipTable" id='table3p' onclick="mark(table3p,['table0p','table1p','table2p','table4p','table5p','table6p','table7p','table8p','table9p','table10p','table11p'])">
+                  <td><svg id="critter3" style="max-width:128px;max-height:128px"></svg></td>
+                  <tr><div id="table3pcritname"></div></tr>
+
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <table class="ipTable" id='table4p' onclick="mark(table4p,['table0p','table1p','table2p','table3p','table5p','table6p','table7p','table8p','table9p','table10p','table11p'])">
+                  <td><svg id="critter4" style="max-width:128px;max-height:128px"></svg></td>
+                  <tr><div id="table4pcritname"></div></tr>
+              </table>
+            </td>
+            <td>
+              <table class="ipTable" id='table5p' onclick="mark(table5p,['table0p','table1p','table2p','table3p','table4p','table6p','table7p','table8p','table9p','table10p','table11p'])">
+                  <td><svg id="critter5" style="max-width:128px;max-height:128px"></svg></td>
+                  <tr><div id="table5pcritname"></div></tr>
+              </table>
+            </td>
+            <td>
+              <table class="ipTable" id='table6p' onclick="mark(table6p,['table0p','table1p','table2p','table3p','table4p','table5p','table7p','table8p','table9p','table10p','table11p'])">
+                  <td><svg id="critter6" style="max-width:128px;max-height:128px"></svg></td>
+                  <tr><div id="table6pcritname"></div></tr>
+              </table>
+            </td>
+            <td>
+              <table class="ipTable" id='table7p' onclick="mark(table7p,['table0p','table1p','table2p','table3p','table4p','table5p','table6p','table8p','table9p','table10p','table11p'])">
+                  <td><svg id="critter7" style="max-width:128px;max-height:128px"></svg></td>
+                  <tr><div id="table7pcritname"></div></tr>
+              </table>
+            </td>
+      </tr>
+      <tr>
+            <td>
+              <table class="ipTable" id='table8p' onclick="mark(table8p,['table0p','table1p','table2p','table3p','table4p','table5p','table6p','table7p','table9p','table10p','table11p'])">
+                  <td><svg id="critter8" style="max-width:128px;max-height:128px"></svg></td>
+                  <tr><div id="table8pcritname"></div></tr>
+              </table>
+            </td>
+            <td>
+              <table class="ipTable" id='table9p' onclick="mark(table9p,['table0p','table1p','table2p','table3p','table4p','table5p','table6p','table7p','table8p','table10p','table11p'])">
+                  <td><svg id="critter9" style="max-width:128px;max-height:128px"></svg></td>
+                  <tr><div id="table9pcritname"></div></tr>
+              </table>
+            </td>
+            <td>
+              <table class="ipTable" id='table10p' onclick="mark(table10p,['table0p','table1p','table2p','table3p','table4p','table5p','table6p','table7p','table8p','table9p','table11p'])">
+                  <td><svg id="critter10" style="max-width:128px;max-height:128px"></svg></td>
+                  <tr><div id="table10pcritname"></div></tr>
+              </table>
+            </td>
+            <td>
+              <table class="ipTable" id='table11p' onclick="mark(table11p,['table0p','table1p','table2p','table3p','table4p','table5p','table6p','table7p','table8p','table9p','table10p'])">
+                  <td><svg id="critter11" style="max-width:128px;max-height:128px"></svg></td>
+                  <tr><div id="table11pcritname"></div></tr>
+              </table>
+            </td>
+      </tr>
+
+    </table>
+
+
     <button onclick="_s.button()">Continue</button>
   </div>
 

@@ -1,3 +1,30 @@
+var prev = null;
+
+function mark(el, otherEls) {
+  if(prev != null){
+    gray(prev);
+  }
+  prev = el;
+
+    el.style.border=='' ? 
+    $('#'+el.id).css({"border":'2px solid red',
+                    'background-color': 'white','opacity': '1'}) : 
+    $('#'+el.id).css({"border":'',
+                    'background-color': 'white'})
+    otherEls.map(function(cell){$('#'+cell).css({"border":'',
+      'background-color': 'white'})})
+  console.log(shuffledCritters[i])
+  $('#'+el.id+'critname').append("<p style=\"max-width:128px;max-height:28px\">"+crit+"</p>");
+  //$(".prompt").html("CritterDex output: " + this.stim.creatureName);
+
+}
+
+
+function gray(el) {
+   $('#'+el.id).css({'opacity': '0.5'})
+
+}
+
 function make_slides(f) {
   var   slides = {};
 
@@ -17,8 +44,11 @@ function make_slides(f) {
 
   slides.welcome_critterLand = slide({
     name : "welcome_critterLand",
-    start : function() {
+    start : function(stim) {
       var shuffledCritters = _.shuffle(allCreatures)
+      
+
+
       for (var i=0; i<shuffledCritters.length; i++) {
            $("#all_critters").append(
             "<svg id='critter" + i.toString() +
@@ -29,10 +59,43 @@ function make_slides(f) {
               "critter"+i, scale)
       }
     },
+
+    button : function() {
+      var end_time = Date.now();
+      response = $("#testFreeResponse").val();
+      if (response == "") {
+        $(".err").show();
+      } else {
+        this.time_spent = end_time - this.start_time;
+        this.log_responses();
+        _stream.apply(this); //make sure this is at the *end*, after you log your data
+      }
+    },
+
     button : function() {
       exp.go(); // use exp.go() if and only if there is no "present" data.
     },
   });
+
+  // slides.welcome_critterLand = slide({
+  //   name : "welcome_critterLand",
+  //   start : function() {
+  //     var shuffledCritters = _.shuffle(allCreatures)
+  //     for (var i=0; i<shuffledCritters.length; i++) {
+  //          $("#all_critters").append(
+  //           "<svg id='critter" + i.toString() +
+  //           "'></svg>");
+  //           var scale = 0.5;
+  //           Ecosystem.draw(
+  //             shuffledCritters[i]["critter"], shuffledCritters[i],
+  //             "critter"+i, scale)
+  //     }
+  //   },
+    
+  //   button : function() {
+  //     exp.go(); // use exp.go() if and only if there is no "present" data.
+  //   },
+  // });
 
   slides.learning_trial = slide({
     name: "learning_trial",
@@ -137,6 +200,7 @@ function make_slides(f) {
           "tar1_crit" : this.critOpts.tar1,
           "tar2_crit" : this.critOpts.tar2,
 
+          //"color" : this.stim["color"], //change this
           "col1" : this.stim["col1"],
           "col2" : this.stim["col2"],
           "col3" : this.stim["col3"] == null ? "-99" : this.stim["col3"],
@@ -168,6 +232,7 @@ function make_slides(f) {
       $(".err").hide();
 
       this.critOpts = _.where(critFeatures, {creature: stim.critter})[0];
+
       this.question = _.where(question_phrase, {creature: stim.critter})[0];
 
       this.stim = stim; //I like to store this information in the slide so I can record it later.
@@ -218,6 +283,7 @@ function make_slides(f) {
           "tar1_crit" : this.critOpts.tar1,
           "tar2_crit" : this.critOpts.tar2,
 
+          //"color" : this.stim["color"], //change this
           "col1" : this.stim["col1"],
           "col2" : this.stim["col2"],
           "col3" : this.stim["col3"] == null ? "-99" : this.stim["col3"],
@@ -313,7 +379,8 @@ function make_slides(f) {
           "catch_trials" : exp.catch_trials,
           "system" : exp.system,
           "question": exp.question,
-          "distribution": JSON.stringify(exp.distribution),          "subject_information" : exp.subj_data,
+          "distribution": JSON.stringify(exp.distribution),          
+          "subject_information" : exp.subj_data,
           "time_in_minutes" : (Date.now() - exp.startT)/60000
       };
       setTimeout(function() {turk.submit(exp.data);}, 1000);
@@ -367,6 +434,7 @@ function init() {
   	// debugger;
   	while (j<(exemplarN*(i+1))) {
   		allCreatures.push({
+        //"color": creatureColor["color_alpha"], //color change
   			"col1": creatureColor["color"][localCounter],
   			"col2": creatureColor["color"][localCounter],
   			"col3": creatureColor["color"][localCounter] == null ? null : creatureColor["color"][localCounter] ,
@@ -387,6 +455,8 @@ function init() {
   		localCounter++;
     		j++;
   	}
+
+    //var shuffledCritters = _.shuffle(allCreatures)
   }
 
   exp.creatureCategories = _.uniq(_.pluck(allCreatures, "creatureName"))
@@ -401,6 +471,7 @@ function init() {
   exp.test_critters = _.uniq(allCreatures, function(stim){
     return _.values(_.pick(stim,
       "col1", "col2","col3", "creatureName", "tar1","tar2"
+      //"color", "col1", "col2","col3", "creatureName", "tar1","tar2" //maybe change back later
     )).join('')
   })
 
