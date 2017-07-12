@@ -50,7 +50,7 @@ var onMessage = function(client,message) {
             {crittersToPresent: gc.trialList.listenerLearningTrial}
 
             
-        p.player.instance.emit("nextBlock", {subjectSpecificBlock: })
+        p.player.instance.emit("nextBlock", {subjectSpecificBlock: dataPacket})
 
       });
       // tell server to advance to next round (or if at end, disconnect)

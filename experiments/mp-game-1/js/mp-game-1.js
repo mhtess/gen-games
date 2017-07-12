@@ -171,6 +171,8 @@ slides.learning_trial = slide({
     start: function() {
       console.log('start of robert page')
       $(".err").hide();
+            this.start_time = Date.now();
+      setTimeout(button, 60*1000)
       // $('#exit_survey').hide();
       // $('#message_panel').show();
       // $('#main').show();

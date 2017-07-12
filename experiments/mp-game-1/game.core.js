@@ -35,6 +35,11 @@ var game_core = function(options){
     role2 : 'listener'
   };
 
+  this.critter = {
+    role1 : 'bird',
+    role2 : 'bug'
+  }
+
   //Dimensions of world in pixels and numberof cells to be divided into;
   this.numHorizontalCells = 3;
   this.numVerticalCells = 1;
