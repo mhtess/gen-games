@@ -19,10 +19,13 @@ var ondisconnect = function(data) {
   console.log("server booted");
   this.viewport.style.display="none";
 
+  // here change the quote to you will now do whatever
+  disconStr = 'Thanks for participating in our experiment! ' +
+        "Before you submit your HIT, we'd like to ask you a few questions."
 
   if(globalGame.roundNum + 2 > globalGame.numRounds) {
-      $('#instructs').html('Thanks for participating in our experiment! ' +
-        "Before you submit your HIT, we'd like to ask you a few questions.");
+      $('#instructs').html(disconStr);
+      $('#contButton').show();
   }
   else {
       $('#instructs').html('Oops! It looks like your partner lost their connection.' +
@@ -33,7 +36,7 @@ var ondisconnect = function(data) {
   $('#submitbutton').hide();
   $('#roleLabel').hide();
   $('#score').hide();
-  $('#exit_survey').show();
+  // $('#exit_survey').show();
   $('#sketchpad').hide(); // this is from sketchpad experiment (jefan 4/23/17)
   $('#loading').hide(); // this is from sketchpad experiment (jefan 4/23/17)
 
@@ -115,7 +118,7 @@ var sharedSetup = function(game) {
     var otherRole = (globalGame.my_role === game.playerRoleNames.role1 ?
 		     game.playerRoleNames.role2 : game.playerRoleNames.role1);
     var source = data.user === globalGame.my_id ? "You" : otherRole;
-    var col = source === "You" ? "#363636" : "#707070";
+    var col = source === "You" ? "#f47777" : "#c66f6f";
     $('.typing-msg').remove();
     $('#messages')
       .append($('<li style="padding: 5px 10px; background: ' + col + '">')
