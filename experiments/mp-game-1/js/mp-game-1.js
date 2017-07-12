@@ -10,7 +10,7 @@ function make_slides(f) {
 //      socket.emit('connection')
      }
   });
-  
+
   // slides.waiting_room = slide({
   //    name : "waiting_room",
   //    //change button show that it only shows up after both players have connected
@@ -22,9 +22,9 @@ function make_slides(f) {
   //      $(".waiting").hide();
   //      document.getElementById('after_waiting').style.visibility = 'visible';
   //    }
-  
+
   //    */
-  
+
   //    start : function() {
   //      //while(document.getElementById("after_waiting").onclick == false);
   //      for(var i=0; i<1000; i++){
@@ -32,21 +32,21 @@ function make_slides(f) {
   //        $(".waiting_message").html("Waiting for another player to join...").fadeIn(500);
   //      }
   //    },
-  
-  
-  
+
+
+
   //    button : function() {
   //      exp.go(); //after both players have connected
   //    },
   //  });
-  
+
   slides.instructions = slide({
     name : "instructions",
     button : function() {
       exp.go(); //use exp.go() if and only if there is no "present" data.
     },
   });
-  
+
   slides.welcome_critterLand = slide({
     name : "welcome_critterLand",
     start : function() {
@@ -80,7 +80,7 @@ function make_slides(f) {
       exp.go();
     },
   });
-  
+
 slides.learning_trial = slide({
     name: "learning_trial",
 
@@ -167,7 +167,7 @@ slides.learning_trial = slide({
 
   slides.robertPage = slide({
     name: "robertPage",
-  
+
     start: function() {
       console.log('start of robert page')
       $(".err").hide();
@@ -184,7 +184,7 @@ slides.learning_trial = slide({
       // $('#sketchpad').show(); // this is from sketchpad experiment (jefan 4/23/17)
       // $('#loading').show();
     },
-  
+
     button : function() {
       response = $("#chat_response").val();
       if (response == "") {
@@ -212,13 +212,13 @@ slides.learning_trial = slide({
         //exp.go(); will jump the critter
       }
     },
-  
+
   });
-  
-  
+
+
   slides.chatbox = slide({
     name: "chatbox",
-  
+
     start: function() {
       $(".err").hide();
       $('#exit_survey').hide();
@@ -234,7 +234,7 @@ slides.learning_trial = slide({
       $('#sketchpad').show(); // this is from sketchpad experiment (jefan 4/23/17)
       $('#loading').show();
     },
-  
+
     button : function() {
       response = $("#chat_response").val();
       if (response == "") {
@@ -262,11 +262,11 @@ slides.learning_trial = slide({
         //exp.go(); will jump the critter
       }
     },
-  
+
   });
-  
-  
-  
+
+
+
   slides.subj_info =  slide({
     name : "subj_info",
     submit : function(e){
@@ -286,9 +286,9 @@ slides.learning_trial = slide({
     button : function() {
       exp.go();
     } //use exp.go() if and only if there is no "present" data.
-    
+
   });
-  
+
   slides.thanks = slide({
     name : "thanks",
     start : function() {
@@ -337,8 +337,17 @@ function init() {
       screenUW: exp.width
     };
   //blocks of the experiment:
-  exp.structure=["i0", "instructions", "robertPage", "welcome_critterLand", "learning_trial", 
-  "condition", 'subj_info', 'thanks'] 
+  exp.structure=[
+    "i0",
+    "instructions",
+    "robertPage",
+    "welcome_critterLand", 
+    "learning_trial",
+    "robertPage",
+    "condition",
+    'subj_info',
+    'thanks'
+  ]
     // "chatbox", 'subj_info', 'thanks'];//,
   // "waiting_room", "instructions", "welcome_critterLand", "single_trial", "chatbox",];
 

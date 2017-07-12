@@ -166,6 +166,25 @@ var customSetup = function(game) {
     }
   });
 
+  game.socket.on('nextBlock', function(data){
+    // here we will want to set the subject's stimuli (that are coming in data) to be what gets presented. this may be able to be done by modifying the slides e.g., exp.slides.learning_trial.present
+    exp.go();
+
+    // below just copied from newRoundUpdate and may not be needed;
+    $('#chatbox').removeAttr("disabled");
+    $('#chatbox').focus();
+    $('#messages').empty();
+    if(game.roundNum + 2 > game.numRounds) {
+      $('#roundnumber').empty();
+      $('#instructs').empty()
+	.append("Round\n" + (game.roundNum + 1) + "/" + game.numRounds);
+    } else {
+      $('#roundnumber').empty()
+	.append("Round\n" + (game.roundNum + 2) + "/" + game.numRounds);
+    }
+  });
+
+
   // initialize experiment_template
   init()
 };
@@ -239,12 +258,12 @@ function mouseClickListener(evt) {
         var alt1 = _.sample(_.without(globalGame.currStim, obj));
         var alt2 = _.sample(_.without(globalGame.currStim, obj, alt1));
         globalGame.socket.send("clickedObj." + obj.condition + "." +
-			 obj.targetStatus + "." + obj.color.join('.') + "." +
-			 obj.speakerCoords.gridX + "." + obj.listenerCoords.gridX +"." +
-			 alt1.targetStatus + "." + alt1.color.join('.') + "." +
-			 alt1.speakerCoords.gridX+"."+alt1.listenerCoords.gridX+"." +
-			 alt2.targetStatus + "." + alt2.color.join('.') + "." +
-			 alt2.speakerCoords.gridX+"."+alt2.listenerCoords.gridX + ".");
+            			 obj.targetStatus + "." + obj.color.join('.') + "." +
+            			 obj.speakerCoords.gridX + "." + obj.listenerCoords.gridX +"." +
+            			 alt1.targetStatus + "." + alt1.color.join('.') + "." +
+            			 alt1.speakerCoords.gridX+"."+alt1.listenerCoords.gridX+"." +
+            			 alt2.targetStatus + "." + alt2.color.join('.') + "." +
+            			 alt2.speakerCoords.gridX+"."+alt2.listenerCoords.gridX + ".");
 
       }
     }
