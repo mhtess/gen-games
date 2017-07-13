@@ -17,7 +17,6 @@ function mark(el, otherEls) {
       'background-color': 'white'})})
 
   $('#'+el.id+'critname').show();
-  //$(".prompt").html("CritterDex output: " + this.stim.creatureName);
 
 }
 
@@ -27,6 +26,45 @@ function gray(el) {
    $('#'+el.id+'critname').css({'opacity': '0.5', 'font-weight': 'normal'});
 
 }
+
+function create_table(rows, cols) { //rows * cols = number of exemplars
+  var table = "<table>";
+  for(var i=0; i <rows; i++) {
+    table += "<tr>";
+    for(var j=0; j<cols; j++) {
+      table += "<td>";
+      var ind = i * cols + j;
+      console.log(ind);
+      table += "<table class ='cell' id='cell" + ind + "' onclick=\"mark(cell" + ind +",";
+      table += "[";
+      for(var k=0; k<rows*cols; k++) {
+        if(k != ind){
+          table += "'cell" + k + "'";
+        }
+        if(!(k == rows*cols-1 || k == ind || (ind == rows*cols-1 && k == rows*cols-2))) {
+          table += ",";
+        }
+      }
+      table += "])\">";
+
+      table += "<td>";
+      table += "<svg id='critter" + ind +
+        "' style='max-width: 128px;max-height:128px\'></svg></td>";
+
+      table += "<tr>";
+      table += "<div class='critname' id='cell" + ind + "critname'></div></tr>";
+      table += "</table>";
+      table += "</td>";
+      
+    }
+    table += "</tr>"
+  }
+  table += "</table>";
+  $("#critter_display").append(table);
+  console.log(ind);
+  console.log(table);
+}
+
 
 function make_slides(f) {
   var   slides = {};
@@ -52,63 +90,29 @@ function make_slides(f) {
       $(".critname").hide();
       var shuffledCritters = _.shuffle(allCreatures)
 
+      create_table(3,4);
 
       for (var i=0; i<shuffledCritters.length; i++) {
-           $("#all_critters").append(
-            "<svg id='critter" + i.toString() +
-            "'></svg>");
             var scale = 0.5;
             Ecosystem.draw(
               shuffledCritters[i]["critter"], shuffledCritters[i],
               "critter"+i, scale)
-            $('#table'+i+'pcritname').html(shuffledCritters[i]["creatureName"]);
       }
-
       
+       for(var i=0; i<shuffledCritters.length; i++) {
+         $('#cell'+i+'critname').html(shuffledCritters[i]["creatureName"]);
+         $('#cell'+i+'critname').hide();
 
-      //$("#table").html('');
-
+       }
 
     },
 
-
-
-    button : function() {
-      var end_time = Date.now();
-      response = $("#testFreeResponse").val();
-      if (response == "") {
-        $(".err").show();
-      } else {
-        this.time_spent = end_time - this.start_time;
-        this.log_responses();
-        _stream.apply(this); //make sure this is at the *end*, after you log your data
-      }
-    },
 
     button : function() {
       exp.go(); // use exp.go() if and only if there is no "present" data.
     },
   });
 
-  // slides.welcome_critterLand = slide({
-  //   name : "welcome_critterLand",
-  //   start : function() {
-  //     var shuffledCritters = _.shuffle(allCreatures)
-  //     for (var i=0; i<shuffledCritters.length; i++) {
-  //          $("#all_critters").append(
-  //           "<svg id='critter" + i.toString() +
-  //           "'></svg>");
-  //           var scale = 0.5;
-  //           Ecosystem.draw(
-  //             shuffledCritters[i]["critter"], shuffledCritters[i],
-  //             "critter"+i, scale)
-  //     }
-  //   },
-    
-  //   button : function() {
-  //     exp.go(); // use exp.go() if and only if there is no "present" data.
-  //   },
-  // });
 
   slides.learning_trial = slide({
     name: "learning_trial",
@@ -501,7 +505,7 @@ function init() {
     "i0",
     "instructions",
     "welcome_critterLand",
-    "learning_trial",
+    //"learning_trial",
     "messagePassing",
     "test_trial",
     'subj_info',
