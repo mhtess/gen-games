@@ -8,13 +8,15 @@ function mark(el, otherEls) {
 
     el.style.border=='' ? 
     $('#'+el.id).css({"border":'2px solid red',
-                    'background-color': 'white','opacity': '1'}) : 
+                    'background-color': 'white','opacity': '1'}) &
+    $('#'+el.id+'critname').css({'opacity': '1', 'font-weight': 'bold'})
+                     : 
     $('#'+el.id).css({"border":'',
                     'background-color': 'white'})
     otherEls.map(function(cell){$('#'+cell).css({"border":'',
       'background-color': 'white'})})
-  console.log(shuffledCritters[i])
-  $('#'+el.id+'critname').append("<p style=\"max-width:128px;max-height:28px\">"+crit+"</p>");
+
+  $('#'+el.id+'critname').show();
   //$(".prompt").html("CritterDex output: " + this.stim.creatureName);
 
 }
@@ -22,6 +24,7 @@ function mark(el, otherEls) {
 
 function gray(el) {
    $('#'+el.id).css({'opacity': '0.5'})
+   $('#'+el.id+'critname').css({'opacity': '0.5', 'font-weight': 'normal'});
 
 }
 
@@ -45,8 +48,9 @@ function make_slides(f) {
   slides.welcome_critterLand = slide({
     name : "welcome_critterLand",
     start : function(stim) {
+      this.stim = stim;
+      $(".critname").hide();
       var shuffledCritters = _.shuffle(allCreatures)
-      
 
 
       for (var i=0; i<shuffledCritters.length; i++) {
@@ -57,8 +61,17 @@ function make_slides(f) {
             Ecosystem.draw(
               shuffledCritters[i]["critter"], shuffledCritters[i],
               "critter"+i, scale)
+            $('#table'+i+'pcritname').html(shuffledCritters[i]["creatureName"]);
       }
+
+      
+
+      //$("#table").html('');
+
+
     },
+
+
 
     button : function() {
       var end_time = Date.now();
