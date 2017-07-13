@@ -17,6 +17,7 @@ function mark(el, otherEls) {
       'background-color': 'white'})})
 
   $('#'+el.id+'critname').show();
+  check(allCreatures.length);
 
 }
 
@@ -27,6 +28,22 @@ function gray(el) {
 
 }
 
+function check(num){
+  var check_all = 0;
+  for(var i=0; i<num; i++) {
+     if($('#cell'+i+'critname').is(':visible')){
+        ++check_all;
+     }
+  }
+  console.log(check_all);
+
+  if(check_all == num) {
+     $("#learning_button").show();
+     console.log("good to go!");
+  }
+
+}
+
 function create_table(rows, cols) { //rows * cols = number of exemplars
   var table = "<table>";
   for(var i=0; i <rows; i++) {
@@ -34,7 +51,6 @@ function create_table(rows, cols) { //rows * cols = number of exemplars
     for(var j=0; j<cols; j++) {
       table += "<td>";
       var ind = i * cols + j;
-      console.log(ind);
       table += "<table class ='cell' id='cell" + ind + "' onclick=\"mark(cell" + ind +",";
       table += "[";
       for(var k=0; k<rows*cols; k++) {
@@ -61,9 +77,8 @@ function create_table(rows, cols) { //rows * cols = number of exemplars
   }
   table += "</table>";
   $("#critter_display").append(table);
-  console.log(ind);
-  console.log(table);
 }
+
 
 
 function make_slides(f) {
@@ -83,12 +98,20 @@ function make_slides(f) {
     },
   });
 
+
   slides.welcome_critterLand = slide({
     name : "welcome_critterLand",
+
+
     start : function(stim) {
+      var start_time = Date.now()
       this.stim = stim;
       $(".critname").hide();
+      $(".err").hide();
+      $("#learning_button").hide(); //fix this
       var shuffledCritters = _.shuffle(allCreatures)
+      var all_visible = {};
+
 
       create_table(3,4);
 
@@ -98,18 +121,21 @@ function make_slides(f) {
               shuffledCritters[i]["critter"], shuffledCritters[i],
               "critter"+i, scale)
       }
+
       
        for(var i=0; i<shuffledCritters.length; i++) {
          $('#cell'+i+'critname').html(shuffledCritters[i]["creatureName"]);
          $('#cell'+i+'critname').hide();
 
-       }
+      }
 
     },
 
-
     button : function() {
+      var end_time = Date.now()
+      this.time_spent = end_time - this.start_time;
       exp.go(); // use exp.go() if and only if there is no "present" data.
+      
     },
   });
 
@@ -217,7 +243,7 @@ function make_slides(f) {
           "tar1_crit" : this.critOpts.tar1,
           "tar2_crit" : this.critOpts.tar2,
 
-          //"color" : this.stim["color"], //change this
+          "color" : this.stim["color"], //change this
           "col1" : this.stim["col1"],
           "col2" : this.stim["col2"],
           "col3" : this.stim["col3"] == null ? "-99" : this.stim["col3"],
@@ -451,7 +477,7 @@ function init() {
   	// debugger;
   	while (j<(exemplarN*(i+1))) {
   		allCreatures.push({
-        //"color": creatureColor["color_alpha"], //color change
+        //"color": creatureColor, //color 
   			"col1": creatureColor["color"][localCounter],
   			"col2": creatureColor["color"][localCounter],
   			"col3": creatureColor["color"][localCounter] == null ? null : creatureColor["color"][localCounter] ,
@@ -487,8 +513,8 @@ function init() {
   exp.learning_critters = _.shuffle(allCreatures);
   exp.test_critters = _.uniq(allCreatures, function(stim){
     return _.values(_.pick(stim,
-      "col1", "col2","col3", "creatureName", "tar1","tar2"
-      //"color", "col1", "col2","col3", "creatureName", "tar1","tar2" //maybe change back later
+      //"col1", "col2","col3", "creatureName", "tar1","tar2"
+      "color", "col1", "col2","col3", "creatureName", "tar1","tar2" //maybe change back later
     )).join('')
   })
 

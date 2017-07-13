@@ -36,7 +36,7 @@
 
     <script src="../_shared/js/uniqueturker.js"></script>
 
-</head>s
+</head>
 
 <body onload="init();">
   <noscript>This task requires JavaScript.</noscript>
@@ -75,10 +75,11 @@
 
   <div class="slide" id="welcome_critterLand">
     <h3>Welcome to Critter Country</h3>
-    <p>Meet the Critters of Critter Country. These are some of the different critters you encounter:</p>
+    <p>Meet the Critters of Critter Country. These are some of the different critters you encounter. Use the CritterDex on each critter by clicking on them in order to proceed:</p>
     <div id='critter_display'></div>
 
-    <button onclick="_s.button()">Continue</button>
+    <button id="learning_button" onclick="_s.button()">Continue</button>
+    <p class="err">Please read about each critter to continue.</p>
   </div>
 
   <div class="slide" id="condition">

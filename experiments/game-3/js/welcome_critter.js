@@ -187,7 +187,7 @@ var createCreatureColors = function(creatureLabel){
 		creatureColors = creatureColors.concat(
 			fillArray(ncrit,
 				genColor(
-				varcolor_dict[colorProps["props"]["color_mean"]],
+				color_dict[colorProps["props"]["color_mean"]],
 				colorProps["props"]["color_var"]
 			))
 		)
@@ -204,6 +204,7 @@ var createFeatureArray = function(creatureLabel, p){
 	var probs = [p, 1-p]
 	var creatOpts = _.where(creatureOpts, {name: creatureLabel})[0];
 	var creatureColors = [];
+	var creatureColor_alph = [];
 	var creatureLocation = [];
 	// debugger;
 	var nRemaining = exemplarN;
@@ -224,10 +225,11 @@ var createFeatureArray = function(creatureLabel, p){
 				colorProps["props"]["color_var"]
 			))
 		)
+		//creatureColor_alph = colorProps["props"]["color_mean"];
 		creatureLocation = 0;
 	  nRemaining = nRemaining-ncrit;
 	}
-	return {color: creatureColors, location: creatureLocation} //color encod
+	return {color: creatureColors, color_alpha: creatureColor_alph, location: creatureLocation} //color encoded
 }
 
 // This outlines the features of all critters defined in ecosystem.js
