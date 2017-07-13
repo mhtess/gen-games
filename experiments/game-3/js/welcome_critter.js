@@ -229,7 +229,7 @@ var createFeatureArray = function(creatureLabel, p){
 		creatureLocation = 0;
 	  nRemaining = nRemaining-ncrit;
 	}
-	return {color: creatureColors, color_alpha: creatureColor_alph, location: creatureLocation} //color encoded
+	return {color: creatureColors, location: creatureLocation} //color encoded
 }
 
 // This outlines the features of all critters defined in ecosystem.js

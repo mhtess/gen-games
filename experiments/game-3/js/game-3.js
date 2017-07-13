@@ -16,7 +16,7 @@ function mark(el, otherEls) {
     otherEls.map(function(cell){$('#'+cell).css({"border":'',
       'background-color': 'white'})})
 
-  $('#'+el.id+'critname').show();
+  $('#'+el.id+'critname').css({'opacity': '1'});
   check(allCreatures.length);
 
 }
@@ -31,7 +31,7 @@ function gray(el) {
 function check(num){
   var check_all = 0;
   for(var i=0; i<num; i++) {
-     if($('#cell'+i+'critname').is(':visible')){
+     if($('#cell'+i+'critname').css('opacity') != 0){
         ++check_all;
      }
   }
@@ -39,7 +39,6 @@ function check(num){
 
   if(check_all == num) {
      $("#learning_button").show();
-     console.log("good to go!");
   }
 
 }
@@ -65,7 +64,7 @@ function create_table(rows, cols) { //rows * cols = number of exemplars
 
       table += "<td>";
       table += "<svg id='critter" + ind +
-        "' style='max-width: 128px;max-height:128px\'></svg></td>";
+        "' style='max-width:100px;max-height:100px\'></svg></td>";
 
       table += "<tr>";
       table += "<div class='critname' id='cell" + ind + "critname'></div></tr>";
@@ -110,7 +109,6 @@ function make_slides(f) {
       $(".err").hide();
       $("#learning_button").hide(); //fix this
       var shuffledCritters = _.shuffle(allCreatures)
-      var all_visible = {};
 
 
       create_table(3,4);
@@ -125,7 +123,7 @@ function make_slides(f) {
       
        for(var i=0; i<shuffledCritters.length; i++) {
          $('#cell'+i+'critname').html(shuffledCritters[i]["creatureName"]);
-         $('#cell'+i+'critname').hide();
+         $('#cell'+i+'critname').css({'opacity': '0'});
 
       }
 
@@ -243,7 +241,7 @@ function make_slides(f) {
           "tar1_crit" : this.critOpts.tar1,
           "tar2_crit" : this.critOpts.tar2,
 
-          "color" : this.stim["color"], //change this
+          //"color" : this.stim["color"], //change this
           "col1" : this.stim["col1"],
           "col2" : this.stim["col2"],
           "col3" : this.stim["col3"] == null ? "-99" : this.stim["col3"],
