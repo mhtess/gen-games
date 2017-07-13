@@ -1,4 +1,83 @@
-//var socket = io('/function-nsp');
+var prev = null;
+
+function mark(el, otherEls) {
+  if(prev != null){
+    gray(prev);
+  }
+  prev = el;
+
+    el.style.border=='' ? 
+    $('#'+el.id).css({"border":'2px solid red',
+                    'background-color': 'white','opacity': '1'}) &
+    $('#'+el.id+'critname').css({'opacity': '1', 'font-weight': 'bold'})
+                     : 
+    $('#'+el.id).css({"border":'',
+                    'background-color': 'white'})
+    otherEls.map(function(cell){$('#'+cell).css({"border":'',
+      'background-color': 'white'})})
+
+  $('#'+el.id+'critname').css({'opacity': '1'});
+  check(allCreatures.length);
+
+}
+
+
+function gray(el) {
+   $('#'+el.id).css({'opacity': '0.5'})
+   $('#'+el.id+'critname').css({'opacity': '0.5', 'font-weight': 'normal'});
+
+}
+
+function check(num){
+  var check_all = 0;
+  for(var i=0; i<num; i++) {
+     if($('#cell'+i+'critname').css('opacity') != 0){
+        ++check_all;
+     }
+  }
+  console.log(check_all);
+
+  if(check_all == num) {
+     $("#learning_button").show();
+     console.log("good to go!");
+  }
+
+}
+
+function create_table(rows, cols) { //rows * cols = number of exemplars
+  var table = "<table>";
+  for(var i=0; i <rows; i++) {
+    table += "<tr>";
+    for(var j=0; j<cols; j++) {
+      table += "<td>";
+      var ind = i * cols + j;
+      table += "<table class ='cell' id='cell" + ind + "' onclick=\"mark(cell" + ind +",";
+      table += "[";
+      for(var k=0; k<rows*cols; k++) {
+        if(k != ind){
+          table += "'cell" + k + "'";
+        }
+        if(!(k == rows*cols-1 || k == ind || (ind == rows*cols-1 && k == rows*cols-2))) {
+          table += ",";
+        }
+      }
+      table += "])\">";
+
+      table += "<td>";
+      table += "<svg id='critter" + ind +
+        "' style='max-width: 128px;max-height:128px\'></svg></td>";
+
+      table += "<tr>";
+      table += "<div class='critname' id='cell" + ind + "critname'></div></tr>";
+      table += "</table>";
+      table += "</td>";
+      
+    }
+    table += "</tr>"
+  }
+  table += "</table>";
+  $("#critter_display").append(table);
+}
 
 function make_slides(f) {
   var   slides = {};
@@ -47,22 +126,42 @@ function make_slides(f) {
     },
   });
 
-  slides.welcome_critterLand = slide({
+ slides.welcome_critterLand = slide({
     name : "welcome_critterLand",
-    start : function() {
+
+
+    start : function(stim) {
+      var start_time = Date.now()
+      this.stim = stim;
+      $(".critname").hide();
+      $(".err").hide();
+      $("#learning_button").hide(); //fix this
       var shuffledCritters = _.shuffle(allCreatures)
+
+
+      create_table(3,4);
+
       for (var i=0; i<shuffledCritters.length; i++) {
-           $("#all_critters").append(
-            "<svg id='critter" + i.toString() +
-            "'></svg>");
             var scale = 0.5;
             Ecosystem.draw(
               shuffledCritters[i]["critter"], shuffledCritters[i],
               "critter"+i, scale)
       }
+
+      
+       for(var i=0; i<shuffledCritters.length; i++) {
+         $('#cell'+i+'critname').html(shuffledCritters[i]["creatureName"]);
+         $('#cell'+i+'critname').css({'opacity': '0'});
+
+      }
+
     },
+
     button : function() {
+      var end_time = Date.now()
+      this.time_spent = end_time - this.start_time;
       exp.go(); // use exp.go() if and only if there is no "present" data.
+      
     },
   });
 
@@ -171,8 +270,10 @@ slides.learning_trial = slide({
     start: function() {
       console.log('start of robert page')
       $(".err").hide();
-            this.start_time = Date.now();
-      setTimeout(button, 60*1000)
+
+      $("#chatCont").hide()
+      // change this to 60 seconds (10 -> 60)
+      setTimeout(function() { $("#chatCont").show() }, 3*1000)
       // $('#exit_survey').hide();
       // $('#message_panel').show();
       // $('#main').show();

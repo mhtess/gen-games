@@ -6,25 +6,25 @@
 
     substantially modified for collective behavior experiments on the web
     MIT Licensed.
-*/
+    */
 
 /*
   The main game class. This gets created on both server and
   client. Server creates one for each game that is hosted, and each
   client creates one for itself to play the game. When you set a
   variable, remember that it's only set in that instance.
-*/
-var has_require = typeof require !== 'undefined';
+  */
+  var has_require = typeof require !== 'undefined';
 
-if( typeof _ === 'undefined' ) {
-  if( has_require ) {
-    _ = require('underscore');
-    utils  = require(__base + '/sharedUtils/sharedUtils.js');
+  if( typeof _ === 'undefined' ) {
+    if( has_require ) {
+      _ = require('underscore');
+      utils  = require(__base + '/sharedUtils/sharedUtils.js');
+    }
+    else throw 'mymodule requires underscore, see http://underscorejs.org';
   }
-  else throw 'mymodule requires underscore, see http://underscorejs.org';
-}
 
-var game_core = function(options){
+  var game_core = function(options){
   // Store a flag if we are the server instance
   this.server = options.server ;
 
@@ -41,14 +41,14 @@ var game_core = function(options){
   }
 
   //Dimensions of world in pixels and numberof cells to be divided into;
-  this.numHorizontalCells = 3;
-  this.numVerticalCells = 1;
-  this.cellDimensions = {height : 300, width : 300}; // in pixels
+  this.numHorizontalCells = 0;
+  this.numVerticalCells = 0;
+  this.cellDimensions = {height : 0, width : 0}; // in pixels
   this.cellPadding = 0;
   this.world = {height : (this.cellDimensions.height * this.numVerticalCells
-              + this.cellPadding),
-              width : (this.cellDimensions.width * this.numHorizontalCells
-              + this.cellPadding)};
+    + this.cellPadding),
+  width : (this.cellDimensions.width * this.numHorizontalCells
+    + this.cellPadding)};
 
   // Which round are we on (initialize at -1 so that first round is 0-indexed)
   this.roundNum = -1;
@@ -75,7 +75,7 @@ var game_core = function(options){
       catch_trials : [], system : {},
       subject_information : {
         gameID: this.id,
-	score: 0
+        score: 0
       }
     };
     this.players = [{
@@ -149,8 +149,8 @@ game_core.prototype.newRound = function() {
 game_core.prototype.getRandomizedConditions = function() {
   var numEach = this.numRounds / 3;
   var conditions = [].concat(utils.fillArray("equal", numEach),
-			     utils.fillArray("closer", numEach),
-			     utils.fillArray("further", numEach));
+    utils.fillArray("closer", numEach),
+    utils.fillArray("further", numEach));
   return _.shuffle(conditions);
 };
 
@@ -170,32 +170,34 @@ game_core.prototype.makeTrialList = function () {
     var condition = conditionList[i];
     var objList = sampleTrial(condition); // Sample three objects
     var locs = this.sampleStimulusLocs(); // Sample locations for those objects
-    trialList.push(_.map(_.zip(objList, locs.speaker, locs.listener), function(tuple) {
-      var object = _.clone(tuple[0]);
-      object.width = local_this.cellDimensions.width;
-      object.height = local_this.cellDimensions.height;
-      var speakerGridCell = local_this.getPixelFromCell(tuple[1][0], tuple[1][1]);
-      var listenerGridCell = local_this.getPixelFromCell(tuple[2][0], tuple[2][1]);
-      object.speakerCoords = {
-	gridX : tuple[1][0],
-	gridY : tuple[1][1],
-	trueX : speakerGridCell.centerX - object.width/2,
-	trueY : speakerGridCell.centerY - object.height/2,
-	gridPixelX: speakerGridCell.centerX - 150,
-	gridPixelY: speakerGridCell.centerY - 150
-      };
-      object.listenerCoords = {
-	gridX : tuple[2][0],
-	gridY : tuple[2][1],
-	trueX : listenerGridCell.centerX - object.width/2,
-	trueY : listenerGridCell.centerY - object.height/2,
-	gridPixelX: listenerGridCell.centerX - 150,
-	gridPixelY: listenerGridCell.centerY - 150
-      };
-      return object;
-    }));
-  };
-  return(trialList);
+   //  trialList.push(_.map(_.zip(objList, locs.speaker, locs.listener), function(tuple) {
+   //    var object = _.clone(tuple[0]);
+   //    object.width = local_this.cellDimensions.width;
+   //    object.height = local_this.cellDimensions.height;
+   //    var speakerGridCell = local_this.getPixelFromCell(tuple[1][0], tuple[1][1]);
+   //    var listenerGridCell = local_this.getPixelFromCell(tuple[2][0], tuple[2][1]);
+   //    object.speakerCoords = {
+   //     gridX : tuple[1][0],
+   //     gridY : tuple[1][1],
+   //     trueX : speakerGridCell.centerX - object.width/2,
+   //     trueY : speakerGridCell.centerY - object.height/2,
+   //     gridPixelX: speakerGridCell.centerX - 150,
+   //     gridPixelY: speakerGridCell.centerY - 150
+   //   };
+   //   object.listenerCoords = {
+   //     gridX : tuple[2][0],
+   //     gridY : tuple[2][1],
+   //     trueX : listenerGridCell.centerX - object.width/2,
+   //     trueY : listenerGridCell.centerY - object.height/2,
+   //     gridPixelX: listenerGridCell.centerX - 150,
+   //     gridPixelY: listenerGridCell.centerY - 150
+   //   };
+   //   return object;
+   // }));
+  //trialList.push(exp.slides.learning_trial.present)
+
+};
+return(trialList);
 };
 
 game_core.prototype.server_send_update = function(){
@@ -205,8 +207,8 @@ game_core.prototype.server_send_update = function(){
   // Add info about all players
   var player_packet = _.map(local_game.players, function(p){
     return {id: p.id,
-            player: null};
-  });
+      player: null};
+    });
 
   var state = {
     gs : this.game_started,   // true when game's started
@@ -265,9 +267,9 @@ var checkItem = function(condition, target, firstDistractor, secondDistractor) {
 game_core.prototype.getPixelFromCell = function (x, y) {
   return {
     centerX: (this.cellPadding/2 + this.cellDimensions.width * (x - 1)
-        + this.cellDimensions.width / 2),
+      + this.cellDimensions.width / 2),
     centerY: (this.cellPadding/2 + this.cellDimensions.height * (y - 1)
-        + this.cellDimensions.height / 2),
+      + this.cellDimensions.height / 2),
     upperLeftX : (this.cellDimensions.width * (x - 1) + this.cellPadding/2),
     upperLeftY : (this.cellDimensions.height * (y - 1) + this.cellPadding/2),
     width: this.cellDimensions.width,

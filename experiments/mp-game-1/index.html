@@ -94,11 +94,12 @@
     <button onclick="_s.button()">Continue</button>
   </div>
 
-  <div class="slide" id="welcome_critterLand">
+ <div class="slide" id="welcome_critterLand">
     <h3>Welcome to Critter Country</h3>
-    <p>Meet the Critters of Critter Country. These are some examples of the different types of critters you may encounter:</p>
-    <div id="all_critters"></div>
-    <button onclick="_s.button()">Continue</button>
+    <p>Meet the Critters of Critter Country. These are some of the different critters you encounter. Use the CritterDex on each critter by clicking on them in order to proceed:</p>
+    <div id='critter_display'></div>
+
+    <button id="learning_button" onclick="_s.button()">Continue</button>
   </div>
 
   <div class="slide" id="condition">
@@ -141,7 +142,14 @@
           <button id="chatbutton">Send</button>
         </form>
       </div>
+      <!-- <div id=chatCont>
+      <button onclick="_s.button()">Continue</button>
+      </div> -->
     </div>
+    <div id=chatCont>
+      <button onclick="_s.button()">Continue</button>
+    </div>
+    
     <canvas id="viewport"> </canvas>
     <!-- </span> -->
   </div>
@@ -165,10 +173,10 @@
     <label><input type="radio"  name="assess" value="Confused"/>I was confused</label>
 
     <p>Were there any problems or bugs in the experiment?</p>
-    <textarea id="problems" rows="2" cols="50"></textarea>
+    <textarea id="problems" rows="2" cols="50" spellcheck=false></textarea>
 
     <p>What do you think is a fair price for the work you did?</p>
-    <textarea id="fairprice" rows="1" cols="10"></textarea>
+    <textarea id="fairprice" rows="1" cols="10" spellcheck=false></textarea>
 
     <p>Gender:
       <select id="gender">
@@ -204,7 +212,7 @@
     </select>
 
     <p>We would be interested in any comments you have about this experiment. Please type them here:</p>
-    <textarea id="comments" rows="3" cols="50"></textarea>
+    <textarea id="comments" rows="3" cols="50" spellcheck=false></textarea>
     <br/>
     <button onclick="_s.submit()">Submit</button>
   </div>

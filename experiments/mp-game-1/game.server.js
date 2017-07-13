@@ -30,6 +30,8 @@ var onMessage = function(client,message) {
   var all = gc.get_active_players();
   var target = gc.get_player(client.userid);
   var others = gc.get_others(client.userid);
+  debugger;
+  console.log(gc)
   switch(message_type) {
 
   // when server gets "clickedObj" signal
