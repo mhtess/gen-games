@@ -135,6 +135,43 @@ function make_slides(f) {
       exp.go(); // use exp.go() if and only if there is no "present" data.
       
     },
+
+    //fix this
+    log_responses: function(){
+      exp.catch_trials.push({
+          "trial_type" : "learning_trial",
+          "trial_num" : 0, //change later when we add more blocks
+          "question": "NA",
+          "distribution": JSON.stringify(exp.distribution),
+          "response" : "NA",
+          // "response" : $('input[type=radio]:checked').val(),
+          // "question" : this.stim["attentionCheck"],
+          "time_in_seconds" : this.time_spent/1000,
+          "critter" : this.stim["critter"],
+          "species" : this.stim["creatureName"],
+
+          "col1_crit" : this.critOpts.col1,
+          "col2_crit" : this.critOpts.col2,
+          "col3_crit" : this.critOpts.col3,
+          "col4_crit" : this.critOpts.col4,
+          "col5_crit" : this.critOpts.col5,
+          "prop1_crit" : this.critOpts.prop1,
+          "prop2_crit" : this.critOpts.prop2,
+          "tar1_crit" : this.critOpts.tar1,
+          "tar2_crit" : this.critOpts.tar2,
+
+          //"color" : this.stim["color"], //change this
+          "col1" : this.stim["col1"],
+          "col2" : this.stim["col2"],
+          "col3" : this.stim["col3"] == null ? "-99" : this.stim["col3"],
+          "col4" : this.stim["col4"] == null ? "-99" : this.stim["col4"],
+          "col5" : this.stim["col5"] == null ? "-99" : this.stim["col5"],
+          "prop1" : this.stim["prop1"] == null ? "-99" : this.stim["prop1"],
+          "prop2" : this.stim["prop2"] == null ? "-99" : this.stim["prop2"],
+          "tar1" : this.stim["tar1"] ? 1 : 0,
+          "tar2" : this.stim["tar2"] ? 1 : 0
+        });
+    }
   });
 
 
@@ -292,8 +329,8 @@ function make_slides(f) {
 
     button : function() {
       var end_time = Date.now();
-      response = $("#testFreeResponse").val();
-      if (response == "") {
+      //response = $("#testFreeResponse").val();
+      if ($('input[type=radio]:checked').size() == 0) {
         $(".err").show();
       } else {
         this.time_spent = end_time - this.start_time;
@@ -419,6 +456,7 @@ function make_slides(f) {
       exp.data= {
           "trials" : exp.data_trials,
           "catch_trials" : exp.catch_trials,
+          //"learning_trials" : exp.learning_trials,
           "system" : exp.system,
           "question": exp.question,
           "distribution": JSON.stringify(exp.distribution),          
@@ -445,6 +483,7 @@ function init() {
    })();
   exp.trials = [];
   exp.catch_trials = [];
+  //exp.learning_trials = [];
   //exp.all_stimuli = _.shuffle(all_stimuli); // all_stimuli
   exp.question = _.sample([
     "find creatures",
