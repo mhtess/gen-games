@@ -35,7 +35,6 @@ function check(num){
         ++check_all;
      }
   }
-  console.log(check_all);
 
   if(check_all == num) {
      $("#learning_button").show();
@@ -160,6 +159,7 @@ function make_slides(f) {
     button : function() {
       var end_time = Date.now()
       this.time_spent = end_time - this.start_time;
+      allCreatures = [];
       exp.go(); // use exp.go() if and only if there is no "present" data.
 
     },
@@ -288,6 +288,7 @@ slides.learning_trial = slide({
     },
 
     button : function() {
+      $('#messages').empty();
       response = $("#chat_response").val();
       if (response == "") {
         $(".err").show();
@@ -367,6 +368,89 @@ slides.learning_trial = slide({
 
   });
 
+slides.test_trial = slide({
+    name: "test_trial",
+
+    /* trial information for this block
+     (the variable 'stim' will change between each of these values,
+      and for each of these, present_handle will be run.) */
+
+    present : _.shuffle(exp.test_critters),
+    trial_num: 0,
+
+    present_handle : function(stim) {
+      // reset critter & note
+      $("#critterTestSVG").empty();
+      $('input[type=radio]').attr('checked', false); //for radio button response
+
+      // hide stuff
+      $(".err").hide();
+
+      this.critOpts = _.where(critFeatures, {creature: stim.critter})[0];
+
+      this.question = _.where(question_phrase, {creature: stim.critter})[0];
+
+      this.stim = stim; //I like to store this information in the slide so I can record it later.
+
+      this.start_time = Date.now()
+
+      var scale = 0.5;
+      Ecosystem.draw(
+        stim.critter, stim,
+        "critterTestSVG", scale)
+
+      this.trial_num++;
+
+    },
+
+    button : function() {
+      var end_time = Date.now();
+      // if ($('input[type=radio]:checked').size() == 0) {
+      //   $(".err").show();
+      // } else {
+        this.time_spent = end_time - this.start_time;
+        this.log_responses();
+        _stream.apply(this); //make sure this is at the *end*, after you log your data
+      //}
+    },
+
+    log_responses: function(){
+      exp.catch_trials.push({
+          "trial_type" : "test_trial",
+          "trial_num" : this.trial_num,
+          "question": exp.question,
+          "distribution": JSON.stringify(exp.distribution),
+          "response" : $("#testFreeResponse").val(),
+          // "response" : $('input[type=radio]:checked').val(),
+          "question": exp.question,
+          "time_in_seconds" : this.time_spent/1000,
+          "critter" : this.stim["critter"],
+          "species" : this.stim["creatureName"],
+
+          "col1_crit" : this.critOpts.col1,
+          "col2_crit" : this.critOpts.col2,
+          "col3_crit" : this.critOpts.col3,
+          "col4_crit" : this.critOpts.col4,
+          "col5_crit" : this.critOpts.col5,
+          "prop1_crit" : this.critOpts.prop1,
+          "prop2_crit" : this.critOpts.prop2,
+          "tar1_crit" : this.critOpts.tar1,
+          "tar2_crit" : this.critOpts.tar2,
+
+          //"color" : this.stim["color"], //change this
+          "col1" : this.stim["col1"],
+          "col2" : this.stim["col2"],
+          "col3" : this.stim["col3"] == null ? "-99" : this.stim["col3"],
+          "col4" : this.stim["col4"] == null ? "-99" : this.stim["col4"],
+          "col5" : this.stim["col5"] == null ? "-99" : this.stim["col5"],
+          "prop1" : this.stim["prop1"] == null ? "-99" : this.stim["prop1"],
+          "prop2" : this.stim["prop2"] == null ? "-99" : this.stim["prop2"],
+          "tar1" : this.stim["tar1"] ? 1 : 0,
+          "tar2" : this.stim["tar2"] ? 1 : 0
+        });
+    }
+  });
+
 
 
   slides.subj_info =  slide({
@@ -384,8 +468,6 @@ slides.learning_trial = slide({
         problems: $("#problems").val(),
         fairprice: $("#fairprice").val()
       };
-    },
-    button : function() {
       exp.go();
     } //use exp.go() if and only if there is no "present" data.
 
@@ -428,6 +510,13 @@ function init() {
 
   exp.trials = [];
   exp.catch_trials = [];
+  allCreatures = genCreatures();
+  exp.test_critters = _.uniq(allCreatures, function(stim){
+    return _.values(_.pick(stim,
+      //"col1", "col2","col3", "creatureName", "tar1","tar2"
+      "color", "col1", "col2","col3", "creatureName", "tar1","tar2" //maybe change back later
+    )).join('')
+  })
   //exp.all_stimuli = _.shuffle(all_stimuli); // all_stimuli
   exp.condition = _.sample(["CONDITION 1", "condition 2"]); //can randomize between subject conditions here
   exp.system = {
@@ -438,18 +527,42 @@ function init() {
       screenW: screen.width,
       screenUW: exp.width
     };
+  
+  // learning - chat - test rounds
+    var numRounds = function(num) {
+      array1 = ["welcome_critterLand", "robertPage", "test_trial"]
+      while (num != 0) {
+        array1.push.apply(array1, array1);
+        num --;
+      }
+      return array1
+    }
+
+
   //blocks of the experiment:
-  exp.structure=[
-    "robertPage",
-    "i0",
-    "instructions",
-    "welcome_critterLand",
-    "learning_trial",
-    "robertPage",
-    "condition",
-    'subj_info',
-    'thanks'
-  ]
+
+  // exp.structure=[
+  //   "i0",
+  //   "instructions",
+  //   // "condition",
+  //   "welcome_critterLand", 
+  //   "robertPage",
+  //   "test_trial",
+  //   // need a waiting room here
+  //   "robertPage",
+  //    'subj_info',
+  //   'thanks'
+  // ]
+  
+  var start_exp = ["i0", "instructions"]
+  // change this as you please
+  var middle_exp = numRounds(2)
+  var end_exp = ['subj_info','thanks']
+  start_exp.push.apply(start_exp, middle_exp)
+  //  exp.structure.push.apply(middle_exp)
+  start_exp.push.apply(start_exp, end_exp)
+  exp.structure = start_exp
+
     // "chatbox", 'subj_info', 'thanks'];//,
   // "waiting_room", "instructions", "welcome_critterLand", "single_trial", "chatbox",];
 
