@@ -12,6 +12,7 @@ library(ggplot2)
 library(data.table)
 #library(xtable)
 library(langcog)
+library(forcats)
 
 
 #setting the directory
@@ -30,8 +31,8 @@ catch_test <- subset(catch_trial_data, catch_trial_data$trial_type=="test_trial"
 
 summary(catch_test$col1)
 
-catch_test$Correct <- ifelse(
-  catch_test$species==tolower(catch_test$response), TRUE, FALSE)
+
+
 
 #catch_test_wug <- subset(catch_test, catch_test$species=="wug" & Correct == FALSE)
 
@@ -47,6 +48,16 @@ catch_test$Color <- ifelse(catch_test$species=="wug", "blue",
 )
 
 catch_test$Response.edit <- tolower(catch_test$response)
+
+
+catch_test$Correct <- ifelse(
+  catch_test$species==catch_test$Response.edit, TRUE, FALSE)
+
+# compare correct species to incorrect input
+catch_test_errors <- catch_test %>%
+  filter(Correct == FALSE) %>%
+  select(species, Response.edit)
+#View(catch_test_errors)
 
 catch_test$Response.cat <- ifelse(catch_test$Response.edit == "wug", "wug",
                                   ifelse(catch_test$Response.edit == "fep", "fep",
@@ -137,32 +148,69 @@ graph_by_species
 
 ```{r, results='asis'}
 catch_test_reduced_species_by_color <- catch_test_reduced %>%
-  group_by(workerid, trial_num, species, distribution, Response.cat, Color) %>%
-  distinct() %>%
-  summarise(Total = 1) %>%
+  group_by(workerid, trial_num, Response.cat, Color) %>%
+  summarise(Total = n()) %>%
   group_by(Response.cat, Color) %>%
   summarise(Total_trials = sum(Total)) %>%
-  #mutate(Percentage_correct = Correct_trials/Total_trials) %>%
+  #mutate(Percentage_trials = Correct_trials/Total_trials) %>%
   select(Total_trials, Response.cat, Color)
 
 catch_test_reduced_species_by_color
 
-graph_species_by_color <- ggplot(catch_test_reduced_species_by_color, aes(x=Response.cat, y=Total_trials)) +
+graph_species_by_color_count <- ggplot(catch_test_reduced_species_by_color, aes(x=Response.cat, y=Total_trials)) +
   geom_bar(stat="identity") +
-  scale_x_discrete("Species") +
+  scale_x_discrete("Species Stated in Response") +
   scale_y_continuous("Count") +
   #scale_colour_discrete(guide=guide_legend("Distribution")) +
   #scale_fill_discrete(guide=guide_legend("Distribution")) +
   facet_wrap(~Color) +
-  ggtitle("Accuracy on Catch Trials by Species") +
+  ggtitle("Species Responses on Test Trials by Stimuli Responses") +
   theme_bw() +
   theme(plot.title = element_text(hjust=0.5, size=18, face="bold"),
         strip.background = element_rect(fill="skyblue"),
         strip.text = element_text(size=12, face="bold"))
-graph_species_by_color
+graph_species_by_color_count
 
-#ggsave("Graph_by_Species.pdf")
+#ggsave("Graph_Species_by_Color_count.pdf")
 
+
+catch_test_reduced_species_by_color_prop <- catch_test_reduced %>%
+  group_by(Response.cat, Color) %>%
+  summarise(Total_trials = n()) %>%
+  group_by(Color) %>%
+  mutate(All_Color_trials = sum(Total_trials),
+         Percent_trials = Total_trials/All_Color_trials) %>%
+  ungroup() %>%
+  mutate(#Response.cat = fct_relevel(Response.cat, "wug", "fep", "lorch", "other"),
+         Response.cat = factor(Response.cat, 
+                               levels = c("wug", "fep", "lorch", "other"),
+                               labels = c("Wug", "Fep", "Lorch", "Other")
+                               ))
+
+#sanity check
+#catch_test_reduced_species_by_color_prop %>%
+#  group_by(Color) %>%
+#  summarise(sum(Percent_trials))
+
+
+
+graph_species_by_color_prop <- ggplot(catch_test_reduced_species_by_color_prop, aes(x=Response.cat, y=Percent_trials, fill = Color)) +
+  geom_bar(stat="identity") +
+  scale_x_discrete("Species Stated in Response") +
+  scale_y_continuous("Percent") +
+  #scale_colour_discrete(guide=guide_legend("Distribution")) +
+  #scale_fill_discrete(guide=guide_legend("Distribution")) +
+  facet_wrap(~Color) +
+  scale_fill_manual(values = c("blue", "purple", "yellow"))+
+  ggtitle("Species Responses on Test Trials by Stimuli Responses") +
+  guides(fill=FALSE) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust=0.5, size=18, face="bold"),
+        strip.background = element_rect(fill=c("skyblue")),
+        strip.text = element_text(size=12, face="bold"))
+graph_species_by_color_prop
+
+#ggsave("Graph_Species_by_Color_prop.pdf")
 
 ```
 

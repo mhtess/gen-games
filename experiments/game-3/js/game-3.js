@@ -35,7 +35,7 @@ function check(num){
         ++check_all;
      }
   }
-  console.log(check_all);
+  //console.log(check_all);
 
   if(check_all == num) {
      $("#learning_button").show();
@@ -267,7 +267,8 @@ function make_slides(f) {
     present_handle : function(stim) {
       // reset critter & note
       $("#critterTestSVG").empty();
-      $("#testFreeResponse").val('');
+      //$("#testFreeResponse").val(''); //for text response
+      $('input[type=radio]').attr('checked', false); //for radio button response
 
       // hide stuff
       $(".err").hide();
@@ -307,8 +308,8 @@ function make_slides(f) {
           "trial_num" : this.trial_num,
           "question": exp.question,
           "distribution": JSON.stringify(exp.distribution),
-          "response" : $("#testFreeResponse").val(),
-          // "response" : $('input[type=radio]:checked').val(),
+          //"response" : $("#testFreeResponse").val(), //if using text box
+          "response" : $('input[type=radio]:checked').val(), //if using radio buttons
           "question": exp.question,
           "time_in_seconds" : this.time_spent/1000,
           "critter" : this.stim["critter"],
