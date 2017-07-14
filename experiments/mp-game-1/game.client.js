@@ -169,6 +169,11 @@ var customSetup = function(game) {
   game.socket.on('nextBlock', function(data){
     // here we will want to set the subject's stimuli (that are coming in data) to be what gets presented. this may be able to be done by modifying the slides e.g., exp.slides.learning_trial.present
     console.log("nextBlock")
+
+    $("#" + data.crittersToPresent).hide();
+    // to modify stimuli
+    // exp.slides.learning_trial.present = data;
+
     exp.go();
 
     // below just copied from newRoundUpdate and may not be needed;
@@ -193,6 +198,7 @@ var customSetup = function(game) {
 var client_onjoingame = function(num_players, role) {
   // set role locally
   globalGame.my_role = role;
+  console.log(role)
   globalGame.get_player(globalGame.my_id).role = globalGame.my_role;
 
   _.map(_.range(num_players - 1), function(i){

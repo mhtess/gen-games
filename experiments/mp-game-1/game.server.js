@@ -31,7 +31,7 @@ var onMessage = function(client,message) {
   var all = gc.get_active_players();
   var target = gc.get_player(client.userid);
   var others = gc.get_others(client.userid);
-
+  // console.log(message_parts)
   // console.log(gc)
   switch(message_type) {
 
@@ -44,22 +44,19 @@ var onMessage = function(client,message) {
       _.map(all, function(p){
         // tell client to advance to next round
         // p.player.instance.emit( 'newRoundUpdate', {user: client.userid} );
-
         // p.role may be incorrect, information is somewhere in p
         // here, decide what data to pass to each subject
-        var dataPacket = p.role == "speaker" ?
-            {crittersToPresent: gc.trialList.speakerLearningTrial} :
-            {crittersToPresent: gc.trialList.listenerLearningTrial}
+        // console.log(p.player)
+        var dataPacket = p.instance.role == "listener" ?
+            {crittersToPresent: "instruct-text"} :
+            {crittersToPresent: "legal"}
 
-
-        p.player.instance.emit("nextBlock",
-          {user: client.userid}
-        )
+        p.player.instance.emit("nextBlock",dataPacket)
 
       });
       // tell server to advance to next round (or if at end, disconnect)
       // gc.newRound();
-    }, 1000);
+    }, 300);
 
     break;
 
