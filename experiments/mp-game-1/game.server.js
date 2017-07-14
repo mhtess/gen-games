@@ -18,6 +18,7 @@
 // with the coordinates of the click, which this function reads and
 // applies.
 var onMessage = function(client,message) {
+  console.log("server received")
   //Cut the message up into sub components
   var message_parts = message.split('.');
 
@@ -30,20 +31,19 @@ var onMessage = function(client,message) {
   var all = gc.get_active_players();
   var target = gc.get_player(client.userid);
   var others = gc.get_others(client.userid);
-  debugger;
-  console.log(gc)
+
+  // console.log(gc)
   switch(message_type) {
 
   // when server gets "clickedObj" signal
   case 'clickedObj' :
-    writeData(client, "clickedObj", message_parts);
-    others[0].player.instance.send("s.feedback." + message_parts[2]);
-    target.instance.send("s.feedback." + message_parts[2]);
+    // writeData(client, "clickedObj", message_parts);
+    // others[0].player.instance.send("s.feedback." + message_parts[2]);
+    // target.instance.send("s.feedback." + message_parts[2]);
     setTimeout(function() {
       _.map(all, function(p){
         // tell client to advance to next round
         // p.player.instance.emit( 'newRoundUpdate', {user: client.userid} );
-
 
         // p.role may be incorrect, information is somewhere in p
         // here, decide what data to pass to each subject
@@ -51,13 +51,15 @@ var onMessage = function(client,message) {
             {crittersToPresent: gc.trialList.speakerLearningTrial} :
             {crittersToPresent: gc.trialList.listenerLearningTrial}
 
-            
-        p.player.instance.emit("nextBlock", {subjectSpecificBlock: dataPacket})
+
+        p.player.instance.emit("nextBlock",
+          {user: client.userid}
+        )
 
       });
       // tell server to advance to next round (or if at end, disconnect)
       // gc.newRound();
-    }, 3000);
+    }, 1000);
 
     break;
 
