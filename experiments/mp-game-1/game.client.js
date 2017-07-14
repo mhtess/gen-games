@@ -168,20 +168,21 @@ var customSetup = function(game) {
 
   game.socket.on('nextBlock', function(data){
     // here we will want to set the subject's stimuli (that are coming in data) to be what gets presented. this may be able to be done by modifying the slides e.g., exp.slides.learning_trial.present
+    console.log("nextBlock")
     exp.go();
 
     // below just copied from newRoundUpdate and may not be needed;
-    $('#chatbox').removeAttr("disabled");
-    $('#chatbox').focus();
-    $('#messages').empty();
-    if(game.roundNum + 2 > game.numRounds) {
-      $('#roundnumber').empty();
-      $('#instructs').empty()
-	.append("Round\n" + (game.roundNum + 1) + "/" + game.numRounds);
-    } else {
-      $('#roundnumber').empty()
-	.append("Round\n" + (game.roundNum + 2) + "/" + game.numRounds);
-    }
+  //   $('#chatbox').removeAttr("disabled");
+  //   $('#chatbox').focus();
+  //   $('#messages').empty();
+  //   if(game.roundNum + 2 > game.numRounds) {
+  //     $('#roundnumber').empty();
+  //     $('#instructs').empty()
+	// .append("Round\n" + (game.roundNum + 1) + "/" + game.numRounds);
+  //   } else {
+  //     $('#roundnumber').empty()
+	// .append("Round\n" + (game.roundNum + 2) + "/" + game.numRounds);
+  //   }
   });
 
 
@@ -227,7 +228,15 @@ var client_onjoingame = function(num_players, role) {
 
   // set mouse-tracking event handler
   if(role === globalGame.playerRoleNames.role2) {
-    globalGame.viewport.addEventListener("click", mouseClickListener, false);
+    // only role2 gets to see Continue button and press Continue
+    // change this to 60 seconds (10 -> 60)
+    // var div = document.createElement('div');
+    // div.innerHTML = "<p> hello </p>";
+    // globalGame.slides.robertPage.add(div)
+    var continueButton = document.getElementById("chatCont")
+    setTimeout(function() { $("#chatCont").show() }, 3*1000)
+    // globalGame.chatCont.addEventListener("click", buttonClickListener, false);
+    continueButton.addEventListener("click", buttonClickListener, false);
   }
 };
 
@@ -235,39 +244,41 @@ var client_onjoingame = function(num_players, role) {
  MOUSE EVENT LISTENERS
  */
 
-function mouseClickListener(evt) {
-  var bRect = globalGame.viewport.getBoundingClientRect();
-  var mouseX = (evt.clientX - bRect.left)*(globalGame.viewport.width/bRect.width);
-  var mouseY = (evt.clientY - bRect.top)*(globalGame.viewport.height/bRect.height);
-  if (globalGame.messageSent){ // if message was not sent, don't do anything
-    for (var i=0; i < globalGame.currStim.length; i++) {
-      var obj = globalGame.currStim[i];
-      if (hitTest(obj, mouseX, mouseY)) {
-        globalGame.messageSent = false;
-        //highlight the object that was clicked:
-        var upperLeftXListener = obj.listenerCoords.gridPixelX;
-        var upperLeftYListener = obj.listenerCoords.gridPixelY;
-        if (upperLeftXListener != null && upperLeftYListener != null) {
-          globalGame.ctx.beginPath();
-          globalGame.ctx.lineWidth="10";
-          globalGame.ctx.strokeStyle="black";
-          globalGame.ctx.rect(upperLeftXListener+5, upperLeftYListener+5,290,290);
-          globalGame.ctx.stroke();
-        }
-	// Tell the server about it
-        var alt1 = _.sample(_.without(globalGame.currStim, obj));
-        var alt2 = _.sample(_.without(globalGame.currStim, obj, alt1));
-        globalGame.socket.send("clickedObj." + obj.condition + "." +
-            			 obj.targetStatus + "." + obj.color.join('.') + "." +
-            			 obj.speakerCoords.gridX + "." + obj.listenerCoords.gridX +"." +
-            			 alt1.targetStatus + "." + alt1.color.join('.') + "." +
-            			 alt1.speakerCoords.gridX+"."+alt1.listenerCoords.gridX+"." +
-            			 alt2.targetStatus + "." + alt2.color.join('.') + "." +
-            			 alt2.speakerCoords.gridX+"."+alt2.listenerCoords.gridX + ".");
-
-      }
-    }
-  }
+function buttonClickListener(evt) {
+  console.log("cliked button")
+  // var bRect = globalGame.viewport.getBoundingClientRect();
+  // var mouseX = (evt.clientX - bRect.left)*(globalGame.viewport.width/bRect.width);
+  // var mouseY = (evt.clientY - bRect.top)*(globalGame.viewport.height/bRect.height);
+  globalGame.socket.send("clickedObj.");
+  // if (globalGame.messageSent){ // if message was not sent, don't do anything
+  //   for (var i=0; i < globalGame.currStim.length; i++) {
+  //     var obj = globalGame.currStim[i];
+  //     if (hitTest(obj, mouseX, mouseY)) {
+  //       globalGame.messageSent = false;
+  //       //highlight the object that was clicked:
+  //       var upperLeftXListener = obj.listenerCoords.gridPixelX;
+  //       var upperLeftYListener = obj.listenerCoords.gridPixelY;
+  //       if (upperLeftXListener != null && upperLeftYListener != null) {
+  //         globalGame.ctx.beginPath();
+  //         globalGame.ctx.lineWidth="10";
+  //         globalGame.ctx.strokeStyle="black";
+  //         globalGame.ctx.rect(upperLeftXListener+5, upperLeftYListener+5,290,290);
+  //         globalGame.ctx.stroke();
+  //       }
+	// // Tell the server about it
+  //       var alt1 = _.sample(_.without(globalGame.currStim, obj));
+  //       var alt2 = _.sample(_.without(globalGame.currStim, obj, alt1));
+  //       globalGame.socket.send("clickedObj." + obj.condition + "." +
+  //           			 obj.targetStatus + "." + obj.color.join('.') + "." +
+  //           			 obj.speakerCoords.gridX + "." + obj.listenerCoords.gridX +"." +
+  //           			 alt1.targetStatus + "." + alt1.color.join('.') + "." +
+  //           			 alt1.speakerCoords.gridX+"."+alt1.listenerCoords.gridX+"." +
+  //           			 alt2.targetStatus + "." + alt2.color.join('.') + "." +
+  //           			 alt2.speakerCoords.gridX+"."+alt2.listenerCoords.gridX + ".");
+  //
+  //     }
+  //   }
+  // }
 };
 
 function hitTest(shape,mx,my) {
