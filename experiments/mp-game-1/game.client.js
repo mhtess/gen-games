@@ -227,7 +227,10 @@ var client_onjoingame = function(num_players, role) {
 
   // set mouse-tracking event handler
   if(role === globalGame.playerRoleNames.role2) {
-    globalGame.viewport.addEventListener("click", mouseClickListener, false);
+    // only role2 gets to see Continue button and press Continue
+    // change this to 60 seconds (10 -> 60)
+    setTimeout(function() { $("#chatCont").show() }, 5*1000)
+    globalGame.viewport.addEventListener("click", buttonClickListener, false);
   }
 };
 
@@ -235,7 +238,7 @@ var client_onjoingame = function(num_players, role) {
  MOUSE EVENT LISTENERS
  */
 
-function mouseClickListener(evt) {
+function buttonClickListener(evt) {
   var bRect = globalGame.viewport.getBoundingClientRect();
   var mouseX = (evt.clientX - bRect.left)*(globalGame.viewport.width/bRect.width);
   var mouseY = (evt.clientY - bRect.top)*(globalGame.viewport.height/bRect.height);

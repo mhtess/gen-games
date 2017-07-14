@@ -6,11 +6,11 @@ function mark(el, otherEls) {
   }
   prev = el;
 
-    el.style.border=='' ? 
+    el.style.border=='' ?
     $('#'+el.id).css({"border":'2px solid red',
                     'background-color': 'white','opacity': '1'}) &
     $('#'+el.id+'critname').css({'opacity': '1', 'font-weight': 'bold'})
-                     : 
+                     :
     $('#'+el.id).css({"border":'',
                     'background-color': 'white'})
     otherEls.map(function(cell){$('#'+cell).css({"border":'',
@@ -71,7 +71,7 @@ function create_table(rows, cols) { //rows * cols = number of exemplars
       table += "<div class='critname' id='cell" + ind + "critname'></div></tr>";
       table += "</table>";
       table += "</td>";
-      
+
     }
     table += "</tr>"
   }
@@ -148,7 +148,7 @@ function make_slides(f) {
               "critter"+i, scale)
       }
 
-      
+
        for(var i=0; i<shuffledCritters.length; i++) {
          $('#cell'+i+'critname').html(shuffledCritters[i]["creatureName"]);
          $('#cell'+i+'critname').css({'opacity': '0'});
@@ -161,7 +161,7 @@ function make_slides(f) {
       var end_time = Date.now()
       this.time_spent = end_time - this.start_time;
       exp.go(); // use exp.go() if and only if there is no "present" data.
-      
+
     },
   });
 
@@ -273,7 +273,6 @@ slides.learning_trial = slide({
 
       $("#chatCont").hide()
       // change this to 60 seconds (10 -> 60)
-      setTimeout(function() { $("#chatCont").show() }, 3*1000)
       // $('#exit_survey').hide();
       // $('#message_panel').show();
       // $('#main').show();
@@ -441,10 +440,10 @@ function init() {
     };
   //blocks of the experiment:
   exp.structure=[
+    "robertPage",
     "i0",
     "instructions",
-    "robertPage",
-    "welcome_critterLand", 
+    "welcome_critterLand",
     "learning_trial",
     "robertPage",
     "condition",
