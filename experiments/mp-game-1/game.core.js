@@ -40,6 +40,69 @@
     role2 : 'bug'
   }
 
+  this.critterScale = 0.5;
+  this.creatureOpts = [
+  	{ creature: "bird",
+  		name: "wug",
+  		col1_mean: "#00ff00", // col1 = crest
+  		col1_var: 0.5,
+  		col2_mean: "#00ff1a", // col2 = body
+  		col2_var: 0.001,
+  		col3_mean: "#006400", // col3 = wing
+  		col3_var: 0.3,
+  	    col4_mean: null,
+  	    col4_var: null,
+  	    col5_mean: null,
+  	    col5_var: null,
+  		prop1: null, // height
+  		prop2: null, // fatness
+  		tar1: 0.5, // tails
+  		tar2: 0.2, // crest
+  		internal_prop: 0.8 // pepsin
+  	},
+  	{ creature: "bird",
+  		name: "blicket",
+  		col1_mean: "#ff4500", // col1 = crest
+  		col1_var: 0.2,
+  		col2_mean: "#ff4500", // col2 = body
+  		col2_var: 0.001,
+  		col3_mean: "#ff4500", // col3 = wing
+  		col3_var: 1.2,
+      	col4_mean: null,
+  	    col4_var: null,
+  	    col5_mean: null,
+  	    col5_var: null,
+  		prop1: null, // height
+  		prop2: null, // fatness
+  		tar1: 0, // tails
+  		tar1: 1, // crest
+  		internal_prop: 0.2, // pepsin
+  	},
+  	{ creature: "bird",
+  		name: "rambo",
+  		col1_mean: "#ffff00", // col1 = crest
+  		col1_var: 0.2,
+  		col2_mean: "#ffff00", // col2 = body
+  		col2_var: 0.001,
+  		col3_mean: "#ffff00", // col3 = wing
+  		col3_var: 1.2,
+  	    col4_mean: null,
+  	    col4_var: null,
+  	    col5_mean: null,
+  	    col5_var: null,
+  		prop1: null, // height
+  		prop2: null, // fatness
+  		tar1: 1, // tails
+  		tar1: 0.2, // crest
+  		internal_prop: 0 // pepsin
+  	}
+  ]
+
+  this.creatureN = 12;
+  this.creatureTypesN = 3;
+  this.exemplarN = this.creatureN/this.creatureTypesN;
+  this.uniqueCreatures =  _.uniq(_.pluck(this.creatureOpts, "name"));
+
   //Dimensions of world in pixels and numberof cells to be divided into;
   this.numHorizontalCells = 0;
   this.numVerticalCells = 0;
@@ -68,7 +131,7 @@
     this.id = options.id;
     this.expName = options.expName;
     this.player_count = options.player_count;
-    this.trialList = this.makeTrialList();
+    this.trialList = this.genCreatures();
     this.data = {
       id : this.id,
       trials : [],
@@ -159,6 +222,37 @@ game_core.prototype.sampleStimulusLocs = function() {
   var speakerLocs = _.shuffle([[1,1], [2,1], [3,1]]);
   return {listener : listenerLocs, speaker : speakerLocs};
 };
+
+game_core.prototype.genCreatures = function(){
+  var j = 0;
+  // Generates the characteristics for each critter
+  	var allCreatures = [];
+  	for (var i = 0; i < this.uniqueCreatures.length; i++){
+  		var creatOpts = _.where(this.creatureOpts, {name: this.uniqueCreatures[i]})[0];
+  		while (j<(this.exemplarN*(i+1))) {
+  			allCreatures.push({
+  				"col1": utils.genColor(creatOpts.col1_mean, creatOpts.col1_var),
+  				"col2": utils.genColor(creatOpts.col2_mean, creatOpts.col2_var),
+  				"col3": creatOpts.col3_mean == null ? null : utils.genColor(creatOpts.col3_mean, creatOpts.col3_var),
+  		    	"col4" : creatOpts.col4_mean == null ? null : utils.genColor(creatOpts.col4_mean, creatOpts.col4_var),
+  		    	"col5" : creatOpts.col5_mean == null ? null : utils.genColor(creatOpts.col5_mean, creatOpts.col5_var),
+  				"prop1": creatOpts.prop1 == null ? utils.randProp() : creatOpts.prop1,
+  				"prop2": creatOpts.prop2 == null ? utils.randProp() : creatOpts.prop2,
+  				"tar1": utils.flip(creatOpts.tar1),
+  				"tar2": utils.flip(creatOpts.tar2),
+  				"creatureName": this.uniqueCreatures[i],
+  				"critter" : creatOpts.creature,
+  				"query": "question",
+  				"stimID": j,
+  				"internal_prop": utils.flip(creatOpts.internal_prop),
+  				"attentionCheck": utils.generateAttentionQuestion()
+  			})
+  	  		j++;
+  		}
+  	}
+  	return allCreatures
+}
+
 
 // this gets run when the game is created and creates all trial information
 // functionally equivalent to making something like exp.stims in init() in template.js

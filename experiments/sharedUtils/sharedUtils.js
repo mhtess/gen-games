@@ -3,6 +3,7 @@ var fs = require('fs');
 var converter = require("color-convert");
 var DeltaE = require('../node_modules/delta-e');
 var sendPostRequest = require('request').post;
+// var Raphael = require('raphael.min.js');
 
 var serveFile = function(req, res) {
   var fileName = req.params[0];
@@ -10,7 +11,7 @@ var serveFile = function(req, res) {
   if(req.query.workerId) {
     console.log(" by workerID " + req.query.workerId);
   }
-  return res.sendFile(fileName, {root: __base}); 
+  return res.sendFile(fileName, {root: __base});
 };
 
 var handleDuplicate = function(req, res) {
@@ -190,8 +191,8 @@ var colorDiff = function(color1, color2) {
 var vec = function extractEntries(dict,key) {
     vec = []
     for (i=0; i<dict.length; i++) {
-        vec.push(dict[i][key]);    
-    } 
+        vec.push(dict[i][key]);
+    }
     return vec;
 }
 
@@ -199,19 +200,19 @@ var vec = function extractEntries(dict,key) {
 var vec = function matchingValue(dict,key,value) {
   vec = []
   for (i=0; i<dict.length; i++) {
-    if (dict[i][key]==value) {      
-        vec.push(dict[i]);    
+    if (dict[i][key]==value) {
+        vec.push(dict[i]);
     }
-  } 
+  }
   return vec;
 }
 
 // add entry to dictionary object
 var dict = function addEntry(dict,key,value) {
   for (i=0; i<dict.length; i++) {
-      dict[i][key] = value;   
-  } 
-  return dict;  
+      dict[i][key] = value;
+  }
+  return dict;
 }
 
 // make integer series from lb (lower) to ub (upper)
@@ -227,6 +228,71 @@ var series = function makeSeries(lb,ub) {
 }
 
 // --- above added by jefan March 2017
+
+
+// -- added by MHT July 2017
+var genColor = function(color, variance) {
+	function shuffle(v) { newarray = v.slice(0);for(var j, x, i = newarray.length; i; j = parseInt(Math.random() * i), x = newarray[--i], newarray[i] = newarray[j], newarray[j] = x);return newarray;} // non-destructive.
+	var n = 10; // this is the default in ecosystem.js see line 12
+	if (color == null) {
+		var h = [];
+		var offset = Math.random() * .99 / n;
+	    for (var i=0;i<n-1;i++) {
+	   		h.push((i/n)+offset);
+	  	}
+	  	h = shuffle(h);
+	    h = h.shift();
+		var s = uniformAroundMean(.99, .1);
+	    var v = uniformAroundMean(.99, .1);
+		color = converter.hsv.hex(h, s, v);
+	}
+	else
+		color = myColor(color, variance);
+	return color;
+};
+
+var flip = function(p){
+	return p > Math.random()
+};
+
+var generateAttentionQuestion = function(){
+	return this.flip(0.5) ? "tar1" : "tar2"
+};
+
+var randProp = function() {return Math.random();};
+var uniform = function(a, b) { return ( (Math.random()*(b-a))+a ); }
+var uniformAroundMean = function(mean, radius) {
+    var upper = Math.min(0.99, mean+radius);
+    var lower = Math.max(0.01, mean-radius);
+    return uniform(lower, upper);
+};
+
+var myColor = function(mean, variance) {
+    var hVar;
+    var sVar;
+    var vVar;
+    if (variance == null) {
+        hVar = 0.01;
+        sVar = 0.1;
+        vVar = 0.1;
+    } else if (variance < 1) {
+        hVar = 0.1 * variance;
+        sVar = 1 * variance;
+        vVar = 1 * variance;
+    } else {
+        hVar = 0.1 * variance;
+        sVar = 0.1 * variance;
+        vVar = 0.1 * variance;
+    }
+    var c = converter.hex.hsv(mean)
+    var hue = uniformAroundMean(c[0], hVar);
+    var saturation = uniformAroundMean(c[1], sVar);
+    var value = uniformAroundMean(c[2], vVar);
+    var newColor = converter.hsv.hex(hue, saturation, value);
+    return  "#" + newColor;
+}
+
+
 
 module.exports = {
   UUID,
@@ -244,5 +310,9 @@ module.exports = {
   randomCircle,
   randomPoint,
   randomSpline,
-  colorDiff
+  colorDiff,
+  randProp,
+  genColor,
+  flip,
+  generateAttentionQuestion
 };
