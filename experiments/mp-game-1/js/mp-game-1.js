@@ -12,11 +12,11 @@ function mark(el, otherEls) {
     $('#'+el.id+'critname').css({'opacity': '1', 'font-weight': 'bold'})
                      :
     $('#'+el.id).css({"border":'',
-                    'background-color': 'white'})
+                    'background-color': 'white'}) &
+    $('#'+el.id+'critname').css({'opacity': '0.5', 'font-weight': 'normal'})
     otherEls.map(function(cell){$('#'+cell).css({"border":'',
       'background-color': 'white'})})
 
-  $('#'+el.id+'critname').css({'opacity': '1'});
   check(allCreatures.length);
 
 }
@@ -557,7 +557,8 @@ function init() {
 
   exp.structure=[
     "robertPage",
-    "welcome_critterLand",
+    "welcome_critterLand", "welcome_critterLand", 
+    
     "i0",
     "instructions",
     // "condition",
