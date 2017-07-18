@@ -57,7 +57,7 @@
 
 
   <!-- Finally, Load the game client code. -->
-  <script type="text/javascript" src="/sharedUtils/clientBase.js"></script>    
+  <script type="text/javascript" src="/sharedUtils/clientBase.js"></script>
   <script type="text/javascript" src="game.client.js"></script>
   <script type="text/javascript" src="drawing.js"></script>
   <script type="text/javascript" src ="js/mp-game-1.js"></script>
@@ -72,7 +72,7 @@
     <p id="cocolab">Stanford CoCoLab</p>
     <p id="instruct-text">You will see some creatures and be asked some questions about them. The HIT should take 5 minutes. Please pay attention, thanks!</p>
     <button id="start_button" type="button">Start Experiment</button>
-    <p id="legal">Legal information: By answering the following questions, you are participating in a study being performed by cognitive scientists in the Stanford Department of Psychology. If you have questions about this research, please contact Erin Bennett at <a href="mailto://erindb@stanford.edu">erindb@stanford.edu</a> or Noah Goodman, at ngoodman@stanford.edu. You must be  at least 18 years old to participate. Your participation in this research is voluntary. You may decline to answer any or all of the following questions. You may decline further participation, at any time, without adverse consequences. Your anonymity is assured; the researchers who have requested your participation will not receive any personal information about you.</p>
+    <p id="legal">Legal information: By answering the following questions, you are participating in a study being performed by cognitive scientists in the Stanford Department of Psychology. If you have questions about this research, please contact M. H. Tessler at <a href="mailto://mtessler@stanford.edu">mtessler@stanford.edu</a> or Noah Goodman, at ngoodman@stanford.edu. You must be  at least 18 years old to participate. Your participation in this research is voluntary. You may decline to answer any or all of the following questions. You may decline further participation, at any time, without adverse consequences. Your anonymity is assured; the researchers who have requested your participation will not receive any personal information about you.</p>
   </div>
 
 
@@ -94,11 +94,12 @@
     <button onclick="_s.button()">Continue</button>
   </div>
 
-  <div class="slide" id="welcome_critterLand">
+ <div class="slide" id="welcome_critterLand">
     <h3>Welcome to Critter Country</h3>
-    <p>Meet the Critters of Critter Country. These are some examples of the different types of critters you may encounter:</p>
-    <div id="all_critters"></div>
-    <button onclick="_s.button()">Continue</button>
+    <p>Meet the Critters of Critter Country. These are some of the different critters you encounter. Use the CritterDex on each critter by clicking on them in order to proceed:</p>
+    <div id='critter_display'></div>
+
+    <button id="learning_button" onclick="_s.button()">Continue</button>
   </div>
 
   <div class="slide" id="condition">
@@ -118,33 +119,57 @@
     <p class="err">Please select something.</p>
   </div>
 
-  <div class="slide" id="robertPage">
-  <div id='header'>
-    <div id='textInfo'>
-     <h1 id='roleLabel'> You are the </h1> 
-     <p id='instructs'> </p>
+  <div class="slide" id="test_trial">
+    <p>You come across the following creature:</p>
+    <div><svg id="critterTestSVG"></svg></div>
 
-   </div>
-   <p style="color:red" id='roundnumber'> Round 1</p>
-   <p style="color:green" id='score'> </p>
- </div>
+    <p class="testQuestion">What is it?</p>
+    <label><input type="radio"  name="response" value="wug"/>wug</label>
+    <label><input type="radio"  name="response" value="fep"/>fep</label>
+    <label><input type="radio"  name="response" value="lorch"/>lorch</label>
 
+    <br>
+    <br>
 
- <div id='main'>
-  <!-- <span> -->
-  <div id='message_panel'>
-    <ul id="messages"></ul>
-    <hr>
-    <div id="chatarea">
-      <form action="">
-        <input id="chatbox" autocomplete="off" />
-        <button id="chatbutton">Send</button>
-      </form>
-    </div>
+    <button onclick="_s.button()">Continue</button>
+    <p class="err">Please answer the question.</p>
   </div>
-  <canvas id="viewport"> </canvas>
-  <!-- </span> -->
-</div>
+
+  <div class="slide" id="robertPage">
+    <div id='header'>
+      <div id='textInfo'>
+       <h1 id='roleLabel'> You are the </h1>
+       <p id='instructs'> </p>
+
+     </div>
+     <p style="color:red" id='roundnumber'> Round 1</p>
+     <p style="color:green" id='score'> </p>
+   </div>
+
+
+   <div id='main'>
+    <!-- <span> -->
+    <div id='message_panel'>
+      <ul id="messages"></ul>
+      <hr>
+      <div id="chatarea">
+        <form action="">
+          <input id="chatbox" autocomplete="off" />
+          <button id="chatbutton">Send</button>
+        </form>
+      </div>
+      <!-- <div id=chatCont>
+      <button onclick="_s.button()">Continue</button>
+      </div> -->
+    </div>
+    <div id=chatCont>
+      <!-- <button onclick="_s.button()">Continue</button> -->
+      <button>Continue</button>
+    </div>
+
+    <canvas id="viewport"> </canvas>
+    <!-- </span> -->
+  </div>
 </div>
 
 <div class="slide" id="exit_survey">
@@ -165,10 +190,10 @@
     <label><input type="radio"  name="assess" value="Confused"/>I was confused</label>
 
     <p>Were there any problems or bugs in the experiment?</p>
-    <textarea id="problems" rows="2" cols="50"></textarea>
+    <textarea id="problems" rows="2" cols="50" spellcheck=false></textarea>
 
     <p>What do you think is a fair price for the work you did?</p>
-    <textarea id="fairprice" rows="1" cols="10"></textarea>
+    <textarea id="fairprice" rows="1" cols="10" spellcheck=false></textarea>
 
     <p>Gender:
       <select id="gender">
@@ -204,7 +229,7 @@
     </select>
 
     <p>We would be interested in any comments you have about this experiment. Please type them here:</p>
-    <textarea id="comments" rows="3" cols="50"></textarea>
+    <textarea id="comments" rows="3" cols="50" spellcheck=false></textarea>
     <br/>
     <button onclick="_s.submit()">Submit</button>
   </div>
@@ -226,5 +251,5 @@
 </html>
 
 
-<!-- Problems: Need to get the main off the screen after it, need to 
+<!-- Problems: Need to get the main off the screen after it, need to
  put in critters for matching, need to rearrange, connect them later -->

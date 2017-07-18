@@ -1,8 +1,8 @@
 /*  Copyright (c) 2012 Sven "FuzzYspo0N" Bergström, 2013 Robert XD Hawkins
-    
+
     written by : http://underscorediscovery.com
     written for : http://buildnewgames.com/real-time-multiplayer/
-    
+
     modified for collective behavior experiments on Amazon Mechanical Turk
 
     MIT Licensed.
@@ -18,40 +18,59 @@
 // with the coordinates of the click, which this function reads and
 // applies.
 var onMessage = function(client,message) {
+  console.log("server received")
   //Cut the message up into sub components
   var message_parts = message.split('.');
 
   //The first is always the type of message
   var message_type = message_parts[0];
-  
+
   //Extract important variables
   var gc = client.game;
+  // console.log(gc)
   var id = gc.id;
   var all = gc.get_active_players();
   var target = gc.get_player(client.userid);
-  var others = gc.get_others(client.userid);  
+  var others = gc.get_others(client.userid);
+  // console.log(message_parts)
+  // console.log(gc)
   switch(message_type) {
-    
+
+  // when server gets "clickedObj" signal
   case 'clickedObj' :
-    writeData(client, "clickedObj", message_parts);
-    others[0].player.instance.send("s.feedback." + message_parts[2]);
-    target.instance.send("s.feedback." + message_parts[2]);
+    // writeData(client, "clickedObj", message_parts);
+    // others[0].player.instance.send("s.feedback." + message_parts[2]);
+    // target.instance.send("s.feedback." + message_parts[2]);
     setTimeout(function() {
       _.map(all, function(p){
-        p.player.instance.emit( 'newRoundUpdate', {user: client.userid} );
+        // tell client to advance to next round
+        // p.player.instance.emit( 'newRoundUpdate', {user: client.userid} );
+        // p.role may be incorrect, information is somewhere in p
+        // here, decide what data to pass to each subject
+        // console.log(p.player)
+        // var dataPacket = p.instance.role == "listener" ?
+        //     {crittersToPresent: "instruct-text"} :
+        //     {crittersToPresent: "legal"}
+
+        var dataPacket = gc.trialList;
+        console.log(dataPacket)
+
+        p.player.instance.emit("nextBlock",dataPacket)
+
       });
-      gc.newRound();
-    }, 3000);
-    
-    break; 
-  
+      // tell server to advance to next round (or if at end, disconnect)
+      // gc.newRound();
+    }, 300);
+
+    break;
+
   case 'playerTyping' :
     _.map(others, function(p) {
       p.player.instance.emit( 'playerTyping',
 			      {typing: message_parts[1]});
     });
     break;
-  
+
   case 'chatMessage' :
     if(client.game.player_count == 2 && !gc.paused) {
       writeData(client, "message", message_parts);
@@ -101,7 +120,7 @@ var getStim = function(game, targetStatus) {
   })[0]['color'];
 };
 
-// /* 
+// /*
 //    The following functions should not need to be modified for most purposes
 // */
 

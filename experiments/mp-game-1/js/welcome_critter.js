@@ -98,34 +98,37 @@ var creatureTypesN = 3;
 var exemplarN = creatureN/creatureTypesN;
 
 var uniqueCreatures = _.uniq(_.pluck(creatureOpts, "name"))
-var allCreatures = [];
-var j=0;
 
+
+var genCreatures = function(){
+	var j=0;
 // Generates the characteristics for each critter
-for (var i = 0; i < uniqueCreatures.length; i++){
-	var creatOpts = _.where(creatureOpts, {name: uniqueCreatures[i]})[0];
-	while (j<(exemplarN*(i+1))) {
-		allCreatures.push({
-			"col1": genColor(creatOpts.col1_mean, creatOpts.col1_var),
-			"col2": genColor(creatOpts.col2_mean, creatOpts.col2_var),
-			"col3": creatOpts.col3_mean == null ? null : genColor(creatOpts.col3_mean, creatOpts.col3_var),
-	    	"col4" : creatOpts.col4_mean == null ? null : genColor(creatOpts.col4_mean, creatOpts.col4_var),
-	    	"col5" : creatOpts.col5_mean == null ? null : genColor(creatOpts.col5_mean, creatOpts.col5_var),
-			"prop1": creatOpts.prop1 == null ? Ecosystem.randProp() : creatOpts.prop1,
-			"prop2": creatOpts.prop2 == null ? Ecosystem.randProp() : creatOpts.prop2,
-			"tar1": flip(creatOpts.tar1),
-			"tar2": flip(creatOpts.tar2),
-			"creatureName": uniqueCreatures[i],
-			"critter" : creatOpts.creature,
-			"query": "question",
-			"stimID": j,
-			"internal_prop": flip(creatOpts.internal_prop),
-			"attentionCheck": generateAttentionQuestion()
-		})
-  		j++;
+	var allCreatures = [];
+	for (var i = 0; i < uniqueCreatures.length; i++){
+		var creatOpts = _.where(creatureOpts, {name: uniqueCreatures[i]})[0];
+		while (j<(exemplarN*(i+1))) {
+			allCreatures.push({
+				"col1": genColor(creatOpts.col1_mean, creatOpts.col1_var),
+				"col2": genColor(creatOpts.col2_mean, creatOpts.col2_var),
+				"col3": creatOpts.col3_mean == null ? null : genColor(creatOpts.col3_mean, creatOpts.col3_var),
+		    	"col4" : creatOpts.col4_mean == null ? null : genColor(creatOpts.col4_mean, creatOpts.col4_var),
+		    	"col5" : creatOpts.col5_mean == null ? null : genColor(creatOpts.col5_mean, creatOpts.col5_var),
+				"prop1": creatOpts.prop1 == null ? Ecosystem.randProp() : creatOpts.prop1,
+				"prop2": creatOpts.prop2 == null ? Ecosystem.randProp() : creatOpts.prop2,
+				"tar1": flip(creatOpts.tar1),
+				"tar2": flip(creatOpts.tar2),
+				"creatureName": uniqueCreatures[i],
+				"critter" : creatOpts.creature,
+				"query": "question",
+				"stimID": j,
+				"internal_prop": flip(creatOpts.internal_prop),
+				"attentionCheck": generateAttentionQuestion()
+			})
+	  		j++;
+		}
 	}
+	return allCreatures
 }
-
 // This outlines the features of all critters defined in ecosystem.js
 var critFeatures = [
 	{ creature: "bird",

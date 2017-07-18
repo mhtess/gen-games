@@ -160,6 +160,9 @@ window.onload = function(){
   //Fetch the viewport
   globalGame.viewport = document.getElementById('viewport');
 
+  globalGame.slides = document.getElementsByClassName('slide');
+
+
   //Adjust its size
   globalGame.viewport.width = globalGame.world.width;
   globalGame.viewport.height = globalGame.world.height;

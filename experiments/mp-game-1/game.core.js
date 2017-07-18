@@ -1,50 +1,118 @@
-/*  Copyright (c) 2012 Sven "FuzzYspo0N" Bergström, 
+/*  Copyright (c) 2012 Sven "FuzzYspo0N" Bergström,
                   2013 Robert XD Hawkins
-    
+
  written by : http://underscorediscovery.com
     written for : http://buildnewgames.com/real-time-multiplayer/
-    
+
     substantially modified for collective behavior experiments on the web
     MIT Licensed.
-*/
+    */
 
 /*
   The main game class. This gets created on both server and
   client. Server creates one for each game that is hosted, and each
   client creates one for itself to play the game. When you set a
   variable, remember that it's only set in that instance.
-*/
-var has_require = typeof require !== 'undefined';
+  */
+  var has_require = typeof require !== 'undefined';
 
-if( typeof _ === 'undefined' ) {
-  if( has_require ) {
-    _ = require('underscore');
-    utils  = require(__base + '/sharedUtils/sharedUtils.js');
+  if( typeof _ === 'undefined' ) {
+    if( has_require ) {
+      _ = require('underscore');
+      utils  = require(__base + '/sharedUtils/sharedUtils.js');
+    }
+    else throw 'mymodule requires underscore, see http://underscorejs.org';
   }
-  else throw 'mymodule requires underscore, see http://underscorejs.org';
-}
 
-var game_core = function(options){
+  var game_core = function(options){
   // Store a flag if we are the server instance
   this.server = options.server ;
-  
+
   // How many players in the game?
   this.players_threshold = 2;
   this.playerRoleNames = {
     role1 : 'speaker',
     role2 : 'listener'
   };
-  
+
+  this.critter = {
+    role1 : 'bird',
+    role2 : 'bug'
+  }
+
+  this.critterScale = 0.5;
+  this.creatureOpts = [
+  	{ creature: "bird",
+  		name: "wug",
+  		col1_mean: "#00ff00", // col1 = crest
+  		col1_var: 0.001,
+  		col2_mean: "#00ff1a", // col2 = body
+  		col2_var: 0.001,
+  		col3_mean: "#006400", // col3 = wing
+  		col3_var: 0.001,
+  	    col4_mean: null,
+  	    col4_var: null,
+  	    col5_mean: null,
+  	    col5_var: null,
+  		prop1: null, // height
+  		prop2: null, // fatness
+  		tar1: 0.5, // tails
+  		tar2: 0.2, // crest
+  		internal_prop: 0.8 // pepsin
+  	},
+  	{ creature: "bird",
+  		name: "blicket",
+  		col1_mean: "#ff4500", // col1 = crest
+  		col1_var: 0.001,
+  		col2_mean: "#ff4500", // col2 = body
+  		col2_var: 0.001,
+  		col3_mean: "#ff4500", // col3 = wing
+  		col3_var: 0.001,
+      	col4_mean: null,
+  	    col4_var: null,
+  	    col5_mean: null,
+  	    col5_var: null,
+  		prop1: null, // height
+  		prop2: null, // fatness
+  		tar1: 0, // tails
+  		tar1: 1, // crest
+  		internal_prop: 0.2, // pepsin
+  	},
+  	{ creature: "bird",
+  		name: "rambo",
+  		col1_mean: "#ffff00", // col1 = crest
+  		col1_var: 0.001,
+  		col2_mean: "#ffff00", // col2 = body
+  		col2_var: 0.001,
+  		col3_mean: "#ffff00", // col3 = wing
+  		col3_var: 0.001,
+  	    col4_mean: null,
+  	    col4_var: null,
+  	    col5_mean: null,
+  	    col5_var: null,
+  		prop1: null, // height
+  		prop2: null, // fatness
+  		tar1: 1, // tails
+  		tar1: 0.2, // crest
+  		internal_prop: 0 // pepsin
+  	}
+  ]
+
+  this.creatureN = 12;
+  this.creatureTypesN = 3;
+  this.exemplarN = this.creatureN/this.creatureTypesN;
+  this.uniqueCreatures =  _.uniq(_.pluck(this.creatureOpts, "name"));
+
   //Dimensions of world in pixels and numberof cells to be divided into;
-  this.numHorizontalCells = 3;
-  this.numVerticalCells = 1;
-  this.cellDimensions = {height : 300, width : 300}; // in pixels
+  this.numHorizontalCells = 0;
+  this.numVerticalCells = 0;
+  this.cellDimensions = {height : 0, width : 0}; // in pixels
   this.cellPadding = 0;
   this.world = {height : (this.cellDimensions.height * this.numVerticalCells
-              + this.cellPadding),
-              width : (this.cellDimensions.width * this.numHorizontalCells
-              + this.cellPadding)}; 
-  
+    + this.cellPadding),
+  width : (this.cellDimensions.width * this.numHorizontalCells
+    + this.cellPadding)};
+
   // Which round are we on (initialize at -1 so that first round is 0-indexed)
   this.roundNum = -1;
 
@@ -56,21 +124,22 @@ var game_core = function(options){
 
   // This will be populated with the tangram set
   this.trialInfo = {};
-  
+
   if(this.server) {
     // If we're initializing the server game copy, pre-create the list of trials
     // we'll use, make a player object, and tell the player who they are
     this.id = options.id;
     this.expName = options.expName;
     this.player_count = options.player_count;
-    this.trialList = this.makeTrialList();
+    this.trialList = this.genCreatures();
+    // this.trialList = this.makeTrialList();
     this.data = {
       id : this.id,
       trials : [],
-      catch_trials : [], system : {}, 
+      catch_trials : [], system : {},
       subject_information : {
         gameID: this.id,
-	score: 0
+        score: 0
       }
     };
     this.players = [{
@@ -96,7 +165,7 @@ var game_player = function( game_instance, player_instance) {
   this.role = '';
   this.message = '';
   this.id = '';
-}; 
+};
 
 // server side we set some classes to global types, so that
 // we can use them in other files (specifically, game.server.js)
@@ -107,7 +176,7 @@ if('undefined' != typeof global) {
 
 // HELPER FUNCTIONS
 
-// Method to easily look up player 
+// Method to easily look up player
 game_core.prototype.get_player = function(id) {
   var result = _.find(this.players, function(e){ return e.id == id; });
   return result.player;
@@ -127,8 +196,9 @@ game_core.prototype.get_active_players = function() {
 };
 
 // Advance to the next round
+// MH: this can probably be removed since we will not be advancing trials within chatroom
 game_core.prototype.newRound = function() {
-  // If you've reached the planned number of rounds, end the game  
+  // If you've reached the planned number of rounds, end the game
   if(this.roundNum == this.numRounds - 1) {
     _.map(this.get_active_players(), function(p){
       p.player.instance.disconnect();});
@@ -143,8 +213,8 @@ game_core.prototype.newRound = function() {
 game_core.prototype.getRandomizedConditions = function() {
   var numEach = this.numRounds / 3;
   var conditions = [].concat(utils.fillArray("equal", numEach),
-			     utils.fillArray("closer", numEach),
-			     utils.fillArray("further", numEach));
+    utils.fillArray("closer", numEach),
+    utils.fillArray("further", numEach));
   return _.shuffle(conditions);
 };
 
@@ -154,52 +224,87 @@ game_core.prototype.sampleStimulusLocs = function() {
   return {listener : listenerLocs, speaker : speakerLocs};
 };
 
+game_core.prototype.genCreatures = function(){
+  var j = 0;
+  // Generates the characteristics for each critter
+  	var allCreatures = [];
+  	for (var i = 0; i < this.uniqueCreatures.length; i++){
+  		var creatOpts = _.where(this.creatureOpts, {name: this.uniqueCreatures[i]})[0];
+  		while (j<(this.exemplarN*(i+1))) {
+  			allCreatures.push({
+  				"col1": utils.genColor(creatOpts.col1_mean, creatOpts.col1_var),
+  				"col2": utils.genColor(creatOpts.col2_mean, creatOpts.col2_var),
+  				"col3": creatOpts.col3_mean == null ? null : utils.genColor(creatOpts.col3_mean, creatOpts.col3_var),
+  		    	"col4" : creatOpts.col4_mean == null ? null : utils.genColor(creatOpts.col4_mean, creatOpts.col4_var),
+  		    	"col5" : creatOpts.col5_mean == null ? null : utils.genColor(creatOpts.col5_mean, creatOpts.col5_var),
+  				"prop1": creatOpts.prop1 == null ? utils.randProp() : creatOpts.prop1,
+  				"prop2": creatOpts.prop2 == null ? utils.randProp() : creatOpts.prop2,
+  				"tar1": utils.flip(creatOpts.tar1),
+  				"tar2": utils.flip(creatOpts.tar2),
+  				"creatureName": this.uniqueCreatures[i],
+  				"critter" : creatOpts.creature,
+  				"query": "question",
+  				"stimID": j,
+  				"internal_prop": utils.flip(creatOpts.internal_prop),
+  				"attentionCheck": utils.generateAttentionQuestion()
+  			})
+  	  		j++;
+  		}
+  	}
+  	return allCreatures
+}
+
+
+// this gets run when the game is created and creates all trial information
+// functionally equivalent to making something like exp.stims in init() in template.js
 game_core.prototype.makeTrialList = function () {
   var local_this = this;
   var conditionList = this.getRandomizedConditions();
   var trialList = [];
   for (var i = 0; i < conditionList.length; i++) {
     var condition = conditionList[i];
-    var objList = sampleTrial(condition); // Sample three objects 
+    var objList = sampleTrial(condition); // Sample three objects
     var locs = this.sampleStimulusLocs(); // Sample locations for those objects
-    trialList.push(_.map(_.zip(objList, locs.speaker, locs.listener), function(tuple) {
-      var object = _.clone(tuple[0]);
-      object.width = local_this.cellDimensions.width;
-      object.height = local_this.cellDimensions.height;      
-      var speakerGridCell = local_this.getPixelFromCell(tuple[1][0], tuple[1][1]); 
-      var listenerGridCell = local_this.getPixelFromCell(tuple[2][0], tuple[2][1]);
-      object.speakerCoords = {
-	gridX : tuple[1][0],
-	gridY : tuple[1][1],
-	trueX : speakerGridCell.centerX - object.width/2,
-	trueY : speakerGridCell.centerY - object.height/2,
-	gridPixelX: speakerGridCell.centerX - 150,
-	gridPixelY: speakerGridCell.centerY - 150
-      };
-      object.listenerCoords = {
-	gridX : tuple[2][0],
-	gridY : tuple[2][1],
-	trueX : listenerGridCell.centerX - object.width/2,
-	trueY : listenerGridCell.centerY - object.height/2,
-	gridPixelX: listenerGridCell.centerX - 150,
-	gridPixelY: listenerGridCell.centerY - 150
-      };
-      return object;
-    }));
-  };
-  return(trialList);
+   //  trialList.push(_.map(_.zip(objList, locs.speaker, locs.listener), function(tuple) {
+   //    var object = _.clone(tuple[0]);
+   //    object.width = local_this.cellDimensions.width;
+   //    object.height = local_this.cellDimensions.height;
+   //    var speakerGridCell = local_this.getPixelFromCell(tuple[1][0], tuple[1][1]);
+   //    var listenerGridCell = local_this.getPixelFromCell(tuple[2][0], tuple[2][1]);
+   //    object.speakerCoords = {
+   //     gridX : tuple[1][0],
+   //     gridY : tuple[1][1],
+   //     trueX : speakerGridCell.centerX - object.width/2,
+   //     trueY : speakerGridCell.centerY - object.height/2,
+   //     gridPixelX: speakerGridCell.centerX - 150,
+   //     gridPixelY: speakerGridCell.centerY - 150
+   //   };
+   //   object.listenerCoords = {
+   //     gridX : tuple[2][0],
+   //     gridY : tuple[2][1],
+   //     trueX : listenerGridCell.centerX - object.width/2,
+   //     trueY : listenerGridCell.centerY - object.height/2,
+   //     gridPixelX: listenerGridCell.centerX - 150,
+   //     gridPixelY: listenerGridCell.centerY - 150
+   //   };
+   //   return object;
+   // }));
+  //trialList.push(exp.slides.learning_trial.present)
+
+};
+return(trialList);
 };
 
 game_core.prototype.server_send_update = function(){
   //Make a snapshot of the current state, for updating the clients
   var local_game = this;
-  
+
   // Add info about all players
   var player_packet = _.map(local_game.players, function(p){
     return {id: p.id,
-            player: null};
-  });
-  
+      player: null};
+    });
+
   var state = {
     gs : this.game_started,   // true when game's started
     pt : this.players_threshold,
@@ -257,9 +362,9 @@ var checkItem = function(condition, target, firstDistractor, secondDistractor) {
 game_core.prototype.getPixelFromCell = function (x, y) {
   return {
     centerX: (this.cellPadding/2 + this.cellDimensions.width * (x - 1)
-        + this.cellDimensions.width / 2),
+      + this.cellDimensions.width / 2),
     centerY: (this.cellPadding/2 + this.cellDimensions.height * (y - 1)
-        + this.cellDimensions.height / 2),
+      + this.cellDimensions.height / 2),
     upperLeftX : (this.cellDimensions.width * (x - 1) + this.cellPadding/2),
     upperLeftY : (this.cellDimensions.height * (y - 1) + this.cellPadding/2),
     width: this.cellDimensions.width,
@@ -298,4 +403,3 @@ game_core.prototype.getTrueCoords = function (coord, objLocation, objImage) {
     return trueY;
   }
 };
-  
