@@ -27,6 +27,7 @@ var onMessage = function(client,message) {
 
   //Extract important variables
   var gc = client.game;
+  // console.log(gc)
   var id = gc.id;
   var all = gc.get_active_players();
   var target = gc.get_player(client.userid);
@@ -47,9 +48,12 @@ var onMessage = function(client,message) {
         // p.role may be incorrect, information is somewhere in p
         // here, decide what data to pass to each subject
         // console.log(p.player)
-        var dataPacket = p.instance.role == "listener" ?
-            {crittersToPresent: "instruct-text"} :
-            {crittersToPresent: "legal"}
+        // var dataPacket = p.instance.role == "listener" ?
+        //     {crittersToPresent: "instruct-text"} :
+        //     {crittersToPresent: "legal"}
+
+        var dataPacket = gc.trialList;
+        console.log(dataPacket)
 
         p.player.instance.emit("nextBlock",dataPacket)
 

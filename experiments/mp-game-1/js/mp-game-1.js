@@ -129,6 +129,7 @@ function make_slides(f) {
  slides.welcome_critterLand = slide({
     name : "welcome_critterLand",
 
+    crittersFromServer : "",
 
     start : function(stim) {
       var start_time = Date.now()
@@ -136,7 +137,7 @@ function make_slides(f) {
       $(".critname").hide();
       $(".err").hide();
       $("#learning_button").hide(); //fix this
-      allCreatures = genCreatures();
+      allCreatures = this.crittersFromServer;//genCreatures();
       var shuffledCritters = _.shuffle(allCreatures)
 
       this.num_creats = allCreatures.length;
@@ -540,7 +541,7 @@ function init() {
       screenW: screen.width,
       screenUW: exp.width
     };
-  
+
   // learning - chat - test rounds
     var numRounds = function(num) {
       array1 = ["welcome_critterLand", "robertPage", "test_trial"]
@@ -555,18 +556,19 @@ function init() {
   //blocks of the experiment:
 
   exp.structure=[
+    "robertPage",
+    "welcome_critterLand",
     "i0",
     "instructions",
     // "condition",
-    "welcome_critterLand", "welcome_critterLand",
+    "welcome_critterLand",
     "robertPage",
     "test_trial",
     // need a waiting room here
-    "robertPage",
      'subj_info',
     'thanks'
   ]
-  
+
   // var start_exp = ["i0", "instructions"]
   // // change this as you please
   // var middle_exp = numRounds(2)

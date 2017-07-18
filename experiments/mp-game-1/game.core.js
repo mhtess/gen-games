@@ -45,11 +45,11 @@
   	{ creature: "bird",
   		name: "wug",
   		col1_mean: "#00ff00", // col1 = crest
-  		col1_var: 0.5,
+  		col1_var: 0.001,
   		col2_mean: "#00ff1a", // col2 = body
   		col2_var: 0.001,
   		col3_mean: "#006400", // col3 = wing
-  		col3_var: 0.3,
+  		col3_var: 0.001,
   	    col4_mean: null,
   	    col4_var: null,
   	    col5_mean: null,
@@ -63,11 +63,11 @@
   	{ creature: "bird",
   		name: "blicket",
   		col1_mean: "#ff4500", // col1 = crest
-  		col1_var: 0.2,
+  		col1_var: 0.001,
   		col2_mean: "#ff4500", // col2 = body
   		col2_var: 0.001,
   		col3_mean: "#ff4500", // col3 = wing
-  		col3_var: 1.2,
+  		col3_var: 0.001,
       	col4_mean: null,
   	    col4_var: null,
   	    col5_mean: null,
@@ -81,11 +81,11 @@
   	{ creature: "bird",
   		name: "rambo",
   		col1_mean: "#ffff00", // col1 = crest
-  		col1_var: 0.2,
+  		col1_var: 0.001,
   		col2_mean: "#ffff00", // col2 = body
   		col2_var: 0.001,
   		col3_mean: "#ffff00", // col3 = wing
-  		col3_var: 1.2,
+  		col3_var: 0.001,
   	    col4_mean: null,
   	    col4_var: null,
   	    col5_mean: null,
@@ -132,6 +132,7 @@
     this.expName = options.expName;
     this.player_count = options.player_count;
     this.trialList = this.genCreatures();
+    // this.trialList = this.makeTrialList();
     this.data = {
       id : this.id,
       trials : [],
