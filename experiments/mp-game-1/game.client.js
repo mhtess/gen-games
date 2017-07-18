@@ -37,22 +37,22 @@ var client_onserverupdate_received = function(data){
     });
   }
 
-  if (globalGame.roundNum != data.roundNum) {
-    globalGame.currStim = _.map(data.trialInfo.currStim, function(obj) {
-      // Extract the coordinates matching your role
-      var customCoords = (globalGame.my_role == globalGame.playerRoleNames.role1 ?
-			  obj.speakerCoords : obj.listenerCoords);
-      // remove the speakerCoords and listenerCoords properties
-      var customObj = _.chain(obj)
-	    .omit('speakerCoords', 'listenerCoords')
-	    .extend(obj, {trueX : customCoords.trueX, trueY : customCoords.trueY,
-			  gridX : customCoords.gridX, gridY : customCoords.gridY,
-			  box : customCoords.box})
-	    .value();
-
-      return customObj;
-    });
-  };
+  // if (globalGame.roundNum != data.roundNum) {
+  //   globalGame.currStim = _.map(data.trialInfo.currStim, function(obj) {
+  //     // Extract the coordinates matching your role
+  //     var customCoords = (globalGame.my_role == globalGame.playerRoleNames.role1 ?
+	// 		  obj.speakerCoords : obj.listenerCoords);
+  //     // remove the speakerCoords and listenerCoords properties
+  //     var customObj = _.chain(obj)
+	//     .omit('speakerCoords', 'listenerCoords')
+	//     .extend(obj, {trueX : customCoords.trueX, trueY : customCoords.trueY,
+	// 		  gridX : customCoords.gridX, gridY : customCoords.gridY,
+	// 		  box : customCoords.box})
+	//     .value();
+  //
+  //     return customObj;
+  //   });
+  // };
 
   // Get rid of "waiting" screen if there are multiple players
   if(data.players.length > 1) {
