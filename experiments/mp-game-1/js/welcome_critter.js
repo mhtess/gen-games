@@ -98,9 +98,10 @@ var creatureTypesN = 3;
 var exemplarN = creatureN/creatureTypesN;
 
 var uniqueCreatures = _.uniq(_.pluck(creatureOpts, "name"))
-var j=0;
+
 
 var genCreatures = function(){
+	var j=0;
 // Generates the characteristics for each critter
 	var allCreatures = [];
 	for (var i = 0; i < uniqueCreatures.length; i++){

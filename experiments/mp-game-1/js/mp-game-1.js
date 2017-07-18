@@ -43,13 +43,14 @@ function check(num){
 
 }
 
+var ind = 0;
 function create_table(rows, cols) { //rows * cols = number of exemplars
-  var table = "<table>";
+  var table = "<table id='creature_table'>";
   for(var i=0; i <rows; i++) {
     table += "<tr>";
     for(var j=0; j<cols; j++) {
       table += "<td>";
-      var ind = i * cols + j;
+      ind = i * cols + j;
       table += "<table class ='cell' id='cell" + ind + "' onclick=\"mark(cell" + ind +",";
       table += "[";
       for(var k=0; k<rows*cols; k++) {
@@ -135,8 +136,10 @@ function make_slides(f) {
       $(".critname").hide();
       $(".err").hide();
       $("#learning_button").hide(); //fix this
+      allCreatures = genCreatures();
       var shuffledCritters = _.shuffle(allCreatures)
 
+      this.num_creats = allCreatures.length;
 
       create_table(3,4);
 
@@ -160,6 +163,16 @@ function make_slides(f) {
       var end_time = Date.now()
       this.time_spent = end_time - this.start_time;
       allCreatures = [];
+
+      for (var i = 0; i < this.num_creats; i++) {
+        $('#critter' + i).empty();
+        $('#cell' + i).css({'opacity': '1'});
+        $('#cell' + i).css({'border': ''});
+        $('#creature_table').remove();
+        prev = null;
+        //$('#cell'+i+'critname').css({'opacity': '1'});
+      }
+
       exp.go(); // use exp.go() if and only if there is no "present" data.
 
     },
@@ -541,27 +554,27 @@ function init() {
 
   //blocks of the experiment:
 
-  // exp.structure=[
-  //   "i0",
-  //   "instructions",
-  //   // "condition",
-  //   "welcome_critterLand", 
-  //   "robertPage",
-  //   "test_trial",
-  //   // need a waiting room here
-  //   "robertPage",
-  //    'subj_info',
-  //   'thanks'
-  // ]
+  exp.structure=[
+    "i0",
+    "instructions",
+    // "condition",
+    "welcome_critterLand", "welcome_critterLand",
+    "robertPage",
+    "test_trial",
+    // need a waiting room here
+    "robertPage",
+     'subj_info',
+    'thanks'
+  ]
   
-  var start_exp = ["i0", "instructions"]
-  // change this as you please
-  var middle_exp = numRounds(2)
-  var end_exp = ['subj_info','thanks']
-  start_exp.push.apply(start_exp, middle_exp)
-  //  exp.structure.push.apply(middle_exp)
-  start_exp.push.apply(start_exp, end_exp)
-  exp.structure = start_exp
+  // var start_exp = ["i0", "instructions"]
+  // // change this as you please
+  // var middle_exp = numRounds(2)
+  // var end_exp = ['subj_info','thanks']
+  // start_exp.push.apply(start_exp, middle_exp)
+  // //  exp.structure.push.apply(middle_exp)
+  // start_exp.push.apply(start_exp, end_exp)
+  // exp.structure = start_exp
 
     // "chatbox", 'subj_info', 'thanks'];//,
   // "waiting_room", "instructions", "welcome_critterLand", "single_trial", "chatbox",];
