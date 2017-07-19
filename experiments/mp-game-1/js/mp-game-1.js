@@ -495,7 +495,8 @@ function init() {
 
   exp.trials = [];
   exp.catch_trials = [];
-  allCreatures = genCreatures();
+  //allCreatures = genCreatures();
+  allCreatures = [];//genCreatures();
   exp.test_critters = _.uniq(allCreatures, function(stim){
     return _.values(_.pick(stim,
       //"col1", "col2","col3", "creatureName", "tar1","tar2"

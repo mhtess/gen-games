@@ -38,6 +38,22 @@ var scale = 0.5;
 var creatureOpts = [
 	{ creature: "bird",
 		name: "wug",
+		globalColors: [
+            {
+                p: 0.99,
+                props: {
+                    color_mean: "blue",
+                    color_var: 0.001,
+                    location: "ground"
+                }
+            }, {
+                p: 0.01,
+                props: {
+                    color_mean: "green",
+                    color_var: 0.001,
+                    location: "trees"
+                }
+            }],
 		col1_mean: "#00ff00", // col1 = crest
 		col1_var: 0.5,
 		col2_mean: "#00ff1a", // col2 = body
@@ -56,6 +72,22 @@ var creatureOpts = [
 	},
 	{ creature: "bird",
 		name: "blicket",
+		globalColors: [
+            {
+                p: 0.99,
+                props: {
+                    color_mean: "yellow",
+                    color_var: 0.001,
+                    location: "ground"
+                }
+            }, {
+                p: 0.01,
+                props: {
+                    color_mean: "red",
+                    color_var: 0.001,
+                    location: "trees"
+                }
+            }],
 		col1_mean: "#ff4500", // col1 = crest
 		col1_var: 0.2,
 		col2_mean: "#ff4500", // col2 = body
@@ -74,6 +106,22 @@ var creatureOpts = [
 	},
 	{ creature: "bird",
 		name: "rambo",
+		globalColors: [
+            {
+                p: 0.5,
+                props: {
+                    color_mean: "yellow",
+                    color_var: 0.001,
+                    location: "ground"
+                }
+            }, {
+                p: 0.5,
+                props: {
+                    color_mean: "purple",
+                    color_var: 0.001,
+                    location: "trees"
+                }
+            }],
 		col1_mean: "#ffff00", // col1 = crest
 		col1_var: 0.2,
 		col2_mean: "#ffff00", // col2 = body

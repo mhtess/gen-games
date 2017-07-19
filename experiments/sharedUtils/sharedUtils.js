@@ -235,19 +235,27 @@ var genColor = function(color, variance) {
 	function shuffle(v) { newarray = v.slice(0);for(var j, x, i = newarray.length; i; j = parseInt(Math.random() * i), x = newarray[--i], newarray[i] = newarray[j], newarray[j] = x);return newarray;} // non-destructive.
 	var n = 10; // this is the default in ecosystem.js see line 12
 	if (color == null) {
-		var h = [];
+    console.log("is it this");
+		//var h = [];
+    var h = 100;
 		var offset = Math.random() * .99 / n;
 	    for (var i=0;i<n-1;i++) {
 	   		h.push((i/n)+offset);
 	  	}
 	  	h = shuffle(h);
 	    h = h.shift();
-		var s = uniformAroundMean(.99, .1);
-	    var v = uniformAroundMean(.99, .1);
+		 var s = uniformAroundMean(.99, .001);
+	   var v = uniformAroundMean(.99, .001);
+   //var s = 100;
+    //var v = 100;
 		color = converter.hsv.hex(h, s, v);
+    
 	}
-	else
+	else {
 		color = myColor(color, variance);
+    
+  }
+
 	return color;
 };
 
@@ -268,6 +276,7 @@ var uniformAroundMean = function(mean, radius) {
 };
 
 var myColor = function(mean, variance) {
+    //console.log("myColor");
     var hVar;
     var sVar;
     var vVar;
