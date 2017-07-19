@@ -132,8 +132,10 @@
     this.id = options.id;
     this.expName = options.expName;
     this.player_count = options.player_count;
-    this.trialList = [this.genCreatures("bug"), this.genCreatures("bird")];
-
+    var bugCritters = this.genCreatures("bug");
+    var birdCritters = this.genCreatures("bird");
+    this.trialList = [bugCritters, birdCritters];
+    this.testList = [birdCritters, bugCritters];
     // this.trialList = {
     //   role1: this.genCreatures("bird"),
     //   role2: this.genCreatures("bug")

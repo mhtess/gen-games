@@ -174,12 +174,13 @@ var customSetup = function(game) {
     }
   });
 
-  game.socket.on('nextBlock', function(data){
+  game.socket.on('exitChatRoom', function(data){
     // here we will want to set the subject's stimuli (that are coming in data) to be what gets presented. this may be able to be done by modifying the slides e.g., exp.slides.learning_trial.present
-    console.log("nextBlock")
+    console.log("exitChatRoom")
     console.log(data)
 
-    exp.slides.welcome_critterLand.crittersFromServer = data;
+    exp.slides.test_critters.crittersFromServer = data.thisRoundTest;
+    exp.slides.welcome_critterLand.crittersFromServer = data.nextRoundLearning;
     exp.go();
 
   });
@@ -199,6 +200,12 @@ var customSetup = function(game) {
       // globalGame.chatCont.addEventListener("click", buttonClickListener, false);
       continueButton.addEventListener("click", buttonClickListener, false);
     }
+
+  });
+
+  game.socket.on('enterTestPage', function(data){
+
+    console.log("enterTestPage")
 
   });
 

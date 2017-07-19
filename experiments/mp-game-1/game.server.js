@@ -38,8 +38,11 @@ var onMessage = function(client,message) {
 
   // when server gets "clickedObj" signal
   case 'clickedObj' :
+    gc.blockCritters = {
+      thisRoundTest: gc.testList[gc.roundNum],
+      nextRoundLearning: gc.trialList[gc.roundNum + 1]
+    };
     gc.roundNum += 1;
-    gc.blockCritters = {currStim: gc.trialList[gc.roundNum]};
 
     // writeData(client, "clickedObj", message_parts);
     // others[0].player.instance.send("s.feedback." + message_parts[2]);
@@ -55,10 +58,10 @@ var onMessage = function(client,message) {
         //     {crittersToPresent: "instruct-text"} :
         //     {crittersToPresent: "legal"}
 
-        var dataPacket = gc.blockCritters.currStim;
+        var dataPacket = gc.blockCritters;
         // console.log(dataPacket)
 
-        p.player.instance.emit("nextBlock", dataPacket)
+        p.player.instance.emit("exitChatRoom", dataPacket)
 
       });
       // tell server to advance to next round (or if at end, disconnect)
@@ -92,6 +95,7 @@ var onMessage = function(client,message) {
       });
     }, 300);
     break;
+
 
   case 'h' : // Receive message when browser focus shifts
     target.visible = message_parts[1];
