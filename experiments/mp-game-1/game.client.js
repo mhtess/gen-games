@@ -75,8 +75,7 @@ var client_onserverupdate_received = function(data){
   // var customCoords = (globalGame.my_role == globalGame.playerRoleNames.role1 ?
     // obj.speakerCoords : obj.listenerCoords);
 
-  // console.log(globalGame)
-  var myCritters = data.blockCritters.currStim;
+  var myCritters = data.initialLearningCritters;
   exp.slides.welcome_critterLand.crittersFromServer = myCritters;
   // exp.go();
 };

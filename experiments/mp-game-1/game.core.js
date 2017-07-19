@@ -132,10 +132,21 @@
     this.id = options.id;
     this.expName = options.expName;
     this.player_count = options.player_count;
+
     var bugCritters = this.genCreatures("bug");
     var birdCritters = this.genCreatures("bird");
-    this.trialList = [bugCritters, birdCritters];
-    this.testList = [birdCritters, bugCritters];
+    var speakerOrder = [bugCritters, birdCritters];
+    var listenerOrder = [birdCritters, bugCritters];
+
+    this.trialList = {
+      speaker: speakerOrder,
+      listener: listenerOrder
+    };
+
+    this.testList = {
+      speaker: listenerOrder,
+      listener: speakerOrder
+    };
     // this.trialList = {
     //   role1: this.genCreatures("bird"),
     //   role2: this.genCreatures("bug")
@@ -307,7 +318,8 @@ return(trialList);
 game_core.prototype.server_send_update = function(){
   //Make a snapshot of the current state, for updating the clients
   var local_game = this;
-
+  // console.log('logging local game in server send update')
+  // console.log(local_game)
   // Add info about all players
   var player_packet = _.map(local_game.players, function(p){
     return {id: p.id,
@@ -319,17 +331,25 @@ game_core.prototype.server_send_update = function(){
     pt : this.players_threshold,
     pc : this.player_count,
     dataObj  : this.data,
-    roundNum : this.roundNum,
-    blockCritters: {currStim: this.trialList[0]}
+    roundNum : this.roundNum
   };
   // console.log(state)
   _.extend(state, {players: player_packet});
   _.extend(state, {instructions: this.instructions});
-
   //Send the snapshot to the players
   this.state = state;
+  console.log(local_game.get_active_players())
   _.map(local_game.get_active_players(), function(p){
-    p.player.instance.emit( 'onserverupdate', state);});
+    // console.log(local_game.trialList)
+    console.log(p.instance.role)
+    p.instance.role ? console.log(local_game.trialList[p.instance.role][0][0]): null
+    var playerState = p.instance.role ? _.extend(state,
+      {
+        initialLearningCritters: local_game.trialList[p.instance.role][0]
+      }
+    ) : state
+    p.player.instance.emit( 'onserverupdate', playerState);
+  });
 };
 
 var sampleTrial = function(condition) {
