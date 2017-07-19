@@ -18,7 +18,7 @@
 // with the coordinates of the click, which this function reads and
 // applies.
 var onMessage = function(client,message) {
-  console.log("server received")
+  console.log("server onMessage")
   //Cut the message up into sub components
   var message_parts = message.split('.');
 
@@ -38,6 +38,9 @@ var onMessage = function(client,message) {
 
   // when server gets "clickedObj" signal
   case 'clickedObj' :
+    gc.roundNum += 1;
+    gc.blockCritters = {currStim: gc.trialList[gc.roundNum]};
+
     // writeData(client, "clickedObj", message_parts);
     // others[0].player.instance.send("s.feedback." + message_parts[2]);
     // target.instance.send("s.feedback." + message_parts[2]);
@@ -52,14 +55,15 @@ var onMessage = function(client,message) {
         //     {crittersToPresent: "instruct-text"} :
         //     {crittersToPresent: "legal"}
 
-        var dataPacket = gc.trialList;
-        console.log(dataPacket)
+        var dataPacket = gc.blockCritters.currStim;
+        // console.log(dataPacket)
 
-        p.player.instance.emit("nextBlock",dataPacket)
+        p.player.instance.emit("nextBlock", dataPacket)
 
       });
       // tell server to advance to next round (or if at end, disconnect)
       // gc.newRound();
+
     }, 300);
 
     break;
@@ -79,6 +83,14 @@ var onMessage = function(client,message) {
       _.map(all, function(p){
 	p.player.instance.emit( 'chatMessage', {user: client.userid, msg: msg});});
     }
+    break;
+
+  case 'enterChatRoom' :
+    setTimeout(function() {
+      _.map(all, function(p){
+        p.player.instance.emit("enterChatRoom", {})
+      });
+    }, 300);
     break;
 
   case 'h' : // Receive message when browser focus shifts

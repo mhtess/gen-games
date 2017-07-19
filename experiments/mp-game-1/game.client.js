@@ -36,7 +36,7 @@ var client_onserverupdate_received = function(data){
       z[1].id = z[0].id;
     });
   }
-
+  // console.log(data.blockCritters.currStim)
   // if (globalGame.roundNum != data.roundNum) {
   //   globalGame.currStim = _.map(data.trialInfo.currStim, function(obj) {
   //     // Extract the coordinates matching your role
@@ -70,7 +70,15 @@ var client_onserverupdate_received = function(data){
   }
 
   // Draw all this new stuff
-  drawScreen(globalGame, globalGame.get_player(globalGame.my_id));
+  // drawScreen(globalGame, globalGame.get_player(globalGame.my_id));
+  // Extract the coordinates matching your role
+  // var customCoords = (globalGame.my_role == globalGame.playerRoleNames.role1 ?
+    // obj.speakerCoords : obj.listenerCoords);
+
+  // console.log(globalGame)
+  var myCritters = data.blockCritters.currStim;
+  exp.slides.welcome_critterLand.crittersFromServer = myCritters;
+  // exp.go();
 };
 
 var client_onMessage = function(data) {
@@ -171,26 +179,28 @@ var customSetup = function(game) {
     console.log("nextBlock")
     console.log(data)
 
-    // $("#" + data.crittersToPresent).hide();
-    // to modify stimuli
     exp.slides.welcome_critterLand.crittersFromServer = data;
-
     exp.go();
 
-    // below just copied from newRoundUpdate and may not be needed;
-  //   $('#chatbox').removeAttr("disabled");
-  //   $('#chatbox').focus();
-  //   $('#messages').empty();
-  //   if(game.roundNum + 2 > game.numRounds) {
-  //     $('#roundnumber').empty();
-  //     $('#instructs').empty()
-	// .append("Round\n" + (game.roundNum + 1) + "/" + game.numRounds);
-  //   } else {
-  //     $('#roundnumber').empty()
-	// .append("Round\n" + (game.roundNum + 2) + "/" + game.numRounds);
-  //   }
   });
 
+  game.socket.on('enterChatRoom', function(data){
+
+    console.log("enterChatRoom")
+    // set mouse-tracking event handler
+    if (globalGame.my_role === globalGame.playerRoleNames.role2) {
+      // only role2 gets to see Continue button and press Continue
+      // change this to 60 seconds (10 -> 60)
+      // var div = document.createElement('div');
+      // div.innerHTML = "<p> hello </p>";
+      // globalGame.slides.robertPage.add(div)
+      var continueButton = document.getElementById("chatCont")
+      setTimeout(function() { $("#chatCont").show() }, 3*1000)
+      // globalGame.chatCont.addEventListener("click", buttonClickListener, false);
+      continueButton.addEventListener("click", buttonClickListener, false);
+    }
+
+  });
 
   // initialize experiment_template
   init()
@@ -198,6 +208,7 @@ var customSetup = function(game) {
 
 var client_onjoingame = function(num_players, role) {
   // set role locally
+  // console.log("client on join game")
   globalGame.my_role = role;
   console.log(role)
   globalGame.get_player(globalGame.my_id).role = globalGame.my_role;
@@ -233,18 +244,7 @@ var client_onjoingame = function(num_players, role) {
 				      + 'Please do not refresh the page!');
   }
 
-  // set mouse-tracking event handler
-  if(role === globalGame.playerRoleNames.role2) {
-    // only role2 gets to see Continue button and press Continue
-    // change this to 60 seconds (10 -> 60)
-    // var div = document.createElement('div');
-    // div.innerHTML = "<p> hello </p>";
-    // globalGame.slides.robertPage.add(div)
-    var continueButton = document.getElementById("chatCont")
-    setTimeout(function() { $("#chatCont").show() }, 3*1000)
-    // globalGame.chatCont.addEventListener("click", buttonClickListener, false);
-    continueButton.addEventListener("click", buttonClickListener, false);
-  }
+
 };
 
 /*

@@ -283,9 +283,9 @@ slides.learning_trial = slide({
 
     start: function() {
       console.log('start of robert page')
+      globalGame.socket.send("enterChatRoom.");
       $(".err").hide();
-
-      $("#chatCont").hide()
+      $("#chatCont").hide();
       // change this to 60 seconds (10 -> 60)
       // $('#exit_survey').hide();
       // $('#message_panel').show();
@@ -299,36 +299,7 @@ slides.learning_trial = slide({
       // $('#exit_survey').show();
       // $('#sketchpad').show(); // this is from sketchpad experiment (jefan 4/23/17)
       // $('#loading').show();
-    },
-
-    button : function() {
-      $('#messages').empty();
-      response = $("#chat_response").val();
-      if (response == "") {
-        $(".err").show();
-      } else {
-        exp.data_trials.push({
-          "trial_type" : "chatbox",
-          "response" : response
-        });
-
-        // $('#message_panel').hide();
-        // $('#main').hide();
-        // $('#submitbutton').hide();
-        // $('#roleLabel').hide();
-        // $('#textInfo').hide();
-        // $('#viewport').hide();
-        // $('#score').hide();
-        // $('#roundnumber').hide();
-        // $('#exit_survey').hide();
-        // $('#sketchpad').hide(); // this is from sketchpad experiment (jefan 4/23/17)
-        // $('#loading').hide();
-        // $('#exit_survey').show();
-
-        exp.go(); //make sure this is at the *end*, after you log your data
-        //exp.go(); will jump the critter
-      }
-    },
+    }
 
   });
 
@@ -556,14 +527,15 @@ function init() {
   //blocks of the experiment:
 
   exp.structure=[
-    "robertPage",
-    "welcome_critterLand",
     "i0",
-    "instructions",
-    // "condition",
+    "welcome_critterLand",
+    "robertPage",
     "welcome_critterLand",
     "robertPage",
     "test_trial",
+    "instructions",
+    // "condition",
+    "robertPage",
     // need a waiting room here
      'subj_info',
     'thanks'

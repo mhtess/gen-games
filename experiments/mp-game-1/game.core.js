@@ -26,6 +26,7 @@
 
   var game_core = function(options){
   // Store a flag if we are the server instance
+  console.log('inside game core function')
   this.server = options.server ;
 
   // How many players in the game?
@@ -98,7 +99,7 @@
   	}
   ]
 
-  this.creatureN = 12;
+  this.creatureN = 6;
   this.creatureTypesN = 3;
   this.exemplarN = this.creatureN/this.creatureTypesN;
   this.uniqueCreatures =  _.uniq(_.pluck(this.creatureOpts, "name"));
@@ -123,7 +124,7 @@
   this.attemptNum = 0;
 
   // This will be populated with the tangram set
-  this.trialInfo = {};
+  this.trialInfo = [];
 
   if(this.server) {
     // If we're initializing the server game copy, pre-create the list of trials
@@ -131,7 +132,13 @@
     this.id = options.id;
     this.expName = options.expName;
     this.player_count = options.player_count;
-    this.trialList = this.genCreatures();
+    this.trialList = [this.genCreatures("bug"), this.genCreatures("bird")];
+
+    // this.trialList = {
+    //   role1: this.genCreatures("bird"),
+    //   role2: this.genCreatures("bug")
+    // },
+
     // this.trialList = this.makeTrialList();
     this.data = {
       id : this.id,
@@ -205,7 +212,7 @@ game_core.prototype.newRound = function() {
   } else {
     // Otherwise, get the preset list of tangrams for the new round
     this.roundNum += 1;
-    this.trialInfo = {currStim: this.trialList[this.roundNum]};
+    this.blockCritters = {currStim: this.trialList[this.roundNum]};
     this.server_send_update();
   }
 };
@@ -224,7 +231,7 @@ game_core.prototype.sampleStimulusLocs = function() {
   return {listener : listenerLocs, speaker : speakerLocs};
 };
 
-game_core.prototype.genCreatures = function(){
+game_core.prototype.genCreatures = function(creatureCategory){
   var j = 0;
   // Generates the characteristics for each critter
   	var allCreatures = [];
@@ -242,7 +249,7 @@ game_core.prototype.genCreatures = function(){
   				"tar1": utils.flip(creatOpts.tar1),
   				"tar2": utils.flip(creatOpts.tar2),
   				"creatureName": this.uniqueCreatures[i],
-  				"critter" : creatOpts.creature,
+  				"critter" : creatureCategory, //creatOpts.creature,
   				"query": "question",
   				"stimID": j,
   				"internal_prop": utils.flip(creatOpts.internal_prop),
@@ -311,9 +318,9 @@ game_core.prototype.server_send_update = function(){
     pc : this.player_count,
     dataObj  : this.data,
     roundNum : this.roundNum,
-    trialInfo: this.trialInfo
+    blockCritters: {currStim: this.trialList[0]}
   };
-
+  // console.log(state)
   _.extend(state, {players: player_packet});
   _.extend(state, {instructions: this.instructions});
 
