@@ -126,6 +126,18 @@ function make_slides(f) {
     },
   });
 
+slides.wait_room = slide({
+    name: "wait_room",
+
+    start: function() {
+      console.log('start of wait_room')
+      $(".err").hide();
+      $("#waitCont").hide(); // chatCont
+      globalGame.socket.send("enterWaitRoom."); // enterChatRoom
+
+    }
+  });
+
  slides.welcome_critterLand = slide({
     name : "welcome_critterLand",
 
@@ -282,10 +294,10 @@ slides.learning_trial = slide({
     name: "robertPage",
 
     start: function() {
+      $("#chatCont").hide();
       console.log('start of robert page')
       globalGame.socket.send("enterChatRoom.");
       $(".err").hide();
-      $("#chatCont").hide();
       // change this to 60 seconds (10 -> 60)
       // $('#exit_survey').hide();
       // $('#message_panel').show();
@@ -529,6 +541,7 @@ function init() {
 
   exp.structure=[
     "i0",
+      "wait_room",
     "welcome_critterLand",
     "robertPage",
     "welcome_critterLand",

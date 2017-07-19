@@ -36,6 +36,10 @@ var onMessage = function(client,message) {
   // console.log(gc)
   switch(message_type) {
 
+  case 'enterSlide' :
+    gc.currentSlide[target.instance.role] = message_parts[1]
+    break;
+
   // when server gets "clickedObj" signal
   case 'clickedObj' :
     gc.roundNum += 1;
@@ -89,6 +93,15 @@ var onMessage = function(client,message) {
     setTimeout(function() {
       _.map(all, function(p){
         p.player.instance.emit("enterChatRoom", {})
+      });
+    }, 300);
+    break;
+
+
+  case 'enterWaitRoom' :
+    setTimeout(function() {
+      _.map(all, function(p){
+        p.player.instance.emit("enterWaitRoom", {})
       });
     }, 300);
     break;

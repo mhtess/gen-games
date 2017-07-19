@@ -184,6 +184,15 @@ var customSetup = function(game) {
 
   });
 
+  game.socket.on('enterWaitRoom', function(data){
+
+    console.log("enterWaitRoom")
+    var continueButton = document.getElementById("waitCont")
+    $("#waitCont").show()
+    continueButton.addEventListener("click", goButton, false);
+    
+  });
+
   game.socket.on('enterChatRoom', function(data){
 
     console.log("enterChatRoom")
@@ -250,6 +259,11 @@ var client_onjoingame = function(num_players, role) {
 /*
  MOUSE EVENT LISTENERS
  */
+
+function goButton(evt) {
+  exp.go();
+};
+
 
 function buttonClickListener(evt) {
   console.log("cliked button")
