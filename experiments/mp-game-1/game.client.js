@@ -187,9 +187,25 @@ var customSetup = function(game) {
   game.socket.on('enterWaitRoom', function(data){
 
     console.log("enterWaitRoom")
-    var continueButton = document.getElementById("waitCont")
-    $("#waitCont").show()
-    continueButton.addEventListener("click", goButton, false);
+    exp.go()
+    // console.log("client game: ")
+    // console.log(game)
+    // //console.log("speaker slide -- " + game.currentSlide["speaker"])
+    // console.log("speaker slide -- " + globalGame.currentSlide["speaker"])
+    // console.log("listener slide -- " + globalGame.currentSlide["listener"])
+    // console.log(globalGame)
+
+    // //console.log(globalGame.client_onMessage);
+    // console.log(globalGame.message)
+
+    //if (globalGame.currentSlide["speaker"] === globalGame.currentSlide["listener"]) {
+
+    //if (globalGame.currentSlide["speaker"] == globalGame.currentSlide["listener"]) {
+      //var continueButton = document.getElementById("waitCont")
+      //$("#waitCont").show()
+      //goButton()
+      //continueButton.addEventListener("click", goButton, false);
+    //}
     
   });
 
@@ -266,7 +282,7 @@ var client_onjoingame = function(num_players, role) {
  MOUSE EVENT LISTENERS
  */
 
-function goButton(evt) {
+function goButton() {
   exp.go();
 };
 
