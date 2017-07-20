@@ -126,13 +126,25 @@ function make_slides(f) {
     },
   });
 
+slides.wait_room = slide({
+    name: "wait_room",
+
+    start: function() {
+      console.log('start of wait_room')
+      $(".err").hide();
+      $("#waitCont").hide(); // chatCont
+      globalGame.socket.send("enterWaitRoom."); // enterChatRoom
+
+    }
+  });
+
  slides.welcome_critterLand = slide({
     name : "welcome_critterLand",
 
     crittersFromServer : "",
 
     start : function(stim) {
-      var start_time = Date.now()
+      this.start_time = Date.now()
       this.stim = stim;
       $(".critname").hide();
       $(".err").hide();
@@ -178,6 +190,58 @@ function make_slides(f) {
 
     },
   });
+
+  slides.test_critters = slide({
+     name : "test_critters",
+
+     crittersFromServer : "",
+
+     start : function() {
+
+       this.start_time = Date.now()
+       $(".err").hide();
+       allCreatures = this.crittersFromServer;
+       var shuffledCritters = _.shuffle(allCreatures)
+       console.log(allCreatures)
+       this.num_creats = allCreatures.length;
+
+       create_table(3,4);
+
+       for (var i=0; i<shuffledCritters.length; i++) {
+             var scale = 0.5;
+             Ecosystem.draw(
+               shuffledCritters[i]["critter"], shuffledCritters[i],
+               "critter"+i, scale)
+       }
+
+
+        for(var i=0; i<shuffledCritters.length; i++) {
+          $('#cell'+i+'critname').html(shuffledCritters[i]["creatureName"]);
+          $('#cell'+i+'critname').css({'opacity': '0'});
+
+       }
+
+     },
+
+     button : function() {
+       var end_time = Date.now()
+       this.time_spent = end_time - this.start_time;
+       allCreatures = [];
+
+       for (var i = 0; i < this.num_creats; i++) {
+         $('#critter' + i).empty();
+         $('#cell' + i).css({'opacity': '1'});
+         $('#cell' + i).css({'border': ''});
+         $('#creature_table').remove();
+         prev = null;
+         //$('#cell'+i+'critname').css({'opacity': '1'});
+       }
+
+       exp.go(); // use exp.go() if and only if there is no "present" data.
+
+     },
+   });
+
 
   slides.condition = slide({
     name: "condition",
@@ -282,10 +346,10 @@ slides.learning_trial = slide({
     name: "robertPage",
 
     start: function() {
+      $("#chatCont").hide();
       console.log('start of robert page')
       globalGame.socket.send("enterChatRoom.");
       $(".err").hide();
-      $("#chatCont").hide();
       // change this to 60 seconds (10 -> 60)
       // $('#exit_survey').hide();
       // $('#message_panel').show();
@@ -353,88 +417,88 @@ slides.learning_trial = slide({
 
   });
 
-slides.test_trial = slide({
-    name: "test_trial",
-
-    /* trial information for this block
-     (the variable 'stim' will change between each of these values,
-      and for each of these, present_handle will be run.) */
-
-    present : _.shuffle(exp.test_critters),
-    trial_num: 0,
-
-    present_handle : function(stim) {
-      // reset critter & note
-      $("#critterTestSVG").empty();
-      $('input[type=radio]').attr('checked', false); //for radio button response
-
-      // hide stuff
-      $(".err").hide();
-
-      this.critOpts = _.where(critFeatures, {creature: stim.critter})[0];
-
-      this.question = _.where(question_phrase, {creature: stim.critter})[0];
-
-      this.stim = stim; //I like to store this information in the slide so I can record it later.
-
-      this.start_time = Date.now()
-
-      var scale = 0.5;
-      Ecosystem.draw(
-        stim.critter, stim,
-        "critterTestSVG", scale)
-
-      this.trial_num++;
-
-    },
-
-    button : function() {
-      var end_time = Date.now();
-      // if ($('input[type=radio]:checked').size() == 0) {
-      //   $(".err").show();
-      // } else {
-        this.time_spent = end_time - this.start_time;
-        this.log_responses();
-        _stream.apply(this); //make sure this is at the *end*, after you log your data
-      //}
-    },
-
-    log_responses: function(){
-      exp.catch_trials.push({
-          "trial_type" : "test_trial",
-          "trial_num" : this.trial_num,
-          "question": exp.question,
-          "distribution": JSON.stringify(exp.distribution),
-          "response" : $("#testFreeResponse").val(),
-          // "response" : $('input[type=radio]:checked').val(),
-          "question": exp.question,
-          "time_in_seconds" : this.time_spent/1000,
-          "critter" : this.stim["critter"],
-          "species" : this.stim["creatureName"],
-
-          "col1_crit" : this.critOpts.col1,
-          "col2_crit" : this.critOpts.col2,
-          "col3_crit" : this.critOpts.col3,
-          "col4_crit" : this.critOpts.col4,
-          "col5_crit" : this.critOpts.col5,
-          "prop1_crit" : this.critOpts.prop1,
-          "prop2_crit" : this.critOpts.prop2,
-          "tar1_crit" : this.critOpts.tar1,
-          "tar2_crit" : this.critOpts.tar2,
-
-          //"color" : this.stim["color"], //change this
-          "col1" : this.stim["col1"],
-          "col2" : this.stim["col2"],
-          "col3" : this.stim["col3"] == null ? "-99" : this.stim["col3"],
-          "col4" : this.stim["col4"] == null ? "-99" : this.stim["col4"],
-          "col5" : this.stim["col5"] == null ? "-99" : this.stim["col5"],
-          "prop1" : this.stim["prop1"] == null ? "-99" : this.stim["prop1"],
-          "prop2" : this.stim["prop2"] == null ? "-99" : this.stim["prop2"],
-          "tar1" : this.stim["tar1"] ? 1 : 0,
-          "tar2" : this.stim["tar2"] ? 1 : 0
-        });
-    }
-  });
+// slides.test_trial = slide({
+//     name: "test_trial",
+//
+//     /* trial information for this block
+//      (the variable 'stim' will change between each of these values,
+//       and for each of these, present_handle will be run.) */
+//
+//     present : _.shuffle(exp.test_critters),
+//     trial_num: 0,
+//
+//     present_handle : function(stim) {
+//       // reset critter & note
+//       $("#critterTestSVG").empty();
+//       $('input[type=radio]').attr('checked', false); //for radio button response
+//
+//       // hide stuff
+//       $(".err").hide();
+//
+//       this.critOpts = _.where(critFeatures, {creature: stim.critter})[0];
+//
+//       this.question = _.where(question_phrase, {creature: stim.critter})[0];
+//
+//       this.stim = stim; //I like to store this information in the slide so I can record it later.
+//
+//       this.start_time = Date.now()
+//
+//       var scale = 0.5;
+//       Ecosystem.draw(
+//         stim.critter, stim,
+//         "critterTestSVG", scale)
+//
+//       this.trial_num++;
+//
+//     },
+//
+//     button : function() {
+//       var end_time = Date.now();
+//       // if ($('input[type=radio]:checked').size() == 0) {
+//       //   $(".err").show();
+//       // } else {
+//         this.time_spent = end_time - this.start_time;
+//         this.log_responses();
+//         _stream.apply(this); //make sure this is at the *end*, after you log your data
+//       //}
+//     },
+//
+//     log_responses: function(){
+//       exp.catch_trials.push({
+//           "trial_type" : "test_trial",
+//           "trial_num" : this.trial_num,
+//           "question": exp.question,
+//           "distribution": JSON.stringify(exp.distribution),
+//           "response" : $("#testFreeResponse").val(),
+//           // "response" : $('input[type=radio]:checked').val(),
+//           "question": exp.question,
+//           "time_in_seconds" : this.time_spent/1000,
+//           "critter" : this.stim["critter"],
+//           "species" : this.stim["creatureName"],
+//
+//           "col1_crit" : this.critOpts.col1,
+//           "col2_crit" : this.critOpts.col2,
+//           "col3_crit" : this.critOpts.col3,
+//           "col4_crit" : this.critOpts.col4,
+//           "col5_crit" : this.critOpts.col5,
+//           "prop1_crit" : this.critOpts.prop1,
+//           "prop2_crit" : this.critOpts.prop2,
+//           "tar1_crit" : this.critOpts.tar1,
+//           "tar2_crit" : this.critOpts.tar2,
+//
+//           //"color" : this.stim["color"], //change this
+//           "col1" : this.stim["col1"],
+//           "col2" : this.stim["col2"],
+//           "col3" : this.stim["col3"] == null ? "-99" : this.stim["col3"],
+//           "col4" : this.stim["col4"] == null ? "-99" : this.stim["col4"],
+//           "col5" : this.stim["col5"] == null ? "-99" : this.stim["col5"],
+//           "prop1" : this.stim["prop1"] == null ? "-99" : this.stim["prop1"],
+//           "prop2" : this.stim["prop2"] == null ? "-99" : this.stim["prop2"],
+//           "tar1" : this.stim["tar1"] ? 1 : 0,
+//           "tar2" : this.stim["tar2"] ? 1 : 0
+//         });
+//     }
+//   });
 
 
 
@@ -478,31 +542,17 @@ slides.test_trial = slide({
 
 /// init ///
 function init() {
-  // $('#message_panel').hide();
-  // $('#main').hide();
-  // $('#submitbutton').hide();
-  // $('#roleLabel').hide();
-  // $('#textInfo').hide();
-  // $('#viewport').hide();
-  // $('#score').hide();
-  // $('#roundnumber').hide();
-  // $('#exit_survey').hide();
-  // $('#sketchpad').hide(); // this is from sketchpad experiment (jefan 4/23/17)
-  // $('#loading').hide();
-  //  // this is from sketchpad experiment (jefan 4/23/17)
-  //  $('#contButton').hide();
 
 
   exp.trials = [];
   exp.catch_trials = [];
-  //allCreatures = genCreatures();
   allCreatures = [];//genCreatures();
-  exp.test_critters = _.uniq(allCreatures, function(stim){
-    return _.values(_.pick(stim,
-      //"col1", "col2","col3", "creatureName", "tar1","tar2"
-      "color", "col1", "col2","col3", "creatureName", "tar1","tar2" //maybe change back later
-    )).join('')
-  })
+  // exp.test_critters = _.uniq(allCreatures, function(stim){
+  //   return _.values(_.pick(stim,
+  //     //"col1", "col2","col3", "creatureName", "tar1","tar2"
+  //     "color", "col1", "col2","col3", "creatureName", "tar1","tar2" //maybe change back later
+  //   )).join('')
+  // })
   //exp.all_stimuli = _.shuffle(all_stimuli); // all_stimuli
   exp.condition = _.sample(["CONDITION 1", "condition 2"]); //can randomize between subject conditions here
   exp.system = {
@@ -529,11 +579,12 @@ function init() {
 
   exp.structure=[
     "i0",
+      "wait_room",
     "welcome_critterLand",
     "robertPage",
+    "test_critters",
     "welcome_critterLand",
     "robertPage",
-    "test_trial",
     "instructions",
     // "condition",
     "robertPage",

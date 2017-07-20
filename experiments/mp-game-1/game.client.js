@@ -75,8 +75,7 @@ var client_onserverupdate_received = function(data){
   // var customCoords = (globalGame.my_role == globalGame.playerRoleNames.role1 ?
     // obj.speakerCoords : obj.listenerCoords);
 
-  // console.log(globalGame)
-  var myCritters = data.blockCritters.currStim;
+  var myCritters = data.initialLearningCritters;
   exp.slides.welcome_critterLand.crittersFromServer = myCritters;
   // exp.go();
 };
@@ -174,14 +173,24 @@ var customSetup = function(game) {
     }
   });
 
-  game.socket.on('nextBlock', function(data){
+  game.socket.on('exitChatRoom', function(data){
     // here we will want to set the subject's stimuli (that are coming in data) to be what gets presented. this may be able to be done by modifying the slides e.g., exp.slides.learning_trial.present
-    console.log("nextBlock")
+    console.log("exitChatRoom")
     console.log(data)
 
-    exp.slides.welcome_critterLand.crittersFromServer = data;
+    exp.slides.test_critters.crittersFromServer = data.thisRoundTest;
+    exp.slides.welcome_critterLand.crittersFromServer = data.nextRoundLearning;
     exp.go();
 
+  });
+
+  game.socket.on('enterWaitRoom', function(data){
+
+    console.log("enterWaitRoom")
+    var continueButton = document.getElementById("waitCont")
+    $("#waitCont").show()
+    continueButton.addEventListener("click", goButton, false);
+    
   });
 
   game.socket.on('enterChatRoom', function(data){
@@ -199,6 +208,12 @@ var customSetup = function(game) {
       // globalGame.chatCont.addEventListener("click", buttonClickListener, false);
       continueButton.addEventListener("click", buttonClickListener, false);
     }
+
+  });
+
+  game.socket.on('enterTestPage', function(data){
+
+    console.log("enterTestPage")
 
   });
 
@@ -250,6 +265,11 @@ var client_onjoingame = function(num_players, role) {
 /*
  MOUSE EVENT LISTENERS
  */
+
+function goButton(evt) {
+  exp.go();
+};
+
 
 function buttonClickListener(evt) {
   console.log("cliked button")

@@ -36,10 +36,12 @@ var onMessage = function(client,message) {
   // console.log(gc)
   switch(message_type) {
 
+  case 'enterSlide' :
+    gc.currentSlide[target.instance.role] = message_parts[1]
+    break;
+
   // when server gets "clickedObj" signal
   case 'clickedObj' :
-    gc.roundNum += 1;
-    gc.blockCritters = {currStim: gc.trialList[gc.roundNum]};
 
     // writeData(client, "clickedObj", message_parts);
     // others[0].player.instance.send("s.feedback." + message_parts[2]);
@@ -54,15 +56,20 @@ var onMessage = function(client,message) {
         // var dataPacket = p.instance.role == "listener" ?
         //     {crittersToPresent: "instruct-text"} :
         //     {crittersToPresent: "legal"}
+        var playerRole = p.instance.role;
+        var dataPacket = {
+          thisRoundTest: gc.testList[playerRole][gc.roundNum],
+          nextRoundLearning: gc.trialList[playerRole][gc.roundNum + 1]
+        };
 
-        var dataPacket = gc.blockCritters.currStim;
         // console.log(dataPacket)
 
-        p.player.instance.emit("nextBlock", dataPacket)
+        p.player.instance.emit("exitChatRoom", dataPacket)
 
       });
       // tell server to advance to next round (or if at end, disconnect)
       // gc.newRound();
+      gc.roundNum += 1;
 
     }, 300);
 
@@ -89,6 +96,15 @@ var onMessage = function(client,message) {
     setTimeout(function() {
       _.map(all, function(p){
         p.player.instance.emit("enterChatRoom", {})
+      });
+    }, 300);
+    break;
+
+
+  case 'enterWaitRoom' :
+    setTimeout(function() {
+      _.map(all, function(p){
+        p.player.instance.emit("enterWaitRoom", {})
       });
     }, 300);
     break;
