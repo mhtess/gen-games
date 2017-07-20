@@ -209,9 +209,46 @@ var customSetup = function(game) {
     
   });
 
+game.socket.on('chatWait', function(data){
+  // Set timeout only for first player...
+    // this.timeoutID = setTimeout(function() {
+    //   if(_.size(this.urlParams) == 4) {
+    //     this.submitted = true;
+    //     window.opener.turk.submit(this.data, true);
+    //     window.close();
+    //   } else {
+    //     console.log("would have submitted the following :");
+    //     console.log(this.data);
+    //   }
+    // }, 1000 * 60 * 15);
+    $('#chatbox').attr("disabled", "disabled");
+    console.log("in chatWait")
+    globalGame.get_player(globalGame.my_id).message = ('Waiting for another player to connect... '
+      + 'Please do not refresh the page!');
+  });
+
+
   game.socket.on('enterChatRoom', function(data){
 
     console.log("enterChatRoom")
+    $('#chatbox').removeAttr("disabled");
+    $('#waiting').hide();
+  //   if(num_players == 1) {
+  //   // Set timeout only for first player...
+  //   this.timeoutID = setTimeout(function() {
+  //     if(_.size(this.urlParams) == 4) {
+  //       this.submitted = true;
+  //       window.opener.turk.submit(this.data, true);
+  //       window.close();
+  //     } else {
+  //       console.log("would have submitted the following :");
+  //       console.log(this.data);
+  //     }
+  //   }, 1000 * 60 * 15);
+
+  //   globalGame.get_player(globalGame.my_id).message = ('Waiting for another player to connect... '
+  //     + 'Please do not refresh the page!');
+  // }
     // set mouse-tracking event handler
     if (globalGame.my_role === globalGame.playerRoleNames.role2) {
       // only role2 gets to see Continue button and press Continue
@@ -289,6 +326,7 @@ function goButton() {
 
 function buttonClickListener(evt) {
   console.log("cliked button")
+
   // var bRect = globalGame.viewport.getBoundingClientRect();
   // var mouseX = (evt.clientX - bRect.left)*(globalGame.viewport.width/bRect.width);
   // var mouseY = (evt.clientY - bRect.top)*(globalGame.viewport.height/bRect.height);

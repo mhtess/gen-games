@@ -35,8 +35,8 @@ var onMessage = function(client,message) {
   // console.log(target)
   // console.log(message_parts)
   // console.log(gc)
-  console.log('message')
-  console.log(message)
+  console.log(gc.currentSlide)
+
   switch(message_type) {
 
   case 'enterSlide' :
@@ -88,7 +88,12 @@ var onMessage = function(client,message) {
     break;
 
   case 'chatMessage' :
-    if(client.game.player_count == 2 && !gc.paused) {
+    // if (gc.currentSlide["speaker"] != gc.currentSlide["listener"]) {
+    //   $('#chatbox').attr("disabled", "disabled");
+    // }
+    //   // $('#chatbox').removeAttr("disabled");
+    if((gc.currentSlide["speaker"] == gc.currentSlide["listener"]) && !gc.paused) {
+      console.log('sending messages');
       writeData(client, "message", message_parts);
       // Update others
       var msg = message_parts[1].replace(/~~~/g,'.');
@@ -98,11 +103,16 @@ var onMessage = function(client,message) {
     break;
 
   case 'enterChatRoom' :
-    setTimeout(function() {
-      _.map(all, function(p){
-        p.player.instance.emit("enterChatRoom", {})
-      });
-    }, 300);
+    if (gc.currentSlide["speaker"] != gc.currentSlide["listener"]) {
+      console.log("chat with only one player")
+      target.instance.emit("chatWait", {})
+    } else {
+      setTimeout(function() {
+        _.map(all, function(p){
+          p.player.instance.emit("enterChatRoom", {})
+        });
+      }, 300);      
+    } 
     break;
 
 

@@ -357,8 +357,10 @@ slides.learning_trial = slide({
       $("#chatCont").hide();
       $('#messages').empty();
       console.log('start of robert page')
+      globalGame.socket.send("enterSlide.chatRoom.");
       globalGame.socket.send("enterChatRoom.");
       $(".err").hide();
+        $('#waiting').show();
       // change this to 60 seconds (10 -> 60)
       // $('#exit_survey').hide();
       // $('#message_panel').show();
@@ -599,7 +601,6 @@ function init() {
     "welcome_critterLand",
     "robertPage",
     // "condition",
-    "robertPage",
     // need a waiting room here
      'subj_info',
     'thanks'
