@@ -1,6 +1,6 @@
 var prev = null;
 
-function mark(el, otherEls) {
+function mark_critter_display(el, otherEls) {
   if(prev != null){
     gray(prev);
   }
@@ -22,6 +22,20 @@ function mark(el, otherEls) {
       'background-color': 'white'})})
 
   check(allCreatures.length);
+
+}
+
+function mark_critter_test_display(el, otherEls) {
+
+    if(el.style.border==''){
+      $('#'+el.id).css({"border":'2px solid red',
+                    'background-color': 'white','opacity': '1'})
+    } else {
+      $('#'+el.id).css({"border":'',
+                    'background-color': 'white'})
+    }
+    // otherEls.map(function(cell){$('#'+cell).css({"border":'',
+    //   'background-color': 'white'})})
 
 }
 
@@ -50,14 +64,14 @@ function check(num){
 }
 
 var ind = 0;
-function create_table(rows, cols) { //rows * cols = number of exemplars
+function create_table(rows, cols, display_type) { //rows * cols = number of exemplars
   var table = "<table id='creature_table'>";
   for(var i=0; i <rows; i++) {
     table += "<tr>";
     for(var j=0; j<cols; j++) {
       table += "<td>";
       ind = i * cols + j;
-      table += "<table class ='cell' id='cell" + ind + "' onclick=\"mark(cell" + ind +",";
+      table += "<table class ='cell' id='cell" + ind + "' onclick=\"mark_" + display_type +"(cell" + ind +",";
       table += "[";
       for(var k=0; k<rows*cols; k++) {
         if(k != ind){
@@ -85,7 +99,7 @@ function create_table(rows, cols) { //rows * cols = number of exemplars
     table += "</tr>"
   }
   table += "</table>";
-  $("#critter_display").append(table);
+  $("#" + display_type).append(table);
 }
 
 function make_slides(f) {
@@ -168,7 +182,7 @@ slides.wait_room = slide({
 
       this.num_creats = allCreatures.length;
 
-      create_table(3,4);
+      create_table(3,4,"critter_display");
 
       for (var i=0; i<shuffledCritters.length; i++) {
             var scale = 0.5;
@@ -234,7 +248,7 @@ slides.wait_room = slide({
        console.log(allCreatures)
        this.num_creats = allCreatures.length;
 
-       create_table(3,4);
+       create_table(3,4,"critter_test_display");
 
        for (var i=0; i<shuffledCritters.length; i++) {
              var scale = 0.5;
@@ -245,8 +259,24 @@ slides.wait_room = slide({
 
 
         for(var i=0; i<shuffledCritters.length; i++) {
-          $('#cell'+i+'critname').html(shuffledCritters[i]["creatureName"]);           
-        }
+         $('#cell'+i+'critname').html(shuffledCritters[i]["creatureName"]);
+
+         switch(shuffledCritters[i]["critter"]) {
+           case 'bird':
+            $("label[for='internalProp_cell"+ i +"']").text(" lays eggs");
+            break;
+           case 'bug':
+            $("label[for='internalProp_cell"+ i +"']").text(" is poisonous");
+            break;
+         }
+         $("label[for='internalProp_cell"+ i +"']").css({'font-size': '12px'});
+         
+         shuffledCritters[i]["internal_prop"] ?
+            $('#internalProp_cell'+i).prop('checked', true) :
+            $('#internalProp_cell'+i).prop('checked', false)
+
+
+       }
 
        
 
