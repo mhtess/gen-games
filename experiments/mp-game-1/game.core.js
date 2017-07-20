@@ -45,6 +45,22 @@
   this.creatureOpts = [
   	{ creature: "bird",
   		name: "wug",
+      globalColors: [
+      {
+        p: 0.99,
+        props: {
+          color_mean: "blue",
+          color_var: 0.001,
+          location: "ground"
+        }
+      }, {
+        p: 0.01,
+        props: {
+          color_mean: "green",
+          color_var: 0.001,
+          location: "trees"
+        }
+      }],
   		col1_mean: "#00ff00", // col1 = crest
   		col1_var: 0.001,
   		col2_mean: "#00ff1a", // col2 = body
@@ -62,7 +78,23 @@
   		internal_prop: 0.8 // pepsin
   	},
   	{ creature: "bird",
-  		name: "blicket",
+  		name: "fep",
+      globalColors: [
+      {
+        p: 1,
+        props: {
+          color_mean: "yellow",
+          color_var: 0.001,
+          location: "ground"
+        }
+      }, {
+        p: 0,
+        props: {
+          color_mean: "red",
+          color_var: 0.001,
+          location: "trees"
+        }
+      }],
   		col1_mean: "#ff4500", // col1 = crest
   		col1_var: 0.001,
   		col2_mean: "#ff4500", // col2 = body
@@ -76,11 +108,26 @@
   		prop1: null, // height
   		prop2: null, // fatness
   		tar1: 0, // tails
-  		tar1: 1, // crest
+  		tar2: 1, // crest
   		internal_prop: 0.2, // pepsin
   	},
   	{ creature: "bird",
-  		name: "rambo",
+  		name: "lorch",
+      globalColors: [
+      {
+        p: 0.5,
+        props: {
+          color_mean: "yellow",
+          color_var: 0.001,
+          location: "ground"
+        }
+      }, {
+        p: 0.5,
+        props: {
+          color_mean: "purple",
+          color_var: 0.001,
+          location: "trees"}
+      }],
   		col1_mean: "#ffff00", // col1 = crest
   		col1_var: 0.001,
   		col2_mean: "#ffff00", // col2 = body
@@ -94,7 +141,7 @@
   		prop1: null, // height
   		prop2: null, // fatness
   		tar1: 1, // tails
-  		tar1: 0.2, // crest
+  		tar2: 0.2, // crest
   		internal_prop: 0 // pepsin
   	}
   ]
@@ -102,7 +149,17 @@
   this.creatureN = 6;
   this.creatureTypesN = 3;
   this.exemplarN = this.creatureN/this.creatureTypesN;
+  console.log("exemplarN #1: " + this.exemplarN)
   this.uniqueCreatures =  _.uniq(_.pluck(this.creatureOpts, "name"));
+
+  this.color_dict = {
+  blue: "#5da5db",
+  red: "#f42935",
+  yellow: "#eec900",
+  green: "#228b22",
+  orange: "#ff8c00",
+  purple: "#dda0dd"
+}
 
   //Dimensions of world in pixels and numberof cells to be divided into;
   this.numHorizontalCells = 0;
@@ -250,19 +307,81 @@ game_core.prototype.sampleStimulusLocs = function() {
   return {listener : listenerLocs, speaker : speakerLocs};
 };
 
+// var distribution = _.sample([
+//     [1, 1, 0.5],
+//     [1, 1, 0.25]
+//   ])
+
+var fillArray = function(n, fillVal){
+  return Array(n).fill(fillVal)
+}
+
+var probToCount = function(p, n){
+  return Math.round(p*n);
+}
+
+game_core.prototype.createFeatureArray = function(creatureLabel, p){
+  var probs = [p, 1-p]
+  console.log("is this working");
+  var creatOpts = _.where(this.creatureOpts, {name: creatureLabel})[0];
+  //var creatOpts = _.where(this.creatureOpts, {name: this.uniqueCreatures})[0];
+  var creatureColors = [];
+  var creatureLocation = [];
+  // debugger;
+  var nRemaining = this.exemplarN;
+  console.log("number remaining: " + nRemaining);
+  for (var i=0; i<2; i++ ){
+    //var colorProps = creatOpts.globalColors[i];
+    //console.log(creatOpts.name);
+    var colorProps = creatOpts.globalColors[i];
+
+    var n_creatures_of_this_color =  probToCount(
+      probs[i], this.exemplarN
+    );
+
+    var ncrit = n_creatures_of_this_color == 0 ?
+      ((probs[i] > 0) && (nRemaining > 0)) ? 1 : 0 :
+      n_creatures_of_this_color
+    creatureColors = creatureColors.concat(
+      fillArray(ncrit,
+        utils.genColor(
+        this.color_dict[colorProps["props"]["color_mean"]],
+        colorProps["props"]["color_var"]
+      ))
+    )
+    creatureLocation = 0;
+    nRemaining = nRemaining-ncrit;
+  }
+  return {color: creatureColors, location: creatureLocation}
+}
+
+var distribution = _.sample([
+    [1, 1, 0.5],
+    [1, 1, 0.25]
+  ])
+
 game_core.prototype.genCreatures = function(creatureCategory){
   var j = 0;
   // Generates the characteristics for each critter
   	var allCreatures = [];
   	for (var i = 0; i < this.uniqueCreatures.length; i++){
-  		var creatOpts = _.where(this.creatureOpts, {name: this.uniqueCreatures[i]})[0];
-  		while (j<(this.exemplarN*(i+1))) {
+  	//for (var i = 0; i < this.creatureTypesN; i++){
+      var creatOpts = _.where(this.creatureOpts, {name: this.uniqueCreatures[i]})[0];
+     var creatureColor = this.createFeatureArray(
+       this.uniqueCreatures[i], distribution[i]
+     );
+      var localCounter = 0;
+      while (j<(this.exemplarN*(i+1))) {
   			allCreatures.push({
-  				"col1": utils.genColor(creatOpts.col1_mean, creatOpts.col1_var),
-  				"col2": utils.genColor(creatOpts.col2_mean, creatOpts.col2_var),
-  				"col3": creatOpts.col3_mean == null ? null : utils.genColor(creatOpts.col3_mean, creatOpts.col3_var),
-  		    	"col4" : creatOpts.col4_mean == null ? null : utils.genColor(creatOpts.col4_mean, creatOpts.col4_var),
-  		    	"col5" : creatOpts.col5_mean == null ? null : utils.genColor(creatOpts.col5_mean, creatOpts.col5_var),
+          "col1": creatureColor["color"][localCounter],
+          "col2": creatureColor["color"][localCounter],
+          "col3": creatureColor["color"][localCounter] == null ? null : creatureColor["color"][localCounter] ,
+          
+  				 // "col1": utils.genColor(creatOpts.col1_mean, creatOpts.col1_var),
+  				 // "col2": utils.genColor(creatOpts.col2_mean, creatOpts.col2_var),
+  				 // "col3": creatOpts.col3_mean == null ? null : utils.genColor(creatOpts.col3_mean, creatOpts.col3_var),
+          	"col4": creatureColor["color"][localCounter] == null ? null : creatureColor["color"][localCounter],
+  		    	"col5": creatureColor["color"][localCounter] == null ? null : creatureColor["color"][localCounter],
   				"prop1": creatOpts.prop1 == null ? utils.randProp() : creatOpts.prop1,
   				"prop2": creatOpts.prop2 == null ? utils.randProp() : creatOpts.prop2,
   				"tar1": utils.flip(creatOpts.tar1),
@@ -274,6 +393,10 @@ game_core.prototype.genCreatures = function(creatureCategory){
   				"internal_prop": utils.flip(creatOpts.internal_prop),
   				"attentionCheck": utils.generateAttentionQuestion()
   			})
+        console.log(creatureCategory);
+        // console.log(creatureName);
+        // console.log(col1);
+        localCounter++;
   	  		j++;
   		}
   	}
