@@ -103,7 +103,7 @@ var hsl2lab = function(hsl) {
   return converter.hsl.lab(hsl);
 };
 
-function fillArray(value, len) {
+function fillArr(value, len) { //changed name from fillArray to fillArr
   var arr = [];
   for (var i = 0; i < len; i++) {
     arr.push(value);
@@ -235,17 +235,16 @@ var genColor = function(color, variance) {
 	function shuffle(v) { newarray = v.slice(0);for(var j, x, i = newarray.length; i; j = parseInt(Math.random() * i), x = newarray[--i], newarray[i] = newarray[j], newarray[j] = x);return newarray;} // non-destructive.
 	var n = 10; // this is the default in ecosystem.js see line 12
 	if (color == null) {
-    console.log("is it this");
-		//var h = [];
-    var h = 100;
+		var h = [];
+    //var h = .5;
 		var offset = Math.random() * .99 / n;
 	    for (var i=0;i<n-1;i++) {
 	   		h.push((i/n)+offset);
 	  	}
 	  	h = shuffle(h);
 	    h = h.shift();
-		 var s = uniformAroundMean(.99, .001);
-	   var v = uniformAroundMean(.99, .001);
+		 var s = uniformAroundMean(.99, .1);
+	   var v = uniformAroundMean(.99, .1);
    //var s = 100;
     //var v = 100;
 		color = converter.hsv.hex(h, s, v);
@@ -259,6 +258,14 @@ var genColor = function(color, variance) {
 	return color;
 };
 
+var fillArray = function(n, fillVal){
+  return Array(n).fill(fillVal)
+}
+
+var probToCount = function(p, n){
+  return Math.round(p*n);
+}
+
 var flip = function(p){
 	return p > Math.random()
 };
@@ -270,8 +277,10 @@ var generateAttentionQuestion = function(){
 var randProp = function() {return Math.random();};
 var uniform = function(a, b) { return ( (Math.random()*(b-a))+a ); }
 var uniformAroundMean = function(mean, radius) {
-    var upper = Math.min(0.99, mean+radius);
-    var lower = Math.max(0.01, mean-radius);
+    // var upper = Math.min(0.99, mean+radius);
+    // var lower = Math.max(0.01, mean-radius);
+    var upper = mean+radius;
+    var lower = mean-radius;
     return uniform(lower, upper);
 };
 
@@ -293,11 +302,20 @@ var myColor = function(mean, variance) {
         sVar = 0.1 * variance;
         vVar = 0.1 * variance;
     }
-    var c = converter.hex.hsv(mean)
+    //console.log("input: mean=" + mean + ", variance=" + variance);
+    var c = converter.hex.hsv(mean);
+    //console.log(c);
     var hue = uniformAroundMean(c[0], hVar);
+    //console.log("hue: " + c[0] + ", " + hVar);
     var saturation = uniformAroundMean(c[1], sVar);
+    //console.log("saturation: " + c[1] + ", " + sVar);
     var value = uniformAroundMean(c[2], vVar);
+    //console.log("value: " + c[2] + ", " + vVar);
+    //console.log(hue + ", " + saturation + ", " + value);
     var newColor = converter.hsv.hex(hue, saturation, value);
+    //console.log(newColor);
+    
+
     return  "#" + newColor;
 }
 
