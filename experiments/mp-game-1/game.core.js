@@ -146,7 +146,7 @@
   	}
   ]
 
-  this.creatureN = 6;
+  this.creatureN = 12;
   this.creatureTypesN = 3;
   this.exemplarN = this.creatureN/this.creatureTypesN;
   console.log("exemplarN #1: " + this.exemplarN)
