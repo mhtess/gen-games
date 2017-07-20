@@ -6,14 +6,18 @@ function mark(el, otherEls) {
   }
   prev = el;
 
-    el.style.border=='' ?
-    $('#'+el.id).css({"border":'2px solid red',
-                    'background-color': 'white','opacity': '1'}) &
-    $('#'+el.id+'critname').css({'opacity': '1', 'font-weight': 'bold'})
-                     :
-    $('#'+el.id).css({"border":'',
-                    'background-color': 'white'}) &
-    $('#'+el.id+'critname').css({'opacity': '0.5', 'font-weight': 'normal'})
+    if(el.style.border==''){
+      $('#'+el.id).css({"border":'2px solid red',
+                    'background-color': 'white','opacity': '1'});
+      $('#internalProp_'+ el.id).css({'opacity': 1});
+      $("label[for='internalProp_"+ el.id +"']").css({'opacity': 1})
+    } else {
+      $('#'+el.id).css({"border":'',
+                    'background-color': 'white'});
+      $('#'+el.id+'critname').css({'opacity': '0.5', 'font-weight': 'normal'});
+      $('#internalProp_'+ el.id).css({'opacity': 0.5});
+      $("label[for='internalProp_"+ el.id +"']").css({'opacity': 0.5})
+    }
     otherEls.map(function(cell){$('#'+cell).css({"border":'',
       'background-color': 'white'})})
 
@@ -23,15 +27,17 @@ function mark(el, otherEls) {
 
 
 function gray(el) {
-   $('#'+el.id).css({'opacity': '0.5'})
-   $('#'+el.id+'critname').css({'opacity': '0.5', 'font-weight': 'normal'});
+   $('#internalProp_'+el.id).css({'opacity': '0.5'});
+   $("label[for='internalProp_"+ el.id +"']").css({'opacity': 0.5})
+   //$('#'+el.id+'critname').css({'opacity': '0.5', 'font-weight': 'normal'});
 
 }
 
 function check(num){
   var check_all = 0;
   for(var i=0; i<num; i++) {
-     if($('#cell'+i+'critname').css('opacity') != 0){
+     if($("label[for='internalProp_cell"+ i +"']").css('opacity') != 0){
+     //if($('#cell'+i+'critname').css('opacity') != 0){
         ++check_all;
      }
   }
@@ -65,10 +71,13 @@ function create_table(rows, cols) { //rows * cols = number of exemplars
 
       table += "<td>";
       table += "<svg id='critter" + ind +
-        "' style='max-width: 128px;max-height:128px\'></svg></td>";
+        "' style='max-width: 100px;max-height:100px\'></svg></td>";
 
       table += "<tr>";
-      table += "<div class='critname' id='cell" + ind + "critname'></div></tr>";
+      table += "<div class='critname' id='cell" + ind + "critname'></div>"; //critter species name
+      table += "<div><input type='checkbox' id='internalProp_cell" + ind +"' style='opacity:0' onclick=\"return false;\">";
+      table += "<label for='internalProp_cell" + ind + "' style='opacity:0'></label></div></tr>";
+      //table += "<label for='internalProp" + ind + "'></div></tr>"; //checkbox indicating internal feature
       table += "</table>";
       table += "</td>";
 
@@ -166,9 +175,23 @@ slides.wait_room = slide({
 
        for(var i=0; i<shuffledCritters.length; i++) {
          $('#cell'+i+'critname').html(shuffledCritters[i]["creatureName"]);
-         $('#cell'+i+'critname').css({'opacity': '0'});
 
-      }
+         switch(shuffledCritters[i]["critter"]) {
+           case 'bird':
+            $("label[for='internalProp_cell"+ i +"']").text(" lays eggs");
+            break;
+           case 'bug':
+            $("label[for='internalProp_cell"+ i +"']").text(" is poisonous");
+            break;
+         }
+         $("label[for='internalProp_cell"+ i +"']").css({'font-size': '12px'});
+         
+         shuffledCritters[i]["internal_prop"] ?
+            $('#internalProp_cell'+i).prop('checked', true) :
+            $('#internalProp_cell'+i).prop('checked', false)
+
+
+       }
 
     },
 
@@ -216,10 +239,10 @@ slides.wait_room = slide({
 
 
         for(var i=0; i<shuffledCritters.length; i++) {
-          $('#cell'+i+'critname').html(shuffledCritters[i]["creatureName"]);
-          $('#cell'+i+'critname').css({'opacity': '0'});
+          $('#cell'+i+'critname').html(shuffledCritters[i]["creatureName"]);           
+        }
 
-       }
+       
 
      },
 
