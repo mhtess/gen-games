@@ -130,6 +130,9 @@ function make_slides(f) {
 
   slides.instructions = slide({
     name : "instructions",
+    start: function(){
+      globalGame.socket.send("enterSlide.instructions."); // enterChatRoom
+    },
     button : function() {
       exp.go(); //use exp.go() if and only if there is no "present" data.
     },
@@ -140,6 +143,7 @@ slides.wait_room = slide({
 
     start: function() {
       console.log('start of wait_room')
+      globalGame.socket.send("enterSlide.wait_room.");
       $(".err").hide();
       $("#waitCont").hide(); // chatCont
       globalGame.socket.send("enterWaitRoom."); // enterChatRoom
@@ -154,6 +158,7 @@ slides.wait_room = slide({
 
     start : function(stim) {
       this.start_time = Date.now()
+      globalGame.socket.send("enterSlide.welcome_critterLand.");
       this.stim = stim;
       $(".critname").hide();
       $(".err").hide();
@@ -222,6 +227,7 @@ slides.wait_room = slide({
      start : function() {
 
        this.start_time = Date.now()
+       globalGame.socket.send("enterSlide.test_critters.");
        $(".err").hide();
        allCreatures = this.crittersFromServer;
        var shuffledCritters = _.shuffle(allCreatures)
@@ -269,6 +275,7 @@ slides.wait_room = slide({
   slides.condition = slide({
     name: "condition",
     start : function() {
+      globalGame.socket.send("enterSlide.condition.");
       var cond_sentence = "To help you learn about the critters, you have been given a "
       exp.condition == "pepsin_detector" ?
         cond_sentence += "device that can detect a substance called pepsin." :
@@ -294,6 +301,7 @@ slides.learning_trial = slide({
     present_handle : function(stim) {
       $("#critterSVG").empty();
       $(".err").hide();
+      globalGame.socket.send("enterSlide.learning_trial.");
       this.critOpts = _.where(critFeatures, {creature: stim.critter})[0];
       this.question = _.where(question_phrase, {creature: stim.critter})[0];
 
@@ -370,6 +378,7 @@ slides.learning_trial = slide({
 
     start: function() {
       $("#chatCont").hide();
+      $('#messages').empty();
       console.log('start of robert page')
       globalGame.socket.send("enterChatRoom.");
       $(".err").hide();
@@ -408,6 +417,7 @@ slides.learning_trial = slide({
       $('#exit_survey').show();
       $('#sketchpad').show(); // this is from sketchpad experiment (jefan 4/23/17)
       $('#loading').show();
+      globalGame.socket.send("enterSlide.chatbox.");
     },
 
     button : function() {
@@ -529,6 +539,7 @@ slides.learning_trial = slide({
     name : "subj_info",
     submit : function(e){
       //if (e.preventDefault) e.preventDefault(); // I don't know what this means.
+      globalGame.socket.send("enterSlide.subj_info.");
       exp.subj_data = {
         language : $("#language").val(),
         enjoyment : $("#enjoyment").val(),
@@ -548,6 +559,7 @@ slides.learning_trial = slide({
   slides.thanks = slide({
     name : "thanks",
     start : function() {
+      globalGame.socket.send("enterSlide.thanks.");
       exp.data= {
           "trials" : exp.data_trials,
           "catch_trials" : exp.catch_trials,
@@ -602,13 +614,13 @@ function init() {
 
   exp.structure=[
     "i0",
+     "instructions",
       "wait_room",
     "welcome_critterLand",
     "robertPage",
     "test_critters",
     "welcome_critterLand",
     "robertPage",
-    "instructions",
     // "condition",
     "robertPage",
     // need a waiting room here

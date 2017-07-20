@@ -180,6 +180,11 @@
   // How many mistakes have the pair made on the current trial?
   this.attemptNum = 0;
 
+  this.currentSlide = {
+    speaker: "i0",
+    listener: "i0"
+  }
+
   // This will be populated with the tangram set
   this.trialInfo = [];
 
@@ -204,6 +209,7 @@
       speaker: listenerOrder,
       listener: speakerOrder
     };
+
     // this.trialList = {
     //   role1: this.genCreatures("bird"),
     //   role2: this.genCreatures("bug")

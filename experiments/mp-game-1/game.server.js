@@ -32,15 +32,20 @@ var onMessage = function(client,message) {
   var all = gc.get_active_players();
   var target = gc.get_player(client.userid);
   var others = gc.get_others(client.userid);
+  // console.log(target)
   // console.log(message_parts)
   // console.log(gc)
+  console.log('message')
+  console.log(message)
   switch(message_type) {
 
   case 'enterSlide' :
+    console.log("gc currentslide ---")
     gc.currentSlide[target.instance.role] = message_parts[1]
+    console.log(gc.currentSlide)
     break;
 
-  // when server gets "clickedObj" signal
+  // continue button from chat room
   case 'clickedObj' :
 
     // writeData(client, "clickedObj", message_parts);
@@ -102,11 +107,14 @@ var onMessage = function(client,message) {
 
 
   case 'enterWaitRoom' :
+    if (gc.currentSlide["speaker"] == gc.currentSlide["listener"]) {
+      console.log("enter wait server")
     setTimeout(function() {
       _.map(all, function(p){
         p.player.instance.emit("enterWaitRoom", {})
       });
     }, 300);
+  }
     break;
 
   case 'h' : // Receive message when browser focus shifts
