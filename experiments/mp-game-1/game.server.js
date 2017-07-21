@@ -6,10 +6,10 @@
     modified for collective behavior experiments on Amazon Mechanical Turk
 
     MIT Licensed.
-*/
+    */
     var
-        fs    = require('fs'),
-        utils = require(__base + 'sharedUtils/sharedUtils.js');
+    fs    = require('fs'),
+    utils = require(__base + 'sharedUtils/sharedUtils.js');
 
 // This is the function where the server parses and acts on messages
 // sent from 'clients' aka the browsers of people playing the
@@ -27,131 +27,112 @@ var onMessage = function(client,message) {
 
   //Extract important variables
   var gc = client.game;
-  // console.log(gc)
   var id = gc.id;
   var all = gc.get_active_players();
+  // gets current player and differentiates them from other players
   var target = gc.get_player(client.userid);
   var others = gc.get_others(client.userid);
-  // console.log(target)
-  // console.log(message_parts)
-  // console.log(gc)
-  console.log(gc.currentSlide)
 
   switch(message_type) {
 
-  case 'enterSlide' :
-    console.log("gc currentslide ---")
-    gc.currentSlide[target.instance.role] = message_parts[1]
-    console.log(gc.currentSlide)
-    break;
+    // keeps track of which "experiment template" slide each particular user is on
+    // will update (through use of globalGame.socket.send("enterSlide.slide_name.");) in game js file
+    case 'enterSlide' :
+      gc.currentSlide[target.instance.role] = message_parts[1]
+      break;
 
-  // continue button from chat room
-  case 'clickedObj' :
-
-    // writeData(client, "clickedObj", message_parts);
-    // others[0].player.instance.send("s.feedback." + message_parts[2]);
-    // target.instance.send("s.feedback." + message_parts[2]);
-    setTimeout(function() {
-      _.map(all, function(p){
-        // tell client to advance to next round
-        // p.player.instance.emit( 'newRoundUpdate', {user: client.userid} );
-        // p.role may be incorrect, information is somewhere in p
-        // here, decide what data to pass to each subject
-        // console.log(p.player)
-        // var dataPacket = p.instance.role == "listener" ?
-        //     {crittersToPresent: "instruct-text"} :
-        //     {crittersToPresent: "legal"}
-        var playerRole = p.instance.role;
-        var dataPacket = {
-          thisRoundTest: gc.testList[playerRole][gc.roundNum],
-          nextRoundLearning: gc.trialList[playerRole][gc.roundNum + 1]
-        };
-
-        // console.log(dataPacket)
-
-        p.player.instance.emit("exitChatRoom", dataPacket)
-
-      });
-      // tell server to advance to next round (or if at end, disconnect)
-      // gc.newRound();
-      gc.roundNum += 1;
-
-    }, 300);
-
-    break;
-
-  case 'playerTyping' :
-    _.map(others, function(p) {
-      p.player.instance.emit( 'playerTyping',
-			      {typing: message_parts[1]});
-    });
-    break;
-
-  case 'chatMessage' :
-    // if (gc.currentSlide["speaker"] != gc.currentSlide["listener"]) {
-    //   $('#chatbox').attr("disabled", "disabled");
-    // }
-    //   // $('#chatbox').removeAttr("disabled");
-    if((gc.currentSlide["speaker"] == gc.currentSlide["listener"]) && !gc.paused) {
-      console.log('sending messages');
-      writeData(client, "message", message_parts);
-      // Update others
-      var msg = message_parts[1].replace(/~~~/g,'.');
-      _.map(all, function(p){
-	p.player.instance.emit( 'chatMessage', {user: client.userid, msg: msg});});
-    }
-    break;
-
-  case 'enterChatRoom' :
-    if (gc.currentSlide["speaker"] != gc.currentSlide["listener"]) {
-      console.log("chat with only one player")
-      target.instance.emit("chatWait", {})
-    } else {
+    // continue button from chat room
+    case 'clickedObj' :
       setTimeout(function() {
         _.map(all, function(p){
-          p.player.instance.emit("enterChatRoom", {})
-        });
-      }, 300);      
-    } 
-    break;
+            // tell client to advance to next slide
+            var playerRole = p.instance.role;
+            // here, decide what data to pass to each subject
+            var dataPacket = {
+              thisRoundTest: gc.testList[playerRole][gc.roundNum],
+              nextRoundLearning: gc.trialList[playerRole][gc.roundNum + 1]
+            };
+            // calls exitChatRoom to move to next slide and collect data to the packet
+            p.player.instance.emit("exitChatRoom", dataPacket)
+          });
+          // tell server to advance to next round (or if at end, disconnect)
+          gc.roundNum += 1;
+        }, 300);
+      break;
 
-
-  case 'enterWaitRoom' :
-    if (gc.currentSlide["speaker"] == gc.currentSlide["listener"]) {
-      console.log("enter wait server")
-    setTimeout(function() {
-      _.map(all, function(p){
-        p.player.instance.emit("enterWaitRoom", {})
+    // will result in "other player is typing" on others' chatboxes
+    case 'playerTyping' :
+      _.map(others, function(p) {
+        p.player.instance.emit( 'playerTyping',
+         {typing: message_parts[1]});
       });
-    }, 300);
-  }
-    break;
+      break;
 
-  case 'h' : // Receive message when browser focus shifts
-    target.visible = message_parts[1];
-    break;
+    // Only allows a message to be sent when both players are present in the chatroom
+    // If this is true, the message will be relayed
+    case 'chatMessage' :
+      if(gc.currentSlide["speaker"] == gc.currentSlide["listener"]) {
+        writeData(client, "message", message_parts);
+          // Update others
+          var msg = message_parts[1].replace(/~~~/g,'.');
+          _.map(all, function(p){
+           p.player.instance.emit( 'chatMessage', {user: client.userid, msg: msg});});
+      }
+      break;
+
+    // Will show a wait message if only one player is in the chatroom
+    // Will allow them to enter the chatroom
+    case 'enterChatRoom' :
+      if (gc.currentSlide["speaker"] != gc.currentSlide["listener"]) {
+        target.instance.emit("chatWait", {})
+      } else {
+        setTimeout(function() {
+          _.map(all, function(p){
+            p.player.instance.emit("enterChatRoom", {})
+          });
+        }, 300);      
+      } 
+      break;
+
+    // Seems confusing, but this fn actually goes to the wait room and only moves forward,
+    // (enterWaitRoom) when both the speaker and listener are in the wait room
+    case 'enterWaitRoom' :
+      if (gc.currentSlide["speaker"] == gc.currentSlide["listener"]) {
+        setTimeout(function() {
+          _.map(all, function(p){
+            p.player.instance.emit("enterWaitRoom", {})
+          });
+        }, 300);
+      }
+      break;
+
+    // Receive message when browser focus shifts
+    case 'h' : 
+      target.visible = message_parts[1];
+      break;
   }
 };
 
+// Collects data..
 var writeData = function(client, type, message_parts) {
   var gc = client.game;
   var roundNum = gc.state.roundNum + 1;
   var id = gc.id;
   switch(type) {
-  case "clickedObj" :
+    case "clickedObj" :
     var outcome = message_parts[2] === "target";
     var targetVsD1 = utils.colorDiff(getStim(gc, "target"), getStim(gc, "distr1"));
     var targetVsD2 = utils.colorDiff(getStim(gc, "target"), getStim(gc, "distr2"));
     var D1VsD2 = utils.colorDiff(getStim(gc, "distr1"), getStim(gc, "distr2"));
     var line = (id + ',' + Date.now() + ',' + roundNum  + ',' +
-		message_parts.slice(1).join(',') +
-		targetVsD1 + "," + targetVsD2 + "," + D1VsD2 + "," + outcome +
-		'\n');
+      message_parts.slice(1).join(',') +
+      targetVsD1 + "," + targetVsD2 + "," + D1VsD2 + "," + outcome +
+      '\n');
     console.log("clickedObj:" + line);
     break;
 
 
-  case "message" :
+    case "message" :
     var msg = message_parts[1].replace(/~~~/g,'.');
     var line = (id + ',' + Date.now() + ',' + roundNum + ',' + client.role + ',"' + msg + '"\n');
     console.log("message:" + line);
@@ -160,11 +141,13 @@ var writeData = function(client, type, message_parts) {
   gc.streams[type].write(line, function (err) {if(err) throw err;});
 };
 
+// used in the fn above to collect data
 var getStim = function(game, targetStatus) {
   return _.filter(game.trialInfo.currStim, function(x){
     return x.targetStatus == targetStatus;
   })[0]['color'];
 };
+
 
 // /*
 //    The following functions should not need to be modified for most purposes
@@ -175,13 +158,13 @@ var startGame = function(game, player) {
   var startTime = utils.getLongFormTime();
   var dataFileName = startTime + "_" + game.id + ".csv";
   utils.establishStream(game, "message", dataFileName,
-			"gameid,time,roundNum,sender,contents\n");
+   "gameid,time,roundNum,sender,contents\n");
   utils.establishStream(game, "clickedObj", dataFileName,
-			"gameid,time,roundNum,condition," +
-			"clickStatus,clickColH,clickColS,clickColL,clickLocS,clickLocL"+
-			"alt1Status,alt1ColH,alt1ColS,alt1ColL,alt1LocS,alt1LocL" +
-			"alt2Status,alt2ColH,alt2ColS,alt2ColL,alt2LocS,alt2LocL" +
-			"targetD1Diff,targetD2Diff,D1D2Diff,outcome\n");
+   "gameid,time,roundNum,condition," +
+   "clickStatus,clickColH,clickColS,clickColL,clickLocS,clickLocL"+
+   "alt1Status,alt1ColH,alt1ColS,alt1ColL,alt1LocS,alt1LocL" +
+   "alt2Status,alt2ColH,alt2ColS,alt2ColL,alt2LocS,alt2LocL" +
+   "targetD1Diff,targetD2Diff,D1D2Diff,outcome\n");
   game.newRound();
 };
 
