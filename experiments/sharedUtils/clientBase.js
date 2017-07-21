@@ -7,28 +7,28 @@ var getURLParams = function() {
       decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
       query  = location.search.substring(1);
 
-  var urlParams = {};
-  while ((match = search.exec(query))) {
-    urlParams[decode(match[1])] = decode(match[2]);
-  }
-  return urlParams;
-};
+      var urlParams = {};
+      while ((match = search.exec(query))) {
+        urlParams[decode(match[1])] = decode(match[2]);
+      }
+      return urlParams;
+    };
 
-var ondisconnect = function(data) {
+    var ondisconnect = function(data) {
   // Redirect to exit survey
   console.log("server booted");
   this.viewport.style.display="none";
 
   // here change the quote to you will now do whatever
   disconStr = 'Thanks for participating in our experiment! ' +
-        "Before you submit your HIT, we'd like to ask you a few questions."
+  "Before you submit your HIT, we'd like to ask you a few questions."
 
   if(globalGame.roundNum + 2 > globalGame.numRounds) {
-      $('#instructs').html(disconStr);
-      $('#contButton').show();
+    $('#instructs').html(disconStr);
+    $('#contButton').show();
   }
   else {
-      $('#instructs').html('Oops! It looks like your partner lost their connection.' +
+    $('#instructs').html('Oops! It looks like your partner lost their connection.' +
       ' Completing this survey will submit your HIT so you will still receive ' +
       'full compensation. If you experience any problems, please email us (sketchloop@gmail.com).'); // this is from sketchpad experiment (jefan 4/23/17)
   }
@@ -36,11 +36,10 @@ var ondisconnect = function(data) {
   $('#submitbutton').hide();
   $('#roleLabel').hide();
   $('#score').hide();
-  // $('#exit_survey').show();
   $('#sketchpad').hide(); // this is from sketchpad experiment (jefan 4/23/17)
   $('#loading').hide(); // this is from sketchpad experiment (jefan 4/23/17)
 
-  };
+};
 
 var onconnect = function(data) {
   console.log('on connect')
@@ -48,22 +47,7 @@ var onconnect = function(data) {
   this.my_id = data.id;
   this.players[0].id = this.my_id;
   this.urlParams = getURLParams();
-  // console.log(this.urlParams);
-  // console.log(this.my_id,this.players[0].id);
   console.log(this);
-  // console.log(this.get_player(this.my_id));
-  // $('#message_panel').hide();
-  // $('#submitbutton').hide();
-  // $('#roleLabel').hide();
-  // //$('#textInfo').hide();
-  // $('#viewport').hide();
-  // $('#score').hide();
-  // $('#roundnumber').hide();
-  // $('#exit_survey').hide();
-  // $('#sketchpad').hide(); // this is from sketchpad experiment (jefan 4/23/17)
-  // $('#loading').hide(); // this is from sketchpad experiment (jefan 4/23/17)
-  // $('#i0').show();
-  //drawScreen(this, this.get_player(this.my_id));
 };
 
 // Associates callback functions corresponding to different socket messages
@@ -81,7 +65,6 @@ var sharedSetup = function(game) {
     } else if($("#chatbox").val() == "") {
       game.socket.send('playerTyping.false');
       globalGame.sentTyping = false;
-      console.log("globalGame is being used here!");
     }
   });
 
@@ -101,11 +84,11 @@ var sharedSetup = function(game) {
   game.socket.on('playerTyping', function(data){
     if(data.typing == "true") {
       $('#messages')
-	.append('<span class="typing-msg">Other player is typing...</span>')
-	.stop(true,true)
-	.animate({
-	  scrollTop: $("#messages").prop("scrollHeight")
-	}, 800);
+      .append('<span class="typing-msg">Other player is typing...</span>')
+      .stop(true,true)
+      .animate({
+       scrollTop: $("#messages").prop("scrollHeight")
+     }, 800);
     } else {
       $('.typing-msg').remove();
     }
@@ -116,17 +99,17 @@ var sharedSetup = function(game) {
     // Just in case we want to bar responses until after some message received
     globalGame.messageSent = true;
     var otherRole = (globalGame.my_role === game.playerRoleNames.role1 ?
-		     game.playerRoleNames.role2 : game.playerRoleNames.role1);
+     game.playerRoleNames.role2 : game.playerRoleNames.role1);
     var source = data.user === globalGame.my_id ? "You" : otherRole;
     var col = source === "You" ? "#f47777" : "#c66f6f";
     $('.typing-msg').remove();
     $('#messages')
-      .append($('<li style="padding: 5px 10px; background: ' + col + '">')
-    	      .text(source + ": " + data.msg))
-      .stop(true,true)
-      .animate({
-	scrollTop: $("#messages").prop("scrollHeight")
-      }, 800);
+    .append($('<li style="padding: 5px 10px; background: ' + col + '">')
+     .text(source + ": " + data.msg))
+    .stop(true,true)
+    .animate({
+     scrollTop: $("#messages").prop("scrollHeight")
+   }, 800);
   });
 
   //so that we can measure the duration of the game
@@ -159,9 +142,7 @@ window.onload = function(){
 
   //Fetch the viewport
   globalGame.viewport = document.getElementById('viewport');
-
   globalGame.slides = document.getElementsByClassName('slide');
-
 
   //Adjust its size
   globalGame.viewport.width = globalGame.world.width;
@@ -183,24 +164,24 @@ function dropdownTip(data){
   console.log(globalGame);
   var commands = data.split('::');
   switch(commands[0]) {
-  case 'human' :
+    case 'human' :
     $('#humanResult').show();
     globalGame.data.subject_information = _.extend(globalGame.data.subject_information,
-					     {'thinksHuman' : commands[1]}); break;
-  case 'language' :
+      {'thinksHuman' : commands[1]}); break;
+    case 'language' :
     globalGame.data.subject_information = _.extend(globalGame.data.subject_information,
-					     {'nativeEnglish' : commands[1]}); break;
-  case 'partner' :
+      {'nativeEnglish' : commands[1]}); break;
+    case 'partner' :
     globalGame.data.subject_information = _.extend(globalGame.data.subject_information,
-						   {'ratePartner' : commands[1]}); break;
-  case 'confused' :
+     {'ratePartner' : commands[1]}); break;
+    case 'confused' :
     globalGame.data.subject_information = _.extend(globalGame.data.subject_information,
-						   {'confused' : commands[1]}); break;
-  case 'submit' :
+     {'confused' : commands[1]}); break;
+    case 'submit' :
     globalGame.data.subject_information = _.extend(globalGame.data.subject_information,
-				   {'comments' : $('#comments').val(),
-				    'role' : globalGame.my_role,
-				    'totalLength' : Date.now() - globalGame.startTime});
+     {'comments' : $('#comments').val(),
+     'role' : globalGame.my_role,
+     'totalLength' : Date.now() - globalGame.startTime});
     globalGame.submitted = true;
     console.log("data is...");
     console.log(globalGame.data);
@@ -210,8 +191,6 @@ function dropdownTip(data){
     } else {
       console.log("would have submitted the following :")
       console.log(globalGame.data);
-//      var URL = 'http://web.stanford.edu/~rxdh/psych254/replication_project/forms/end.html?id=' + my_id;
-//      window.location.replace(URL);
     }
     break;
   }
@@ -220,7 +199,7 @@ function dropdownTip(data){
 window.onbeforeunload = function(e) {
   e = e || window.event;
   var msg = ("If you leave before completing the task, "
-	     + "you will not be able to submit the HIT.");
+    + "you will not be able to submit the HIT.");
   if (!globalGame.submitted) {
     // For IE & Firefox
     if (e) {
@@ -250,14 +229,14 @@ window.onbeforeunload = function(e) {
   // All others:
   else
     window.onpageshow = window.onpagehide = window.onfocus
-    = window.onblur = onchange;
+  = window.onblur = onchange;
 })();
 
 function onchange (evt) {
   var v = 'visible', h = 'hidden',
-      evtMap = {
-        focus:v, focusin:v, pageshow:v, blur:h, focusout:h, pagehide:h
-      };
+  evtMap = {
+    focus:v, focusin:v, pageshow:v, blur:h, focusout:h, pagehide:h
+  };
   evt = evt || window.event;
   if (evt.type in evtMap) {
     document.body.className = evtMap[evt.type];
@@ -265,8 +244,6 @@ function onchange (evt) {
     document.body.className = evt.target.hidden ? "hidden" : "visible";
   }
   console.log(evt);
-  // console.log(document.body.className);
-  // console.log(globalGame);
   visible = document.body.className;
   globalGame.socket.send("h." + document.body.className);
 
@@ -295,4 +272,4 @@ function onchange (evt) {
     document.title = original;
   };
 
-}());
+});
