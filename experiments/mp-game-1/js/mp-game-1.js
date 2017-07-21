@@ -9,14 +9,12 @@ function mark_critter_display(el, otherEls) {
     if(el.style.border==''){
       $('#'+el.id).css({"border":'2px solid red',
                     'background-color': 'white','opacity': '1'});
-      $('#internalProp_'+ el.id).css({'opacity': 1});
-      $("label[for='internalProp_"+ el.id +"']").css({'opacity': 1})
+      $('#'+ el.id + 'critname').css({'opacity': 1, 'font-weight': 'bold'});
+      $("#"+ el.id + 'internalprop').css({'opacity': 1});
+      $('#'+el.id+'internalprop').show()
     } else {
       $('#'+el.id).css({"border":'',
-                    'background-color': 'white'});
-      $('#'+el.id+'critname').css({'opacity': '0.5', 'font-weight': 'normal'});
-      $('#internalProp_'+ el.id).css({'opacity': 0.5});
-      $("label[for='internalProp_"+ el.id +"']").css({'opacity': 0.5})
+                    'background-color': 'white', 'opacity': 0.5});
     }
     otherEls.map(function(cell){$('#'+cell).css({"border":'',
       'background-color': 'white'})})
@@ -34,31 +32,26 @@ function mark_critter_test_display(el, otherEls) {
       $('#'+el.id).css({"border":'',
                     'background-color': 'white'})
     }
-    // otherEls.map(function(cell){$('#'+cell).css({"border":'',
-    //   'background-color': 'white'})})
 
 }
 
 
 function gray(el) {
-   $('#internalProp_'+el.id).css({'opacity': '0.5'});
-   $("label[for='internalProp_"+ el.id +"']").css({'opacity': 0.5})
-   //$('#'+el.id+'critname').css({'opacity': '0.5', 'font-weight': 'normal'});
+   $('#'+el.id+'critname').css({'opacity': 0.5, 'font-weight': 'normal'});
+   $('#'+ el.id+'internalprop').css({'opacity': 0.5})
 
 }
 
 function check(num){
   var check_all = 0;
   for(var i=0; i<num; i++) {
-     if($("label[for='internalProp_cell"+ i +"']").css('opacity') != 0){
-     //if($('#cell'+i+'critname').css('opacity') != 0){
+     if($('#cell' + i +'critname').css('opacity') != 1 || $('#cell' + i +'critname').css('font-weight') == 'bold'){
         ++check_all;
      }
   }
 
   if(check_all == num) {
      $("#learning_button").show();
-     console.log("good to go!");
   }
 
 }
@@ -88,10 +81,12 @@ function create_table(rows, cols, display_type) { //rows * cols = number of exem
         "' style='max-width: 100px;max-height:100px\'></svg></td>";
 
       table += "<tr>";
-      table += "<div class='critname' id='cell" + ind + "critname'></div>"; //critter species name
-      table += "<div><input type='checkbox' id='internalProp_cell" + ind +"' style='opacity:0' onclick=\"return false;\">";
-      table += "<label for='internalProp_cell" + ind + "' style='opacity:0'></label></div></tr>";
-      //table += "<label for='internalProp" + ind + "'></div></tr>"; //checkbox indicating internal feature
+      table += "<td>";
+      table += "<div class='critlabel' id='cell" + ind + "critlabel'>"; //critter species name + emoji
+      table += "<div class='critname' id='cell" + ind + "critname' style='float:left'></div>";
+      table += "<div class='critname' id='cell" + ind + "internalprop' style='float:center'></div></div>";
+      table += "</td>";
+      table += "</tr>";
       table += "</table>";
       table += "</td>";
 
@@ -192,25 +187,23 @@ slides.wait_room = slide({
       }
 
 
-       for(var i=0; i<shuffledCritters.length; i++) {
-         $('#cell'+i+'critname').html(shuffledCritters[i]["creatureName"]);
-
-         switch(shuffledCritters[i]["critter"]) {
+      for(var i=0; i<shuffledCritters.length; i++) {
+        $('#cell'+i+'critname').html(shuffledCritters[i]["creatureName"]);
+        switch(shuffledCritters[i]["critter"]) {
            case 'bird':
-            $("label[for='internalProp_cell"+ i +"']").text(" lays eggs");
+            if (shuffledCritters[i]["internal_prop"]) {
+              $('#cell'+i+'internalprop').html("&#x1F423;"); //hatching chick
+            }
             break;
            case 'bug':
-            $("label[for='internalProp_cell"+ i +"']").text(" is poisonous");
+            if (shuffledCritters[i]["internal_prop"]) {
+              $('#cell'+i+'internalprop').html("&#x1f480"); //skull sign
+            }
             break;
-         }
-         $("label[for='internalProp_cell"+ i +"']").css({'font-size': '12px'});
-         
-         shuffledCritters[i]["internal_prop"] ?
-            $('#internalProp_cell'+i).prop('checked', true) :
-            $('#internalProp_cell'+i).prop('checked', false)
+        }
+        $('#cell'+i+'internalprop').hide();
 
-
-       }
+      }
 
     },
 
@@ -225,7 +218,6 @@ slides.wait_room = slide({
         $('#cell' + i).css({'border': ''});
         $('#creature_table').remove();
         prev = null;
-        //$('#cell'+i+'critname').css({'opacity': '1'});
       }
 
       exp.go(); // use exp.go() if and only if there is no "present" data.
