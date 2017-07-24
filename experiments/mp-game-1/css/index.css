@@ -95,6 +95,18 @@ html , body {
 ALOT...don't understand how to adjust that.*/
 }
 
+#disconnecting {
+	height: auto;
+	width: auto;
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: auto ;
+	left:30%; right:30%; top:10%; bottom: 0;
+	position: absolute;
+}
+
+
 #main {
 	height: auto;
 	width: auto;

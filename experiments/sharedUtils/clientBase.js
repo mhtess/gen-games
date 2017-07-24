@@ -14,7 +14,7 @@ var getURLParams = function() {
       return urlParams;
     };
 
-    var ondisconnect = function(data) {
+   var ondisconnect = function(data) {
   // Redirect to exit survey
   console.log("server booted");
   this.viewport.style.display="none";
@@ -28,16 +28,22 @@ var getURLParams = function() {
     $('#contButton').show();
   }
   else {
-    $('#instructs').html('Oops! It looks like your partner lost their connection.' +
+    $('.long_form').prepend('<p style="font-size:15px">' + 
+      'Oops! It looks like your partner lost their connection.' +
       ' Completing this survey will submit your HIT so you will still receive ' +
-      'full compensation. If you experience any problems, please email us (sketchloop@gmail.com).'); // this is from sketchpad experiment (jefan 4/23/17)
-  }
-  $('#message_panel').hide();
+      'full compensation. If you experience any problems, please email us (mtessler@stanford.edu).'
+       + '</p>' + '<br>');
+
+      $('#message_panel').hide();
   $('#submitbutton').hide();
   $('#roleLabel').hide();
   $('#score').hide();
   $('#sketchpad').hide(); // this is from sketchpad experiment (jefan 4/23/17)
   $('#loading').hide(); // this is from sketchpad experiment (jefan 4/23/17)
+  $('.slide').hide();
+  $('#subj_info').show();
+  $('.progress').hide();
+  }
 
 };
 
