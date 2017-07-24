@@ -196,9 +196,9 @@
     var birdCritters = this.genCreatures("bird");
     var fishCritters = this.genCreatures("fish");
     var flowerCritters = this.genCreatures("flower");
-    var treeCritters = this.genCreatures("tree");
-    var speakerOrder = [bugCritters, fishCritters];
-    var listenerOrder = [birdCritters, flowerCritters];
+    //var treeCritters = this.genCreatures("tree");
+    var speakerOrder = [fishCritters, bugCritters];
+    var listenerOrder = [flowerCritters, birdCritters];
 
     // assigns the critters to their respective players
     this.trialList = {

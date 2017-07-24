@@ -164,16 +164,29 @@ function make_slides(f) {
       for(var i=0; i<shuffledCritters.length; i++) {
         $('#cell'+i+'critname').html(shuffledCritters[i]["creatureName"]);
         switch(shuffledCritters[i]["critter"]) {
-           case 'bird':
-            $('#internalprops_instruct').html("Click on each critter to discover whether it lays eggs or not.");
+          case 'bird':
+            $('#internalprops_instruct').html("Click on each critter to discover whether it lays eggs.");
             if (shuffledCritters[i]["internal_prop"]) {
               $('#cell'+i+'internalprop').html("&#x1F423;"); //hatching chick
+
             }
             break;
-           case 'bug':
+          case 'bug':
             $('#internalprops_instruct').html("Click on each critter to discover whether it is poisonous.")
             if (shuffledCritters[i]["internal_prop"]) {
-              $('#cell'+i+'internalprop').html("&#x1f480"); //skull sign
+              $('#cell'+i+'internalprop').html("&#x2620;"); //skull & crossbones sign
+            }
+            break;
+          case 'fish':
+            $('#internalprops_instruct').html("Click on each critter to discover whether it can be caught.")
+            if (shuffledCritters[i]["internal_prop"]) {
+              $('#cell'+i+'internalprop').html("&#x1f3a3;");
+            }
+            break;
+          case 'flower':
+            $('#internalprops_instruct').html("Click on each critter to discover whether it grows near mushrooms.")
+            if (shuffledCritters[i]["internal_prop"]) {
+              $('#cell'+i+'internalprop').html("&#x1f344;");
             }
             break;
         }
