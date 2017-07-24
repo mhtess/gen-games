@@ -38,8 +38,8 @@ function mark_critter_test_display(el, otherEls) {
 // grays out after clicked for learning phase
 function gray(el) {
    $('#'+el.id).css({"border":'2px solid white',
-                    'background-color': 'white', 'opacity': 0.7});
-   $('#'+el.id+'critname').css({'opacity': 0.7, 'font-weight': 'normal'});
+                    'background-color': 'white', 'opacity': 0.5});
+   $('#'+el.id+'critname').css({'opacity': 0.5, 'font-weight': 'normal'});
    $('#'+ el.id+'internalprop').css({'opacity': 0.7})
 
 }
@@ -126,6 +126,10 @@ function make_slides(f) {
       $(".err").hide();
       $("#waitCont").hide();
       globalGame.socket.send("enterWaitRoom.");
+      for(var i=0; i<1000; i++){
+         $("#waiting_wait_room").fadeOut(1000);
+         $("#waiting_wait_room").fadeIn(1000);
+       }
     }
   });
 
@@ -283,6 +287,10 @@ slides.robertPage = slide({
     globalGame.socket.send("enterChatRoom.");
     $(".err").hide();
     $('#waiting').show();
+    // for(var i=0; i<1000; i++){
+    //   $("#waiting").fadeOut(1000);
+    //   $("#waiting").fadeIn(1000);
+    // }
   }
 });
 
@@ -355,6 +363,11 @@ function init() {
   exp.structure=[
     "i0",
     "instructions",
+    "wait_room",
+    "welcome_critterLand",
+    "robertPage",
+    "test_instructs",
+    "test_critters",
     "wait_room",
     "welcome_critterLand",
     "robertPage",
