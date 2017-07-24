@@ -161,11 +161,13 @@ function make_slides(f) {
         $('#cell'+i+'critname').html(shuffledCritters[i]["creatureName"]);
         switch(shuffledCritters[i]["critter"]) {
            case 'bird':
+            $('#internalprops_instruct').html("Click on each critter to discover whether it lays eggs or not.");
             if (shuffledCritters[i]["internal_prop"]) {
               $('#cell'+i+'internalprop').html("&#x1F423;"); //hatching chick
             }
             break;
            case 'bug':
+            $('#internalprops_instruct').html("Click on each critter to discover whether it is poisonous.")
             if (shuffledCritters[i]["internal_prop"]) {
               $('#cell'+i+'internalprop').html("&#x1f480"); //skull sign
             }
@@ -193,6 +195,17 @@ function make_slides(f) {
 
     },
   });
+
+slides.test_instructs = slide({
+  name: "test_instructs",
+  start: function() {
+    // switch statements based on which critters are being shown
+    $('#test_cond').html("On the next slide, you will choose the ")
+  },
+  button : function() {
+    exp.go();
+  },
+});
 
 slides.test_critters = slide({
  name : "test_critters",
@@ -340,16 +353,14 @@ function init() {
 
   //blocks of the experiment:
   exp.structure=[
-  "wait_room",
-  "welcome_critterLand",
-  "i0",
-  "instructions",
-  "wait_room",
-  "welcome_critterLand",
-  "robertPage",
-  "test_critters",
-  "welcome_critterLand",
-  "robertPage",
+    "i0",
+    "instructions",
+    "wait_room",
+    "welcome_critterLand",
+    "robertPage",
+    "test_instructs",
+    "test_critters",
+  // "robertPage",
     // "condition",
     // need a waiting room here
     'subj_info',

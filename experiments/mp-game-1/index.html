@@ -62,23 +62,16 @@
   <div class="slide" id="i0" >
     <img src="../_shared/images/cocologo.png" alt="Stanford CoCoLab" id="cocologo"></img>
     <p id="cocolab">Stanford CoCoLab</p>
-    <p id="instruct-text">You will see some creatures and be asked some questions about them. The HIT should take 5 minutes. Please pay attention, thanks!</p>
+    <p id="instruct-text">You will see some creatures and be asked to communicate with another turker about what you learned; after, you will be asked some questions. The HIT should take 20 minutes. Please pay attention, thanks!</p>
     <button id="start_button" type="button">Start Experiment</button>
     <p id="legal">Legal information: By answering the following questions, you are participating in a study being performed by cognitive scientists in the Stanford Department of Psychology. If you have questions about this research, please contact M. H. Tessler at <a href="mailto://mtessler@stanford.edu">mtessler@stanford.edu</a> or Noah Goodman, at ngoodman@stanford.edu. You must be  at least 18 years old to participate. Your participation in this research is voluntary. You may decline to answer any or all of the following questions. You may decline further participation, at any time, without adverse consequences. Your anonymity is assured; the researchers who have requested your participation will not receive any personal information about you.</p>
   </div>
 
   <div class="slide" id="instructions">
     <h3>Instructions</h3>
-    <p>
+    <p> <br><br>
       You will explore a new world called Critter Country.
-      You are part of a group of turkers and <strong>you are tasked with learning about the species in this world and teaching others about them</strong>.
-      <br><br>
-      After exploring the world, you will be asked to teach another turker about the world.
-      You will do this by writing a message to them, and we will send the message on your behalf.
-      The turker who receives your message will have to move through the world, interact with critters, and complete various tasks.
-      <br><br>
-      What you learn in this task will be helpful to them.
-      At the end of the experiment, you will send a message to the next turker.
+      You and your assigned partner are <strong> separately tasked with learning about different species in this world, and then teaching each other about them</strong>. <br><br><br>
     </p>
     <button onclick="_s.button()">Continue</button>
   </div>
@@ -99,18 +92,26 @@
   </div>  
 
   <div class="slide" id="welcome_critterLand">
-    <h3>Welcome to Critter Country</h3>
-    <p>Meet the Critters of Critter Country. These are some of the different critters you encounter. Use the CritterDex on each critter by clicking on them in order to proceed:</p>
+    <h3>Welcome to Critter Country</h3><br>
+    <p style='font-size: 19px'>Meet the Critters of Critter Country. Here are some of the different critters you encounter.</p>
+    <p id="internalprops_instruct" style='font-weight: bold'></p>
     <div id='critter_display'></div>
 
+    <br>
     <button id="learning_button" onclick="_s.button()">Continue</button>
   </div>
 
-  <div class="slide" id="test_critters">
-   <h3>Test critters</h3>
-   <p></p>
-   <div id='critter_test_display'></div>
+  <div class= "slide" id="test_instructs">
+    <p id="test_cond"></p>
+    <br><br>
+    <button onclick="_s.button()">Continue</button>
+  </div>
 
+  <div class="slide" id="test_critters">
+   <h3>Collect your critters!</h3>
+   <p><br>Click on the critter(s) that will help you and your teammate complete your task.</p>
+   <div id='critter_test_display'></div>
+   <br>
    <button id="test_button" onclick="_s.button()">Continue</button>
  </div>
 
@@ -142,33 +143,32 @@
   <div id='header'>
     <div id='textInfo'>
      <h1 id='roleLabel'> You are the </h1>
-     <p id='instructs'> </p>
+     <p id='instructs'><br> </p>
 
    </div>
-   <p style="color:red" id='roundnumber'> Round 1</p>
+   <!-- <p style="color:red" id='roundnumber'> Round 1</p> -->
    <p style="color:green" id='score'> </p>
  </div>
 
-
- <div id='main'>
-  <!-- <span> -->
+ <div id='main'><br><br>
   <div id='message_panel'>
     <ul id="messages"></ul>
     <hr>
     <div id="chatarea">
-      <div id = "waiting"><p>Waiting for another player to reach the chat...</p><br>Please do not refresh the page!</p></div>
       <form action="">
         <input id="chatbox" autocomplete="off" />
         <button id="chatbutton">Send</button>
       </form>
     </div>
+    <br><br>
+    <div id = "waiting"><p>Waiting for another player to reach the chat...</p><br>Please do not refresh the page!</p></div>
   </div>
   <div id="chatCont"> 
+    <br>
     <button>Continue</button>
   </div>
 
   <canvas id="viewport"> </canvas>
-  <!-- </span> -->
 </div>
 </div>
 
