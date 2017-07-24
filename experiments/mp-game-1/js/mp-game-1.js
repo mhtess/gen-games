@@ -7,17 +7,14 @@ function mark_critter_display(el, otherEls) {
   }
   prev = el;
 
-    if(el.style.border==''){
+    if(el.style.border=='2px solid white'){
       $('#'+el.id).css({"border":'2px solid red',
                     'background-color': 'white','opacity': '1'});
       $('#'+ el.id + 'critname').css({'opacity': 1, 'font-weight': 'bold'});
       $("#"+ el.id + 'internalprop').css({'opacity': 1});
-      $('#'+el.id+'internalprop').show()
-    } else {
-      $('#'+el.id).css({"border":'',
-                    'background-color': 'white', 'opacity': 0.5});
-    }
-    otherEls.map(function(cell){$('#'+cell).css({"border":'',
+      $('#'+el.id+'internalprop').css({'opacity': 1})}
+
+    otherEls.map(function(cell){$('#'+cell).css({"border":'2px solid white',
       'background-color': 'white'})})
 
 
@@ -28,11 +25,11 @@ function mark_critter_display(el, otherEls) {
 // same as above but able to highlight multiple for the test trials
 function mark_critter_test_display(el, otherEls) {
 
-  if(el.style.border==''){
+  if(el.style.border=='2px solid white'){
     $('#'+el.id).css({"border":'2px solid red',
       'background-color': 'white','opacity': '1'})
   } else {
-    $('#'+el.id).css({"border":'',
+    $('#'+el.id).css({"border":'2px solid white',
       'background-color': 'white'})
   }
 
@@ -40,7 +37,7 @@ function mark_critter_test_display(el, otherEls) {
 
 // grays out after clicked for learning phase
 function gray(el) {
-   $('#'+el.id).css({"border":'',
+   $('#'+el.id).css({"border":'2px solid white',
                     'background-color': 'white', 'opacity': 0.5});
    $('#'+el.id+'critname').css({'opacity': 0.5, 'font-weight': 'normal'});
    $('#'+ el.id+'internalprop').css({'opacity': 0.5})
@@ -65,13 +62,13 @@ function check(num){
 var ind = 0;
 // Puts the critters we have in a table so we can use borders to our advantage
 function create_table(rows, cols, display_type) { //rows * cols = number of exemplars
-  var table = "<table id='creature_table'>";
+  var table = "<table id='creature_table' cellspacing='20'>";
   for(var i=0; i <rows; i++) {
     table += "<tr>";
     for(var j=0; j<cols; j++) {
       table += "<td>";
       ind = i * cols + j;
-      table += "<table class ='cell' id='cell" + ind + "' onclick=\"mark_" + display_type +"(cell" + ind +",";
+      table += "<table class ='cell' id='cell" + ind + "' style='border:2px solid white' onclick=\"mark_" + display_type +"(cell" + ind +",";
       table += "[";
       for(var k=0; k<rows*cols; k++) {
         if(k != ind){
@@ -85,13 +82,13 @@ function create_table(rows, cols, display_type) { //rows * cols = number of exem
 
       table += "<td>";
       table += "<svg id='critter" + ind +
-      "' style='max-width: 100px;max-height:100px\'></svg></td>";
+      "' style='max-width: 90px;max-height: 90px\'></svg></td>";
       table += "<tr>";
       table += "<td>";
       table += "<div class='critlabel' id='cell" + ind + "critlabel'>"; //critter species name + emoji
       table += "<div class='critname' id='cell" + ind + "critname' style='float:left'></div>";
-      table += "<div class='critname' id='cell" + ind + "internalprop' style='float:center'></div></div>";
-      table += "</td>";
+      table += "<div class='critname' id='cell" + ind + "internalprop' style='float: center'></div></div>";
+      table += "</td><br>";
       table += "</tr>";
       table += "</table>";
       table += "</td>";
@@ -147,7 +144,7 @@ function make_slides(f) {
 
       this.num_creats = allCreatures.length;
 
-      create_table(3,4,"critter_display");
+      create_table(2,6,"critter_display");
 
       for (var i=0; i<shuffledCritters.length; i++) {
         var scale = 0.5;
@@ -174,7 +171,7 @@ function make_slides(f) {
             }
             break;
         }
-        $('#cell'+i+'internalprop').hide();
+        $('#cell'+i+'internalprop').css({'opacity': 0});
 
       }
 
@@ -212,7 +209,7 @@ slides.test_critters = slide({
    console.log(allCreatures)
    this.num_creats = allCreatures.length;
 
-   create_table(3,4,"critter_test_display");
+   create_table(2,6,"critter_test_display");
 
    for (var i=0; i<shuffledCritters.length; i++) {
      var scale = 0.5;
@@ -224,21 +221,8 @@ slides.test_critters = slide({
 
    for(var i=0; i<shuffledCritters.length; i++) {
      $('#cell'+i+'critname').html(shuffledCritters[i]["creatureName"]);
-
-     switch(shuffledCritters[i]["critter"]) {
-       case 'bird':
-       $("label[for='internalProp_cell"+ i +"']").text(" lays eggs");
-       break;
-       case 'bug':
-       $("label[for='internalProp_cell"+ i +"']").text(" is poisonous");
-       break;
-     }
-     $("label[for='internalProp_cell"+ i +"']").css({'font-size': '12px'});
-
-     shuffledCritters[i]["internal_prop"] ?
-     $('#internalProp_cell'+i).prop('checked', true) :
-     $('#internalProp_cell'+i).prop('checked', false)
    }
+   
  },
 
  button : function() {
@@ -356,6 +340,8 @@ function init() {
 
   //blocks of the experiment:
   exp.structure=[
+  "wait_room",
+  "welcome_critterLand",
   "i0",
   "instructions",
   "wait_room",
