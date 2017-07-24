@@ -41,8 +41,9 @@ var getURLParams = function() {
   $('#sketchpad').hide(); // this is from sketchpad experiment (jefan 4/23/17)
   $('#loading').hide(); // this is from sketchpad experiment (jefan 4/23/17)
   $('.slide').hide();
-  $('#subj_info').show();
+  //$('#subj_info').show();
   $('.progress').hide();
+  exp.goToSlide("subj_info");
   }
 
 };

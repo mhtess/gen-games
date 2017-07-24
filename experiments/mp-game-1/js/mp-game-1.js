@@ -312,6 +312,7 @@ slides.subj_info =  slide({
   submit : function(e){
       //if (e.preventDefault) e.preventDefault(); // I don't know what this means.
       globalGame.socket.send("enterSlide.subj_info.");
+      console.log("is it getting here when disconnected?")
       exp.subj_data = {
         language : $("#language").val(),
         enjoyment : $("#enjoyment").val(),

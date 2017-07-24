@@ -44,6 +44,33 @@ make_exp = function() {
     }
   };
 
+  f.goToSlide = function(slide_goal) {
+    /* previously: we first called end of whatever slide we _were_ on 
+        this was redundent with what was done in _stream */
+
+    /* figure out what slide to go to next */
+    while (this.structure[this.slideIndex] != slide_goal) {
+      this.slideIndex++;
+    }
+    if (this.slideIndex < this.structure.length) {
+      /*
+       * in the original, there's an option to do different versions of the
+       * same slide here. i'm taking that out for the moment for readability.
+       */
+      var slide_name = this.structure[this.slideIndex];
+      console.log("Beginning "+ slide_name);
+      _s = this.slides[slide_name];
+      /*$('#progress').css('visibility', 'hidden');*/
+      if(_s != undefined) {
+        _s.init(); //defined in stream.js
+      } else {
+        utils.showSlide(slide_name);
+      }
+    } else {
+      //what should we do if we try to go on after the experiment is done?
+    }
+  };
+
   f.get_length = function() {
     if (this.structure) {
         var length = 0;
