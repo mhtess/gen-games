@@ -108,6 +108,9 @@ var client_onMessage = function(data) {
         console.log("adding player" + commanddata);
         console.log("cancelling timeout");
         clearTimeout(globalGame.timeoutID);
+        // if(hidden === 'hidden') {
+        //   flashTitle("Connected!");
+        // }
         globalGame.players.push({id: commanddata, player: new game_player(globalGame)}); break;
     }
   }
@@ -148,6 +151,10 @@ var customSetup = function(game) {
   // Means both players are in the wait room, results in moving to next slide
   game.socket.on('enterWaitRoom', function(data){
     console.log("enterWaitRoom")
+    // fix this later
+    // if(hidden === 'hidden') {
+    //   flashTitle("Connected!");
+    // }
     exp.go()
   });
 

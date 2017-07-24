@@ -38,9 +38,9 @@ function mark_critter_test_display(el, otherEls) {
 // grays out after clicked for learning phase
 function gray(el) {
    $('#'+el.id).css({"border":'2px solid white',
-                    'background-color': 'white', 'opacity': 0.5});
-   $('#'+el.id+'critname').css({'opacity': 0.5, 'font-weight': 'normal'});
-   $('#'+ el.id+'internalprop').css({'opacity': 0.5})
+                    'background-color': 'white', 'opacity': 0.7});
+   $('#'+el.id+'critname').css({'opacity': 0.7, 'font-weight': 'normal'});
+   $('#'+ el.id+'internalprop').css({'opacity': 0.7})
 
 }
 
