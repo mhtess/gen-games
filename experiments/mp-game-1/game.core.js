@@ -167,6 +167,8 @@
       purple: "#dda0dd"
     }
 
+    this.critter_dict = 
+
   // Which round are we on (initialize at -1 so that first round is 0-indexed)
   this.roundNum = -1;
 
@@ -192,8 +194,11 @@
     // determines what critters will be used and who sees what when
     var bugCritters = this.genCreatures("bug");
     var birdCritters = this.genCreatures("bird");
-    var speakerOrder = [bugCritters, birdCritters];
-    var listenerOrder = [birdCritters, bugCritters];
+    var fishCritters = this.genCreatures("fish");
+    var flowerCritters = this.genCreatures("flower");
+    var treeCritters = this.genCreatures("tree");
+    var speakerOrder = [bugCritters, fishCritters];
+    var listenerOrder = [birdCritters, flowerCritters];
 
     // assigns the critters to their respective players
     this.trialList = {
