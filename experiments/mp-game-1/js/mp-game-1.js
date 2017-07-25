@@ -268,6 +268,7 @@ slides.test_critters = slide({
    $("#critter_test_display").hide();
    $("#test_button").hide();
    $("#next_button").show();
+   $('#test_cond').show();
 
    $('#test_cond').html("On the next slide, you will choose the ");
    switch (this.creat_type) {
