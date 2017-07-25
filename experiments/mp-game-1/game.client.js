@@ -150,11 +150,30 @@ var customSetup = function(game) {
 
   // Means both players are in the wait room, results in moving to next slide
   game.socket.on('enterWaitRoom', function(data){
+    var original = document.title;
+    var timeout;
+    var cancelFlashTitle = function (timeout) {
+      clearTimeout(timeout);
+      document.title = original;
+    };
     console.log("enterWaitRoom")
     // fix this later
-    // if(hidden === 'hidden') {
-    //   flashTitle("Connected!");
-    // }
+    if(hidden === 'hidden') {
+      console.log('hi')
+      newMsg = "Connected!"
+      function step() {
+        document.title = (document.title == original) ? newMsg : original;
+        if (visible === "hidden") {
+          timeout = setTimeout(step, 500);
+        } else {
+          document.title = original;
+        }
+        };
+      cancelFlashTitle(timeout);
+      step();
+    }
+
+
     exp.go()
   });
 
