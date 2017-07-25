@@ -181,11 +181,12 @@ var customSetup = function(game) {
     $('#chatbox').attr("disabled", "disabled");
     console.log("in chatWait");
 
+    //not perfect but does the jo
     var blinking = setInterval(function() {
       $("#waiting").fadeOut(1000);
       $("#waiting").fadeIn(1000);
       if(!($('#chatbox').prop("disabled"))){
-        $("#waiting").fadeOut(1000);
+        $("#waiting").fadeOut(0);
         clearInterval(blinking);
       };
 

@@ -124,10 +124,17 @@ function make_slides(f) {
       $(".err").hide();
       $("#waitCont").hide();
       globalGame.socket.send("enterWaitRoom.");
-      for(var i=0; i<1000; i++){
-         $("#waiting_wait_room").fadeOut(1000);
-         $("#waiting_wait_room").fadeIn(1000);
-       }
+      // for(var i=0; i<1000; i++){
+      //    $("#waitText").fadeOut(1000);
+      //    $("#waitText").fadeIn(1000);
+      //  }
+      var blinking_wait = setInterval(function() {
+        $("#waitText").fadeOut(1000);
+        $("#waitText").fadeIn(1000);
+        if($("#welcome").is(':visible')){ //if it goes to next slide
+          clearInterval(blinking_wait);
+        }
+      }, 2000);
     }
   });
 
