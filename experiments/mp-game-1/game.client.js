@@ -161,14 +161,19 @@ var customSetup = function(game) {
   // One player has not yet made it to the chatroom, so sending messages is impossible
   game.socket.on('chatWait', function(data){
     $('#chatbox').attr("disabled", "disabled");
-    console.log("in chatWait")
-    console.log($('#chatbox').prop("disabled"));
-    //while($('#chatbox').prop("disabled")){
-    // for(var i=0; i<100; i++) {
-    //   console.log("is it getting here??")
-    //       $("#waiting").fadeOut(1000);
-    //       $("#waiting").fadeIn(1000);
-    //  }
+    console.log("in chatWait");
+
+    var blinking = setInterval(function() {
+      $("#waiting").fadeOut(1000);
+      $("#waiting").fadeIn(1000);
+      if(!($('#chatbox').prop("disabled"))){
+        $("#waiting").fadeOut(1000);
+        clearInterval(blinking);
+      };
+
+    }, 2500);
+      
+
   });
 
   // Both players are now in the chatroom, so they may send messages

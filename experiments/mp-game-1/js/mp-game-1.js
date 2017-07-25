@@ -426,15 +426,17 @@ function init() {
   exp.structure=[
     "i0",
     "instructions",
+
+    "robertPage",
+    "test_critters",
+
     "wait_room",
     "welcome_critterLand",
     "robertPage",
-    //"test_instructs",
     "test_critters",
     "wait_room",
     "welcome_critterLand",
     "robertPage",
-    //"test_instructs",
     "test_critters",
     'subj_info',
     'thanks'
