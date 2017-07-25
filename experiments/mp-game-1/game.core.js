@@ -274,14 +274,14 @@
     {
       p: 0.99,
       props: {
-        color_mean: "orange",
+        color_mean: "green",
         color_var: 0.001,
         location: "ground"
       }
     }, {
       p: 0.01,
       props: {
-        color_mean: "green",
+        color_mean: "orange",
         color_var: 0.001,
         location: "trees"
       }
@@ -298,7 +298,7 @@
       {
         p: 1,
         props: {
-          color_mean: "purple",
+          color_mean: "blue",
           color_var: 0.001,
           location: "ground"
         }
@@ -495,21 +495,22 @@ game_core.prototype.createFeatureArray = function(creatureLabel, p, creatureCate
   switch(creatureCategory) {
     case "bird":
     creatureOpts = this.birdOpts;
+    break;
     case "bug":
     creatureOpts = this.bugOpts;
+    break;
     case "fish":
     creatureOpts = this.fishOpts;
+    break;
     case "tree":
     creatureOpts = this.treeOpts;
+    break;
   }
 
   var creatOpts = _.where(creatureOpts, {name: creatureLabel})[0];
-  console.log("creatOpts is this: " + creatOpts);
-  //console.log("uniqueCreatures: " + this.uniqueCreatures);
   var creatureColors = [];
   var creatureLocation = [];
   var nRemaining = this.exemplarN;
-  //console.log("number remaining: " + nRemaining);
   for (var i=0; i<2; i++ ){
     var colorProps = creatOpts.globalColors[i];
 
@@ -546,12 +547,16 @@ game_core.prototype.genCreatures = function(creatureCategory){
   switch(creatureCategory) {
     case "bird":
     creatureOpts = this.birdOpts;
+    break;
     case "bug":
     creatureOpts = this.bugOpts;
+    break;
     case "fish":
     creatureOpts = this.fishOpts;
+    break;
     case "tree":
     creatureOpts = this.treeOpts;
+    break;
   }
 
   uniqueCreatures =  _.uniq(_.pluck(creatureOpts, "name"));
