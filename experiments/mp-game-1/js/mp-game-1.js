@@ -178,15 +178,15 @@ function make_slides(f) {
             }
             break;
           case 'fish':
-            $('#internalprops_instruct').html("Click on each critter to discover whether it can be caught.")
+            $('#internalprops_instruct').html("Click on each critter to discover whether it is eaten by crocodiles.")
             if (shuffledCritters[i]["internal_prop"]) {
-              $('#cell'+i+'internalprop').html("&#x1f3a3;");
+              $('#cell'+i+'internalprop').html("&#x1f40a;"); //crocodile
             }
             break;
-          case 'flower':
-            $('#internalprops_instruct').html("Click on each critter to discover whether it grows near mushrooms.")
+          case 'tree':
+            $('#internalprops_instruct').html("Click on each critter to discover whether it drops leaves.")
             if (shuffledCritters[i]["internal_prop"]) {
-              $('#cell'+i+'internalprop').html("&#x1f344;");
+              $('#cell'+i+'internalprop').html("&#x2618;"); //shamrock
             }
             break;
         }
@@ -300,6 +300,7 @@ slides.robertPage = slide({
     globalGame.socket.send("enterChatRoom.");
     $(".err").hide();
     $('#waiting').show();
+    
     // for(var i=0; i<1000; i++){
     //   $("#waiting").fadeOut(1000);
     //   $("#waiting").fadeIn(1000);

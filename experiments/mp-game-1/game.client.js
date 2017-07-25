@@ -162,6 +162,13 @@ var customSetup = function(game) {
   game.socket.on('chatWait', function(data){
     $('#chatbox').attr("disabled", "disabled");
     console.log("in chatWait")
+    console.log($('#chatbox').prop("disabled"));
+    //while($('#chatbox').prop("disabled")){
+    // for(var i=0; i<100; i++) {
+    //   console.log("is it getting here??")
+    //       $("#waiting").fadeOut(1000);
+    //       $("#waiting").fadeIn(1000);
+    //  }
   });
 
   // Both players are now in the chatroom, so they may send messages
