@@ -172,16 +172,29 @@ function make_slides(f) {
       for(var i=0; i<shuffledCritters.length; i++) {
         $('#cell'+i+'critname').html(shuffledCritters[i]["creatureName"]);
         switch(shuffledCritters[i]["critter"]) {
-           case 'bird':
-            $('#internalprops_instruct').html("Click on each critter to discover whether it lays eggs or not.");
+          case 'bird':
+            $('#internalprops_instruct').html("Click on each critter to discover whether it lays eggs.");
             if (shuffledCritters[i]["internal_prop"]) {
               $('#cell'+i+'internalprop').html("&#x1F423;"); //hatching chick
+
             }
             break;
-           case 'bug':
+          case 'bug':
             $('#internalprops_instruct').html("Click on each critter to discover whether it is poisonous.")
             if (shuffledCritters[i]["internal_prop"]) {
-              $('#cell'+i+'internalprop').html("&#x1f480"); //skull sign
+              $('#cell'+i+'internalprop').html("&#x2620;"); //skull & crossbones sign
+            }
+            break;
+          case 'fish':
+            $('#internalprops_instruct').html("Click on each critter to discover whether it is eaten by crocodiles.")
+            if (shuffledCritters[i]["internal_prop"]) {
+              $('#cell'+i+'internalprop').html("&#x1f40a;"); //crocodile
+            }
+            break;
+          case 'tree':
+            $('#internalprops_instruct').html("Click on each critter to discover whether it drops leaves.")
+            if (shuffledCritters[i]["internal_prop"]) {
+              $('#cell'+i+'internalprop').html("&#x2618;"); //shamrock
             }
             break;
         }
@@ -334,6 +347,7 @@ slides.robertPage = slide({
     globalGame.socket.send("enterChatRoom.");
     $(".err").hide();
     $('#waiting').show();
+    
     // for(var i=0; i<1000; i++){
     //   $("#waiting").fadeOut(1000);
     //   $("#waiting").fadeIn(1000);
@@ -346,6 +360,7 @@ slides.subj_info =  slide({
   submit : function(e){
       //if (e.preventDefault) e.preventDefault(); // I don't know what this means.
       globalGame.socket.send("enterSlide.subj_info.");
+      console.log("is it getting here when disconnected?")
       exp.subj_data = {
         language : $("#language").val(),
         enjoyment : $("#enjoyment").val(),
