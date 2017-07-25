@@ -1,3 +1,6 @@
+// For slides proceed to line 95
+// To add a slide to experiment structure (to ensure it shows up) proceed to line 400
+
 var prev = null;
 
 // Allows the border of each critter to be highlighted when chosed
@@ -6,25 +9,20 @@ function mark_critter_display(el, otherEls) {
     gray(prev);
   }
   prev = el;
-
-    if(el.style.border=='2px solid white'){
-      $('#'+el.id).css({"border":'2px solid red',
-                    'background-color': 'white','opacity': '1'});
-      $('#'+ el.id + 'critname').css({'opacity': 1, 'font-weight': 'bold'});
-      $("#"+ el.id + 'internalprop').css({'opacity': 1});
-      $('#'+el.id+'internalprop').css({'opacity': 1})}
+  if(el.style.border=='2px solid white'){
+    $('#'+el.id).css({"border":'2px solid red',
+      'background-color': 'white','opacity': '1'});
+    $('#'+ el.id + 'critname').css({'opacity': 1, 'font-weight': 'bold'});
+    $("#"+ el.id + 'internalprop').css({'opacity': 1});
+    $('#'+el.id+'internalprop').css({'opacity': 1})}
 
     otherEls.map(function(cell){$('#'+cell).css({"border":'2px solid white',
       'background-color': 'white'})})
-
-
-  check(allCreatures.length);
-
+    check(allCreatures.length);
 }
 
 // same as above but able to highlight multiple for the test trials
 function mark_critter_test_display(el, otherEls) {
-
   if(el.style.border=='2px solid white'){
     $('#'+el.id).css({"border":'2px solid red',
       'background-color': 'white','opacity': '1'})
@@ -32,7 +30,6 @@ function mark_critter_test_display(el, otherEls) {
     $('#'+el.id).css({"border":'2px solid white',
       'background-color': 'white'})
   }
-
 }
 
 // grays out after clicked for learning phase
@@ -41,7 +38,6 @@ function gray(el) {
                     'background-color': 'white', 'opacity': 0.5});
    $('#'+el.id+'critname').css({'opacity': 0.5, 'font-weight': 'normal'});
    $('#'+ el.id+'internalprop').css({'opacity': 0.7})
-
 }
 
 function check(num){
@@ -50,13 +46,10 @@ function check(num){
      if($('#cell' + i +'critname').css('opacity') != 1 || $('#cell' + i +'critname').css('font-weight') == 'bold'){
         ++check_all;
      }
-
   }
-
   if(check_all == num) {
     $("#learning_button").show();
   }
-
 }
 
 var ind = 0;
@@ -99,8 +92,11 @@ function create_table(rows, cols, display_type) { //rows * cols = number of exem
   $("#" + display_type).append(table);
 }
 
+// All slides must have a slides.slide_name function in this function
 function make_slides(f) {
   var   slides = {};
+
+  // Information page - legal and about the experiment
   slides.i0 = slide({
     name : "i0",
     start: function() {
@@ -108,6 +104,7 @@ function make_slides(f) {
     }
   });
 
+  // Instructions slide for the experiment
   slides.instructions = slide({
     name : "instructions",
     start: function(){
@@ -118,6 +115,7 @@ function make_slides(f) {
     },
   });
 
+  // This slide will be seen by one of the players while until the other player reaches the same screen
   slides.wait_room = slide({
     name: "wait_room",
     start: function() {
@@ -133,10 +131,12 @@ function make_slides(f) {
     }
   });
 
+  // This is the learning slide in which users will uncover information about the critters
   slides.welcome_critterLand = slide({
     name : "welcome_critterLand",
     crittersFromServer : "",
     start : function(stim) {
+      // The hide / show is so we can put more specific (to which critter they see) instructions 
       $("#cur_instructs").hide();
       $("#instru_button").hide();
       $("#welcome").show();
@@ -156,6 +156,7 @@ function make_slides(f) {
       this.num_creats = allCreatures.length;
       this.creat_type = shuffledCritters[0]["critter"];
 
+      // This generates all the critters 
       create_table(2,6,"critter_display");
 
       for (var i=0; i<shuffledCritters.length; i++) {
@@ -169,41 +170,42 @@ function make_slides(f) {
        $('#cell'+i+'critname').html(shuffledCritters[i]["creatureName"]);
      }
 
-      for(var i=0; i<shuffledCritters.length; i++) {
-        $('#cell'+i+'critname').html(shuffledCritters[i]["creatureName"]);
-        switch(shuffledCritters[i]["critter"]) {
-          case 'bird':
-            $('#internalprops_instruct').html("Click on each critter to discover whether it lays eggs.");
-            if (shuffledCritters[i]["internal_prop"]) {
+     for(var i=0; i<shuffledCritters.length; i++) {
+      $('#cell'+i+'critname').html(shuffledCritters[i]["creatureName"]);
+      switch(shuffledCritters[i]["critter"]) {
+        case 'bird':
+        $('#internalprops_instruct').html("Click on each critter to discover whether it lays eggs.");
+        if (shuffledCritters[i]["internal_prop"]) {
               $('#cell'+i+'internalprop').html("&#x1F423;"); //hatching chick
 
             }
             break;
-          case 'bug':
+            case 'bug':
             $('#internalprops_instruct').html("Click on each critter to discover whether it is poisonous.")
             if (shuffledCritters[i]["internal_prop"]) {
               $('#cell'+i+'internalprop').html("&#x2620;"); //skull & crossbones sign
             }
             break;
-          case 'fish':
+            case 'fish':
             $('#internalprops_instruct').html("Click on each critter to discover whether it is eaten by crocodiles.")
             if (shuffledCritters[i]["internal_prop"]) {
               $('#cell'+i+'internalprop').html("&#x1f40a;"); //crocodile
             }
             break;
-          case 'tree':
+            case 'tree':
             $('#internalprops_instruct').html("Click on each critter to discover whether it grows leaves.")
             if (shuffledCritters[i]["internal_prop"]) {
               $('#cell'+i+'internalprop').html("&#x2618;"); //shamrock
             }
             break;
+          }
+          $('#cell'+i+'internalprop').css({'opacity': 0});
+
         }
-        $('#cell'+i+'internalprop').css({'opacity': 0});
 
-      }
+      },
 
-    },
-
+    // This button refers to the button seen in welcome critter page, not on the page with instructions for it
     button : function() {
       var end_time = Date.now()
       this.time_spent = end_time - this.start_time;
@@ -217,6 +219,7 @@ function make_slides(f) {
         prev = null;
       }
 
+      // Hide / show allows for specific instructions
       $("#welcome").hide();
       $("#meeting").hide();
       $("#internalprops_instruct").hide();
@@ -226,27 +229,16 @@ function make_slides(f) {
       $("#instru_button").show();
       switch (this.creat_type) {
         case 'bird': case 'bug':
-          $("#cur_instructs").append("<h2>Save the population</h2><p><br>You are trying to save the dwindling population of birds in Critter Country. Discuss with your partner which birds and bugs should be gathered in order to save the population.</p>");
-          break;
+        $("#cur_instructs").append("<h2>Save the population</h2><p><br>You are trying to save the dwindling population of birds in Critter Country. Discuss with your partner which birds and bugs should be gathered in order to save the population.</p>");
+        break;
         case 'tree': case 'fish':
-          $("#cur_instructs").append("<h2>Protect the fish</h2><p><br>Some of the fish in Critter Country are under threat and need to find homes that can help hide them. Discuss with your partner which fish need to be saved and which underwater plants will protect them.</p>");
-          break;
+        $("#cur_instructs").append("<h2>Protect the fish</h2><p><br>Some of the fish in Critter Country are under threat and need to find homes that can help hide them. Discuss with your partner which fish need to be saved and which underwater plants will protect them.</p>");
+        break;
       }
     },
   });
 
-// slides.test_instructs = slide({
-//   name: "test_instructs",
-//   start: function() {
-//     globalGame.socket.send("enterSlide.test_instructs.");
-//     // switch statements based on which critters are being shown
-//     $('#test_cond').html("On the next slide, you will choose the ")
-//   },
-//   button : function() {
-//     exp.go();
-//   },
-// });
-
+// Generates critters that the partner learned about and tests the user
 slides.test_critters = slide({
  name : "test_critters",
 
@@ -263,6 +255,7 @@ slides.test_critters = slide({
    this.num_creats = allCreatures.length;
    this.creat_type = shuffledCritters[0]["critter"];
 
+   // Creating a specific instructions view 
    $("#collect").hide();
    $("#chooseCrit").hide();
    $("#critter_test_display").hide();
@@ -272,23 +265,24 @@ slides.test_critters = slide({
 
    $('#test_cond').html("<br>On the next slide, you will choose the ");
    switch (this.creat_type) {
-        case 'bird': 
-          $("#test_cond").append("<p>birds that you believe will help you and your partner save the population.<br>");
-          break;
-        case 'bug':
-          $("#test_cond").append("<p>bugs that you can feed the birds to help you and your partner save the population.<br>");
-          break;
-        case 'tree': 
-          $("#test_cond").append("<p>underwater plants that will help protect the fish from being eaten.<br>");
-          break;
-        case 'fish':
-          $("#test_cond").append("<p>fish that are in danger of being eaten.<br>");
-          break;
-      }
+    case 'bird': 
+    $("#test_cond").append("<p>birds that you believe will help you and your partner save the population.<br>");
+    break;
+    case 'bug':
+    $("#test_cond").append("<p>bugs that you can feed the birds to help you and your partner save the population.<br>");
+    break;
+    case 'tree': 
+    $("#test_cond").append("<p>underwater plants that will help protect the fish from being eaten.<br>");
+    break;
+    case 'fish':
+    $("#test_cond").append("<p>fish that are in danger of being eaten.<br>");
+    break;
+  }
 
-   create_table(2,6,"critter_test_display");
+    // Generates critters for test phase
+    create_table(2,6,"critter_test_display");
 
-   for (var i=0; i<shuffledCritters.length; i++) {
+    for (var i=0; i<shuffledCritters.length; i++) {
      var scale = 0.5;
      Ecosystem.draw(
        shuffledCritters[i]["critter"], shuffledCritters[i],
@@ -303,59 +297,39 @@ slides.test_critters = slide({
  },
 
  button : function() {
-   var end_time = Date.now()
-   this.time_spent = end_time - this.start_time;
-   allCreatures = [];
+  var end_time = Date.now()
+  this.time_spent = end_time - this.start_time;
+  allCreatures = [];
 
-   for (var i = 0; i < this.num_creats; i++) {
+  for (var i = 0; i < this.num_creats; i++) {
      $('#critter' + i).empty();
      $('#cell' + i).css({'opacity': '1'});
      $('#cell' + i).css({'border': ''});
      $('#creature_table').remove();
      prev = null;
-   }
+  }
 
-       exp.go(); // use exp.go() if and only if there is no "present" data.
+  exp.go(); // use exp.go() if and only if there is no "present" data.
 
-     },
-   });
-
-
-slides.condition = slide({
-  name: "condition",
-  start : function() {
-    globalGame.socket.send("enterSlide.condition.");
-    var cond_sentence = "To help you learn about the critters, you have been given a "
-    exp.condition == "pepsin_detector" ?
-    cond_sentence += "device that can detect a substance called pepsin." :
-    cond_sentence += "book that will help you identify species."
-    $("#get_cond").append(
-      "<p>"+cond_sentence+"</p>");
-  },
-  button : function() {
-    exp.go();
   },
 });
 
-slides.robertPage = slide({
-  name: "robertPage",
+// Connected players can discuss what they have learned in 'welcome_critter' here using a chatbox
+slides.chatRoom = slide({
+  name: "chatRoom",
   start: function() {
     $("#cur_instructs").empty();
     $("#chatCont").hide();
     $('#messages').empty();
-    console.log('start of robert page')
+    console.log('start of chatRoom')
     globalGame.socket.send("enterSlide.chatRoom.");
     globalGame.socket.send("enterChatRoom.");
     $(".err").hide();
     $('#waiting').show();
-    
-    // for(var i=0; i<1000; i++){
-    //   $("#waiting").fadeOut(1000);
-    //   $("#waiting").fadeIn(1000);
-    // }
   }
 });
 
+// Collects demographic information from users
 slides.subj_info =  slide({
   name : "subj_info",
   submit : function(e){
@@ -375,9 +349,9 @@ slides.subj_info =  slide({
       };
       exp.go();
     } //use exp.go() if and only if there is no "present" data.
-
   });
 
+// Generic thanks page that collects some data
 slides.thanks = slide({
   name : "thanks",
   start : function() {
@@ -414,7 +388,7 @@ function init() {
 
   // learning - chat - test rounds
   var numRounds = function(num) {
-    array1 = ["wait_room", "welcome_critterLand", "robertPage", "test_critters"]
+    array1 = ["wait_room", "welcome_critterLand", "chatRoom", "test_critters"]
     while (num != 0) {
       array1.push.apply(array1, array1);
       num --;
@@ -426,17 +400,13 @@ function init() {
   exp.structure=[
     "i0",
     "instructions",
-
-    "robertPage",
-    "test_critters",
-
     "wait_room",
     "welcome_critterLand",
-    "robertPage",
+    "chatRoom",
     "test_critters",
     "wait_room",
     "welcome_critterLand",
-    "robertPage",
+    "chatRoom",
     "test_critters",
     'subj_info',
     'thanks'
@@ -468,5 +438,4 @@ function init() {
     }
   });
   exp.go(); //show first slide
-
 }
