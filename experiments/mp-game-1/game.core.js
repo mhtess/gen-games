@@ -357,7 +357,12 @@
       yellow: "#eec900",
       green: "#228b22",
       orange: "#ff8c00",
-      purple: "#dda0dd"
+      purple: "#b62fef"
+      // pink: "#f97ada",
+      // lightblue: "#11edf4",
+      // lightgreen: "#11f427",
+      // lightpurple: "#dda0dd",
+
     }
 
     this.critter_dict = 

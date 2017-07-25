@@ -192,7 +192,7 @@ function make_slides(f) {
             }
             break;
           case 'tree':
-            $('#internalprops_instruct').html("Click on each critter to discover whether it drops leaves.")
+            $('#internalprops_instruct').html("Click on each critter to discover whether it grows leaves.")
             if (shuffledCritters[i]["internal_prop"]) {
               $('#cell'+i+'internalprop').html("&#x2618;"); //shamrock
             }
@@ -226,10 +226,10 @@ function make_slides(f) {
       $("#instru_button").show();
       switch (this.creat_type) {
         case 'bird': case 'bug':
-          $("#cur_instructs").append("<h2>Save the population</h2><p>You are trying to save the dwindling population of birds in Critter Country. Discuss with your partner which birds and bugs should be gathered in order to save the population.<p>");
+          $("#cur_instructs").append("<h2>Save the population</h2><p><br>You are trying to save the dwindling population of birds in Critter Country. Discuss with your partner which birds and bugs should be gathered in order to save the population.</p>");
           break;
         case 'tree': case 'fish':
-          $("#cur_instructs").append("<h2>Protect the fish</h2><p>Some of the fish in Critter Country are under threat and need to find homes that can help hide them. Discuss with your partner which fish need to be saved and which underwater plants will protect them.");
+          $("#cur_instructs").append("<h2>Protect the fish</h2><p><br>Some of the fish in Critter Country are under threat and need to find homes that can help hide them. Discuss with your partner which fish need to be saved and which underwater plants will protect them.</p>");
           break;
       }
     },
@@ -270,19 +270,19 @@ slides.test_critters = slide({
    $("#next_button").show();
    $('#test_cond').show();
 
-   $('#test_cond').html("On the next slide, you will choose the ");
+   $('#test_cond').html("<br>On the next slide, you will choose the ");
    switch (this.creat_type) {
         case 'bird': 
-          $("#test_cond").append("<p>birds that you believe will help you and your partner save the population.");
+          $("#test_cond").append("<p>birds that you believe will help you and your partner save the population.<br>");
           break;
         case 'bug':
-          $("#test_cond").append("<p>bugs that you can feed the birds to help you and your partner save the population.");
+          $("#test_cond").append("<p>bugs that you can feed the birds to help you and your partner save the population.<br>");
           break;
         case 'tree': 
-          $("#test_cond").append("<p>underwater plants that will help protect the fish from being eaten.");
+          $("#test_cond").append("<p>underwater plants that will help protect the fish from being eaten.<br>");
           break;
         case 'fish':
-          $("#test_cond").append("<p>fish that are in danger of being eaten.");
+          $("#test_cond").append("<p>fish that are in danger of being eaten.<br>");
           break;
       }
 
