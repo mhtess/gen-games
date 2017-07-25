@@ -137,6 +137,13 @@ function make_slides(f) {
     name : "welcome_critterLand",
     crittersFromServer : "",
     start : function(stim) {
+      $("#cur_instructs").hide();
+      $("#instru_button").hide();
+      $("#welcome").show();
+      $("#meeting").show();
+      $("#internalprops_instruct").show();
+      $("#critter_display").show();
+      $("#learning_button").show();
       this.start_time = Date.now()
       globalGame.socket.send("enterSlide.welcome_critterLand.");
       this.stim = stim;
@@ -147,6 +154,7 @@ function make_slides(f) {
       var shuffledCritters = _.shuffle(allCreatures)
 
       this.num_creats = allCreatures.length;
+      this.creat_type = shuffledCritters[0]["critter"];
 
       create_table(2,6,"critter_display");
 
@@ -195,21 +203,36 @@ function make_slides(f) {
         $('#creature_table').remove();
         prev = null;
       }
-      exp.go(); // use exp.go() if and only if there is no "present" data.
 
+      $("#welcome").hide();
+      $("#meeting").hide();
+      $("#internalprops_instruct").hide();
+      $("#critter_display").hide();
+      $("#learning_button").hide();
+      $("#cur_instructs").show();
+      $("#instru_button").show();
+      switch (this.creat_type) {
+        case 'bird': case 'bug':
+          $("#cur_instructs").append("<h2>Save the population</h2><p>You are trying to save the dwindling population of birds in Critter Country. Discuss with your partner which birds and bugs should be gathered in order to save the population.<p>");
+          break;
+        case 'tree': case 'fish':
+          $("#cur_instructs").append("<h2>Protect the fish</h2><p>Some of the fish in Critter Country are under threat and need to find homes that can help hide them. Discuss with your partner which fish need to be saved and which underwater plants will protect them.");
+          break;
+      }
     },
   });
 
-slides.test_instructs = slide({
-  name: "test_instructs",
-  start: function() {
-    // switch statements based on which critters are being shown
-    $('#test_cond').html("On the next slide, you will choose the ")
-  },
-  button : function() {
-    exp.go();
-  },
-});
+// slides.test_instructs = slide({
+//   name: "test_instructs",
+//   start: function() {
+//     globalGame.socket.send("enterSlide.test_instructs.");
+//     // switch statements based on which critters are being shown
+//     $('#test_cond').html("On the next slide, you will choose the ")
+//   },
+//   button : function() {
+//     exp.go();
+//   },
+// });
 
 slides.test_critters = slide({
  name : "test_critters",
@@ -225,6 +248,29 @@ slides.test_critters = slide({
    var shuffledCritters = _.shuffle(allCreatures)
    console.log(allCreatures)
    this.num_creats = allCreatures.length;
+   this.creat_type = shuffledCritters[0]["critter"];
+
+   $("#collect").hide();
+   $("#chooseCrit").hide();
+   $("#critter_test_display").hide();
+   $("#test_button").hide();
+   $("#next_button").show();
+
+   $('#test_cond').html("On the next slide, you will choose the ");
+   switch (this.creat_type) {
+        case 'bird': 
+          $("#test_cond").append("<p>birds that you believe will help you and your partner save the population.");
+          break;
+        case 'bug':
+          $("#test_cond").append("<p>bugs that you can feed the birds to help you and your partner save the population.");
+          break;
+        case 'tree': 
+          $("#test_cond").append("<p>underwater plants that will help protect the fish from being eaten.");
+          break;
+        case 'fish':
+          $("#test_cond").append("<p>fish that are in danger of being eaten.");
+          break;
+      }
 
    create_table(2,6,"critter_test_display");
 
@@ -280,6 +326,7 @@ slides.condition = slide({
 slides.robertPage = slide({
   name: "robertPage",
   start: function() {
+    $("#cur_instructs").empty();
     $("#chatCont").hide();
     $('#messages').empty();
     console.log('start of robert page')
@@ -351,7 +398,7 @@ function init() {
 
   // learning - chat - test rounds
   var numRounds = function(num) {
-    array1 = ["welcome_critterLand", "robertPage", "test_trial"]
+    array1 = ["wait_room", "welcome_critterLand", "robertPage", "test_critters"]
     while (num != 0) {
       array1.push.apply(array1, array1);
       num --;
@@ -366,16 +413,13 @@ function init() {
     "wait_room",
     "welcome_critterLand",
     "robertPage",
-    "test_instructs",
+    //"test_instructs",
     "test_critters",
     "wait_room",
     "welcome_critterLand",
     "robertPage",
-    "test_instructs",
+    //"test_instructs",
     "test_critters",
-  // "robertPage",
-    // "condition",
-    // need a waiting room here
     'subj_info',
     'thanks'
     ]
