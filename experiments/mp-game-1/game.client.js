@@ -149,6 +149,8 @@ var customSetup = function(game) {
   });
 
   // Means both players are in the wait room, results in moving to next slide
+  // Most code is so the the first player who gets there will see "Connected!" on 
+  // the tab when the second player enters. This will allow users to konw when they can move forward
   game.socket.on('enterWaitRoom', function(data){
     var original = document.title;
     var timeout;
@@ -157,9 +159,7 @@ var customSetup = function(game) {
       document.title = original;
     };
     console.log("enterWaitRoom")
-    // fix this later
     if(hidden === 'hidden') {
-      console.log('hi')
       newMsg = "Connected!"
       function step() {
         document.title = (document.title == original) ? newMsg : original;
@@ -168,11 +168,10 @@ var customSetup = function(game) {
         } else {
           document.title = original;
         }
-        };
+      };
       cancelFlashTitle(timeout);
       step();
     }
-
 
     exp.go()
   });
