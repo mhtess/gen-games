@@ -43,6 +43,7 @@ var onMessage = function(client,message) {
 
     // continue button from chat room
     case 'clickedObj' :
+      //writeData(client, "clickedObj", message_parts);
       setTimeout(function() {
         _.map(all, function(p){
             // tell client to advance to next slide
@@ -119,17 +120,17 @@ var writeData = function(client, type, message_parts) {
   var roundNum = gc.state.roundNum + 1;
   var id = gc.id;
   switch(type) {
-    case "clickedObj" :
-    var outcome = message_parts[2] === "target";
-    var targetVsD1 = utils.colorDiff(getStim(gc, "target"), getStim(gc, "distr1"));
-    var targetVsD2 = utils.colorDiff(getStim(gc, "target"), getStim(gc, "distr2"));
-    var D1VsD2 = utils.colorDiff(getStim(gc, "distr1"), getStim(gc, "distr2"));
-    var line = (id + ',' + Date.now() + ',' + roundNum  + ',' +
-      message_parts.slice(1).join(',') +
-      targetVsD1 + "," + targetVsD2 + "," + D1VsD2 + "," + outcome +
-      '\n');
-    console.log("clickedObj:" + line);
-    break;
+    // case "clickedObj" :
+    // var outcome = message_parts[2] === "target";
+    // var targetVsD1 = utils.colorDiff(getStim(gc, "target"), getStim(gc, "distr1"));
+    // var targetVsD2 = utils.colorDiff(getStim(gc, "target"), getStim(gc, "distr2"));
+    // var D1VsD2 = utils.colorDiff(getStim(gc, "distr1"), getStim(gc, "distr2"));
+    // var line = (id + ',' + Date.now() + ',' + roundNum  + ',' +
+    //   message_parts.slice(1).join(',') +
+    //   targetVsD1 + "," + targetVsD2 + "," + D1VsD2 + "," + outcome +
+    //   '\n');
+    // console.log("clickedObj:" + line);
+    // break;
 
 
     case "message" :
@@ -159,12 +160,12 @@ var startGame = function(game, player) {
   var dataFileName = startTime + "_" + game.id + ".csv";
   utils.establishStream(game, "message", dataFileName,
    "gameid,time,roundNum,sender,contents\n");
-  utils.establishStream(game, "clickedObj", dataFileName,
-   "gameid,time,roundNum,condition," +
-   "clickStatus,clickColH,clickColS,clickColL,clickLocS,clickLocL"+
-   "alt1Status,alt1ColH,alt1ColS,alt1ColL,alt1LocS,alt1LocL" +
-   "alt2Status,alt2ColH,alt2ColS,alt2ColL,alt2LocS,alt2LocL" +
-   "targetD1Diff,targetD2Diff,D1D2Diff,outcome\n");
+  // utils.establishStream(game, "clickedObj", dataFileName,
+  //  "gameid,time,roundNum,condition," +
+  //  "clickStatus,clickColH,clickColS,clickColL,clickLocS,clickLocL"+
+  //  "alt1Status,alt1ColH,alt1ColS,alt1ColL,alt1LocS,alt1LocL" +
+  //  "alt2Status,alt2ColH,alt2ColS,alt2ColL,alt2LocS,alt2LocL" +
+  //  "targetD1Diff,targetD2Diff,D1D2Diff,outcome\n");
   game.newRound();
 };
 

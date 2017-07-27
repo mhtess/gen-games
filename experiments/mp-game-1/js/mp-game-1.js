@@ -2,6 +2,7 @@
 // To add a slide to experiment structure (to ensure it shows up) proceed to line 400
 
 var prev = null;
+var block = 0;
 
 // Allows the border of each critter to be highlighted when chosed
 function mark_critter_display(el, otherEls) {
@@ -51,6 +52,7 @@ function check(num){
     $("#learning_button").show();
   }
 }
+
 
 var ind = 0;
 // Puts the critters we have in a table so we can use borders to our advantage
@@ -166,7 +168,7 @@ function make_slides(f) {
       $(".err").hide();
       $("#learning_button").hide();
       allCreatures = this.crittersFromServer;
-      var shuffledCritters = _.shuffle(allCreatures)
+      shuffledCritters = _.shuffle(allCreatures)
 
       this.num_creats = allCreatures.length;
       this.creat_type = shuffledCritters[0]["critter"];
@@ -208,7 +210,7 @@ function make_slides(f) {
             }
             break;
             case 'tree':
-            $('#internalprops_instruct').html("Click on each critter to discover whether it grows leaves.")
+            $('#internalprops_instruct').html("Click on each plant to discover whether it grows leaves.")
             if (shuffledCritters[i]["internal_prop"]) {
               $('#cell'+i+'internalprop').html("&#x2618;"); //shamrock
             }
@@ -225,6 +227,7 @@ function make_slides(f) {
       var end_time = Date.now()
       this.time_spent = end_time - this.start_time;
       allCreatures = [];
+      shuffledCritters = [];
 
       for (var i = 0; i < this.num_creats; i++) {
         $('#critter' + i).empty();
@@ -265,8 +268,8 @@ slides.test_critters = slide({
    globalGame.socket.send("enterSlide.test_critters.");
    $(".err").hide();
    allCreatures = this.crittersFromServer;
-   var shuffledCritters = _.shuffle(allCreatures)
-   console.log(allCreatures)
+   shuffledCritters = _.shuffle(allCreatures)
+   //console.log(allCreatures)
    this.num_creats = allCreatures.length;
    this.creat_type = shuffledCritters[0]["critter"];
 
@@ -314,7 +317,29 @@ slides.test_critters = slide({
  button : function() {
   var end_time = Date.now()
   this.time_spent = end_time - this.start_time;
+
+
+  //log responses
+  for (var i=0; i<this.num_creats; i++) {
+    exp.test_trials.push({
+      "block_num" : block,
+      //"distribution" : exp.distribution, //fix this later
+      "time_in_seconds" : this.time_spent/1000,
+      "critter" : shuffledCritters[i]["critter"],
+      "critter_num" : i,
+      "species" : shuffledCritters[i]["creatureName"],
+      "color" : shuffledCritters[i]["col1"], //add this in too
+      "prop1" : shuffledCritters[i]["prop1"],
+      "prop2" : shuffledCritters[i]["prop2"],
+      "tar1" : shuffledCritters[i]["tar1"],
+      "tar2" : shuffledCritters[i]["tar2"],
+      "internal_prop" : shuffledCritters[i]["internal_prop"],
+      "selected" : $('#cell' + i).css('border') == '2px solid rgb(255, 0, 0)' ? "true" : "false"      
+    })
+  }
+
   allCreatures = [];
+  shuffledCritters = [];
 
   for (var i = 0; i < this.num_creats; i++) {
      $('#critter' + i).empty();
@@ -323,10 +348,11 @@ slides.test_critters = slide({
      $('#creature_table').remove();
      prev = null;
   }
-
+  
+  block++;
   exp.go(); // use exp.go() if and only if there is no "present" data.
 
-  },
+  }
 });
 
 // Connected players can discuss what they have learned in 'welcome_critter' here using a chatbox
@@ -350,7 +376,6 @@ slides.subj_info =  slide({
   submit : function(e){
       //if (e.preventDefault) e.preventDefault(); // I don't know what this means.
       globalGame.socket.send("enterSlide.subj_info.");
-      console.log("is it getting here when disconnected?")
       exp.subj_data = {
         language : $("#language").val(),
         enjoyment : $("#enjoyment").val(),
@@ -372,8 +397,8 @@ slides.thanks = slide({
   start : function() {
     globalGame.socket.send("enterSlide.thanks.");
     exp.data= {
-      "trials" : exp.data_trials,
-      "catch_trials" : exp.catch_trials,
+      //"trials" : exp.data_trials,
+      "test_trials" : exp.test_trials,
       "system" : exp.system,
       "condition" : exp.condition,
       "subject_information" : exp.subj_data,
@@ -389,8 +414,9 @@ return slides;
 /// init ///
 function init() {
   exp.trials = [];
-  exp.catch_trials = [];
+  exp.test_trials = [];
   allCreatures = [];
+  shuffledCritters = [];
   exp.condition = _.sample(["CONDITION 1", "condition 2"]); //can randomize between subject conditions here
   exp.system = {
     Browser : BrowserDetect.browser,
@@ -437,7 +463,7 @@ function init() {
   // start_exp.push.apply(start_exp, end_exp)
   // exp.structure = start_exp
 
-  exp.data_trials = [];
+  //exp.data_trials = [];
   //make corresponding slides:
   exp.slides = make_slides(exp);
 
