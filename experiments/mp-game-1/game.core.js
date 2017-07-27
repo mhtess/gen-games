@@ -29,6 +29,8 @@
   console.log('inside game core function')
   this.server = options.server ;
 
+  this.dataStore = ['csv', 'mongo']; //maybe change to just csv
+
   // How many players in the game?
   this.players_threshold = 2;
   this.playerRoleNames = {
@@ -240,7 +242,7 @@
         prop2: 0, // tailsize
         tar1: 0, // fangs
         tar2: 0, // whiskers
-        internal_prop: 0.8 // eaten by crocodiles
+        internal_prop: 0.6 // eaten by crocodiles
       },
       { creature: "fish",
       name: "burge",
@@ -263,7 +265,7 @@
         prop2: 0, // tailsize
         tar1: 0, // fangs
         tar2: 0, // whiskers
-        internal_prop: 0.8 // eaten by crocodiles
+        internal_prop: 0.3 // eaten by crocodiles
       }
       ]
 
@@ -290,7 +292,7 @@
         prop2: 0, // fatness
         tar1: 0, // berries
         tar2: 0, // leaves
-        internal_prop: 0.8 // leaves
+        internal_prop: 0.1 // leaves
       },
       { creature: "tree",
       name: "glibe",
@@ -314,7 +316,7 @@
         prop2: 0, // fatness
         tar1: 0, // berries
         tar2: 0, // leaves
-        internal_prop: 0.8 // leaves
+        internal_prop: 0.9 // leaves
       },
       { creature: "tree",
       name: "lopt",
@@ -337,7 +339,7 @@
         prop2: 0, // fatness
         tar1: 0, // berries
         tar2: 0, // leaves
-        internal_prop: 0.8 // leaves
+        internal_prop: 0.2 // leaves
       }
       ]
 
@@ -365,7 +367,7 @@
         prop2: 1, // fatness
         tar1: 1, // tails
         tar2: 1, // crest
-        internal_prop: 0.8 // lays eggs
+        internal_prop: 0.4 // lays eggs
       },
       { creature: "bird",
       name: "creed",
@@ -439,7 +441,7 @@
           prop2: 1, // bodysize
           tar1: 1, // antennae
           tar2: 1, // wings
-          internal_prop: 0.8 // poisonous
+          internal_prop: 0.7 // poisonous
         },
         { creature: "bug",
         name: "flay",
@@ -463,7 +465,7 @@
           prop2: 1, // bodysize
           tar1: 1, // antennae
           tar2: 1, // wings
-          internal_prop: 0.2, // poisonous
+          internal_prop: 0.1, // poisonous
         },
         { creature: "bug",
         name: "codger",
@@ -537,7 +539,7 @@
           prop2: 1, // tailsize
           tar1: 1, // fangs
           tar2: 1, // whiskers
-          internal_prop: 0.8 // eaten by crocodiles
+          internal_prop: 0.9 // eaten by crocodiles
         },
         { creature: "fish",
         name: "nift",
@@ -560,7 +562,7 @@
           prop2: 1, // tailsize
           tar1: 1, // fangs
           tar2: 1, // whiskers
-          internal_prop: 0.8 // eaten by crocodiles
+          internal_prop: 0.7 // eaten by crocodiles
         }
         ]
 
@@ -611,7 +613,7 @@
           prop2: 1, // fatness
           tar1: 1, // berries
           tar2: 1, // leaves
-          internal_prop: 0.8 // leaves
+          internal_prop: 0.4 // leaves
         },
         { creature: "tree",
         name: "zord",
@@ -634,7 +636,7 @@
           prop2: 1, // fatness
           tar1: 1, // berries
           tar2: 1, // leaves
-          internal_prop: 0.8 // leaves
+          internal_prop: 0 // leaves
         }
         ]
 
