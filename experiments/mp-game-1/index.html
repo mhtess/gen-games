@@ -63,7 +63,7 @@
   <div class="slide" id="i0" >
     <img src="../_shared/images/cocologo.png" alt="Stanford CoCoLab" id="cocologo"></img>
     <p id="cocolab">Stanford CoCoLab</p>
-    <p id="instruct-text">You will see some creatures and be asked to communicate with another turker about what you learned; after, you will be asked some questions. <strong>You will be rewarded based on how well your partner answers their questions.</strong> The HIT should take 20 minutes. Please pay attention, thanks!<br><br></p>
+    <p id="instruct-text">You will see some wildlife and be asked to communicate with another turker about what you learned; after, you will be asked some questions. <strong>You will be rewarded based on how well your partner answers their questions.</strong> The HIT should take approximately 30 minutes. Please pay attention, thanks!<br><br></p>
     <button class="continuebutton" id="start_button" type="button">Start Experiment</button>
     <p id="legal"><br>Legal information: By answering the following questions, you are participating in a study being performed by cognitive scientists in the Stanford Department of Psychology. If you have questions about this research, please contact M. H. Tessler at <a href="mailto://mtessler@stanford.edu">mtessler@stanford.edu</a> or Noah Goodman, at ngoodman@stanford.edu. You must be  at least 18 years old to participate. Your participation in this research is voluntary. You may decline to answer any or all of the following questions. You may decline further participation, at any time, without adverse consequences. Your anonymity is assured; the researchers who have requested your participation will not receive any personal information about you.</p>
   </div>
@@ -73,7 +73,9 @@
     <h3>Instructions</h3>
     <p> <br><br>
       You will explore a new world called Critter Country.
-      You and your assigned partner are <strong> separately tasked with learning about different species in this world, and then teaching each other about them</strong>. <br><br><br>
+      You and your assigned partner are <strong> separately tasked with learning about different species in this world, and then teaching each other about them</strong>.
+      <br><br>
+      Then, based off of what you learned from your partner, you will then be given a task to select the species that will help save Critter Country.<br><br><br>
     </p>
     <button class="continuebutton" onclick="_s.button()">Continue</button>
   </div>
@@ -94,7 +96,7 @@
   <!-- This is the learning slide in which users will uncover information about the critters -->
   <div class="slide" id="welcome_critterLand">
     <h3 id="welcome">Welcome to Critter Country</h3><br>
-    <p id="meeting" style='font-size: 19px'>Meet the Critters of Critter Country. Here are some of the different critters you encounter.</p>
+    <p id="meeting" style='font-size: 19px'>Meet the Critters of Critter Country. Here are some of the different wildlife you encounter.</p>
     <p id="internalprops_instruct" style='font-weight: bold'></p>
     <div id='critter_display'></div>
     <br>
@@ -105,8 +107,8 @@
 
   <!-- Generates critters that the partner learned about and tests the user -->
   <div class="slide" id="test_critters">
-   <h3 id="collect">Collect your critters!</h3>
-   <p id="chooseCrit"><br>Click on the critter(s) that will help you and your teammate complete your task.</p>
+   <h3 id="collect">Collect your wildlife!</h3>
+   <p id="chooseCrit"><br>Click on wildlife that will help you and your teammate complete your task.</p>
    <div id='critter_test_display'></div>
    <p id="test_cond"><br></p>
    <br>
