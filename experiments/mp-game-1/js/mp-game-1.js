@@ -200,7 +200,7 @@ function make_slides(f) {
             }
             break;
             case 'tree':
-            $('#internalprops_instruct').html("Click on each critter to discover whether it grows leaves.")
+            $('#internalprops_instruct').html("Click on each plant to discover whether it grows leaves.")
             if (shuffledCritters[i]["internal_prop"]) {
               $('#cell'+i+'internalprop').html("&#x2618;"); //shamrock
             }
@@ -407,6 +407,14 @@ function init() {
   exp.structure=[
     "i0",
     "instructions",
+    "wait_room",
+    "welcome_critterLand",
+    "chatRoom",
+    "test_critters",
+    "wait_room",
+    "welcome_critterLand",
+    "chatRoom",
+    "test_critters",
     "wait_room",
     "welcome_critterLand",
     "chatRoom",
