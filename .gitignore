@@ -6,4 +6,5 @@ experiments/node_modules/
 *.input
 *.csv
 *.png
+*.md
 .Rproj.user
