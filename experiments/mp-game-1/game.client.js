@@ -181,18 +181,20 @@ var customSetup = function(game) {
     $('#chatbox').attr("disabled", "disabled");
     console.log("in chatWait");
 
-    //not perfect but does the jo
+    //not perfect but does the job
+    var ready = false;
     var blinking = setInterval(function() {
-      $("#waiting").fadeOut(1000);
-      $("#waiting").fadeIn(1000);
       if(!($('#chatbox').prop("disabled"))){
         $("#waiting").fadeOut(0);
+        ready = true;
         clearInterval(blinking);
       };
-
-    }, 2500);
+      if (!ready) {
+        $("#waiting").fadeOut(1000);
+        $("#waiting").fadeIn(1000);
+      }
       
-
+    }, 2500);
   });
 
   // Both players are now in the chatroom, so they may send messages
