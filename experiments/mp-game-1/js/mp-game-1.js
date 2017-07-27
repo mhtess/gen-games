@@ -140,6 +140,14 @@ function make_slides(f) {
     }
   });
 
+  slides.structure_instruct = slide({
+    name: "structure_instruct",
+    button : function() {
+      exp.go();
+    }
+  })
+
+
   // This is the learning slide in which users will uncover information about the critters
   slides.welcome_critterLand = slide({
     name : "welcome_critterLand",
@@ -437,14 +445,17 @@ function init() {
     "welcome_critterLand",
     "chatRoom",
     "test_critters",
+    "structure_instruct",
     "wait_room",
     "welcome_critterLand",
     "chatRoom",
     "test_critters",
+    "structure_instruct",
     "wait_room",
     "welcome_critterLand",
     "chatRoom",
     "test_critters",
+    "structure_instruct",
     "wait_room",
     "welcome_critterLand",
     "chatRoom",
