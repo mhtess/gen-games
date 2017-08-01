@@ -30,8 +30,8 @@ summary(text_data)
 
 # Adjusting MechTurk/Punctuation Errors
 text_df <- data_frame(roundNum=text_data[,3], 
-                      sender=text_data[,4],text=text_data[,5]
-                      )
+                      sender=text_data[,4],
+                      text=text_data[,5])
 text_df$text <- as.character(text_df$text)
 #text_df$text <- gsub("&quotechar", "'", text_df$text)
 #text_df$text <- gsub("DON'T.NONE", "DON'T. NONE", text_df$text)
@@ -94,7 +94,7 @@ f <- function(x) as.character(wordTypeDict[match(x, wordTypeDict[[1]]), 2])
 #Tokenize text responses
 tokenized <- text_df %>%
   unnest_tokens(word, text) %>%
-  #group_by(condition, distribution) %>%
+  group_by(roundNum, sender) %>%
   count(word, sort=TRUE) %>% 
   rowwise() %>%
   mutate(wordType = f(word))
@@ -103,19 +103,27 @@ tokenized <- text_df %>%
 tokenized_ungrouped <- text_df %>%
   unnest_tokens(word, text) %>%
   count(word, sort=TRUE)
+```
 
-# Make plots for these!!!
-tokenized %>%
+
+# Word Count
+
+```{r}
+all_words_byType <- tokenized %>%
   group_by(wordType) %>%
   summarize(n = sum(n)) %>%
   ungroup() %>%
   mutate(wordType = ifelse(is.na(wordType), "other", wordType),
          wordType  = factor(wordType, levels = wordType[order(n)]) ) %>%
-  ggplot(., aes( x = wordType, y = n ))+
-  geom_col()+
-  theme(axis.text.x = element_text(angle = 90))
+  ggplot(., aes( x = wordType, y = n))+
+  geom_col(fill="black")+
+  ggtitle("All Words by Type")+
+  theme_minimal()+
+  theme(axis.text.x = element_text(angle = 90),
+        plot.title = element_text(hjust=0.5))
+all_words_byType
 
-# 
+# Word Count by Condition by Type
 # tokenized %>%
 #   group_by(condition, wordType) %>%
 #   summarize(n = sum(n)) %>%
@@ -146,8 +154,10 @@ count_context_words <-  text_df %>%
 ggplot(count_context_words %>% filter(n > 2), aes(x=word, y=n)) +
   geom_bar(stat="identity", fill="black") +
   scale_x_discrete("Word Used in Response") +
-  ggtitle("Context Words - Unfiltered") +
-  coord_flip()
+  ggtitle("Context Words by Frequency") +
+  coord_flip() + 
+  theme_minimal() + 
+  theme(plot.title = element_text(hjust=0.5))
 
 #ggsave("~/Documents/research/talks/general/")
 
@@ -165,7 +175,11 @@ count_context_words_type <-  text_df %>%
   mutate(wordType = factor(wordType, levels= wordType[order(-total)]))
 
 ggplot(count_context_words_type, aes(x=wordType, y=total)) +
-  geom_bar(stat="identity", fill="black")
+  geom_bar(stat="identity", fill="black") +
+  ggtitle("Context Words by Type") +
+  theme_minimal() + 
+  theme(plot.title = element_text(hjust=0.5))
+  
 
 
 
@@ -319,4 +333,33 @@ internalProp_count <- ggplot(internalProp_categories, aes(x=word, y=n, fill=word
   theme(plot.title = element_text(hjust=0.5))
 
 internalProp_count
+```
+
+
+# Total Word Count by Speaker
+```{r}
+# by Speaker in a given game
+all_words_bySpeaker <- tokenized %>%
+  group_by(sender) %>%
+  summarize(n = sum(n))
+
+bySpeaker_count <- ggplot(all_words_bySpeaker, aes(x=sender, y=n)) +
+  geom_bar(stat="identity", colour="black") +
+  scale_x_discrete("Word Used in Response") +
+  scale_y_continuous("Frequency") + 
+  ggtitle("Word Count by Speaker") +
+  guides(fill=FALSE) +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust=0.5))
+
+bySpeaker_count
+```
+
+# Total Word Count by Round
+```{r}
+# by Round in a given game
+all_words_byRound <- tokenized %>%
+  group_by(roundNum) %>%
+  summarize(n = sum(n))
+
 ```
