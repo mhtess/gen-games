@@ -17,6 +17,7 @@
 // to the server (check the client_on_click function in game.client.js)
 // with the coordinates of the click, which this function reads and
 // applies.
+var startTime;
 var onMessage = function(client,message) {
   console.log("server onMessage")
   //Cut the message up into sub components
@@ -44,6 +45,8 @@ var onMessage = function(client,message) {
     // continue button from chat room
     case 'clickedObj' :
       //writeData(client, "clickedObj", message_parts);
+      console.log("is clickedObj happening??");
+      gc.state.roundNum += 1; 
       setTimeout(function() {
         _.map(all, function(p){
             // tell client to advance to next slide
@@ -57,7 +60,7 @@ var onMessage = function(client,message) {
             p.player.instance.emit("exitChatRoom", dataPacket)
           });
           // tell server to advance to next round (or if at end, disconnect)
-          gc.roundNum += 1;
+          gc.roundNum += 1; 
         }, 300);
       break;
 
@@ -84,6 +87,7 @@ var onMessage = function(client,message) {
     // Will show a wait message if only one player is in the chatroom
     // Will allow them to enter the chatroom
     case 'enterChatRoom' :
+      //gc.state.roundNum += 1;
       if (gc.currentSlide["speaker"] != gc.currentSlide["listener"]) {
         target.instance.emit("chatWait", {})
       } else {
@@ -91,6 +95,7 @@ var onMessage = function(client,message) {
           _.map(all, function(p){
             p.player.instance.emit("enterChatRoom", {})
           });
+          startTime = Date.now();
         }, 300);      
       } 
       break;
@@ -135,7 +140,8 @@ var writeData = function(client, type, message_parts) {
 
     case "message" :
     var msg = message_parts[1].replace(/~~~/g,'.');
-    var line = (id + ',' + Date.now() + ',' + roundNum + ',' + client.role + ',"' + msg + '"\n');
+    var timeInChat = (Date.now() - startTime)/1000; //time in seconds since start of chat room
+    var line = (id + ',' + Date.now() + ',' + timeInChat + ',' + roundNum + ',' + client.role + ',"' + msg + '"\n');
     console.log("message:" + line);
     break;
   }
@@ -159,7 +165,11 @@ var startGame = function(game, player) {
   var startTime = utils.getLongFormTime();
   var dataFileName = startTime + "_" + game.id + ".csv";
   utils.establishStream(game, "message", dataFileName,
-   "gameid,time,roundNum,sender,contents\n");
+   "gameid,timeSent,timeInChat,roundNum,sender,contents\n");
+  utils.establishStream(game, "clickedObj", dataFileName,
+    "gameid,time,blockNum,testTime," +
+    "critter,critter_num,species,color," +
+    "prop1,prop2,tar1,tar2,internal_prop,selected\n");
   // utils.establishStream(game, "clickedObj", dataFileName,
   //  "gameid,time,roundNum,condition," +
   //  "clickStatus,clickColH,clickColS,clickColL,clickLocS,clickLocL"+

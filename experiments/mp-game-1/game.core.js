@@ -670,7 +670,7 @@
   this.roundNum = -1;
 
   // How many rounds do we want people to complete?
-  this.numRounds = 2;
+  this.numRounds = 4;
 
   this.currentSlide = {
     speaker: "i0",

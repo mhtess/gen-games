@@ -33,6 +33,18 @@ library(data.table)
 
 ``` r
 # library(xtable)
+library(langcog)
+```
+
+    ## 
+    ## Attaching package: 'langcog'
+
+    ## The following object is masked from 'package:base':
+    ## 
+    ##     scale
+
+``` r
+library(forcats)
 
 
 # setting the directory
@@ -132,18 +144,57 @@ summary(catch_trial_data)
 catch_test <- subset(catch_trial_data, catch_trial_data$trial_type == "test_trial")
 # catch_test$response <- grep(catch_test$response)
 
-catch_test$Correct <- ifelse(catch_test$species == tolower(catch_test$response), 
+summary(catch_test$col1)
+```
+
+    ## #4f9eda #4f9fda #4f9fdb #dc74dc #dc74dd #dd74dc #dd74dd #edc800 #edc801 
+    ##       1      23      12      18       1       3      14       9       1 
+    ## #edc900 #edc901 #edc902 #eec800 #eec900 #eec901 #eec902 
+    ##       8      17       6       1      11      16       3
+
+``` r
+# catch_test_wug <- subset(catch_test, catch_test$species=='wug' & Correct
+# == FALSE)
+
+# wug.color = #4f9fda fep.color = #eec900 lorch.color = #edc901 (yellow) or
+# #dc74dc (purple)
+
+purple <- c("#dc74dc", "#dc74dd", "#dd74dc", "#dd74dd")
+
+catch_test$Color <- ifelse(catch_test$species == "wug", "blue", ifelse(catch_test$col1 %in% 
+    purple, "purple", "yellow"))
+
+catch_test$Response.edit <- tolower(catch_test$response)
+
+
+catch_test$Correct <- ifelse(catch_test$species == catch_test$Response.edit, 
     TRUE, FALSE)
 
-catch_test_wug <- subset(catch_test, catch_test$species == "wug" & Correct == 
-    FALSE)
+# compare correct species to incorrect input
+catch_test_errors <- catch_test %>% filter(Correct == FALSE) %>% select(species, 
+    Response.edit)
+# View(catch_test_errors)
+
+catch_test$Response.cat <- ifelse(catch_test$Response.edit == "wug", "wug", 
+    ifelse(catch_test$Response.edit == "fep", "fep", ifelse(catch_test$Response.edit == 
+        "lorch", "lorch", "other")))
+
+# data frame structure data.frame( distribution = c( ... ), question = c(
+# ... ), targetColor = c('blue', 'yellow', 'purple', 'blue', ... ),
+# codedResponse = c('fep', 'lorch', 'other', 'wug', ...) # only four
+# categories: fep, lorch, wug, other )
+
+
+catch_test_reduced <- catch_test %>% select(workerid, trial_num, species, question, 
+    distribution, response, Response.cat, Correct, Color)
+# View(catch_test_reduced)
 ```
 
 Proportion Correct By Subject
 =============================
 
 ``` r
-catch_test_by_subj <- catch_test %>%
+catch_test_reduced_by_subj <- catch_test_reduced %>%
   group_by(workerid, trial_num, question, distribution) %>%
   distinct() %>%
   summarise(Total = 1, Correct_trial = ifelse(Correct==TRUE, 1, 0)) %>%
@@ -152,7 +203,7 @@ catch_test_by_subj <- catch_test %>%
   mutate(Percentage_correct = Correct_trials/Total_trials) %>%
   select(workerid, Percentage_correct, question, distribution)
 
-catch_test_by_subj
+catch_test_reduced_by_subj
 ```
 
 A tibble: 36 x 4
@@ -164,7 +215,7 @@ Groups: workerid, question \[36\]
 workerid Percentage\_correct question distribution <int> <dbl> <fctr> <fctr> 1 0 0.25 find creatures \[1,1,0.5\] 2 1 0.50 find creatures \[1,1,0.25\] 3 2 0.50 find all of the creatures \[1,1,0.25\] 4 3 0.50 find creatures \[1,1,0.25\] 5 4 0.75 find all of the creatures \[1,1,0.5\] 6 5 0.50 find creatures \[1,1,0.5\] 7 6 0.75 find all of the creatures \[1,1,0.25\] 8 7 0.00 find creatures \[1,1,0.25\] 9 8 0.00 find all of the creatures \[1,1,0.5\] 10 9 0.50 find creatures \[1,1,0.5\] \# ... with 26 more rows
 
 ``` r
-graph_by_subj <- ggplot(catch_test_by_subj, aes(x=workerid, y=Percentage_correct, colour=distribution, fill=distribution)) +
+graph_by_subj <- ggplot(catch_test_reduced_by_subj, aes(x=workerid, y=Percentage_correct, colour=distribution, fill=distribution)) +
   geom_bar(stat="identity") +
   scale_x_discrete("Subjects") +
   scale_y_continuous("Percentage of Trials Correct") +
@@ -182,16 +233,14 @@ graph_by_subj
 ![](CritterGame_DataAnalysis_exp2_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-1-1.png)
 
 ``` r
-ggsave("graph_by_subj.pdf")
+#ggsave("graph_by_subj.pdf")
 ```
 
-    ## Saving 7 x 5 in image
-
-Proportion Correct By Subject
+Proportion Correct By Species
 =============================
 
 ``` r
-catch_test_by_species <- catch_test %>%
+catch_test_reduced_by_species <- catch_test_reduced %>%
   group_by(workerid, trial_num, species, distribution) %>%
   distinct() %>%
   summarise(Total = 1, Correct_trial = ifelse(Correct==TRUE, 1, 0)) %>%
@@ -200,7 +249,7 @@ catch_test_by_species <- catch_test %>%
   mutate(Percentage_correct = Correct_trials/Total_trials) %>%
   select(Percentage_correct, species, distribution)
 
-catch_test_by_species
+catch_test_reduced_by_species
 ```
 
 A tibble: 6 x 3
@@ -212,7 +261,7 @@ Groups: species \[3\]
 Percentage\_correct species distribution <dbl> <fctr> <fctr> 1 0.4736842 fep \[1,1,0.25\] 2 0.3529412 fep \[1,1,0.5\] 3 0.4473684 lorch \[1,1,0.25\] 4 0.4705882 lorch \[1,1,0.5\] 5 0.5789474 wug \[1,1,0.25\] 6 0.6470588 wug \[1,1,0.5\]
 
 ``` r
-graph_by_species <- ggplot(catch_test_by_species, aes(x=species, y=Percentage_correct)) +
+graph_by_species <- ggplot(catch_test_reduced_by_species, aes(x=species, y=Percentage_correct)) +
   geom_bar(stat="identity") +
   scale_x_discrete("Species") +
   scale_y_continuous("Percentage of Trials Correct", limits=c(0,1)) +
@@ -230,7 +279,93 @@ graph_by_species
 ![](CritterGame_DataAnalysis_exp2_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-2-1.png)
 
 ``` r
-ggsave("Graph_by_Species.pdf")
+#ggsave("Graph_by_Species.pdf")
 ```
 
-    ## Saving 7 x 5 in image
+Proportion of Species by Color
+==============================
+
+``` r
+catch_test_reduced_species_by_color <- catch_test_reduced %>%
+  group_by(workerid, trial_num, Response.cat, Color) %>%
+  summarise(Total = n()) %>%
+  group_by(Response.cat, Color) %>%
+  summarise(Total_trials = sum(Total)) %>%
+  #mutate(Percentage_trials = Correct_trials/Total_trials) %>%
+  select(Total_trials, Response.cat, Color)
+
+catch_test_reduced_species_by_color
+```
+
+A tibble: 12 x 3
+================
+
+Groups: Response.cat \[4\]
+==========================
+
+Total\_trials Response.cat Color <int> <chr> <chr> 1 5 fep blue 2 2 fep purple 3 37 fep yellow 4 4 lorch blue 5 25 lorch purple 6 22 lorch yellow 7 5 other blue 8 3 other purple 9 11 other yellow 10 22 wug blue 11 6 wug purple 12 2 wug yellow
+
+``` r
+graph_species_by_color_count <- ggplot(catch_test_reduced_species_by_color, aes(x=Response.cat, y=Total_trials)) +
+  geom_bar(stat="identity") +
+  scale_x_discrete("Species Stated in Response") +
+  scale_y_continuous("Count") +
+  #scale_colour_discrete(guide=guide_legend("Distribution")) +
+  #scale_fill_discrete(guide=guide_legend("Distribution")) +
+  facet_wrap(~Color) +
+  ggtitle("Species Responses on Test Trials by Stimuli Responses") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust=0.5, size=18, face="bold"),
+        strip.background = element_rect(fill="skyblue"),
+        strip.text = element_text(size=12, face="bold"))
+graph_species_by_color_count
+```
+
+![](CritterGame_DataAnalysis_exp2_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-3-1.png)
+
+``` r
+#ggsave("Graph_Species_by_Color_count.pdf")
+
+
+catch_test_reduced_species_by_color_prop <- catch_test_reduced %>%
+  group_by(Response.cat, Color) %>%
+  summarise(Total_trials = n()) %>%
+  group_by(Color) %>%
+  mutate(All_Color_trials = sum(Total_trials),
+         Percent_trials = Total_trials/All_Color_trials) %>%
+  ungroup() %>%
+  mutate(#Response.cat = fct_relevel(Response.cat, "wug", "fep", "lorch", "other"),
+         Response.cat = factor(Response.cat, 
+                               levels = c("wug", "fep", "lorch", "other"),
+                               labels = c("Wug", "Fep", "Lorch", "Other")
+                               ))
+
+#sanity check
+#catch_test_reduced_species_by_color_prop %>%
+#  group_by(Color) %>%
+#  summarise(sum(Percent_trials))
+
+
+
+graph_species_by_color_prop <- ggplot(catch_test_reduced_species_by_color_prop, aes(x=Response.cat, y=Percent_trials, fill = Color)) +
+  geom_bar(stat="identity") +
+  scale_x_discrete("Species Stated in Response") +
+  scale_y_continuous("Percent") +
+  #scale_colour_discrete(guide=guide_legend("Distribution")) +
+  #scale_fill_discrete(guide=guide_legend("Distribution")) +
+  facet_wrap(~Color) +
+  scale_fill_manual(values = c("blue", "purple", "yellow"))+
+  ggtitle("Species Responses on Test Trials by Stimuli Responses") +
+  guides(fill=FALSE) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust=0.5, size=18, face="bold"),
+        strip.background = element_rect(fill=c("skyblue")),
+        strip.text = element_text(size=12, face="bold"))
+graph_species_by_color_prop
+```
+
+![](CritterGame_DataAnalysis_exp2_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-3-2.png)
+
+``` r
+#ggsave("Graph_Species_by_Color_prop.pdf")
+```
