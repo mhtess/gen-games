@@ -362,4 +362,15 @@ all_words_byRound <- tokenized %>%
   group_by(roundNum) %>%
   summarize(n = sum(n))
 
+byRound_count <- ggplot(all_words_byRound, aes(x=roundNum, y=n)) +
+  geom_bar(stat="identity", colour="black") +
+  scale_x_discrete("Word Used in Response") +
+  scale_y_continuous("Frequency") + 
+  ggtitle("Word Count by Round") +
+  guides(fill=FALSE) +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust=0.5))
+
+byRound_count
+
 ```
