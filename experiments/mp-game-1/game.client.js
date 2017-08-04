@@ -119,27 +119,18 @@ var client_onMessage = function(data) {
   }
 };
 
-var client_addnewround = function(game) {
-  $('#roundnumber').append(game.roundNum);
-};
+// var client_addnewround = function(game) {
+//   $('#roundnumber').append(game.roundNum);
+// };
 
 // Set up new round on client's browsers after submit round button is pressed.
 // This means clear the chatboxes, update round number, and update score on screen
 var customSetup = function(game) {
-  // totalRounds = game.numRounds;
-  // console.log("total " + totalRounds)
   game.socket.on('newRoundUpdate', function(data){
     $('#chatbox').removeAttr("disabled");
     $('#chatbox').focus();
     $('#messages').empty();
-    if(game.roundNum + 2 > game.numRounds) {
-      $('#roundnumber').empty();
-      $('#instructs').empty()
-      .append("Round\n" + (game.roundNum + 1) + "/" + game.numRounds);
-    } else {
-      $('#roundnumber').empty()
-      .append("Round\n" + (game.roundNum + 2) + "/" + game.numRounds);
-    }
+    // $('#roundnumber').empty();
   });
 
   // here we will want to set the subject's stimuli (that are coming in data) to be what gets presented. 
@@ -218,12 +209,6 @@ var customSetup = function(game) {
       setTimeout(function() { $("#chatCont").show() }, 3*1000)
       continueButton.addEventListener("click", buttonClickListener, false);
     }
-  });
-
-  game.socket.on('enterTestPage', function(data){
-    exp.slides.test_critters.crittersFromServer = data.thisRoundTest;
-    exp.slides.welcome_critterLand.crittersFromServer = data.nextRoundLearning;
-    exp.go();
   });
 
   // initialize experiment_template

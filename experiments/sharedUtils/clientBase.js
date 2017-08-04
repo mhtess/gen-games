@@ -14,25 +14,15 @@ var getURLParams = function() {
       return urlParams;
     };
 
-   var ondisconnect = function(data) {
-  // Redirect to exit survey
-  console.log("server booted");
-  //this.viewport.style.display="none";
+  var ondisconnect = function(data) {
+    // Redirect to exit survey
+    console.log("server booted");
 
-  // here change the quote to you will now do whatever
-  disconStr = 'Thanks for participating in our experiment! ' +
-  "Before you submit your HIT, we'd like to ask you a few questions."
-
-  if(globalGame.roundNum + 2 > globalGame.numRounds) {
-    $('#instructs').html(disconStr);
-    $('#contButton').show();
-  }
-  else {
     $('.long_form').prepend('<p style="font-size:15px">' + 
       'Oops! It looks like your partner lost their connection.' +
       ' Completing this survey will submit your HIT so you will still receive ' +
       'full compensation. If you experience any problems, please email us (mtessler@stanford.edu).'
-       + '</p>' + '<br>');
+      + '</p>' + '<br>');
 
     $('#message_panel').hide();
     $('#submitbutton').hide();
@@ -44,12 +34,11 @@ var getURLParams = function() {
     //$('#subj_info').show();
     $('.progress').hide();
     exp.goToSlide("subj_info");
-  }
 
-};
+  };
 
-var onconnect = function(data) {
-  console.log('on connect')
+  var onconnect = function(data) {
+    console.log('on connect')
   //The server responded that we are now in a game. Remember who we are
   this.my_id = data.id;
   this.players[0].id = this.my_id;
