@@ -15,6 +15,7 @@
 
 // A window global for our game root variable.
 var globalGame = {};
+//var totalRounds = null;
 
 // Update client versions of variables with data received from
 // server_send_update function in game.core.js
@@ -53,9 +54,11 @@ var client_onMessage = function(data) {
     case 's': //server message
     switch(subcommand) {
       case 'end' :
-        // Redirect to exit survey
-        ondisconnect();
-        console.log("received end message...");
+        // Redirect to exit survey only if it is not the last round
+        if(globalGame.roundNum < globalGame.numRounds || globalGame.numRounds == null) {
+          ondisconnect();
+          console.log("received end message...");
+        }
         break;
 
         case 'feedback' :
@@ -123,6 +126,8 @@ var client_addnewround = function(game) {
 // Set up new round on client's browsers after submit round button is pressed.
 // This means clear the chatboxes, update round number, and update score on screen
 var customSetup = function(game) {
+  // totalRounds = game.numRounds;
+  // console.log("total " + totalRounds)
   game.socket.on('newRoundUpdate', function(data){
     $('#chatbox').removeAttr("disabled");
     $('#chatbox').focus();
@@ -145,6 +150,8 @@ var customSetup = function(game) {
 
     exp.slides.test_critters.crittersFromServer = data.thisRoundTest;
     exp.slides.welcome_critterLand.crittersFromServer = data.nextRoundLearning;
+
+    globalGame.roundNum = data['currentRoundNum'];
     exp.go();
   });
 
@@ -211,6 +218,12 @@ var customSetup = function(game) {
       setTimeout(function() { $("#chatCont").show() }, 3*1000)
       continueButton.addEventListener("click", buttonClickListener, false);
     }
+  });
+
+  game.socket.on('enterTestPage', function(data){
+    exp.slides.test_critters.crittersFromServer = data.thisRoundTest;
+    exp.slides.welcome_critterLand.crittersFromServer = data.nextRoundLearning;
+    exp.go();
   });
 
   // initialize experiment_template

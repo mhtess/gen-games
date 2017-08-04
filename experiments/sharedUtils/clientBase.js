@@ -17,7 +17,7 @@ var getURLParams = function() {
    var ondisconnect = function(data) {
   // Redirect to exit survey
   console.log("server booted");
-  this.viewport.style.display="none";
+  //this.viewport.style.display="none";
 
   // here change the quote to you will now do whatever
   disconStr = 'Thanks for participating in our experiment! ' +
@@ -34,16 +34,16 @@ var getURLParams = function() {
       'full compensation. If you experience any problems, please email us (mtessler@stanford.edu).'
        + '</p>' + '<br>');
 
-      $('#message_panel').hide();
-  $('#submitbutton').hide();
-  $('#roleLabel').hide();
-  $('#score').hide();
-  $('#sketchpad').hide(); // this is from sketchpad experiment (jefan 4/23/17)
-  $('#loading').hide(); // this is from sketchpad experiment (jefan 4/23/17)
-  $('.slide').hide();
-  //$('#subj_info').show();
-  $('.progress').hide();
-  exp.goToSlide("subj_info");
+    $('#message_panel').hide();
+    $('#submitbutton').hide();
+    $('#roleLabel').hide();
+    $('#score').hide();
+    $('#sketchpad').hide(); // this is from sketchpad experiment (jefan 4/23/17)
+    $('#loading').hide(); // this is from sketchpad experiment (jefan 4/23/17)
+    $('.slide').hide();
+    //$('#subj_info').show();
+    $('.progress').hide();
+    exp.goToSlide("subj_info");
   }
 
 };
@@ -147,16 +147,16 @@ window.onload = function(){
   customSetup(globalGame);
   globalGame.submitted = false;
 
-  //Fetch the viewport
-  globalGame.viewport = document.getElementById('viewport');
-  globalGame.slides = document.getElementsByClassName('slide');
+  // //Fetch the viewport
+  // globalGame.viewport = document.getElementById('viewport');
+  // globalGame.slides = document.getElementsByClassName('slide');
 
-  //Adjust its size
-  globalGame.viewport.width = globalGame.world.width;
-  globalGame.viewport.height = globalGame.world.height;
+  // //Adjust its size
+  // globalGame.viewport.width = globalGame.world.width;
+  // globalGame.viewport.height = globalGame.world.height;
 
   //Fetch the rendering contexts
-  globalGame.ctx = globalGame.viewport.getContext('2d');
+  //globalGame.ctx = globalGame.viewport.getContext('2d');
 
   //Set the draw style for the font
   globalGame.ctx.font = '11px "Helvetica"';
