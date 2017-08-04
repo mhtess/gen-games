@@ -15,30 +15,36 @@ var getURLParams = function() {
     };
 
   var ondisconnect = function(data) {
-    // Redirect to exit survey
-    console.log("server booted");
+    if(isConnected) {
 
-    $('.long_form').prepend('<p style="font-size:15px">' + 
-      'Oops! It looks like your partner lost their connection.' +
-      ' Completing this survey will submit your HIT so you will still receive ' +
-      'full compensation. If you experience any problems, please email us (mtessler@stanford.edu).'
-      + '</p>' + '<br>');
+      // Redirect to exit survey
+      console.log("server booted");
+      
+      $('.long_form').prepend('<p style="font-size:15px">' + 
+        'Oops! It looks like your partner lost their connection.' +
+        ' Completing this survey will submit your HIT so you will still receive ' +
+        'full compensation. If you experience any problems, please email us (mtessler@stanford.edu).'
+        + '</p>' + '<br>');
 
-    $('#message_panel').hide();
-    $('#submitbutton').hide();
-    $('#roleLabel').hide();
-    $('#score').hide();
-    $('#sketchpad').hide(); // this is from sketchpad experiment (jefan 4/23/17)
-    $('#loading').hide(); // this is from sketchpad experiment (jefan 4/23/17)
-    $('.slide').hide();
-    //$('#subj_info').show();
-    $('.progress').hide();
-    exp.goToSlide("subj_info");
+      $('#message_panel').hide();
+      $('#submitbutton').hide();
+      $('#roleLabel').hide();
+      $('#score').hide();
+      $('#sketchpad').hide(); // this is from sketchpad experiment (jefan 4/23/17)
+      $('#loading').hide(); // this is from sketchpad experiment (jefan 4/23/17)
+      $('.slide').hide();
+      //$('#subj_info').show();
+      $('.progress').hide();
+      exp.goToSlide("subj_info");
+    }
+
+    isConnected = false;
 
   };
 
   var onconnect = function(data) {
     console.log('on connect')
+    isConnected = true;
   //The server responded that we are now in a game. Remember who we are
   this.my_id = data.id;
   this.players[0].id = this.my_id;
