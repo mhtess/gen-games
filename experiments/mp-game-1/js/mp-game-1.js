@@ -324,7 +324,7 @@ slides.test_critters = slide({
     var dataToSend = {
       "block_num" : block,
       //"distribution" : exp.distribution, //fix this later
-      "time_in_seconds" : this.time_spent/1000,
+      "time_in_ms" : this.time_spent,
       "critter" : shuffledCritters[i]["critter"],
       "critter_num" : i,
       "species" : shuffledCritters[i]["creatureName"],
@@ -334,25 +334,10 @@ slides.test_critters = slide({
       "tar1" : shuffledCritters[i]["tar1"],
       "tar2" : shuffledCritters[i]["tar2"],
       "internal_prop" : shuffledCritters[i]["internal_prop"],
-      "selected" : $('#cell' + i).css('border') == '2px solid rgb(255, 0, 0)' ? "true" : "false"
+      "selected" : $('#cell' + i).css('border') == '2px solid rgb(255, 0, 0)' ? 1 : 0
     }
-    globalGame.socket.send("logResponse.testCritters." + _.values(dataToSend).join('.'));
+    globalGame.socket.send("logResponse.testCritters." + _.pairs(dataToSend).join('.'));
 
-    // exp.test_trials.push({
-    //   "block_num" : block,
-    //   //"distribution" : exp.distribution, //fix this later
-    //   "time_in_seconds" : this.time_spent/1000,
-    //   "critter" : shuffledCritters[i]["critter"],
-    //   "critter_num" : i,
-    //   "species" : shuffledCritters[i]["creatureName"],
-    //   "color" : shuffledCritters[i]["col1"],
-    //   "prop1" : shuffledCritters[i]["prop1"],
-    //   "prop2" : shuffledCritters[i]["prop2"],
-    //   "tar1" : shuffledCritters[i]["tar1"],
-    //   "tar2" : shuffledCritters[i]["tar2"],
-    //   "internal_prop" : shuffledCritters[i]["internal_prop"],
-    //   "selected" : $('#cell' + i).css('border') == '2px solid rgb(255, 0, 0)' ? "true" : "false"
-    // })
   }
 
   allCreatures = [];
