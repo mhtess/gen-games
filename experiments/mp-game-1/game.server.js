@@ -148,9 +148,9 @@ var dataOutput = function() {
   }
 
   var logResponseOutput = function(client, message_data) {
-    console.log('enter log responses output')
     return _.extend(
       commonOutput(client, message_data),
+      // message_data contrains the flattened JSON object with test trial info.
       createTestCritterObject(message_data.slice(2))
     );
   };
