@@ -153,7 +153,7 @@ function make_slides(f) {
     name : "welcome_critterLand",
     crittersFromServer : "",
     start : function(stim) {
-      // The hide / show is so we can put more specific (to which critter they see) instructions 
+      // The hide / show is so we can put more specific (to which critter they see) instructions
       $("#cur_instructs").hide();
       $("#instru_button").hide();
       $("#welcome").show();
@@ -173,7 +173,7 @@ function make_slides(f) {
       this.num_creats = allCreatures.length;
       this.creat_type = shuffledCritters[0]["critter"];
 
-      // This generates all the critters 
+      // This generates all the critters
       create_table(2,6,"critter_display");
 
       for (var i=0; i<shuffledCritters.length; i++) {
@@ -266,6 +266,7 @@ slides.test_critters = slide({
 
    this.start_time = Date.now()
    globalGame.socket.send("enterSlide.test_critters.");
+   //globalGame.socket.send("enterTests.");
    $(".err").hide();
    allCreatures = this.crittersFromServer;
    shuffledCritters = _.shuffle(allCreatures)
@@ -273,7 +274,7 @@ slides.test_critters = slide({
    this.num_creats = allCreatures.length;
    this.creat_type = shuffledCritters[0]["critter"];
 
-   // Creating a specific instructions view 
+   // Creating a specific instructions view
    $("#collect").hide();
    $("#chooseCrit").hide();
    $("#critter_test_display").hide();
@@ -283,13 +284,13 @@ slides.test_critters = slide({
 
    $('#test_cond').html("<br>On the next slide, you will choose the ");
    switch (this.creat_type) {
-    case 'bird': 
+    case 'bird':
     $("#test_cond").append("<p>birds that you believe will help you and your partner save the population.<br>");
     break;
     case 'bug':
     $("#test_cond").append("<p>bugs that you can feed the birds to help you and your partner save the population.<br>");
     break;
-    case 'tree': 
+    case 'tree':
     $("#test_cond").append("<p>underwater plants that will help protect the fish from being eaten.<br>");
     break;
     case 'fish':
@@ -311,7 +312,7 @@ slides.test_critters = slide({
    for(var i=0; i<shuffledCritters.length; i++) {
      $('#cell'+i+'critname').html(shuffledCritters[i]["creatureName"]);
    }
-   
+
  },
 
  button : function() {
@@ -321,21 +322,23 @@ slides.test_critters = slide({
 
   //log responses
   for (var i=0; i<this.num_creats; i++) {
-    exp.test_trials.push({
+    var dataToSend = {
       "block_num" : block,
       //"distribution" : exp.distribution, //fix this later
-      "time_in_seconds" : this.time_spent/1000,
+      "time_in_ms" : this.time_spent,
       "critter" : shuffledCritters[i]["critter"],
       "critter_num" : i,
       "species" : shuffledCritters[i]["creatureName"],
-      "color" : shuffledCritters[i]["col1"], 
+      "color" : shuffledCritters[i]["col1"],
       "prop1" : shuffledCritters[i]["prop1"],
       "prop2" : shuffledCritters[i]["prop2"],
       "tar1" : shuffledCritters[i]["tar1"],
       "tar2" : shuffledCritters[i]["tar2"],
       "internal_prop" : shuffledCritters[i]["internal_prop"],
-      "selected" : $('#cell' + i).css('border') == '2px solid rgb(255, 0, 0)' ? "true" : "false"      
-    })
+      "selected" : $('#cell' + i).css('border') == '2px solid rgb(255, 0, 0)' ? 1 : 0
+    }
+    globalGame.socket.send("logResponse.testCritters." + _.pairs(dataToSend).join('.'));
+
   }
 
   allCreatures = [];
@@ -348,7 +351,7 @@ slides.test_critters = slide({
      $('#creature_table').remove();
      prev = null;
   }
-  
+
   block++;
   exp.go(); // use exp.go() if and only if there is no "present" data.
 
@@ -439,8 +442,13 @@ function init() {
 
   //blocks of the experiment:
   exp.structure=[
-    "i0",
-    "instructions",
+    // "i0",
+    // "instructions",
+    // "wait_room",
+    // "welcome_critterLand",
+    "chatRoom",
+    "test_critters",
+    "structure_instruct",
     "wait_room",
     "welcome_critterLand",
     "chatRoom",
@@ -450,16 +458,11 @@ function init() {
     "welcome_critterLand",
     "chatRoom",
     "test_critters",
-    // "structure_instruct",
-    // "wait_room",
-    // "welcome_critterLand",
-    // "chatRoom",
-    // "test_critters",
-    // "structure_instruct",
-    // "wait_room",
-    // "welcome_critterLand",
-    // "chatRoom",
-    // "test_critters",
+    "structure_instruct",
+    "wait_room",
+    "welcome_critterLand",
+    "chatRoom",
+    "test_critters",
     'subj_info',
     'thanks'
     ]
