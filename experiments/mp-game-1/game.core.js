@@ -18,8 +18,9 @@
 
   if( typeof _ === 'undefined' ) {
     if( has_require ) {
-      _ = require('underscore');
-      utils  = require(__base + '/sharedUtils/sharedUtils.js');
+      _ = require('lodash');
+      utils  = require(__base + 'sharedUtils/sharedUtils.js');
+      assert = require('assert');
     }
     else throw 'mymodule requires underscore, see http://underscorejs.org';
   }
@@ -29,7 +30,13 @@
   console.log('inside game core function')
   this.server = options.server ;
 
-  this.dataStore = ['csv', 'mongo']; //maybe change to just csv
+  this.dataStore = ['csv']; //maybe change to just csv
+  this.email = 'mtessler@stanford.edu';
+  this.projectName = 'genGames';
+  this.experimentName = 'mpGame1';
+  this.iterationName = 'pilot1';
+  this.anonymizeCSV = true;
+  this.bonusAmt = 3; // in cents
 
   // How many players in the game?
   this.players_threshold = 2;
@@ -44,7 +51,7 @@
     role2 : 'bug'
   }
 
-  // Determines the specifics of the critters used in the experiment. Can be probabilistic 
+  // Determines the specifics of the critters used in the experiment. Can be probabilistic
   // Change this to change distribution, critter type, names of species, and critter characteristics
   this.critterScale = 0.5;
   this.birdOpts0 = [
@@ -670,7 +677,7 @@
 
     }
 
-    this.critter_dict = 
+    this.critter_dict =
 
   // Which round are we on (initialize at -1 so that first round is 0-indexed)
   this.roundNum = -1;
@@ -723,12 +730,12 @@
 
     // needs to be generalized
     // determines what critters will be used and who sees what when
-    var bugCritters0 = this.genCreatures("bug",0); 
+    var bugCritters0 = this.genCreatures("bug",0);
     var birdCritters0 = this.genCreatures("bird",0);
     var fishCritters0 = this.genCreatures("fish",0);
     //var flowerCritters0 = this.genCreatures("flower",0);
     var treeCritters0 = this.genCreatures("tree",0);
-    var bugCritters1 = this.genCreatures("bug",1); 
+    var bugCritters1 = this.genCreatures("bug",1);
     var birdCritters1 = this.genCreatures("bird",1);
     var fishCritters1 = this.genCreatures("fish",1);
     //var flowerCritters1 = this.genCreatures("flower",1);
@@ -785,8 +792,7 @@ var game_player = function( game_instance, player_instance) {
 // server side we set some classes to global types, so that
 // we can use them in other files (specifically, game.server.js)
 if('undefined' != typeof global) {
-  module.exports = global.game_core = game_core;
-  module.exports = global.game_player = game_player;
+  module.exports = {game_core, game_player};
 }
 
 // HELPER FUNCTIONS
@@ -858,7 +864,7 @@ game_core.prototype.createFeatureArray = function(creatureLabel, p, creatureCate
     break;
   }
 
-  var creatOpts = _.where(creatureOpts, {name: creatureLabel})[0];
+  var creatOpts = _.filter(creatureOpts, {name: creatureLabel})[0];
   var creatureColors = [];
   var creatureLocation = [];
   var nRemaining = this.exemplarN;
@@ -918,9 +924,9 @@ game_core.prototype.genCreatures = function(creatureCategory, num){ //include nu
     break;
   }
 
-  uniqueCreatures =  _.uniq(_.pluck(creatureOpts, "name"));
+  uniqueCreatures =  _.uniqBy(_.map(creatureOpts, "name"));
   for (var i = 0; i < uniqueCreatures.length; i++){
-    var creatOpts = _.where(creatureOpts, {name: uniqueCreatures[i]})[0];
+    var creatOpts = _.filter(creatureOpts, {name: uniqueCreatures[i]})[0];
     var creatureColor = this.createFeatureArray(
      uniqueCreatures[i], distribution[i], creatureCategory, num
      );

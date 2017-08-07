@@ -19,12 +19,30 @@ var getURLParams = function() {
 
       // Redirect to exit survey
       console.log("server booted");
-      
-      $('.long_form').prepend('<p style="font-size:15px">' + 
-        'Oops! It looks like your partner lost their connection.' +
-        ' Completing this survey will submit your HIT so you will still receive ' +
-        'full compensation. If you experience any problems, please email us (mtessler@stanford.edu).'
-        + '</p>' + '<br>');
+      var email = globalGame.email ? globalGame.email : '';
+
+      // $('.long_form').prepend('<p style="font-size:15px">' +
+      //   'Oops! It looks like your partner lost their connection.' +
+      //   ' Completing this survey will submit your HIT so you will still receive ' +
+      //   'full compensation. If you experience any problems, please email us (mtessler@stanford.edu).'
+      //   + '</p>' + '<br>');
+
+      var failMsg = [
+        '<h3>Oops! It looks like your partner lost their connection!</h3>',
+        '<p> Completing this survey will submit your HIT so you will still receive full ',
+        'compensation.</p> <p>If you experience any problems, please email us (',
+        email, ')</p>'
+      ].join('');
+      var successMsg = [
+        "<h3>Thanks for participating in our experiment!</h3>",
+        "<p>Before you submit your HIT, we'd like to ask you a few questions.</p>"
+      ].join('');
+
+      if(globalGame.roundNum + 2 > globalGame.numRounds) {
+        $('#subj_info').prepend(successMsg);
+      } else {
+        $('#subj_info').prepend(failMsg);
+      }
 
       $('#message_panel').hide();
       $('#submitbutton').hide();
@@ -45,17 +63,17 @@ var getURLParams = function() {
   var onconnect = function(data) {
     console.log('on connect')
     isConnected = true;
-  //The server responded that we are now in a game. Remember who we are
-  this.my_id = data.id;
-  this.players[0].id = this.my_id;
-  this.urlParams = getURLParams();
-  console.log(this);
+    //The server responded that we are now in a game. Remember who we are
+    this.my_id = data.id;
+    this.players[0].id = this.my_id;
+    this.urlParams = getURLParams();
+    // console.log(this);
 };
 
 // Associates callback functions corresponding to different socket messages
 var sharedSetup = function(game) {
   //Store a local reference to our connection to the server
-  game.socket = io.connect();
+  game.socket = io.connect({reconnection: false});
 
   // Tell other player if someone is typing...
   $('#chatbox').on('input', function() {
@@ -97,21 +115,46 @@ var sharedSetup = function(game) {
   });
 
   // Update messages log when other players send chat
-  game.socket.on('chatMessage', function(data){
-    // Just in case we want to bar responses until after some message received
-    globalGame.messageSent = true;
-    var otherRole = (globalGame.my_role === game.playerRoleNames.role1 ?
-     game.playerRoleNames.role2 : game.playerRoleNames.role1);
-    var source = data.user === globalGame.my_id ? "You" : otherRole;
-    var col = source === "You" ? "#f47777" : "#c66f6f";
-    $('.typing-msg').remove();
-    $('#messages')
-    .append($('<li style="padding: 5px 10px; background: ' + col + '">')
-     .text(source + ": " + data.msg))
-    .stop(true,true)
-    .animate({
-     scrollTop: $("#messages").prop("scrollHeight")
-   }, 800);
+  // game.socket.on('chatMessage', function(data){
+  //   // Just in case we want to bar responses until after some message received
+  //   globalGame.messageSent = true;
+  //   var otherRole = (globalGame.my_role === game.playerRoleNames.role1 ?
+  //    game.playerRoleNames.role2 : game.playerRoleNames.role1);
+  //   var source = data.user === globalGame.my_id ? "You" : otherRole;
+  //   var col = source === "You" ? "#f47777" : "#c66f6f";
+  //   $('.typing-msg').remove();
+  //   $('#messages')
+  //   .append($('<li style="padding: 5px 10px; background: ' + col + '">')
+  //    .text(source + ": " + data.msg))
+  //   .stop(true,true)
+  //   .animate({
+  //    scrollTop: $("#messages").prop("scrollHeight")
+  //  }, 800);
+
+   // Update messages log when other players send ch at
+   game.socket.on('chatMessage', function(data){
+
+     var otherRole = (globalGame.my_role === game.playerRoleNames.role1 ?
+ 		     game.playerRoleNames.role2 : game.playerRoleNames.role1);
+     var source = data.user === globalGame.my_id ? "You" : otherRole;
+     // To bar responses until speaker has uttered at least one message
+     if(source !== "You"){
+       globalGame.messageSent = true;
+     }
+     var col = source === "You" ? "#f47777" : "#c66f6f";
+     $('.typing-msg').remove();
+     $('#messages')
+       .append($('<li style="padding: 5px 10px; background: ' + col + '">')
+     	      .text(source + ": " + data.msg))
+       .stop(true,true)
+       .animate({
+ 	scrollTop: $("#messages").prop("scrollHeight")
+       }, 800);
+
+
+
+
+
   });
 
   //so that we can measure the duration of the game
@@ -128,6 +171,7 @@ var sharedSetup = function(game) {
   game.socket.on('onconnected', onconnect.bind(game));
   //On message from the server, we parse the commands and send it to the handlers
   game.socket.on('message', client_onMessage.bind(game));
+
 };
 
 // When loading the page, we store references to our
@@ -160,30 +204,35 @@ window.onload = function(){
 
 };
 
+
+
+
+
 // This gets called when someone selects something in the menu during the exit survey...
 // collects data from drop-down menus and submits using mmturkey
 function dropdownTip(data){
   console.log(globalGame);
   var commands = data.split('::');
   switch(commands[0]) {
-    case 'human' :
+  case 'human' :
     $('#humanResult').show();
     globalGame.data.subject_information = _.extend(globalGame.data.subject_information,
-      {'thinksHuman' : commands[1]}); break;
-    case 'language' :
+					     {'thinksHuman' : commands[1]}); break;
+  case 'language' :
     globalGame.data.subject_information = _.extend(globalGame.data.subject_information,
-      {'nativeEnglish' : commands[1]}); break;
-    case 'partner' :
+					     {'nativeEnglish' : commands[1]}); break;
+  case 'partner' :
     globalGame.data.subject_information = _.extend(globalGame.data.subject_information,
-     {'ratePartner' : commands[1]}); break;
-    case 'confused' :
+						   {'ratePartner' : commands[1]}); break;
+  case 'confused' :
     globalGame.data.subject_information = _.extend(globalGame.data.subject_information,
-     {'confused' : commands[1]}); break;
-    case 'submit' :
+						   {'confused' : commands[1]}); break;
+  case 'submit' :
     globalGame.data.subject_information = _.extend(globalGame.data.subject_information,
-     {'comments' : $('#comments').val(),
-     'role' : globalGame.my_role,
-     'totalLength' : Date.now() - globalGame.startTime});
+						   {'comments' : $('#comments').val(),
+						    'strategy' : $('#strategy').val(),
+				    'role' : globalGame.my_role,
+				    'totalLength' : Date.now() - globalGame.startTime});
     globalGame.submitted = true;
     console.log("data is...");
     console.log(globalGame.data);
@@ -231,21 +280,23 @@ window.onbeforeunload = function(e) {
   // All others:
   else
     window.onpageshow = window.onpagehide = window.onfocus
-  = window.onblur = onchange;
+    = window.onblur = onchange;
 })();
 
 function onchange (evt) {
   var v = 'visible', h = 'hidden',
-  evtMap = {
-    focus:v, focusin:v, pageshow:v, blur:h, focusout:h, pagehide:h
-  };
+      evtMap = {
+        focus:v, focusin:v, pageshow:v, blur:h, focusout:h, pagehide:h
+      };
   evt = evt || window.event;
   if (evt.type in evtMap) {
     document.body.className = evtMap[evt.type];
   } else {
     document.body.className = evt.target.hidden ? "hidden" : "visible";
   }
-  console.log(evt);
+  // console.log(evt);
+  // console.log(document.body.className);
+  // console.log(globalGame);
   visible = document.body.className;
   globalGame.socket.send("h." + document.body.className);
 
@@ -274,4 +325,4 @@ function onchange (evt) {
     document.title = original;
   };
 
-});
+}());

@@ -15,7 +15,8 @@ var
     https         = require('https'),
     fs            = require('fs'),
     app           = require('express')(),
-    _             = require('underscore');
+    _             = require('underscore'),
+    Server        = require('./sharedUtils/serverBase.js');
 
 var gameport;
 
@@ -28,10 +29,10 @@ if(argv.gameport) {
 }
 
 if(argv.expname) {
-  var exp = argv.expname;
-  var gameServer = require('./sharedUtils/serverBase.js')(exp);
+  var exp = argv.expname.replace(/\/$/, "");
+  var gameServer = new Server(exp);
 } else {
-  throw "no experiment supplied; use --expname flag\nnode app.js --expname spatial";
+  throw new Error("missing arguments. Use --expname flag (e.g. 'node app.js --expname spatial')");
 }
 
 try {
@@ -57,7 +58,7 @@ console.log('\t :: Express :: Listening on port ' + gameport );
 
 app.get( '/*' , function( req, res ) {
   var id = req.query.workerId;
-  if(!id) {
+  if(!id || id === 'undefined') {
     // If no worker id supplied (e.g. for demo), allow to continue
     return utils.serveFile(req, res);
   } else if(!valid_id(id)) {
@@ -80,12 +81,12 @@ io.on('connection', function (client) {
   var query = require('url').parse(hs.headers.referer, true).query;
   var id;
   if( !(query.workerId && query.workerId in global_player_set) ) {
-    if(query.workerId) {
+    if(!query.workerId || query.workerId === 'undefined') {
+      id = utils.UUID();
+    } else {
       // useid from query string if exists
       global_player_set[query.workerId] = true;
       id = query.workerId;
-    } else {
-      id = utils.UUID();
     }
     if(valid_id(id)) {
       initialize(query, client, id);
@@ -98,14 +99,19 @@ var valid_id = function(id) {
 };
 
 var initialize = function(query, client, id) {
+  // Assign properties to client
   client.userid = id;
+  client.workerid = query.workerId ? query.workerId : '';
+  client.assignmentid = query.assignmentId ? query.assignmentId : '';
+
+  // Make contact with client
   client.emit('onconnected', { id: client.userid } );
   if(gameServer.setCustomEvents) {gameServer.setCustomEvents(client);};
 
   // Good to know when they connected
   console.log('\t socket.io:: player ' + client.userid + ' connected');
 
-  //Pass off to game.server.js code
+  // Pass off to game.server.js code
   gameServer.findGame(client);
 
   // Now we want set up some callbacks to handle messages that clients will send.
