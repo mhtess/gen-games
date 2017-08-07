@@ -111,7 +111,7 @@ var initialize = function(query, client, id) {
   // Good to know when they connected
   console.log('\t socket.io:: player ' + client.userid + ' connected');
 
-  //Pass off to game.server.js code
+  // Pass off to game.server.js code
   gameServer.findGame(client);
 
   // Now we want set up some callbacks to handle messages that clients will send.

@@ -49,7 +49,7 @@ var onMessage = function(client,message) {
 
     // continue button from chat room
     case 'clickedObj' :
-      gc.state.roundNum += 1; 
+      gc.state.roundNum += 1;
       setTimeout(function() {
         _.map(all, function(p){
             // tell client to advance to next slide
@@ -83,7 +83,6 @@ var onMessage = function(client,message) {
     // If this is true, the message will be relayed
     case 'chatMessage' :
       if(gc.currentSlide["speaker"] == gc.currentSlide["listener"]) {
-        // writeData(client, "message", message_parts);
           // Update others
           var msg = message_parts[1].replace(/~~~/g,'.');
           _.map(all, function(p){
@@ -119,7 +118,7 @@ var onMessage = function(client,message) {
       break;
 
     case 'logResponse' :
-      break
+       break
 
     // Receive message when browser focus shifts
     case 'h' :
@@ -127,6 +126,7 @@ var onMessage = function(client,message) {
       break;
   }
 };
+
 
 
 /*
@@ -146,7 +146,8 @@ var dataOutput = function() {
       time: Date.now(),
       trialNum : client.game.state.roundNum + 1,
       workerId: client.workerid,
-      assignmentId: client.assignmentid
+      assignmentId: client.assignmentid,
+      role: client.role
     };
   };
 
@@ -155,9 +156,10 @@ var dataOutput = function() {
   }
 
   var logResponseOutput = function(client, message_data) {
+    console.log('enter log responses output')
+    // message_data contrains the flattened JSON object with test trial info.
     return _.extend(
       commonOutput(client, message_data),
-      // message_data contrains the flattened JSON object with test trial info.
       createTestCritterObject(message_data.slice(2))
     );
   };
@@ -167,7 +169,6 @@ var dataOutput = function() {
     return _.extend(
       commonOutput(client, message_data), {
       	// intendedName,
-      	role: client.role,
       	text: message_data[1].replace(/~~~/g, '.'),
       	reactionTime: message_data[2]
       }

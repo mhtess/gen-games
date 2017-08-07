@@ -1,6 +1,5 @@
 var _ = require('underscore');
 var fs = require('fs');
-var path = require('path');
 var converter = require("color-convert");
 var DeltaE = require('../node_modules/delta-e');
 var mkdirp = require('mkdirp');
@@ -124,18 +123,45 @@ var establishStream = function(game, dataPoint) {
   game.streams[dataPoint.eventType] = stream;
 };
 
-var getObjectLocHeaderArray = function() {
-  var arr =  _.map(_.range(1,5), function(i) {
-    return _.map(['Name', 'SenderLoc', 'ReceiverLoc'], function(v) {
+var getObjectLocHeader = function() {
+  return _.map(_.range(1,5), function(i) {
+    return _.map(['Name', 'SketcherLoc', 'ViewerLoc'], function(v) {
       return 'object' + i + v;
-    });
-  });
-  return _.flatten(arr);
+    }).join('\t');
+  }).join('\t');
 };
 
 var hsl2lab = function(hsl) {
   return converter.hsl.lab(hsl);
 };
+
+const flatten = arr => arr.reduce(
+  (acc, val) => acc.concat(
+    Array.isArray(val) ? flatten(val) : val
+  ),
+  []
+);
+
+var getObjectLocHeaderArray = function() {
+  arr =  _.map(_.range(1,5), function(i) {
+    return _.map(['Name', 'SketcherLoc', 'ViewerLoc'], function(v) {
+      return 'object' + i + v;
+    });
+  });
+  return flatten(arr);
+};
+
+var hsl2lab = function(hsl) {
+  return converter.hsl.lab(hsl);
+};
+
+function fillArr(value, len) { //changed name from fillArray to fillArr
+  var arr = [];
+  for (var i = 0; i < len; i++) {
+    arr.push(value);
+  }
+  return arr;
+}
 
 function fillArray(value, len) {
   var arr = [];
@@ -144,6 +170,7 @@ function fillArray(value, len) {
   }
   return arr;
 }
+
 
 var checkInBounds = function(object, options) {
   return (object.x + (object.w || object.d) < options.width) &&
@@ -264,7 +291,6 @@ var series = function makeSeries(lb,ub) {
 // --- above added by jefan March 2017
 
 
-
 // -- added by MHT July 2017
 var genColor = function(color, variance) {
 	function shuffle(v) { newarray = v.slice(0);for(var j, x, i = newarray.length; i; j = parseInt(Math.random() * i), x = newarray[--i], newarray[i] = newarray[j], newarray[j] = x);return newarray;} // non-destructive.
@@ -364,6 +390,7 @@ module.exports = {
   handleInvalidID,
   getLongFormTime,
   establishStream,
+  getObjectLocHeader,
   writeDataToCSV,
   writeDataToMongo,
   hsl2lab,
