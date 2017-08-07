@@ -219,16 +219,34 @@ function make_slides(f) {
     button : function() {
       var end_time = Date.now()
       this.time_spent = end_time - this.start_time;
-      allCreatures = [];
-      shuffledCritters = [];
 
       for (var i = 0; i < this.num_creats; i++) {
+        var dataToSend = {
+          "block_num" : block,
+          //"distribution" : exp.distribution, //fix this later
+          "time_in_ms" : this.time_spent,
+          "block": "learnCritters",
+          "critter" : shuffledCritters[i]["critter"],
+          "critter_num" : i,
+          "species" : shuffledCritters[i]["creatureName"],
+          "color" : shuffledCritters[i]["col1"],
+          "prop1" : shuffledCritters[i]["prop1"],
+          "prop2" : shuffledCritters[i]["prop2"],
+          "tar1" : shuffledCritters[i]["tar1"],
+          "tar2" : shuffledCritters[i]["tar2"],
+          "internal_prop" : shuffledCritters[i]["internal_prop"]
+        }
+        globalGame.socket.send("logTrain.learnCritters." + _.pairs(dataToSend).join('.'));
+
         $('#critter' + i).empty();
         $('#cell' + i).css({'opacity': '1'});
         $('#cell' + i).css({'border': ''});
         $('#creature_table').remove();
         prev = null;
       }
+
+      allCreatures = [];
+      shuffledCritters = [];
 
       // Hide / show allows for specific instructions
       $("#welcome").hide();
@@ -313,6 +331,7 @@ slides.test_critters = slide({
   for (var i=0; i<this.num_creats; i++) {
     var dataToSend = {
       "block_num" : block,
+      "block": "testCritters",
       //"distribution" : exp.distribution, //fix this later
       "time_in_ms" : this.time_spent,
       "critter" : shuffledCritters[i]["critter"],
@@ -326,7 +345,7 @@ slides.test_critters = slide({
       "internal_prop" : shuffledCritters[i]["internal_prop"],
       "selected" : $('#cell' + i).attr("data-selected")
     }
-    globalGame.socket.send("logResponse.testCritters." + _.pairs(dataToSend).join('.'));
+    globalGame.socket.send("logTest.testCritters." + _.pairs(dataToSend).join('.'));
 
   }
 
@@ -379,6 +398,8 @@ slides.subj_info =  slide({
         problems: $("#problems").val(),
         fairprice: $("#fairprice").val()
       };
+      globalGame.socket.send("logSubjInfo.subjInfo." + _.pairs(exp.subj_data).join('.'));
+
       exp.go();
     } //use exp.go() if and only if there is no "present" data.
   });
@@ -431,6 +452,7 @@ function init() {
 
   //blocks of the experiment:
   exp.structure=[
+    "subj_info",
     "i0",
     "instructions",
     "wait_room",
@@ -452,7 +474,6 @@ function init() {
     "welcome_critterLand",
     "chatRoom",
     "test_critters",
-    'subj_info',
     'thanks'
     ]
 
