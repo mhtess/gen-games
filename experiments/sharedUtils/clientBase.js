@@ -37,7 +37,6 @@ var ondisconnect = function(data) {
       $('#exit_survey').prepend(failMsg);
     }
 
-    $('#exit_survey').show();
     $('#main').hide();
     $('#header').hide();
 
