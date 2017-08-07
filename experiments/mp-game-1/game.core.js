@@ -30,7 +30,13 @@
   console.log('inside game core function')
   this.server = options.server ;
 
-  this.dataStore = ['csv', 'mongo']; //maybe change to just csv
+  this.dataStore = ['csv']; //maybe change to just csv
+  this.email = 'mtessler@stanford.edu';
+  this.projectName = 'genGames';
+  this.experimentName = 'mpGame1';
+  this.iterationName = 'pilot1';
+  this.anonymizeCSV = true;
+  this.bonusAmt = 3; // in cents
 
   // How many players in the game?
   this.players_threshold = 2;
