@@ -43,11 +43,13 @@
   this.email = 'mtessler@stanford.edu';
   this.projectName = 'genGames';
   this.experimentName = 'mpGame1';
+  // This has replaced expid - see if this is recorded
   this.iterationName = 'pilot1';
   this.anonymizeCSV = true;
   this.bonusAmt = 3; // in cents
 
   // save data to the following locations (allowed: 'csv', 'mongo')
+  // Karl said we should write to Mongo so we have data ??
   this.dataStore = ['csv'];
 
   // How many players in the game?

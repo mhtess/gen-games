@@ -226,9 +226,12 @@ function make_slides(f) {
     button : function() {
       var end_time = Date.now()
       this.time_spent = end_time - this.start_time;
+      
+      // clears critter arrays for next time
       allCreatures = [];
       shuffledCritters = [];
 
+      // clears table
       for (var i = 0; i < this.num_creats; i++) {
         $('#critter' + i).empty();
         $('#cell' + i).css({'opacity': '1'});
@@ -253,6 +256,30 @@ function make_slides(f) {
         $("#cur_instructs").append("<h2>Protect the fish</h2><p><br>Some of the fish in Critter Country are under threat and need to find homes that can help hide them. Discuss with your partner which fish need to be saved and which underwater plants will protect them.</p>");
         break;
       }
+      
+      //log responses
+      // make sure this works, think it should be same as test critters ??
+      for (var i=0; i<this.num_creats; i++) {
+        var dataToSend = {
+          "block_num" : block,
+          //"distribution" : exp.distribution, //fix this later
+          "time_in_ms" : this.time_spent,
+          "critter" : shuffledCritters[i]["critter"],
+          "critter_num" : i,
+          "species" : shuffledCritters[i]["creatureName"],
+          "color" : shuffledCritters[i]["col1"],
+          "prop1" : shuffledCritters[i]["prop1"],
+          "prop2" : shuffledCritters[i]["prop2"],
+          "tar1" : shuffledCritters[i]["tar1"],
+          "tar2" : shuffledCritters[i]["tar2"],
+          "internal_prop" : shuffledCritters[i]["internal_prop"],
+          // will need to be changed - do what lauren fixes in test critters
+          "selected" : $('#cell' + i).css('border') == '2px solid rgb(255, 0, 0)' ? 1 : 0
+        }
+        globalGame.socket.send("logResponse.welcome_critter." + _.pairs(dataToSend).join('.'));
+
+      }
+
     },
   });
 
@@ -341,9 +368,11 @@ slides.test_critters = slide({
 
   }
 
+  // empties the critter arrays so they can be repopulated without overlap
   allCreatures = [];
   shuffledCritters = [];
 
+  // resets table
   for (var i = 0; i < this.num_creats; i++) {
      $('#critter' + i).empty();
      $('#cell' + i).css({'opacity': '1'});
@@ -390,6 +419,9 @@ slides.subj_info =  slide({
         problems: $("#problems").val(),
         fairprice: $("#fairprice").val()
       };
+
+      globalGame.socket.send("logResponse.subjInfo." + _.pairs(exp.subj_data).join('.'));
+
       exp.go();
     } //use exp.go() if and only if there is no "present" data.
   });
@@ -442,10 +474,10 @@ function init() {
 
   //blocks of the experiment:
   exp.structure=[
-    // "i0",
-    // "instructions",
-    // "wait_room",
-    // "welcome_critterLand",
+    "i0",
+    "instructions",
+    "wait_room",
+    "welcome_critterLand",
     "chatRoom",
     "test_critters",
     "structure_instruct",

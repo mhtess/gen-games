@@ -1,4 +1,5 @@
 var visible;
+var isConnected = false;
 
 var getURLParams = function() {
   var match,
@@ -26,15 +27,16 @@ var ondisconnect = function(data) {
       'compensation.</p> <p>If you experience any problems, please email us (',
       email, ')</p>'
     ].join('');
+    // does this ever show up ??
     var successMsg = [
       "<h3>Thanks for participating in our experiment!</h3>",
       "<p>Before you submit your HIT, we'd like to ask you a few questions.</p>"
     ].join('');
 
     if(globalGame.roundNum + 2 > globalGame.numRounds) {
-      $('#exit_survey').prepend(successMsg);
+      $('#subj_info').prepend(successMsg);
     } else {
-      $('#exit_survey').prepend(failMsg);
+      $('#subj_info').prepend(failMsg);
     }
 
     $('#main').hide();
@@ -172,7 +174,7 @@ window.onload = function(){
   //globalGame.ctx = globalGame.viewport.getContext('2d');
 
   //Set the draw style for the font
-  globalGame.ctx.font = '11px "Helvetica"';
+  // globalGame.ctx.font = '11px "Helvetica"';
 
   document.getElementById('chatbox').focus();
 
