@@ -654,6 +654,12 @@
     this.creatureTypesN = 3;
     // number of each critter of a species
     this.exemplarN = this.creatureN/this.creatureTypesN;
+    
+    // Number of rows & columns in table presenting critters
+    this.presentRows = 2;
+    this.presentCols = this.creatureN/this.presentRows;
+
+
     //this.uniqueCreatures =  _.uniq(_.pluck(this.creatureOpts, "name")); //might need to comment back in
 
     // allows us to write (and record) what color we want without needing hex codes
@@ -686,6 +692,34 @@
 
   // This will be populated with the critters shown
   this.trialInfo = [];
+
+  this.task_welcome_critter = {
+    bird_bug: "<h2>Save the population</h2><p><br>You are trying to save the dwindling population of birds in Critter Country. Discuss with your partner which birds and bugs should be gathered in order to save the population.</p>",
+    tree_fish: "<h2>Protect the fish</h2><p><br>Some of the fish in Critter Country are under threat and need to find homes that can help hide them. Discuss with your partner which fish need to be saved and which underwater plants will protect them.</p>"
+  }
+
+  this.critter_instructions = {
+    bird: {
+      internal_prop_instruct: "Click on each critter to discover whether it lays eggs.",
+      internal_prop_symbol: "&#x1F423;", //hatching chick
+      test_instruct: "<p>birds that you believe will help you and your partner save the population.<br>"
+    },
+    bug: {
+      internal_prop_instruct: "Click on each critter to discover whether it is poisonous.",
+      internal_prop_symbol: "&#x2620;", //skull & crossbones sign
+      test_instruct: "<p>bugs that you can feed the birds to help you and your partner save the population.<br>"
+    },
+    fish: {
+      internal_prop_instruct: "Click on each critter to discover whether it is eaten by crocodiles.",
+      internal_prop_symbol: "&#x1f40a;", //crocodile
+      test_instruct: "<p>fish that are in danger of being eaten.<br>"
+    },
+    tree: {
+      internal_prop_instruct: "Click on each plant to discover whether it grows leaves.",
+      internal_prop_symbol: "&#x2618;", //shamrock
+      test_instruct: "<p>underwater plants that will help protect the fish from being eaten.<br>"
+    }
+  }
 
   if(this.server) {
     // If we're initializing the server game copy, pre-create the list of trials
@@ -913,7 +947,8 @@ game_core.prototype.genCreatures = function(creatureCategory, num){ //include nu
       "query": "question",
       "stimID": j,
       "internal_prop": utils.flip(creatOpts.internal_prop),
-      "attentionCheck": utils.generateAttentionQuestion()
+      "attentionCheck": utils.generateAttentionQuestion(),
+      "marked": 0
     })
      localCounter++;
      j++;
