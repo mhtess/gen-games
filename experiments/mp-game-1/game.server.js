@@ -67,7 +67,7 @@ var onMessage = function(client,message) {
             });
           });
           // tell server to advance to next round (or if at end, disconnect)
-          gc.roundNum += 1;
+          gc.roundNum += 1; 
         }, 300);
       break;
 
@@ -83,7 +83,7 @@ var onMessage = function(client,message) {
     // If this is true, the message will be relayed
     case 'chatMessage' :
       if(gc.currentSlide["speaker"] == gc.currentSlide["listener"]) {
-        // writeData(client, "message", message_parts);
+        writeData(client, "message", message_parts);
           // Update others
           var msg = message_parts[1].replace(/~~~/g,'.');
           _.map(all, function(p){
@@ -103,7 +103,7 @@ var onMessage = function(client,message) {
           });
           startTime = Date.now();
         }, 300);
-      }
+      } 
       break;
 
     // Seems confusing, but this fn actually goes to the wait room and only moves forward,
@@ -118,70 +118,75 @@ var onMessage = function(client,message) {
       }
       break;
 
-    case 'logResponse' :
-      break
-
     // Receive message when browser focus shifts
-    case 'h' :
+    case 'h' : 
       target.visible = message_parts[1];
       break;
   }
 };
 
+// Collects data..
+var writeData = function(client, type, message_parts) {
+  var gc = client.game;
+  var roundNum = gc.state.roundNum + 1;
+  var id = gc.id;
+  switch(type) {
+    // case "clickedObj" :
+    // var outcome = message_parts[2] === "target";
+    // var targetVsD1 = utils.colorDiff(getStim(gc, "target"), getStim(gc, "distr1"));
+    // var targetVsD2 = utils.colorDiff(getStim(gc, "target"), getStim(gc, "distr2"));
+    // var D1VsD2 = utils.colorDiff(getStim(gc, "distr1"), getStim(gc, "distr2"));
+    // var line = (id + ',' + Date.now() + ',' + roundNum  + ',' +
+    //   message_parts.slice(1).join(',') +
+    //   targetVsD1 + "," + targetVsD2 + "," + D1VsD2 + "," + outcome +
+    //   '\n');
+    // console.log("clickedObj:" + line);
+    // break;
 
-/*
-  Associates events in onMessage with callback returning json to be saved
-  {
-    <eventName>: (client, message_parts) => {<datajson>}
+
+    case "message" :
+    var msg = message_parts[1].replace(/~~~/g,'.');
+    var timeInChat = (Date.now() - startTime)/1000; //time in seconds since start of chat room
+    var line = (id + ',' + Date.now() + ',' + timeInChat + ',' + roundNum + ',' + client.role + ',"' + msg + '"\n');
+    console.log("message:" + line);
+    break;
   }
-  Note: If no function provided for an event, no data will be written
-*/
-var dataOutput = function() {
+  gc.streams[type].write(line, function (err) {if(err) throw err;});
+};
 
-  function commonOutput (client, message_data) {
-    return {
-      expid: client.game.expid,
-      gameid: client.game.id,
-      time: Date.now(),
-      trialNum : client.game.state.roundNum + 1,
-      workerId: client.workerid,
-      assignmentId: client.assignmentid
-    };
-  };
-
-  function createTestCritterObject(m_data){
-    return _.fromPairs(_.map(m_data, function(i){return i.split(',')}))
-  }
-
-  var logResponseOutput = function(client, message_data) {
-    return _.extend(
-      commonOutput(client, message_data),
-      // message_data contrains the flattened JSON object with test trial info.
-      createTestCritterObject(message_data.slice(2))
-    );
-  };
-
-  var chatMessageOutput = function(client, message_data) {
-    // var intendedName = getIntendedTargetName(client.game.trialInfo.currStim);
-    return _.extend(
-      commonOutput(client, message_data), {
-      	// intendedName,
-      	role: client.role,
-      	text: message_data[1].replace(/~~~/g, '.'),
-      	reactionTime: message_data[2]
-      }
-    );
-  };
-
-  return {
-    'chatMessage' : chatMessageOutput,
-    'logResponse' : logResponseOutput
-  };
-}();
-
-var setCustomEvents = function(socket) {
-  //empty
+// used in the fn above to collect data
+var getStim = function(game, targetStatus) {
+  return _.filter(game.trialInfo.currStim, function(x){
+    return x.targetStatus == targetStatus;
+  })[0]['color'];
 };
 
 
-module.exports = {dataOutput, setCustomEvents, onMessage}
+// /*
+//    The following functions should not need to be modified for most purposes
+// */
+
+var startGame = function(game, player) {
+  // Establish write streams
+  var startTime = utils.getLongFormTime();
+  var dataFileName = startTime + "_" + game.id + ".csv";
+  utils.establishStream(game, "message", dataFileName,
+   "gameid,timeSent,timeInChat,roundNum,sender,contents\n");
+  utils.establishStream(game, "clickedObj", dataFileName,
+    "gameid,time,blockNum,testTime," +
+    "critter,critter_num,species,color," +
+    "prop1,prop2,tar1,tar2,internal_prop,selected\n");
+  // utils.establishStream(game, "clickedObj", dataFileName,
+  //  "gameid,time,roundNum,condition," +
+  //  "clickStatus,clickColH,clickColS,clickColL,clickLocS,clickLocL"+
+  //  "alt1Status,alt1ColH,alt1ColS,alt1ColL,alt1LocS,alt1LocL" +
+  //  "alt2Status,alt2ColH,alt2ColS,alt2ColL,alt2LocS,alt2LocL" +
+  //  "targetD1Diff,targetD2Diff,D1D2Diff,outcome\n");
+  game.newRound();
+};
+
+module.exports = {
+  writeData : writeData,
+  startGame : startGame,
+  onMessage : onMessage
+};
