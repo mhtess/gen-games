@@ -15,6 +15,7 @@
 
 // A window global for our game root variable.
 var globalGame = {};
+//var totalRounds = null;
 
 // Update client versions of variables with data received from
 // server_send_update function in game.core.js
@@ -53,9 +54,11 @@ var client_onMessage = function(data) {
     case 's': //server message
     switch(subcommand) {
       case 'end' :
-        // Redirect to exit survey
-        ondisconnect();
-        console.log("received end message...");
+        // Redirect to exit survey only if it is not the last round
+        if(globalGame.roundNum < globalGame.numRounds || globalGame.numRounds == null) {
+          ondisconnect();
+          console.log("received end message...");
+        }
         break;
 
         case 'feedback' :
@@ -116,9 +119,9 @@ var client_onMessage = function(data) {
   }
 };
 
-var client_addnewround = function(game) {
-  $('#roundnumber').append(game.roundNum);
-};
+// var client_addnewround = function(game) {
+//   $('#roundnumber').append(game.roundNum);
+// };
 
 // Set up new round on client's browsers after submit round button is pressed.
 // This means clear the chatboxes, update round number, and update score on screen
@@ -127,14 +130,7 @@ var customSetup = function(game) {
     $('#chatbox').removeAttr("disabled");
     $('#chatbox').focus();
     $('#messages').empty();
-    if(game.roundNum + 2 > game.numRounds) {
-      $('#roundnumber').empty();
-      $('#instructs').empty()
-      .append("Round\n" + (game.roundNum + 1) + "/" + game.numRounds);
-    } else {
-      $('#roundnumber').empty()
-      .append("Round\n" + (game.roundNum + 2) + "/" + game.numRounds);
-    }
+    // $('#roundnumber').empty();
   });
 
   // here we will want to set the subject's stimuli (that are coming in data) to be what gets presented. 
@@ -145,6 +141,8 @@ var customSetup = function(game) {
 
     exp.slides.test_critters.crittersFromServer = data.thisRoundTest;
     exp.slides.welcome_critterLand.crittersFromServer = data.nextRoundLearning;
+
+    globalGame.roundNum = data['currentRoundNum'];
     exp.go();
   });
 

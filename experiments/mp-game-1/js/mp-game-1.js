@@ -266,6 +266,7 @@ slides.test_critters = slide({
 
    this.start_time = Date.now()
    globalGame.socket.send("enterSlide.test_critters.");
+   //globalGame.socket.send("enterTests.");
    $(".err").hide();
    allCreatures = this.crittersFromServer;
    shuffledCritters = _.shuffle(allCreatures)
@@ -452,16 +453,16 @@ function init() {
     "welcome_critterLand",
     "chatRoom",
     "test_critters",
-    // "structure_instruct",
-    // "wait_room",
-    // "welcome_critterLand",
-    // "chatRoom",
-    // "test_critters",
-    // "structure_instruct",
-    // "wait_room",
-    // "welcome_critterLand",
-    // "chatRoom",
-    // "test_critters",
+    "structure_instruct",
+    "wait_room",
+    "welcome_critterLand",
+    "chatRoom",
+    "test_critters",
+    "structure_instruct",
+    "wait_room",
+    "welcome_critterLand",
+    "chatRoom",
+    "test_critters",
     'subj_info',
     'thanks'
     ]

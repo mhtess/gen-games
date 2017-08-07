@@ -688,7 +688,7 @@
   // Which round are we on (initialize at -1 so that first round is 0-indexed)
   this.roundNum = -1;
 
-  // How many rounds do we want people to complete?
+  // How many rounds do we want people to complete? MAKE SURE THIS ALIGNS WITH EXP TEMPLATE SLIDE AMT
   this.numRounds = 4;
 
   this.currentSlide = {
