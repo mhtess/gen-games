@@ -145,23 +145,21 @@ var dataOutput = function() {
       time: Date.now(),
       trialNum : client.game.state.roundNum + 1,
       workerId: client.workerid,
-      assignmentId: client.assignmentid
+      assignmentId: client.assignmentid,
+      role: client.role
     };
   };
 
+  function createTestCritterObject(m_data){
+    return _.fromPairs(_.map(m_data, function(i){return i.split(',')}))
+  }
+
   var logResponseOutput = function(client, message_data) {
     console.log('enter log responses output')
-    console.log(message_data)
-
-    // var objects = client.game.trialInfo.currStim;
-    // var intendedName = getIntendedTargetName(objects);
-    // var objLocations = _.zipObject(getObjectLocHeaderArray(), getObjectLocs(objects));
+    // message_data contrains the flattened JSON object with test trial info.
     return _.extend(
       commonOutput(client, message_data),
-      {
-        "block_num": message_data[0],
-        "time_in_seconds": message_data[1]
-      }
+      createTestCritterObject(message_data.slice(2))
     );
   };
 
@@ -170,7 +168,6 @@ var dataOutput = function() {
     return _.extend(
       commonOutput(client, message_data), {
       	// intendedName,
-      	role: client.role,
       	text: message_data[1].replace(/~~~/g, '.'),
       	reactionTime: message_data[2]
       }

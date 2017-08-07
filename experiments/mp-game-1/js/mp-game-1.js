@@ -187,25 +187,25 @@ function make_slides(f) {
           case 'bird':
           $('#internalprops_instruct').html(globalGame.critter_instructions["bird"]["internal_prop_instruct"]);
           if (shuffledCritters[i]["internal_prop"]) {
-            $('#cell'+i+'internalprop').html(globalGame.critter_instructions["bird"]["internal_prop_symbol"]); 
+            $('#cell'+i+'internalprop').html(globalGame.critter_instructions["bird"]["internal_prop_symbol"]);
           }
           break;
           case 'bug':
           $('#internalprops_instruct').html(globalGame.critter_instructions["bug"]["internal_prop_instruct"])
           if (shuffledCritters[i]["internal_prop"]) {
-            $('#cell'+i+'internalprop').html(globalGame.critter_instructions["bug"]["internal_prop_symbol"]); 
+            $('#cell'+i+'internalprop').html(globalGame.critter_instructions["bug"]["internal_prop_symbol"]);
           }
           break;
           case 'fish':
           $('#internalprops_instruct').html(globalGame.critter_instructions["fish"]["internal_prop_instruct"])
           if (shuffledCritters[i]["internal_prop"]) {
-            $('#cell'+i+'internalprop').html(globalGame.critter_instructions["fish"]["internal_prop_symbol"]); 
+            $('#cell'+i+'internalprop').html(globalGame.critter_instructions["fish"]["internal_prop_symbol"]);
           }
           break;
           case 'tree':
           $('#internalprops_instruct').html(globalGame.critter_instructions["tree"]["internal_prop_instruct"])
           if (shuffledCritters[i]["internal_prop"]) {
-            $('#cell'+i+'internalprop').html(globalGame.critter_instructions["tree"]["internal_prop_symbol"]); 
+            $('#cell'+i+'internalprop').html(globalGame.critter_instructions["tree"]["internal_prop_symbol"]);
           }
           break;
         }
@@ -324,7 +324,7 @@ slides.test_critters = slide({
       "tar1" : shuffledCritters[i]["tar1"],
       "tar2" : shuffledCritters[i]["tar2"],
       "internal_prop" : shuffledCritters[i]["internal_prop"],
-      "selected3" : $('#cell' + i).attr("data-selected")
+      "selected" : $('#cell' + i).attr("data-selected")
     }
     globalGame.socket.send("logResponse.testCritters." + _.pairs(dataToSend).join('.'));
 
@@ -431,27 +431,27 @@ function init() {
 
   //blocks of the experiment:
   exp.structure=[
-    // "i0",
-    // "instructions",
+    "i0",
+    "instructions",
     "wait_room",
     "welcome_critterLand",
     "chatRoom",
     "test_critters",
-    // "structure_instruct",
-    // "wait_room",
-    // "welcome_critterLand",
-    // "chatRoom",
-    // "test_critters",
-    // "structure_instruct",
-    // "wait_room",
-    // "welcome_critterLand",
-    // "chatRoom",
-    // "test_critters",
-    // "structure_instruct",
-    // "wait_room",
-    // "welcome_critterLand",
-    // "chatRoom",
-    // "test_critters",
+    "structure_instruct",
+    "wait_room",
+    "welcome_critterLand",
+    "chatRoom",
+    "test_critters",
+    "structure_instruct",
+    "wait_room",
+    "welcome_critterLand",
+    "chatRoom",
+    "test_critters",
+    "structure_instruct",
+    "wait_room",
+    "welcome_critterLand",
+    "chatRoom",
+    "test_critters",
     'subj_info',
     'thanks'
     ]
