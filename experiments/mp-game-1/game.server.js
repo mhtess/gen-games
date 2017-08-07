@@ -18,6 +18,10 @@
 // with the coordinates of the click, which this function reads and
 // applies.
 var startTime;
+
+
+
+
 var onMessage = function(client,message) {
   console.log("server onMessage")
   //Cut the message up into sub components
@@ -30,6 +34,7 @@ var onMessage = function(client,message) {
   var gc = client.game;
   var id = gc.id;
   var all = gc.get_active_players();
+  gc.rounds = {"speker": 1, "listener": 1};
   // gets current player and differentiates them from other players
   var target = gc.get_player(client.userid);
   var others = gc.get_others(client.userid);
@@ -44,9 +49,7 @@ var onMessage = function(client,message) {
 
     // continue button from chat room
     case 'clickedObj' :
-      //writeData(client, "clickedObj", message_parts);
-      console.log("is clickedObj happening??");
-      gc.state.roundNum += 1;
+      gc.state.roundNum += 1; 
       setTimeout(function() {
         _.map(all, function(p){
             // tell client to advance to next slide
@@ -54,10 +57,14 @@ var onMessage = function(client,message) {
             // here, decide what data to pass to each subject
             var dataPacket = {
               thisRoundTest: gc.testList[playerRole][gc.roundNum],
-              nextRoundLearning: gc.trialList[playerRole][gc.roundNum + 1]
+              nextRoundLearning: gc.trialList[playerRole][gc.roundNum + 1],
+              currentRoundNum: gc.state.roundNum
             };
             // calls exitChatRoom to move to next slide and collect data to the packet
             p.player.instance.emit("exitChatRoom", dataPacket)
+            _.map(all,function(p){
+                p.player.instance.emit('newRoundUpdate', {user: client.userid});
+            });
           });
           // tell server to advance to next round (or if at end, disconnect)
           gc.roundNum += 1;
@@ -87,7 +94,6 @@ var onMessage = function(client,message) {
     // Will show a wait message if only one player is in the chatroom
     // Will allow them to enter the chatroom
     case 'enterChatRoom' :
-      //gc.state.roundNum += 1;
       if (gc.currentSlide["speaker"] != gc.currentSlide["listener"]) {
         target.instance.emit("chatWait", {})
       } else {

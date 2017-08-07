@@ -15,43 +15,52 @@ var getURLParams = function() {
 };
 
 var ondisconnect = function(data) {
-  // Redirect to exit survey
-  console.log("server booted");
-  this.viewport.style.display="none";
-  var email = globalGame.email ? globalGame.email : '';
-  var failMsg = [
-    '<h3>Oops! It looks like your partner lost their connection!</h3>',
-    '<p> Completing this survey will submit your HIT so you will still receive full ',
-    'compensation.</p> <p>If you experience any problems, please email us (',
-    email, ')</p>'
-  ].join('');
-  var successMsg = [
-    "<h3>Thanks for participating in our experiment!</h3>",
-    "<p>Before you submit your HIT, we'd like to ask you a few questions.</p>"
-  ].join('');
+  if(isConnected) {
+    // Redirect to exit survey
+    console.log("server booted");
+    this.viewport.style.display="none";
+    var email = globalGame.email ? globalGame.email : '';
+    var failMsg = [
+      '<h3>Oops! It looks like your partner lost their connection!</h3>',
+      '<p> Completing this survey will submit your HIT so you will still receive full ',
+      'compensation.</p> <p>If you experience any problems, please email us (',
+      email, ')</p>'
+    ].join('');
+    var successMsg = [
+      "<h3>Thanks for participating in our experiment!</h3>",
+      "<p>Before you submit your HIT, we'd like to ask you a few questions.</p>"
+    ].join('');
 
-  if(globalGame.roundNum + 2 > globalGame.numRounds) {
-    $('#exit_survey').prepend(successMsg);
-  } else {
-    $('#exit_survey').prepend(failMsg);
-  }
+    if(globalGame.roundNum + 2 > globalGame.numRounds) {
+      $('#exit_survey').prepend(successMsg);
+    } else {
+      $('#exit_survey').prepend(failMsg);
+    }
 
-  $('#exit_survey').show();
-  $('#main').hide();
-  $('#header').hide();
+    $('#exit_survey').show();
+    $('#main').hide();
+    $('#header').hide();
 
-  $('#message_panel').hide();
-  $('#submitbutton').hide();
-  $('#roleLabel').hide();
-  $('#score').hide();
+    $('#message_panel').hide();
+    $('#submitbutton').hide();
+    $('#roleLabel').hide();
+    $('#score').hide();
 
-  $('#post_test').hide();
-  $('#sketchpad').hide(); // this is from sketchpad experiment (jefan 4/23/17)
-  $('#loading').hide(); // this is from sketchpad experiment (jefan 4/23/17)
+    $('#post_test').hide();
+    $('#sketchpad').hide(); // this is from sketchpad experiment (jefan 4/23/17)
+    $('#loading').hide(); // this is from sketchpad experiment (jefan 4/23/17)
+    $('.slide').hide();
+    //$('#subj_info').show();
+    $('.progress').hide();
+    exp.goToSlide("subj_info");
+  };
+  isConnected = false;
 };
 
 // The server responded that we are now in a game
 var onconnect = function(data) {
+    console.log('on connect')
+    isConnected = true;
   this.my_id = data.id;
   this.players[0].id = this.my_id;
   this.urlParams = getURLParams();
@@ -151,15 +160,17 @@ window.onload = function(){
   customSetup(globalGame);
   globalGame.submitted = false;
 
-  //Fetch the viewport
-  globalGame.viewport = document.getElementById('viewport');
 
-  //Adjust its size
-  globalGame.viewport.width = globalGame.world.width;
-  globalGame.viewport.height = globalGame.world.height;
+  // //Fetch the viewport
+  // globalGame.viewport = document.getElementById('viewport');
+  // globalGame.slides = document.getElementsByClassName('slide');
+
+  // //Adjust its size
+  // globalGame.viewport.width = globalGame.world.width;
+  // globalGame.viewport.height = globalGame.world.height;
 
   //Fetch the rendering contexts
-  globalGame.ctx = globalGame.viewport.getContext('2d');
+  //globalGame.ctx = globalGame.viewport.getContext('2d');
 
   //Set the draw style for the font
   globalGame.ctx.font = '11px "Helvetica"';
