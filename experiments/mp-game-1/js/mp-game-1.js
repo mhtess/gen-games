@@ -16,6 +16,7 @@ function mark_critter_display(el, otherEls) {
     $('#'+ el.id + 'critname').css({'opacity': 1, 'font-weight': 'bold'});
     $("#"+ el.id + 'internalprop').css({'opacity': 1});
     $('#'+el.id+'internalprop').css({'opacity': 1})}
+    $('#'+el.id).attr("data-selected","1")
 
     otherEls.map(function(cell){$('#'+cell).css({"border":'2px solid white',
       'background-color': 'white'})})
@@ -26,10 +27,12 @@ function mark_critter_display(el, otherEls) {
 function mark_critter_test_display(el, otherEls) {
   if(el.style.border=='2px solid white'){
     $('#'+el.id).css({"border":'2px solid red',
-      'background-color': 'white','opacity': '1'})
+      'background-color': 'white','opacity': '1'});
+    $('#'+el.id).attr("data-selected",'1')
   } else {
     $('#'+el.id).css({"border":'2px solid white',
-      'background-color': 'white'})
+      'background-color': 'white'});
+    $('#'+el.id).attr("data-selected",'0')
   }
 }
 
@@ -44,8 +47,8 @@ function gray(el) {
 function check(num){
   var check_all = 0;
   for(var i=0; i<num; i++) {
-     if($('#cell' + i +'critname').css('opacity') != 1 || $('#cell' + i +'critname').css('font-weight') == 'bold'){
-        ++check_all;
+     if($('#cell' + i).attr("data-selected")=='1'){
+      ++check_all;
      }
   }
   if(check_all == num) {
@@ -63,7 +66,7 @@ function create_table(rows, cols, display_type) { //rows * cols = number of exem
     for(var j=0; j<cols; j++) {
       table += "<td>";
       ind = i * cols + j;
-      table += "<table class ='cell' id='cell" + ind + "' style='border:2px solid white' onclick=\"mark_" + display_type +"(cell" + ind +",";
+      table += "<table class ='cell' id='cell" + ind + "' data-selected='0' style='border:2px solid white' onclick=\"mark_" + display_type +"(cell" + ind +",";
       table += "[";
       for(var k=0; k<rows*cols; k++) {
         if(k != ind){
@@ -126,10 +129,6 @@ function make_slides(f) {
       $(".err").hide();
       $("#waitCont").hide();
       globalGame.socket.send("enterWaitRoom.");
-      // for(var i=0; i<1000; i++){
-      //    $("#waitText").fadeOut(1000);
-      //    $("#waitText").fadeIn(1000);
-      //  }
       var blinking_wait = setInterval(function() {
         $("#waitText").fadeOut(1000);
         $("#waitText").fadeIn(1000);
@@ -174,53 +173,47 @@ function make_slides(f) {
       this.creat_type = shuffledCritters[0]["critter"];
 
       // This generates all the critters
-      create_table(2,6,"critter_display");
+      create_table(globalGame.presentRows,globalGame.presentCols,"critter_display");
 
       for (var i=0; i<shuffledCritters.length; i++) {
         var scale = 0.5;
         Ecosystem.draw(
           shuffledCritters[i]["critter"], shuffledCritters[i],
           "critter"+i, scale)
+
+        $('#cell'+i+'critname').html(shuffledCritters[i]["creatureName"]);
+
+        switch(shuffledCritters[i]["critter"]) {
+          case 'bird':
+          $('#internalprops_instruct').html(globalGame.critter_instructions["bird"]["internal_prop_instruct"]);
+          if (shuffledCritters[i]["internal_prop"]) {
+            $('#cell'+i+'internalprop').html(globalGame.critter_instructions["bird"]["internal_prop_symbol"]); 
+          }
+          break;
+          case 'bug':
+          $('#internalprops_instruct').html(globalGame.critter_instructions["bug"]["internal_prop_instruct"])
+          if (shuffledCritters[i]["internal_prop"]) {
+            $('#cell'+i+'internalprop').html(globalGame.critter_instructions["bug"]["internal_prop_symbol"]); 
+          }
+          break;
+          case 'fish':
+          $('#internalprops_instruct').html(globalGame.critter_instructions["fish"]["internal_prop_instruct"])
+          if (shuffledCritters[i]["internal_prop"]) {
+            $('#cell'+i+'internalprop').html(globalGame.critter_instructions["fish"]["internal_prop_symbol"]); 
+          }
+          break;
+          case 'tree':
+          $('#internalprops_instruct').html(globalGame.critter_instructions["tree"]["internal_prop_instruct"])
+          if (shuffledCritters[i]["internal_prop"]) {
+            $('#cell'+i+'internalprop').html(globalGame.critter_instructions["tree"]["internal_prop_symbol"]); 
+          }
+          break;
+        }
+        $('#cell'+i+'internalprop').css({'opacity': 0});
+
       }
 
-      for(var i=0; i<shuffledCritters.length; i++) {
-       $('#cell'+i+'critname').html(shuffledCritters[i]["creatureName"]);
-     }
-
-     for(var i=0; i<shuffledCritters.length; i++) {
-      $('#cell'+i+'critname').html(shuffledCritters[i]["creatureName"]);
-      switch(shuffledCritters[i]["critter"]) {
-        case 'bird':
-        $('#internalprops_instruct').html("Click on each critter to discover whether it lays eggs.");
-        if (shuffledCritters[i]["internal_prop"]) {
-              $('#cell'+i+'internalprop').html("&#x1F423;"); //hatching chick
-
-            }
-            break;
-            case 'bug':
-            $('#internalprops_instruct').html("Click on each critter to discover whether it is poisonous.")
-            if (shuffledCritters[i]["internal_prop"]) {
-              $('#cell'+i+'internalprop').html("&#x2620;"); //skull & crossbones sign
-            }
-            break;
-            case 'fish':
-            $('#internalprops_instruct').html("Click on each critter to discover whether it is eaten by crocodiles.")
-            if (shuffledCritters[i]["internal_prop"]) {
-              $('#cell'+i+'internalprop').html("&#x1f40a;"); //crocodile
-            }
-            break;
-            case 'tree':
-            $('#internalprops_instruct').html("Click on each plant to discover whether it grows leaves.")
-            if (shuffledCritters[i]["internal_prop"]) {
-              $('#cell'+i+'internalprop').html("&#x2618;"); //shamrock
-            }
-            break;
-          }
-          $('#cell'+i+'internalprop').css({'opacity': 0});
-
-        }
-
-      },
+    },
 
     // This button refers to the button seen in welcome critter page, not on the page with instructions for it
     button : function() {
@@ -247,10 +240,10 @@ function make_slides(f) {
       $("#instru_button").show();
       switch (this.creat_type) {
         case 'bird': case 'bug':
-        $("#cur_instructs").append("<h2>Save the population</h2><p><br>You are trying to save the dwindling population of birds in Critter Country. Discuss with your partner which birds and bugs should be gathered in order to save the population.</p>");
+        $("#cur_instructs").append(globalGame.task_welcome_critter["bird_bug"]);
         break;
         case 'tree': case 'fish':
-        $("#cur_instructs").append("<h2>Protect the fish</h2><p><br>Some of the fish in Critter Country are under threat and need to find homes that can help hide them. Discuss with your partner which fish need to be saved and which underwater plants will protect them.</p>");
+        $("#cur_instructs").append(globalGame.task_welcome_critter["tree_fish"]);
         break;
       }
     },
@@ -285,31 +278,27 @@ slides.test_critters = slide({
    $('#test_cond').html("<br>On the next slide, you will choose the ");
    switch (this.creat_type) {
     case 'bird':
-    $("#test_cond").append("<p>birds that you believe will help you and your partner save the population.<br>");
+    $("#test_cond").append(globalGame.critter_instructions["bird"]["test_instruct"]);
     break;
     case 'bug':
-    $("#test_cond").append("<p>bugs that you can feed the birds to help you and your partner save the population.<br>");
-    break;
-    case 'tree':
-    $("#test_cond").append("<p>underwater plants that will help protect the fish from being eaten.<br>");
+    $("#test_cond").append(globalGame.critter_instructions["bug"]["test_instruct"]);
     break;
     case 'fish':
-    $("#test_cond").append("<p>fish that are in danger of being eaten.<br>");
+    $("#test_cond").append(globalGame.critter_instructions["fish"]["test_instruct"]);
+    break;
+    case 'tree':
+    $("#test_cond").append(globalGame.critter_instructions["tree"]["test_instruct"]);
     break;
   }
 
     // Generates critters for test phase
-    create_table(2,6,"critter_test_display");
+    create_table(globalGame.presentRows,globalGame.presentCols,"critter_test_display");
 
     for (var i=0; i<shuffledCritters.length; i++) {
      var scale = 0.5;
      Ecosystem.draw(
        shuffledCritters[i]["critter"], shuffledCritters[i],
        "critter"+i, scale)
-   }
-
-
-   for(var i=0; i<shuffledCritters.length; i++) {
      $('#cell'+i+'critname').html(shuffledCritters[i]["creatureName"]);
    }
 
@@ -335,7 +324,7 @@ slides.test_critters = slide({
       "tar1" : shuffledCritters[i]["tar1"],
       "tar2" : shuffledCritters[i]["tar2"],
       "internal_prop" : shuffledCritters[i]["internal_prop"],
-      "selected" : $('#cell' + i).css('border') == '2px solid rgb(255, 0, 0)' ? 1 : 0
+      "selected3" : $('#cell' + i).attr("data-selected")
     }
     globalGame.socket.send("logResponse.testCritters." + _.pairs(dataToSend).join('.'));
 
@@ -444,25 +433,25 @@ function init() {
   exp.structure=[
     // "i0",
     // "instructions",
+    "wait_room",
+    "welcome_critterLand",
+    "chatRoom",
+    "test_critters",
+    // "structure_instruct",
     // "wait_room",
     // "welcome_critterLand",
-    "chatRoom",
-    "test_critters",
-    "structure_instruct",
-    "wait_room",
-    "welcome_critterLand",
-    "chatRoom",
-    "test_critters",
-    "structure_instruct",
-    "wait_room",
-    "welcome_critterLand",
-    "chatRoom",
-    "test_critters",
-    "structure_instruct",
-    "wait_room",
-    "welcome_critterLand",
-    "chatRoom",
-    "test_critters",
+    // "chatRoom",
+    // "test_critters",
+    // "structure_instruct",
+    // "wait_room",
+    // "welcome_critterLand",
+    // "chatRoom",
+    // "test_critters",
+    // "structure_instruct",
+    // "wait_room",
+    // "welcome_critterLand",
+    // "chatRoom",
+    // "test_critters",
     'subj_info',
     'thanks'
     ]
