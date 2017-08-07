@@ -15,8 +15,7 @@ var
     https         = require('https'),
     fs            = require('fs'),
     app           = require('express')(),
-    _             = require('underscore'),
-    Server        = require('./sharedUtils/serverBase.js');
+    _             = require('underscore');
 
 var gameport;
 
@@ -29,10 +28,10 @@ if(argv.gameport) {
 }
 
 if(argv.expname) {
-  var exp = argv.expname.replace(/\/$/, "");
-  var gameServer = new Server(exp);
+  var exp = argv.expname;
+  var gameServer = require('./sharedUtils/serverBase.js')(exp);
 } else {
-  throw new Error("missing arguments. Use --expname flag (e.g. 'node app.js --expname spatial')");
+  throw "no experiment supplied; use --expname flag\nnode app.js --expname spatial";
 }
 
 try {
@@ -58,7 +57,7 @@ console.log('\t :: Express :: Listening on port ' + gameport );
 
 app.get( '/*' , function( req, res ) {
   var id = req.query.workerId;
-  if(!id || id === 'undefined') {
+  if(!id) {
     // If no worker id supplied (e.g. for demo), allow to continue
     return utils.serveFile(req, res);
   } else if(!valid_id(id)) {
@@ -81,12 +80,12 @@ io.on('connection', function (client) {
   var query = require('url').parse(hs.headers.referer, true).query;
   var id;
   if( !(query.workerId && query.workerId in global_player_set) ) {
-    if(!query.workerId || query.workerId === 'undefined') {
-      id = utils.UUID();
-    } else {
+    if(query.workerId) {
       // useid from query string if exists
       global_player_set[query.workerId] = true;
       id = query.workerId;
+    } else {
+      id = utils.UUID();
     }
     if(valid_id(id)) {
       initialize(query, client, id);
@@ -99,12 +98,7 @@ var valid_id = function(id) {
 };
 
 var initialize = function(query, client, id) {
-  // Assign properties to client
   client.userid = id;
-  client.workerid = query.workerId ? query.workerId : '';
-  client.assignmentid = query.assignmentId ? query.assignmentId : '';
-
-  // Make contact with client
   client.emit('onconnected', { id: client.userid } );
   if(gameServer.setCustomEvents) {gameServer.setCustomEvents(client);};
 
