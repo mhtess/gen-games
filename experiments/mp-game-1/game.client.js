@@ -127,7 +127,7 @@ var customSetup = function(game) {
     $('#chatbox').removeAttr("disabled");
     $('#chatbox').focus();
     $('#messages').empty();
-    if(game.roundNum + 2 > game.numRounds) {
+        if(game.roundNum + 2 > game.numRounds) {
       $('#roundnumber').empty();
       $('#instructs').empty()
       .append("Round\n" + (game.roundNum + 1) + "/" + game.numRounds);
@@ -142,7 +142,6 @@ var customSetup = function(game) {
   game.socket.on('exitChatRoom', function(data){
     console.log("exitChatRoom")
     console.log(data)
-
     exp.slides.test_critters.crittersFromServer = data.thisRoundTest;
     exp.slides.welcome_critterLand.crittersFromServer = data.nextRoundLearning;
     exp.go();
@@ -152,6 +151,7 @@ var customSetup = function(game) {
   // Most code is so the the first player who gets there will see "Connected!" on 
   // the tab when the second player enters. This will allow users to konw when they can move forward
   game.socket.on('enterWaitRoom', function(data){
+    $('#chatbox').val('');
     var original = document.title;
     var timeout;
     var cancelFlashTitle = function (timeout) {

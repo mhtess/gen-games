@@ -1,0 +1,5 @@
+Gen-Games Chat Room Linguistic Analysis
+
+Stanford CoreNLP v3.8.0 (as of 8/4/17)
+Using R:
+CleanNLP v1.10.0 (as of 8/4/17)

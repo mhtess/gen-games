@@ -48,6 +48,7 @@ str(text_df)
 # Stanford CoreNLP Pre-Processing
 
 ```{r}
+
 init_tokenizers()
 init_spaCy()
 
@@ -58,6 +59,10 @@ str(annotations)
 token_coreNLP <- get_token(annotations)
 dependency_coreNLP <- get_dependency(annotations)
 entity_coreNLP <- get_entity(annotations)
+#coref_coreNLP <- get_coreference(annotations) #doesn't seem to do anything
+
+#combine_annotators(token_coreNLP, dependency_coreNLP, entity_coreNLP)
+
 
 
 ```
@@ -88,11 +93,17 @@ wordTypeDictionary <- list(
 wordTypeDict <- utils::stack(wordTypeDictionary)
 f <- function(x) as.character(wordTypeDict[match(x, wordTypeDict[[1]]), 2])
 
+genericDict <- list(
+  quantifier = c("all","each","most","many","half","some","few","none"),
+  probability = c("always","usually","often","likely","sometimes","never"),
+  demonstrative = c("these", "this", "those") #excluding that because of complications
+  )
+g <- function(x) ifelse(token_coreNLP$lemma %in% genericDict[[1]], FALSE,
+       ifelse(grepl("wug", token_coreNLP$lemma), FALSE, TRUE))
 
 #Tokenize text responses
 tokenized_wCond <- text_df %>%
   unnest_tokens(word, text)
-
 
 
 # tokenized_ungrouped <- text_df %>%
@@ -106,7 +117,6 @@ tokenized_wCond <- text_df %>%
 #   distinct(word, lemma, tid, upos, roundNum, sender)
   
   
-
 tokenized <- token_coreNLP %>%
   filter(upos != "PUNCT") %>%
   count(lemma, sort=TRUE) %>%
@@ -118,6 +128,15 @@ tokenized_word <- token_coreNLP %>%
   count(word, sort=TRUE) %>%
   rowwise() %>%
   mutate(wordType = f(word))
+
+
+tokenized_generic <- token_coreNLP %>%
+  filter(upos != "PUNCT") %>%
+  mutate(genericType = ifelse(upos=="NUM", FALSE, g(lemma)),
+         sentence_id = paste(id, "_", sid))
+  #unite(sentence, )
+View(tokenized_generic)
+
 
 ```
 
