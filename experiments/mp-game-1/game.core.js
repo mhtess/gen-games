@@ -698,6 +698,7 @@
     // Number of rows & columns in table presenting critters
     this.presentRows = 2;
     this.presentCols = this.creatureN/this.presentRows;
+    
 
 
     //this.uniqueCreatures =  _.uniq(_.pluck(this.creatureOpts, "name")); //might need to comment back in

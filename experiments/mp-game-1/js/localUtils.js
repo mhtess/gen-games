@@ -1,46 +1,50 @@
+
 var prev = null;
-var block = 0;
+var ind = 0;
+var cell_border_unclicked = '2px solid white';
+var critname_fontweight_unclicked = 'normal';
+var all_opacity_clicked = 1;
+var cell_border_clicked = '2px solid red';
+var critname_fontweight_unclicked = 'bold';
+var cell_opacity_gray = '0.5';
+var symbol_opacity_gray = '0.7';
 
 // Allows the border of each critter to be highlighted when chosed
-function mark_critter_display(el, otherEls) {
-  if(prev != null){
-    gray(prev);
+function mark_critter_display(el) {
+  if(exp.prev != null){
+    gray(exp.prev);
   }
-  prev = el;
-  if(el.style.border=='2px solid white'){
-    $('#'+el.id).css({"border":'2px solid red',
-      'background-color': 'white','opacity': '1'});
-    $('#'+ el.id + 'critname').css({'opacity': 1, 'font-weight': 'bold', 'font-size': '14px'});
-    $("#"+ el.id + 'internalprop').css({'opacity': 1});
-    $('#'+el.id+'internalprop').css({'opacity': 1})}
-    $('#'+el.id).attr("data-selected","1")
+  exp.prev = el;
+  $('#'+el.id).css({"border":cell_border_clicked,
+    'opacity': all_opacity_clicked});
+  $('#'+ el.id + 'critname').css({'opacity': all_opacity_clicked, 'font-weight': critname_fontweight_unclicked});
+  $('#'+el.id+'internalprop').css({'opacity': all_opacity_clicked});
+  $('#'+el.id).attr("data-selected",'1'); //keeps track of whether cell was clicked at all in a given round, used in check function
 
-    otherEls.map(function(cell){$('#'+cell).css({"border":'2px solid white',
-      'background-color': 'white'})})
-    check(allCreatures.length);
+  check(allCreatures.length);
 }
 
 // same as above but able to highlight multiple for the test trials
-function mark_critter_test_display(el, otherEls) {
-  if(el.style.border=='2px solid white'){
-    $('#'+el.id).css({"border":'2px solid red',
-      'background-color': 'white','opacity': '1'});
+function mark_critter_test_display(el) {
+  if($('#' + el.id).attr("data-selected")=='0'){
+    $('#'+el.id).css({"border": cell_border_clicked,
+      'opacity': all_opacity_clicked});
     $('#'+el.id).attr("data-selected",'1')
   } else {
-    $('#'+el.id).css({"border":'2px solid white',
-      'background-color': 'white'});
+    $('#'+el.id).css({"border": cell_border_unclicked});
     $('#'+el.id).attr("data-selected",'0')
   }
 }
 
 // grays out after clicked for learning phase
 function gray(el) {
-   $('#'+el.id).css({"border":'2px solid white',
-                    'background-color': 'white', 'opacity': 0.5});
-   $('#'+el.id+'critname').css({'opacity': 0.5, 'font-weight': 'normal'});
-   $('#'+ el.id+'internalprop').css({'opacity': 0.7})
+   $('#'+el.id).css({"border": cell_border_unclicked,
+                    'opacity': cell_opacity_gray});
+   $('#'+el.id+'critname').css({'opacity': cell_opacity_gray, 'font-weight': critname_fontweight_unclicked});
+   $('#'+ el.id+'internalprop').css({'opacity': symbol_opacity_gray})
 }
 
+// checks if all cells were clicked in order to show learning continue button, used in learning trial
 function check(num){
   var check_all = 0;
   for(var i=0; i<num; i++) {
@@ -54,7 +58,7 @@ function check(num){
 }
 
 
-var ind = 0;
+
 // Puts the critters we have in a table so we can use borders to our advantage
 function create_table(rows, cols, display_type) { //rows * cols = number of exemplars
   var table = "<table id='creature_table' cellspacing='20'>";
@@ -63,7 +67,7 @@ function create_table(rows, cols, display_type) { //rows * cols = number of exem
     for(var j=0; j<cols; j++) {
       table += "<td>";
       ind = i * cols + j;
-      table += "<table class ='cell' id='cell" + ind + "' data-selected='0' style='border:2px solid white' onclick=\"mark_" + display_type +"(cell" + ind +",";
+      table += "<table class ='cell' id='cell" + ind + "' data-selected='0' style='border:" + cell_border_unclicked + "' onclick=\"mark_" + display_type +"(cell" + ind +",";
       table += "[";
       for(var k=0; k<rows*cols; k++) {
         if(k != ind){

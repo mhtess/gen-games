@@ -259,7 +259,7 @@ slides.test_critters = slide({
   //log responses
   for (var i=0; i<this.num_creats; i++) {
     var dataToSend = {
-      "block_num" : block,
+      "block_num" : exp.block,
       "block": "testCritters",
       //"distribution" : exp.distribution, //fix this later
       "time_in_ms" : this.time_spent,
@@ -291,7 +291,7 @@ slides.test_critters = slide({
      prev = null;
   }
 
-  block++;
+  exp.block++;
   exp.go(); // use exp.go() if and only if there is no "present" data.
 
   }
@@ -378,6 +378,7 @@ function init() {
     screenW: screen.width,
     screenUW: exp.width
   };
+  exp.block = 0;
 
   // learning - chat - test rounds
   var numRounds = function(num) {
