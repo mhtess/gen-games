@@ -317,7 +317,7 @@
         internal_prop: 0.3 // eaten by crocodiles
       }
       ]
-    
+
     this.treeOpts0 = [
     { creature: "tree",
     name: ourCreatNames[9]["exemplar"],//"mider",
@@ -391,8 +391,13 @@
         internal_prop: 0.2 // leaves
       }
       ]
+<<<<<<< HEAD
     
     
+=======
+
+
+>>>>>>> f3466596299fdcc296a7e234dbbc5d18447bb590
       this.birdOpts1 = [
     { creature: "bird",
     name: ourCreatNames[12]["exemplar"],//"blicket",
@@ -466,7 +471,11 @@
         internal_prop: 0 // lays eggs
       }
       ]
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> f3466596299fdcc296a7e234dbbc5d18447bb590
       this.bugOpts1 = [
       { creature: "bug",
       name: ourCreatNames[15]["exemplar"],//"shork",
@@ -540,7 +549,11 @@
           internal_prop: 0 // poisonous
         }
         ]
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> f3466596299fdcc296a7e234dbbc5d18447bb590
       this.fishOpts1 = [
       { creature: "fish",
       name: ourCreatNames[18]["exemplar"],//"croop",
@@ -614,7 +627,11 @@
           internal_prop: 0.7 // eaten by crocodiles
         }
         ]
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> f3466596299fdcc296a7e234dbbc5d18447bb590
       this.treeOpts1 = [
       { creature: "tree",
       name: ourCreatNames[21]["exemplar"],//"garp",
@@ -699,6 +716,7 @@
     this.presentRows = 2;
     this.presentCols = this.creatureN/this.presentRows;
     
+
 
 
     //this.uniqueCreatures =  _.uniq(_.pluck(this.creatureOpts, "name")); //might need to comment back in
