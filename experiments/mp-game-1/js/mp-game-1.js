@@ -127,7 +127,7 @@ function make_slides(f) {
       // clears table
       for (var i = 0; i < this.num_creats; i++) {
         var dataToSend = {
-          "block_num" : block,
+          "block_num" : exp.block,
           //"distribution" : exp.distribution, //fix this later
           "time_in_ms" : this.time_spent,
           "block": "learnCritters",
@@ -174,7 +174,7 @@ function make_slides(f) {
       // make sure this works, think it should be same as test critters ??
       for (var i=0; i<this.num_creats; i++) {
         var dataToSend = {
-          "block_num" : block,
+          "block_num" : exp.block,
           //"distribution" : exp.distribution, //fix this later
           "time_in_ms" : this.time_spent,
           "critter" : shuffledCritters[i]["critter"],

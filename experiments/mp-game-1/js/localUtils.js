@@ -11,10 +11,10 @@ var symbol_opacity_gray = '0.7';
 
 // Allows the border of each critter to be highlighted when chosed
 function mark_critter_display(el) {
-  if(exp.prev != null){
-    gray(exp.prev);
+  if(prev != null){
+    gray(prev);
   }
-  exp.prev = el;
+  prev = el;
   $('#'+el.id).css({"border":cell_border_clicked,
     'opacity': all_opacity_clicked});
   $('#'+ el.id + 'critname').css({'opacity': all_opacity_clicked, 'font-weight': critname_fontweight_unclicked});
@@ -85,8 +85,8 @@ function create_table(rows, cols, display_type) { //rows * cols = number of exem
       table += "<tr>";
       table += "<td>";
       table += "<div class='critlabel' id='cell" + ind + "critlabel'>"; //critter species name + emoji
-      table += "<div class='critname' id='cell" + ind + "critname' style='float:left'></div><br>";
-      table += "<div class='critname' id='cell" + ind + "internalprop' style='float: center'></div></div>";
+      table += "<div class='critname' id='cell" + ind + "critname' style='float:center'></div>";
+      table += "<td><div class='critname' id='cell" + ind + "internalprop' style='float: left'></div></td></div>";
       table += "</td><br>";
       table += "</tr>";
       table += "</table>";

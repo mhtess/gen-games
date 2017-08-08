@@ -178,21 +178,22 @@ var customSetup = function(game) {
   game.socket.on('chatWait', function(data){
     $('#chatbox').attr("disabled", "disabled");
     console.log("in chatWait");
+    $("#waiting").show();
 
     //not perfect but does the job
-    var ready = false;
-    var blinking = setInterval(function() {
-      if(!($('#chatbox').prop("disabled"))){
-        $("#waiting").fadeOut(0);
-        ready = true;
-        clearInterval(blinking);
-      };
-      if (!ready) {
-        $("#waiting").fadeOut(1000);
-        $("#waiting").fadeIn(1000);
-      }
+    // var ready = false;
+    // var blinking = setInterval(function() {
+    //   if(!($('#chatbox').prop("disabled"))){
+    //     $("#waiting").fadeOut(0);
+    //     ready = true;
+    //     clearInterval(blinking);
+    //   };
+    //   if (!ready) {
+    //     $("#waiting").fadeOut(1000);
+    //     $("#waiting").fadeIn(1000);
+    //   }
       
-    }, 2500);
+    // }, 2500);
   });
 
   // Both players are now in the chatroom, so they may send messages
