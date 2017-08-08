@@ -1,4 +1,5 @@
 var visible;
+var isConnected = false;
 
 var getURLParams = function() {
   var match,
@@ -198,7 +199,7 @@ window.onload = function(){
   //globalGame.ctx = globalGame.viewport.getContext('2d');
 
   //Set the draw style for the font
-  globalGame.ctx.font = '11px "Helvetica"';
+  // globalGame.ctx.font = '11px "Helvetica"';
 
   document.getElementById('chatbox').focus();
 
