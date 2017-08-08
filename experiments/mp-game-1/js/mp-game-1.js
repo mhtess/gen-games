@@ -1,101 +1,5 @@
-// For slides proceed to line 95
-// To add a slide to experiment structure (to ensure it shows up) proceed to line 400
+// To add a slide to experiment structure (to ensure it shows up) proceed to line 337
 
-var prev = null;
-var block = 0;
-
-// Allows the border of each critter to be highlighted when chosed
-function mark_critter_display(el, otherEls) {
-  if(prev != null){
-    gray(prev);
-  }
-  prev = el;
-  if(el.style.border=='2px solid white'){
-    $('#'+el.id).css({"border":'2px solid red',
-      'background-color': 'white','opacity': '1'});
-    $('#'+ el.id + 'critname').css({'opacity': 1, 'font-weight': 'bold'});
-    $("#"+ el.id + 'internalprop').css({'opacity': 1});
-    $('#'+el.id+'internalprop').css({'opacity': 1})}
-    $('#'+el.id).attr("data-selected","1")
-
-    otherEls.map(function(cell){$('#'+cell).css({"border":'2px solid white',
-      'background-color': 'white'})})
-    check(allCreatures.length);
-}
-
-// same as above but able to highlight multiple for the test trials
-function mark_critter_test_display(el, otherEls) {
-  if(el.style.border=='2px solid white'){
-    $('#'+el.id).css({"border":'2px solid red',
-      'background-color': 'white','opacity': '1'});
-    $('#'+el.id).attr("data-selected",'1')
-  } else {
-    $('#'+el.id).css({"border":'2px solid white',
-      'background-color': 'white'});
-    $('#'+el.id).attr("data-selected",'0')
-  }
-}
-
-// grays out after clicked for learning phase
-function gray(el) {
-   $('#'+el.id).css({"border":'2px solid white',
-                    'background-color': 'white', 'opacity': 0.5});
-   $('#'+el.id+'critname').css({'opacity': 0.5, 'font-weight': 'normal'});
-   $('#'+ el.id+'internalprop').css({'opacity': 0.7})
-}
-
-function check(num){
-  var check_all = 0;
-  for(var i=0; i<num; i++) {
-     if($('#cell' + i).attr("data-selected")=='1'){
-      ++check_all;
-     }
-  }
-  if(check_all == num) {
-    $("#learning_button").show();
-  }
-}
-
-
-var ind = 0;
-// Puts the critters we have in a table so we can use borders to our advantage
-function create_table(rows, cols, display_type) { //rows * cols = number of exemplars
-  var table = "<table id='creature_table' cellspacing='20'>";
-  for(var i=0; i <rows; i++) {
-    table += "<tr>";
-    for(var j=0; j<cols; j++) {
-      table += "<td>";
-      ind = i * cols + j;
-      table += "<table class ='cell' id='cell" + ind + "' data-selected='0' style='border:2px solid white' onclick=\"mark_" + display_type +"(cell" + ind +",";
-      table += "[";
-      for(var k=0; k<rows*cols; k++) {
-        if(k != ind){
-          table += "'cell" + k + "'";
-        }
-        if(!(k == rows*cols-1 || k == ind || (ind == rows*cols-1 && k == rows*cols-2))) {
-          table += ",";
-        }
-      }
-      table += "])\">";
-
-      table += "<td>";
-      table += "<svg id='critter" + ind +
-      "' style='max-width: 90px;max-height: 90px\'></svg></td>";
-      table += "<tr>";
-      table += "<td>";
-      table += "<div class='critlabel' id='cell" + ind + "critlabel'>"; //critter species name + emoji
-      table += "<div class='critname' id='cell" + ind + "critname' style='float:left'></div>";
-      table += "<div class='critname' id='cell" + ind + "internalprop' style='float: center'></div></div>";
-      table += "</td><br>";
-      table += "</tr>";
-      table += "</table>";
-      table += "</td>";
-    }
-    table += "</tr>"
-  }
-  table += "</table>";
-  $("#" + display_type).append(table);
-}
 
 // All slides must have a slides.slide_name function in this function
 function make_slides(f) {
@@ -219,19 +123,42 @@ function make_slides(f) {
     button : function() {
       var end_time = Date.now()
       this.time_spent = end_time - this.start_time;
+<<<<<<< HEAD
       
       // clears critter arrays for next time
       allCreatures = [];
       shuffledCritters = [];
+=======
+>>>>>>> 497ded3534923bcd6983e2f824d6365fb2b561eb
 
       // clears table
       for (var i = 0; i < this.num_creats; i++) {
+        var dataToSend = {
+          "block_num" : block,
+          //"distribution" : exp.distribution, //fix this later
+          "time_in_ms" : this.time_spent,
+          "block": "learnCritters",
+          "critter" : shuffledCritters[i]["critter"],
+          "critter_num" : i,
+          "species" : shuffledCritters[i]["creatureName"],
+          "color" : shuffledCritters[i]["col1"],
+          "prop1" : shuffledCritters[i]["prop1"],
+          "prop2" : shuffledCritters[i]["prop2"],
+          "tar1" : shuffledCritters[i]["tar1"],
+          "tar2" : shuffledCritters[i]["tar2"],
+          "internal_prop" : shuffledCritters[i]["internal_prop"]
+        }
+        globalGame.socket.send("logTrain.learnCritters." + _.pairs(dataToSend).join('.'));
+
         $('#critter' + i).empty();
         $('#cell' + i).css({'opacity': '1'});
         $('#cell' + i).css({'border': ''});
         $('#creature_table').remove();
         prev = null;
       }
+
+      allCreatures = [];
+      shuffledCritters = [];
 
       // Hide / show allows for specific instructions
       $("#welcome").hide();
@@ -340,6 +267,7 @@ slides.test_critters = slide({
   for (var i=0; i<this.num_creats; i++) {
     var dataToSend = {
       "block_num" : block,
+      "block": "testCritters",
       //"distribution" : exp.distribution, //fix this later
       "time_in_ms" : this.time_spent,
       "critter" : shuffledCritters[i]["critter"],
@@ -353,7 +281,7 @@ slides.test_critters = slide({
       "internal_prop" : shuffledCritters[i]["internal_prop"],
       "selected" : $('#cell' + i).attr("data-selected")
     }
-    globalGame.socket.send("logResponse.testCritters." + _.pairs(dataToSend).join('.'));
+    globalGame.socket.send("logTest.testCritters." + _.pairs(dataToSend).join('.'));
 
   }
 
@@ -408,8 +336,12 @@ slides.subj_info =  slide({
         problems: $("#problems").val(),
         fairprice: $("#fairprice").val()
       };
+<<<<<<< HEAD
 
       globalGame.socket.send("logResponse.subjInfo." + _.pairs(exp.subj_data).join('.'));
+=======
+      globalGame.socket.send("logSubjInfo.subjInfo." + _.pairs(exp.subj_data).join('.'));
+>>>>>>> 497ded3534923bcd6983e2f824d6365fb2b561eb
 
       exp.go();
     } //use exp.go() if and only if there is no "present" data.
@@ -463,6 +395,7 @@ function init() {
 
   //blocks of the experiment:
   exp.structure=[
+    "subj_info",
     "i0",
     "instructions",
     "wait_room",
@@ -484,7 +417,6 @@ function init() {
     "welcome_critterLand",
     "chatRoom",
     "test_critters",
-    'subj_info',
     'thanks'
     ]
 
