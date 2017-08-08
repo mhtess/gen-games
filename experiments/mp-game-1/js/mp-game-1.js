@@ -123,16 +123,35 @@ function make_slides(f) {
     button : function() {
       var end_time = Date.now()
       this.time_spent = end_time - this.start_time;
-      allCreatures = [];
-      shuffledCritters = [];
 
+      // clears table
       for (var i = 0; i < this.num_creats; i++) {
+        var dataToSend = {
+          "block_num" : block,
+          //"distribution" : exp.distribution, //fix this later
+          "time_in_ms" : this.time_spent,
+          "block": "learnCritters",
+          "critter" : shuffledCritters[i]["critter"],
+          "critter_num" : i,
+          "species" : shuffledCritters[i]["creatureName"],
+          "color" : shuffledCritters[i]["col1"],
+          "prop1" : shuffledCritters[i]["prop1"],
+          "prop2" : shuffledCritters[i]["prop2"],
+          "tar1" : shuffledCritters[i]["tar1"],
+          "tar2" : shuffledCritters[i]["tar2"],
+          "internal_prop" : shuffledCritters[i]["internal_prop"]
+        }
+        globalGame.socket.send("logTrain.learnCritters." + _.pairs(dataToSend).join('.'));
+
         $('#critter' + i).empty();
         $('#cell' + i).css({'opacity': '1'});
         $('#cell' + i).css({'border': ''});
         $('#creature_table').remove();
         prev = null;
       }
+
+      allCreatures = [];
+      shuffledCritters = [];
 
       // Hide / show allows for specific instructions
       $("#welcome").hide();
@@ -150,6 +169,30 @@ function make_slides(f) {
         $("#cur_instructs").append(globalGame.task_welcome_critter["tree_fish"]);
         break;
       }
+
+      //log responses
+      // make sure this works, think it should be same as test critters ??
+      for (var i=0; i<this.num_creats; i++) {
+        var dataToSend = {
+          "block_num" : block,
+          //"distribution" : exp.distribution, //fix this later
+          "time_in_ms" : this.time_spent,
+          "critter" : shuffledCritters[i]["critter"],
+          "critter_num" : i,
+          "species" : shuffledCritters[i]["creatureName"],
+          "color" : shuffledCritters[i]["col1"],
+          "prop1" : shuffledCritters[i]["prop1"],
+          "prop2" : shuffledCritters[i]["prop2"],
+          "tar1" : shuffledCritters[i]["tar1"],
+          "tar2" : shuffledCritters[i]["tar2"],
+          "internal_prop" : shuffledCritters[i]["internal_prop"],
+          // will need to be changed - do what lauren fixes in test critters
+          "selected" : $('#cell' + i).css('border') == '2px solid rgb(255, 0, 0)' ? 1 : 0
+        }
+        globalGame.socket.send("logResponse.welcome_critter." + _.pairs(dataToSend).join('.'));
+
+      }
+
     },
   });
 
@@ -217,6 +260,7 @@ slides.test_critters = slide({
   for (var i=0; i<this.num_creats; i++) {
     var dataToSend = {
       "block_num" : exp.block,
+      "block": "testCritters",
       //"distribution" : exp.distribution, //fix this later
       "time_in_ms" : this.time_spent,
       "critter" : shuffledCritters[i]["critter"],
@@ -230,13 +274,15 @@ slides.test_critters = slide({
       "internal_prop" : shuffledCritters[i]["internal_prop"],
       "selected" : $('#cell' + i).attr("data-selected")
     }
-    globalGame.socket.send("logResponse.testCritters." + _.pairs(dataToSend).join('.'));
+    globalGame.socket.send("logTest.testCritters." + _.pairs(dataToSend).join('.'));
 
   }
 
+  // empties the critter arrays so they can be repopulated without overlap
   allCreatures = [];
   shuffledCritters = [];
 
+  // resets table
   for (var i = 0; i < this.num_creats; i++) {
      $('#critter' + i).empty();
      $('#cell' + i).css({'opacity': '1'});
@@ -283,6 +329,9 @@ slides.subj_info =  slide({
         problems: $("#problems").val(),
         fairprice: $("#fairprice").val()
       };
+
+      globalGame.socket.send("logSubjInfo.subjInfo." + _.pairs(exp.subj_data).join('.'));
+
       exp.go();
     } //use exp.go() if and only if there is no "present" data.
   });
@@ -300,7 +349,14 @@ slides.thanks = slide({
       "subject_information" : exp.subj_data,
       "time_in_minutes" : (Date.now() - exp.startT)/60000
     };
-    setTimeout(function() {turk.submit(exp.data);}, 1000);
+    if(_.size(globalGame.urlParams) == 4) {
+      window.opener.turk.submit(exp.data, true);
+      window.close();
+    } else {
+      console.log("would have submitted the following :")
+      console.log(exp.data);
+    }
+    // setTimeout(function() {turk.submit(exp.data);}, 1000);
   }
 });
 
@@ -338,27 +394,27 @@ function init() {
   exp.structure=[
     "i0",
     "instructions",
+    // "wait_room",
+    // "welcome_critterLand",
+    // "chatRoom",
+    // "test_critters",
+    // "structure_instruct",
+    // "wait_room",
+    // "welcome_critterLand",
+    // "chatRoom",
+    // "test_critters",
+    // "structure_instruct",
+    // "wait_room",
+    // "welcome_critterLand",
+    // "chatRoom",
+    // "test_critters",
+    // "structure_instruct",
     "wait_room",
     "welcome_critterLand",
     "chatRoom",
     "test_critters",
-    "structure_instruct",
-    "wait_room",
-    "welcome_critterLand",
-    "chatRoom",
-    "test_critters",
-    "structure_instruct",
-    "wait_room",
-    "welcome_critterLand",
-    "chatRoom",
-    "test_critters",
-    "structure_instruct",
-    "wait_room",
-    "welcome_critterLand",
-    "chatRoom",
-    "test_critters",
-    'subj_info',
-    'thanks'
+    "subj_info",
+    'thanks',
     ]
 
   // var start_exp = ["i0", "instructions"]

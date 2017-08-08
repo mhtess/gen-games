@@ -140,7 +140,7 @@ var dataOutput = function() {
 
   function commonOutput (client, message_data) {
     return {
-      expid: client.game.expid,
+      iterationName: client.game.iterationName,
       gameid: client.game.id,
       time: Date.now(),
       trialNum : client.game.state.roundNum + 1,
@@ -150,7 +150,7 @@ var dataOutput = function() {
     };
   };
 
-  function createTestCritterObject(m_data){
+  function flattenedArrayToObj(m_data){
     return _.fromPairs(_.map(m_data, function(i){return i.split(',')}))
   }
 
@@ -159,7 +159,7 @@ var dataOutput = function() {
     // message_data contrains the flattened JSON object with test trial info.
     return _.extend(
       commonOutput(client, message_data),
-      createTestCritterObject(message_data.slice(2))
+      flattenedArrayToObj(message_data.slice(2))
     );
   };
 
@@ -176,7 +176,9 @@ var dataOutput = function() {
 
   return {
     'chatMessage' : chatMessageOutput,
-    'logResponse' : logResponseOutput
+    'logTest' : logResponseOutput,
+    'logTrain': logResponseOutput,
+    'logSubjInfo': logResponseOutput
   };
 }();
 
