@@ -52,7 +52,7 @@
     role2 : 'bug'
   }
 
-  this.numRounds = 1;
+  this.numRounds = 4;
 
   // number of different species
   this.creatureTypesN = 3;
@@ -244,450 +244,450 @@
       }
       ]
 
-    // this.fishOpts0 = [
-    // { creature: "fish",
-    // name: ourCreatNames[6]["exemplar"],//"strate",
-    // globalColors: [
-    // {
-    //   p: 0.99,
-    //   props: {
-    //     color_mean: "green",
-    //     color_var: 0.001,
-    //     location: "ground"
-    //   }
-    // }, {
-    //   p: 0.01,
-    //   props: {
-    //     color_mean: "orange",
-    //     color_var: 0.001,
-    //     location: "trees"
-    //   }
-    // }],
-    //     prop1: 0, // bodysize
-    //     prop2: 0, // tailsize
-    //     tar1: 0, // fangs
-    //     tar2: 0, // whiskers
-    //     internal_prop: 0.8 // eaten by crocodiles
-    //   },
-    //   { creature: "fish",
-    //   name: ourCreatNames[7]["exemplar"],//"hilate",
-    //   globalColors: [
-    //   {
-    //     p: 1,
-    //     props: {
-    //       color_mean: "blue",
-    //       color_var: 0.001,
-    //       location: "ground"
-    //     }
-    //   }, {
-    //     p: 0,
-    //     props: {
-    //       color_mean: "purple",
-    //       color_var: 0.001,
-    //       location: "trees"
-    //     }
-    //   }],
-    //     prop1: 0, // bodysize
-    //     prop2: 0, // tailsize
-    //     tar1: 0, // fangs
-    //     tar2: 0, // whiskers
-    //     internal_prop: 0.6 // eaten by crocodiles
-    //   },
-    //   { creature: "fish",
-    //   name: ourCreatNames[8]["exemplar"],//"burge",
-    //   globalColors: [
-    //   {
-    //     p: 0.5,
-    //     props: {
-    //       color_mean: "yellow",
-    //       color_var: 0.001,
-    //       location: "ground"
-    //     }
-    //   }, {
-    //     p: 0.5,
-    //     props: {
-    //       color_mean: "green",
-    //       color_var: 0.001,
-    //       location: "trees"}
-    //     }],
-    //     prop1: 0, // bodysize
-    //     prop2: 0, // tailsize
-    //     tar1: 0, // fangs
-    //     tar2: 0, // whiskers
-    //     internal_prop: 0.3 // eaten by crocodiles
-    //   }
-    //   ]
-    //
-    // this.treeOpts0 = [
-    // { creature: "tree",
-    // name: ourCreatNames[9]["exemplar"],//"mider",
-    // globalColors: [
-    // {
-    //   p: 0.99,
-    //   props: {
-    //     color_mean: "green",
-    //     color_var: 0.001,
-    //     location: "ground"
-    //   }
-    // }, {
-    //   p: 0.01,
-    //   props: {
-    //     color_mean: "orange",
-    //     color_var: 0.001,
-    //     location: "trees"
-    //   }
-    // }],
-    //     prop1: 0, // height
-    //     prop2: 0, // fatness
-    //     tar1: 0, // berries
-    //     tar2: 0, // leaves
-    //     internal_prop: 0.1 // leaves
-    //   },
-    //   { creature: "tree",
-    //   name: ourCreatNames[10]["exemplar"],//"glibe",
-    //   globalColors: [
-    //   {
-    //     p: 1,
-    //     props: {
-    //       color_mean: "blue",
-    //       color_var: 0.001,
-    //       location: "ground"
-    //     }
-    //   }, {
-    //     p: 0,
-    //     props: {
-    //       color_mean: "red",
-    //       color_var: 0.001,
-    //       location: "trees"
-    //     }
-    //   }],
-    //     prop1: 0, // height
-    //     prop2: 0, // fatness
-    //     tar1: 0, // berries
-    //     tar2: 0, // leaves
-    //     internal_prop: 0.9 // leaves
-    //   },
-    //   { creature: "tree",
-    //   name: ourCreatNames[11]["exemplar"],//"lopt",
-    //   globalColors: [
-    //   {
-    //     p: 0.5,
-    //     props: {
-    //       color_mean: "yellow",
-    //       color_var: 0.001,
-    //       location: "ground"
-    //     }
-    //   }, {
-    //     p: 0.5,
-    //     props: {
-    //       color_mean: "red",
-    //       color_var: 0.001,
-    //       location: "trees"}
-    //     }],
-    //     prop1: 0, // height
-    //     prop2: 0, // fatness
-    //     tar1: 0, // berries
-    //     tar2: 0, // leaves
-    //     internal_prop: 0.2 // leaves
-    //   }
-    //   ]
-    //
-    //
-    //   this.birdOpts1 = [
-    // { creature: "bird",
-    // name: ourCreatNames[12]["exemplar"],//"blicket",
-    // globalColors: [
-    // {
-    //   p: 0.99,
-    //   props: {
-    //     color_mean: "green",
-    //     color_var: 0.001,
-    //     location: "ground"
-    //   }
-    // }, {
-    //   p: 0.01,
-    //   props: {
-    //     color_mean: "orange",
-    //     color_var: 0.001,
-    //     location: "trees"
-    //   }
-    // }],
-    //     prop1: 1, // height
-    //     prop2: 1, // fatness
-    //     tar1: 1, // tails
-    //     tar2: 1, // crest
-    //     internal_prop: 0.4 // lays eggs
-    //   },
-    //   { creature: "bird",
-    //   name: ourCreatNames[13]["exemplar"],//"creed",
-    //   globalColors: [
-    //   {
-    //     p: 1,
-    //     props: {
-    //       color_mean: "red",
-    //       color_var: 0.001,
-    //       location: "ground"
-    //     }
-    //   }, {
-    //     p: 0,
-    //     props: {
-    //       color_mean: "red",
-    //       color_var: 0.001,
-    //       location: "trees"
-    //     }
-    //   }],
-    //     prop1: 1, // height
-    //     prop2: 1, // fatness
-    //     tar1: 1, // tails
-    //     tar2: 1, // crest
-    //     internal_prop: 0.2, // lays eggs
-    //   },
-    //   { creature: "bird",
-    //   name: ourCreatNames[14]["exemplar"],//"dredge",
-    //   globalColors: [
-    //   {
-    //     p: 0.5,
-    //     props: {
-    //       color_mean: "blue",
-    //       color_var: 0.001,
-    //       location: "ground"
-    //     }
-    //   }, {
-    //     p: 0.5,
-    //     props: {
-    //       color_mean: "yellow",
-    //       color_var: 0.001,
-    //       location: "trees"}
-    //     }],
-    //     prop1: 1, // height
-    //     prop2: 1, // fatness
-    //     tar1: 1, // tails
-    //     tar2: 1, // crest
-    //     internal_prop: 0 // lays eggs
-    //   }
-    //   ]
-    //
-    //   this.bugOpts1 = [
-    //   { creature: "bug",
-    //   name: ourCreatNames[15]["exemplar"],//"shork",
-    //   globalColors: [
-    //   {
-    //     p: 0.99,
-    //     props: {
-    //       color_mean: "green",
-    //       color_var: 0.001,
-    //       location: "ground"
-    //     }
-    //   }, {
-    //     p: 0.01,
-    //     props: {
-    //       color_mean: "orange",
-    //       color_var: 0.001,
-    //       location: "trees"
-    //     }
-    //   }],
-    //       prop1: 1, // headsize
-    //       prop2: 1, // bodysize
-    //       tar1: 1, // antennae
-    //       tar2: 1, // wings
-    //       internal_prop: 0.7 // poisonous
-    //     },
-    //     { creature: "bug",
-    //     name: ourCreatNames[16]["exemplar"],//"flay",
-    //     globalColors: [
-    //     {
-    //       p: 1,
-    //       props: {
-    //         color_mean: "blue",
-    //         color_var: 0.001,
-    //         location: "ground"
-    //       }
-    //     }, {
-    //       p: 0,
-    //       props: {
-    //         color_mean: "green",
-    //         color_var: 0.001,
-    //         location: "trees"
-    //       }
-    //     }],
-    //       prop1: 1, // headsize
-    //       prop2: 1, // bodysize
-    //       tar1: 1, // antennae
-    //       tar2: 1, // wings
-    //       internal_prop: 0.1, // poisonous
-    //     },
-    //     { creature: "bug",
-    //     name: ourCreatNames[17]["exemplar"],//"codger",
-    //     globalColors: [
-    //     {
-    //       p: 0.5,
-    //       props: {
-    //         color_mean: "red",
-    //         color_var: 0.001,
-    //         location: "ground"
-    //       }
-    //     }, {
-    //       p: 0.5,
-    //       props: {
-    //         color_mean: "green",
-    //         color_var: 0.001,
-    //         location: "trees"}
-    //       }],
-    //       prop1: 1, // headsize
-    //       prop2: 1, // bodysize
-    //       tar1: 1, // antennae
-    //       tar2: 1, // wings
-    //       internal_prop: 0 // poisonous
-    //     }
-    //     ]
-    //
-    //   this.fishOpts1 = [
-    //   { creature: "fish",
-    //   name: ourCreatNames[18]["exemplar"],//"croop",
-    //   globalColors: [
-    //   {
-    //     p: 0.99,
-    //     props: {
-    //       color_mean: "purple",
-    //       color_var: 0.001,
-    //       location: "ground"
-    //     }
-    //   }, {
-    //     p: 0.01,
-    //     props: {
-    //       color_mean: "orange",
-    //       color_var: 0.001,
-    //       location: "trees"
-    //     }
-    //   }],
-    //       prop1: 1, // bodysize
-    //       prop2: 1, // tailsize
-    //       tar1: 1, // fangs
-    //       tar2: 1, // whiskers
-    //       internal_prop: 0.8 // eaten by crocodiles
-    //     },
-    //     { creature: "fish",
-    //     name: ourCreatNames[19]["exemplar"],//"bleb",
-    //     globalColors: [
-    //     {
-    //       p: 1,
-    //       props: {
-    //         color_mean: "red",
-    //         color_var: 0.001,
-    //         location: "ground"
-    //       }
-    //     }, {
-    //       p: 0,
-    //       props: {
-    //         color_mean: "green",
-    //         color_var: 0.001,
-    //         location: "trees"
-    //       }
-    //     }],
-    //       prop1: 1, // bodysize
-    //       prop2: 1, // tailsize
-    //       tar1: 1, // fangs
-    //       tar2: 1, // whiskers
-    //       internal_prop: 0.9 // eaten by crocodiles
-    //     },
-    //     { creature: "fish",
-    //     name: ourCreatNames[20]["exemplar"],//"nift",
-    //     globalColors: [
-    //     {
-    //       p: 0.5,
-    //       props: {
-    //         color_mean: "red",
-    //         color_var: 0.001,
-    //         location: "ground"
-    //       }
-    //     }, {
-    //       p: 0.5,
-    //       props: {
-    //         color_mean: "blue",
-    //         color_var: 0.001,
-    //         location: "trees"}
-    //       }],
-    //       prop1: 1, // bodysize
-    //       prop2: 1, // tailsize
-    //       tar1: 1, // fangs
-    //       tar2: 1, // whiskers
-    //       internal_prop: 0.7 // eaten by crocodiles
-    //     }
-    //     ]
-    //
-    //   this.treeOpts1 = [
-    //   { creature: "tree",
-    //   name: ourCreatNames[21]["exemplar"],//"garp",
-    //   globalColors: [
-    //   {
-    //     p: 0.99,
-    //     props: {
-    //       color_mean: "red",
-    //       color_var: 0.001,
-    //       location: "ground"
-    //     }
-    //   }, {
-    //     p: 0.01,
-    //     props: {
-    //       color_mean: "purple",
-    //       color_var: 0.001,
-    //       location: "trees"
-    //     }
-    //   }],
-    //       prop1: 1, // height
-    //       prop2: 1, // fatness
-    //       tar1: 1, // berries
-    //       tar2: 1, // leaves
-    //       internal_prop: 0.8 // leaves
-    //     },
-    //     { creature: "tree",
-    //     name: ourCreatNames[22]["exemplar"],//"harkel",
-    //     globalColors: [
-    //     {
-    //       p: 1,
-    //       props: {
-    //         color_mean: "blue",
-    //         color_var: 0.001,
-    //         location: "ground"
-    //       }
-    //     }, {
-    //       p: 0,
-    //       props: {
-    //         color_mean: "red",
-    //         color_var: 0.001,
-    //         location: "trees"
-    //       }
-    //     }],
-    //       prop1: 1, // height
-    //       prop2: 1, // fatness
-    //       tar1: 1, // berries
-    //       tar2: 1, // leaves
-    //       internal_prop: 0.4 // leaves
-    //     },
-    //     { creature: "tree",
-    //     name: ourCreatNames[23]["exemplar"],//"zord",
-    //     globalColors: [
-    //     {
-    //       p: 0.5,
-    //       props: {
-    //         color_mean: "purple",
-    //         color_var: 0.001,
-    //         location: "ground"
-    //       }
-    //     }, {
-    //       p: 0.5,
-    //       props: {
-    //         color_mean: "green",
-    //         color_var: 0.001,
-    //         location: "trees"}
-    //       }],
-    //       prop1: 1, // height
-    //       prop2: 1, // fatness
-    //       tar1: 1, // berries
-    //       tar2: 1, // leaves
-    //       internal_prop: 0 // leaves
-    //     }
-    //     ]
+    this.fishOpts0 = [
+    { creature: "fish",
+    name: ourCreatNames[6]["exemplar"],//"strate",
+    globalColors: [
+    {
+      p: 0.99,
+      props: {
+        color_mean: "green",
+        color_var: 0.001,
+        location: "ground"
+      }
+    }, {
+      p: 0.01,
+      props: {
+        color_mean: "orange",
+        color_var: 0.001,
+        location: "trees"
+      }
+    }],
+        prop1: 0, // bodysize
+        prop2: 0, // tailsize
+        tar1: 0, // fangs
+        tar2: 0, // whiskers
+        internal_prop: 0.8 // eaten by crocodiles
+      },
+      { creature: "fish",
+      name: ourCreatNames[7]["exemplar"],//"hilate",
+      globalColors: [
+      {
+        p: 1,
+        props: {
+          color_mean: "blue",
+          color_var: 0.001,
+          location: "ground"
+        }
+      }, {
+        p: 0,
+        props: {
+          color_mean: "purple",
+          color_var: 0.001,
+          location: "trees"
+        }
+      }],
+        prop1: 0, // bodysize
+        prop2: 0, // tailsize
+        tar1: 0, // fangs
+        tar2: 0, // whiskers
+        internal_prop: 0.6 // eaten by crocodiles
+      },
+      { creature: "fish",
+      name: ourCreatNames[8]["exemplar"],//"burge",
+      globalColors: [
+      {
+        p: 0.5,
+        props: {
+          color_mean: "yellow",
+          color_var: 0.001,
+          location: "ground"
+        }
+      }, {
+        p: 0.5,
+        props: {
+          color_mean: "green",
+          color_var: 0.001,
+          location: "trees"}
+        }],
+        prop1: 0, // bodysize
+        prop2: 0, // tailsize
+        tar1: 0, // fangs
+        tar2: 0, // whiskers
+        internal_prop: 0.3 // eaten by crocodiles
+      }
+      ]
+
+    this.treeOpts0 = [
+    { creature: "tree",
+    name: ourCreatNames[9]["exemplar"],//"mider",
+    globalColors: [
+    {
+      p: 0.99,
+      props: {
+        color_mean: "green",
+        color_var: 0.001,
+        location: "ground"
+      }
+    }, {
+      p: 0.01,
+      props: {
+        color_mean: "orange",
+        color_var: 0.001,
+        location: "trees"
+      }
+    }],
+        prop1: 0, // height
+        prop2: 0, // fatness
+        tar1: 0, // berries
+        tar2: 0, // leaves
+        internal_prop: 0.1 // leaves
+      },
+      { creature: "tree",
+      name: ourCreatNames[10]["exemplar"],//"glibe",
+      globalColors: [
+      {
+        p: 1,
+        props: {
+          color_mean: "blue",
+          color_var: 0.001,
+          location: "ground"
+        }
+      }, {
+        p: 0,
+        props: {
+          color_mean: "red",
+          color_var: 0.001,
+          location: "trees"
+        }
+      }],
+        prop1: 0, // height
+        prop2: 0, // fatness
+        tar1: 0, // berries
+        tar2: 0, // leaves
+        internal_prop: 0.9 // leaves
+      },
+      { creature: "tree",
+      name: ourCreatNames[11]["exemplar"],//"lopt",
+      globalColors: [
+      {
+        p: 0.5,
+        props: {
+          color_mean: "yellow",
+          color_var: 0.001,
+          location: "ground"
+        }
+      }, {
+        p: 0.5,
+        props: {
+          color_mean: "red",
+          color_var: 0.001,
+          location: "trees"}
+        }],
+        prop1: 0, // height
+        prop2: 0, // fatness
+        tar1: 0, // berries
+        tar2: 0, // leaves
+        internal_prop: 0.2 // leaves
+      }
+      ]
+
+
+      this.birdOpts1 = [
+    { creature: "bird",
+    name: ourCreatNames[12]["exemplar"],//"blicket",
+    globalColors: [
+    {
+      p: 0.99,
+      props: {
+        color_mean: "green",
+        color_var: 0.001,
+        location: "ground"
+      }
+    }, {
+      p: 0.01,
+      props: {
+        color_mean: "orange",
+        color_var: 0.001,
+        location: "trees"
+      }
+    }],
+        prop1: 1, // height
+        prop2: 1, // fatness
+        tar1: 1, // tails
+        tar2: 1, // crest
+        internal_prop: 0.4 // lays eggs
+      },
+      { creature: "bird",
+      name: ourCreatNames[13]["exemplar"],//"creed",
+      globalColors: [
+      {
+        p: 1,
+        props: {
+          color_mean: "red",
+          color_var: 0.001,
+          location: "ground"
+        }
+      }, {
+        p: 0,
+        props: {
+          color_mean: "red",
+          color_var: 0.001,
+          location: "trees"
+        }
+      }],
+        prop1: 1, // height
+        prop2: 1, // fatness
+        tar1: 1, // tails
+        tar2: 1, // crest
+        internal_prop: 0.2, // lays eggs
+      },
+      { creature: "bird",
+      name: ourCreatNames[14]["exemplar"],//"dredge",
+      globalColors: [
+      {
+        p: 0.5,
+        props: {
+          color_mean: "blue",
+          color_var: 0.001,
+          location: "ground"
+        }
+      }, {
+        p: 0.5,
+        props: {
+          color_mean: "yellow",
+          color_var: 0.001,
+          location: "trees"}
+        }],
+        prop1: 1, // height
+        prop2: 1, // fatness
+        tar1: 1, // tails
+        tar2: 1, // crest
+        internal_prop: 0 // lays eggs
+      }
+      ]
+
+      this.bugOpts1 = [
+      { creature: "bug",
+      name: ourCreatNames[15]["exemplar"],//"shork",
+      globalColors: [
+      {
+        p: 0.99,
+        props: {
+          color_mean: "green",
+          color_var: 0.001,
+          location: "ground"
+        }
+      }, {
+        p: 0.01,
+        props: {
+          color_mean: "orange",
+          color_var: 0.001,
+          location: "trees"
+        }
+      }],
+          prop1: 1, // headsize
+          prop2: 1, // bodysize
+          tar1: 1, // antennae
+          tar2: 1, // wings
+          internal_prop: 0.7 // poisonous
+        },
+        { creature: "bug",
+        name: ourCreatNames[16]["exemplar"],//"flay",
+        globalColors: [
+        {
+          p: 1,
+          props: {
+            color_mean: "blue",
+            color_var: 0.001,
+            location: "ground"
+          }
+        }, {
+          p: 0,
+          props: {
+            color_mean: "green",
+            color_var: 0.001,
+            location: "trees"
+          }
+        }],
+          prop1: 1, // headsize
+          prop2: 1, // bodysize
+          tar1: 1, // antennae
+          tar2: 1, // wings
+          internal_prop: 0.1, // poisonous
+        },
+        { creature: "bug",
+        name: ourCreatNames[17]["exemplar"],//"codger",
+        globalColors: [
+        {
+          p: 0.5,
+          props: {
+            color_mean: "red",
+            color_var: 0.001,
+            location: "ground"
+          }
+        }, {
+          p: 0.5,
+          props: {
+            color_mean: "green",
+            color_var: 0.001,
+            location: "trees"}
+          }],
+          prop1: 1, // headsize
+          prop2: 1, // bodysize
+          tar1: 1, // antennae
+          tar2: 1, // wings
+          internal_prop: 0 // poisonous
+        }
+        ]
+
+      this.fishOpts1 = [
+      { creature: "fish",
+      name: ourCreatNames[18]["exemplar"],//"croop",
+      globalColors: [
+      {
+        p: 0.99,
+        props: {
+          color_mean: "purple",
+          color_var: 0.001,
+          location: "ground"
+        }
+      }, {
+        p: 0.01,
+        props: {
+          color_mean: "orange",
+          color_var: 0.001,
+          location: "trees"
+        }
+      }],
+          prop1: 1, // bodysize
+          prop2: 1, // tailsize
+          tar1: 1, // fangs
+          tar2: 1, // whiskers
+          internal_prop: 0.8 // eaten by crocodiles
+        },
+        { creature: "fish",
+        name: ourCreatNames[19]["exemplar"],//"bleb",
+        globalColors: [
+        {
+          p: 1,
+          props: {
+            color_mean: "red",
+            color_var: 0.001,
+            location: "ground"
+          }
+        }, {
+          p: 0,
+          props: {
+            color_mean: "green",
+            color_var: 0.001,
+            location: "trees"
+          }
+        }],
+          prop1: 1, // bodysize
+          prop2: 1, // tailsize
+          tar1: 1, // fangs
+          tar2: 1, // whiskers
+          internal_prop: 0.9 // eaten by crocodiles
+        },
+        { creature: "fish",
+        name: ourCreatNames[20]["exemplar"],//"nift",
+        globalColors: [
+        {
+          p: 0.5,
+          props: {
+            color_mean: "red",
+            color_var: 0.001,
+            location: "ground"
+          }
+        }, {
+          p: 0.5,
+          props: {
+            color_mean: "blue",
+            color_var: 0.001,
+            location: "trees"}
+          }],
+          prop1: 1, // bodysize
+          prop2: 1, // tailsize
+          tar1: 1, // fangs
+          tar2: 1, // whiskers
+          internal_prop: 0.7 // eaten by crocodiles
+        }
+        ]
+
+      this.treeOpts1 = [
+      { creature: "tree",
+      name: ourCreatNames[21]["exemplar"],//"garp",
+      globalColors: [
+      {
+        p: 0.99,
+        props: {
+          color_mean: "red",
+          color_var: 0.001,
+          location: "ground"
+        }
+      }, {
+        p: 0.01,
+        props: {
+          color_mean: "purple",
+          color_var: 0.001,
+          location: "trees"
+        }
+      }],
+          prop1: 1, // height
+          prop2: 1, // fatness
+          tar1: 1, // berries
+          tar2: 1, // leaves
+          internal_prop: 0.8 // leaves
+        },
+        { creature: "tree",
+        name: ourCreatNames[22]["exemplar"],//"harkel",
+        globalColors: [
+        {
+          p: 1,
+          props: {
+            color_mean: "blue",
+            color_var: 0.001,
+            location: "ground"
+          }
+        }, {
+          p: 0,
+          props: {
+            color_mean: "red",
+            color_var: 0.001,
+            location: "trees"
+          }
+        }],
+          prop1: 1, // height
+          prop2: 1, // fatness
+          tar1: 1, // berries
+          tar2: 1, // leaves
+          internal_prop: 0.4 // leaves
+        },
+        { creature: "tree",
+        name: ourCreatNames[23]["exemplar"],//"zord",
+        globalColors: [
+        {
+          p: 0.5,
+          props: {
+            color_mean: "purple",
+            color_var: 0.001,
+            location: "ground"
+          }
+        }, {
+          p: 0.5,
+          props: {
+            color_mean: "green",
+            color_var: 0.001,
+            location: "trees"}
+          }],
+          prop1: 1, // height
+          prop2: 1, // fatness
+          tar1: 1, // berries
+          tar2: 1, // leaves
+          internal_prop: 0 // leaves
+        }
+        ]
 
 
     // total number of creatures
@@ -698,7 +698,7 @@
     // Number of rows & columns in table presenting critters
     this.presentRows = 2;
     this.presentCols = this.creatureN/this.presentRows;
-    
+
 
 
     //this.uniqueCreatures =  _.uniq(_.pluck(this.creatureOpts, "name")); //might need to comment back in
@@ -879,8 +879,7 @@ var probToCount = function(p, n){
   return Math.round(p*n);
 }
 
-game_core.prototype.createFeatureArray = function(creatureLabel, p, creatureCategory, num){ //add num as parameter too
-  var probs = [p, 1-p]
+game_core.prototype.createFeatureArray = function(creatureLabel, creatureCategory, num){ //add num as parameter too
   var creatureOpts;
   switch(creatureCategory) {
     case "bird":
@@ -905,19 +904,21 @@ game_core.prototype.createFeatureArray = function(creatureLabel, p, creatureCate
     break;
   }
 
+  // var probs = [p, 1-p]
   var creatOpts = _.filter(creatureOpts, {name: creatureLabel})[0];
   var creatureColors = [];
   var creatureLocation = [];
-  var nRemaining = this.exemplarN;
-  for (var i=0; i<2; i++ ){
+  var nRemaining = this.exemplarN; // number of exemplars in category
+  // 2 possible colors (so loop for i < 2)
+  for (var i=0; i < creatOpts.globalColors.length; i++ ){
     var colorProps = creatOpts.globalColors[i];
 
     var n_creatures_of_this_color =  probToCount(
-      probs[i], this.exemplarN
+      colorProps.p, this.exemplarN
       );
 
     var ncrit = n_creatures_of_this_color == 0 ?
-    ((probs[i] > 0) && (nRemaining > 0)) ? 1 : 0 :
+    ((colorProps.p > 0) && (nRemaining > 0)) ? 1 : 0 :
     n_creatures_of_this_color
     creatureColors = creatureColors.concat(
       fillArray(ncrit,
@@ -932,10 +933,10 @@ game_core.prototype.createFeatureArray = function(creatureLabel, p, creatureCate
   return {color: creatureColors, location: creatureLocation}
 }
 
-var distribution = _.sample([
-  [1, 1, 0.5],
-  [1, 1, 0.25]
-  ])
+// var distribution = _.sample([
+//   [1, 1, 0.5],
+//   [1, 1, 0.25]
+//   ])
 
 game_core.prototype.genCreatures = function(creatureCategory, num){ //include num as parameter
   var j = 0;
@@ -964,12 +965,12 @@ game_core.prototype.genCreatures = function(creatureCategory, num){ //include nu
       creatureOpts = this.treeOpts1
     break;
   }
-
+  // get unique labels (e.g., wug, fep, lorch); should be number of unique kinds in each block
   uniqueCreatures =  _.uniqBy(_.map(creatureOpts, "name"));
   for (var i = 0; i < uniqueCreatures.length; i++){
     var creatOpts = _.filter(creatureOpts, {name: uniqueCreatures[i]})[0];
     var creatureColor = this.createFeatureArray(
-     uniqueCreatures[i], distribution[i], creatureCategory, num
+     uniqueCreatures[i], creatureCategory, num
      );
     var localCounter = 0;
     while (j<(this.exemplarN*(i+1))) {
