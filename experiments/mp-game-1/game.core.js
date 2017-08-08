@@ -654,7 +654,7 @@
     this.creatureTypesN = 3;
     // number of each critter of a species
     this.exemplarN = this.creatureN/this.creatureTypesN;
-    
+
     // Number of rows & columns in table presenting critters
     this.presentRows = 2;
     this.presentCols = this.creatureN/this.presentRows;
@@ -683,7 +683,7 @@
   this.roundNum = -1;
 
   // How many rounds do we want people to complete? MAKE SURE THIS ALIGNS WITH EXP TEMPLATE SLIDE AMT
-  this.numRounds = 4;
+  this.numRounds = 1;
 
   this.currentSlide = {
     speaker: "i0",
