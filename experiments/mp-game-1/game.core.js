@@ -52,7 +52,7 @@
     role2 : 'bug'
   }
 
-  this.numRounds = 4;
+  this.numRounds = 1;
 
   // number of different species
   this.creatureTypesN = 3;
