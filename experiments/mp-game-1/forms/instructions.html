@@ -37,7 +37,7 @@
 	  <span class="sr-only">5% Complete</span>
 	</div>
       </div>
-      
+
       <div class="page-header">
         <h1>Instructions</h1>
       </div>
@@ -72,7 +72,7 @@
 	  get <b> a bonus of $0.03 for each correct response</b>, so
 	  pay attention!
 	</p>
-	
+
 	<p>
 	  The goal of the Listener is to identify the target
 	  based on what the Speaker has told you. If you are the Listener,
@@ -87,14 +87,14 @@
 	  foreign language. To send their chosen label, the Speaker
 	  clicks and drags it into the grey 'dropzone' below.
 	</p>
-	
+
 	<p>
 	  <center>
 	    <img src="images/screenshot_labels.png" alt="Example labels"
 		 style="width:300px; height:300px">
 	  </center>
 	</p>
-	
+
 	<p>
 	  Once the Listener clicks on the object they believe is the
 	  target, both players will be given feedback: the Speaker
@@ -135,7 +135,7 @@
 	  Please fill out this short quiz below before getting started.
 	  Good luck and have fun!
 	</h3>
-	
+
       </div>
 
       <div class="page-header">
@@ -143,7 +143,7 @@
       </div>
 
       <div class="well" style="width:800px; margin: 0 auto">
-	
+
 	<br>
 	The <b>speaker</b> can click on an object to end the round.
 	<br>
@@ -227,8 +227,8 @@
         var ans5 = $('input[name="location"]:checked').val();
         var ans6 = $('input[name="completed"]:checked').val();
 
-        if(ans1 == "yes" && ans2 == "yes" && ans3 == "yes" && 
-           ans4 == "yes" && ans5 == "yes" && ans6 == "yes") { 
+        // if(ans1 == "yes" && ans2 == "yes" && ans3 == "yes" &&
+        //    ans4 == "yes" && ans5 == "yes" && ans6 == "yes") {
            var workerId = urlParams.workerId;
            var assignmentId = urlParams.assignmentId;
            var hitId = urlParams.hitId;
@@ -236,12 +236,12 @@
            location.replace("./pass.html?workerId=" + workerId
                             + "&assignmentId=" + assignmentId
                             + "&hitId=" + hitId + "&turkSubmitTo=" + turkSubmitTo);
-        } else if(counter == 3) {
-          location.replace("./fail.html");
-        } else {
-          $('.error').show()
-          counter += 1;
-        }
+        // } else if(counter == 3) {
+        //   location.replace("./fail.html");
+        // } else {
+        //   $('.error').show()
+        //   counter += 1;
+        // }
       };
     </script>
 
