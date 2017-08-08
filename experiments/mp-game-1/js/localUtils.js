@@ -10,7 +10,7 @@ function mark_critter_display(el, otherEls) {
   if(el.style.border=='2px solid white'){
     $('#'+el.id).css({"border":'2px solid red',
       'background-color': 'white','opacity': '1'});
-    $('#'+ el.id + 'critname').css({'opacity': 1, 'font-weight': 'bold'});
+    $('#'+ el.id + 'critname').css({'opacity': 1, 'font-weight': 'bold', 'font-size': '14px'});
     $("#"+ el.id + 'internalprop').css({'opacity': 1});
     $('#'+el.id+'internalprop').css({'opacity': 1})}
     $('#'+el.id).attr("data-selected","1")
