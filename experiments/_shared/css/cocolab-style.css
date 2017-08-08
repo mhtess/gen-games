@@ -21,7 +21,7 @@ table {
 	/*all elements in a slide will be centered by default*/
     text-align: center;
 
-    border: 1px solid #04abe3;
+    /*border: 1px solid #04abe3;*/
     width: 800px;
     height: 600px;
 
