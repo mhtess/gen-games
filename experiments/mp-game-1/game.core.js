@@ -54,6 +54,7 @@
 
   this.numRounds = 4;
 
+  // number of different species
   this.creatureTypesN = 3;
 
   this.creatureNames = [
@@ -97,7 +98,7 @@
   this.critterScale = 0.5;
   this.birdOpts0 = [
   { creature: "bird",
-  name: ourCreatNames[0]["category"],//"wug",
+  name: ourCreatNames[0]["exemplar"],//"wug",
   globalColors: [
   {
     p: 0.99,
@@ -121,7 +122,7 @@
   		internal_prop: 0.8 // lays eggs
   	},
   	{ creature: "bird",
-    name: ourCreatNames[1]["category"],//"fep",
+    name: ourCreatNames[1]["exemplar"],//"fep",
     globalColors: [
     {
       p: 1,
@@ -145,7 +146,7 @@
   		internal_prop: 0.2, // lays eggs
   	},
   	{ creature: "bird",
-    name: ourCreatNames[2]["category"],//"lorch",
+    name: ourCreatNames[2]["exemplar"],//"lorch",
     globalColors: [
     {
       p: 0.5,
@@ -171,7 +172,7 @@
 
     this.bugOpts0 = [
     { creature: "bug",
-    name: ourCreatNames[3]["category"],//"rambo",
+    name: ourCreatNames[3]["exemplar"],//"rambo",
     globalColors: [
     {
       p: 0.99,
@@ -195,7 +196,7 @@
         internal_prop: 0.8 // poisonous
       },
       { creature: "bug",
-      name: ourCreatNames[4]["category"],//"prit",
+      name: ourCreatNames[4]["exemplar"],//"prit",
       globalColors: [
       {
         p: 1,
@@ -219,7 +220,7 @@
         internal_prop: 0.2, // poisonous
       },
       { creature: "bug",
-      name: ourCreatNames[5]["category"],//"radiss",
+      name: ourCreatNames[5]["exemplar"],//"radiss",
       globalColors: [
       {
         p: 0.5,
@@ -245,7 +246,7 @@
 
     this.fishOpts0 = [
     { creature: "fish",
-    name: ourCreatNames[6]["category"],//"strate",
+    name: ourCreatNames[6]["exemplar"],//"strate",
     globalColors: [
     {
       p: 0.99,
@@ -269,7 +270,7 @@
         internal_prop: 0.8 // eaten by crocodiles
       },
       { creature: "fish",
-      name: ourCreatNames[7]["category"],//"hilate",
+      name: ourCreatNames[7]["exemplar"],//"hilate",
       globalColors: [
       {
         p: 1,
@@ -293,7 +294,7 @@
         internal_prop: 0.6 // eaten by crocodiles
       },
       { creature: "fish",
-      name: ourCreatNames[8]["category"],//"burge",
+      name: ourCreatNames[8]["exemplar"],//"burge",
       globalColors: [
       {
         p: 0.5,
@@ -319,7 +320,7 @@
 
     this.treeOpts0 = [
     { creature: "tree",
-    name: ourCreatNames[9]["category"],//"mider",
+    name: ourCreatNames[9]["exemplar"],//"mider",
     globalColors: [
     {
       p: 0.99,
@@ -343,7 +344,7 @@
         internal_prop: 0.1 // leaves
       },
       { creature: "tree",
-      name: ourCreatNames[10]["category"],//"glibe",
+      name: ourCreatNames[10]["exemplar"],//"glibe",
       globalColors: [
       {
         p: 1,
@@ -367,7 +368,7 @@
         internal_prop: 0.9 // leaves
       },
       { creature: "tree",
-      name: ourCreatNames[11]["category"],//"lopt",
+      name: ourCreatNames[11]["exemplar"],//"lopt",
       globalColors: [
       {
         p: 0.5,
@@ -394,7 +395,7 @@
 
       this.birdOpts1 = [
     { creature: "bird",
-    name: ourCreatNames[12]["category"],//"blicket",
+    name: ourCreatNames[12]["exemplar"],//"blicket",
     globalColors: [
     {
       p: 0.99,
@@ -418,7 +419,7 @@
         internal_prop: 0.4 // lays eggs
       },
       { creature: "bird",
-      name: ourCreatNames[13]["category"],//"creed",
+      name: ourCreatNames[13]["exemplar"],//"creed",
       globalColors: [
       {
         p: 1,
@@ -442,7 +443,7 @@
         internal_prop: 0.2, // lays eggs
       },
       { creature: "bird",
-      name: ourCreatNames[14]["category"],//"dredge",
+      name: ourCreatNames[14]["exemplar"],//"dredge",
       globalColors: [
       {
         p: 0.5,
@@ -468,7 +469,7 @@
 
       this.bugOpts1 = [
       { creature: "bug",
-      name: ourCreatNames[15]["category"],//"shork",
+      name: ourCreatNames[15]["exemplar"],//"shork",
       globalColors: [
       {
         p: 0.99,
@@ -492,7 +493,7 @@
           internal_prop: 0.7 // poisonous
         },
         { creature: "bug",
-        name: ourCreatNames[16]["category"],//"flay",
+        name: ourCreatNames[16]["exemplar"],//"flay",
         globalColors: [
         {
           p: 1,
@@ -516,7 +517,7 @@
           internal_prop: 0.1, // poisonous
         },
         { creature: "bug",
-        name: ourCreatNames[17]["category"],//"codger",
+        name: ourCreatNames[17]["exemplar"],//"codger",
         globalColors: [
         {
           p: 0.5,
@@ -542,7 +543,7 @@
 
       this.fishOpts1 = [
       { creature: "fish",
-      name: ourCreatNames[18]["category"],//"croop",
+      name: ourCreatNames[18]["exemplar"],//"croop",
       globalColors: [
       {
         p: 0.99,
@@ -566,7 +567,7 @@
           internal_prop: 0.8 // eaten by crocodiles
         },
         { creature: "fish",
-        name: ourCreatNames[19]["category"],//"bleb",
+        name: ourCreatNames[19]["exemplar"],//"bleb",
         globalColors: [
         {
           p: 1,
@@ -590,7 +591,7 @@
           internal_prop: 0.9 // eaten by crocodiles
         },
         { creature: "fish",
-        name: ourCreatNames[20]["category"],//"nift",
+        name: ourCreatNames[20]["exemplar"],//"nift",
         globalColors: [
         {
           p: 0.5,
@@ -616,7 +617,7 @@
 
       this.treeOpts1 = [
       { creature: "tree",
-      name: ourCreatNames[21]["category"],//"garp",
+      name: ourCreatNames[21]["exemplar"],//"garp",
       globalColors: [
       {
         p: 0.99,
@@ -640,7 +641,7 @@
           internal_prop: 0.8 // leaves
         },
         { creature: "tree",
-        name: ourCreatNames[22]["category"],//"harkel",
+        name: ourCreatNames[22]["exemplar"],//"harkel",
         globalColors: [
         {
           p: 1,
@@ -664,7 +665,7 @@
           internal_prop: 0.4 // leaves
         },
         { creature: "tree",
-        name: ourCreatNames[23]["category"],//"zord",
+        name: ourCreatNames[23]["exemplar"],//"zord",
         globalColors: [
         {
           p: 0.5,
@@ -691,8 +692,6 @@
 
     // total number of creatures
     this.creatureN = 12;
-    // number of different species
-    
     // number of each critter of a species
     this.exemplarN = this.creatureN/this.creatureTypesN;
 
