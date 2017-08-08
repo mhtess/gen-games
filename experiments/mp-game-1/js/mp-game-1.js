@@ -392,12 +392,12 @@ function init() {
 
   //blocks of the experiment:
   exp.structure=[
-    "i0",
-    "instructions",
+    //"i0",
+    //"instructions",
     // "wait_room",
     // "welcome_critterLand",
-    // "chatRoom",
-    // "test_critters",
+     "chatRoom",
+     "test_critters",
     // "structure_instruct",
     // "wait_room",
     // "welcome_critterLand",

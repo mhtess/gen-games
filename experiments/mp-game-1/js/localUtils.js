@@ -85,7 +85,7 @@ function create_table(rows, cols, display_type) { //rows * cols = number of exem
       table += "<tr>";
       table += "<td>";
       table += "<div class='critlabel' id='cell" + ind + "critlabel'>"; //critter species name + emoji
-      table += "<div class='critname' id='cell" + ind + "critname' style='float:left'></div>";
+      table += "<div class='critname' id='cell" + ind + "critname' style='float:left'></div><br>";
       table += "<div class='critname' id='cell" + ind + "internalprop' style='float: center'></div></div>";
       table += "</td><br>";
       table += "</tr>";
