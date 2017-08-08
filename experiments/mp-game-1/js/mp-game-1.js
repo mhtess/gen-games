@@ -169,7 +169,7 @@ function make_slides(f) {
         $("#cur_instructs").append(globalGame.task_welcome_critter["tree_fish"]);
         break;
       }
-      
+
       //log responses
       // make sure this works, think it should be same as test critters ??
       for (var i=0; i<this.num_creats; i++) {

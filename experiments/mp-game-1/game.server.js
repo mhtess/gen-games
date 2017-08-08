@@ -141,7 +141,6 @@ var dataOutput = function() {
   function commonOutput (client, message_data) {
     return {
       iterationName: client.game.iterationName,
-      // expid: client.game.expid,
       gameid: client.game.id,
       time: Date.now(),
       trialNum : client.game.state.roundNum + 1,
