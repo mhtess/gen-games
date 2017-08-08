@@ -123,13 +123,7 @@ function make_slides(f) {
     button : function() {
       var end_time = Date.now()
       this.time_spent = end_time - this.start_time;
-<<<<<<< HEAD
-      
-      // clears critter arrays for next time
-      allCreatures = [];
-      shuffledCritters = [];
-=======
->>>>>>> 497ded3534923bcd6983e2f824d6365fb2b561eb
+
 
       // clears table
       for (var i = 0; i < this.num_creats; i++) {
@@ -176,7 +170,7 @@ function make_slides(f) {
         $("#cur_instructs").append(globalGame.task_welcome_critter["tree_fish"]);
         break;
       }
-      
+
       //log responses
       // make sure this works, think it should be same as test critters ??
       for (var i=0; i<this.num_creats; i++) {
@@ -336,12 +330,8 @@ slides.subj_info =  slide({
         problems: $("#problems").val(),
         fairprice: $("#fairprice").val()
       };
-<<<<<<< HEAD
 
-      globalGame.socket.send("logResponse.subjInfo." + _.pairs(exp.subj_data).join('.'));
-=======
       globalGame.socket.send("logSubjInfo.subjInfo." + _.pairs(exp.subj_data).join('.'));
->>>>>>> 497ded3534923bcd6983e2f824d6365fb2b561eb
 
       exp.go();
     } //use exp.go() if and only if there is no "present" data.
