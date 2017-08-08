@@ -170,29 +170,6 @@ function make_slides(f) {
         break;
       }
 
-      //log responses
-      // make sure this works, think it should be same as test critters ??
-      for (var i=0; i<this.num_creats; i++) {
-        var dataToSend = {
-          "block_num" : exp.block,
-          //"distribution" : exp.distribution, //fix this later
-          "time_in_ms" : this.time_spent,
-          "critter" : shuffledCritters[i]["critter"],
-          "critter_num" : i,
-          "species" : shuffledCritters[i]["creatureName"],
-          "color" : shuffledCritters[i]["col1"],
-          "prop1" : shuffledCritters[i]["prop1"],
-          "prop2" : shuffledCritters[i]["prop2"],
-          "tar1" : shuffledCritters[i]["tar1"],
-          "tar2" : shuffledCritters[i]["tar2"],
-          "internal_prop" : shuffledCritters[i]["internal_prop"],
-          // will need to be changed - do what lauren fixes in test critters
-          "selected" : $('#cell' + i).css('border') == '2px solid rgb(255, 0, 0)' ? 1 : 0
-        }
-        globalGame.socket.send("logResponse.welcome_critter." + _.pairs(dataToSend).join('.'));
-
-      }
-
     },
   });
 
@@ -260,7 +237,7 @@ slides.test_critters = slide({
   for (var i=0; i<this.num_creats; i++) {
     var dataToSend = {
       "block_num" : exp.block,
-      "block": "testCritters",
+      "block_type": "testCritters",
       //"distribution" : exp.distribution, //fix this later
       "time_in_ms" : this.time_spent,
       "critter" : shuffledCritters[i]["critter"],
