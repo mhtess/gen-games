@@ -879,8 +879,7 @@ var probToCount = function(p, n){
   return Math.round(p*n);
 }
 
-game_core.prototype.createFeatureArray = function(creatureLabel, p, creatureCategory, num){ //add num as parameter too
-  var probs = [p, 1-p]
+game_core.prototype.createFeatureArray = function(creatureLabel, creatureCategory, num){ //add num as parameter too
   var creatureOpts;
   switch(creatureCategory) {
     case "bird":
@@ -905,19 +904,21 @@ game_core.prototype.createFeatureArray = function(creatureLabel, p, creatureCate
     break;
   }
 
+  // var probs = [p, 1-p]
   var creatOpts = _.filter(creatureOpts, {name: creatureLabel})[0];
   var creatureColors = [];
   var creatureLocation = [];
-  var nRemaining = this.exemplarN;
-  for (var i=0; i<2; i++ ){
+  var nRemaining = this.exemplarN; // number of exemplars in category
+  // 2 possible colors (so loop for i < 2)
+  for (var i=0; i < creatOpts.globalColors.length; i++ ){
     var colorProps = creatOpts.globalColors[i];
 
     var n_creatures_of_this_color =  probToCount(
-      probs[i], this.exemplarN
+      colorProps.p, this.exemplarN
       );
 
     var ncrit = n_creatures_of_this_color == 0 ?
-    ((probs[i] > 0) && (nRemaining > 0)) ? 1 : 0 :
+    ((colorProps.p > 0) && (nRemaining > 0)) ? 1 : 0 :
     n_creatures_of_this_color
     creatureColors = creatureColors.concat(
       fillArray(ncrit,
@@ -932,10 +933,10 @@ game_core.prototype.createFeatureArray = function(creatureLabel, p, creatureCate
   return {color: creatureColors, location: creatureLocation}
 }
 
-var distribution = _.sample([
-  [1, 1, 0.5],
-  [1, 1, 0.25]
-  ])
+// var distribution = _.sample([
+//   [1, 1, 0.5],
+//   [1, 1, 0.25]
+//   ])
 
 game_core.prototype.genCreatures = function(creatureCategory, num){ //include num as parameter
   var j = 0;
@@ -964,12 +965,12 @@ game_core.prototype.genCreatures = function(creatureCategory, num){ //include nu
       creatureOpts = this.treeOpts1
     break;
   }
-
+  // get unique labels (e.g., wug, fep, lorch); should be number of unique kinds in each block
   uniqueCreatures =  _.uniqBy(_.map(creatureOpts, "name"));
   for (var i = 0; i < uniqueCreatures.length; i++){
     var creatOpts = _.filter(creatureOpts, {name: uniqueCreatures[i]})[0];
     var creatureColor = this.createFeatureArray(
-     uniqueCreatures[i], distribution[i], creatureCategory, num
+     uniqueCreatures[i], creatureCategory, num
      );
     var localCounter = 0;
     while (j<(this.exemplarN*(i+1))) {
