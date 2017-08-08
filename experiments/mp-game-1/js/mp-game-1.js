@@ -123,13 +123,6 @@ function make_slides(f) {
     button : function() {
       var end_time = Date.now()
       this.time_spent = end_time - this.start_time;
-<<<<<<< HEAD
-      
-      // clears critter arrays for next time
-      allCreatures = [];
-      shuffledCritters = [];
-=======
->>>>>>> 497ded3534923bcd6983e2f824d6365fb2b561eb
 
       // clears table
       for (var i = 0; i < this.num_creats; i++) {
@@ -336,12 +329,8 @@ slides.subj_info =  slide({
         problems: $("#problems").val(),
         fairprice: $("#fairprice").val()
       };
-<<<<<<< HEAD
 
-      globalGame.socket.send("logResponse.subjInfo." + _.pairs(exp.subj_data).join('.'));
-=======
       globalGame.socket.send("logSubjInfo.subjInfo." + _.pairs(exp.subj_data).join('.'));
->>>>>>> 497ded3534923bcd6983e2f824d6365fb2b561eb
 
       exp.go();
     } //use exp.go() if and only if there is no "present" data.
@@ -395,7 +384,6 @@ function init() {
 
   //blocks of the experiment:
   exp.structure=[
-    "subj_info",
     "i0",
     "instructions",
     "wait_room",
@@ -417,7 +405,8 @@ function init() {
     "welcome_critterLand",
     "chatRoom",
     "test_critters",
-    'thanks'
+    'thanks',
+    "subj_info"
     ]
 
   // var start_exp = ["i0", "instructions"]
