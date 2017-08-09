@@ -56,6 +56,7 @@ var client_onMessage = function(data) {
       case 'end' :
         // Redirect to exit survey only if it is not the last round
         if(globalGame.roundNum < globalGame.numRounds || globalGame.numRounds == null) {
+          $('#thanks').hide();
           ondisconnect();
           console.log("received end message...");
         }
