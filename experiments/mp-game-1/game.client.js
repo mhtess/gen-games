@@ -138,7 +138,7 @@ var customSetup = function(game) {
   // this may be able to be done by modifying the slides e.g., exp.slides.learning_trial.present
   game.socket.on('exitChatRoom', function(data){
     console.log("exitChatRoom")
-    console.log(data)
+    // console.log(data)
     exp.slides.test_critters.crittersFromServer = data.thisRoundTest;
     exp.slides.learning_critters.crittersFromServer = data.nextRoundLearning;
 

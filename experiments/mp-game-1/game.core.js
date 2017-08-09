@@ -97,6 +97,14 @@
   // Determines the specifics of the critters used in the experiment. Can be probabilistic
   // Change this to change distribution, critter type, names of species, and critter characteristics
   this.critterScale = 0.5;
+
+  this.distributions = [
+    [0, 0, 1],
+    [0.5, 0.5, 0.5],
+    [0, 0.25, 1],
+    [0, 0, 0.25]
+  ];
+
   this.birdOpts0 = [
   { creature: "bird",
   name: ourCreatNames[0]["exemplar"],//"wug",
@@ -773,21 +781,37 @@
     this.expName = options.expName;
     this.player_count = options.player_count;
 
+    var playerDistributions = {
+      A: _.shuffle(this.distributions),
+      B: _.shuffle(this.distributions)
+    };
+
     // needs to be generalized
     // determines what critters will be used and who sees what when
-    var bugCritters0 = this.genCreatures("bug",0);
-    var birdCritters0 = this.genCreatures("bird",0);
-    var fishCritters0 = this.genCreatures("fish",0);
-    //var flowerCritters0 = this.genCreatures("flower",0);
-    var treeCritters0 = this.genCreatures("tree",0);
-    var bugCritters1 = this.genCreatures("bug",1);
-    var birdCritters1 = this.genCreatures("bird",1);
-    var fishCritters1 = this.genCreatures("fish",1);
-    //var flowerCritters1 = this.genCreatures("flower",1);
-    var treeCritters1 = this.genCreatures("tree",1);
-    var aOrder = [fishCritters0, bugCritters0, treeCritters1, birdCritters1];
-    var bOrder = [treeCritters0, birdCritters0, fishCritters1, bugCritters1];
+    var critterOrders = {
+      A: ["fish", "bug", "tree", "bird"],
+      B: ["tree", "bird", "fish", "bug"]
+    }
+    var aOrder = [], bOrder = [];
+    for (i = 0; i<playerDistributions.A.length; i++){
+      // console.log(playerDistributions.A[i])
+      aOrder.push(
+        this.genCreatures(critterOrders.A[i],
+          0,
+          playerDistributions.A[i])
+        )
 
+        // console.log(playerDistributions.B[i])
+
+      bOrder.push(
+        this.genCreatures(critterOrders.B[i],
+          1,
+          playerDistributions.B[i])
+        )
+
+    }
+
+    // console.log(aOrder)
     // assigns the critters to their respective players
     this.trialList = {
       playerA: aOrder,
@@ -937,12 +961,22 @@ game_core.prototype.createFeatureArray = function(creatureLabel, creatureCategor
   return {color: creatureColors, location: creatureLocation}
 }
 
-// var distribution = _.sample([
-//   [1, 1, 0.5],
-//   [1, 1, 0.25]
-//   ])
 
-game_core.prototype.genCreatures = function(creatureCategory, num){ //include num as parameter
+game_core.prototype.representativeFlip = function(p, n){
+  var creatureBooleans = [];
+  var n_creatures_w_feature =  probToCount(p, n);
+  var ncrit = n_creatures_w_feature == 0 ?
+      (p > 0) ? 1 : 0 :
+        n_creatures_w_feature
+  creatureBooleans = creatureBooleans.concat(
+      fillArray(ncrit, 1),
+      fillArray(n - ncrit, 0)
+      )
+  return _.shuffle(creatureBooleans)
+}
+
+
+game_core.prototype.genCreatures = function(creatureCategory, num, interval_feature_probs){ //include num as parameter
   var j = 0;
   // Generates the characteristics for each critter
   var allCreatures = [];
@@ -973,9 +1007,12 @@ game_core.prototype.genCreatures = function(creatureCategory, num){ //include nu
   uniqueCreatures =  _.uniqBy(_.map(creatureOpts, "name"));
   for (var i = 0; i < uniqueCreatures.length; i++){
     var creatOpts = _.filter(creatureOpts, {name: uniqueCreatures[i]})[0];
+    console.log(uniqueCreatures[i])
     var creatureColor = this.createFeatureArray(
      uniqueCreatures[i], creatureCategory, num
      );
+    //  console.log(creatureColor)
+    var n_with_feature =  this.representativeFlip(interval_feature_probs[i], this.exemplarN);
     var localCounter = 0;
     while (j<(this.exemplarN*(i+1))) {
      allCreatures.push({
@@ -992,7 +1029,7 @@ game_core.prototype.genCreatures = function(creatureCategory, num){ //include nu
       "creatureName": uniqueCreatures[i],
       "critter" : creatureCategory,
       "stimID": j,
-      "internal_prop": utils.flip(creatOpts.internal_prop),
+      "internal_prop": n_with_feature[j % this.exemplarN],
       "creatureOpts": creatureOpts,
       "critter_full_info": creatOpts
     })
@@ -1038,10 +1075,10 @@ game_core.prototype.server_send_update = function(){
   _.extend(state, {instructions: this.instructions});
   //Send the snapshot to the players
   this.state = state;
-  console.log(local_game.get_active_players())
+  // console.log(local_game.get_active_players())
   _.map(local_game.get_active_players(), function(p){
-    console.log(p.instance.role)
-    p.instance.role ? console.log(local_game.trialList[p.instance.role][0][0]): null
+    // console.log(p.instance.role)
+    // p.instance.role ? console.log(local_game.trialList[p.instance.role][0][0]): null
     var playerState = p.instance.role ? _.extend(state,
     {
       initialLearningCritters: local_game.trialList[p.instance.role][0]
