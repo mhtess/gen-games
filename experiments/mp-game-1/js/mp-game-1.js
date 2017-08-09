@@ -52,8 +52,8 @@ function make_slides(f) {
   });
 
   // This is the learning slide in which users will uncover information about the critters
-  slides.welcome_critterLand = slide({
-    name : "welcome_critterLand",
+  slides.learning_critters = slide({
+    name : "learning_critters",
     crittersFromServer : "",
     start : function(stim) {
 
@@ -146,9 +146,9 @@ slides.learning_instructions = slide({
   name : "learning_instructions",
   start : function() {
     // send signal to server to send stimuli
-    globalGame.socket.send("enterSlide.welcome_critterLand.");
+    globalGame.socket.send("enterSlide.learning_critters.");
 
-    this.creat_type = exp.slides.welcome_critterLand.crittersFromServer
+    this.creat_type = exp.slides.learning_critters.crittersFromServer
 [0]["critter"];
 
     switch (this.creat_type) {
@@ -171,7 +171,7 @@ slides.test_instructions = slide({
     // send signal to server to send stimuli
     globalGame.socket.send("enterSlide.test_critters.");
 
-    this.creat_type = exp.slides.welcome_critterLand.crittersFromServer
+    this.creat_type = exp.slides.learning_critters.crittersFromServer
 [0]["critter"];
   $('#test_instructs').html(
     "<br>On the next slide, you will select the " +
@@ -354,7 +354,7 @@ function init() {
 
   // learning - chat - test rounds
   var roundGenerator = function(num) {
-    array1 = ["wait_room", "welcome_critterLand", "chatRoom", "test_critters", "structure_instruct"]
+    array1 = ["wait_room", "learning_critters", "chatRoom", "test_critters", "structure_instruct"]
     while (num != 1) {
       array1.push.apply(array1, array1);
       num --;
@@ -369,25 +369,25 @@ function init() {
     // "instructions",
     "wait_room",
     "learning_instructions",
-    "welcome_critterLand",
+    "learning_critters",
     "chatRoom",
     "test_instructions",
     "test_critters",
     "wait_room",
     "learning_instructions",
-    "welcome_critterLand",
+    "learning_critters",
     "chatRoom",
     "test_instructions",
     "test_critters",
     "wait_room",
     "learning_instructions",
-    "welcome_critterLand",
+    "learning_critters",
     "chatRoom",
     "test_instructions",
     "test_critters",
     "wait_room",
     "learning_instructions",
-    "welcome_critterLand",
+    "learning_critters",
     "chatRoom",
     "test_instructions",
     "test_critters",
