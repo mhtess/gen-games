@@ -87,32 +87,11 @@ function make_slides(f) {
 
         $('#cell'+i+'critname').html(shuffledCritters[i]["creatureName"]);
 
-        switch(shuffledCritters[i]["critter"]) {
-          case 'bird':
-          $('#internalprops_instruct').html(globalGame.critter_instructions["bird"]["internal_prop_instruct"]);
-          if (shuffledCritters[i]["internal_prop"]) {
-            $('#cell'+i+'internalprop').html(globalGame.critter_instructions["bird"]["internal_prop_symbol"]);
-          }
-          break;
-          case 'bug':
-          $('#internalprops_instruct').html(globalGame.critter_instructions["bug"]["internal_prop_instruct"])
-          if (shuffledCritters[i]["internal_prop"]) {
-            $('#cell'+i+'internalprop').html(globalGame.critter_instructions["bug"]["internal_prop_symbol"]);
-          }
-          break;
-          case 'fish':
-          $('#internalprops_instruct').html(globalGame.critter_instructions["fish"]["internal_prop_instruct"])
-          if (shuffledCritters[i]["internal_prop"]) {
-            $('#cell'+i+'internalprop').html(globalGame.critter_instructions["fish"]["internal_prop_symbol"]);
-          }
-          break;
-          case 'tree':
-          $('#internalprops_instruct').html(globalGame.critter_instructions["tree"]["internal_prop_instruct"])
-          if (shuffledCritters[i]["internal_prop"]) {
-            $('#cell'+i+'internalprop').html(globalGame.critter_instructions["tree"]["internal_prop_symbol"]);
-          }
-          break;
+        $('#internalprops_instruct').html(globalGame.critter_instructions[shuffledCritters[i]["critter"]]["internal_prop_instruct"]);
+        if (shuffledCritters[i]["internal_prop"]) {
+          $('#cell'+i+'internalprop').html(globalGame.critter_instructions[shuffledCritters[i]["critter"]]["internal_prop_symbol"]);
         }
+
         $('#cell'+i+'internalprop').css({'opacity': 0});
 
       }
@@ -200,20 +179,7 @@ slides.test_critters = slide({
    $('#test_cond').show();
 
    $('#test_cond').html("<br>On the next slide, you will choose the ");
-   switch (this.creat_type) {
-    case 'bird':
-    $("#test_cond").append(globalGame.critter_instructions["bird"]["test_instruct"]);
-    break;
-    case 'bug':
-    $("#test_cond").append(globalGame.critter_instructions["bug"]["test_instruct"]);
-    break;
-    case 'fish':
-    $("#test_cond").append(globalGame.critter_instructions["fish"]["test_instruct"]);
-    break;
-    case 'tree':
-    $("#test_cond").append(globalGame.critter_instructions["tree"]["test_instruct"]);
-    break;
-  }
+   $("#test_cond").append(globalGame.critter_instructions[this.creat_type]["test_instruct"]);
 
     // Generates critters for test phase
     create_table(globalGame.presentRows,globalGame.presentCols,"critter_test_display");
