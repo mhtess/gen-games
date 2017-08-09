@@ -63,8 +63,7 @@ function make_slides(f) {
     start : function(stim) {
 
       // The hide / show is so we can put more specific (to which critter they see) instructions
-      $("#cur_instructs").hide();
-      $("#instru_button").hide();
+      // Note: do we need all these show() statements?
       $("#welcome").show();
       $("#meeting").show();
       $("#internalprops_instruct").show();
@@ -75,7 +74,6 @@ function make_slides(f) {
 
       $(".critname").hide();
       $(".err").hide();
-      $("#learning_button").hide();
 
       allCreatures = this.crittersFromServer;
       shuffledCritters = _.shuffle(allCreatures)
