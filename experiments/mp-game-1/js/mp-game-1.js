@@ -370,6 +370,7 @@ function init() {
     "wait_room",
     "learning_instructions",
     "learning_critters",
+    "chat_instructions",
     "chatRoom",
     "test_instructions",
     "test_critters",
