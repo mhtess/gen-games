@@ -28,15 +28,10 @@ var getURLParams = function() {
         'compensation.</p> <p>If you experience any problems, please email us (',
         email, ')</p>'
       ].join('');
-      var successMsg = [
-        "<h3>Thanks for participating in our experiment!</h3>",
-        "<p>Before you submit your HIT, we'd like to ask you a few questions.</p>"
-      ].join('');
 
-      if(globalGame.roundNum == globalGame.numRounds) {
-        $('#subj_info').prepend(successMsg);
-      } else {
+      if(globalGame.roundNum != globalGame.numRounds) {
         $('#subj_info').prepend(failMsg);
+        $('#thanks').hide();
       }
 
       $('#message_panel').hide();
