@@ -61,6 +61,7 @@ function make_slides(f) {
     name : "welcome_critterLand",
     crittersFromServer : "",
     start : function(stim) {
+
       // The hide / show is so we can put more specific (to which critter they see) instructions
       $("#cur_instructs").hide();
       $("#instru_button").hide();
@@ -70,11 +71,12 @@ function make_slides(f) {
       $("#critter_display").show();
       $("#learning_button").show();
       this.start_time = Date.now()
-      globalGame.socket.send("enterSlide.welcome_critterLand.");
       this.stim = stim;
+
       $(".critname").hide();
       $(".err").hide();
       $("#learning_button").hide();
+
       allCreatures = this.crittersFromServer;
       shuffledCritters = _.shuffle(allCreatures)
 
@@ -142,26 +144,34 @@ function make_slides(f) {
 
       allCreatures = [];
       shuffledCritters = [];
-
-      // Hide / show allows for specific instructions
-      $("#welcome").hide();
-      $("#meeting").hide();
-      $("#internalprops_instruct").hide();
-      $("#critter_display").hide();
-      $("#learning_button").hide();
-      $("#cur_instructs").show();
-      $("#instru_button").show();
-      switch (this.creat_type) {
-        case 'bird': case 'bug':
-        $("#cur_instructs").append(globalGame.task_welcome_critter["bird_bug"]);
-        break;
-        case 'tree': case 'fish':
-        $("#cur_instructs").append(globalGame.task_welcome_critter["tree_fish"]);
-        break;
-      }
+      exp.go()
 
     },
   });
+
+slides.learning_instructions = slide({
+  name : "learning_instructions",
+  start : function() {
+    // send signal to server to send stimuli
+    globalGame.socket.send("enterSlide.welcome_critterLand.");
+
+    this.creat_type = exp.slides.welcome_critterLand.crittersFromServer
+[0]["critter"];
+
+    switch (this.creat_type) {
+      case 'bird': case 'bug':
+      $("#learning_instructs").html(globalGame.task_welcome_critter["bird_bug"]);
+      break;
+      case 'tree': case 'fish':
+      $("#learning_instructs").html(globalGame.task_welcome_critter["tree_fish"]);
+      break;
+    }
+  },
+  button : function() {
+    exp.go()
+  }
+})
+
 
 // Generates critters that the partner learned about and tests the user
 slides.test_critters = slide({
@@ -287,7 +297,7 @@ slides.subj_info =  slide({
       exp.subj_data = {
         language : $("#language").val(),
         enjoyment : $("#enjoyment").val(),
-        asses : $('input[name="assess"]:checked').val(),
+        assess : $('input[name="assess"]:checked').val(),
         age : $("#age").val(),
         gender : $("#gender").val(),
         education : $("#education").val(),
@@ -296,7 +306,7 @@ slides.subj_info =  slide({
         fairprice: $("#fairprice").val()
       };
 
-      globalGame.socket.send("logSubjInfo.subjInfo." + _.pairs(exp.subj_data).join('.'));
+      globalGame.socket.send("logSubjInfo.subjInfo." + _.pairs(encodeData(exp.subj_data)).join('.'));
 
       exp.go();
     } //use exp.go() if and only if there is no "present" data.
@@ -361,21 +371,25 @@ function init() {
     // "i0",
     // "instructions",
     "wait_room",
+    "learning_instructions",
     "welcome_critterLand",
     "chatRoom",
     "test_critters",
     "structure_instruct",
     "wait_room",
+    "learning_instructions",
     "welcome_critterLand",
     "chatRoom",
     "test_critters",
     "structure_instruct",
     "wait_room",
+    "learning_instructions",
     "welcome_critterLand",
     "chatRoom",
     "test_critters",
     "structure_instruct",
     "wait_room",
+    "learning_instructions",
     "welcome_critterLand",
     "chatRoom",
     "test_critters",

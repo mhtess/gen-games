@@ -104,14 +104,17 @@
 
   <!-- This is the learning slide in which users will uncover information about the critters -->
   <div class="slide" id="welcome_critterLand">
-    <!-- <h3 id="welcome">Welcome to Critter Country</h3><br> -->
-    <!-- <p id="meeting" style='font-size: 19px'>Meet the Critters of Critter Country. Here are some of the different wildlife you encounter.</p> -->
     <p id="internalprops_instruct"></p>
     <div id='critter_display'></div>
     <br>
     <button class="continuebutton" id="learning_button" onclick="_s.button()">Continue</button>
     <div id="cur_instructs"></div><br>
-    <button class="continuebutton" id="instru_button" onclick="exp.go()">Continue</button>
+  </div>
+
+  <div class="slide" id="learning_instructions">
+    <br><br>
+    <div id="learning_instructs"></div><br>
+    <button class="continuebutton" id="instru_button" onclick="_s.button()">Continue</button>
   </div>
 
   <!-- Generates critters that the partner learned about and tests the user -->
@@ -158,11 +161,57 @@
   <div class="slide"  id="subj_info">
     <div class="long_form">
       <div class="subj_info_title">Additional information</div>
-      <p>Answering these questions is optional, but will help us understand your answers.</p>
-      <p>Did you read the instructions and do you think you did the HIT correctly?</p>
+
+      <h3> Thanks for participating in our experiment! </h3>
+      <h3> Before you submit your HIT, we'd like to ask you a few questions. </h3>
+
+      <!-- <p>Did you read the instructions and do you think you did the HIT correctly?</p>
       <label><input type="radio"  name="assess" value="No"/>No</label>
       <label><input type="radio"  name="assess" value="Yes"/>Yes</label>
-      <label><input type="radio"  name="assess" value="Confused"/>I was confused</label>
+      <label><input type="radio"  name="assess" value="Confused"/>I was confused</label> -->
+
+      <p> Did you read the instructions and do you think you did the
+    HIT correctly? </p>
+      <select onChange="dropdownTip('confused::' + this.value)">
+        <option value = ""></option>
+        <option value="yes">Yes</option>
+        <option value="no">No</option>
+        <option value="confused">I was confused</option>
+      </select>
+
+
+      <br><br><br>
+      <p> How would you describe the strategy you used in this experiment? </p>
+      <textarea id='strategy' rows="4" cols="50"></textarea>
+
+
+
+      <p> Did you believe you were playing against another human player? </p>
+      <select onChange="dropdownTip('human::' + this.value)">
+    <option value=""></option>
+    <option value="yes">Yes, I thought they were a human</option>
+    <option value="no">No, I thought it was a computer program</option>
+      </select>
+      <p id='humanResult' style="display:none;color:red"> Thank you for your response -- in fact, all players were paired with other human turkers! <p>
+
+
+
+        <p> Are you a native English speaker? </p>
+        <select onChange="dropdownTip('language::' + this.value)">
+      <option value = ""></option>
+      <option value="yes">Yes</option>
+      <option value="no">No</option>
+        </select>
+
+        <p> How much did you like working with your partner? </p>
+        <select onChange="dropdownTip('partner::' + this.value)">
+          <option value = ""></option>
+          <option value="not much">Not that much</option>
+          <option value="okay">My partner was fine</option>
+          <option value="liked">I liked working with my partner</option>
+          <option value="loved">I really enjoyed working with my partner</option>
+        </select>
+        <br><br>
 
       <p>Were there any problems or bugs in the experiment?</p>
       <textarea id="problems" rows="2" cols="50" spellcheck=false></textarea>
@@ -192,9 +241,6 @@
         </select>
       </p>
 
-      <p>Native Language: <input type="text" id="language"/></p>
-      <label>(the language(s) spoken at home when you were a child)</label>
-
       <p>Did you enjoy the hit?</p>
       <select id="enjoyment">
         <label><option value="-1"></option></label>
@@ -209,6 +255,7 @@
       <button class="continuebutton" onclick="_s.submit()">Submit</button>
     </div>
   </div>
+
   <!-- Generic thanks page that collects some data -->
   <div id="thanks" class="slide js" >
     <p  class="big">Thanks for your Time!</p>
