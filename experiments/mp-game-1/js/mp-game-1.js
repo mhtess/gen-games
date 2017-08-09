@@ -184,6 +184,17 @@ slides.test_instructions = slide({
   }
 })
 
+slides.chat_instructions = slide({
+  name : "chat_instructions",
+  start : function() {
+    // send signal to server to send stimuli
+    globalGame.socket.send("enterSlide.test_critters.");
+  },
+  button : function() {
+    exp.go()
+  }
+})
+
 // Generates critters that the partner learned about and tests the user
 slides.test_critters = slide({
  name : "test_critters",
