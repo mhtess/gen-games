@@ -31,7 +31,7 @@ function make_slides(f) {
       console.log('start of wait_room')
       globalGame.socket.send("enterSlide.wait_room.");
       $(".err").hide();
-      if(exp.block == 0) 
+      if(exp.block == 0)
         $("#waitText").append("Waiting for another player to connect...")
       else
         $("#waitText").append("Waiting for your partner to catch up...")
@@ -125,7 +125,7 @@ function make_slides(f) {
           "tar2" : shuffledCritters[i]["tar2"],
           "internal_prop" : shuffledCritters[i]["internal_prop"]
         }
-        globalGame.socket.send("logTrain.learnCritters." + _.pairs(dataToSend).join('.'));
+        globalGame.socket.send("logTrain.learnCritters." + _.pairs(encodeData(dataToSend)).join('.'));
 
         $('#critter' + i).empty();
         $('#cell' + i).css({'opacity': '1'});
@@ -376,7 +376,7 @@ function init() {
 
   // var start_exp = ["i0", "instructions"]
   // // change this as you please - plus find way to make one globalGame.numRounds
-  // var middle_exp = roundGenerator(1) 
+  // var middle_exp = roundGenerator(1)
   // var end_exp = ['subj_info','thanks']
   // start_exp.push.apply(start_exp, middle_exp)
   // start_exp.pop();
