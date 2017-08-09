@@ -92,29 +92,19 @@
     <button class="continuebutton" id='waitCont'>Continue</button>
   </div>
 
-  <!-- This slide will alert the player about what is to come -->
-  <div class="slide" id="structure_instruct">
-    <br><br>
-    <p>You will now learn about another species in Critter Country.</p>
-    <br>
-    <p>After, you will chat with your partner and teach them about what you learned. They will teach you about the species they learned about, too. Then you will be given another task to help preserve the wonderful Critter Country.</p>
-    <br><br>
-    <button class="continuebutton" onclick='_s.button()'>Continue</button>
-  </div>
 
   <!-- This is the learning slide in which users will uncover information about the critters -->
-  <div class="slide" id="welcome_critterLand">
+  <div class="slide" id="learning_critters">
     <p id="internalprops_instruct"></p>
     <div id='critter_display'></div>
     <br>
     <button class="continuebutton" id="learning_button" onclick="_s.button()">Continue</button>
-    <div id="cur_instructs"></div><br>
   </div>
 
   <div class="slide" id="learning_instructions">
     <br><br>
     <div id="learning_instructs"></div><br>
-    <button class="continuebutton" id="instru_button" onclick="_s.button()">Continue</button>
+    <button onclick="_s.button()">Continue</button>
   </div>
 
   <div class="slide" id="test_instructions">
@@ -147,7 +137,7 @@
         <hr>
         <div id="chatarea">
           <form action="">
-            <input id="chatbox" autocomplete="off" autocorrect="off" spellcheck="false"/>
+            <input id="chatbox" autocomplete="off" />
             <button id="chatbutton">Send</button>
           </form>
         </div>

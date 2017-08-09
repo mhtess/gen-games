@@ -29,14 +29,18 @@ function make_slides(f) {
     name: "wait_room",
     start: function() {
       console.log('start of wait_room')
+      $("#waitText").empty();
+
       globalGame.socket.send("enterSlide.wait_room.");
+      globalGame.socket.send("enterWaitRoom.");
+
       $(".err").hide();
       if(exp.block == 0)
         $("#waitText").append("Waiting for another player to connect...")
       else
         $("#waitText").append("Waiting for your partner to catch up...")
       $("#waitCont").hide();
-      globalGame.socket.send("enterWaitRoom.");
+
       var blinking_wait = setInterval(function() {
         $("#waitText").fadeOut(1000);
         $("#waitText").fadeIn(1000);
@@ -47,24 +51,14 @@ function make_slides(f) {
     }
   });
 
-  slides.structure_instruct = slide({
-    name: "structure_instruct",
-    button : function() {
-      $("#waitText").empty();
-      exp.go();
-    }
-  })
-
-
   // This is the learning slide in which users will uncover information about the critters
-  slides.welcome_critterLand = slide({
-    name : "welcome_critterLand",
+  slides.learning_critters = slide({
+    name : "learning_critters",
     crittersFromServer : "",
     start : function(stim) {
 
       // The hide / show is so we can put more specific (to which critter they see) instructions
-      $("#cur_instructs").hide();
-      $("#instru_button").hide();
+      // Note: do we need all these show() statements?
       $("#welcome").show();
       $("#meeting").show();
       $("#internalprops_instruct").show();
@@ -75,7 +69,6 @@ function make_slides(f) {
 
       $(".critname").hide();
       $(".err").hide();
-      $("#learning_button").hide();
 
       allCreatures = this.crittersFromServer;
       shuffledCritters = _.shuffle(allCreatures)
@@ -153,9 +146,9 @@ slides.learning_instructions = slide({
   name : "learning_instructions",
   start : function() {
     // send signal to server to send stimuli
-    globalGame.socket.send("enterSlide.welcome_critterLand.");
+    globalGame.socket.send("enterSlide.learning_critters.");
 
-    this.creat_type = exp.slides.welcome_critterLand.crittersFromServer
+    this.creat_type = exp.slides.learning_critters.crittersFromServer
 [0]["critter"];
 
     switch (this.creat_type) {
@@ -178,7 +171,7 @@ slides.test_instructions = slide({
     // send signal to server to send stimuli
     globalGame.socket.send("enterSlide.test_critters.");
 
-    this.creat_type = exp.slides.welcome_critterLand.crittersFromServer
+    this.creat_type = exp.slides.test_critters.crittersFromServer
 [0]["critter"];
   $('#test_instructs').html(
     "<br>On the next slide, you will select the " +
@@ -361,7 +354,7 @@ function init() {
 
   // learning - chat - test rounds
   var roundGenerator = function(num) {
-    array1 = ["wait_room", "welcome_critterLand", "chatRoom", "test_critters", "structure_instruct"]
+    array1 = ["wait_room", "learning_critters", "chatRoom", "test_critters", "structure_instruct"]
     while (num != 1) {
       array1.push.apply(array1, array1);
       num --;
@@ -376,28 +369,25 @@ function init() {
     // "instructions",
     "wait_room",
     "learning_instructions",
-    "welcome_critterLand",
+    "learning_critters",
     "chatRoom",
     "test_instructions",
     "test_critters",
-    "structure_instruct",
     "wait_room",
     "learning_instructions",
-    "welcome_critterLand",
+    "learning_critters",
     "chatRoom",
     "test_instructions",
     "test_critters",
-    "structure_instruct",
     "wait_room",
     "learning_instructions",
-    "welcome_critterLand",
+    "learning_critters",
     "chatRoom",
     "test_instructions",
     "test_critters",
-    "structure_instruct",
     "wait_room",
     "learning_instructions",
-    "welcome_critterLand",
+    "learning_critters",
     "chatRoom",
     "test_instructions",
     "test_critters",
