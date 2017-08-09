@@ -39,7 +39,7 @@ var client_onserverupdate_received = function(data){
   }
 
   var myCritters = data.initialLearningCritters;
-  exp.slides.welcome_critterLand.crittersFromServer = myCritters;
+  exp.slides.learning_critters.crittersFromServer = myCritters;
 };
 
 // gets messages from the server/game file, parses them
@@ -86,7 +86,7 @@ var client_onMessage = function(data) {
            })[0];
            upperLeftX = objToHighlight.listenerCoords.gridPixelX;
            upperLeftY = objToHighlight.listenerCoords.gridPixelY;
-          } 
+          }
           if (upperLeftX != null && upperLeftY != null) {
             globalGame.ctx.beginPath();
             globalGame.ctx.lineWidth="10";
@@ -95,19 +95,19 @@ var client_onMessage = function(data) {
             globalGame.ctx.stroke();
           }
           break;
-      
+
       // Not in database, so you can't play...
       case 'alert' :
         alert('You did not enter an ID');
         window.location.replace('http://nodejs.org'); break;
 
       //join a game requested
-      case 'join' : 
+      case 'join' :
         var num_players = commanddata;
         client_onjoingame(num_players, commands[3]); break;
 
       // New player joined... Need to add them to our list.
-      case 'add_player' : 
+      case 'add_player' :
         console.log("adding player" + commanddata);
         console.log("cancelling timeout");
         clearTimeout(globalGame.timeoutID);
@@ -133,20 +133,20 @@ var customSetup = function(game) {
     $('#roundnumber').empty();
   });
 
-  // here we will want to set the subject's stimuli (that are coming in data) to be what gets presented. 
+  // here we will want to set the subject's stimuli (that are coming in data) to be what gets presented.
   // this may be able to be done by modifying the slides e.g., exp.slides.learning_trial.present
   game.socket.on('exitChatRoom', function(data){
     console.log("exitChatRoom")
     console.log(data)
     exp.slides.test_critters.crittersFromServer = data.thisRoundTest;
-    exp.slides.welcome_critterLand.crittersFromServer = data.nextRoundLearning;
+    exp.slides.learning_critters.crittersFromServer = data.nextRoundLearning;
 
     globalGame.roundNum = data['currentRoundNum'];
     exp.go();
   });
 
   // Means both players are in the wait room, results in moving to next slide
-  // Most code is so the the first player who gets there will see "Connected!" on 
+  // Most code is so the the first player who gets there will see "Connected!" on
   // the tab when the second player enters. This will allow users to konw when they can move forward
   game.socket.on('enterWaitRoom', function(data){
     $('#chatbox').val('');
@@ -192,7 +192,7 @@ var customSetup = function(game) {
     //     $("#waiting").fadeOut(1000);
     //     $("#waiting").fadeIn(1000);
     //   }
-      
+
     // }, 2500);
   });
 
@@ -214,7 +214,7 @@ var customSetup = function(game) {
 
   game.socket.on('enterTestPage', function(data){
     exp.slides.test_critters.crittersFromServer = data.thisRoundTest;
-    exp.slides.welcome_critterLand.crittersFromServer = data.nextRoundLearning;
+    exp.slides.learning_critters.crittersFromServer = data.nextRoundLearning;
     exp.go();
   });
 
