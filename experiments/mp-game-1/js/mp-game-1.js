@@ -172,6 +172,24 @@ slides.learning_instructions = slide({
   }
 })
 
+slides.test_instructions = slide({
+  name : "test_instructions",
+  start : function() {
+    // send signal to server to send stimuli
+    globalGame.socket.send("enterSlide.test_critters.");
+
+    this.creat_type = exp.slides.welcome_critterLand.crittersFromServer
+[0]["critter"];
+  $('#test_instructs').html(
+    "<br>On the next slide, you will select the " +
+    globalGame.critter_instructions[this.creat_type]["test_instruct"]
+  );
+
+  },
+  button : function() {
+    exp.go()
+  }
+})
 
 // Generates critters that the partner learned about and tests the user
 slides.test_critters = slide({
@@ -182,25 +200,11 @@ slides.test_critters = slide({
  start : function() {
 
    this.start_time = Date.now()
-   globalGame.socket.send("enterSlide.test_critters.");
    $(".err").hide();
    allCreatures = this.crittersFromServer;
    shuffledCritters = _.shuffle(allCreatures)
    this.num_creats = allCreatures.length;
    this.creat_type = shuffledCritters[0]["critter"];
-
-   // Creating a specific instructions view
-   $("#collect").hide();
-   $("#chooseCrit").hide();
-   $("#critter_test_display").hide();
-   $("#test_button").hide();
-   $("#next_button").show();
-   $('#test_cond').show();
-
-   $('#test_cond').html(
-     "<br>On the next slide, you will select the " +
-     globalGame.critter_instructions[this.creat_type]["test_instruct"]
-   );
 
     // Generates critters for test phase
     create_table(globalGame.presentRows,globalGame.presentCols,"critter_test_display");
@@ -374,24 +378,28 @@ function init() {
     "learning_instructions",
     "welcome_critterLand",
     "chatRoom",
+    "test_instructions",
     "test_critters",
     "structure_instruct",
     "wait_room",
     "learning_instructions",
     "welcome_critterLand",
     "chatRoom",
+    "test_instructions",
     "test_critters",
     "structure_instruct",
     "wait_room",
     "learning_instructions",
     "welcome_critterLand",
     "chatRoom",
+    "test_instructions",
     "test_critters",
     "structure_instruct",
     "wait_room",
     "learning_instructions",
     "welcome_critterLand",
     "chatRoom",
+    "test_instructions",
     "test_critters",
     "subj_info",
     'thanks',
