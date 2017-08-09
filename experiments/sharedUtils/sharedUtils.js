@@ -380,6 +380,10 @@ var myColor = function(mean, variance) {
     return  "#" + newColor;
 }
 
+function isNumeric(n) {
+  return !isNaN(parseFloat(n)) && isFinite(n);
+}
+
 
 
 module.exports = {
@@ -404,5 +408,6 @@ module.exports = {
   randProp,
   genColor,
   flip,
-  generateAttentionQuestion
+  generateAttentionQuestion,
+  isNumeric
 };

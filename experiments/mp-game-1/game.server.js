@@ -150,6 +150,16 @@ var dataOutput = function() {
     };
   };
 
+  function decodeData(dataObj){
+    return _.mapValues(dataObj, function(val){
+      if (utils.isNumeric(val)) {
+        return val
+      } else {
+        return val.replace("&", ".")
+      }
+    })
+  }
+
   function flattenedArrayToObj(m_data){
     return _.fromPairs(_.map(m_data, function(i){return i.split(',')}))
   }
@@ -159,7 +169,7 @@ var dataOutput = function() {
     // message_data contrains the flattened JSON object with test trial info.
     return _.extend(
       commonOutput(client, message_data),
-      flattenedArrayToObj(message_data.slice(2))
+      decodeData(flattenedArrayToObj(message_data.slice(2)))
     );
   };
 
