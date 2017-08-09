@@ -272,9 +272,7 @@ slides.test_critters = slide({
 
   }
 
-  globalGame.socket.send("testScore." + _.pairs(calculateScore()).join('.'));
-
-
+  globalGame.socket.send("sendingTestScores." + globalGame.my_role + "." + _.pairs(calculateScore()).join('.'));
 
 
   // empties the critter arrays so they can be repopulated without overlap
@@ -294,6 +292,10 @@ slides.test_critters = slide({
   exp.go(); // use exp.go() if and only if there is no "present" data.
 
   }
+});
+
+slides.scoreReport = slide({
+
 });
 
 // Connected players can discuss what they have learned in 'welcome_critter' here using a chatbox
@@ -393,10 +395,10 @@ function init() {
   exp.structure=[
     // "i0",
     // "instructions",
-    "wait_room",
-    "learning_instructions",
-    "learning_critters",
-    "chat_instructions",
+    //"wait_room",
+    //"learning_instructions",
+    //"learning_critters",
+    //"chat_instructions",
     "chatRoom",
     "test_instructions",
     "test_critters",

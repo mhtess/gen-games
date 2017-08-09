@@ -219,6 +219,14 @@ var customSetup = function(game) {
     exp.go();
   });
 
+  game.socket.on('sendingTestScores', function(data){
+    console.log("sendingTestScores")
+    console.log("scores: " + JSON.stringify(data))
+    //exp.slides.test_critters.crittersFromServer = data.thisRoundTest;
+      
+    //exp.go();
+  });
+
   // initialize experiment_template
   init()
 };

@@ -125,8 +125,31 @@ var onMessage = function(client,message) {
       target.visible = message_parts[1];
       break;
 
-    case 'testScore' :
+    case 'sendingTestScores' :
+       var scoreObj = _.fromPairs(_.map(
+        message_parts.slice(2), // get relevant part of message 
+        function(i){return i.split(',')}))
+
+      gc.testScores[target.instance.role].push(scoreObj);
+
       //input something here
+      //console.log("message_parts: "  + message_parts);
+      // if(gc.currentSlide["playerA"] == gc.currentSlide["playerB"]) {
+      //   _.map(all, function(p) {
+      //     p.player.instance.emit("sendingTestScores", {message_parts});
+      //   });
+      //   //console.log(message_parts);
+      // }
+
+      // if (gc.currentSlide["playerA"] == gc.currentSlide["playerB"]) {
+        //var msg = message_parts[1].replace(/~~~/g,'.');
+        setTimeout(function() {
+          _.map(all, function(p){
+            p.player.instance.emit("sendingTestScores", 
+              gc.testScores)
+          });
+        }, 300);
+      // }
       break;
   }
 };
