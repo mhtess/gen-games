@@ -117,15 +117,19 @@
     <button class="continuebutton" id="instru_button" onclick="_s.button()">Continue</button>
   </div>
 
+  <div class="slide" id="test_instructions">
+    <br><br>
+    <div id="test_instructs"></div><br>
+    <button onclick="_s.button()">Continue</button>
+  </div>
+
   <!-- Generates critters that the partner learned about and tests the user -->
   <div class="slide" id="test_critters">
    <h3 id="collect">Collect your wildlife!</h3>
    <p id="chooseCrit"><br>Click on wildlife that will help you and your teammate complete your task.</p>
    <div id='critter_test_display'></div>
-   <p id="test_cond"><br></p>
    <br>
    <button class="continuebutton" id="test_button" onclick="_s.button()">Continue</button>
-   <button class="continuebutton" id="next_button" onclick="$('#test_cond').hide(); $('#next_button').hide(); $('#collect').show(); $('#chooseCrit').show(); $('#critter_test_display').show(); $('#test_button').show();">Continue</button>
  </div>
 
  <!-- Connected players can discuss what they have learned in 'welcome_critter' here using a chatbox -->
