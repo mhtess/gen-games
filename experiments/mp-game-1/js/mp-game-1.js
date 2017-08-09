@@ -171,7 +171,7 @@ slides.test_instructions = slide({
     // send signal to server to send stimuli
     globalGame.socket.send("enterSlide.test_critters.");
 
-    this.creat_type = exp.slides.learning_critters.crittersFromServer
+    this.creat_type = exp.slides.test_critters.crittersFromServer
 [0]["critter"];
   $('#test_instructs').html(
     "<br>On the next slide, you will select the " +
