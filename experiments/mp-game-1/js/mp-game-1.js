@@ -1,5 +1,9 @@
 // To add a slide to experiment structure (to ensure it shows up) proceed to line 337
 
+var roleDictionary = {
+  playerA: "Player A",
+  playerB: "Player B"
+}
 
 // All slides must have a slides.slide_name function in this function
 function make_slides(f) {
@@ -63,7 +67,7 @@ function make_slides(f) {
       $("#meeting").show();
       $("#internalprops_instruct").show();
       $("#critter_display").show();
-      $("#learning_button").show();
+      $("#learning_button").hide();
       this.start_time = Date.now()
       this.stim = stim;
 
@@ -163,7 +167,7 @@ slides.learning_instructions = slide({
   button : function() {
     exp.go()
   }
-})
+});
 
 slides.test_instructions = slide({
   name : "test_instructions",
@@ -182,18 +186,19 @@ slides.test_instructions = slide({
   button : function() {
     exp.go()
   }
-})
+});
 
 slides.chat_instructions = slide({
   name : "chat_instructions",
   start : function() {
-    // send signal to server to send stimuli
-    globalGame.socket.send("enterSlide.test_critters.");
+    $('#chat_instructs').html("On the next page, you will enter into a chatroom with your partner. " +
+    " After 45 seconds, a continue button will appear for Player B, which will advance the game for both players. " +
+    "You are " +  roleDictionary[globalGame.my_role]) + "."
   },
   button : function() {
     exp.go()
   }
-})
+});
 
 // Generates critters that the partner learned about and tests the user
 slides.test_critters = slide({

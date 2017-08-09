@@ -52,6 +52,7 @@
     role2 : 'bug'
   }
 
+  // How many rounds do we want people to complete? MAKE SURE THIS ALIGNS WITH EXP TEMPLATE SLIDE AMT
   this.numRounds = 4;
 
   // number of different species
@@ -729,9 +730,6 @@
   // Which round are we on (initialize at -1 so that first round is 0-indexed)
   this.roundNum = -1;
 
-  // How many rounds do we want people to complete? MAKE SURE THIS ALIGNS WITH EXP TEMPLATE SLIDE AMT
-  this.numRounds = 1;
-
   this.currentSlide = {
     playerA: "i0",
     playerB: "i0"
@@ -741,7 +739,7 @@
   this.trialInfo = [];
 
   this.task_welcome_critter = {
-    bird_bug: "<h2>Save the population</h2><p><br> The population of birds on the island is dwindling because of poisonous bugs. Learn about the birds and bug will your partner to try to save the population.</p>",
+    bird_bug: "<h2>Save the population</h2><p><br> The population of birds on the island is dwindling because of poisonous bugs. Learn about the birds and bugs with your partner to try to save the population.</p>",
     tree_fish: "<h2>Protect the fish</h2><p><br> Fish off the shore of the island are under threat by crocodiles. They can helped by putting them near plants with leaves that can protect them. Learn about the fish and the plants with your partner to try to save the fish.</p>"
   }
 
