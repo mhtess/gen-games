@@ -232,7 +232,6 @@ slides.test_critters = slide({
   var end_time = Date.now()
   this.time_spent = end_time - this.start_time;
 
-
   //log responses
   for (var i=0; i<this.num_creats; i++) {
     var dataToSend = {
@@ -249,8 +248,21 @@ slides.test_critters = slide({
       "tar1" : shuffledCritters[i]["tar1"],
       "tar2" : shuffledCritters[i]["tar2"],
       "internal_prop" : shuffledCritters[i]["internal_prop"],
-      "selected" : $('#cell' + i).attr("data-selected")
+      "selected" : $('#cell' + i).attr("data-selected"),
+      "full_globalColor0_p" : shuffledCritters[i]["critter_full_info"].globalColors[0]["p"].toString(),
+      "full_globalColor0_color_mean" : shuffledCritters[i]["critter_full_info"].globalColors[0]["props"]["color_mean"],
+      "full_globalColor0_color_var" : shuffledCritters[i]["critter_full_info"].globalColors[0]["props"]["color_var"],
+      "full_globalColor1_p" : shuffledCritters[i]["critter_full_info"].globalColors[1]["p"],
+      "full_globalColor1_color_mean" : shuffledCritters[i]["critter_full_info"].globalColors[1]["props"]["color_mean"],
+      "full_globalColor1_color_var" : shuffledCritters[i]["critter_full_info"].globalColors[1]["props"]["color_var"],
+      "full_prop1" : shuffledCritters[i]["critter_full_info"]["prop1"],
+      "full_prop2" : shuffledCritters[i]["critter_full_info"]["prop2"],
+      "full_tar1" : shuffledCritters[i]["critter_full_info"]["tar1"],
+      "full_tar2" : shuffledCritters[i]["critter_full_info"]["tar2"],
+      "full_internal_prop" : shuffledCritters[i]["critter_full_info"]["internal_prop"]
     }
+    console.log(dataToSend); //data works fine here
+    console.log(_.pairs(dataToSend));
     globalGame.socket.send("logTest.testCritters." + _.pairs(dataToSend).join('.'));
 
   }
@@ -371,8 +383,8 @@ function init() {
   exp.structure=[
     // "i0",
     // "instructions",
-    "wait_room",
-    "welcome_critterLand",
+    //"wait_room",
+    //"welcome_critterLand",
     "chatRoom",
     "test_critters",
     "structure_instruct",
