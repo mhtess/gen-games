@@ -986,11 +986,10 @@ game_core.prototype.genCreatures = function(creatureCategory, num){ //include nu
       "tar2": utils.flip(creatOpts.tar2),
       "creatureName": uniqueCreatures[i],
       "critter" : creatureCategory,
-      "query": "question",
       "stimID": j,
       "internal_prop": utils.flip(creatOpts.internal_prop),
-      "attentionCheck": utils.generateAttentionQuestion(),
-      "marked": 0
+      "creatureOpts": creatureOpts,
+      "critter_full_info": creatOpts
     })
      localCounter++;
      j++;
