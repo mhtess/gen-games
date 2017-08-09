@@ -735,30 +735,30 @@
   this.trialInfo = [];
 
   this.task_welcome_critter = {
-    bird_bug: "<h2>Save the population</h2><p><br>You are trying to save the dwindling population of birds in Critter Country. Discuss with your partner which birds and bugs should be gathered in order to save the population.</p>",
-    tree_fish: "<h2>Protect the fish</h2><p><br>Some of the fish in Critter Country are under threat and need to find homes that can help hide them. Discuss with your partner which fish need to be saved and which underwater plants will protect them.</p>"
+    bird_bug: "<h2>Save the population</h2><p><br> The population of birds on the island is dwindling because of poisonous bugs. Learn about the birds and bug will your partner to try to save the population.</p>",
+    tree_fish: "<h2>Protect the fish</h2><p><br> Fish off the shore of the island are under threat by crocodiles. They can helped by putting them near plants with leaves that can protect them. Learn about the fish and the plants with your partner to try to save the fish.</p>"
   }
 
   this.critter_instructions = {
     bird: {
-      internal_prop_instruct: "Click on each critter to discover whether it lays eggs.",
+      internal_prop_instruct: "it lays eggs.",
       internal_prop_symbol: "&#x1F423;", //hatching chick
-      test_instruct: "<p>birds that you believe will help you and your partner save the population.<br>"
+      test_instruct: "birds that lay eggs."
     },
     bug: {
-      internal_prop_instruct: "Click on each critter to discover whether it is poisonous.",
+      internal_prop_instruct: "it is poisonous.",
       internal_prop_symbol: "&#x2620;", //skull & crossbones sign
-      test_instruct: "<p>bugs that you can feed the birds to help you and your partner save the population.<br>"
+      test_instruct: "bugs that are poisonous."
     },
     fish: {
-      internal_prop_instruct: "Click on each critter to discover whether it is eaten by crocodiles.",
+      internal_prop_instruct: "it lives near crocodiles.",
       internal_prop_symbol: "&#x1f40a;", //crocodile
-      test_instruct: "<p>fish that are in danger of being eaten.<br>"
+      test_instruct: "fish that live near crocodiles."
     },
     tree: {
-      internal_prop_instruct: "Click on each plant to discover whether it grows leaves.",
+      internal_prop_instruct: "it grows leaves.",
       internal_prop_symbol: "&#x2618;", //shamrock
-      test_instruct: "<p>underwater plants that will help protect the fish from being eaten.<br>"
+      test_instruct: "plants that grow leaves."
     }
   }
 

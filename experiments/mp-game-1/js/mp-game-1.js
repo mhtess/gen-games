@@ -92,7 +92,12 @@ function make_slides(f) {
 
         $('#cell'+i+'critname').html(shuffledCritters[i]["creatureName"]);
 
-        $('#internalprops_instruct').html(globalGame.critter_instructions[shuffledCritters[i]["critter"]]["internal_prop_instruct"]);
+        $('#internalprops_instruct').html(
+          "Click on each one to discover whether <strong>" +
+          globalGame.critter_instructions[shuffledCritters[i]["critter"]]["internal_prop_instruct"] +
+          "</strong>"
+        );
+
         if (shuffledCritters[i]["internal_prop"]) {
           $('#cell'+i+'internalprop').html(globalGame.critter_instructions[shuffledCritters[i]["critter"]]["internal_prop_symbol"]);
         }
@@ -181,8 +186,10 @@ slides.test_critters = slide({
    $("#next_button").show();
    $('#test_cond').show();
 
-   $('#test_cond').html("<br>On the next slide, you will choose the ");
-   $("#test_cond").append(globalGame.critter_instructions[this.creat_type]["test_instruct"]);
+   $('#test_cond').html(
+     "<br>On the next slide, you will select the " +
+     globalGame.critter_instructions[this.creat_type]["test_instruct"]
+   );
 
     // Generates critters for test phase
     create_table(globalGame.presentRows,globalGame.presentCols,"critter_test_display");
@@ -349,8 +356,8 @@ function init() {
 
   //blocks of the experiment:
   exp.structure=[
-    "i0",
-    "instructions",
+    // "i0",
+    // "instructions",
     "wait_room",
     "welcome_critterLand",
     "chatRoom",
