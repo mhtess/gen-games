@@ -29,14 +29,18 @@ function make_slides(f) {
     name: "wait_room",
     start: function() {
       console.log('start of wait_room')
+      $("#waitText").empty();
+
       globalGame.socket.send("enterSlide.wait_room.");
+      globalGame.socket.send("enterWaitRoom.");
+
       $(".err").hide();
       if(exp.block == 0)
         $("#waitText").append("Waiting for another player to connect...")
       else
         $("#waitText").append("Waiting for your partner to catch up...")
       $("#waitCont").hide();
-      globalGame.socket.send("enterWaitRoom.");
+
       var blinking_wait = setInterval(function() {
         $("#waitText").fadeOut(1000);
         $("#waitText").fadeIn(1000);
@@ -46,15 +50,6 @@ function make_slides(f) {
       }, 2000);
     }
   });
-
-  slides.structure_instruct = slide({
-    name: "structure_instruct",
-    button : function() {
-      $("#waitText").empty();
-      exp.go();
-    }
-  })
-
 
   // This is the learning slide in which users will uncover information about the critters
   slides.welcome_critterLand = slide({
@@ -378,21 +373,18 @@ function init() {
     "chatRoom",
     "test_instructions",
     "test_critters",
-    "structure_instruct",
     "wait_room",
     "learning_instructions",
     "welcome_critterLand",
     "chatRoom",
     "test_instructions",
     "test_critters",
-    "structure_instruct",
     "wait_room",
     "learning_instructions",
     "welcome_critterLand",
     "chatRoom",
     "test_instructions",
     "test_critters",
-    "structure_instruct",
     "wait_room",
     "learning_instructions",
     "welcome_critterLand",
