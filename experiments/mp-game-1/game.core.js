@@ -267,6 +267,7 @@
         prop2: 0, // tailsize
         tar1: 0, // fangs
         tar2: 0, // whiskers
+        tar3: 0, // stripes
         internal_prop: 0.8 // eaten by crocodiles
       },
       { creature: "fish",
@@ -291,6 +292,7 @@
         prop2: 0, // tailsize
         tar1: 0, // fangs
         tar2: 0, // whiskers
+        tar3: 0, // stripes
         internal_prop: 0.6 // eaten by crocodiles
       },
       { creature: "fish",
@@ -314,6 +316,7 @@
         prop2: 0, // tailsize
         tar1: 0, // fangs
         tar2: 0, // whiskers
+        tar3: 0, // stripes
         internal_prop: 0.3 // eaten by crocodiles
       }
       ]
@@ -564,6 +567,7 @@
           prop2: 1, // tailsize
           tar1: 1, // fangs
           tar2: 1, // whiskers
+          tar3: 1, // stripes
           internal_prop: 0.8 // eaten by crocodiles
         },
         { creature: "fish",
@@ -588,6 +592,7 @@
           prop2: 1, // tailsize
           tar1: 1, // fangs
           tar2: 1, // whiskers
+          tar3: 1, // stripes
           internal_prop: 0.9 // eaten by crocodiles
         },
         { creature: "fish",
@@ -611,6 +616,7 @@
           prop2: 1, // tailsize
           tar1: 1, // fangs
           tar2: 1, // whiskers
+          tar3: 1, // stripes
           internal_prop: 0.7 // eaten by crocodiles
         }
         ]
@@ -984,6 +990,7 @@ game_core.prototype.genCreatures = function(creatureCategory, num){ //include nu
       "prop2": creatOpts.prop2 == null ? utils.randProp() : creatOpts.prop2,
       "tar1": utils.flip(creatOpts.tar1),
       "tar2": utils.flip(creatOpts.tar2),
+      "tar3": utils.flip(creatOpts.tar3),
       "creatureName": uniqueCreatures[i],
       "critter" : creatureCategory,
       "stimID": j,
