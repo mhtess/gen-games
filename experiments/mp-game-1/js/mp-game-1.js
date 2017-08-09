@@ -184,6 +184,17 @@ slides.test_instructions = slide({
   }
 })
 
+slides.chat_instructions = slide({
+  name : "chat_instructions",
+  start : function() {
+    // send signal to server to send stimuli
+    globalGame.socket.send("enterSlide.test_critters.");
+  },
+  button : function() {
+    exp.go()
+  }
+})
+
 // Generates critters that the partner learned about and tests the user
 slides.test_critters = slide({
  name : "test_critters",
@@ -216,8 +227,11 @@ slides.test_critters = slide({
   var end_time = Date.now()
   this.time_spent = end_time - this.start_time;
 
+
   //log responses
   for (var i=0; i<this.num_creats; i++) {
+    var correctAnswer = shuffledCritters[i]["internal_prop"];
+    var selectedAnswer = $('#cell' + i).attr("data-selected");
     var dataToSend = {
       "block_num" : exp.block,
       "block_type": "testCritters",
@@ -232,8 +246,8 @@ slides.test_critters = slide({
       "tar1" : shuffledCritters[i]["tar1"],
       "tar2" : shuffledCritters[i]["tar2"],
       "tar3" : shuffledCritters[i]["tar3"],
-      "internal_prop" : shuffledCritters[i]["internal_prop"],
-      "selected" : $('#cell' + i).attr("data-selected"),
+      "internal_prop" : correctAnswer,
+      "selected" : selectedAnswer,
       "full_globalColor0_p" : shuffledCritters[i]["critter_full_info"].globalColors[0]["p"].toString(),
       "full_globalColor0_color_mean" : shuffledCritters[i]["critter_full_info"].globalColors[0]["props"]["color_mean"],
       "full_globalColor0_color_var" : shuffledCritters[i]["critter_full_info"].globalColors[0]["props"]["color_var"],
@@ -244,12 +258,19 @@ slides.test_critters = slide({
       "full_prop2" : shuffledCritters[i]["critter_full_info"]["prop2"],
       "full_tar1" : shuffledCritters[i]["critter_full_info"]["tar1"],
       "full_tar2" : shuffledCritters[i]["critter_full_info"]["tar2"],
-      "full_internal_prop" : shuffledCritters[i]["critter_full_info"]["internal_prop"]
+      "full_internal_prop" : shuffledCritters[i]["critter_full_info"]["internal_prop"],
+      "score" : score(correctAnswer, selectedAnswer)
     }
 
     globalGame.socket.send("logTest.testCritters." + _.pairs(encodeData(dataToSend)).join('.'));
 
+
   }
+
+  //globalGame.socket.send("testScore.")
+
+
+
 
   // empties the critter arrays so they can be repopulated without overlap
   allCreatures = [];
@@ -370,6 +391,7 @@ function init() {
     "wait_room",
     "learning_instructions",
     "learning_critters",
+    "chat_instructions",
     "chatRoom",
     "test_instructions",
     "test_critters",

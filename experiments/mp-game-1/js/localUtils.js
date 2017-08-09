@@ -9,6 +9,12 @@ var critname_fontweight_unclicked = 'bold';
 var cell_opacity_gray = '0.5';
 var symbol_opacity_gray = '0.7';
 
+//record score
+var hits = 0;
+var falseAlarms = 0;
+var misses = 0;
+var correctRejections = 0;
+
 // Allows the border of each critter to be highlighted when chosed
 function mark_critter_display(el) {
   if(prev != null){
@@ -114,3 +120,33 @@ function encodeData(dataObj){
     } else { return val }
   });
 }
+
+function score(correctAnswer, selectedAnswer){
+  if(correctAnswer && selectedAnswer=='1'){
+    hits++;
+    return 'hit';
+  }
+  else if(!correctAnswer && selectedAnswer=='1'){
+    falseAlarms++;
+    return 'falseAlarm';
+  }
+  else if(correctAnswer && selectedAnswer=='0'){
+    misses++;
+    return 'miss';
+  }
+  else if(!correctAnswer && selectedAnswer=='0'){
+    correctRejections++;
+    return 'correctRejection';
+  }
+}
+
+function calculateScore(){
+  console.log("hits: " + hits);
+  return {
+    "hits" : hits,
+    "falseAlarms" : falseAlarms,
+    "misses" : misses,
+    "correctRejections" : correctRejections
+  }
+}
+
