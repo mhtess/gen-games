@@ -167,11 +167,9 @@ slides.test_critters = slide({
 
    this.start_time = Date.now()
    globalGame.socket.send("enterSlide.test_critters.");
-   //globalGame.socket.send("enterTests.");
    $(".err").hide();
    allCreatures = this.crittersFromServer;
    shuffledCritters = _.shuffle(allCreatures)
-   //console.log(allCreatures)
    this.num_creats = allCreatures.length;
    this.creat_type = shuffledCritters[0]["critter"];
 
@@ -301,7 +299,6 @@ slides.thanks = slide({
   start : function() {
     globalGame.socket.send("enterSlide.thanks.");
     exp.data= {
-      //"trials" : exp.data_trials,
       "test_trials" : exp.test_trials,
       "system" : exp.system,
       "condition" : exp.condition,
@@ -340,12 +337,13 @@ function init() {
   exp.block = 0;
 
   // learning - chat - test rounds
-  var numRounds = function(num) {
-    array1 = ["wait_room", "welcome_critterLand", "chatRoom", "test_critters"]
-    while (num != 0) {
+  var roundGenerator = function(num) {
+    array1 = ["wait_room", "welcome_critterLand", "chatRoom", "test_critters", "structure_instruct"]
+    while (num != 1) {
       array1.push.apply(array1, array1);
       num --;
     }
+    console.log("generate")
     return array1
   }
 
@@ -377,11 +375,11 @@ function init() {
     ]
 
   // var start_exp = ["i0", "instructions"]
-  // // change this as you please
-  // var middle_exp = numRounds(2)
+  // // change this as you please - plus find way to make one globalGame.numRounds
+  // var middle_exp = roundGenerator(1) 
   // var end_exp = ['subj_info','thanks']
   // start_exp.push.apply(start_exp, middle_exp)
-  // //  exp.structure.push.apply(middle_exp)
+  // start_exp.pop();
   // start_exp.push.apply(start_exp, end_exp)
   // exp.structure = start_exp
 
