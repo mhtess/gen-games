@@ -67,7 +67,7 @@ function make_slides(f) {
       $("#meeting").show();
       $("#internalprops_instruct").show();
       $("#critter_display").show();
-      $("#learning_button").show();
+      $("#learning_button").hide();
       this.start_time = Date.now()
       this.stim = stim;
 
