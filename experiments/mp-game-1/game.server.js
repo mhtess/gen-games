@@ -34,7 +34,7 @@ var onMessage = function(client,message) {
   var gc = client.game;
   var id = gc.id;
   var all = gc.get_active_players();
-  gc.rounds = {"speker": 1, "listener": 1};
+  gc.rounds = {"playerA": 1, "playerB": 1};
   // gets current player and differentiates them from other players
   var target = gc.get_player(client.userid);
   var others = gc.get_others(client.userid);
@@ -82,7 +82,7 @@ var onMessage = function(client,message) {
     // Only allows a message to be sent when both players are present in the chatroom
     // If this is true, the message will be relayed
     case 'chatMessage' :
-      if(gc.currentSlide["speaker"] == gc.currentSlide["listener"]) {
+      if(gc.currentSlide["playerA"] == gc.currentSlide["playerB"]) {
           // Update others
           var msg = message_parts[1].replace(/~~~/g,'.');
           _.map(all, function(p){
@@ -93,7 +93,7 @@ var onMessage = function(client,message) {
     // Will show a wait message if only one player is in the chatroom
     // Will allow them to enter the chatroom
     case 'enterChatRoom' :
-      if (gc.currentSlide["speaker"] != gc.currentSlide["listener"]) {
+      if (gc.currentSlide["playerA"] != gc.currentSlide["playerB"]) {
         target.instance.emit("chatWait", {})
       } else {
         setTimeout(function() {
@@ -106,9 +106,9 @@ var onMessage = function(client,message) {
       break;
 
     // Seems confusing, but this fn actually goes to the wait room and only moves forward,
-    // (enterWaitRoom) when both the speaker and listener are in the wait room
+    // (enterWaitRoom) when both the speaker (playerA) and listener (playerB) are in the wait room
     case 'enterWaitRoom' :
-      if (gc.currentSlide["speaker"] == gc.currentSlide["listener"]) {
+      if (gc.currentSlide["playerA"] == gc.currentSlide["playerB"]) {
         setTimeout(function() {
           _.map(all, function(p){
             p.player.instance.emit("enterWaitRoom", {})
