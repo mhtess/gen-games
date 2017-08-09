@@ -128,6 +128,7 @@ function make_slides(f) {
           "prop2" : shuffledCritters[i]["prop2"],
           "tar1" : shuffledCritters[i]["tar1"],
           "tar2" : shuffledCritters[i]["tar2"],
+          "tar3" : shuffledCritters[i]["tar3"],
           "internal_prop" : shuffledCritters[i]["internal_prop"]
         }
         globalGame.socket.send("logTrain.learnCritters." + _.pairs(encodeData(dataToSend)).join('.'));
@@ -223,6 +224,7 @@ slides.test_critters = slide({
       "prop2" : shuffledCritters[i]["prop2"],
       "tar1" : shuffledCritters[i]["tar1"],
       "tar2" : shuffledCritters[i]["tar2"],
+      "tar3" : shuffledCritters[i]["tar3"],
       "internal_prop" : shuffledCritters[i]["internal_prop"],
       "selected" : $('#cell' + i).attr("data-selected"),
       "full_globalColor0_p" : shuffledCritters[i]["critter_full_info"].globalColors[0]["p"].toString(),
