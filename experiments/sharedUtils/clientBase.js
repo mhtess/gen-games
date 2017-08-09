@@ -22,12 +22,6 @@ var getURLParams = function() {
       console.log("server booted");
       var email = globalGame.email ? globalGame.email : '';
 
-      // $('.long_form').prepend('<p style="font-size:15px">' +
-      //   'Oops! It looks like your partner lost their connection.' +
-      //   ' Completing this survey will submit your HIT so you will still receive ' +
-      //   'full compensation. If you experience any problems, please email us (mtessler@stanford.edu).'
-      //   + '</p>' + '<br>');
-
       var failMsg = [
         '<h3>Oops! It looks like your partner lost their connection!</h3>',
         '<p> Completing this survey will submit your HIT so you will still receive full ',
@@ -39,7 +33,7 @@ var getURLParams = function() {
         "<p>Before you submit your HIT, we'd like to ask you a few questions.</p>"
       ].join('');
 
-      if(globalGame.roundNum + 2 > globalGame.numRounds) {
+      if(globalGame.roundNum == globalGame.numRounds) {
         $('#subj_info').prepend(successMsg);
       } else {
         $('#subj_info').prepend(failMsg);
