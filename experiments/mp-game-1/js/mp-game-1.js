@@ -227,9 +227,8 @@ slides.test_critters = slide({
       "full_tar2" : shuffledCritters[i]["critter_full_info"]["tar2"],
       "full_internal_prop" : shuffledCritters[i]["critter_full_info"]["internal_prop"]
     }
-    console.log(dataToSend); //data works fine here
-    console.log(_.pairs(dataToSend));
-    globalGame.socket.send("logTest.testCritters." + _.pairs(dataToSend).join('.'));
+
+    globalGame.socket.send("logTest.testCritters." + _.pairs(encodeData(dataToSend)).join('.'));
 
   }
 
