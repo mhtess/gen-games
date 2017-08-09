@@ -267,7 +267,7 @@ slides.test_critters = slide({
 
   }
 
-  //globalGame.socket.send("testScore.")
+  globalGame.socket.send("testScore." + _.pairs(calculateScore()).join('.'));
 
 
 

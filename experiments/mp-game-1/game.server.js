@@ -125,7 +125,9 @@ var onMessage = function(client,message) {
       target.visible = message_parts[1];
       break;
 
-    //case 'testScore' :
+    case 'testScore' :
+      //input something here
+      break;
   }
 };
 

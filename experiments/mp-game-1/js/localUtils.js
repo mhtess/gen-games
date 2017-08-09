@@ -141,7 +141,6 @@ function score(correctAnswer, selectedAnswer){
 }
 
 function calculateScore(){
-  console.log("hits: " + hits);
   return {
     "hits" : hits,
     "falseAlarms" : falseAlarms,
