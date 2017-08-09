@@ -42,8 +42,8 @@
   // How many players in the game?
   this.players_threshold = 2;
   this.playerRoleNames = {
-    role1 : 'speaker',
-    role2 : 'listener'
+    role1 : 'playerA',
+    role2 : 'playerB'
   };
 
   // Determines which critters are present in the game and who gets which first
@@ -727,8 +727,8 @@
   this.numRounds = 1;
 
   this.currentSlide = {
-    speaker: "i0",
-    listener: "i0"
+    playerA: "i0",
+    playerB: "i0"
   }
 
   // This will be populated with the critters shown
@@ -781,19 +781,19 @@
     var fishCritters1 = this.genCreatures("fish",1);
     //var flowerCritters1 = this.genCreatures("flower",1);
     var treeCritters1 = this.genCreatures("tree",1);
-    var speakerOrder = [fishCritters0, bugCritters0, treeCritters1, birdCritters1];
-    var listenerOrder = [treeCritters0, birdCritters0, fishCritters1, bugCritters1];
+    var aOrder = [fishCritters0, bugCritters0, treeCritters1, birdCritters1];
+    var bOrder = [treeCritters0, birdCritters0, fishCritters1, bugCritters1];
 
     // assigns the critters to their respective players
     this.trialList = {
-      speaker: speakerOrder,
-      listener: listenerOrder
+      playerA: aOrder,
+      playerB: bOrder
     };
 
     // this is switched so the they will get tested on the information their partner relayed to them
     this.testList = {
-      speaker: listenerOrder,
-      listener: speakerOrder
+      playerA: bOrder,
+      playerB: aOrder
     };
 
     this.data = {
