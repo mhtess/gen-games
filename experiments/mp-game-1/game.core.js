@@ -46,6 +46,11 @@
     role2 : 'playerB'
   };
 
+  this.testScores = {
+    "playerA": [],
+    "playerB": []
+  }
+
   // Determines which critters are present in the game and who gets which first
   this.critter = {
     role1 : 'bird',
