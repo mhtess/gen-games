@@ -49,9 +49,13 @@
 	  In this experiment you will play a fun communication game
 	  with another turker!
 
-
-    In each round both of you are going to
-	  be shown a set of objects like this:
+    You and your partner will be sent to a newly discovered island and will encounter endangered wildlife that needs your help!
+    In each round, you and your partner will learn about two different kinds of wildlife that can help each other.
+    Each of you will learn about one kind of wildlife and then teach each other about them.
+    Your partner will have to gather the wildlife that you studied, and vice versa.
+  </p>
+  <p>
+    The wildlife you study will look like these:
 	</p>
 
 	<p>
@@ -68,49 +72,38 @@
 	</p>
 
 	<p>
-	  One of you will be assigned the <b> Speaker </b> role and
-	  the other will be the <b> Listener </b>. On each round, one of the four
-	  objects is the <b>target</b>, which is outlined in orange. Only the
-	  Speaker can see which object is the target.
+    The name of the kind of critter appears below it, as does whether or not the critter has a <b> hidden feature </b>.
+    This hidden feature is important for saving the endangered wildlife.
+    In the example above, both the oller and the ellep show an egg below: This is their hidden feature.
+    In the game, you will have to click on the critter to reveal whether or not it has the hidden feature.
 	</p>
 
 	<p>
-	  The goal of the Speaker is to send a message so that the
-	  Listener can figure out which object it is. You'll both
-	  get <b> a bonus of $0.03 for each correct response</b>, so
+    The critters that you and your partner see will be <b> different </b>.
+    Your task is to study these critters so that you can teach your partner about them.
+    When studying the critters, you must click on all of them (revealing whether or not they have a hidden feature) before being allowed to move on.
+    After studying, you will meet with your partner in a chatroom and discuss what you both have learned.
+    You may have to wait in the chatroom for a short period while your partner finishes studying.
+	</p>
+
+	<p>
+    While in the chat room, you can discuss what you learned.
+    After chatting, you will be tasked with collecting the critters that will help save the wildlife.
+    The critters you can collect are the ones that your partner learned about.
+    You will not be able to see the hidden features during collection, but you will see the names.
+    You will be in the chat room for 45 seconds.
+    After 45 seconds, a button will appear for Player B that will continue the experiment for both of you.
+    You and your partner can chat for as long as you need to make sure you both learn.
+	</p>
+
+	<p>
+    After collecting critters, you will immediately proceed to the next round, where the learning--chat--collecting sequence will repeat.
+    In total, there are 4 rounds.
+	</p>
+
+	<p>
+    You'll both get <b> a bonus of $0.03 for each critter that helps save the wildlife </b>, so
 	  pay attention!
-	</p>
-
-	<p>
-	  The goal of the Listener is to identify the target
-	  based on what the Speaker has told you. If you are the Listener,
-	  you will first need to wait until the Speaker has sent their
-	  message before being able to select an object.
-	</p>
-
-	<p>
-	  What makes this game more interesting and challenging is the
-	  content of your messages: instead of using the English
-	  language, the Speaker must choose from a set of labels in a
-	  foreign language. To send their chosen label, the Speaker
-	  clicks and drags it into the grey 'dropzone' below.
-	</p>
-
-	<p>
-	  <center>
-	    <img src="images/screenshot_labels.png" alt="Example labels"
-		 style="width:300px; height:300px">
-	  </center>
-	</p>
-
-	<p>
-	  Once the Listener clicks on the object they believe is the
-	  target, both players will be given feedback: the Speaker
-	  will see what the Listener clicked, and the Listener will
-	  see the true target. Then you will both automatically
-	  advance to the next round of objects. There are a total
-	  of <b>60 rounds</b>. After the final round you will fill out
-	  a quick 15 second survey and be on your way.
 	</p>
 
 	<p> A few final notes: First, since you are playing with
@@ -118,13 +111,14 @@
 	  begins:
 	<p>
 	  <center><img src="images/Waitroom.png" alt="initial wait screen"
+=
 		       style="width:700px;height:150px">
 	  </center>
 	</p>
 	Just hold tight. Another player should join the game within
 	the next few minutes. If you're in the waiting room 15 minutes
 	without another player joining, please email us to let us know
-	(rxdh@stanford.edu).
+	(mtessler@stanford.edu).
 	</p>
 
 	<p>
@@ -153,7 +147,7 @@
       <div class="well" style="width:800px; margin: 0 auto">
 
 	<br>
-	The <b>speaker</b> can click on an object to end the round.
+	Players can proceed at their own pace through the experiment.
 	<br>
 	<input type="radio" name="dgoal" value="yes"> False
 	<br>
@@ -162,8 +156,7 @@
 
 
 	<br>
-	The listener wants to click on the object that the speaker is
-	telling them about.
+	Players will have unlimited time in the chatroom to discuss what they learned with their partner.
 	<br>
 	<input type="radio" name="mgoal" value="no"> False
 	<br>
@@ -172,7 +165,7 @@
 
 
 	<br>
-	Only the speaker can send messages.
+	Players will collect critters that their partner learned about.
 	<br>
 	<input type="radio" name="message" value="yes"> True
 	<br>
@@ -180,7 +173,7 @@
 	<br>
 
 	<br>
-	There are a total of 200 rounds.
+	There are a total of 10 rounds.
 	<br>
 	<input type="radio" name="comp" value="no"> True
 	<br>
@@ -188,7 +181,7 @@
 	<br>
 
 	<br>
-	The locations of the objects are the same for the speaker and the listener.
+	Both players will study the same critters.
 	<br>
 	<input type="radio" name="location" value="yes"> False
 	<br>
@@ -235,8 +228,8 @@
         var ans5 = $('input[name="location"]:checked').val();
         var ans6 = $('input[name="completed"]:checked').val();
 
-        // if(ans1 == "yes" && ans2 == "yes" && ans3 == "yes" &&
-        //    ans4 == "yes" && ans5 == "yes" && ans6 == "yes") {
+        if(ans1 == "yes" && ans2 == "yes" && ans3 == "yes" &&
+           ans4 == "yes" && ans5 == "yes" && ans6 == "yes") {
            var workerId = urlParams.workerId;
            var assignmentId = urlParams.assignmentId;
            var hitId = urlParams.hitId;
@@ -244,12 +237,12 @@
            location.replace("./pass.html?workerId=" + workerId
                             + "&assignmentId=" + assignmentId
                             + "&hitId=" + hitId + "&turkSubmitTo=" + turkSubmitTo);
-        // } else if(counter == 3) {
-        //   location.replace("./fail.html");
-        // } else {
-        //   $('.error').show()
-        //   counter += 1;
-        // }
+        } else if(counter == 3) {
+          location.replace("./fail.html");
+        } else {
+          $('.error').show()
+          counter += 1;
+        }
       };
     </script>
 
