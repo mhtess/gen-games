@@ -153,6 +153,7 @@ slides.learning_instructions = slide({
     // send signal to server to send stimuli
     globalGame.socket.send("enterSlide.learning_critters.");
 
+
     this.creat_type = exp.slides.learning_critters.crittersFromServer
 [0]["critter"];
 
@@ -193,8 +194,8 @@ slides.chat_instructions = slide({
   name : "chat_instructions",
   start : function() {
     $('#chat_instructs').html("On the next page, you will enter into a chatroom with your partner. " +
-    " After 45 seconds, a continue button will appear for Player B, which will advance the game for both players. " +
-    "You are " +  roleDictionary[globalGame.my_role]) + "."
+    " After 45 seconds, a continue button will appear for Player B, which, when clicked, will advance the game for both players. " +
+    "You are " +  roleDictionary[globalGame.my_role] + ".")
   },
   button : function() {
     exp.go()
@@ -233,7 +234,15 @@ slides.test_critters = slide({
   var end_time = Date.now()
   this.time_spent = end_time - this.start_time;
 
-
+  var blockScores = {
+    hits:0, misses:0, falseAlarms: 0, correctRejections: 0
+  }
+  for (i = 0; i < shuffledCritters.length; i++){
+    var correctAnswer = shuffledCritters[i].internal_prop;
+    var selectedAnswer = $('#cell' + i).attr("data-selected");
+    blockScores[scoreSingle(correctAnswer, selectedAnswer)]++
+  }
+  
   //log responses
   for (var i=0; i<this.num_creats; i++) {
     var correctAnswer = shuffledCritters[i]["internal_prop"];
@@ -273,8 +282,11 @@ slides.test_critters = slide({
 
   }
 
-  globalGame.socket.send("sendingTestScores." + globalGame.my_role + "." + _.pairs(calculateScore()).join('.'));
-
+  globalGame.socket.send("sendingTestScores." + globalGame.my_role + "." + _.pairs(blockScores).join('.'));
+  // $('#'+score_role+'_hits').empty();
+  // $('#'+score_role+'_falseAlarms').empty();
+  // $('#'+score_role+'_misses').empty();
+  // $('#'+score_role+'_correctRejections').empty();
 
   // empties the critter arrays so they can be repopulated without overlap
   allCreatures = [];
@@ -420,14 +432,6 @@ function init() {
     "chatRoom",
     "test_instructions",
     "test_critters",
-/*
-    "wait_room",
-    "score_report",
-    "learning_instructions",
-    "learning_critters",
-    "chatRoom",
-    "test_instructions",
-    "test_critters",
 
     "wait_room",
     "score_report",
@@ -443,7 +447,15 @@ function init() {
     "learning_critters",
     "chatRoom",
     "test_instructions",
-    "test_critters",*/
+    "test_critters",
+
+    "wait_room",
+    "score_report",
+    "learning_instructions",
+    "learning_critters",
+    "chatRoom",
+    "test_instructions",
+    "test_critters",
 
     "wait_room",
     "score_report",

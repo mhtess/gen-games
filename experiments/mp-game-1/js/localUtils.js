@@ -140,6 +140,21 @@ function score(correctAnswer, selectedAnswer){
   }
 }
 
+function scoreSingle(correctAnswer, selectedAnswer){
+  if(correctAnswer && selectedAnswer=='1'){
+    return 'hits';
+  }
+  else if(!correctAnswer && selectedAnswer=='1'){
+    return 'falseAlarms';
+  }
+  else if(correctAnswer && selectedAnswer=='0'){
+    return 'misses';
+  }
+  else if(!correctAnswer && selectedAnswer=='0'){
+    return 'correctRejections';
+  }
+}
+
 function calculateScore(){
   return {
     "hits" : hits,
