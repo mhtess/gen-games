@@ -353,7 +353,6 @@ slides.thanks = slide({
   name : "thanks",
   start : function() {
     globalGame.socket.send("enterSlide.thanks.");
-    //globalGame.socket.send("calculateReward.")
     exp.data= {
       "test_trials" : exp.test_trials,
       "system" : exp.system,
@@ -361,8 +360,6 @@ slides.thanks = slide({
       "subject_information" : exp.subj_data,
       "time_in_minutes" : (Date.now() - exp.startT)/60000
     };
-
-
     if(_.size(globalGame.urlParams) == 4) {
       window.opener.turk.submit(exp.data, true);
       window.close();
@@ -396,57 +393,60 @@ function init() {
 
   // learning - chat - test rounds
   var roundGenerator = function(num) {
-    array1 = ["wait_room", "learning_critters", "chatRoom", "test_critters", "structure_instruct"]
+    array1 = ["wait_room", "score_report", "learning_instructions", "learning_critters", "chat_instructions", "chatRoom", "test_instructions", "test_critters"]
     while (num != 1) {
       array1.push.apply(array1, array1);
       num --;
     }
+    array.splice(1, 1); // deletes the first score report
     console.log("generate")
     return array1
   }
 
   // blocks of the experiment:
   exp.structure=[
-    // "i0",
-    // "instructions",
-    // "wait_room",
-    // "learning_instructions",
-    // "learning_critters",
-    // "chat_instructions",
-    // "chatRoom",
-    // "test_instructions",
-    // "test_critters",
-    // "wait_room",
-    // "score_report",
-    // "learning_instructions",
-    // "learning_critters",
-    // "chatRoom",
-    // "test_instructions",
-    // "test_critters",
-    // "wait_room",
-    // "score_report",
-    // "learning_instructions",
-    // "learning_critters",
-    // "chatRoom",
-    // "test_instructions",
-    // "test_critters",
-    // "wait_room",
-    // "score_report",
-    // "learning_instructions",
-    // "learning_critters",
+    "wait_room",
+    "learning_instructions",
+    "learning_critters",
+    "chat_instructions",
     "chatRoom",
     "test_instructions",
     "test_critters",
+
+    "wait_room",
+    "score_report",
+    "learning_instructions",
+    "learning_critters",
+    "chatRoom",
+    "test_instructions",
+    "test_critters",
+
+    "wait_room",
+    "score_report",
+    "learning_instructions",
+    "learning_critters",
+    "chatRoom",
+    "test_instructions",
+    "test_critters",
+
+    "wait_room",
+    "score_report",
+    "learning_instructions",
+    "learning_critters",
+    "chatRoom",
+    "test_instructions",
+    "test_critters",
+
     "wait_room",
     "score_report",
     "subj_info",
     'thanks',
     ]
 
-  // var start_exp = ["i0", "instructions"]
+  // var start_exp = [];//"i0", "instructions"]
   // // change this as you please - plus find way to make one globalGame.numRounds
   // var middle_exp = roundGenerator(1)
-  // var end_exp = ['subj_info','thanks']
+  // var end_exp = ['wait_room', 'score_report', 'subj_info','thanks']
   // start_exp.push.apply(start_exp, middle_exp)
   // start_exp.pop();
   // start_exp.push.apply(start_exp, end_exp)
