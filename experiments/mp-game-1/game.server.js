@@ -143,10 +143,11 @@ var onMessage = function(client,message) {
         }, 300);
       // }
       break;
+    // case 'calculateReward' :
+    //   gc.calculate_end_game_bonus();
+    //   break;
   }
 };
-
-
 
 /*
   Associates events in onMessage with callback returning json to be saved
@@ -207,6 +208,7 @@ var dataOutput = function() {
     'chatMessage' : chatMessageOutput,
     'logTest' : logResponseOutput,
     'logTrain': logResponseOutput,
+    'logScores': logResponseOutput,
     'logSubjInfo': logResponseOutput
   };
 }();
