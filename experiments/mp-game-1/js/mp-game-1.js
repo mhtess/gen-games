@@ -283,10 +283,7 @@ slides.test_critters = slide({
   }
 
   globalGame.socket.send("sendingTestScores." + globalGame.my_role + "." + _.pairs(blockScores).join('.'));
-  // $('#'+score_role+'_hits').empty();
-  // $('#'+score_role+'_falseAlarms').empty();
-  // $('#'+score_role+'_misses').empty();
-  // $('#'+score_role+'_correctRejections').empty();
+  globalGame.socket.send("logScores.score_report." + _.pairs(blockScores).join('.'));
 
   // empties the critter arrays so they can be repopulated without overlap
   allCreatures = [];
@@ -337,8 +334,9 @@ slides.subj_info =  slide({
   name : "subj_info",
   start: function(){
     $('#humanResult').hide();
-
-    //globalGame.socket.send("logScores.score_report." + _.pairs(calculate_end_game_bonus()).join('.'));
+    //console.log("reward: " + globalGame.calculate_end_game_bonus());
+    //globalGame.socket.send("calculatingReward.");
+    
   },
   submit : function(e){
       //if (e.preventDefault) e.preventDefault(); // I don't know what this means.
@@ -371,7 +369,6 @@ slides.thanks = slide({
   start : function() {
     globalGame.socket.send("enterSlide.thanks.");
 
-    //calculate_end_game_bonus();
     exp.data= {
       "test_trials" : exp.test_trials,
       "system" : exp.system,
