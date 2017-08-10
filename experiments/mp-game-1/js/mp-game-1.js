@@ -271,9 +271,8 @@ slides.test_critters = slide({
 
 
   }
-
-  globalGame.socket.send("sendingTestScores." + globalGame.my_role + "." + _.pairs(calculateScore()).join('.'));
-
+  
+  globalGame.socket.send("logScores.score_report" + globalGame.my_role + "." + _.pairs(calculateScore()).join('.'));
 
   // empties the critter arrays so they can be repopulated without overlap
   allCreatures = [];
@@ -322,19 +321,25 @@ slides.chatRoom = slide({
 // Collects demographic information from users
 slides.subj_info =  slide({
   name : "subj_info",
+  start: function(){
+    $('#humanResult').hide();
+  },
   submit : function(e){
       //if (e.preventDefault) e.preventDefault(); // I don't know what this means.
       globalGame.socket.send("enterSlide.subj_info.");
       exp.subj_data = {
-        language : $("#language").val(),
+        nativeEnglish : $("#nativeEnglish").val(),
         enjoyment : $("#enjoyment").val(),
-        assess : $('input[name="assess"]:checked').val(),
+        assess : $('#assess').val(),
         age : $("#age").val(),
         gender : $("#gender").val(),
         education : $("#education").val(),
         comments : $("#comments").val(),
         problems: $("#problems").val(),
-        fairprice: $("#fairprice").val()
+        fairprice: $("#fairprice").val(),
+        strategy: $("#strategy").val(),
+        humanPartner: $("#human").val(),
+        likePartner: $("#likePartner").val()
       };
 
       globalGame.socket.send("logSubjInfo.subjInfo." + _.pairs(encodeData(exp.subj_data)).join('.'));
@@ -400,7 +405,7 @@ function init() {
     return array1
   }
 
-  //blocks of the experiment:
+  // blocks of the experiment:
   exp.structure=[
     // "i0",
     // "instructions",

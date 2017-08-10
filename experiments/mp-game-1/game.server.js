@@ -208,6 +208,7 @@ var dataOutput = function() {
     'chatMessage' : chatMessageOutput,
     'logTest' : logResponseOutput,
     'logTrain': logResponseOutput,
+    'logScores': logResponseOutput,
     'logSubjInfo': logResponseOutput
   };
 }();

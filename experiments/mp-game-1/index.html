@@ -201,9 +201,10 @@
     <div class="long_form">
      <div id="thanks"> <h3>Thanks for participating in our experiment!</h3>
       <p>Before you submit your HIT, we'd like to ask you a few questions.</p></div>
+
       <p> Did you read the instructions and do you think you did the
     HIT correctly? </p>
-      <select onChange="dropdownTip('confused::' + this.value)">
+      <select id="assess">
         <option value = ""></option>
         <option value="yes">Yes</option>
         <option value="no">No</option>
@@ -217,7 +218,7 @@
 
 
       <p> Did you believe you were playing against another human player? </p>
-      <select onChange="dropdownTip('human::' + this.value)">
+      <select onChange="$('#humanResult').show();" id="human">
     <option value=""></option>
     <option value="yes">Yes, I thought they were a human</option>
     <option value="no">No, I thought it was a computer program</option>
@@ -226,15 +227,15 @@
 
 
 
-        <p> Are you a native English speaker? </p>
-        <select onChange="dropdownTip('language::' + this.value)">
+        <p> Are you a native English speaker? (Was English the language spoken in your house when you were growing up?)</p>
+        <select id="nativeEnglish">
       <option value = ""></option>
       <option value="yes">Yes</option>
       <option value="no">No</option>
         </select>
 
         <p> How much did you like working with your partner? </p>
-        <select onChange="dropdownTip('partner::' + this.value)">
+        <select id="likePartner">
           <option value = ""></option>
           <option value="not much">Not that much</option>
           <option value="okay">My partner was fine</option>
