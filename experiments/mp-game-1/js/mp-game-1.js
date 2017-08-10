@@ -131,6 +131,7 @@ function make_slides(f) {
           "internal_prop" : shuffledCritters[i]["internal_prop"]
         }
         globalGame.socket.send("logTrain.learnCritters." + _.pairs(encodeData(dataToSend)).join('.'));
+        exp.data_trials.push(dataToSend);
 
         $('#critter' + i).empty();
         $('#cell' + i).css({'opacity': '1'});
@@ -268,7 +269,7 @@ slides.test_critters = slide({
     }
 
     globalGame.socket.send("logTest.testCritters." + _.pairs(encodeData(dataToSend)).join('.'));
-
+    exp.data_trials.push(dataToSend);
 
   }
 
@@ -346,6 +347,7 @@ slides.subj_info =  slide({
       };
 
       globalGame.socket.send("logSubjInfo.subjInfo." + _.pairs(encodeData(exp.subj_data)).join('.'));
+      exp.data_trials.push(exp.subj_data);
 
       exp.go();
     } //use exp.go() if and only if there is no "present" data.
@@ -356,11 +358,8 @@ slides.thanks = slide({
   name : "thanks",
   start : function() {
     globalGame.socket.send("enterSlide.thanks.");
-<<<<<<< HEAD
 
     //calculate_end_game_bonus();
-=======
->>>>>>> 3280df36f0fcb2f35c84bdecc8b6170da399a339
     exp.data= {
       "test_trials" : exp.test_trials,
       "system" : exp.system,
@@ -375,7 +374,7 @@ slides.thanks = slide({
       console.log("would have submitted the following :")
       console.log(exp.data);
     }
-    // setTimeout(function() {turk.submit(exp.data);}, 1000);
+    setTimeout(function() {turk.submit(exp.data_trials);}, 1000);
   }
 });
 
@@ -421,7 +420,7 @@ function init() {
     "chatRoom",
     "test_instructions",
     "test_critters",
-
+/*
     "wait_room",
     "score_report",
     "learning_instructions",
@@ -444,7 +443,7 @@ function init() {
     "learning_critters",
     "chatRoom",
     "test_instructions",
-    "test_critters",
+    "test_critters",*/
 
     "wait_room",
     "score_report",
@@ -464,6 +463,7 @@ function init() {
   //exp.data_trials = [];
   //make corresponding slides:
   exp.slides = make_slides(exp);
+  exp.data_trials = [];
 
   exp.nQs = utils.get_exp_length(); //this does not work if there are stacks of stims (but does work for an experiment with this structure)
                     //relies on structure and slides being defined
