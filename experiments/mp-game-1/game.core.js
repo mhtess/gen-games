@@ -103,86 +103,75 @@
   // Change this to change distribution, critter type, names of species, and critter characteristics
   this.critterScale = 0.5;
 
-  this.distributions = [
-    [0, 0, 1],
-    [0.5, 0.5, 0.5],
-    [0, 0.25, 1],
-    [0, 0, 0.25]
-  ];
+  // 4 rounds, 3 categories per round
+  // assuming each property is boolean
+  // tar is a feature (e.g., whiskers)
+  // prop is shape / size (e.g., fat)
 
+  this.colorOptions = [
+    "blue", "green", "red", "yellow", "orange", "purple"
+  ]
+  this.distributions = {
+    internal:  [
+        [0, 0, 1],
+        [0.5, 0.5, 0.5],
+        [0, 0.25, 1],
+        [0, 0, 0.25]
+      ]//,
+    // colors: [
+    //
+    // ],
+    // tar1: [
+    //
+    // ],
+    // tar2: [
+    //
+    // ],
+    // prop1: [
+    //
+    // ],
+    // prop2: [
+    //
+    // ]
+  }
+
+  this.createCreatureOptsObj = function(creature, name, shapeParams, featureParams, color1, color2) {
+    return _.extend({ creature, name,
+      globalColors: [
+      { p: color1.p, props: { color_mean: color1.mean, color_var: 0.001 } },
+      { p: color2.p, props: { color_mean: color2.mean, color_var: 0.001 } }
+    ] }, shapeParams, featureParams)
+  }
+  //
+  // this.categories = {
+  //   bird: ,
+  //   bug: ,
+  //   fish: ,
+  //   tree: ,
+  // }
   this.birdOpts0 = [
-  { creature: "bird",
-  name: ourCreatNames[0]["exemplar"],//"wug",
-  globalColors: [
-  {
-    p: 0.99,
-    props: {
-      color_mean: "blue",
-      color_var: 0.001,
-      location: "ground"
-    }
-  }, {
-    p: 0.01,
-    props: {
-      color_mean: "green",
-      color_var: 0.001,
-      location: "trees"
-    }
-  }],
-  		prop1: 0, // height
-  		prop2: 0, // fatness
-  		tar1: 0, // tails
-  		tar2: 0, // crest
-  		internal_prop: 0.8 // lays eggs
-  	},
-  	{ creature: "bird",
-    name: ourCreatNames[1]["exemplar"],//"fep",
-    globalColors: [
-    {
-      p: 1,
-      props: {
-        color_mean: "yellow",
-        color_var: 0.001,
-        location: "ground"
-      }
-    }, {
-      p: 0,
-      props: {
-        color_mean: "red",
-        color_var: 0.001,
-        location: "trees"
-      }
-    }],
-  		prop1: 0, // height
-      prop2: 0, // fatness
-  		tar1: 0, // tails
-  		tar2: 0, // crest
-  		internal_prop: 0.2, // lays eggs
-  	},
-  	{ creature: "bird",
-    name: ourCreatNames[2]["exemplar"],//"lorch",
-    globalColors: [
-    {
-      p: 0.5,
-      props: {
-        color_mean: "yellow",
-        color_var: 0.001,
-        location: "ground"
-      }
-    }, {
-      p: 0.5,
-      props: {
-        color_mean: "purple",
-        color_var: 0.001,
-        location: "trees"}
-      }],
-  		prop1: 0, // height
-      prop2: 0, // fatness
-  		tar1: 0, // tails
-  		tar2: 0, // crest
-  		internal_prop: 0 // lays eggs
-  	}
-    ]
+    this.createCreatureOptsObj("bird", ourCreatNames[0]["exemplar"],
+    {prop1: 0, prop2: 0}, {tar1: 0, tar2: 0}, {p:0.99, mean: "blue"}, {p:0.01, mean: "green"}),
+    this.createCreatureOptsObj("bird", ourCreatNames[1]["exemplar"],
+    {prop1: 0, prop2: 0}, {tar1: 0, tar2: 0}, {p:1, mean: "yellow"}, {p:0, mean: "green"}),
+    this.createCreatureOptsObj("bird", ourCreatNames[2]["exemplar"],
+    {prop1: 0, prop2: 0}, {tar1: 0, tar2: 0}, {p:0.5, mean: "purple"}, {p:0.5, mean: "yellow"}),
+  ]
+
+  this.birdOpts1 = [
+    this.createCreatureOptsObj("bird", ourCreatNames[12]["exemplar"],
+    {prop1: 1, prop2: 1},
+    {tar1: 1, tar2: 1},
+    {p:0.99, mean: "green"}, {p:0.01, mean: "orange"}),
+    this.createCreatureOptsObj("bird", ourCreatNames[13]["exemplar"],
+    {prop1: 1, prop2: 1},
+    {tar1: 1, tar2: 1},
+    {p:1, mean: "red"}, {p:0, mean: "green"}),
+    this.createCreatureOptsObj("bird", ourCreatNames[14]["exemplar"],
+    {prop1: 1, prop2: 1},
+    {tar1: 1, tar2: 1},
+    {p:0.5, mean: "blue"}, {p:0.5, mean: "yellow"}),
+  ]
 
     this.bugOpts0 = [
     { creature: "bug",
@@ -406,81 +395,6 @@
         tar1: 0, // berries
         tar2: 0, // leaves
         internal_prop: 0.2 // leaves
-      }
-      ]
-
-
-      this.birdOpts1 = [
-    { creature: "bird",
-    name: ourCreatNames[12]["exemplar"],//"blicket",
-    globalColors: [
-    {
-      p: 0.99,
-      props: {
-        color_mean: "green",
-        color_var: 0.001,
-        location: "ground"
-      }
-    }, {
-      p: 0.01,
-      props: {
-        color_mean: "orange",
-        color_var: 0.001,
-        location: "trees"
-      }
-    }],
-        prop1: 1, // height
-        prop2: 1, // fatness
-        tar1: 1, // tails
-        tar2: 1, // crest
-        internal_prop: 0.4 // lays eggs
-      },
-      { creature: "bird",
-      name: ourCreatNames[13]["exemplar"],//"creed",
-      globalColors: [
-      {
-        p: 1,
-        props: {
-          color_mean: "red",
-          color_var: 0.001,
-          location: "ground"
-        }
-      }, {
-        p: 0,
-        props: {
-          color_mean: "red",
-          color_var: 0.001,
-          location: "trees"
-        }
-      }],
-        prop1: 1, // height
-        prop2: 1, // fatness
-        tar1: 1, // tails
-        tar2: 1, // crest
-        internal_prop: 0.2, // lays eggs
-      },
-      { creature: "bird",
-      name: ourCreatNames[14]["exemplar"],//"dredge",
-      globalColors: [
-      {
-        p: 0.5,
-        props: {
-          color_mean: "blue",
-          color_var: 0.001,
-          location: "ground"
-        }
-      }, {
-        p: 0.5,
-        props: {
-          color_mean: "yellow",
-          color_var: 0.001,
-          location: "trees"}
-        }],
-        prop1: 1, // height
-        prop2: 1, // fatness
-        tar1: 1, // tails
-        tar2: 1, // crest
-        internal_prop: 0 // lays eggs
       }
       ]
 
@@ -787,8 +701,8 @@
     this.player_count = options.player_count;
 
     var playerDistributions = {
-      A: _.shuffle(this.distributions),
-      B: _.shuffle(this.distributions)
+      A: _.shuffle(this.distributions.internal),
+      B: _.shuffle(this.distributions.internal)
     };
 
     // needs to be generalized
