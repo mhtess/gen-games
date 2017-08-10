@@ -348,6 +348,7 @@ slides.thanks = slide({
   name : "thanks",
   start : function() {
     globalGame.socket.send("enterSlide.thanks.");
+    //globalGame.socket.send("calculateReward.")
     exp.data= {
       "test_trials" : exp.test_trials,
       "system" : exp.system,
@@ -355,6 +356,8 @@ slides.thanks = slide({
       "subject_information" : exp.subj_data,
       "time_in_minutes" : (Date.now() - exp.startT)/60000
     };
+
+
     if(_.size(globalGame.urlParams) == 4) {
       window.opener.turk.submit(exp.data, true);
       window.close();
@@ -399,33 +402,33 @@ function init() {
 
   //blocks of the experiment:
   exp.structure=[
-    "i0",
-    "instructions",
-    "wait_room",
-    "learning_instructions",
-    "learning_critters",
-    "chat_instructions",
-    "chatRoom",
-    "test_instructions",
-    "test_critters",
-    "wait_room",
-    "score_report",
-    "learning_instructions",
-    "learning_critters",
-    "chatRoom",
-    "test_instructions",
-    "test_critters",
-    "wait_room",
-    "score_report",
-    "learning_instructions",
-    "learning_critters",
-    "chatRoom",
-    "test_instructions",
-    "test_critters",
-    "wait_room",
-    "score_report",
-    "learning_instructions",
-    "learning_critters",
+    // "i0",
+    // "instructions",
+    // "wait_room",
+    // "learning_instructions",
+    // "learning_critters",
+    // "chat_instructions",
+    // "chatRoom",
+    // "test_instructions",
+    // "test_critters",
+    // "wait_room",
+    // "score_report",
+    // "learning_instructions",
+    // "learning_critters",
+    // "chatRoom",
+    // "test_instructions",
+    // "test_critters",
+    // "wait_room",
+    // "score_report",
+    // "learning_instructions",
+    // "learning_critters",
+    // "chatRoom",
+    // "test_instructions",
+    // "test_critters",
+    // "wait_room",
+    // "score_report",
+    // "learning_instructions",
+    // "learning_critters",
     "chatRoom",
     "test_instructions",
     "test_critters",

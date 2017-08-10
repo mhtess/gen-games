@@ -228,29 +228,24 @@ var customSetup = function(game) {
     enterScoreReport++;
     if(enterScoreReport % 2 == 0){ //hacky way to handle error thrown when only one player finishes the test
       var ind = (enterScoreReport / 2) - 1;
-      if(globalGame.my_role === globalGame.playerRoleNames.role1) {
-        $('#your_hits').html("Hits: " + data["playerA"][ind].hits);
-        $('#your_falseAlarms').html("False Alarms: " + data["playerA"][ind].falseAlarms);
-        $('#your_misses').html("Misses: " + data["playerA"][ind].misses);
-        $('#your_correctRejections').html("Correct Rejections: " + data["playerA"][ind].correctRejections);
-        $('#other_hits').html("Hits: " + data["playerB"][ind].hits);
-        $('#other_falseAlarms').html("False Alarms: " + data["playerB"][ind].falseAlarms);
-        $('#other_misses').html("Misses: " + data["playerB"][ind].misses);
-        $('#other_correctRejections').html("Correct Rejections: " + data["playerB"][ind].correctRejections);
-      }
-      else if(globalGame.my_role === globalGame.playerRoleNames.role2) {
-        $('#your_hits').html("Hits: " + data["playerB"][ind].hits);
-        $('#your_falseAlarms').html("False Alarms: " + data["playerB"][ind].falseAlarms);
-        $('#your_misses').html("Misses: " + data["playerB"][ind].misses);
-        $('#your_correctRejections').html("Correct Rejections: " + data["playerB"][ind].correctRejections);
-        $('#other_hits').html("Hits: " + data["playerA"][ind].hits);
-        $('#other_falseAlarms').html("False Alarms: " + data["playerA"][ind].falseAlarms);
-        $('#other_misses').html("Misses: " + data["playerA"][ind].misses);
-        $('#other_correctRejections').html("Correct Rejections: " + data["playerA"][ind].correctRejections);
+      var my_role = globalGame.my_role;
+      var partner_role = my_role === "playerA" ? "playerB" : "playerA"
+      for(var i=0; i<2; i++){
+        var score_role, role_index;
+        if(i==0){
+          score_role="your";
+          role_index=my_role;
+        }
+        else if(i==1){
+          score_role="other";
+          role_index=partner_role;
+        }
+        $('#'+score_role+'_hits').append(data[role_index][ind].hits);
+        $('#'+score_role+'_falseAlarms').append(data[role_index][ind].falseAlarms);
+        $('#'+score_role+'_misses').append(data[role_index][ind].misses);
+        $('#'+score_role+'_correctRejections').append(data[role_index][ind].correctRejections);
       }
     }
-    
-
   });
 
   // initialize experiment_template
@@ -270,11 +265,6 @@ var client_onjoingame = function(num_players, role) {
 
   // Update w/ role (can only move stuff if agent)
   $('#roleLabel').append(role + '.');
-  if(role === globalGame.playerRoleNames.role1) {
-    $('#instructs').append("Discuss with your partner what each of you learned.");
-  } else if(role === globalGame.playerRoleNames.role2) {
-    $('#instructs').append("Discuss with your partner what each of you learned.");
-  }
 
   if(num_players == 1) {
     // Set timeout only for first player...

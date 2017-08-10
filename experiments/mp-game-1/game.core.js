@@ -1092,3 +1092,19 @@ game_core.prototype.server_send_update = function(){
     p.player.instance.emit( 'onserverupdate', playerState);
   });
 };
+
+// var calculate_end_game_bonus = function(){
+//     console.log(this.testScores)
+//     console.log(this.bonusAmt)
+//     var reward = 0;
+//     for(var i=0; i<this.numRounds; i++){
+//       for (var j=0; j<2; j++){
+//         var role_index = j == 0 ? "playerA" : "playerB";
+//         reward += this.testScores[role_index][i].hits + this.testScores[role_index][i].correctRejections;
+//       }
+//     }
+//     console.log("reward is " + reward);
+//     return reward;
+    
+//   }
+
