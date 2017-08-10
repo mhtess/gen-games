@@ -15,6 +15,7 @@
 
 // A window global for our game root variable.
 var globalGame = {};
+var enterScoreReport = 0;
 //var totalRounds = null;
 
 // Update client versions of variables with data received from
@@ -220,11 +221,36 @@ var customSetup = function(game) {
   });
 
   game.socket.on('sendingTestScores', function(data){
-    console.log("sendingTestScores")
-    console.log("scores: " + JSON.stringify(data))
+    console.log("sendingTestScores");
+    console.log("scores: " + JSON.stringify(data));
+    //console.log("this does what I want: " + data["playerA"][0].hits);
     //exp.slides.test_critters.crittersFromServer = data.thisRoundTest;
-      
-    //exp.go();
+    enterScoreReport++;
+    if(enterScoreReport % 2 == 0){ //hacky way to handle error thrown when only one player finishes the test
+      var ind = (enterScoreReport / 2) - 1;
+      if(globalGame.my_role === globalGame.playerRoleNames.role1) {
+        $('#your_hits').html("Hits: " + data["playerA"][ind].hits);
+        $('#your_falseAlarms').html("False Alarms: " + data["playerA"][ind].falseAlarms);
+        $('#your_misses').html("Misses: " + data["playerA"][ind].misses);
+        $('#your_correctRejections').html("Correct Rejections: " + data["playerA"][ind].correctRejections);
+        $('#other_hits').html("Hits: " + data["playerB"][ind].hits);
+        $('#other_falseAlarms').html("False Alarms: " + data["playerB"][ind].falseAlarms);
+        $('#other_misses').html("Misses: " + data["playerB"][ind].misses);
+        $('#other_correctRejections').html("Correct Rejections: " + data["playerB"][ind].correctRejections);
+      }
+      else if(globalGame.my_role === globalGame.playerRoleNames.role2) {
+        $('#your_hits').html("Hits: " + data["playerB"][ind].hits);
+        $('#your_falseAlarms').html("False Alarms: " + data["playerB"][ind].falseAlarms);
+        $('#your_misses').html("Misses: " + data["playerB"][ind].misses);
+        $('#your_correctRejections').html("Correct Rejections: " + data["playerB"][ind].correctRejections);
+        $('#other_hits').html("Hits: " + data["playerA"][ind].hits);
+        $('#other_falseAlarms').html("False Alarms: " + data["playerA"][ind].falseAlarms);
+        $('#other_misses').html("Misses: " + data["playerA"][ind].misses);
+        $('#other_correctRejections').html("Correct Rejections: " + data["playerA"][ind].correctRejections);
+      }
+    }
+    
+
   });
 
   // initialize experiment_template

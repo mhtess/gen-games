@@ -128,6 +128,45 @@
    <button class="continuebutton" id="test_button" onclick="_s.button()">Continue</button>
  </div>
 
+ <!-- Shows score report before allowing player to move on to next block -->
+  <div class="slide" id="score_report">
+   <h3 id="scoreTitle">Score Report</h3>
+   <p id="scoreInfo"><br>Here is you and your partner's score from this section.</p>
+   <br>
+   <div>
+     <table><tr>
+     <td>
+     <div class="score_table" id="your_score">
+
+       <h4 class="score_player">Your Score</h4><br>
+       <div class="report">
+         <p id="your_hits"></p><br>
+         <p id="your_falseAlarms"></p><br>
+         <p id="your_misses"></p><br>
+         <p id="your_correctRejections"></p>
+       </div>
+
+     </div>
+     </td>
+     <td><div style="width:80px"></div></td>
+     <td>
+     <div class="score_table" id="partner_score">
+
+       <h4 class="score_player">Your Partner's Score</h4><br>
+       <div class="report">
+         <p id="other_hits"></p><br>
+         <p id="other_falseAlarms"></p><br>
+         <p id="other_misses"></p><br>
+         <p id="other_correctRejections"></p>
+       </div>
+
+     </div>
+     </td>
+     </tr></table><br><br><br>
+   </div>
+   <button class="continuebutton" onclick="_s.button()">Continue</button>
+ </div>
+
  <!-- Connected players can discuss what they have learned in 'welcome_critter' here using a chatbox -->
  <div class="slide" id="chatRoom">
   <div id='header'>

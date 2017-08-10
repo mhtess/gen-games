@@ -294,8 +294,14 @@ slides.test_critters = slide({
   }
 });
 
-slides.scoreReport = slide({
+slides.score_report = slide({
+  name: "score_report",
+  start: function() {
 
+  },
+  button : function() {
+    exp.go()
+  }
 });
 
 // Connected players can discuss what they have learned in 'welcome_critter' here using a chatbox
@@ -393,33 +399,38 @@ function init() {
 
   //blocks of the experiment:
   exp.structure=[
-    // "i0",
-    // "instructions",
-    //"wait_room",
-    //"learning_instructions",
-    //"learning_critters",
-    //"chat_instructions",
+    "i0",
+    "instructions",
+    "wait_room",
+    "learning_instructions",
+    "learning_critters",
+    "chat_instructions",
     "chatRoom",
     "test_instructions",
     "test_critters",
     "wait_room",
+    "score_report",
     "learning_instructions",
     "learning_critters",
     "chatRoom",
     "test_instructions",
     "test_critters",
     "wait_room",
+    "score_report",
     "learning_instructions",
     "learning_critters",
     "chatRoom",
     "test_instructions",
     "test_critters",
     "wait_room",
+    "score_report",
     "learning_instructions",
     "learning_critters",
     "chatRoom",
     "test_instructions",
     "test_critters",
+    "wait_room",
+    "score_report",
     "subj_info",
     'thanks',
     ]

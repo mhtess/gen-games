@@ -132,14 +132,6 @@ var onMessage = function(client,message) {
 
       gc.testScores[target.instance.role].push(scoreObj);
 
-      //input something here
-      //console.log("message_parts: "  + message_parts);
-      // if(gc.currentSlide["playerA"] == gc.currentSlide["playerB"]) {
-      //   _.map(all, function(p) {
-      //     p.player.instance.emit("sendingTestScores", {message_parts});
-      //   });
-      //   //console.log(message_parts);
-      // }
 
       // if (gc.currentSlide["playerA"] == gc.currentSlide["playerB"]) {
         //var msg = message_parts[1].replace(/~~~/g,'.');
