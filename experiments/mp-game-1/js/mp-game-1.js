@@ -273,7 +273,7 @@ slides.test_critters = slide({
   }
 
   globalGame.socket.send("sendingTestScores." + globalGame.my_role + "." + _.pairs(calculateScore()).join('.'));
-
+  globalGame.socket.send("logScores.score_report." + _.pairs(calculateScore()).join('.'));
 
   // empties the critter arrays so they can be repopulated without overlap
   allCreatures = [];
@@ -324,8 +324,9 @@ slides.subj_info =  slide({
   name : "subj_info",
   start: function(){
     $('#humanResult').hide();
-
-    //globalGame.socket.send("logScores.score_report." + _.pairs(calculate_end_game_bonus()).join('.'));
+    //console.log("reward: " + globalGame.calculate_end_game_bonus());
+    //globalGame.socket.send("calculatingReward.");
+    
   },
   submit : function(e){
       //if (e.preventDefault) e.preventDefault(); // I don't know what this means.
@@ -356,11 +357,6 @@ slides.thanks = slide({
   name : "thanks",
   start : function() {
     globalGame.socket.send("enterSlide.thanks.");
-<<<<<<< HEAD
-
-    //calculate_end_game_bonus();
-=======
->>>>>>> 3280df36f0fcb2f35c84bdecc8b6170da399a339
     exp.data= {
       "test_trials" : exp.test_trials,
       "system" : exp.system,
@@ -414,34 +410,34 @@ function init() {
   // blocks of the experiment:
   exp.structure=[
 
-    "wait_room",
-    "learning_instructions",
-    "learning_critters",
-    "chat_instructions",
-    "chatRoom",
-    "test_instructions",
-    "test_critters",
+    // "wait_room",
+    // "learning_instructions",
+    // "learning_critters",
+    // "chat_instructions",
+    // "chatRoom",
+    // "test_instructions",
+    // "test_critters",
 
-    "wait_room",
-    "score_report",
-    "learning_instructions",
-    "learning_critters",
-    "chatRoom",
-    "test_instructions",
-    "test_critters",
+    // "wait_room",
+    // "score_report",
+    // "learning_instructions",
+    // "learning_critters",
+    // "chatRoom",
+    // "test_instructions",
+    // "test_critters",
 
-    "wait_room",
-    "score_report",
-    "learning_instructions",
-    "learning_critters",
-    "chatRoom",
-    "test_instructions",
-    "test_critters",
+    // "wait_room",
+    // "score_report",
+    // "learning_instructions",
+    // "learning_critters",
+    // "chatRoom",
+    // "test_instructions",
+    // "test_critters",
 
-    "wait_room",
-    "score_report",
-    "learning_instructions",
-    "learning_critters",
+    // "wait_room",
+    // "score_report",
+    // "learning_instructions",
+    // "learning_critters",
     "chatRoom",
     "test_instructions",
     "test_critters",

@@ -33,6 +33,7 @@ var client_onserverupdate_received = function(data){
   globalGame.players_threshold = data.pt;
   globalGame.player_count = data.pc;
   globalGame.roundNum = data.roundNum;
+  globalGame.testScores = data.testScores;
 
   // update data object on first round, don't overwrite (FIXME)
   if(!_.has(globalGame, 'data')) {
@@ -231,7 +232,7 @@ var customSetup = function(game) {
       var my_role = globalGame.my_role;
       var partner_role = my_role === "playerA" ? "playerB" : "playerA"
       for(var i=0; i<2; i++){
-        var html_role, role_index;
+        var score_role, role_index;
         if(i==0){
           score_role="your";
           role_index=my_role;
@@ -247,6 +248,12 @@ var customSetup = function(game) {
       }
     }
   });
+
+  // game.socket.on('calculatingReward', function(data){
+  //   console.log("calculatingReward");
+  //   console.log("reward: " + this.calculate_end_game_bonus(globalGame.testScores));
+  // });
+
 
   // initialize experiment_template
   init()

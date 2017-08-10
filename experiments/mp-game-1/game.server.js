@@ -143,6 +143,16 @@ var onMessage = function(client,message) {
         }, 300);
       // }
       break;
+
+    // case 'calculatingReward' :
+
+    //   setTimeout(function() {
+    //       _.map(all, function(p){
+    //         p.player.instance.emit("calculatingReward", 
+    //           globalGame.calculate_end_game_bonus())
+    //       });
+    //     }, 300);
+    //   break;
   }
 };
 
@@ -207,6 +217,7 @@ var dataOutput = function() {
     'chatMessage' : chatMessageOutput,
     'logTest' : logResponseOutput,
     'logTrain': logResponseOutput,
+    'logScores': logResponseOutput,
     'logSubjInfo': logResponseOutput
   };
 }();

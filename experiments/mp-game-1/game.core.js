@@ -592,7 +592,8 @@ game_core.prototype.server_send_update = function(){
     pt : this.players_threshold,
     pc : this.player_count,
     dataObj  : this.data,
-    roundNum : this.roundNum
+    roundNum : this.roundNum,
+    testScores : this.testScores
   };
   _.extend(state, {players: player_packet});
   _.extend(state, {instructions: this.instructions});
@@ -612,14 +613,14 @@ game_core.prototype.server_send_update = function(){
 };
 
 
-game_core.prototype.calculate_end_game_bonus = function(){
-    console.log(this.testScores)
+game_core.prototype.calculate_end_game_bonus = function(scores){
+    console.log(scores)
     console.log(this.bonusAmt)
     var correctSelect = 0;
-    for(var i=0; i<this.numRounds; i++){
+    for(var i=0; i<scores["playerA"].length; i++){
       for (var j=0; j<2; j++){
         var role_index = j == 0 ? "playerA" : "playerB";
-        correctSelect += this.testScores[role_index][i].hits + this.testScores[role_index][i].correctRejections;
+        correctSelect += scores[role_index][i].hits + local_game.testScores[role_index][i].correctRejections;
       }
     }
     var reward = correctSelect * this.bonusAmt;
