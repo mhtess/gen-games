@@ -271,9 +271,8 @@ slides.test_critters = slide({
 
 
   }
-
-  globalGame.socket.send("sendingTestScores." + globalGame.my_role + "." + _.pairs(calculateScore()).join('.'));
-
+  
+  globalGame.socket.send("logScores.score_report" + globalGame.my_role + "." + _.pairs(calculateScore()).join('.'));
 
   // empties the critter arrays so they can be repopulated without overlap
   allCreatures = [];
