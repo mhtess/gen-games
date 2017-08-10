@@ -51,6 +51,12 @@
     "playerB": []
   }
 
+  //overwritten at end of game after reward is calculated
+  // this.reward = {
+  //   "playerA": [],
+  //   "playerB": []
+  // } 
+
   // Determines which critters are present in the game and who gets which first
   this.critter = {
     role1 : 'bird',
@@ -1093,18 +1099,19 @@ game_core.prototype.server_send_update = function(){
   });
 };
 
-// var calculate_end_game_bonus = function(){
-//     console.log(this.testScores)
-//     console.log(this.bonusAmt)
-//     var reward = 0;
-//     for(var i=0; i<this.numRounds; i++){
-//       for (var j=0; j<2; j++){
-//         var role_index = j == 0 ? "playerA" : "playerB";
-//         reward += this.testScores[role_index][i].hits + this.testScores[role_index][i].correctRejections;
-//       }
-//     }
-//     console.log("reward is " + reward);
-//     return reward;
+game_core.prototype.calculate_end_game_bonus = function(){
+    console.log(this.testScores)
+    console.log(this.bonusAmt)
+    var correctSelect = 0;
+    for(var i=0; i<this.numRounds; i++){
+      for (var j=0; j<2; j++){
+        var role_index = j == 0 ? "playerA" : "playerB";
+        correctSelect += this.testScores[role_index][i].hits + this.testScores[role_index][i].correctRejections;
+      }
+    }
+    var reward = correctSelect * this.bonusAmt;
+    console.log("reward is " + reward);
+    return reward;
     
-//   }
+  }
 

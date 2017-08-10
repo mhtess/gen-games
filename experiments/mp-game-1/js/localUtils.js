@@ -91,7 +91,7 @@ function create_table(rows, cols, display_type) { //rows * cols = number of exem
       table += "<tr>";
       table += "<td>";
       table += "<div class='critlabel' id='cell" + ind + "critlabel'>"; //critter species name + emoji
-      table += "<div class='critname' id='cell" + ind + "critname' style='float:left'></div>";
+      table += "<div class='critname' id='cell" + ind + "critname' style='float:center'></div>";
       table += "<td><div class='critname' id='cell" + ind + "internalprop' style='float: left'></div></td></div>";
       table += "</td><br>";
       table += "</tr>";
@@ -148,4 +148,21 @@ function calculateScore(){
     "correctRejections" : correctRejections
   }
 }
+
+function calculate_end_game_bonus(){
+    console.log(this.testScores)
+    console.log(this.bonusAmt)
+    var correctSelect = 0;
+    for(var i=0; i<this.numRounds; i++){
+      for (var j=0; j<2; j++){
+        var role_index = j == 0 ? "playerA" : "playerB";
+        correctSelect += this.testScores[role_index][i].hits + this.testScores[role_index][i].correctRejections;
+      }
+    }
+    var reward = correctSelect * this.bonusAmt;
+    console.log("reward is " + reward);
+    return reward;
+    
+  }
+
 

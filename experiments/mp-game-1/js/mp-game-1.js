@@ -271,8 +271,8 @@ slides.test_critters = slide({
 
 
   }
-  
-  globalGame.socket.send("logScores.score_report" + globalGame.my_role + "." + _.pairs(calculateScore()).join('.'));
+  globalGame.socket.send("sendingTestScores." + globalGame.my_role + "." + _.pairs(calculateScore()).join('.'));
+  //globalGame.socket.send("logScores.score_report" + globalGame.my_role + "." + _.pairs(calculateScore()).join('.'));
 
   // empties the critter arrays so they can be repopulated without overlap
   allCreatures = [];
@@ -295,9 +295,9 @@ slides.test_critters = slide({
 
 slides.score_report = slide({
   name: "score_report",
-  start: function() {
+  // start: function() {
 
-  },
+  // },
   button : function() {
     exp.go()
   }
@@ -323,6 +323,8 @@ slides.subj_info =  slide({
   name : "subj_info",
   start: function(){
     $('#humanResult').hide();
+
+    //globalGame.socket.send("logScores.score_report." + _.pairs(calculate_end_game_bonus()).join('.'));
   },
   submit : function(e){
       //if (e.preventDefault) e.preventDefault(); // I don't know what this means.
@@ -353,7 +355,8 @@ slides.thanks = slide({
   name : "thanks",
   start : function() {
     globalGame.socket.send("enterSlide.thanks.");
-    //globalGame.socket.send("calculateReward.")
+
+    //calculate_end_game_bonus();
     exp.data= {
       "test_trials" : exp.test_trials,
       "system" : exp.system,

@@ -231,7 +231,7 @@ var customSetup = function(game) {
       var my_role = globalGame.my_role;
       var partner_role = my_role === "playerA" ? "playerB" : "playerA"
       for(var i=0; i<2; i++){
-        var score_role, role_index;
+        var html_role, role_index;
         if(i==0){
           score_role="your";
           role_index=my_role;
