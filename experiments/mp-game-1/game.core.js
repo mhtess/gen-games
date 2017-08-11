@@ -37,7 +37,7 @@
   // This has replaced expid - see if this is recorded
   this.iterationName = 'pilot1';
   this.anonymizeCSV = true;
-  this.bonusAmt = 3; // in cents
+  this.bonusAmt = 2; // in cents
 
   // How many players in the game?
   this.players_threshold = 2;
@@ -50,12 +50,6 @@
     "playerA": [],
     "playerB": []
   }
-
-  //overwritten at end of game after reward is calculated
-  // this.reward = {
-  //   "playerA": [],
-  //   "playerB": []
-  // } 
 
   // Determines which critters are present in the game and who gets which first
   this.critter = {
@@ -114,9 +108,27 @@
   // tar is a feature (e.g., whiskers)
   // prop is shape / size (e.g., fat)
 
-  this.colorOptions = [
-    "blue", "green", "red", "yellow", "orange", "purple"
-  ]
+  // allows us to write (and record) what color we want without needing hex codes
+  this.color_dict = {
+    blue: "#5da5db",
+    red: "#f42935",
+    yellow: "#eec900",
+    green: "#228b22",
+    orange: "#ff8c00",
+    purple: "#b62fef"
+    // pink: "#f97ada",
+    // lightblue: "#11edf4",
+    // lightgreen: "#11f427",
+    // lightpurple: "#dda0dd",
+  }
+
+  this.colorOptions = _.keys(this.color_dict);
+  this.species = ["fish", "bug", "tree", "bird"];
+
+  this.createDeterministicColorArray = function(colorLabel){
+    return [{p:1, mean: colorLabel}, {p:0, mean: colorLabel}]
+  }
+
   this.distributions = {
     internal:  [
         [0, 0, 1],
@@ -124,11 +136,14 @@
         [0, 0.25, 1],
         [0, 0, 0.25]
       ],
-    colors: [
-      [{p:1, mean: "blue"}, {p:0, mean: "blue"}],
-      [{p:1, mean: "yellow"}, {p:0, mean: "yellow"}],
-      [{p:1, mean: "red"}, {p:0, mean: "red"}]
-    ]
+    colors: []
+    // _.map(_.range(this.numRounds * 2), function(i){
+    //   return _.map(_.shuffle(this.colorOptions).slice(0, 3), this.createDeterministicColorArray)
+    // })
+      // [{p:1, mean: "blue"}, {p:0, mean: "blue"}],
+      // [{p:1, mean: "yellow"}, {p:0, mean: "yellow"}],
+      // [{p:1, mean: "red"}, {p:0, mean: "red"}]
+  //  ]
     // tar1: [
     //
     // ],
@@ -138,94 +153,78 @@
     // prop1: [
     //
     // ],
+
     // prop2: [
     //
     // ]
   }
 
+  for (i = 0; i < this.numRounds * 2; i++){
+    this.distributions.colors.push(
+      _.map(_.shuffle(this.colorOptions).slice(0, 3), this.createDeterministicColorArray)
+    )
+  }
+
+  console.log(this.distributions.colors)
   var testCreatNames = _.clone(ourCreatNames);
 
   this.createCreatureOptsObj = function(creature, shapeParams, featureParams, colors) {
     var newName = testCreatNames.pop()
+    // var colors = this.distributions.colors.pop();
+    // console.log(creature)
+    // console.log(colors);
     return _.extend({ creature, name: newName.exemplar,
       globalColors: [
       { p: colors[0].p, props: { color_mean: colors[0].mean, color_var: 0.001 } },
       { p: colors[1].p, props: { color_mean: colors[1].mean, color_var: 0.001 } }
     ] }, shapeParams, featureParams)
   }
-  //
-  // this.categories = {
-  //   bird: ,
-  //   bug: ,
-  //   fish: ,
-  //   tree: ,
-  // }
-  this.birdOpts0 = [], this.birdOpts1 = [];
-  this.bugOpts0 = [], this.bugOpts1 = [];
-  this.fishOpts0 = [], this.fishOpts1 = [];
-  this.treeOpts0 = [], this.treeOpts1 = [];
-  for (i=0; i<this.creatureTypesN; i++){
 
-    this.birdOpts0.push(
-      this.createCreatureOptsObj("bird",
-        {prop1: 0, prop2: 0},
-        {tar1: 0, tar2: 0},
-        this.distributions.colors[i]
-      )
-    )
-    this.birdOpts1.push(
-      this.createCreatureOptsObj("bird",
-        {prop1: 1, prop2: 1},
-        {tar1: 1, tar2: 1},
-        this.distributions.colors[i]
-      )
-    )
+  this.categories = {
+    bird: [],
+    bug: [],
+    fish: [],
+    tree: [],
+  }
 
-    this.bugOpts0.push(
-      this.createCreatureOptsObj("bug",
-        {prop1: 0, prop2: 0},
-        {tar1: 0, tar2: 0},
-        this.distributions.colors[i]
-      )
-    )
-    this.bugOpts1.push(
-      this.createCreatureOptsObj("bug",
-        {prop1: 1, prop2: 1},
-        {tar1: 1, tar2: 1},
-        this.distributions.colors[i]
-      )
-    )
+  this.speciesFeatureParams = {
+    "bird": [
+      [{prop1: 0, prop2: 0}, {tar1: 0, tar2: 0}],
+      [{prop1: 1, prop2: 1}, {tar1: 1, tar2: 1}]
+    ],
+    "bug": [
+      [{prop1: 0, prop2: 0}, {tar1: 0, tar2: 0}],
+      [{prop1: 1, prop2: 1}, {tar1: 1, tar2: 1}]
+    ],
+    "fish":[
+      [{prop1: 0, prop2: 0}, {tar1: 0, tar2: 0}],
+      [{prop1: 1, prop2: 1}, {tar1: 1, tar2: 1}]
+    ],
+    "tree": [
+      [{prop1: 0, prop2: 0}, {tar1: 0, tar2: 0}],
+      [{prop1: 1, prop2: 1}, {tar1: 1, tar2: 1}]
+    ],
+  }
 
-    this.treeOpts0.push(
-      this.createCreatureOptsObj("tree",
-        {prop1: 0, prop2: 0},
-        {tar1: 0, tar2: 0},
-        this.distributions.colors[i]
-      )
-    )
-    this.treeOpts1.push(
-      this.createCreatureOptsObj("tree",
-        {prop1: 1, prop2: 1},
-        {tar1: 0, tar2: 0},
-        this.distributions.colors[i]
-      )
-    )
+  // GENERATE CREATURE OPTS
+  for (repeatSpecies = 0; repeatSpecies < 2; repeatSpecies++){
+    for (speciesInd = 0; speciesInd < 4; speciesInd++){
+      var speciesLabel = this.species[speciesInd]
+      var colorDistribution = this.distributions.colors.pop(); // set of colors (one for each category)
 
-    this.fishOpts0.push(
-      this.createCreatureOptsObj("fish",
-        {prop1: 0, prop2: 0},
-        {tar1: 0, tar2: 0},
-        this.distributions.colors[i]
-      )
-    )
-    this.fishOpts1.push(
-      this.createCreatureOptsObj("fish",
-        {prop1: 1, prop2: 1},
-        {tar1: 1, tar2: 1},
-        this.distributions.colors[i]
-      )
-    )
+      var blockCreatureOpts = []; // the current format for creatureOpts is an array of arrays
+      // so this will be that inner array
+      for (i=0; i<this.creatureTypesN; i++){
+        // prop and tar info (can be different for the repetitions of species [eg bird, bug] across blocks)
+        var speciesFeatureParams = this.speciesFeatureParams[speciesLabel][repeatSpecies];
 
+        blockCreatureOpts.push(this.createCreatureOptsObj(speciesLabel,
+            speciesFeatureParams[0], speciesFeatureParams[1],colorDistribution[i])
+        )
+
+      }
+      this.categories[speciesLabel].push(blockCreatureOpts)
+    }
   }
 
     // total number of creatures
@@ -241,22 +240,6 @@
 
     //this.uniqueCreatures =  _.uniq(_.pluck(this.creatureOpts, "name")); //might need to comment back in
 
-    // allows us to write (and record) what color we want without needing hex codes
-    this.color_dict = {
-      blue: "#5da5db",
-      red: "#f42935",
-      yellow: "#eec900",
-      green: "#228b22",
-      orange: "#ff8c00",
-      purple: "#b62fef"
-      // pink: "#f97ada",
-      // lightblue: "#11edf4",
-      // lightgreen: "#11f427",
-      // lightpurple: "#dda0dd",
-
-    }
-
-    this.critter_dict =
 
   // Which round are we on (initialize at -1 so that first round is 0-indexed)
   this.roundNum = -1;
@@ -270,8 +253,8 @@
   this.trialInfo = [];
 
   this.task_welcome_critter = {
-    bird_bug: "<h2>Save the population</h2><p><br> The population of birds on the island is dwindling because of poisonous bugs. Learn about the birds and bugs with your partner to try to save the bird population.</p>",
-    tree_fish: "<h2>Protect the fish</h2><p><br> Fish off the shore of the island are under threat by crocodiles. You can help them by by putting them near plants with leaves that can protect them. Learn about the fish and the plants with your partner to try to save the fish.</p>"
+    bird_bug: "<h2>Save the population</h2><p><br> The population of birds on the island is dwindling because of poisonous bugs. Learn about the birds and bugs with your partner to try to save the population.</p>",
+    tree_fish: "<h2>Protect the fish</h2><p><br> Fish off the shore of the island are under threat by crocodiles. They can helped by putting them near plants with leaves that can protect them. Learn about the fish and the plants with your partner to try to save the fish.</p>"
   }
 
   this.critter_instructions = {
@@ -431,31 +414,7 @@ var probToCount = function(p, n){
 }
 
 game_core.prototype.createFeatureArray = function(creatureLabel, creatureCategory, num){ //add num as parameter too
-  var creatureOpts;
-  switch(creatureCategory) {
-    case "bird":
-    num==0 ?
-      creatureOpts = this.birdOpts0 :
-      creatureOpts = this.birdOpts1 //add if/else statment here too
-    break;
-    case "bug":
-    num==0 ?
-      creatureOpts = this.bugOpts0 :
-      creatureOpts = this.bugOpts1
-    break;
-    case "fish":
-    num==0 ?
-      creatureOpts = this.fishOpts0 :
-      creatureOpts = this.fishOpts1
-    break;
-    case "tree":
-    num==0 ?
-      creatureOpts = this.treeOpts0 :
-      creatureOpts = this.treeOpts1
-    break;
-  }
-
-  // var probs = [p, 1-p]
+  var creatureOpts = this.categories[creatureCategory][num];
   var creatOpts = _.filter(creatureOpts, {name: creatureLabel})[0];
   var creatureColors = [];
   var creatureLocation = [];
@@ -503,29 +462,7 @@ game_core.prototype.genCreatures = function(creatureCategory, num, interval_feat
   var j = 0;
   // Generates the characteristics for each critter
   var allCreatures = [];
-  var creatureOpts;
-  switch(creatureCategory) {
-    case "bird":
-    num==0 ?
-      creatureOpts = this.birdOpts0 :
-      creatureOpts = this.birdOpts1 //add if/else statment here too
-    break;
-    case "bug":
-    num==0 ?
-      creatureOpts = this.bugOpts0 :
-      creatureOpts = this.bugOpts1
-    break;
-    case "fish":
-    num==0 ?
-      creatureOpts = this.fishOpts0 :
-      creatureOpts = this.fishOpts1
-    break;
-    case "tree":
-    num==0 ?
-      creatureOpts = this.treeOpts0 :
-      creatureOpts = this.treeOpts1
-    break;
-  }
+  var creatureOpts = this.categories[creatureCategory][num];
   // get unique labels (e.g., wug, fep, lorch); should be number of unique kinds in each block
   uniqueCreatures =  _.uniqBy(_.map(creatureOpts, "name"));
   for (var i = 0; i < uniqueCreatures.length; i++){
@@ -592,8 +529,7 @@ game_core.prototype.server_send_update = function(){
     pt : this.players_threshold,
     pc : this.player_count,
     dataObj  : this.data,
-    roundNum : this.roundNum,
-    testScores : this.testScores
+    roundNum : this.roundNum
   };
   _.extend(state, {players: player_packet});
   _.extend(state, {instructions: this.instructions});
@@ -612,19 +548,17 @@ game_core.prototype.server_send_update = function(){
   });
 };
 
+// var calculate_end_game_bonus = function(){
+//     console.log(this.testScores)
+//     console.log(this.bonusAmt)
+//     var reward = 0;
+//     for(var i=0; i<this.numRounds; i++){
+//       for (var j=0; j<2; j++){
+//         var role_index = j == 0 ? "playerA" : "playerB";
+//         reward += this.testScores[role_index][i].hits + this.testScores[role_index][i].correctRejections;
+//       }
+//     }
+//     console.log("reward is " + reward);
+//     return reward;
 
-game_core.prototype.calculate_end_game_bonus = function(scores){
-    console.log(scores)
-    console.log(this.bonusAmt)
-    var correctSelect = 0;
-    for(var i=0; i<scores["playerA"].length; i++){
-      for (var j=0; j<2; j++){
-        var role_index = j == 0 ? "playerA" : "playerB";
-        correctSelect += scores[role_index][i].hits + local_game.testScores[role_index][i].correctRejections;
-      }
-    }
-    var reward = correctSelect * this.bonusAmt;
-    console.log("reward is " + reward);
-    return reward;
-    
-  }
+//   }
