@@ -59,9 +59,16 @@
 
   // How many rounds do we want people to complete? MAKE SURE THIS ALIGNS WITH EXP TEMPLATE SLIDE AMT
   this.numRounds = 4;
-
   // number of different species
   this.creatureTypesN = 3;
+  // number of exemplars displayed in a block
+  this.creatureN = 12;
+  // number of each critter of a species
+  this.exemplarN = this.creatureN/this.creatureTypesN;
+
+  // Number of rows & columns in table presenting critters
+  this.presentRows = 2;
+  this.presentCols = this.creatureN/this.presentRows;
 
   this.creatureNames = [
       {list:0,category: "morseths", exemplar:"morseth"},
@@ -140,8 +147,8 @@
     internal:  [
         [0, 0, 1],
         [0.5, 0.5, 0.5],
-        [0, 0.25, 1],
-        [0, 0, 0.25]
+        [0, 0.75, 1],
+        [0, 0.25, 1]
       ],
     colors: []
     // _.map(_.range(this.numRounds * 2), function(i){
@@ -168,11 +175,12 @@
 
   for (i = 0; i < this.numRounds * 2; i++){
     this.distributions.colors.push(
-      _.map(_.shuffle(this.colorOptions).slice(0, 3), this.createDeterministicColorArray)
+      _.map(
+        _.shuffle(this.colorOptions).slice(0, this.creatureTypesN), this.createDeterministicColorArray)
     )
   }
 
-  console.log(this.distributions.colors)
+  // console.log(this.distributions.colors)
   var testCreatNames = _.clone(ourCreatNames);
 
   this.createCreatureOptsObj = function(creature, shapeParams, featureParams, colors) {
@@ -190,25 +198,25 @@
   this.speciesFeatureParams = {
     "bird": [
       [{prop1: 0, prop2: 0}, {tar1: 0, tar2: 0}],
-      [{prop1: 1, prop2: 1}, {tar1: 1, tar2: 1}]
+      [{prop1: 0.8, prop2: 0.8}, {tar1: 1, tar2: 1}]
     ],
     "bug": [
       [{prop1: 0, prop2: 0}, {tar1: 0, tar2: 0}],
-      [{prop1: 1, prop2: 1}, {tar1: 1, tar2: 1}]
+      [{prop1: 0.8, prop2: 0.8}, {tar1: 1, tar2: 1}]
     ],
     "fish":[
       [{prop1: 0, prop2: 0}, {tar1: 0, tar2: 0}],
-      [{prop1: 1, prop2: 1}, {tar1: 1, tar2: 1}]
+      [{prop1: 0.8, prop2: 0.8}, {tar1: 1, tar2: 1}]
     ],
     "tree": [
-      [{prop1: 0, prop2: 0}, {tar1: 0, tar2: 0}],
-      [{prop1: 1, prop2: 1}, {tar1: 0, tar2: 0}]
+      [{prop1: 0.2, prop2: 0.2}, {tar1: 0, tar2: 0}],
+      [{prop1: 0.8, prop2: 0.8}, {tar1: 0, tar2: 0}]
     ],
   }
 
   // GENERATE CREATURE OPTS
   for (repeatSpecies = 0; repeatSpecies < 2; repeatSpecies++){
-    for (speciesInd = 0; speciesInd < 4; speciesInd++){
+    for (speciesInd = 0; speciesInd < this.species.length; speciesInd++){
       var speciesLabel = this.species[speciesInd]
       var colorDistribution = this.distributions.colors.pop(); // set of colors (one for each category)
 
@@ -227,15 +235,8 @@
     }
   }
 
-    // total number of creatures
-    this.creatureN = 12;
-    // number of each critter of a species
-    this.exemplarN = this.creatureN/this.creatureTypesN;
-
-    // Number of rows & columns in table presenting critters
-    this.presentRows = 2;
-    this.presentCols = this.creatureN/this.presentRows;
-
+  // console.log(this.categories)
+  // console.log(this.categories.fish)
 
 
     //this.uniqueCreatures =  _.uniq(_.pluck(this.creatureOpts, "name")); //might need to comment back in
@@ -329,6 +330,8 @@
       playerA: bOrder,
       playerB: aOrder
     };
+
+    // console.log(this.testList)
 
     this.data = {
       id : this.id,
@@ -467,7 +470,7 @@ game_core.prototype.genCreatures = function(creatureCategory, num, interval_feat
   uniqueCreatures =  _.uniqBy(_.map(creatureOpts, "name"));
   for (var i = 0; i < uniqueCreatures.length; i++){
     var creatOpts = _.filter(creatureOpts, {name: uniqueCreatures[i]})[0];
-    console.log(uniqueCreatures[i])
+    // console.log(uniqueCreatures[i])
     var creatureColor = this.createFeatureArray(
      uniqueCreatures[i], creatureCategory, num
      );

@@ -55,6 +55,10 @@ var onMessage = function(client,message) {
             // tell client to advance to next slide
             var playerRole = p.instance.role;
             // here, decide what data to pass to each subject
+            console.log("gc.roundNum " + gc.roundNum)
+            console.log("test list" + gc.testList[playerRole][gc.roundNum])
+            console.log("learning list" + gc.testList[playerRole][gc.roundNum + 1])
+
             var dataPacket = {
               thisRoundTest: gc.testList[playerRole][gc.roundNum],
               nextRoundLearning: gc.trialList[playerRole][gc.roundNum + 1],
@@ -62,13 +66,14 @@ var onMessage = function(client,message) {
             };
             // calls exitChatRoom to move to next slide and collect data to the packet
             p.player.instance.emit("exitChatRoom", dataPacket)
+
             _.map(all,function(p){
                 p.player.instance.emit('newRoundUpdate', {user: client.userid});
             });
           });
           // tell server to advance to next round (or if at end, disconnect)
           gc.roundNum += 1;
-        }, 300);
+        }, 3);
       break;
 
     // will result in "other player is typing" on others' chatboxes
@@ -127,7 +132,7 @@ var onMessage = function(client,message) {
 
     case 'sendingTestScores' :
        var scoreObj = _.fromPairs(_.map(
-        message_parts.slice(2), // get relevant part of message 
+        message_parts.slice(2), // get relevant part of message
         function(i){return i.split(',')}))
 
       gc.testScores[target.instance.role].push(scoreObj);
@@ -137,7 +142,7 @@ var onMessage = function(client,message) {
         //var msg = message_parts[1].replace(/~~~/g,'.');
         setTimeout(function() {
           _.map(all, function(p){
-            p.player.instance.emit("sendingTestScores", 
+            p.player.instance.emit("sendingTestScores",
               gc.testScores)
           });
         }, 300);
@@ -148,7 +153,7 @@ var onMessage = function(client,message) {
 
     //   setTimeout(function() {
     //       _.map(all, function(p){
-    //         p.player.instance.emit("calculatingReward", 
+    //         p.player.instance.emit("calculatingReward",
     //           globalGame.calculate_end_game_bonus())
     //       });
     //     }, 300);

@@ -217,6 +217,11 @@ slides.test_critters = slide({
    this.num_creats = allCreatures.length;
    this.creat_type = shuffledCritters[0]["critter"];
 
+   $('#chooseCrit').html(
+     "Click on the " +
+     globalGame.critter_instructions[this.creat_type]["test_instruct"]
+   );
+
     // Generates critters for test phase
     create_table(globalGame.presentRows,globalGame.presentCols,"critter_test_display");
 
@@ -430,33 +435,33 @@ function init() {
     "chatRoom",
     "test_instructions",
     "test_critters",
-
     "wait_room",
     "score_report",
+
     "learning_instructions",
     "learning_critters",
     "chatRoom",
     "test_instructions",
     "test_critters",
-
     "wait_room",
     "score_report",
+
     "learning_instructions",
     "learning_critters",
     "chatRoom",
     "test_instructions",
     "test_critters",
-
     "wait_room",
     "score_report",
+
     "learning_instructions",
     "learning_critters",
     "chatRoom",
     "test_instructions",
     "test_critters",
-
     "wait_room",
     "score_report",
+
     "subj_info",
     'thanks',
     ]
