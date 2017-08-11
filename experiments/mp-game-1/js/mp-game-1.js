@@ -242,7 +242,7 @@ slides.test_critters = slide({
     var selectedAnswer = $('#cell' + i).attr("data-selected");
     blockScores[scoreSingle(correctAnswer, selectedAnswer)]++
   }
-  
+
   //log responses
   for (var i=0; i<this.num_creats; i++) {
     var correctAnswer = shuffledCritters[i]["internal_prop"];
@@ -336,7 +336,7 @@ slides.subj_info =  slide({
     $('#humanResult').hide();
     //console.log("reward: " + globalGame.calculate_end_game_bonus());
     //globalGame.socket.send("calculatingReward.");
-    
+
   },
   submit : function(e){
       //if (e.preventDefault) e.preventDefault(); // I don't know what this means.
@@ -376,14 +376,14 @@ slides.thanks = slide({
       "subject_information" : exp.subj_data,
       "time_in_minutes" : (Date.now() - exp.startT)/60000
     };
-    if(_.size(globalGame.urlParams) == 4) {
-      window.opener.turk.submit(exp.data, true);
-      window.close();
-    } else {
-      console.log("would have submitted the following :")
-      console.log(exp.data);
-    }
-    setTimeout(function() {turk.submit(exp.data_trials);}, 1000);
+    setTimeout(function(){
+      if(_.size(globalGame.urlParams) == 4) {
+        window.opener.turk.submit(exp.data, true);
+        window.close();
+      } else {
+        console.log("would have submitted the following :")
+        console.log(exp.data);
+      } }, 1000)
   }
 });
 
@@ -414,6 +414,7 @@ function init() {
       array1.push.apply(array1, array1);
       num --;
     }
+    // SHOULD THIS BE array1?
     array.splice(1, 1); // deletes the first score report
     console.log("generate")
     return array1
