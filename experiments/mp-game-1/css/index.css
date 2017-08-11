@@ -178,6 +178,11 @@ ALOT...don't understand how to adjust that.*/
 	width: 300px;
 }
 
+.score_value {
+	font-size: 50px;
+	text-align: center;
+}
+
 
 ::-webkit-scrollbar {
     -webkit-appearance: none;

@@ -241,10 +241,12 @@ var customSetup = function(game) {
           score_role="other";
           role_index=partner_role;
         }
-        $('#'+score_role+'_hits').html("Hits: " + data[role_index][ind].hits);
-        $('#'+score_role+'_falseAlarms').html("False Alarms: " + data[role_index][ind].falseAlarms);
-        $('#'+score_role+'_misses').html("Misses: "+ data[role_index][ind].misses);
-        $('#'+score_role+'_correctRejections').html("Correct Rejections: "+ data[role_index][ind].correctRejections);
+        var player_score = Number(data[role_index][ind].hits) + Number(data[role_index][ind].correctRejections);
+        $('#'+score_role+'_score').html(player_score);
+        // $('#'+score_role+'_hits').html("Hits: " + data[role_index][ind].hits);
+        // $('#'+score_role+'_falseAlarms').html("False Alarms: " + data[role_index][ind].falseAlarms);
+        // $('#'+score_role+'_misses').html("Misses: "+ data[role_index][ind].misses);
+        // $('#'+score_role+'_correctRejections').html("Correct Rejections: "+ data[role_index][ind].correctRejections);
       }
     }
   });
