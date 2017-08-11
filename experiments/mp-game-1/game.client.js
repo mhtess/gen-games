@@ -16,6 +16,7 @@
 // A window global for our game root variable.
 var globalGame = {};
 var enterScoreReport = 0;
+var totalScore = 0;
 //var totalRounds = null;
 
 // Update client versions of variables with data received from
@@ -34,6 +35,7 @@ var client_onserverupdate_received = function(data){
   globalGame.player_count = data.pc;
   globalGame.roundNum = data.roundNum;
   globalGame.testScores = data.testScores;
+  //globalGame.bonusAmt = data.bonusAmt;
 
   // update data object on first round, don't overwrite (FIXME)
   if(!_.has(globalGame, 'data')) {
@@ -244,6 +246,9 @@ var customSetup = function(game) {
         }
         var player_score = Number(data[role_index][ind].hits) + Number(data[role_index][ind].correctRejections);
         $('#'+score_role+'_score').html(player_score);
+        totalScore += player_score;
+        // console.log("Total Score: " + totalScore);
+
         // $('#'+score_role+'_hits').html("Hits: " + data[role_index][ind].hits);
         // $('#'+score_role+'_falseAlarms').html("False Alarms: " + data[role_index][ind].falseAlarms);
         // $('#'+score_role+'_misses').html("Misses: "+ data[role_index][ind].misses);
@@ -252,10 +257,11 @@ var customSetup = function(game) {
     }
   });
 
-  // game.socket.on('calculatingReward', function(data){
-  //   console.log("calculatingReward");
-  //   console.log("reward: " + this.calculate_end_game_bonus(globalGame.testScores));
-  // });
+  game.socket.on('calculatingReward', function(data){
+    console.log("calculatingReward");
+    var reward = totalScore * globalGame.bonusAmt * 0.01;
+    console.log("reward: $" + reward);
+  });
 
 
   // initialize experiment_template

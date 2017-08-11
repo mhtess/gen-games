@@ -149,15 +149,15 @@ var onMessage = function(client,message) {
       // }
       break;
 
-    // case 'calculatingReward' :
+    case 'calculatingReward' :
 
-    //   setTimeout(function() {
-    //       _.map(all, function(p){
-    //         p.player.instance.emit("calculatingReward",
-    //           globalGame.calculate_end_game_bonus())
-    //       });
-    //     }, 300);
-    //   break;
+      setTimeout(function() {
+          _.map(all, function(p){
+            p.player.instance.emit("calculatingReward",
+              {})
+          });
+        }, 300);
+      break;
   }
 };
 
