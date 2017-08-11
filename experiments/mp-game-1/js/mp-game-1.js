@@ -180,7 +180,7 @@ slides.test_instructions = slide({
     this.creat_type = exp.slides.test_critters.crittersFromServer
 [0]["critter"];
   $('#test_instructs').html(
-    "<br>On the next slide, you will select the " +
+    "<br>On the next slide, select the " +
     globalGame.critter_instructions[this.creat_type]["test_instruct"]
   );
 
@@ -362,7 +362,6 @@ slides.subj_info =  slide({
       };
 
       globalGame.socket.send("logSubjInfo.subjInfo." + _.pairs(encodeData(exp.subj_data)).join('.'));
-      exp.data_trials.push(exp.subj_data);
 
       exp.go();
     } //use exp.go() if and only if there is no "present" data.
