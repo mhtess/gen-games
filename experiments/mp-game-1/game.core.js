@@ -122,8 +122,15 @@
     // lightpurple: "#dda0dd",
   }
 
+  this.categories = {
+    bird: [],
+    bug: [],
+    fish: [],
+    tree: [],
+  }
+
   this.colorOptions = _.keys(this.color_dict);
-  this.species = ["fish", "bug", "tree", "bird"];
+  this.species = _.keys(this.categories);
 
   this.createDeterministicColorArray = function(colorLabel){
     return [{p:1, mean: colorLabel}, {p:0, mean: colorLabel}]
@@ -180,13 +187,6 @@
     ] }, shapeParams, featureParams)
   }
 
-  this.categories = {
-    bird: [],
-    bug: [],
-    fish: [],
-    tree: [],
-  }
-
   this.speciesFeatureParams = {
     "bird": [
       [{prop1: 0, prop2: 0}, {tar1: 0, tar2: 0}],
@@ -202,7 +202,7 @@
     ],
     "tree": [
       [{prop1: 0, prop2: 0}, {tar1: 0, tar2: 0}],
-      [{prop1: 1, prop2: 1}, {tar1: 1, tar2: 1}]
+      [{prop1: 1, prop2: 1}, {tar1: 0, tar2: 0}]
     ],
   }
 
