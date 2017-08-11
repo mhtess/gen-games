@@ -334,8 +334,8 @@ slides.subj_info =  slide({
   name : "subj_info",
   start: function(){
     $('#humanResult').hide();
+    globalGame.socket.send("calculatingReward.")
     //console.log("reward: " + globalGame.calculate_end_game_bonus());
-    //globalGame.socket.send("calculatingReward.");
 
   },
   submit : function(e){
