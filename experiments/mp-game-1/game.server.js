@@ -185,11 +185,7 @@ var dataOutput = function() {
 
   function decodeData(dataObj){
     return _.mapValues(dataObj, function(val){
-      if (utils.isNumeric(val)) {
-        return val
-      } else {
-        return val.replace("&", ".")
-      }
+      return val.replace("&", ".")
     })
   }
 
