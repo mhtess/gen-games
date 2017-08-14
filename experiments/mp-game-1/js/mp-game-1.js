@@ -151,7 +151,7 @@ slides.learning_instructions = slide({
   name : "learning_instructions",
   start : function() {
     // send signal to server to send stimuli
-    globalGame.socket.send("enterSlide.learning_critters.");
+    globalGame.socket.send("enterSlide.learning_instructions.");
 
 
     this.creat_type = exp.slides.learning_critters.crittersFromServer

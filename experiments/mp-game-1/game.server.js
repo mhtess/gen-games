@@ -23,7 +23,6 @@ var startTime;
 
 
 var onMessage = function(client,message) {
-  console.log("server onMessage")
   //Cut the message up into sub components
   var message_parts = message.split('.');
 
@@ -45,6 +44,8 @@ var onMessage = function(client,message) {
     // will update (through use of globalGame.socket.send("enterSlide.slide_name.");) in game js file
     case 'enterSlide' :
       gc.currentSlide[target.instance.role] = message_parts[1]
+      console.log("Player A is in: ==== " + gc.currentSlide["playerA"] + " ====")
+      console.log("Player B is in: ==== " + gc.currentSlide["playerB"] + " ====")
       break;
 
     // continue button from chat room
@@ -55,9 +56,7 @@ var onMessage = function(client,message) {
             // tell client to advance to next slide
             var playerRole = p.instance.role;
             // here, decide what data to pass to each subject
-            console.log("gc.roundNum " + gc.roundNum)
-            console.log("test list" + gc.testList[playerRole][gc.roundNum])
-            console.log("learning list" + gc.testList[playerRole][gc.roundNum + 1])
+            console.log("Enter block num ==== " + (gc.roundNum + 1) + " ====")
 
             var dataPacket = {
               thisRoundTest: gc.testList[playerRole][gc.roundNum],
@@ -199,7 +198,6 @@ var dataOutput = function() {
   }
 
   var logResponseOutput = function(client, message_data) {
-    console.log('enter log responses output')
     // message_data contrains the flattened JSON object with test trial info.
     return _.extend(
       commonOutput(client, message_data),
@@ -209,6 +207,7 @@ var dataOutput = function() {
 
   var chatMessageOutput = function(client, message_data) {
     // var intendedName = getIntendedTargetName(client.game.trialInfo.currStim);
+    console.log(client.role + " said " + message_data[1].replace(/~~~/g, '.'))
     return _.extend(
       commonOutput(client, message_data), {
       	// intendedName,
