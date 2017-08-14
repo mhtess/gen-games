@@ -112,7 +112,7 @@ function isNumeric(n) {
 function encodeData(dataObj){
   return _.mapObject(dataObj, function(val, key) {
       val.toString().replace(".", "&")
-    }
+    })
 }
 
 function score(correctAnswer, selectedAnswer){
