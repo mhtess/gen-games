@@ -222,7 +222,8 @@
 
 
       <p> Did you believe you were playing against another human player? </p>
-      <select id="human">
+      <select onChange="$('#humanResult').show();" id="human">
+      <!-- <select id="human"> -->
     <option value=""></option>
     <option value="yes">Yes, I thought they were a human</option>
     <option value="no">No, I thought it was a computer program</option>
@@ -230,8 +231,7 @@
       <p id='humanResult' style="display:none;color:red"> Thank you for your response -- in fact, all players were paired with other human turkers! <p>
 
 
-
-        <p> Are you a native English speaker? </p>
+        <p> Are you a native English speaker? (Was English the language spoken in your house when you were growing up?)</p>
         <select id="nativeEnglish">
       <option value = ""></option>
       <option value="yes">Yes</option>
