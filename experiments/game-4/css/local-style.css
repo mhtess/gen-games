@@ -1,0 +1,11 @@
+.slider {
+  /* default is width 400 and margin 10 */
+	width: 400;
+	margin: 10px;
+}
+
+.prompt {
+  font-family: monospace;
+  font-size: 24px;
+  text-align: left;
+}
