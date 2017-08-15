@@ -25,14 +25,16 @@
     <!-- if you want to draw cute creatures (depends on raphael): -->
     <script src="../_shared/js/ecosystem.js"></script>
 
+<script src="../_shared/js/underscore-min.js"></script>
+
     <!--CSS-->
     <link href="../_shared/full-projects/jquery-ui/jquery-ui.min.css" rel="stylesheet" type="text/css"/>
     <link href="../_shared/css/cocolab-style.css" rel="stylesheet" type="text/css"/>
     <link href="css/local-style.css" rel="stylesheet" type="text/css"/>
 
     <!-- experiment file -->
-    <script src="js/game-3.js"></script>
-    <script src="js/welcome_critter.js"></script>
+    <script src="js/game-4.js"></script>
+    <script src="js/stimuli.js"></script>
 
     <script src="../_shared/js/uniqueturker.js"></script>
 
@@ -67,61 +69,79 @@
   </div>
 
 
-  <div class="slide" id="welcome_critterLand">
-    <h3>Welcome to Critter Country</h3>
-    <p>Meet the Critters of Critter Country. These are some of the different critters you encounter. Use the CritterDex on each critter by clicking on them in order to proceed:</p>
+   <!-- This is the learning slide in which users will uncover information about the critters -->
+  <div class="slide" id="learning_critters">
+    <br><br>
+    <p id="internalprops_instruct"></p>
     <div id='critter_display'></div>
-
-    <button id="learning_button" onclick="_s.button()">Continue</button>
+    <br>
+    <!--  TO CLICK THROUGH QUICKLY-->
+    <!-- <button class="continuebutton"  onclick="_s.button()">Continue</button> -->
+    <button class="continuebutton" id="learning_button" onclick="_s.button()">Continue</button>
   </div>
 
-  <div class="slide" id="condition">
-    <br><br><br><br>
-    <div id="get_cond"></div>
-    <br><br><br>
-    <button onclick="_s.button()">Continue</button>
+  <div class="slide" id="learning_instructions">
+    <br><br>
+    <div id="learning_instructs"></div><br>
+    <button class="continuebutton" onclick="_s.button()">Continue</button>
   </div>
 
-  <div class="slide" id="learning_trial">
-    <p class="critterInfo"></p>
-
-    <div><svg id="critterSVG"></svg></div>
-    <p class="prompt"></p>
-
-    <button onclick="_s.detector()" id="detectorButton">Use CritterDex</button>
-
-    <p class="notePrompt"></p>
-
-    <textarea id="participantNote" rows="2" cols="30" spellcheck=false></textarea>
-
-    <br>
-    <br>
-
-    <!-- <p class="attentionCheck"></p>
-    <label><input type="radio"  name="trial_response" value="Yes"/>Yes</label>
-    <label><input type="radio"  name="trial_response" value="No"/>No</label><br><br> -->
-    <button onclick="_s.button()" id="continueButton">Continue</button>
-    <p class="err">Please write yourself a note.</p>
+  <div class="slide" id="test_instructions">
+    <br><br>
+    <div id="test_instructs"></div><br>
+    <button class="continuebutton" onclick="_s.button()">Continue</button>
   </div>
 
-  <div class="slide" id="test_trial">
-    <p>You come across the following creature:</p>
-    <div><svg id="critterTestSVG"></svg></div>
+  
+   <!-- Generates critters that the partner learned about and tests the user -->
+  <div class="slide" id="test_critters">
+    <br><br>
+   <p id="chooseCrit"><br></p>
+   <div id='critter_test_display'></div>
+   <br>
+   <button class="continuebutton" id="test_button" onclick="_s.button()">Continue</button>
+ </div>
 
-    <p class="testQuestion">What is it?</p>
-    <!-- <textarea id="testFreeResponse" rows="1" cols="20" spellcheck=false></textarea>-->
-    <label><input type="radio"  name="response" value="wug"/>wug</label>
-    <label><input type="radio"  name="response" value="fep"/>fep</label>
-    <label><input type="radio"  name="response" value="lorch"/>lorch</label>
+<!-- Shows score report before allowing player to move on to next block -->
+  <div class="slide" id="score_report">
+   <h3 id="scoreTitle">Score Report</h3>
+   <p id="scoreInfo"><br>Here are the scores from this past section.</p>
+   <br>
+   <div>
+     <table>
+     <td>
+     <div class="score_table" id="your_report">
 
-    <br>
-    <br>
+       <h4 class="score_player">Your Score</h4><br><br>
+       <div class="report">
+         <p class="score_value" id="your_score"></p><br><br>
+         <!-- <p id="your_hits"></p><br>
+         <p id="your_falseAlarms"></p><br>
+         <p id="your_misses"></p><br>
+         <p id="your_correctRejections"></p> -->
+       </div>
 
-    <button onclick="_s.button()">Continue</button>
-    <p class="err">Please answer the question.</p>
-  </div>
+     </div>
+     </td>
+     <td><div style="width:80px"></div></td>
+     <td>
+     <div class="score_table" id="partner_report">
 
+       <h4 class="score_player">Your Partner's Score</h4><br><br>
+       <div class="report">
+         <p class="score_value" id="other_score"></p><br><br>
+         <!-- <p id="other_hits"></p><br>
+         <p id="other_falseAlarms"></p><br>
+         <p id="other_misses"></p><br>
+         <p id="other_correctRejections"></p> -->
+       </div>
 
+     </div>
+     </td>
+     </table><br><br><br>
+   </div>
+   <button class="continuebutton" onclick="_s.button()">Continue</button>
+ </div>
 
   <div class="slide" id="messagePassing">
     <br>

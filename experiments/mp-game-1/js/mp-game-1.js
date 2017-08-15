@@ -21,7 +21,7 @@ function make_slides(f) {
   slides.instructions = slide({
     name : "instructions",
     start: function(){
-      globalGame.socket.send("enterSlide.instructions.");
+      exp.socket.send("enterSlide.instructions.");
     },
     button : function() {
       exp.go(); //use exp.go() if and only if there is no "present" data.
@@ -35,8 +35,8 @@ function make_slides(f) {
       console.log('start of wait_room')
       $("#waitText").empty();
 
-      globalGame.socket.send("enterSlide.wait_room.");
-      globalGame.socket.send("enterWaitRoom.");
+      exp.socket.send("enterSlide.wait_room.");
+      exp.socket.send("enterWaitRoom.");
 
       $(".err").hide();
       if(exp.block == 0)
@@ -81,7 +81,7 @@ function make_slides(f) {
       this.creat_type = shuffledCritters[0]["critter"];
 
       // This generates all the critters
-      create_table(globalGame.presentRows,globalGame.presentCols,"critter_display");
+      create_table(exp.presentRows,exp.presentCols,"critter_display");
 
       for (var i=0; i<shuffledCritters.length; i++) {
         var scale = 0.5;
@@ -93,12 +93,12 @@ function make_slides(f) {
 
         $('#internalprops_instruct').html(
           "Click on each one to discover whether <strong>" +
-          globalGame.critter_instructions[shuffledCritters[i]["critter"]]["internal_prop_instruct"] +
+          exp.critter_instructions[shuffledCritters[i]["critter"]]["internal_prop_instruct"] +
           "</strong>"
         );
 
         if (shuffledCritters[i]["internal_prop"]) {
-          $('#cell'+i+'internalprop').html(globalGame.critter_instructions[shuffledCritters[i]["critter"]]["internal_prop_symbol"]);
+          $('#cell'+i+'internalprop').html(exp.critter_instructions[shuffledCritters[i]["critter"]]["internal_prop_symbol"]);
         }
 
         $('#cell'+i+'internalprop').css({'opacity': 0});
@@ -130,7 +130,7 @@ function make_slides(f) {
           "tar3" : shuffledCritters[i]["tar3"],
           "internal_prop" : shuffledCritters[i]["internal_prop"]
         }
-        globalGame.socket.send("logTrain.learnCritters." + _.pairs(encodeData(dataToSend)).join('.'));
+        exp.socket.send("logTrain.learnCritters." + _.pairs(encodeData(dataToSend)).join('.'));
         exp.data_trials.push(dataToSend);
 
         $('#critter' + i).empty();
@@ -151,7 +151,7 @@ slides.learning_instructions = slide({
   name : "learning_instructions",
   start : function() {
     // send signal to server to send stimuli
-    globalGame.socket.send("enterSlide.learning_instructions.");
+    exp.socket.send("enterSlide.learning_instructions.");
 
 
     this.creat_type = exp.slides.learning_critters.crittersFromServer
@@ -159,10 +159,10 @@ slides.learning_instructions = slide({
 
     switch (this.creat_type) {
       case 'bird': case 'bug':
-      $("#learning_instructs").html(globalGame.task_welcome_critter["bird_bug"]);
+      $("#learning_instructs").html(exp.task_welcome_critter["bird_bug"]);
       break;
       case 'tree': case 'fish':
-      $("#learning_instructs").html(globalGame.task_welcome_critter["tree_fish"]);
+      $("#learning_instructs").html(exp.task_welcome_critter["tree_fish"]);
       break;
     }
   },
@@ -175,13 +175,13 @@ slides.test_instructions = slide({
   name : "test_instructions",
   start : function() {
     // send signal to server to send stimuli
-    globalGame.socket.send("enterSlide.test_critters.");
+    exp.socket.send("enterSlide.test_critters.");
 
     this.creat_type = exp.slides.test_critters.crittersFromServer
 [0]["critter"];
   $('#test_instructs').html(
     "<br>On the next slide, select the " +
-    globalGame.critter_instructions[this.creat_type]["test_instruct"]
+    exp.critter_instructions[this.creat_type]["test_instruct"]
   );
 
   },
@@ -195,7 +195,7 @@ slides.chat_instructions = slide({
   start : function() {
     $('#chat_instructs').html("On the next page, you will enter into a chatroom with your partner. " +
     " After 45 seconds, a continue button will appear for Player B, which, when clicked, will advance the game for both players. " +
-    "You are " +  roleDictionary[globalGame.my_role] + ".")
+    "You are " +  roleDictionary[exp.my_role] + ".")
   },
   button : function() {
     exp.go()
@@ -219,11 +219,11 @@ slides.test_critters = slide({
 
    $('#chooseCrit').html(
      "Click on the " +
-     globalGame.critter_instructions[this.creat_type]["test_instruct"]
+     exp.critter_instructions[this.creat_type]["test_instruct"]
    );
 
     // Generates critters for test phase
-    create_table(globalGame.presentRows,globalGame.presentCols,"critter_test_display");
+    create_table(exp.presentRows,exp.presentCols,"critter_test_display");
 
     for (var i=0; i<shuffledCritters.length; i++) {
      var scale = 0.5;
@@ -282,13 +282,13 @@ slides.test_critters = slide({
       "score" : score(correctAnswer, selectedAnswer)
     }
 
-    globalGame.socket.send("logTest.testCritters." + _.pairs(encodeData(dataToSend)).join('.'));
+    exp.socket.send("logTest.testCritters." + _.pairs(encodeData(dataToSend)).join('.'));
     exp.data_trials.push(dataToSend);
 
   }
 
-  globalGame.socket.send("sendingTestScores." + globalGame.my_role + "." + _.pairs(blockScores).join('.'));
-  globalGame.socket.send("logScores.score_report." + _.pairs(blockScores).join('.'));
+  exp.socket.send("sendingTestScores." + exp.my_role + "." + _.pairs(blockScores).join('.'));
+  exp.socket.send("logScores.score_report." + _.pairs(blockScores).join('.'));
 
   // empties the critter arrays so they can be repopulated without overlap
   allCreatures = [];
@@ -327,8 +327,8 @@ slides.chatRoom = slide({
     $("#chatCont").hide();
     $('#messages').empty();
     console.log('start of chatRoom')
-    globalGame.socket.send("enterSlide.chatRoom.");
-    globalGame.socket.send("enterChatRoom.");
+    exp.socket.send("enterSlide.chatRoom.");
+    exp.socket.send("enterChatRoom.");
     $(".err").hide();
     $('#waiting').show();
   }
@@ -339,13 +339,13 @@ slides.subj_info =  slide({
   name : "subj_info",
   start: function(){
     $('#humanResult').hide();
-    globalGame.socket.send("calculatingReward.")
-    //console.log("reward: " + globalGame.calculate_end_game_bonus());
+    exp.socket.send("calculatingReward.")
+    //console.log("reward: " + exp.calculate_end_game_bonus());
 
   },
   submit : function(e){
       //if (e.preventDefault) e.preventDefault(); // I don't know what this means.
-      globalGame.socket.send("enterSlide.subj_info.");
+      exp.socket.send("enterSlide.subj_info.");
       exp.subj_data = {
         nativeEnglish : $("#nativeEnglish").val(),
         enjoyment : $("#enjoyment").val(),
@@ -361,7 +361,7 @@ slides.subj_info =  slide({
         likePartner: $("#likePartner").val()
       };
 
-      globalGame.socket.send("logSubjInfo.subjInfo." + _.pairs(encodeData(exp.subj_data)).join('.'));
+      exp.socket.send("logSubjInfo.subjInfo." + _.pairs(encodeData(exp.subj_data)).join('.'));
 
       exp.go();
     } //use exp.go() if and only if there is no "present" data.
@@ -371,7 +371,7 @@ slides.subj_info =  slide({
 slides.thanks = slide({
   name : "thanks",
   start : function() {
-    globalGame.socket.send("enterSlide.thanks.");
+    exp.socket.send("enterSlide.thanks.");
 
     exp.data= {
       "test_trials" : exp.test_trials,
@@ -381,7 +381,7 @@ slides.thanks = slide({
       "time_in_minutes" : (Date.now() - exp.startT)/60000
     };
     setTimeout(function(){
-      if(_.size(globalGame.urlParams) == 4) {
+      if(_.size(exp.urlParams) == 4) {
         window.opener.turk.submit(exp.data, true);
         window.close();
       } else {
@@ -466,7 +466,7 @@ function init() {
     ]
 
   // var start_exp = [];//"i0", "instructions"]
-  // // change this as you please - plus find way to make one globalGame.numRounds
+  // // change this as you please - plus find way to make one exp.numRounds
   // var middle_exp = roundGenerator(1)
   // var end_exp = ['wait_room', 'score_report', 'subj_info','thanks']
   // start_exp.push.apply(start_exp, middle_exp)
