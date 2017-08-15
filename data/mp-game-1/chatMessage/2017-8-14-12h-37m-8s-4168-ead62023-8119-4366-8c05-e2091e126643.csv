@@ -1,0 +1,10 @@
+iterationName	gameid	time	trialNum	role	text	reactionTime	eventType
+pilot1	4168-ead62023-8119-4366-8c05-e2091e126643	1502739428011	1	playerA	kwep, the purple fish, lives near aligators. the other two were blue and red, and do not have any hidden attributes	14141	chatMessage
+pilot1	4168-ead62023-8119-4366-8c05-e2091e126643	1502739456252	1	playerB	Cheebas grow leaves, while the others do not	31263	chatMessage
+pilot1	4168-ead62023-8119-4366-8c05-e2091e126643	1502739513533	2	playerB	Just taifels lay eggs	6345	chatMessage
+pilot1	4168-ead62023-8119-4366-8c05-e2091e126643	1502739527002	2	playerA	Mox, the red bug is poisonous. 1/4 of the orange guys are poisonous too	20585	chatMessage
+pilot1	4168-ead62023-8119-4366-8c05-e2091e126643	1502739532242	2	playerA	didn't catch the name	2216	chatMessage
+pilot1	4168-ead62023-8119-4366-8c05-e2091e126643	1502739605322	3	playerA	two of each have the attribute, pick them until you've found 2 from each	14824	chatMessage
+pilot1	4168-ead62023-8119-4366-8c05-e2091e126643	1502739607544	3	playerB	Mooks and reisels are near crocodiles. 	15599	chatMessage
+pilot1	4168-ead62023-8119-4366-8c05-e2091e126643	1502739653734	4	playerA	fram and daith have the attribute	5720	chatMessage
+pilot1	4168-ead62023-8119-4366-8c05-e2091e126643	1502739655203	4	playerB	Half of each are poisonous	6304	chatMessage

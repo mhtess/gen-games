@@ -374,7 +374,7 @@ slides.thanks = slide({
     globalGame.socket.send("enterSlide.thanks.");
 
     exp.data= {
-      "test_trials" : exp.test_trials,
+      "trials" : exp.data_trials,
       "system" : exp.system,
       "condition" : exp.condition,
       "subject_information" : exp.subj_data,
