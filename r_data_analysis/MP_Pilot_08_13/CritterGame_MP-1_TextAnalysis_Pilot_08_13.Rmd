@@ -30,7 +30,6 @@ text_6 <- read.delim("2017-8-14-10h-35m-58s-3416-c018ab1b-f022-41c4-893c-462e121
 text_7 <- read.delim("2017-8-14-12h-37m-8s-4168-ead62023-8119-4366-8c05-e2091e126643.csv", header=TRUE)
 text_8 <- read.delim("2017-8-14-12h-19m-12s-7885-73f4a3d7-c242-46d0-96f2-a0c9fb4c2307.csv", header=TRUE)
 
-
 text_data <- bind_rows(text_1,text_2,text_4,text_6,text_7,text_8)
 #text_data <- bind_rows(text_1,text_2,text_3,text_4,text_6,text_7,text_8)
 reorder_size <- function(x) {
@@ -39,21 +38,34 @@ reorder_size <- function(x) {
 
 
 
-data_1 <- read.delim("../logTest/2017-8-11-16h-2m-26s-7270-103c2178-9638-4a00-9ca6-5ed29429346a.csv", header=TRUE)
-data_2 <- read.delim("../logTest/2017-8-13-11h-36m-21s-0092-4cf18622-eb4d-46de-9e81-4bedec469478.csv", header=TRUE)
-#data_3 <- read.delim("../logTest/2017-8-13-12h-25m-9s-7133-1d5911cf-3f2a-4997-a39d-f565df4b3126.csv", header=TRUE)
-data_4 <- read.delim("../logTest/2017-8-13-13h-36m-41s-7480-f3534652-26df-4fb1-848f-859a2cc64c33.csv", header=TRUE)
-#data_5 <- read.delim("../logTest/2017-8-13-15h-27m-8s-7735-8d70b20e-2b53-4895-92ee-41e98df7fb15.csv", header=TRUE)
-data_6 <- read.delim("../logTest/2017-8-14-10h-37m-22s-3416-c018ab1b-f022-41c4-893c-462e12108278.csv", header=TRUE)
-data_7 <- read.delim("../logTest/2017-8-14-12h-22m-40s-7885-73f4a3d7-c242-46d0-96f2-a0c9fb4c2307.csv", header=TRUE)
-data_8 <- read.delim("../logTest/2017-8-14-12h-37m-51s-4168-ead62023-8119-4366-8c05-e2091e126643.csv", header=TRUE)
+test_1 <- read.delim("../logTest/2017-8-11-16h-2m-26s-7270-103c2178-9638-4a00-9ca6-5ed29429346a.csv", header=TRUE)
+test_2 <- read.delim("../logTest/2017-8-13-11h-36m-21s-0092-4cf18622-eb4d-46de-9e81-4bedec469478.csv", header=TRUE)
+#test_3 <- read.delim("../logTest/2017-8-13-12h-25m-9s-7133-1d5911cf-3f2a-4997-a39d-f565df4b3126.csv", header=TRUE)
+test_4 <- read.delim("../logTest/2017-8-13-13h-36m-41s-7480-f3534652-26df-4fb1-848f-859a2cc64c33.csv", header=TRUE)
+#test_5 <- read.delim("../logTest/2017-8-13-15h-27m-8s-7735-8d70b20e-2b53-4895-92ee-41e98df7fb15.csv", header=TRUE)
+test_6 <- read.delim("../logTest/2017-8-14-10h-37m-22s-3416-c018ab1b-f022-41c4-893c-462e12108278.csv", header=TRUE)
+test_7 <- read.delim("../logTest/2017-8-14-12h-22m-40s-7885-73f4a3d7-c242-46d0-96f2-a0c9fb4c2307.csv", header=TRUE)
+test_8 <- read.delim("../logTest/2017-8-14-12h-37m-51s-4168-ead62023-8119-4366-8c05-e2091e126643.csv", header=TRUE)
 
-condition_data <- bind_rows(data_1,data_2,data_4,data_6,data_7,data_8)
-#condition_data <- bind_rows(data_1,data_2,data_3,data_4,data_6,data_7,data_8)
+train_1 <- read.delim("../logTrain/2017-8-11-16h-1m-25s-7270-103c2178-9638-4a00-9ca6-5ed29429346a.csv", header=TRUE)
+train_2 <- read.delim("../logTrain/2017-8-13-11h-33m-25s-0092-4cf18622-eb4d-46de-9e81-4bedec469478.csv", header=TRUE)
+#train_3 <- read.delim("../logTrain/2017-8-13-12h-19m-23s-7133-1d5911cf-3f2a-4997-a39d-f565df4b3126.csv", header=TRUE)
+train_4 <- read.delim("../logTrain/2017-8-13-13h-31m-54s-7480-f3534652-26df-4fb1-848f-859a2cc64c33.csv", header=TRUE)
+#train_5 <- read.delim("../logTrain/2017-8-13-15h-19m-35s-7735-8d70b20e-2b53-4895-92ee-41e98df7fb15.csv", header=TRUE)
+train_6 <- read.delim("../logTrain/2017-8-14-10h-35m-25s-3416-c018ab1b-f022-41c4-893c-462e12108278.csv", header=TRUE)
+train_7 <- read.delim("../logTrain/2017-8-14-12h-16m-34s-7885-73f4a3d7-c242-46d0-96f2-a0c9fb4c2307.csv", header=TRUE)
+train_8 <- read.delim("../logTrain/2017-8-14-12h-36m-43s-4168-ead62023-8119-4366-8c05-e2091e126643.csv", header=TRUE)
 
-condition_data$trialNum <- condition_data$trialNum - 1
 
-distribution_condition <- condition_data %>% 
+train_data <- bind_rows(train_1,train_2,train_4,train_6,train_7,train_8)
+#train_data <- bind_rows(train_1,train_2,train_3,train_4,train_5,train_6,train_7,train_8)
+test_data <- bind_rows(test_1,test_2,test_4,test_6,test_7,test_8)
+#test_data <- bind_rows(test_1,test_2,test_3,test_4,test_5,test_6,test_7,test_8)
+
+train_data$trialNum <- train_data$trialNum - 1
+test_data$trialNum <- test_data$trialNum - 1
+
+getDistribution <- function(x) x %>% 
   mutate(game_with_species = paste(species, gameid)) %>%
   group_by(gameid, block_num, role, critter, game_with_species, species) %>%
   summarize(p = mean(internal_prop)) %>%
@@ -70,25 +82,28 @@ distribution_condition <- condition_data %>%
   mutate(distribution = paste("[",`1`,", ", `2`,", ", `3`,"]", sep="")) %>%
   select(-`1`, -`2`, -`3`)
 
-distribution_condition$trialNum <- distribution_condition$block_num + 1
+distribution_train_condition <- getDistribution(train_data)
+distribution_test_condition <- getDistribution(test_data)
 
-text_data <- left_join(text_data, distribution_condition, by=c("gameid","trialNum","role"))
+distribution_train_condition$trialNum <- distribution_train_condition$block_num + 1
+distribution_test_condition$trialNum <- distribution_test_condition$block_num + 1
 
+text_data <- left_join(text_data, distribution_train_condition, by=c("gameid","trialNum","role"))
 
-condition_data$partner <- as.factor(
-  ifelse(condition_data$role=="playerA", "playerB", "playerA"))
-condition_data$hit <- as.factor(
-  ifelse(condition_data$score=="hit", 1, 0))
-condition_data$correctRejection <- as.factor(
-  ifelse(condition_data$score=="correctRejection", 1, 0))
-condition_data$falseAlarm <- as.factor(
-  ifelse(condition_data$score=="falseAlarm", 1, 0))
-condition_data$miss <- as.factor(
-  ifelse(condition_data$score=="miss", 1, 0))
-condition_data$correct <- as.factor(
-  ifelse(condition_data$score=="hit" | condition_data$score=="correctRejection", 1, 0))
+test_data$partner <- as.factor(
+  ifelse(test_data$role=="playerA", "playerB", "playerA"))
+test_data$hit <- as.factor(
+  ifelse(test_data$score=="hit", 1, 0))
+test_data$correctRejection <- as.factor(
+  ifelse(test_data$score=="correctRejection", 1, 0))
+test_data$falseAlarm <- as.factor(
+  ifelse(test_data$score=="falseAlarm", 1, 0))
+test_data$miss <- as.factor(
+  ifelse(test_data$score=="miss", 1, 0))
+test_data$correct <- as.factor(
+  ifelse(test_data$score=="hit" | test_data$score=="correctRejection", 1, 0))
 
-roundScore <- condition_data %>%
+roundScore <- test_data %>%
   mutate(hit = as.numeric(as.character(hit)),
          correctRejection = as.numeric(as.character(correctRejection)),
          falseAlarm = as.numeric(as.character(falseAlarm)),
@@ -352,8 +367,10 @@ context_by_words_type
 
 ```{r echo=FALSE, warning=FALSE}
 text_byPartnerScore <- text_df %>%
-  select(gameid_num, trialNum, distribution, text, partnerPercentCorrectlyHit, partnerPercentCorrectlyRejected, partnerPercentCorrect) %>%
-  arrange(desc(partnerPercentCorrect))
+  select(gameid_num, trialNum, role, distribution, text, partnerPercentCorrectlyHit, partnerPercentCorrectlyRejected, partnerPercentCorrect) %>%
+  mutate(distribution = factor(
+    distribution, levels = c("[0, 1, 0]","[0, 1, 0.75]","[0, 1, 0.25]","[0.5, 0.5, 0.5]"))) %>%
+  arrange(distribution, desc(partnerPercentCorrect))
 
 kable(text_byPartnerScore)
 
