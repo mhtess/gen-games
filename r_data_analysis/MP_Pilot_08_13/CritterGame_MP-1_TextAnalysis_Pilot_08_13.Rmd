@@ -373,8 +373,15 @@ text_byPartnerScore <- text_df %>%
   arrange(distribution, gameid_num, trialNum, role, desc(partnerPercentCorrect)) %>%
   rename(dyad = gameid_num, totalCorrect = partnerPercentCorrect, hit = partnerPercentCorrectlyHit, CR = partnerPercentCorrectlyRejected)
 
-kable(text_byPartnerScore, format.args = list(digits=3))
-
+left_join(
+  text_byPartnerScore %>%
+    select(-text) %>%
+    unique(),
+  text_byPartnerScore %>%
+    select(dyad, trialNum, role, distribution, text) %>%
+    group_by(dyad, trialNum, role, distribution) %>%
+    summarize(messages = paste(text, collapse = "; "))
+) %>% kable(., format.args = list(digits=2))
 ```
 
 
