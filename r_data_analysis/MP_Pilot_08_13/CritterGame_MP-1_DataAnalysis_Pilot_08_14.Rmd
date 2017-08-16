@@ -17,7 +17,7 @@ library(reticulate)
 library(langcog)
 
 #setting the directory
-setwd("../../data_FINAL/pilot_1/data/mp-game-1/logTest/")
+setwd("../../data/mp-game-1/logTest/")
 
 data_1 <- read.delim("2017-8-11-16h-2m-26s-7270-103c2178-9638-4a00-9ca6-5ed29429346a.csv", header=TRUE)
 data_2 <- read.delim("2017-8-13-11h-36m-21s-0092-4cf18622-eb4d-46de-9e81-4bedec469478.csv", header=TRUE)
@@ -37,7 +37,8 @@ test_data$correct <- as.factor(ifelse(test_data$score=="hit" | test_data$score==
 numGames = length(unique(test_data$gameid))
 test_data <- test_data %>%
   mutate(gameid_num=gameid,
-         gameid_num=factor(gameid_num, labels=paste0("game_",seq(1,numGames))))
+         gameid_num=factor(gameid_num, labels=paste0("game_",seq(1,numGames))),
+         correct = as.numeric(as.character(correct)))
 
 distribution_condition <- test_data %>% 
   mutate(game_with_species = paste(species, gameid)) %>%
@@ -63,27 +64,31 @@ str(test_data)
 #View(test_data)
 
 
+
 ```
+
 
 # Test Accuracy by Game ID and Player
 
 ```{r echo=FALSE, warning=FALSE}
 totalCorrect <- test_data %>%
-  group_by(correct, gameid_num, role) %>%
-  summarise(n = n())
+  group_by(gameid_num, role) %>%
+  multi_boot_standard(column = "correct")
 
-graph_totalCorrect <- ggplot(totalCorrect, aes(x=role, y=n, fill=correct)) +
-  geom_bar(stat="identity",  position="dodge") +
+graph_totalCorrect <- ggplot(totalCorrect, aes(x=role, y = mean, ymin = ci_lower, ymax = ci_upper)) +
+  geom_bar(stat="identity",  position="dodge", width = 0.5) +
+  geom_errorbar(width = 0.3)+
+  geom_hline(yintercept = 0.5, lty = 3)+
   scale_x_discrete("") +
   scale_fill_manual("Accuracy", labels=c("Incorrect","Correct"), values=c("red","forestgreen")) +
   facet_wrap(~gameid_num) +
-  ggtitle("Test Accuracy") +
+  ggtitle("Test Accuracy by dyad") +
   theme_classic() +
   theme(plot.title = element_text(hjust=0.5, size=18, face="bold"))
 graph_totalCorrect 
 ```
 
-# Test Accuracy by Game ID and Trial Number
+# Test Accuracy by Dyad and Trial Number
 
 ```{r echo=FALSE, warning=FALSE}
 trialNum_gameID <- test_data %>%
@@ -102,6 +107,28 @@ graph_trialNum_gameID <- ggplot(trialNum_gameID, aes(x=trialNum, y=percentCorrec
   theme_minimal() +
   theme(plot.title = element_text(hjust=0.5, size=18, face="bold"))
 graph_trialNum_gameID
+```
+
+# Test Accuracy by Dyad and Distribution
+
+```{r echo=FALSE, warning=FALSE}
+distribution_gameID <- test_data %>%
+  group_by(distribution, gameid_num) %>%
+  summarise(correctCount = sum(correct),
+            totalCount = n(),
+            percentCorrect = correctCount/totalCount)
+
+graph_distribution_gameID <- ggplot(distribution_gameID, aes(x=gameid_num, y=percentCorrect)) +
+  geom_bar(stat="identity",  position="dodge") +
+  scale_x_discrete("Trial Number") +
+    geom_hline(yintercept = 0.5, lty = 3)+
+  scale_fill_manual("PercentCorrect") +
+  facet_wrap(~distribution) +
+  ggtitle("Test Accuracy by Distribution and Dyad") +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust=0.5, size=18, face="bold"),
+        axis.text.x = element_text(angle = 90 ))
+graph_distribution_gameID
 ```
 
 # Test Accuracy by Trial Number

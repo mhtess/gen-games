@@ -18,7 +18,7 @@ library(reticulate)
 library(xtable)
 
 #setting the directory
-setwd("../../data_FINAL/pilot_1/data/mp-game-1/chatMessage/")
+setwd("../../data/mp-game-1/chatMessage/")
 
 
 text_1 <- read.delim("2017-8-11-16h-1m-53s-7270-103c2178-9638-4a00-9ca6-5ed29429346a.csv", header=TRUE)
@@ -370,10 +370,11 @@ text_byPartnerScore <- text_df %>%
   #group_by(gameid_num, trialNum, role) %>%
   #mutate(allText = paste(text, collapse=" $ ")) %>%
   #unique() %>%
-  select(distribution, gameid_num, trialNum, role, allText, partnerPercentCorrect, partnerPercentCorrectlyHit, partnerPercentCorrectlyRejected) %>%
+  select(distribution, gameid_num, trialNum, role, text, partnerPercentCorrect, partnerPercentCorrectlyHit, partnerPercentCorrectlyRejected) %>%
   mutate(distribution = factor(
     distribution, levels = c("[0, 1, 0]","[0, 1, 0.75]","[0, 1, 0.25]","[0.5, 0.5, 0.5]"))) %>%
-  arrange(distribution, desc(partnerPercentCorrect))
+  arrange(distribution, gameid_num, trialNum, role, desc(partnerPercentCorrect)) %>%
+  rename(dyad = gameid_num, totalCorrect = partnerPercentCorrect, hit = partnerPercentCorrectlyHit, CR = partnerPercentCorrectlyRejected)
 
 left_join(
   text_byPartnerScore %>%
@@ -382,11 +383,8 @@ left_join(
   text_byPartnerScore %>%
     select(dyad, trialNum, role, distribution, text) %>%
     group_by(dyad, trialNum, role, distribution) %>%
-    summarize(messages = paste(text, collapse = "; "))
-)
-
-kable(text_byPartnerScore)
-
+    summarize(messages = paste(text, collapse = "; "))) %>% 
+  kable(., format.args = list(digits=2))
 ```
 
 
