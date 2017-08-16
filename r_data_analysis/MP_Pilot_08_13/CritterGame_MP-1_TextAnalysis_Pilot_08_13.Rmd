@@ -167,11 +167,11 @@ summary(text_data)
 # Adjusting MechTurk/Punctuation Errors
 text_df <- text_data
 #text_df <- data_frame(,c())
-text_df$text <- as.character(text_df$text)
+text_df$text <- tolower(as.character(text_df$text))
 #text_df$text <- gsub("&quotechar", "'", text_df$text)
 text_df$text <- gsub("colelct", "collect", text_df$text)
 text_df$text <- gsub("posionous", "poisonous", text_df$text)
-text_df$text <- gsub("posionus", "poisonous", text_df$text)
+text_df$text <- gsub("poisonus", "poisonous", text_df$text)
 text_df$text <- gsub("trut", "thup", text_df$text)
 text_df$text <- gsub("loorch", "lorch", text_df$text)
 text_df$text <- gsub("giffer", "glippet", text_df$text)
@@ -181,6 +181,11 @@ text_df$text <- gsub("leave ", "leaf ", text_df$text)
 text_df$text <- gsub("moreso", "more so", text_df$text)
 text_df$text <- gsub("trut", "truft", text_df$text)
 text_df$text <- gsub("eeg", "egg", text_df$text)
+text_df$text <- gsub("feb", "fep", text_df$text)
+text_df$text <- gsub("zaper", "saper", text_df$text)
+text_df$text <- gsub("aligators", "alligator", text_df$text)
+text_df$text <- gsub("grunks", "grinks", text_df$text)
+text_df$text <- gsub("reisels", "reesles", text_df$text)
 
 
 str(text_df)
@@ -225,16 +230,16 @@ wordTypeDictionary <- list(
   quantifier = c("all","each","most","many","half","some","few","none"),
   numerics = c("50%","1/4","2/4","3/4","50/50",
                "1st","2nd","3rd","4th",
-               "1","2","3","4","50",
+               "0","1","2","3","4","50","100",
                "first","second","third","fourth",
                "two","three","four"),
-  probability = c("always","usually","often","likely","sometimes","never",
-                  "chance"),
+  probability = c("always","usually","often","likely","sometimes","rarely","never",
+                  "chance","time","times"),
   conditionals = c("if","when","while"),
   #category_types = c("pepsin","tail","head","species","color","size")
   species = c("morseths","morseth",
               "ollers","oller",
-              "kweps","kewp",
+              "kweps","kwep",
               "blins","blin",
               "reesles","reesle",
               "dorbs","dorb",
@@ -267,14 +272,25 @@ wordTypeDictionary <- list(
   color = c("red","orange","yellow","green","blue","purple"),
   internal_prop = c("eggs","poisonous","crocodiles","leaves",
                     "egg","crocodile","leaf","crocs","clovers","clover",
-                    "alligators","alligator","spiders","spider","poison"),
-  creatures = c("birds","bird","bugs","bug","trees","tree","fish","animals","animal"),
-  features = c("properties","property","creatures","creature","critters","critter","colors","color"),
-  hedge=c("guess","think","sense")
+                    "alligators","alligator","spiders","spider","poison",
+                    "lay","lays","grow","grows","live","lives"),
+  creatures = c("birds","bird","bugs","bug","trees","tree","fish",
+                "animals","animal","plants","plant"),
+  features = c("properties","property","attributes","attribute",
+               "creatures","creature","critters","critter","types","type",
+               "colors","color"),
+  hedge=c("guess","think","sense"),
+  conversation=c("ok","okay","kk","k","sure","u bet",
+                 "ready","rdy","sorry","gg","hi",
+                 "good luck","luck","here we go","cya","continue",
+                 "thanx","thanks","ty",
+                 "yup","got it","gotcha","cool","yep","yeah","yes","good",
+                 "sounds like a plan","plan",
+                 "lmk","make sense","tricky","tough","whenever","oh","wow","agree")
 )
 
 wordTypeDict <- utils::stack(wordTypeDictionary)
-f <- function(x) as.character(wordTypeDict[match(x, wordTypeDict[[1]]), 2])
+f <- function(x) as.character(wordTypeDict[match(tolower(x), wordTypeDict[[1]]), 2])
 
 genericDict <- list(
   quantifier = c("all","each","most","many","half","some","few","none"),
@@ -321,6 +337,14 @@ tokenized_generic <- token_coreNLP %>%
          sentence_id = gsub(" ", "", paste(as.character(id), "_", as.character(sid))))
 #View(tokenized_generic)
 
+context_by_words_type <-  text_df %>%
+  unnest_tokens(word, text) %>%
+  anti_join(stop_words) %>% #remove function words
+  count(word, sort=TRUE) %>%
+  rowwise() %>%
+  mutate(wordType = f(word),
+         wordType = factor(wordType))
+context_by_words_type
 
 ```
 
@@ -328,7 +352,8 @@ tokenized_generic <- token_coreNLP %>%
 
 ```{r echo=FALSE, warning=FALSE}
 text_byPartnerScore <- text_df %>%
-  select(gameid, trialNum, distribution, text, partnerPercentCorrect)
+  select(gameid_num, trialNum, distribution, text, partnerPercentCorrectlyHit, partnerPercentCorrectlyRejected, partnerPercentCorrect) %>%
+  arrange(desc(partnerPercentCorrect))
 
 kable(text_byPartnerScore)
 
@@ -366,6 +391,7 @@ all_words_byType
 #   coord_flip()
 
 ```
+
 
 # Context Word Count
 
@@ -515,7 +541,7 @@ quantifier_count
 ## Both Conditions Combined
 
 ```{r echo=FALSE, warning=FALSE}
-probability_words = c("always","usually","often","likely","sometimes","never")
+probability_words = c("always","usually","often","likely","sometimes","rarely","never")
 
 probabilities <- tokenized %>%
   filter(lemma %in% probability_words) %>%
