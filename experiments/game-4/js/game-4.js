@@ -31,9 +31,10 @@ function make_slides(f) {
       $("#internalprops_instruct").show();
       $("#critter_display").show();
 
-      var shuffledCritters = _.shuffle(allCreatures)
+      var shuffledCritters = _.shuffle(exp.allCreatures)
+      console.log(allCreatures)
 
-      this.num_creats = allCreatures.length;
+      this.num_creats = exp.allCreatures.length;
       this.creat_type = shuffledCritters[0]["critter"];
 
       // This generates all the critters
@@ -95,7 +96,7 @@ function make_slides(f) {
         prev = null;
       }
 
-      allCreatures = [];
+      exp.allCreatures = [];
       shuffledCritters = [];
       //this.log_responses();
       exp.go(); // use exp.go() if and only if there is no "present" data.
@@ -109,7 +110,7 @@ slides.test_instructions = slide({
     // send signal to server to send stimuli
     exp.socket.send("enterSlide.test_critters.");
 
-    this.creat_type = exp.learning_critters
+    this.creat_type = exp.learning_creats
     [0]["critter"];
     $('#test_instructs').html(
       "<br>On the next slide, select the " +
@@ -129,7 +130,7 @@ slides.test_critters = slide({
      (the variable 'stim' will change between each of these values,
       and for each of these, present_handle will be run.) */
 
-critters: _.shuffle(exp.test_critters),
+critters: _.shuffle(exp.learning_creats),
 trial_num: 0,
 
 start : function() {
@@ -139,9 +140,9 @@ $("#critterTestSVG").empty();
 
 this.start_time = Date.now()
 $(".err").hide();
-allCreatures = exp.learning_critters;
-shuffledCritters = _.shuffle(allCreatures)
-this.num_creats = allCreatures.length;
+exp.allCreatures
+shuffledCritters = _.shuffle(exp.allCreatures)
+this.num_creats = exp.allCreatures.length;
 this.creat_type = shuffledCritters[0]["critter"];
 
 $('#chooseCrit').html(
@@ -232,7 +233,7 @@ $('#chooseCrit').html(
   }
 
   // empties the critter arrays so they can be repopulated without overlap
-  allCreatures = [];
+  exp.allCreatures = [];
   shuffledCritters = [];
 
   // resets table
@@ -362,81 +363,60 @@ function init() {
      repeatWorker = true;
      alert("You have already completed the maximum number of HITs allowed by this requester. Please click 'Return HIT' to avoid any impact on your approval rating.");
    }
- })();
+ });
  exp.trials = [];
  exp.catch_trials = [];
+
+  // Which round are we on (initialize at -1 so that first round is 0-indexed)
+  exp.roundNum = -1;
+  
+  exp.allCreatures = allCreatures;
+  
+  
   //exp.learning_trials = [];
   //exp.all_stimuli = _.shuffle(all_stimuli); // all_stimuli
-  exp.question = _.sample([
-    "find creatures",
-    "find all of the creatures"
-  ]); //can randomize between subject conditions here
   // exp.distribution is probability of binary feature
   // p( color | category1), p( color | category2 )
   // color is binary (but may have different binary values for two categories)
+ // GENERATE CREATURE OPTS
+ for (repeatSpecies = 0; repeatSpecies < 2; repeatSpecies++){
+  for (speciesInd = 0; speciesInd < species.length; speciesInd++){
+    var speciesLabel = species[speciesInd]
+    var colorDistribution = distributions.colors.pop(); // set of colors (one for each category)
 
-  // inside shuffle is to randomize between the two colors
-  exp.distribution = _.sample([
-    [1, 1, 0.5],
-    [1, 1, 0.25]
-    ])
-  // console.log(exp.distribution)
+    var blockCreatureOpts = []; // the current format for creatureOpts is an array of arrays
+    // so this will be that inner array
+    for (i=0; i<exp.creatureTypesN; i++){
+      // prop and tar info (can be different for the repetitions of species [eg bird, bug] across blocks)
+      var speciesFeatureParam = speciesFeatureParams[speciesLabel][repeatSpecies];
+      // just changed above for left side no s at end
+      blockCreatureOpts.push(createCreatureOptsObj(speciesLabel,
+        speciesFeatureParam[0], speciesFeatureParam[1],colorDistribution[i])
+      )
+
+    }
+  categories[speciesLabel].push(blockCreatureOpts)
+  }
+}
+
   // TO DO:
   // - test trials: 2 x each category (perhaps one of each color)
 
-  // Generates the characteristics for each critter
-  for (var i = 0; i < exp.creatureTypesN; i++){
-  // for (var i = 0; i < uniqueCreatures.length; i++){
-  	var creatureName = uniqueCreatures[i]
-  	var creatOpts = _.where(creatureOpts, {name: creatureName})[0];
-  	var creatureColor = createFeatureArray(
-      creatureName, exp.distribution[i]
-      );
-
-  	var localCounter = 0;
-  	// debugger;
-  	while (j<(exemplarN*(i+1))) {
-  		allCreatures.push({
-        //"color": creatureColor, //color 
-        "col1": creatureColor["color"][localCounter],
-        "col2": creatureColor["color"][localCounter],
-        "col3": creatureColor["color"][localCounter] == null ? null : creatureColor["color"][localCounter] ,
-        "col4" : creatOpts.col4_mean == null ? null : genColor(creatOpts.col4_mean, creatOpts.col4_var),
-        "col5" : creatOpts.col5_mean == null ? null : genColor(creatOpts.col5_mean, creatOpts.col5_var),
-        "prop1": creatOpts.prop1 == null ? Ecosystem.randProp() : creatOpts.prop1,
-        "prop2": creatOpts.prop2 == null ? Ecosystem.randProp() : creatOpts.prop2,
-        "tar1": flip(creatOpts.tar1),
-        "tar2": flip(creatOpts.tar2),
-        "creatureName": uniqueCreatures[i],
-        "critter" : creatOpts.creature,
-        "query": "question",
-        "stimID": j,
-        "internal_prop": flip(creatOpts.internal_prop),
-        "attentionCheck": generateAttentionQuestion(),
-        "location":creatureColor.location[localCounter]
-      })
-localCounter++;
-j++;
-}
-
-    //var shuffledCritters = _.shuffle(allCreatures)
-  }
-
   exp.creatureCategories = _.uniq(_.pluck(exp.allCreatures, "creatureName"))
 
-  // exp.test_critters = _.uniq(_.map(allCreatures, function(stim){
+  // exp.test_critters = _.uniq(_.map(exp.allCreatures, function(stim){
   //   _.omit(stim, ["col4", "col5","stimID", "internal_prop",
   // "attentionCheck", "location"])
   // }
 
 // ))
-exp.learning_critters = _.shuffle(allCreatures);
-exp.test_critters = _.uniq(allCreatures, function(stim){
-  return _.values(_.pick(stim,
-      //"col1", "col2","col3", "creatureName", "tar1","tar2"
-      "color", "col1", "col2","col3", "creatureName", "tar1","tar2" //maybe change back later
-      )).join('')
-})
+exp.learning_creats = _.shuffle(exp.allCreatures);
+// exp.test_critters = _.uniq(exp.allCreatures, function(stim){
+//   return _.values(_.pick(stim,
+//       //"col1", "col2","col3", "creatureName", "tar1","tar2"
+//       "color", "col1", "col2","col3", "creatureName", "tar1","tar2" //maybe change back later
+//       )).join('')
+// })
 
 exp.system = {
   Browser : BrowserDetect.browser,
@@ -448,10 +428,9 @@ exp.system = {
 };
   //Change order of slides here, blocks of the experiment:
   exp.structure=[
-  "i0",
-  "instructions",
-  "learning_critters",
-    //"learning_trial",
+    "i0",
+    "instructions",
+    "learning_critters",
     "messagePassing",
     "test_instructions",
     "test_critters",
@@ -460,8 +439,7 @@ exp.system = {
     'thanks'
     ];
 
-
-    exp.data_trials = [];
+  exp.data_trials = [];
   //make corresponding slides:
   exp.slides = make_slides(exp);
 
