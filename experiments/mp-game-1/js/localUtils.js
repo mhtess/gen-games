@@ -115,63 +115,63 @@ function encodeData(dataObj){
     })
 }
 
-// function score(correctAnswer, selectedAnswer){
-//   if(correctAnswer && selectedAnswer=='1'){
-//     hits++;
-//     return 'hit';
-//   }
-//   else if(!correctAnswer && selectedAnswer=='1'){
-//     falseAlarms++;
-//     return 'falseAlarm';
-//   }
-//   else if(correctAnswer && selectedAnswer=='0'){
-//     misses++;
-//     return 'miss';
-//   }
-//   else if(!correctAnswer && selectedAnswer=='0'){
-//     correctRejections++;
-//     return 'correctRejection';
-//   }
-// }
+function score(correctAnswer, selectedAnswer){
+  if(correctAnswer && selectedAnswer=='1'){
+    hits++;
+    return 'hit';
+  }
+  else if(!correctAnswer && selectedAnswer=='1'){
+    falseAlarms++;
+    return 'falseAlarm';
+  }
+  else if(correctAnswer && selectedAnswer=='0'){
+    misses++;
+    return 'miss';
+  }
+  else if(!correctAnswer && selectedAnswer=='0'){
+    correctRejections++;
+    return 'correctRejection';
+  }
+}
 
-// function scoreSingle(correctAnswer, selectedAnswer){
-//   if(correctAnswer && selectedAnswer=='1'){
-//     return 'hits';
-//   }
-//   else if(!correctAnswer && selectedAnswer=='1'){
-//     return 'falseAlarms';
-//   }
-//   else if(correctAnswer && selectedAnswer=='0'){
-//     return 'misses';
-//   }
-//   else if(!correctAnswer && selectedAnswer=='0'){
-//     return 'correctRejections';
-//   }
-// }
+function scoreSingle(correctAnswer, selectedAnswer){
+  if(correctAnswer && selectedAnswer=='1'){
+    return 'hits';
+  }
+  else if(!correctAnswer && selectedAnswer=='1'){
+    return 'falseAlarms';
+  }
+  else if(correctAnswer && selectedAnswer=='0'){
+    return 'misses';
+  }
+  else if(!correctAnswer && selectedAnswer=='0'){
+    return 'correctRejections';
+  }
+}
 
-// function calculateScore(){
-//   return {
-//     "hits" : hits,
-//     "falseAlarms" : falseAlarms,
-//     "misses" : misses,
-//     "correctRejections" : correctRejections
-//   }
-// }
+function calculateScore(){
+  return {
+    "hits" : hits,
+    "falseAlarms" : falseAlarms,
+    "misses" : misses,
+    "correctRejections" : correctRejections
+  }
+}
 
-// function calculate_end_game_bonus(){
-//     console.log(this.testScores)
-//     console.log(this.bonusAmt)
-//     var correctSelect = 0;
-//     for(var i=0; i<this.numRounds; i++){
-//       for (var j=0; j<2; j++){
-//         var role_index = j == 0 ? "playerA" : "playerB";
-//         correctSelect += this.testScores[role_index][i].hits + this.testScores[role_index][i].correctRejections;
-//       }
-//     }
-//     var reward = correctSelect * this.bonusAmt;
-//     console.log("reward is " + reward);
-//     return reward;
+function calculate_end_game_bonus(){
+    console.log(this.testScores)
+    console.log(this.bonusAmt)
+    var correctSelect = 0;
+    for(var i=0; i<this.numRounds; i++){
+      for (var j=0; j<2; j++){
+        var role_index = j == 0 ? "playerA" : "playerB";
+        correctSelect += this.testScores[role_index][i].hits + this.testScores[role_index][i].correctRejections;
+      }
+    }
+    var reward = correctSelect * this.bonusAmt;
+    console.log("reward is " + reward);
+    return reward;
     
-//   }
+  }
 
 
