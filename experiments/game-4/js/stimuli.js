@@ -15,6 +15,114 @@
   variable, remember that it's only set in that instance.
   */
 
+// HELPER FUNCTIONS
+
+// need this or one of the critter things wont show up anymore
+newRound = function() {
+  // If you've reached the planned number of rounds, end the game
+  if(roundNum == numRounds - 1) {
+    _.pluck(get_active_players(), function(p){
+      p.player.instance.disconnect();});
+  } else {
+    // Otherwise, get the preset list of tangrams for the new round
+    roundNum += 1;
+    blockCritters = {currStim: trialList[roundNum]};
+    server_send_update();
+  }
+};
+
+var fillArray = function(n, fillVal){
+  return Array(n).fill(fillVal)
+}
+
+var probToCount = function(p, n){
+  return Math.round(p*n);
+}
+
+// for a particular species / creatureLabel (e.g., wug)
+// create an array of objects / exemplars
+// species --> list of exemplars
+createFeatureArray = function(creatureLabel, creatureCategory, num){ //add num as parameter too
+  var creatureOpts = categories[creatureCategory][num];
+  var creatOpts = _.where(creatureOpts, {name: creatureLabel})[0];
+  var creatureColors = [];
+  var creatureLocation = [];
+  var nRemaining = exemplarN; // number of exemplars in category
+  // 2 possible colors (so loop for i < 2)
+  for (var i=0; i < creatOpts.expColors.length; i++ ){
+    var colorProps = creatOpts.expColors[i];
+
+    var n_creatures_of_this_color =  probToCount(
+      colorProps.p, exemplarN
+      );
+
+    var ncrit = n_creatures_of_this_color == 0 ?
+    ((colorProps.p > 0) && (nRemaining > 0)) ? 1 : 0 :
+    n_creatures_of_this_color
+    creatureColors = creatureColors.concat(
+      fillArray(ncrit,
+        genColor(
+          color_dict[colorProps["props"]["color_mean"]],
+          colorProps["props"]["color_var"]
+          ))
+      )
+    creatureLocation = 0;
+    nRemaining = nRemaining-ncrit;
+  }
+  return {color: creatureColors, location: creatureLocation}
+}
+
+
+representativeFlip = function(p, n){
+  var creatureBooleans = [];
+  var n_creatures_w_feature =  probToCount(p, n);
+  var ncrit = n_creatures_w_feature == 0 ?
+      (p > 0) ? 1 : 0 :
+        n_creatures_w_feature
+  creatureBooleans = creatureBooleans.concat(
+      fillArray(ncrit, 1),
+      fillArray(n - ncrit, 0)
+      )
+  return _.shuffle(creatureBooleans)
+}
+
+
+
+
+
+// this gets run when the game is created and creates all trial information
+// functionally equivalent to making something like stims in init() in template.js
+makeTrialList = function () {
+  var local_this = exp;
+  var conditionList = getRandomizedConditions();
+  var trialList = [];
+  for (var i = 0; i < conditionList.length; i++) {
+    var condition = conditionList[i];
+    var objList = sampleTrial(condition); // Sample three objects
+    var locs = sampleStimulusLocs(); // Sample locations for those objects
+  };
+  return(trialList);
+};
+
+// var calculate_end_game_bonus = function(){
+//     console.log(this.testScores)
+//     console.log(this.bonusAmt)
+//     var reward = 0;
+//     for(var i=0; i<this.numRounds; i++){
+//       for (var j=0; j<2; j++){
+//         var role_index = j == 0 ? "playerA" : "playerB";
+//         reward += this.testScores[role_index][i].hits + this.testScores[role_index][i].correctRejections;
+//       }
+//     }
+//     console.log("reward is " + reward);
+//     return reward;
+
+//   }
+
+
+
+
+
   dataStore = ['csv']; //maybe change to just csv
   email = 'mtessler@stanford.edu';
   projectName = 'genGames';
@@ -35,47 +143,9 @@
   // _.filter -- _.where
   // _.map -- _.pluck
 
-genCreatures = function(creatureCategory, num, interval_feature_probs){ //include num as parameter
-  var j = 0;
-  // Generates the characteristics for each critter
-  var allCreatures = [];
-  var creatureOpts = categories[creatureCategory][num];
-  // get unique labels (e.g., wug, fep, lorch); should be number of unique kinds in each block
-  uniqueCreatures =  _.uniq(_.pluck(creatureOpts, "name"));
-  for (var i = 0; i < uniqueCreatures.length; i++){
-    var creatOpts = _.where(creatureOpts, {name: uniqueCreatures[i]})[0];
-    // console.log(uniqueCreatures[i])
-    var creatureColor = createFeatureArray(
-     uniqueCreatures[i], creatureCategory, num
-     );
-    //  console.log(creatureColor)
-    var n_with_feature =  representativeFlip(interval_feature_probs[i], exemplarN);
-    var localCounter = 0;
-    while (j<(exemplarN*(i+1))) {
-     allCreatures.push({
-      "col1": creatureColor["color"][localCounter],
-      "col2": creatureColor["color"][localCounter],
-      "col3": creatureColor["color"][localCounter] == null ? null : creatureColor["color"][localCounter] ,
-      "col4": creatureColor["color"][localCounter] == null ? null : creatureColor["color"][localCounter],
-      "col5": creatureColor["color"][localCounter] == null ? null : creatureColor["color"][localCounter],
-      "prop1": creatOpts.prop1 == null ? utils.randProp() : creatOpts.prop1,
-      "prop2": creatOpts.prop2 == null ? utils.randProp() : creatOpts.prop2,
-      "tar1": utils.flip(creatOpts.tar1),
-      "tar2": utils.flip(creatOpts.tar2),
-      "tar3": utils.flip(creatOpts.tar3),
-      "creatureName": uniqueCreatures[i],
-      "critter" : creatureCategory,
-      "stimID": j,
-      "internal_prop": n_with_feature[j % exemplarN],
-      "creatureOpts": creatureOpts,
-      "critter_full_info": creatOpts
-    })
-     localCounter++;
-     j++;
-   }
- }
- return allCreatures
-}
+
+
+
 
 
   // // How many rounds do we want people to complete? MAKE SURE THIS ALIGNS WITH EXP TEMPLATE SLIDE AMT
@@ -123,7 +193,7 @@ genCreatures = function(creatureCategory, num, interval_feature_probs){ //includ
 
   colorOptions = _.keys(color_dict);
   //works!!
-  console.log("coloroptions: "+ colorOptions)
+  // console.log("coloroptions: "+ colorOptions)
   species = _.keys(categories);
 
   distributions = {
@@ -194,8 +264,9 @@ genCreatures = function(creatureCategory, num, interval_feature_probs){ //includ
   
 ourCreatNames = _.shuffle(creatureNames).slice(0, numRounds * creatureTypesN * 2);
 
-console.log(_.shuffle(colorOptions).slice(0, creatureTypesN))
-console.log(createDeterministicColorArray('yellow'))
+// console.log(_.shuffle(colorOptions).slice(0, creatureTypesN))
+// console.log("create determ: ")
+// console.log(createDeterministicColorArray('yellow'))
 
 for (i = 0; i < numRounds * 2; i++){
     distributions.colors.push(
@@ -204,7 +275,7 @@ for (i = 0; i < numRounds * 2; i++){
     )
   }
 // works
-  console.log(distributions.colors[0])
+  // console.log(distributions.colors[0])
 
 
   var testCreatNames = _.clone(ourCreatNames);
@@ -240,26 +311,85 @@ for (i = 0; i < numRounds * 2; i++){
     ],
   }
 
-  // // GENERATE CREATURE OPTS
-  // for (repeatSpecies = 0; repeatSpecies < 2; repeatSpecies++){
-  //   for (speciesInd = 0; speciesInd < species.length; speciesInd++){
-  //     var speciesLabel = species[speciesInd]
-  //     var colorDistribution = distributions.colors.pop(); // set of colors (one for each category)
 
-  //     var blockCreatureOpts = []; // the current format for creatureOpts is an array of arrays
-  //     // so this will be that inner array
-  //     for (i=0; i<creatureTypesN; i++){
-  //       // prop and tar info (can be different for the repetitions of species [eg bird, bug] across blocks)
-  //       var speciesFeatureParams = speciesFeatureParams[speciesLabel][repeatSpecies];
+  creatureOpts = [];
 
-  //       blockCreatureOpts.push(createCreatureOptsObj(speciesLabel,
-  //           speciesFeatureParams[0], speciesFeatureParams[1],colorDistribution[i])
-  //       )
+  // GENERATE CREATURE OPTS
+  // outer loop: number of blocks of each genus (e.g., "fish")
+  for (repeatSpecies = 0; repeatSpecies < 1; repeatSpecies++){
+    // loop: number of genuses (fish, bugs, birds, trees)
+    for (speciesInd = 0; speciesInd < species.length; speciesInd++){
+      var speciesLabel = species[speciesInd]
+      var colorDistribution = distributions.colors.pop(); // set of colors (one for each category)
 
-  //     }
-  //     categories[speciesLabel].push(blockCreatureOpts)
-  //   }
-  // }
+      var blockCreatureOpts = []; // the current format for creatureOpts is an array of arrays
+      // so this will be that inner array
+      // loop: number of species per genus (e.g., 3 [unique species per block])
+      for (i=0; i<creatureTypesN; i++){
+        // prop and tar info (can be different for the repetitions of species [eg bird, bug] across blocks)
+        var speciesFeatureParam = speciesFeatureParams[speciesLabel][repeatSpecies];
+
+        blockCreatureOpts.push(createCreatureOptsObj(speciesLabel,
+            speciesFeatureParam[0], speciesFeatureParam[1],colorDistribution[i])
+        )
+
+      }
+      categories[speciesLabel].push(blockCreatureOpts)
+      // creatureOpts.push(blockCreatureOpts)
+    }
+  }
+
+// block --> species
+genCreatures = function(creatureCategory, num, interval_feature_probs){ //include num as parameter
+  var j = 0;
+  // console.log("in genCreatures")
+  // Generates the characteristics for each critter
+  var allCreatures = [];
+  // empty
+  var creatureOpts = categories[creatureCategory][num];
+  // get unique labels (e.g., wug, fep, lorch); should equal to be number of unique species in each block
+  // console.log(creatureOpts)
+  uniqueCreatures =  _.uniq(_.pluck(creatureOpts, "name"));
+  // console.log(creatureOpts[0])
+  // console.log(uniqueCreatures)
+  for (var i = 0; i < uniqueCreatures.length; i++){
+    // console.log("in genCreatures for loop")
+    var creatOpts = _.where(creatureOpts, {name: uniqueCreatures[i]})[0];
+    // console.log("unique " + uniqueCreatures[i])
+    // CREATE FEATURE ARRAY
+    var creatureColor = createFeatureArray(
+     uniqueCreatures[i], creatureCategory, num
+     );
+    //  console.log(creatureColor)
+    var n_with_feature =  representativeFlip(interval_feature_probs[i], exemplarN);
+    var localCounter = 0;
+    while (j<(exemplarN*(i+1))) {
+     allCreatures.push({
+      "col1": creatureColor["color"][localCounter],
+      "col2": creatureColor["color"][localCounter],
+      "col3": creatureColor["color"][localCounter] == null ? null : creatureColor["color"][localCounter] ,
+      "col4": creatureColor["color"][localCounter] == null ? null : creatureColor["color"][localCounter],
+      "col5": creatureColor["color"][localCounter] == null ? null : creatureColor["color"][localCounter],
+      "prop1": creatOpts.prop1 == null ? randProp() : creatOpts.prop1,
+      "prop2": creatOpts.prop2 == null ? randProp() : creatOpts.prop2,
+      "tar1": flip(creatOpts.tar1),
+      "tar2": flip(creatOpts.tar2),
+      "tar3": flip(creatOpts.tar3),
+      "creatureName": uniqueCreatures[i],
+      "critter" : creatureCategory,
+      "stimID": j,
+      "internal_prop": n_with_feature[j % exemplarN],
+      "creatureOpts": creatureOpts,
+      "critter_full_info": creatOpts
+    })
+     localCounter++;
+     j++;
+   }
+ }
+ return allCreatures
+}
+
+
 
   // console.log(this.categories)
   // console.log(this.categories.fish)
@@ -302,25 +432,11 @@ for (i = 0; i < numRounds * 2; i++){
     }
   }
 
-  console.log(genCreatures("fish", 12, [1,0,1])[0])
+  // console.log(genCreatures("fish", 12, [1,0,1])[0])
 
-    // needs to be generalized
-    // determines what critters will be used and who sees what when
-    var critterOrders = ["fish", "bug", "tree", "bird"]
-    var order = [];
-    for (i = 0; i<distributions.internal.length; i++){
-      // console.log(playerDistributions.A[i]) 4times
-      order.push(
-        genCreatures(critterOrders[i],
-          12, // was 0, im confused
-          distributions.internal[i])
-        )
-      console.log("order: " + order)
-    }
+
 
     // this is switched so the they will get tested on the information their partner relayed to them
-    var allCreatures = order;
-    console.log("stim all: " + allCreatures)
 
     // console.log(this.testList)
 
@@ -338,104 +454,3 @@ for (i = 0; i < numRounds * 2; i++){
     //   player: new game_player(exp)
     // }];
   
-
-// HELPER FUNCTIONS
-
-// need this or one of the critter things wont show up anymore
-newRound = function() {
-  // If you've reached the planned number of rounds, end the game
-  if(roundNum == numRounds - 1) {
-    _.pluck(get_active_players(), function(p){
-      p.player.instance.disconnect();});
-  } else {
-    // Otherwise, get the preset list of tangrams for the new round
-    roundNum += 1;
-    blockCritters = {currStim: trialList[roundNum]};
-    server_send_update();
-  }
-};
-
-var fillArray = function(n, fillVal){
-  return Array(n).fill(fillVal)
-}
-
-var probToCount = function(p, n){
-  return Math.round(p*n);
-}
-
-createFeatureArray = function(creatureLabel, creatureCategory, num){ //add num as parameter too
-  var creatureOpts = categories[creatureCategory][num];
-  var creatOpts = _.where(creatureOpts, {name: creatureLabel})[0];
-  var creatureColors = [];
-  var creatureLocation = [];
-  var nRemaining = exemplarN; // number of exemplars in category
-  // 2 possible colors (so loop for i < 2)
-  for (var i=0; i < creatOpts.expColors.length; i++ ){
-    var colorProps = creatOpts.expColors[i];
-
-    var n_creatures_of_this_color =  probToCount(
-      colorProps.p, exemplarN
-      );
-
-    var ncrit = n_creatures_of_this_color == 0 ?
-    ((colorProps.p > 0) && (nRemaining > 0)) ? 1 : 0 :
-    n_creatures_of_this_color
-    creatureColors = creatureColors.concat(
-      fillArray(ncrit,
-        utils.genColor(
-          color_dict[colorProps["props"]["color_mean"]],
-          colorProps["props"]["color_var"]
-          ))
-      )
-    creatureLocation = 0;
-    nRemaining = nRemaining-ncrit;
-  }
-  return {color: creatureColors, location: creatureLocation}
-}
-
-
-representativeFlip = function(p, n){
-  var creatureBooleans = [];
-  var n_creatures_w_feature =  probToCount(p, n);
-  var ncrit = n_creatures_w_feature == 0 ?
-      (p > 0) ? 1 : 0 :
-        n_creatures_w_feature
-  creatureBooleans = creatureBooleans.concat(
-      fillArray(ncrit, 1),
-      fillArray(n - ncrit, 0)
-      )
-  return _.shuffle(creatureBooleans)
-}
-
-
-
-
-
-// this gets run when the game is created and creates all trial information
-// functionally equivalent to making something like stims in init() in template.js
-makeTrialList = function () {
-  var local_this = exp;
-  var conditionList = getRandomizedConditions();
-  var trialList = [];
-  for (var i = 0; i < conditionList.length; i++) {
-    var condition = conditionList[i];
-    var objList = sampleTrial(condition); // Sample three objects
-    var locs = sampleStimulusLocs(); // Sample locations for those objects
-  };
-  return(trialList);
-};
-
-// var calculate_end_game_bonus = function(){
-//     console.log(this.testScores)
-//     console.log(this.bonusAmt)
-//     var reward = 0;
-//     for(var i=0; i<this.numRounds; i++){
-//       for (var j=0; j<2; j++){
-//         var role_index = j == 0 ? "playerA" : "playerB";
-//         reward += this.testScores[role_index][i].hits + this.testScores[role_index][i].correctRejections;
-//       }
-//     }
-//     console.log("reward is " + reward);
-//     return reward;
-
-//   }
