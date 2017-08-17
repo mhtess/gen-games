@@ -64,17 +64,26 @@ test_data <- bind_rows(test_1,test_2,test_4,test_6,test_7,test_8)
 
 train_data$trialNum <- train_data$trialNum - 1
 test_data$trialNum <- test_data$trialNum - 1
+numGames_text = length(unique(text_data$gameid))
+
+getGameIDNum <- function(x) x %>%
+  mutate(gameid_num=gameid,
+         gameid_num=factor(gameid_num, labels=paste0("game_",seq(1,length(unique(x$gameid))))))
+
+text_data <- getGameIDNum(text_data)
+test_data <- getGameIDNum(test_data)
+train_data <- getGameIDNum(train_data)
 
 getDistribution <- function(x) x %>% 
-  mutate(game_with_species = paste(species, gameid)) %>%
-  group_by(gameid, block_num, role, critter, game_with_species, species) %>%
+  mutate(game_with_species = paste(species, gameid_num)) %>%
+  group_by(gameid_num, block_num, role, critter, game_with_species, species) %>%
   summarize(p = mean(internal_prop)) %>%
   ungroup() %>% 
   mutate( # want to spread based on species, but they each have a unique name
     # instead, cooerce to numeric (making sure that they are ordered properly), and then spread
     species = as.numeric(factor(game_with_species, 
                                 levels = game_with_species[
-                                  order(gameid, block_num, role, -p)
+                                  order(gameid_num, block_num, role, -p)
                                   ])),
     speciesNum = (as.numeric(species) %% 3) + 1) %>%
   select(-species,-critter, -game_with_species) %>%
@@ -88,7 +97,7 @@ distribution_test_condition <- getDistribution(test_data)
 distribution_train_condition$trialNum <- distribution_train_condition$block_num + 1
 distribution_test_condition$trialNum <- distribution_test_condition$block_num + 1
 
-text_data <- left_join(text_data, distribution_train_condition, by=c("gameid","trialNum","role"))
+text_data <- left_join(text_data, distribution_train_condition, by=c("gameid_num","trialNum","role"))
 
 test_data$partner <- as.factor(
   ifelse(test_data$role=="playerA", "playerB", "playerA"))
@@ -108,7 +117,7 @@ roundScore <- test_data %>%
          correctRejection = as.numeric(as.character(correctRejection)),
          falseAlarm = as.numeric(as.character(falseAlarm)),
          miss = as.numeric(as.character(miss))) %>%
-  group_by(trialNum, gameid, role) %>%
+  group_by(trialNum, gameid_num, role) %>%
   summarise(hitCount = sum(hit),
             correctRejectionCount = sum(correctRejection),
             falseAlarmCount = sum(falseAlarm),
@@ -129,7 +138,7 @@ roundScore_playerA <- roundScore %>%
          playerA_PercentCorrectlyHit = percentCorrectlyHit,
          playerA_PercentCorrectlyRejected = percentCorrectlyRejected,
          playerA_PercentCorrect = percentCorrect) %>%
-  select(gameid, trialNum, role, playerA_Hit, playerA_CorrectRejection, playerA_CorrectCount, playerA_PercentCorrectlyHit, playerA_PercentCorrectlyRejected, playerA_PercentCorrect)
+  select(gameid_num, trialNum, role, playerA_Hit, playerA_CorrectRejection, playerA_CorrectCount, playerA_PercentCorrectlyHit, playerA_PercentCorrectlyRejected, playerA_PercentCorrect)
 
 roundScore_playerB <- roundScore %>%
   filter(role=="playerB") %>%
@@ -139,17 +148,17 @@ roundScore_playerB <- roundScore %>%
          playerB_PercentCorrectlyHit = percentCorrectlyHit,
          playerB_PercentCorrectlyRejected = percentCorrectlyRejected,
          playerB_PercentCorrect = percentCorrect) %>%
-  select(gameid, trialNum, role, playerB_Hit, playerB_CorrectRejection, playerB_CorrectCount, playerB_PercentCorrectlyHit, playerB_PercentCorrectlyRejected, playerB_PercentCorrect)
+  select(gameid_num, trialNum, role, playerB_Hit, playerB_CorrectRejection, playerB_CorrectCount, playerB_PercentCorrectlyHit, playerB_PercentCorrectlyRejected, playerB_PercentCorrect)
 
-roundScore_combined <- left_join(roundScore, roundScore_playerA, by=c("gameid","trialNum","role"))
-roundScore_combined <- left_join(roundScore_combined, roundScore_playerB, by=c("gameid","trialNum","role"))
+roundScore_combined <- left_join(roundScore, roundScore_playerA, by=c("gameid_num","trialNum","role"))
+roundScore_combined <- left_join(roundScore_combined, roundScore_playerB, by=c("gameid_num","trialNum","role"))
 
 roundScore2 <- roundScore_combined %>%
-  group_by(gameid,trialNum) %>%
+  group_by(gameid_num,trialNum) %>%
   select(-role,-hitCount,-correctRejectionCount,-falseAlarmCount,-missCount,-correctCount,-totalCount,-percentCorrectlyHit,-percentCorrectlyRejected,-percentCorrect) %>%
   summarise_each(funs(na.omit(.)))
 
-roundScore <- left_join(roundScore, roundScore2, by=c("gameid","trialNum"))
+roundScore <- left_join(roundScore, roundScore2, by=c("gameid_num","trialNum"))
 
 roundScore <- roundScore %>%
   mutate(partnerHit = ifelse(role=="playerA", playerB_Hit, playerA_Hit),
@@ -158,15 +167,23 @@ roundScore <- roundScore %>%
          partnerPercentCorrectlyHit = ifelse(role=="playerA", playerB_PercentCorrectlyHit, playerA_PercentCorrectlyHit),
          partnerPercentCorrectlyRejected = ifelse(role=="playerA", playerB_PercentCorrectlyRejected, playerA_PercentCorrectlyRejected),
          partnerPercentCorrect = ifelse(role=="playerA", playerB_PercentCorrect, playerA_PercentCorrect)) %>%
-  select(trialNum, gameid, role, hitCount, correctRejectionCount, correctCount, percentCorrectlyHit, percentCorrectlyRejected, percentCorrect, partnerHit, partnerCorrectRejection, partnerCorrectCount, partnerPercentCorrectlyHit, partnerPercentCorrectlyRejected, partnerPercentCorrect)
+  select(trialNum, gameid_num, role, hitCount, correctRejectionCount, correctCount, percentCorrectlyHit, percentCorrectlyRejected, percentCorrect, partnerHit, partnerCorrectRejection, partnerCorrectCount, partnerPercentCorrectlyHit, partnerPercentCorrectlyRejected, partnerPercentCorrect)
   
   
-text_data <- left_join(text_data, roundScore, by=c("gameid","trialNum","role"))
+text_data_byScore <- left_join(text_data, roundScore, by=c("gameid_num","trialNum","role"))
 
-numGames = length(unique(text_data$gameid))
-text_data <- text_data %>%
-  mutate(gameid_num=gameid,
-         gameid_num=factor(gameid_num, labels=paste0("game_",seq(1,numGames))))
+
+
+text_concat <- text_data %>%
+  select(gameid_num, trialNum, role, text) %>%
+  group_by(gameid_num, trialNum, role) %>%
+  summarize(messages = paste(text, collapse = "; "))
+
+score_byText <- left_join(roundScore, text_concat, by=c("gameid_num","trialNum","role"))
+score_byText <- left_join(score_byText, distribution_train_condition, by=c("gameid_num","trialNum","role"))
+
+
+
 
 str(text_data)
 summary(text_data)
@@ -180,7 +197,7 @@ summary(text_data)
 
 
 # Adjusting MechTurk/Punctuation Errors
-text_df <- text_data
+text_df <- text_data_byScore
 #text_df <- data_frame(,c())
 text_df$text <- tolower(as.character(text_df$text))
 #text_df$text <- gsub("&quotechar", "'", text_df$text)
@@ -366,23 +383,52 @@ context_by_words_type
 # Tables
 
 ```{r echo=FALSE, warning=FALSE}
-text_byPartnerScore <- text_df %>%
-  select(distribution, gameid_num, trialNum, role, text, partnerPercentCorrect, partnerPercentCorrectlyHit, partnerPercentCorrectlyRejected) %>%
+
+text_byPartnerScore <- score_byText %>%
+  select(distribution, gameid_num, trialNum, role, messages, partnerPercentCorrect, partnerPercentCorrectlyHit, partnerPercentCorrectlyRejected) %>%
   mutate(distribution = factor(
     distribution, levels = c("[0, 1, 0]","[0, 1, 0.75]","[0, 1, 0.25]","[0.5, 0.5, 0.5]"))) %>%
   arrange(distribution, gameid_num, trialNum, role, desc(partnerPercentCorrect)) %>%
-  rename(dyad = gameid_num, totalCorrect = partnerPercentCorrect, hit = partnerPercentCorrectlyHit, CR = partnerPercentCorrectlyRejected)
-
-left_join(
-  text_byPartnerScore %>%
-    select(-text) %>%
-    unique(),
-  text_byPartnerScore %>%
-    select(dyad, trialNum, role, distribution, text) %>%
-    group_by(dyad, trialNum, role, distribution) %>%
-    summarize(messages = paste(text, collapse = "; "))) %>% 
-  kable(., format.args = list(digits=2))
+  rename(dyad = gameid_num, totalCorrect = partnerPercentCorrect, hit = partnerPercentCorrectlyHit, CR = partnerPercentCorrectlyRejected) 
+kable(text_byPartnerScore, format.args = list(digits=2))
 ```
+
+# Binning Accuracy
+
+```{r echo=FALSE, warning=FALSE}
+# Binning by Accuracy on Test & Count Words in Text
+split_byDistr_byAccuracy <- score_byText %>%
+  group_by(distribution) %>%
+  mutate(accuracyBin = ifelse(partnerPercentCorrect >= median(partnerPercentCorrect), "upper_bin", "lower_bin")) %>%
+  ungroup()
+
+wordCount_byInput <- split_byDistr_byAccuracy %>%
+  group_by(gameid_num, trialNum, role) %>%
+  unnest_tokens(word, messages) %>%
+  count(word, sort=TRUE) %>%
+  mutate(totalWords = sum(n))
+wordCount_byInput
+
+  
+wordCount_byDistr_byAccuracy <- split_byDistr_byAccuracy %>%
+  group_by(distribution, accuracyBin) %>%
+  unnest_tokens(word, messages) %>%
+  count(word, sort=TRUE) %>%
+  summarise(totalWords = sum(n))
+wordCount_byDistr_byAccuracy
+
+
+table_byAccuracyBin <- split_byDistr_byAccuracy %>%
+  select(distribution, accuracyBin, gameid_num, trialNum, role, messages, partnerPercentCorrect, partnerPercentCorrectlyHit, partnerPercentCorrectlyRejected) %>%
+  mutate(distribution = factor(
+    distribution, levels = c("[0, 1, 0]","[0, 1, 0.75]","[0, 1, 0.25]","[0.5, 0.5, 0.5]"))) %>%
+  arrange(distribution, desc(partnerPercentCorrect), gameid_num, trialNum, role) %>%
+  rename(dyad = gameid_num, totalCorrect = partnerPercentCorrect, hit = partnerPercentCorrectlyHit, CR = partnerPercentCorrectlyRejected) 
+kable(table_byAccuracyBin, format.args = list(digits=2))
+```
+
+
+
 
 
 # Word Count
@@ -503,7 +549,7 @@ context_byWordtype <- ggplot(count_context_words_type, aes(x=wordType, y=total))
         axis.text.x = element_text(size=18, angle=90),
         axis.text.y = element_text(size=20))
 context_byWordtype
-#ggsave("~/Desktop/Research/Summer2017/CSLI/FinalPresentation/Graphics/wordType_context.png", context_byWordtype, height=8, width=12)
+ggsave("~/Desktop/Research/Summer2017/CSLI/FinalPresentation/Graphics/wordType_context.png", context_byWordtype, height=8, width=12)
 
 ```
 
@@ -559,6 +605,31 @@ quantifier_count <- ggplot(quantifiers, aes(x=lemma, y=n)) +
   theme(plot.title = element_text(hjust=0.5))
 
 quantifier_count
+```
+
+## By Distribution
+
+```{r}
+count_quantifiers_byDistr <-  text_df %>%
+  unnest_tokens(word, text) %>%
+  group_by(distribution) %>%
+  count(word, sort=TRUE) %>%
+  filter(word %in% quantifier_words) %>%
+  group_by(distribution, word) %>%
+  summarize(n = sum(n))
+
+quantifiers_byDistr <- ggplot(count_quantifiers_byDistr, aes(x=word, y=n)) +
+  geom_bar(stat="identity", fill="black") +
+  scale_x_discrete("Word") +
+  scale_y_continuous("Counts", expand=c(0,0)) +
+  facet_wrap(~distribution) +
+  ggtitle("Quantifiers Used by Distribution") +
+  theme_classic() + 
+  theme(plot.title = element_text(hjust=0.5, size=36, face="bold"),
+        axis.title = element_text(size=24),
+        axis.text.x = element_text(size=18, angle=90),
+        axis.text.y = element_text(size=20))
+quantifiers_byDistr
 ```
 
 # Probabilistic Word Count

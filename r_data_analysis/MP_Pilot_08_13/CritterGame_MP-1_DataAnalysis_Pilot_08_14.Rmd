@@ -75,17 +75,17 @@ totalCorrect <- test_data %>%
   group_by(gameid_num, role) %>%
   multi_boot_standard(column = "correct")
 
-graph_totalCorrect <- ggplot(totalCorrect, aes(x=role, y = mean, ymin = ci_lower, ymax = ci_upper)) +
-  geom_bar(stat="identity",  position="dodge", width = 0.5) +
-  geom_errorbar(width = 0.3)+
-  geom_hline(yintercept = 0.5, lty = 3)+
-  scale_x_discrete("") +
-  scale_fill_manual("Accuracy", labels=c("Incorrect","Correct"), values=c("red","forestgreen")) +
-  facet_wrap(~gameid_num) +
-  ggtitle("Test Accuracy by dyad") +
-  theme_classic() +
-  theme(plot.title = element_text(hjust=0.5, size=18, face="bold"))
-graph_totalCorrect 
+# graph_totalCorrect <- ggplot(totalCorrect, aes(x=role, y = mean, ymin = ci_lower, ymax = ci_upper)) +
+#   geom_bar(stat="identity",  position="dodge", width = 0.5) +
+#   geom_errorbar(width = 0.3)+
+#   geom_hline(yintercept = 0.5, lty = 3)+
+#   scale_x_discrete("Player") +
+#   scale_fill_manual("Accuracy", labels=c("Incorrect","Correct"), values=c("red","forestgreen")) +
+#   facet_wrap(~gameid_num) +
+#   ggtitle("Test Accuracy by dyad") +
+#   theme_classic() +
+#   theme(plot.title = element_text(hjust=0.5, size=18, face="bold"))
+# graph_totalCorrect 
 ```
 
 # Test Accuracy by Dyad and Trial Number
