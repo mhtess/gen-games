@@ -46,6 +46,7 @@ createFeatureArray = function(creatureLabel, creatureCategory, num){ //add num a
   var creatureOpts = categories[creatureCategory][num];
   var creatOpts = _.where(creatureOpts, {name: creatureLabel})[0];
   var creatureColors = [];
+  var creatureColorNames = [];
   var creatureLocation = [];
   var nRemaining = exemplarN; // number of exemplars in category
   // 2 possible colors (so loop for i < 2)
@@ -59,6 +60,7 @@ createFeatureArray = function(creatureLabel, creatureCategory, num){ //add num a
     var ncrit = n_creatures_of_this_color == 0 ?
     ((colorProps.p > 0) && (nRemaining > 0)) ? 1 : 0 :
     n_creatures_of_this_color
+
     creatureColors = creatureColors.concat(
       fillArray(ncrit,
         genColor(
@@ -67,9 +69,13 @@ createFeatureArray = function(creatureLabel, creatureCategory, num){ //add num a
           ))
       )
     creatureLocation = 0;
+
+    creatureColorNames = creatureColorNames.concat(
+      fillArray(ncrit, color_dict[colorProps["props"]["color_mean"]]   )
+      )
     nRemaining = nRemaining-ncrit;
   }
-  return {color: creatureColors, location: creatureLocation}
+  return {color: creatureColors, location: creatureLocation, creatureColorNames: creatureColorNames}
 }
 
 
@@ -340,7 +346,7 @@ for (i = 0; i < numRounds * 2; i++){
   }
 
 // block --> species
-genCreatures = function(creatureCategory, num, interval_feature_probs){ //include num as parameter
+genCreatures = function(creatureCategory, num, internalFeature_probs){ //include num as parameter
   var j = 0;
   // console.log("in genCreatures")
   // Generates the characteristics for each critter
@@ -361,7 +367,7 @@ genCreatures = function(creatureCategory, num, interval_feature_probs){ //includ
      uniqueCreatures[i], creatureCategory, num
      );
     //  console.log(creatureColor)
-    var n_with_feature =  representativeFlip(interval_feature_probs[i], exemplarN);
+    var n_with_feature =  representativeFlip(internalFeature_probs[i], exemplarN);
     var localCounter = 0;
     while (j<(exemplarN*(i+1))) {
      allCreatures.push({
@@ -372,16 +378,19 @@ genCreatures = function(creatureCategory, num, interval_feature_probs){ //includ
       "col5": creatureColor["color"][localCounter] == null ? null : creatureColor["color"][localCounter],
       "prop1": creatOpts.prop1 == null ? randProp() : creatOpts.prop1,
       "prop2": creatOpts.prop2 == null ? randProp() : creatOpts.prop2,
-      "tar1": flip(creatOpts.tar1),
-      "tar2": flip(creatOpts.tar2),
-      "tar3": flip(creatOpts.tar3),
+      "tar1": flip(creatOpts.tar1) ? 1 : 0,
+      "tar2": flip(creatOpts.tar2) ? 1 : 0,
+      "tar3": flip(creatOpts.tar3) ? 1 : 0,
       "creatureName": uniqueCreatures[i],
       "critter" : creatureCategory,
       "stimID": j,
       "internal_prop": n_with_feature[j % exemplarN],
-      "creatureOpts": creatureOpts,
-      "critter_full_info": creatOpts
-    })
+      "internalFeature_probs": internalFeature_probs[i],
+      "internalFeature_dist" : internalFeature_probs.join(','),
+      "meanColorName": _.invert(color_dict)[creatureColor["creatureColorNames"][localCounter]]
+    }
+    )
+
      localCounter++;
      j++;
    }

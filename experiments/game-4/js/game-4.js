@@ -30,7 +30,9 @@ function make_slides(f) {
       $("#meeting").show();
       $("#internalprops_instruct").show();
       $("#critter_display").show();
+      // took out the shuffling 
       this.shuffledCritters = _.shuffle(exp.allCreatures[exp.blockNum])
+      console.log(exp.blockNum)
 
       this.num_creats = exp.allCreatures.length;
       this.creat_type = this.shuffledCritters[0]["critter"]; //fish, etc
@@ -68,22 +70,13 @@ function make_slides(f) {
       
       // clears table
       for (var i = 0; i < this.num_creats; i++) {
-        var dataToSend = {
-          "block_num" : exp.block,
-          //"distribution" : exp.distribution, //fix this later
+        var dataToSend = _.extend(this.shuffledCritters[i], {
+          "block_num" : exp.blockNum,
           "time_in_ms" : this.time_spent,
           "block": "learnCritters",
-          "critter" : this.shuffledCritters[i]["critter"],
           "critter_num" : i,
-          "species" : this.shuffledCritters[i]["creatureName"],
-          "color" : this.shuffledCritters[i]["col1"],
-          "prop1" : this.shuffledCritters[i]["prop1"],
-          "prop2" : this.shuffledCritters[i]["prop2"],
-          "tar1" : this.shuffledCritters[i]["tar1"],
-          "tar2" : this.shuffledCritters[i]["tar2"],
-          "tar3" : this.shuffledCritters[i]["tar3"],
-          "internal_prop" : this.shuffledCritters[i]["internal_prop"]
-        }
+        })
+
         exp.catch_trials.push(dataToSend);
 
         $('#critter' + i).empty();
@@ -104,7 +97,7 @@ slides.test_instructions = slide({
   name : "test_instructions",
   start : function() {
     // can only do this if all creatures are the same 
-    creat_type = exp.allCreatures[0][0]["critter"];
+    creat_type = exp.allCreatures[exp.blockNum][0]["critter"];
     $('#test_instructs').html(
       "<br>On the next slide, select the " +
       exp.critter_instructions[creat_type]["test_instruct"]
@@ -123,25 +116,24 @@ slides.test_critters = slide({
      (the variable 'stim' will change between each of these values,
       and for each of these, present_handle will be run.) */
 
-trial_num: 0,
 
 start : function() {
-// reset critter & note
-$("#critterTestSVG").empty();
+  // reset critter & note
+  $("#critterTestSVG").empty();
 
 
-this.start_time = Date.now()
-$(".err").hide();
+  this.start_time = Date.now()
+  $(".err").hide();
 
-this.shuffledCritters = _.shuffle(exp.allCreatures[exp.blockNum])
-exp.blockNum++;
-this.num_creats = this.shuffledCritters.length;
-this.creat_type = this.shuffledCritters[0]["critter"];
+  this.shuffledCritters = _.shuffle(exp.allCreatures[exp.blockNum])
 
-$('#chooseCrit').html(
- "Click on the " +
- exp.critter_instructions[this.creat_type]["test_instruct"]
- );
+  this.num_creats = this.shuffledCritters.length;
+  this.creat_type = this.shuffledCritters[0]["critter"];
+
+  $('#chooseCrit').html(
+   "Click on the " +
+   exp.critter_instructions[this.creat_type]["test_instruct"]
+   );
 
     // Generates critters for test phase
     create_table(exp.presentRows,exp.presentCols,"critter_test_display");
@@ -155,9 +147,6 @@ $('#chooseCrit').html(
    }
 
       this.start_time = Date.now()
-
-
-      this.trial_num++;
 
     },
     
@@ -177,53 +166,25 @@ $('#chooseCrit').html(
         blockScore[scoreSingle(correctAnswer, selectedAnswer)]++
       }
 
-        //log responses
-        for (var i=0; i<this.num_creats; i++) {
-          var correctAnswer = this.shuffledCritters[i]["internal_prop"];
-          var selectedAnswer = $('#cell' + i).attr("data-selected");
-          var dataToSend = {
-            "block_num" : exp.block,
-            "block_type": "testCritters",
-      //"distribution" : exp.distribution, //fix this later
+  //log responses
+  for (var i=0; i<this.num_creats; i++) {
+    var correctAnswer = this.shuffledCritters[i]["internal_prop"];
+    var selectedAnswer = $('#cell' + i).attr("data-selected");
+    var dataToSend = _.extend(this.shuffledCritters[i], {
+      "block_num" : exp.blockNum,
+      "block_type": "testCritters",
       "time_in_ms" : this.time_spent,
-      "critter" : this.shuffledCritters[i]["critter"],
       "critter_num" : i,
-      "species" : this.shuffledCritters[i]["creatureName"],
-      "color" : this.shuffledCritters[i]["col1"],
-      "prop1" : this.shuffledCritters[i]["prop1"],
-      "prop2" : this.shuffledCritters[i]["prop2"],
-      "tar1" : this.shuffledCritters[i]["tar1"],
-      "tar2" : this.shuffledCritters[i]["tar2"],
-      "tar3" : this.shuffledCritters[i]["tar3"],
       "internal_prop" : correctAnswer,
       "selected" : selectedAnswer,
-      "full_globalColor0_p" : this.shuffledCritters[i]["critter_full_info"].expColors[0]["p"].toString(),
-      "full_globalColor0_color_mean" : this.shuffledCritters[i]["critter_full_info"].expColors[0]["props"]["color_mean"],
-      "full_globalColor0_color_var" : this.shuffledCritters[i]["critter_full_info"].expColors[0]["props"]["color_var"],
-      "full_globalColor1_p" : this.shuffledCritters[i]["critter_full_info"].expColors[1]["p"],
-      "full_globalColor1_color_mean" : this.shuffledCritters[i]["critter_full_info"].expColors[1]["props"]["color_mean"],
-      "full_globalColor1_color_var" : this.shuffledCritters[i]["critter_full_info"].expColors[1]["props"]["color_var"],
-      "full_prop1" : this.shuffledCritters[i]["critter_full_info"]["prop1"],
-      "full_prop2" : this.shuffledCritters[i]["critter_full_info"]["prop2"],
-      "full_tar1" : this.shuffledCritters[i]["critter_full_info"]["tar1"],
-      "full_tar2" : this.shuffledCritters[i]["critter_full_info"]["tar2"],
-      "full_internal_prop" : this.shuffledCritters[i]["critter_full_info"]["internal_prop"],
-      "score" : score(correctAnswer, selectedAnswer)
-    }
-    blockScore['hits'] = hits
-    blockScore['falseAlarms'] = falseAlarms
-    blockScore['misses'] = misses
-    blockScore['correctRejections'] = correctRejections
+      "categorizedResponse" : scoreSingle(correctAnswer, selectedAnswer)
+    })
 
-    exp.allCreatures = [];
-    exp.catch_trials.push(dataToSend);
+    exp.data_trials.push(dataToSend);
 
   }
 
   // empties the critter arrays so they can be repopulated without overlap
-  exp.allCreatures = [];
-  shuffledCritters = [];
-
   // resets table
   for (var i = 0; i < this.num_creats; i++) {
    $('#critter' + i).empty();
@@ -233,10 +194,10 @@ $('#chooseCrit').html(
    prev = null;
  }
 
-totalScore = blockScore['hits'] + blockScore['correctRejections']
-$('#your_score').append(totalScore)
+  totalScore = blockScore['hits'] + blockScore['correctRejections']
+  $('#your_score').html(totalScore)
 
- exp.block++;
+  exp.blockNum++;
   exp.go(); // use exp.go() if and only if there is no "present" data.
 
 }
@@ -275,10 +236,7 @@ slides.thanks = slide({
     exp.data= {
       "trials" : exp.data_trials,
       "catch_trials" : exp.catch_trials,
-          //"learning_trials" : exp.learning_trials,
           "system" : exp.system,
-          "question": exp.question,
-          "distribution": JSON.stringify(exp.distribution),          
           "subject_information" : exp.subj_data,
           "time_in_minutes" : (Date.now() - exp.startT)/60000
         };
@@ -300,8 +258,9 @@ function init() {
      alert("You have already completed the maximum number of HITs allowed by this requester. Please click 'Return HIT' to avoid any impact on your approval rating.");
    }
  });
- exp.trials = [];
- exp.catch_trials = [];
+
+  exp.data_trials = [];
+  exp.catch_trials = [];
 
   exp.blockNum = 0;
   
@@ -309,18 +268,18 @@ function init() {
   exp.critter_instructions = critter_instructions
   exp.presentRows = presentRows
   exp.presentCols = presentCols
-  
+
+  var shuffledDistributionsInternal = _.shuffle(distributions.internal)
   
   // needs to be generalized
   // determines what critters will be used and who sees what when
   var critterOrders = ["fish", "bug", "tree", "bird"]
-  var order = [];
   // loop over number of blocks
   for (i = 0; i<distributions.internal.length; i++){
     exp.allCreatures.push(
       genCreatures(critterOrders[i],
         0, // because we only have 1 block per genus (fish, bug, bird, tree)
-        distributions.internal[i])
+        shuffledDistributionsInternal[i])
       )
   }
 
@@ -359,26 +318,25 @@ exp.system = {
     "test_critters",
     "score_report",
 
-    "learning_critters",
-    "test_instructions",
-    "test_critters",
-    "score_report",
+    // "learning_critters",
+    // "test_instructions",
+    // "test_critters",
+    // "score_report",
 
-    "learning_critters",
-    "test_instructions",
-    "test_critters",
-    "score_report",
+    // "learning_critters",
+    // "test_instructions",
+    // "test_critters",
+    // "score_report",
 
-    "learning_critters",
-    "test_instructions",
-    "test_critters",
-    "score_report",
+    // "learning_critters",
+    // "test_instructions",
+    // "test_critters",
+    // "score_report",
 
-    'subj_info',
+    // 'subj_info',
     'thanks'
     ];
 
-  exp.data_trials = [];
   //make corresponding slides:
   exp.slides = make_slides(exp);
 
