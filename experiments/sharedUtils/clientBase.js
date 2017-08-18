@@ -22,27 +22,16 @@ var getURLParams = function() {
       console.log("server booted");
       var email = globalGame.email ? globalGame.email : '';
 
-      // $('.long_form').prepend('<p style="font-size:15px">' +
-      //   'Oops! It looks like your partner lost their connection.' +
-      //   ' Completing this survey will submit your HIT so you will still receive ' +
-      //   'full compensation. If you experience any problems, please email us (mtessler@stanford.edu).'
-      //   + '</p>' + '<br>');
-
       var failMsg = [
         '<h3>Oops! It looks like your partner lost their connection!</h3>',
         '<p> Completing this survey will submit your HIT so you will still receive full ',
         'compensation.</p> <p>If you experience any problems, please email us (',
         email, ')</p>'
       ].join('');
-      var successMsg = [
-        "<h3>Thanks for participating in our experiment!</h3>",
-        "<p>Before you submit your HIT, we'd like to ask you a few questions.</p>"
-      ].join('');
 
-      if(globalGame.roundNum + 2 > globalGame.numRounds) {
-        $('#subj_info').prepend(successMsg);
-      } else {
+      if(globalGame.roundNum != globalGame.numRounds) {
         $('#subj_info').prepend(failMsg);
+        $('#thanks').hide();
       }
 
       $('#message_panel').hide();
@@ -212,7 +201,7 @@ window.onload = function(){
 // This gets called when someone selects something in the menu during the exit survey...
 // collects data from drop-down menus and submits using mmturkey
 function dropdownTip(data){
-  console.log(globalGame);
+  // console.log(globalGame);
   var commands = data.split('::');
   switch(commands[0]) {
   case 'human' :

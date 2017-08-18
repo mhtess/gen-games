@@ -1,7 +1,7 @@
 ---
 title: "CritterGame_MP-1_TextAnalysis_Pilot"
 author: "Lauren Oey"
-date: "7/31/2017"
+date: "8/9/2017"
 output: github_document
 ---
 
@@ -16,10 +16,10 @@ library(cleanNLP)
 library(reticulate)
 
 #setting the directory
-setwd("../../data/mp-game-1/message/")
+setwd("../../data/mp-game-1/chatMessage/")
 
 
-text_data <- read.csv("2017-61-31-15-58-4-503_8156-0eaedf8e-1d2c-420c-919a-19fd6eb20d93.csv")
+text_data <- read.table("2017-8-9-10h-40m-8s-8717-b034d679-5f95-4e31-814f-c36d0883303d.csv", header=TRUE, sep="\t")
 
 reorder_size <- function(x) {
   factor(x, levels = names(sort(table(x), decreasing = TRUE)))
@@ -32,9 +32,8 @@ summary(text_data)
 
 
 # Adjusting MechTurk/Punctuation Errors
-text_df <- data_frame(roundNum=text_data[,3], 
-                      sender=text_data[,4],
-                      text=text_data[,5])
+text_df <- text_data
+#text_df <- data_frame(,c())
 text_df$text <- as.character(text_df$text)
 #text_df$text <- gsub("&quotechar", "'", text_df$text)
 #text_df$text <- gsub("DON'T.NONE", "DON'T. NONE", text_df$text)
@@ -133,9 +132,8 @@ tokenized_word <- token_coreNLP %>%
 tokenized_generic <- token_coreNLP %>%
   filter(upos != "PUNCT") %>%
   mutate(genericType = ifelse(upos=="NUM", FALSE, g(lemma)),
-         sentence_id = paste(id, "_", sid))
-  #unite(sentence, )
-View(tokenized_generic)
+         sentence_id = gsub(" ", "", paste(as.character(id), "_", as.character(sid))))
+#View(tokenized_generic)
 
 
 ```

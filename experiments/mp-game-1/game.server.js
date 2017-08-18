@@ -23,7 +23,6 @@ var startTime;
 
 
 var onMessage = function(client,message) {
-  console.log("server onMessage")
   //Cut the message up into sub components
   var message_parts = message.split('.');
 
@@ -34,7 +33,7 @@ var onMessage = function(client,message) {
   var gc = client.game;
   var id = gc.id;
   var all = gc.get_active_players();
-  gc.rounds = {"speker": 1, "listener": 1};
+  gc.rounds = {"playerA": 1, "playerB": 1};
   // gets current player and differentiates them from other players
   var target = gc.get_player(client.userid);
   var others = gc.get_others(client.userid);
@@ -45,6 +44,8 @@ var onMessage = function(client,message) {
     // will update (through use of globalGame.socket.send("enterSlide.slide_name.");) in game js file
     case 'enterSlide' :
       gc.currentSlide[target.instance.role] = message_parts[1]
+      console.log("Player A is in: ==== " + gc.currentSlide["playerA"] + " ====")
+      console.log("Player B is in: ==== " + gc.currentSlide["playerB"] + " ====")
       break;
 
     // continue button from chat room
@@ -55,6 +56,8 @@ var onMessage = function(client,message) {
             // tell client to advance to next slide
             var playerRole = p.instance.role;
             // here, decide what data to pass to each subject
+            console.log("Enter block num ==== " + (gc.roundNum + 1) + " ====")
+
             var dataPacket = {
               thisRoundTest: gc.testList[playerRole][gc.roundNum],
               nextRoundLearning: gc.trialList[playerRole][gc.roundNum + 1],
@@ -62,13 +65,14 @@ var onMessage = function(client,message) {
             };
             // calls exitChatRoom to move to next slide and collect data to the packet
             p.player.instance.emit("exitChatRoom", dataPacket)
+
             _.map(all,function(p){
                 p.player.instance.emit('newRoundUpdate', {user: client.userid});
             });
           });
           // tell server to advance to next round (or if at end, disconnect)
           gc.roundNum += 1;
-        }, 300);
+        }, 3);
       break;
 
     // will result in "other player is typing" on others' chatboxes
@@ -82,7 +86,7 @@ var onMessage = function(client,message) {
     // Only allows a message to be sent when both players are present in the chatroom
     // If this is true, the message will be relayed
     case 'chatMessage' :
-      if(gc.currentSlide["speaker"] == gc.currentSlide["listener"]) {
+      if(gc.currentSlide["playerA"] == gc.currentSlide["playerB"]) {
           // Update others
           var msg = message_parts[1].replace(/~~~/g,'.');
           _.map(all, function(p){
@@ -93,7 +97,7 @@ var onMessage = function(client,message) {
     // Will show a wait message if only one player is in the chatroom
     // Will allow them to enter the chatroom
     case 'enterChatRoom' :
-      if (gc.currentSlide["speaker"] != gc.currentSlide["listener"]) {
+      if (gc.currentSlide["playerA"] != gc.currentSlide["playerB"]) {
         target.instance.emit("chatWait", {})
       } else {
         setTimeout(function() {
@@ -106,9 +110,9 @@ var onMessage = function(client,message) {
       break;
 
     // Seems confusing, but this fn actually goes to the wait room and only moves forward,
-    // (enterWaitRoom) when both the speaker and listener are in the wait room
+    // (enterWaitRoom) when both the speaker (playerA) and listener (playerB) are in the wait room
     case 'enterWaitRoom' :
-      if (gc.currentSlide["speaker"] == gc.currentSlide["listener"]) {
+      if (gc.currentSlide["playerA"] == gc.currentSlide["playerB"]) {
         setTimeout(function() {
           _.map(all, function(p){
             p.player.instance.emit("enterWaitRoom", {})
@@ -123,6 +127,35 @@ var onMessage = function(client,message) {
     // Receive message when browser focus shifts
     case 'h' :
       target.visible = message_parts[1];
+      break;
+
+    case 'sendingTestScores' :
+       var scoreObj = _.fromPairs(_.map(
+        message_parts.slice(2), // get relevant part of message
+        function(i){return i.split(',')}))
+
+      gc.testScores[target.instance.role].push(scoreObj);
+
+
+      // if (gc.currentSlide["playerA"] == gc.currentSlide["playerB"]) {
+        //var msg = message_parts[1].replace(/~~~/g,'.');
+        setTimeout(function() {
+          _.map(all, function(p){
+            p.player.instance.emit("sendingTestScores",
+              gc.testScores)
+          });
+        }, 300);
+      // }
+      break;
+
+    case 'calculatingReward' :
+
+      setTimeout(function() {
+          _.map(all, function(p){
+            p.player.instance.emit("calculatingReward",
+              {})
+          });
+        }, 300);
       break;
   }
 };
@@ -150,21 +183,27 @@ var dataOutput = function() {
     };
   };
 
+  function decodeData(dataObj){
+    return _.mapValues(dataObj, function(val){
+      return val.replace("&", ".")
+    })
+  }
+
   function flattenedArrayToObj(m_data){
     return _.fromPairs(_.map(m_data, function(i){return i.split(',')}))
   }
 
   var logResponseOutput = function(client, message_data) {
-    console.log('enter log responses output')
     // message_data contrains the flattened JSON object with test trial info.
     return _.extend(
       commonOutput(client, message_data),
-      flattenedArrayToObj(message_data.slice(2))
+      decodeData(flattenedArrayToObj(message_data.slice(2)))
     );
   };
 
   var chatMessageOutput = function(client, message_data) {
     // var intendedName = getIntendedTargetName(client.game.trialInfo.currStim);
+    console.log(client.role + " said " + message_data[1].replace(/~~~/g, '.'))
     return _.extend(
       commonOutput(client, message_data), {
       	// intendedName,
@@ -178,6 +217,7 @@ var dataOutput = function() {
     'chatMessage' : chatMessageOutput,
     'logTest' : logResponseOutput,
     'logTrain': logResponseOutput,
+    'logScores': logResponseOutput,
     'logSubjInfo': logResponseOutput
   };
 }();

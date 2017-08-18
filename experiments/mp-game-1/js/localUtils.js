@@ -9,12 +9,18 @@ var critname_fontweight_unclicked = 'bold';
 var cell_opacity_gray = '0.5';
 var symbol_opacity_gray = '0.7';
 
+//record score
+var hits = 0;
+var falseAlarms = 0;
+var misses = 0;
+var correctRejections = 0;
+
 // Allows the border of each critter to be highlighted when chosed
 function mark_critter_display(el) {
-  if(exp.prev != null){
-    gray(exp.prev);
+  if(prev != null){
+    gray(prev);
   }
-  exp.prev = el;
+  prev = el;
   $('#'+el.id).css({"border":cell_border_clicked,
     'opacity': all_opacity_clicked});
   $('#'+ el.id + 'critname').css({'opacity': all_opacity_clicked, 'font-weight': critname_fontweight_unclicked});
@@ -85,8 +91,8 @@ function create_table(rows, cols, display_type) { //rows * cols = number of exem
       table += "<tr>";
       table += "<td>";
       table += "<div class='critlabel' id='cell" + ind + "critlabel'>"; //critter species name + emoji
-      table += "<div class='critname' id='cell" + ind + "critname' style='float:left'></div>";
-      table += "<div class='critname' id='cell" + ind + "internalprop' style='float: center'></div></div>";
+      table += "<div class='critname' id='cell" + ind + "critname' style='float:center'></div>";
+      table += "<td><div class='critname' id='cell" + ind + "internalprop' style='float: left'></div></td></div>";
       table += "</td><br>";
       table += "</tr>";
       table += "</table>";
@@ -97,3 +103,75 @@ function create_table(rows, cols, display_type) { //rows * cols = number of exem
   table += "</table>";
   $("#" + display_type).append(table);
 }
+
+function isNumeric(n) {
+  return !isNaN(parseFloat(n)) && isFinite(n);
+}
+
+// encode real numbers
+function encodeData(dataObj){
+  return _.mapObject(dataObj, function(val, key) {
+      val.toString().replace(".", "&")
+    })
+}
+
+function score(correctAnswer, selectedAnswer){
+  if(correctAnswer && selectedAnswer=='1'){
+    hits++;
+    return 'hit';
+  }
+  else if(!correctAnswer && selectedAnswer=='1'){
+    falseAlarms++;
+    return 'falseAlarm';
+  }
+  else if(correctAnswer && selectedAnswer=='0'){
+    misses++;
+    return 'miss';
+  }
+  else if(!correctAnswer && selectedAnswer=='0'){
+    correctRejections++;
+    return 'correctRejection';
+  }
+}
+
+function scoreSingle(correctAnswer, selectedAnswer){
+  if(correctAnswer && selectedAnswer=='1'){
+    return 'hits';
+  }
+  else if(!correctAnswer && selectedAnswer=='1'){
+    return 'falseAlarms';
+  }
+  else if(correctAnswer && selectedAnswer=='0'){
+    return 'misses';
+  }
+  else if(!correctAnswer && selectedAnswer=='0'){
+    return 'correctRejections';
+  }
+}
+
+function calculateScore(){
+  return {
+    "hits" : hits,
+    "falseAlarms" : falseAlarms,
+    "misses" : misses,
+    "correctRejections" : correctRejections
+  }
+}
+
+function calculate_end_game_bonus(){
+    console.log(this.testScores)
+    console.log(this.bonusAmt)
+    var correctSelect = 0;
+    for(var i=0; i<this.numRounds; i++){
+      for (var j=0; j<2; j++){
+        var role_index = j == 0 ? "playerA" : "playerB";
+        correctSelect += this.testScores[role_index][i].hits + this.testScores[role_index][i].correctRejections;
+      }
+    }
+    var reward = correctSelect * this.bonusAmt;
+    console.log("reward is " + reward);
+    return reward;
+    
+  }
+
+

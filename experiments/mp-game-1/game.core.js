@@ -37,14 +37,19 @@
   // This has replaced expid - see if this is recorded
   this.iterationName = 'pilot1';
   this.anonymizeCSV = true;
-  this.bonusAmt = 3; // in cents
+  this.bonusAmt = 2; // in cents
 
   // How many players in the game?
   this.players_threshold = 2;
   this.playerRoleNames = {
-    role1 : 'speaker',
-    role2 : 'listener'
+    role1 : 'playerA',
+    role2 : 'playerB'
   };
+
+  this.testScores = {
+    "playerA": [],
+    "playerB": []
+  }
 
   // Determines which critters are present in the game and who gets which first
   this.critter = {
@@ -52,10 +57,18 @@
     role2 : 'bug'
   }
 
+  // How many rounds do we want people to complete? MAKE SURE THIS ALIGNS WITH EXP TEMPLATE SLIDE AMT
   this.numRounds = 4;
-
   // number of different species
   this.creatureTypesN = 3;
+  // number of exemplars displayed in a block
+  this.creatureN = 12;
+  // number of each critter of a species
+  this.exemplarN = this.creatureN/this.creatureTypesN;
+
+  // Number of rows & columns in table presenting critters
+  this.presentRows = 2;
+  this.presentCols = this.creatureN/this.presentRows;
 
   this.creatureNames = [
       {list:0,category: "morseths", exemplar:"morseth"},
@@ -96,687 +109,177 @@
   // Determines the specifics of the critters used in the experiment. Can be probabilistic
   // Change this to change distribution, critter type, names of species, and critter characteristics
   this.critterScale = 0.5;
-  this.birdOpts0 = [
-  { creature: "bird",
-  name: ourCreatNames[0]["exemplar"],//"wug",
-  globalColors: [
-  {
-    p: 0.99,
-    props: {
-      color_mean: "blue",
-      color_var: 0.001,
-      location: "ground"
+
+  // 4 rounds, 3 categories per round
+  // assuming each property is boolean
+  // tar is a feature (e.g., whiskers)
+  // prop is shape / size (e.g., fat)
+
+  // allows us to write (and record) what color we want without needing hex codes
+  this.color_dict = {
+    blue: "#5da5db",
+    red: "#f42935",
+    yellow: "#eec900",
+    green: "#228b22",
+    orange: "#ff8c00",
+    purple: "#b62fef"
+    // pink: "#f97ada",
+    // lightblue: "#11edf4",
+    // lightgreen: "#11f427",
+    // lightpurple: "#dda0dd",
+  }
+
+  this.categories = {
+    bird: [],
+    bug: [],
+    fish: [],
+    tree: [],
+  }
+
+  this.colorOptions = _.keys(this.color_dict);
+  this.species = _.keys(this.categories);
+
+
+  this.createDeterministicColorArray = function(colorLabel){
+    return [{p:1, mean: colorLabel}, {p:0, mean: colorLabel}]
+  }
+
+  this.distributions = {
+    internal:  [
+        [0, 0, 1],
+        [0.5, 0.5, 0.5],
+        [0, 0.75, 1],
+        [0, 0.25, 1]
+      ],
+    colors: []
+    // _.map(_.range(this.numRounds * 2), function(i){
+    //   return _.map(_.shuffle(this.colorOptions).slice(0, 3), this.createDeterministicColorArray)
+    // })
+      // [{p:1, mean: "blue"}, {p:0, mean: "blue"}],
+      // [{p:1, mean: "yellow"}, {p:0, mean: "yellow"}],
+      // [{p:1, mean: "red"}, {p:0, mean: "red"}]
+  //  ]
+    // tar1: [
+    //
+    // ],
+    // tar2: [
+    //
+    // ],
+    // prop1: [
+    //
+    // ],
+
+    // prop2: [
+    //
+    // ]
+  }
+
+  for (i = 0; i < this.numRounds * 2; i++){
+    this.distributions.colors.push(
+      _.map(
+        _.shuffle(this.colorOptions).slice(0, this.creatureTypesN), this.createDeterministicColorArray)
+    )
+  }
+
+  // console.log(this.distributions.colors)
+  var testCreatNames = _.clone(ourCreatNames);
+
+  this.createCreatureOptsObj = function(creature, shapeParams, featureParams, colors) {
+    var newName = testCreatNames.pop()
+    // var colors = this.distributions.colors.pop();
+    // console.log(creature)
+    // console.log(colors);
+    return _.extend({ creature, name: newName.exemplar,
+      globalColors: [
+      { p: colors[0].p, props: { color_mean: colors[0].mean, color_var: 0.001 } },
+      { p: colors[1].p, props: { color_mean: colors[1].mean, color_var: 0.001 } }
+    ] }, shapeParams, featureParams)
+  }
+>>>>>>> 79bdfdf61d9b4456b45012db85acf68fb6bc6a63
+
+  this.speciesFeatureParams = {
+    "bird": [
+      [{prop1: 0, prop2: 0}, {tar1: 0, tar2: 0}],
+      [{prop1: 0.8, prop2: 0.8}, {tar1: 1, tar2: 1}]
+    ],
+    "bug": [
+      [{prop1: 0, prop2: 0}, {tar1: 0, tar2: 0}],
+      [{prop1: 0.8, prop2: 0.8}, {tar1: 1, tar2: 1}]
+    ],
+    "fish":[
+      [{prop1: 0, prop2: 0}, {tar1: 0, tar2: 0}],
+      [{prop1: 0.8, prop2: 0.8}, {tar1: 1, tar2: 1}]
+    ],
+    "tree": [
+      [{prop1: 0.2, prop2: 0.2}, {tar1: 0, tar2: 0}],
+      [{prop1: 0.8, prop2: 0.8}, {tar1: 0, tar2: 0}]
+    ],
+  }
+
+  // GENERATE CREATURE OPTS
+  for (repeatSpecies = 0; repeatSpecies < 2; repeatSpecies++){
+    for (speciesInd = 0; speciesInd < this.species.length; speciesInd++){
+      var speciesLabel = this.species[speciesInd]
+      var colorDistribution = this.distributions.colors.pop(); // set of colors (one for each category)
+
+      var blockCreatureOpts = []; // the current format for creatureOpts is an array of arrays
+      // so this will be that inner array
+      for (i=0; i<this.creatureTypesN; i++){
+        // prop and tar info (can be different for the repetitions of species [eg bird, bug] across blocks)
+        var speciesFeatureParams = this.speciesFeatureParams[speciesLabel][repeatSpecies];
+
+        blockCreatureOpts.push(this.createCreatureOptsObj(speciesLabel,
+            speciesFeatureParams[0], speciesFeatureParams[1],colorDistribution[i])
+        )
+
+      }
+      this.categories[speciesLabel].push(blockCreatureOpts)
     }
-  }, {
-    p: 0.01,
-    props: {
-      color_mean: "green",
-      color_var: 0.001,
-      location: "trees"
-    }
-  }],
-  		prop1: 0, // height
-  		prop2: 0, // fatness
-  		tar1: 0, // tails
-  		tar2: 0, // crest
-  		internal_prop: 0.8 // lays eggs
-  	},
-  	{ creature: "bird",
-    name: ourCreatNames[1]["exemplar"],//"fep",
-    globalColors: [
-    {
-      p: 1,
-      props: {
-        color_mean: "yellow",
-        color_var: 0.001,
-        location: "ground"
-      }
-    }, {
-      p: 0,
-      props: {
-        color_mean: "red",
-        color_var: 0.001,
-        location: "trees"
-      }
-    }],
-  		prop1: 0, // height
-      prop2: 0, // fatness
-  		tar1: 0, // tails
-  		tar2: 0, // crest
-  		internal_prop: 0.2, // lays eggs
-  	},
-  	{ creature: "bird",
-    name: ourCreatNames[2]["exemplar"],//"lorch",
-    globalColors: [
-    {
-      p: 0.5,
-      props: {
-        color_mean: "yellow",
-        color_var: 0.001,
-        location: "ground"
-      }
-    }, {
-      p: 0.5,
-      props: {
-        color_mean: "purple",
-        color_var: 0.001,
-        location: "trees"}
-      }],
-  		prop1: 0, // height
-      prop2: 0, // fatness
-  		tar1: 0, // tails
-  		tar2: 0, // crest
-  		internal_prop: 0 // lays eggs
-  	}
-    ]
+  }
 
-    this.bugOpts0 = [
-    { creature: "bug",
-    name: ourCreatNames[3]["exemplar"],//"rambo",
-    globalColors: [
-    {
-      p: 0.99,
-      props: {
-        color_mean: "red",
-        color_var: 0.001,
-        location: "ground"
-      }
-    }, {
-      p: 0.01,
-      props: {
-        color_mean: "yellow",
-        color_var: 0.001,
-        location: "trees"
-      }
-    }],
-        prop1: 0, // headsize
-        prop2: 0, // bodysize
-        tar1: 0, // antennae
-        tar2: 0, // wings
-        internal_prop: 0.8 // poisonous
-      },
-      { creature: "bug",
-      name: ourCreatNames[4]["exemplar"],//"prit",
-      globalColors: [
-      {
-        p: 1,
-        props: {
-          color_mean: "purple",
-          color_var: 0.001,
-          location: "ground"
-        }
-      }, {
-        p: 0,
-        props: {
-          color_mean: "red",
-          color_var: 0.001,
-          location: "trees"
-        }
-      }],
-        prop1: 0, // headsize
-        prop2: 0, // bodysize
-        tar1: 0, // antennae
-        tar2: 0, // wings
-        internal_prop: 0.2, // poisonous
-      },
-      { creature: "bug",
-      name: ourCreatNames[5]["exemplar"],//"radiss",
-      globalColors: [
-      {
-        p: 0.5,
-        props: {
-          color_mean: "blue",
-          color_var: 0.001,
-          location: "ground"
-        }
-      }, {
-        p: 0.5,
-        props: {
-          color_mean: "orange",
-          color_var: 0.001,
-          location: "trees"}
-        }],
-        prop1: 0, // headsize
-        prop2: 0, // bodysize
-        tar1: 0, // antennae
-        tar2: 0, // wings
-        internal_prop: 0 // poisonous
-      }
-      ]
-
-    this.fishOpts0 = [
-    { creature: "fish",
-    name: ourCreatNames[6]["exemplar"],//"strate",
-    globalColors: [
-    {
-      p: 0.99,
-      props: {
-        color_mean: "green",
-        color_var: 0.001,
-        location: "ground"
-      }
-    }, {
-      p: 0.01,
-      props: {
-        color_mean: "orange",
-        color_var: 0.001,
-        location: "trees"
-      }
-    }],
-        prop1: 0, // bodysize
-        prop2: 0, // tailsize
-        tar1: 0, // fangs
-        tar2: 0, // whiskers
-        internal_prop: 0.8 // eaten by crocodiles
-      },
-      { creature: "fish",
-      name: ourCreatNames[7]["exemplar"],//"hilate",
-      globalColors: [
-      {
-        p: 1,
-        props: {
-          color_mean: "blue",
-          color_var: 0.001,
-          location: "ground"
-        }
-      }, {
-        p: 0,
-        props: {
-          color_mean: "purple",
-          color_var: 0.001,
-          location: "trees"
-        }
-      }],
-        prop1: 0, // bodysize
-        prop2: 0, // tailsize
-        tar1: 0, // fangs
-        tar2: 0, // whiskers
-        internal_prop: 0.6 // eaten by crocodiles
-      },
-      { creature: "fish",
-      name: ourCreatNames[8]["exemplar"],//"burge",
-      globalColors: [
-      {
-        p: 0.5,
-        props: {
-          color_mean: "yellow",
-          color_var: 0.001,
-          location: "ground"
-        }
-      }, {
-        p: 0.5,
-        props: {
-          color_mean: "green",
-          color_var: 0.001,
-          location: "trees"}
-        }],
-        prop1: 0, // bodysize
-        prop2: 0, // tailsize
-        tar1: 0, // fangs
-        tar2: 0, // whiskers
-        internal_prop: 0.3 // eaten by crocodiles
-      }
-      ]
-
-    this.treeOpts0 = [
-    { creature: "tree",
-    name: ourCreatNames[9]["exemplar"],//"mider",
-    globalColors: [
-    {
-      p: 0.99,
-      props: {
-        color_mean: "green",
-        color_var: 0.001,
-        location: "ground"
-      }
-    }, {
-      p: 0.01,
-      props: {
-        color_mean: "orange",
-        color_var: 0.001,
-        location: "trees"
-      }
-    }],
-        prop1: 0, // height
-        prop2: 0, // fatness
-        tar1: 0, // berries
-        tar2: 0, // leaves
-        internal_prop: 0.1 // leaves
-      },
-      { creature: "tree",
-      name: ourCreatNames[10]["exemplar"],//"glibe",
-      globalColors: [
-      {
-        p: 1,
-        props: {
-          color_mean: "blue",
-          color_var: 0.001,
-          location: "ground"
-        }
-      }, {
-        p: 0,
-        props: {
-          color_mean: "red",
-          color_var: 0.001,
-          location: "trees"
-        }
-      }],
-        prop1: 0, // height
-        prop2: 0, // fatness
-        tar1: 0, // berries
-        tar2: 0, // leaves
-        internal_prop: 0.9 // leaves
-      },
-      { creature: "tree",
-      name: ourCreatNames[11]["exemplar"],//"lopt",
-      globalColors: [
-      {
-        p: 0.5,
-        props: {
-          color_mean: "yellow",
-          color_var: 0.001,
-          location: "ground"
-        }
-      }, {
-        p: 0.5,
-        props: {
-          color_mean: "red",
-          color_var: 0.001,
-          location: "trees"}
-        }],
-        prop1: 0, // height
-        prop2: 0, // fatness
-        tar1: 0, // berries
-        tar2: 0, // leaves
-        internal_prop: 0.2 // leaves
-      }
-      ]
-<<<<<<< HEAD
-    
-    
-=======
-
-
->>>>>>> f3466596299fdcc296a7e234dbbc5d18447bb590
-      this.birdOpts1 = [
-    { creature: "bird",
-    name: ourCreatNames[12]["exemplar"],//"blicket",
-    globalColors: [
-    {
-      p: 0.99,
-      props: {
-        color_mean: "green",
-        color_var: 0.001,
-        location: "ground"
-      }
-    }, {
-      p: 0.01,
-      props: {
-        color_mean: "orange",
-        color_var: 0.001,
-        location: "trees"
-      }
-    }],
-        prop1: 1, // height
-        prop2: 1, // fatness
-        tar1: 1, // tails
-        tar2: 1, // crest
-        internal_prop: 0.4 // lays eggs
-      },
-      { creature: "bird",
-      name: ourCreatNames[13]["exemplar"],//"creed",
-      globalColors: [
-      {
-        p: 1,
-        props: {
-          color_mean: "red",
-          color_var: 0.001,
-          location: "ground"
-        }
-      }, {
-        p: 0,
-        props: {
-          color_mean: "red",
-          color_var: 0.001,
-          location: "trees"
-        }
-      }],
-        prop1: 1, // height
-        prop2: 1, // fatness
-        tar1: 1, // tails
-        tar2: 1, // crest
-        internal_prop: 0.2, // lays eggs
-      },
-      { creature: "bird",
-      name: ourCreatNames[14]["exemplar"],//"dredge",
-      globalColors: [
-      {
-        p: 0.5,
-        props: {
-          color_mean: "blue",
-          color_var: 0.001,
-          location: "ground"
-        }
-      }, {
-        p: 0.5,
-        props: {
-          color_mean: "yellow",
-          color_var: 0.001,
-          location: "trees"}
-        }],
-        prop1: 1, // height
-        prop2: 1, // fatness
-        tar1: 1, // tails
-        tar2: 1, // crest
-        internal_prop: 0 // lays eggs
-      }
-      ]
-<<<<<<< HEAD
-    
-=======
-
->>>>>>> f3466596299fdcc296a7e234dbbc5d18447bb590
-      this.bugOpts1 = [
-      { creature: "bug",
-      name: ourCreatNames[15]["exemplar"],//"shork",
-      globalColors: [
-      {
-        p: 0.99,
-        props: {
-          color_mean: "green",
-          color_var: 0.001,
-          location: "ground"
-        }
-      }, {
-        p: 0.01,
-        props: {
-          color_mean: "orange",
-          color_var: 0.001,
-          location: "trees"
-        }
-      }],
-          prop1: 1, // headsize
-          prop2: 1, // bodysize
-          tar1: 1, // antennae
-          tar2: 1, // wings
-          internal_prop: 0.7 // poisonous
-        },
-        { creature: "bug",
-        name: ourCreatNames[16]["exemplar"],//"flay",
-        globalColors: [
-        {
-          p: 1,
-          props: {
-            color_mean: "blue",
-            color_var: 0.001,
-            location: "ground"
-          }
-        }, {
-          p: 0,
-          props: {
-            color_mean: "green",
-            color_var: 0.001,
-            location: "trees"
-          }
-        }],
-          prop1: 1, // headsize
-          prop2: 1, // bodysize
-          tar1: 1, // antennae
-          tar2: 1, // wings
-          internal_prop: 0.1, // poisonous
-        },
-        { creature: "bug",
-        name: ourCreatNames[17]["exemplar"],//"codger",
-        globalColors: [
-        {
-          p: 0.5,
-          props: {
-            color_mean: "red",
-            color_var: 0.001,
-            location: "ground"
-          }
-        }, {
-          p: 0.5,
-          props: {
-            color_mean: "green",
-            color_var: 0.001,
-            location: "trees"}
-          }],
-          prop1: 1, // headsize
-          prop2: 1, // bodysize
-          tar1: 1, // antennae
-          tar2: 1, // wings
-          internal_prop: 0 // poisonous
-        }
-        ]
-<<<<<<< HEAD
-    
-=======
-
->>>>>>> f3466596299fdcc296a7e234dbbc5d18447bb590
-      this.fishOpts1 = [
-      { creature: "fish",
-      name: ourCreatNames[18]["exemplar"],//"croop",
-      globalColors: [
-      {
-        p: 0.99,
-        props: {
-          color_mean: "purple",
-          color_var: 0.001,
-          location: "ground"
-        }
-      }, {
-        p: 0.01,
-        props: {
-          color_mean: "orange",
-          color_var: 0.001,
-          location: "trees"
-        }
-      }],
-          prop1: 1, // bodysize
-          prop2: 1, // tailsize
-          tar1: 1, // fangs
-          tar2: 1, // whiskers
-          internal_prop: 0.8 // eaten by crocodiles
-        },
-        { creature: "fish",
-        name: ourCreatNames[19]["exemplar"],//"bleb",
-        globalColors: [
-        {
-          p: 1,
-          props: {
-            color_mean: "red",
-            color_var: 0.001,
-            location: "ground"
-          }
-        }, {
-          p: 0,
-          props: {
-            color_mean: "green",
-            color_var: 0.001,
-            location: "trees"
-          }
-        }],
-          prop1: 1, // bodysize
-          prop2: 1, // tailsize
-          tar1: 1, // fangs
-          tar2: 1, // whiskers
-          internal_prop: 0.9 // eaten by crocodiles
-        },
-        { creature: "fish",
-        name: ourCreatNames[20]["exemplar"],//"nift",
-        globalColors: [
-        {
-          p: 0.5,
-          props: {
-            color_mean: "red",
-            color_var: 0.001,
-            location: "ground"
-          }
-        }, {
-          p: 0.5,
-          props: {
-            color_mean: "blue",
-            color_var: 0.001,
-            location: "trees"}
-          }],
-          prop1: 1, // bodysize
-          prop2: 1, // tailsize
-          tar1: 1, // fangs
-          tar2: 1, // whiskers
-          internal_prop: 0.7 // eaten by crocodiles
-        }
-        ]
-<<<<<<< HEAD
-    
-=======
-
->>>>>>> f3466596299fdcc296a7e234dbbc5d18447bb590
-      this.treeOpts1 = [
-      { creature: "tree",
-      name: ourCreatNames[21]["exemplar"],//"garp",
-      globalColors: [
-      {
-        p: 0.99,
-        props: {
-          color_mean: "red",
-          color_var: 0.001,
-          location: "ground"
-        }
-      }, {
-        p: 0.01,
-        props: {
-          color_mean: "purple",
-          color_var: 0.001,
-          location: "trees"
-        }
-      }],
-          prop1: 1, // height
-          prop2: 1, // fatness
-          tar1: 1, // berries
-          tar2: 1, // leaves
-          internal_prop: 0.8 // leaves
-        },
-        { creature: "tree",
-        name: ourCreatNames[22]["exemplar"],//"harkel",
-        globalColors: [
-        {
-          p: 1,
-          props: {
-            color_mean: "blue",
-            color_var: 0.001,
-            location: "ground"
-          }
-        }, {
-          p: 0,
-          props: {
-            color_mean: "red",
-            color_var: 0.001,
-            location: "trees"
-          }
-        }],
-          prop1: 1, // height
-          prop2: 1, // fatness
-          tar1: 1, // berries
-          tar2: 1, // leaves
-          internal_prop: 0.4 // leaves
-        },
-        { creature: "tree",
-        name: ourCreatNames[23]["exemplar"],//"zord",
-        globalColors: [
-        {
-          p: 0.5,
-          props: {
-            color_mean: "purple",
-            color_var: 0.001,
-            location: "ground"
-          }
-        }, {
-          p: 0.5,
-          props: {
-            color_mean: "green",
-            color_var: 0.001,
-            location: "trees"}
-          }],
-          prop1: 1, // height
-          prop2: 1, // fatness
-          tar1: 1, // berries
-          tar2: 1, // leaves
-          internal_prop: 0 // leaves
-        }
-        ]
-
-
-    // total number of creatures
-    this.creatureN = 12;
-    // number of each critter of a species
-    this.exemplarN = this.creatureN/this.creatureTypesN;
-
-    // Number of rows & columns in table presenting critters
-    this.presentRows = 2;
-    this.presentCols = this.creatureN/this.presentRows;
-    
-
+  // console.log(this.categories)
+  // console.log(this.categories.fish)
 
 
     //this.uniqueCreatures =  _.uniq(_.pluck(this.creatureOpts, "name")); //might need to comment back in
 
-    // allows us to write (and record) what color we want without needing hex codes
-    this.color_dict = {
-      blue: "#5da5db",
-      red: "#f42935",
-      yellow: "#eec900",
-      green: "#228b22",
-      orange: "#ff8c00",
-      purple: "#b62fef"
-      // pink: "#f97ada",
-      // lightblue: "#11edf4",
-      // lightgreen: "#11f427",
-      // lightpurple: "#dda0dd",
-
-    }
-
-    this.critter_dict =
 
   // Which round are we on (initialize at -1 so that first round is 0-indexed)
   this.roundNum = -1;
 
-  // How many rounds do we want people to complete? MAKE SURE THIS ALIGNS WITH EXP TEMPLATE SLIDE AMT
-  this.numRounds = 1;
-
   this.currentSlide = {
-    speaker: "i0",
-    listener: "i0"
+    playerA: "i0",
+    playerB: "i0"
   }
 
   // This will be populated with the critters shown
   this.trialInfo = [];
 
   this.task_welcome_critter = {
-    bird_bug: "<h2>Save the population</h2><p><br>You are trying to save the dwindling population of birds in Critter Country. Discuss with your partner which birds and bugs should be gathered in order to save the population.</p>",
-    tree_fish: "<h2>Protect the fish</h2><p><br>Some of the fish in Critter Country are under threat and need to find homes that can help hide them. Discuss with your partner which fish need to be saved and which underwater plants will protect them.</p>"
+    bird_bug: "<h2>Save the population</h2><p><br> The population of birds on the island is dwindling because of poisonous bugs. Learn about the birds and bugs with your partner to try to save the birds.</p>",
+    tree_fish: "<h2>Protect the fish</h2><p><br> Fish off the shore of the island are under threat by crocodiles. They can be helped by putting them near plants with leaves that can protect them. Learn about the fish and the plants with your partner to try to save the fish.</p>"
   }
 
   this.critter_instructions = {
     bird: {
-      internal_prop_instruct: "Click on each critter to discover whether it lays eggs.",
+      internal_prop_instruct: "it lays eggs.",
       internal_prop_symbol: "&#x1F423;", //hatching chick
-      test_instruct: "<p>birds that you believe will help you and your partner save the population.<br>"
+      test_instruct: "birds that lay eggs."
     },
     bug: {
-      internal_prop_instruct: "Click on each critter to discover whether it is poisonous.",
+      internal_prop_instruct: "it is poisonous.",
       internal_prop_symbol: "&#x2620;", //skull & crossbones sign
-      test_instruct: "<p>bugs that you can feed the birds to help you and your partner save the population.<br>"
+      test_instruct: "bugs that are poisonous."
     },
     fish: {
-      internal_prop_instruct: "Click on each critter to discover whether it is eaten by crocodiles.",
+      internal_prop_instruct: "it lives near crocodiles.",
       internal_prop_symbol: "&#x1f40a;", //crocodile
-      test_instruct: "<p>fish that are in danger of being eaten.<br>"
+      test_instruct: "fish that live near crocodiles."
     },
     tree: {
-      internal_prop_instruct: "Click on each plant to discover whether it grows leaves.",
+      internal_prop_instruct: "it grows leaves.",
       internal_prop_symbol: "&#x2618;", //shamrock
-      test_instruct: "<p>underwater plants that will help protect the fish from being eaten.<br>"
+      test_instruct: "plants that grow leaves."
     }
   }
 
@@ -787,32 +290,50 @@
     this.expName = options.expName;
     this.player_count = options.player_count;
 
+    var playerDistributions = {
+      A: _.shuffle(this.distributions.internal),
+      B: _.shuffle(this.distributions.internal)
+    };
+
     // needs to be generalized
     // determines what critters will be used and who sees what when
-    var bugCritters0 = this.genCreatures("bug",0);
-    var birdCritters0 = this.genCreatures("bird",0);
-    var fishCritters0 = this.genCreatures("fish",0);
-    //var flowerCritters0 = this.genCreatures("flower",0);
-    var treeCritters0 = this.genCreatures("tree",0);
-    var bugCritters1 = this.genCreatures("bug",1);
-    var birdCritters1 = this.genCreatures("bird",1);
-    var fishCritters1 = this.genCreatures("fish",1);
-    //var flowerCritters1 = this.genCreatures("flower",1);
-    var treeCritters1 = this.genCreatures("tree",1);
-    var speakerOrder = [fishCritters0, bugCritters0, treeCritters1, birdCritters1];
-    var listenerOrder = [treeCritters0, birdCritters0, fishCritters1, bugCritters1];
+    var critterOrders = {
+      A: ["fish", "bug", "tree", "bird"],
+      B: ["tree", "bird", "fish", "bug"]
+    }
+    var aOrder = [], bOrder = [];
+    for (i = 0; i<playerDistributions.A.length; i++){
+      // console.log(playerDistributions.A[i])
+      aOrder.push(
+        this.genCreatures(critterOrders.A[i],
+          0,
+          playerDistributions.A[i])
+        )
 
+        // console.log(playerDistributions.B[i])
+
+      bOrder.push(
+        this.genCreatures(critterOrders.B[i],
+          1,
+          playerDistributions.B[i])
+        )
+
+    }
+
+    // console.log(aOrder)
     // assigns the critters to their respective players
     this.trialList = {
-      speaker: speakerOrder,
-      listener: listenerOrder
+      playerA: aOrder,
+      playerB: bOrder
     };
 
     // this is switched so the they will get tested on the information their partner relayed to them
     this.testList = {
-      speaker: listenerOrder,
-      listener: speakerOrder
+      playerA: bOrder,
+      playerB: aOrder
     };
+
+    // console.log(this.testList)
 
     this.data = {
       id : this.id,
@@ -897,45 +418,22 @@ var probToCount = function(p, n){
   return Math.round(p*n);
 }
 
-game_core.prototype.createFeatureArray = function(creatureLabel, p, creatureCategory, num){ //add num as parameter too
-  var probs = [p, 1-p]
-  var creatureOpts;
-  switch(creatureCategory) {
-    case "bird":
-    num==0 ?
-      creatureOpts = this.birdOpts0 :
-      creatureOpts = this.birdOpts1 //add if/else statment here too
-    break;
-    case "bug":
-    num==0 ?
-      creatureOpts = this.bugOpts0 :
-      creatureOpts = this.bugOpts1
-    break;
-    case "fish":
-    num==0 ?
-      creatureOpts = this.fishOpts0 :
-      creatureOpts = this.fishOpts1
-    break;
-    case "tree":
-    num==0 ?
-      creatureOpts = this.treeOpts0 :
-      creatureOpts = this.treeOpts1
-    break;
-  }
-
+game_core.prototype.createFeatureArray = function(creatureLabel, creatureCategory, num){ //add num as parameter too
+  var creatureOpts = this.categories[creatureCategory][num];
   var creatOpts = _.filter(creatureOpts, {name: creatureLabel})[0];
   var creatureColors = [];
   var creatureLocation = [];
-  var nRemaining = this.exemplarN;
-  for (var i=0; i<2; i++ ){
+  var nRemaining = this.exemplarN; // number of exemplars in category
+  // 2 possible colors (so loop for i < 2)
+  for (var i=0; i < creatOpts.globalColors.length; i++ ){
     var colorProps = creatOpts.globalColors[i];
 
     var n_creatures_of_this_color =  probToCount(
-      probs[i], this.exemplarN
+      colorProps.p, this.exemplarN
       );
 
     var ncrit = n_creatures_of_this_color == 0 ?
-    ((probs[i] > 0) && (nRemaining > 0)) ? 1 : 0 :
+    ((colorProps.p > 0) && (nRemaining > 0)) ? 1 : 0 :
     n_creatures_of_this_color
     creatureColors = creatureColors.concat(
       fillArray(ncrit,
@@ -950,45 +448,36 @@ game_core.prototype.createFeatureArray = function(creatureLabel, p, creatureCate
   return {color: creatureColors, location: creatureLocation}
 }
 
-var distribution = _.sample([
-  [1, 1, 0.5],
-  [1, 1, 0.25]
-  ])
 
-game_core.prototype.genCreatures = function(creatureCategory, num){ //include num as parameter
+game_core.prototype.representativeFlip = function(p, n){
+  var creatureBooleans = [];
+  var n_creatures_w_feature =  probToCount(p, n);
+  var ncrit = n_creatures_w_feature == 0 ?
+      (p > 0) ? 1 : 0 :
+        n_creatures_w_feature
+  creatureBooleans = creatureBooleans.concat(
+      fillArray(ncrit, 1),
+      fillArray(n - ncrit, 0)
+      )
+  return _.shuffle(creatureBooleans)
+}
+
+
+game_core.prototype.genCreatures = function(creatureCategory, num, interval_feature_probs){ //include num as parameter
   var j = 0;
   // Generates the characteristics for each critter
   var allCreatures = [];
-  var creatureOpts;
-  switch(creatureCategory) {
-    case "bird":
-    num==0 ?
-      creatureOpts = this.birdOpts0 :
-      creatureOpts = this.birdOpts1 //add if/else statment here too
-    break;
-    case "bug":
-    num==0 ?
-      creatureOpts = this.bugOpts0 :
-      creatureOpts = this.bugOpts1
-    break;
-    case "fish":
-    num==0 ?
-      creatureOpts = this.fishOpts0 :
-      creatureOpts = this.fishOpts1
-    break;
-    case "tree":
-    num==0 ?
-      creatureOpts = this.treeOpts0 :
-      creatureOpts = this.treeOpts1
-    break;
-  }
-
+  var creatureOpts = this.categories[creatureCategory][num];
+  // get unique labels (e.g., wug, fep, lorch); should be number of unique kinds in each block
   uniqueCreatures =  _.uniqBy(_.map(creatureOpts, "name"));
   for (var i = 0; i < uniqueCreatures.length; i++){
     var creatOpts = _.filter(creatureOpts, {name: uniqueCreatures[i]})[0];
+    // console.log(uniqueCreatures[i])
     var creatureColor = this.createFeatureArray(
-     uniqueCreatures[i], distribution[i], creatureCategory, num
+     uniqueCreatures[i], creatureCategory, num
      );
+    //  console.log(creatureColor)
+    var n_with_feature =  this.representativeFlip(interval_feature_probs[i], this.exemplarN);
     var localCounter = 0;
     while (j<(this.exemplarN*(i+1))) {
      allCreatures.push({
@@ -1001,13 +490,13 @@ game_core.prototype.genCreatures = function(creatureCategory, num){ //include nu
       "prop2": creatOpts.prop2 == null ? utils.randProp() : creatOpts.prop2,
       "tar1": utils.flip(creatOpts.tar1),
       "tar2": utils.flip(creatOpts.tar2),
+      "tar3": utils.flip(creatOpts.tar3),
       "creatureName": uniqueCreatures[i],
       "critter" : creatureCategory,
-      "query": "question",
       "stimID": j,
-      "internal_prop": utils.flip(creatOpts.internal_prop),
-      "attentionCheck": utils.generateAttentionQuestion(),
-      "marked": 0
+      "internal_prop": n_with_feature[j % this.exemplarN],
+      "creatureOpts": creatureOpts,
+      "critter_full_info": creatOpts
     })
      localCounter++;
      j++;
@@ -1051,10 +540,10 @@ game_core.prototype.server_send_update = function(){
   _.extend(state, {instructions: this.instructions});
   //Send the snapshot to the players
   this.state = state;
-  console.log(local_game.get_active_players())
+  // console.log(local_game.get_active_players())
   _.map(local_game.get_active_players(), function(p){
-    console.log(p.instance.role)
-    p.instance.role ? console.log(local_game.trialList[p.instance.role][0][0]): null
+    // console.log(p.instance.role)
+    // p.instance.role ? console.log(local_game.trialList[p.instance.role][0][0]): null
     var playerState = p.instance.role ? _.extend(state,
     {
       initialLearningCritters: local_game.trialList[p.instance.role][0]
@@ -1063,3 +552,18 @@ game_core.prototype.server_send_update = function(){
     p.player.instance.emit( 'onserverupdate', playerState);
   });
 };
+
+// var calculate_end_game_bonus = function(){
+//     console.log(this.testScores)
+//     console.log(this.bonusAmt)
+//     var reward = 0;
+//     for(var i=0; i<this.numRounds; i++){
+//       for (var j=0; j<2; j++){
+//         var role_index = j == 0 ? "playerA" : "playerB";
+//         reward += this.testScores[role_index][i].hits + this.testScores[role_index][i].correctRejections;
+//       }
+//     }
+//     console.log("reward is " + reward);
+//     return reward;
+
+//   }

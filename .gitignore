@@ -8,3 +8,5 @@ experiments/node_modules/
 *.png
 *.md
 .Rproj.user
+.Rhistory
+*.Rproj
