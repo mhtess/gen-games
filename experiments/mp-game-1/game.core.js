@@ -195,7 +195,6 @@
       { p: colors[1].p, props: { color_mean: colors[1].mean, color_var: 0.001 } }
     ] }, shapeParams, featureParams)
   }
->>>>>>> 79bdfdf61d9b4456b45012db85acf68fb6bc6a63
 
   this.speciesFeatureParams = {
     "bird": [
