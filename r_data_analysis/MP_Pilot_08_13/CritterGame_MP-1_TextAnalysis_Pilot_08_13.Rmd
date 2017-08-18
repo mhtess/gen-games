@@ -367,7 +367,7 @@ context_by_words_type
 
 ```{r echo=FALSE, warning=FALSE}
 text_byPartnerScore <- text_df %>%
-  select(gameid_num, trialNum, role, distribution, text, partnerPercentCorrectlyHit, partnerPercentCorrectlyRejected, partnerPercentCorrect) %>%
+  select(distribution, gameid_num, trialNum, role, text, partnerPercentCorrect, partnerPercentCorrectlyHit, partnerPercentCorrectlyRejected) %>%
   mutate(distribution = factor(
     distribution, levels = c("[0, 1, 0]","[0, 1, 0.75]","[0, 1, 0.25]","[0.5, 0.5, 0.5]"))) %>%
   arrange(distribution, gameid_num, trialNum, role, desc(partnerPercentCorrect)) %>%
@@ -380,8 +380,8 @@ left_join(
   text_byPartnerScore %>%
     select(dyad, trialNum, role, distribution, text) %>%
     group_by(dyad, trialNum, role, distribution) %>%
-    summarize(messages = paste(text, collapse = "; "))
-) %>% kable(., format.args = list(digits=2))
+    summarize(messages = paste(text, collapse = "; "))) %>% 
+  kable(., format.args = list(digits=2))
 ```
 
 
