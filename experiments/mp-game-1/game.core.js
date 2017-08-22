@@ -139,6 +139,7 @@
   this.colorOptions = _.keys(this.color_dict);
   this.species = _.keys(this.categories);
 
+
   this.createDeterministicColorArray = function(colorLabel){
     return [{p:1, mean: colorLabel}, {p:0, mean: colorLabel}]
   }

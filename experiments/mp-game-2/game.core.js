@@ -25,7 +25,7 @@
     else throw 'mymodule requires underscore, see http://underscorejs.org';
   }
 
-  var game_core = function(options){
+var game_core = function(options){
   // Store a flag if we are the server instance
   console.log('inside game core function')
   this.server = options.server ;
@@ -420,6 +420,7 @@ game_core.prototype.createFeatureArray = function(creatureLabel, creatureCategor
   var creatureOpts = this.categories[creatureCategory][num];
   var creatOpts = _.filter(creatureOpts, {name: creatureLabel})[0];
   var creatureColors = [];
+  var creatureColorNames = [];
   var creatureLocation = [];
   var nRemaining = this.exemplarN; // number of exemplars in category
   // 2 possible colors (so loop for i < 2)
@@ -441,9 +442,15 @@ game_core.prototype.createFeatureArray = function(creatureLabel, creatureCategor
           ))
       )
     creatureLocation = 0;
+
+    creatureColorNames = creatureColorNames.concat(
+      fillArray(ncrit,
+        this.color_dict[colorProps["props"]["color_mean"]]   )
+      )
+
     nRemaining = nRemaining-ncrit;
   }
-  return {color: creatureColors, location: creatureLocation}
+  return {color: creatureColors, location: creatureLocation,  creatureColorNames: creatureColorNames}
 }
 
 
@@ -461,7 +468,7 @@ game_core.prototype.representativeFlip = function(p, n){
 }
 
 
-game_core.prototype.genCreatures = function(creatureCategory, num, interval_feature_probs){ //include num as parameter
+game_core.prototype.genCreatures = function(creatureCategory, num, internalFeature_probs){ //include num as parameter
   var j = 0;
   // Generates the characteristics for each critter
   var allCreatures = [];
@@ -475,7 +482,7 @@ game_core.prototype.genCreatures = function(creatureCategory, num, interval_feat
      uniqueCreatures[i], creatureCategory, num
      );
     //  console.log(creatureColor)
-    var n_with_feature =  this.representativeFlip(interval_feature_probs[i], this.exemplarN);
+    var n_with_feature =  this.representativeFlip(internalFeature_probs[i], this.exemplarN);
     var localCounter = 0;
     while (j<(this.exemplarN*(i+1))) {
      allCreatures.push({
@@ -493,8 +500,11 @@ game_core.prototype.genCreatures = function(creatureCategory, num, interval_feat
       "critter" : creatureCategory,
       "stimID": j,
       "internal_prop": n_with_feature[j % this.exemplarN],
-      "creatureOpts": creatureOpts,
-      "critter_full_info": creatOpts
+      "internalFeature_probs": internalFeature_probs[i],
+      "internalFeature_dist" : internalFeature_probs.join(','),
+      "meanColorName": _.invert(this.color_dict)[creatureColor["creatureColorNames"][localCounter]],
+      "creatureOpts": creatureOpts, //?
+      // "critter_full_info": creatOpts
     })
      localCounter++;
      j++;

@@ -10,11 +10,6 @@ var critname_fontweight_unclicked = 'bold';
 var cell_opacity_gray = '0.5';
 var symbol_opacity_gray = '0.7';
 
-//record score
-var hits = 0;
-var falseAlarms = 0;
-var misses = 0;
-var correctRejections = 0;
 
 // same as above but able to highlight multiple for the test trials
 function mark_critter_test_display(el) {
@@ -119,7 +114,6 @@ function encodeData(dataObj){
 }
 
 
-
 // -- added by MHT July 2017
 var genColor = function(color, variance) {
   function shuffle(v) { newarray = v.slice(0);for(var j, x, i = newarray.length; i; j = parseInt(Math.random() * i), x = newarray[--i], newarray[i] = newarray[j], newarray[j] = x);return newarray;} // non-destructive.
@@ -210,28 +204,6 @@ var myColor = function(mean, variance) {
 
 function isNumeric(n) {
   return !isNaN(parseFloat(n)) && isFinite(n);
-}
-
-
-
-
-function score(correctAnswer, selectedAnswer){
-  if(correctAnswer && selectedAnswer=='1'){
-    hits++;
-    return 'hit';
-  }
-  else if(!correctAnswer && selectedAnswer=='1'){
-    falseAlarms++;
-    return 'falseAlarm';
-  }
-  else if(correctAnswer && selectedAnswer=='0'){
-    misses++;
-    return 'miss';
-  }
-  else if(!correctAnswer && selectedAnswer=='0'){
-    correctRejections++;
-    return 'correctRejection';
-  }
 }
 
 function scoreSingle(correctAnswer, selectedAnswer){

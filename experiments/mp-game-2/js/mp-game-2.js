@@ -114,22 +114,12 @@ function make_slides(f) {
 
       // clears table
       for (var i = 0; i < this.num_creats; i++) {
-        var dataToSend = {
+        var dataToSend = _.extend(shuffledCritters[i], {
           "block_num" : exp.block,
-          //"distribution" : exp.distribution, //fix this later
           "time_in_ms" : this.time_spent,
           "block": "learnCritters",
-          "critter" : shuffledCritters[i]["critter"],
           "critter_num" : i,
-          "species" : shuffledCritters[i]["creatureName"],
-          "color" : shuffledCritters[i]["col1"],
-          "prop1" : shuffledCritters[i]["prop1"],
-          "prop2" : shuffledCritters[i]["prop2"],
-          "tar1" : shuffledCritters[i]["tar1"],
-          "tar2" : shuffledCritters[i]["tar2"],
-          "tar3" : shuffledCritters[i]["tar3"],
-          "internal_prop" : shuffledCritters[i]["internal_prop"]
-        }
+        })
         globalGame.socket.send("logTrain.learnCritters." + _.pairs(encodeData(dataToSend)).join('.'));
         exp.data_trials.push(dataToSend);
 
@@ -252,35 +242,15 @@ slides.test_critters = slide({
   for (var i=0; i<this.num_creats; i++) {
     var correctAnswer = shuffledCritters[i]["internal_prop"];
     var selectedAnswer = $('#cell' + i).attr("data-selected");
-    var dataToSend = {
+    var dataToSend = _.extend(shuffledCritters[i], {
       "block_num" : exp.block,
       "block_type": "testCritters",
-      //"distribution" : exp.distribution, //fix this later
       "time_in_ms" : this.time_spent,
-      "critter" : shuffledCritters[i]["critter"],
       "critter_num" : i,
-      "species" : shuffledCritters[i]["creatureName"],
-      "color" : shuffledCritters[i]["col1"],
-      "prop1" : shuffledCritters[i]["prop1"],
-      "prop2" : shuffledCritters[i]["prop2"],
-      "tar1" : shuffledCritters[i]["tar1"],
-      "tar2" : shuffledCritters[i]["tar2"],
-      "tar3" : shuffledCritters[i]["tar3"],
       "internal_prop" : correctAnswer,
       "selected" : selectedAnswer,
-      "full_globalColor0_p" : shuffledCritters[i]["critter_full_info"].globalColors[0]["p"].toString(),
-      "full_globalColor0_color_mean" : shuffledCritters[i]["critter_full_info"].globalColors[0]["props"]["color_mean"],
-      "full_globalColor0_color_var" : shuffledCritters[i]["critter_full_info"].globalColors[0]["props"]["color_var"],
-      "full_globalColor1_p" : shuffledCritters[i]["critter_full_info"].globalColors[1]["p"],
-      "full_globalColor1_color_mean" : shuffledCritters[i]["critter_full_info"].globalColors[1]["props"]["color_mean"],
-      "full_globalColor1_color_var" : shuffledCritters[i]["critter_full_info"].globalColors[1]["props"]["color_var"],
-      "full_prop1" : shuffledCritters[i]["critter_full_info"]["prop1"],
-      "full_prop2" : shuffledCritters[i]["critter_full_info"]["prop2"],
-      "full_tar1" : shuffledCritters[i]["critter_full_info"]["tar1"],
-      "full_tar2" : shuffledCritters[i]["critter_full_info"]["tar2"],
-      "full_internal_prop" : shuffledCritters[i]["critter_full_info"]["internal_prop"],
-      "score" : score(correctAnswer, selectedAnswer)
-    }
+      "categorizedResponse" : score(correctAnswer, selectedAnswer)
+    })
 
     globalGame.socket.send("logTest.testCritters." + _.pairs(encodeData(dataToSend)).join('.'));
     exp.data_trials.push(dataToSend);
