@@ -25,7 +25,7 @@
     else throw 'mymodule requires underscore, see http://underscorejs.org';
   }
 
-  var game_core = function(options){
+var game_core = function(options){
   // Store a flag if we are the server instance
   console.log('inside game core function')
   this.server = options.server ;
@@ -444,7 +444,8 @@ game_core.prototype.createFeatureArray = function(creatureLabel, creatureCategor
     creatureLocation = 0;
 
     creatureColorNames = creatureColorNames.concat(
-      fillArray(ncrit, color_dict[colorProps["props"]["color_mean"]]   )
+      fillArray(ncrit,
+        this.color_dict[colorProps["props"]["color_mean"]]   )
       )
 
     nRemaining = nRemaining-ncrit;
@@ -501,7 +502,7 @@ game_core.prototype.genCreatures = function(creatureCategory, num, internalFeatu
       "internal_prop": n_with_feature[j % this.exemplarN],
       "internalFeature_probs": internalFeature_probs[i],
       "internalFeature_dist" : internalFeature_probs.join(','),
-      "meanColorName": _.invert(color_dict)[creatureColor["creatureColorNames"][localCounter]]
+      "meanColorName": _.invert(this.color_dict)[creatureColor["creatureColorNames"][localCounter]],
       "creatureOpts": creatureOpts, //?
       // "critter_full_info": creatOpts
     })
