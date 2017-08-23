@@ -1,7 +1,7 @@
 ---
 title: "CritterGame_MP-1_DataAnalysis_Pilot_1"
 author: "Lauren Oey"
-date: "8/14/2017"
+date: "8/14/2017 (updated 8/22/2017)"
 output: github_document
 ---
 
@@ -70,27 +70,26 @@ str(test_data)
 
 # Test Accuracy by Game ID and Player
 
-```{r echo=FALSE, warning=FALSE}
+```{r echo=FALSE, results='hide', message=FALSE, warning=FALSE, tidy=TRUE}
 totalCorrect <- test_data %>%
   group_by(gameid_num, role) %>%
   multi_boot_standard(column = "correct")
 
-graph_totalCorrect <- ggplot(totalCorrect, aes(x=role, y = mean, ymin = ci_lower, ymax = ci_upper)) +
+graph_totalCorrect <- ggplot(totalCorrect, aes(x=role, y = mean, ymin = summary_ci_lower, ymax = summary_ci_upper)) +
   geom_bar(stat="identity",  position="dodge", width = 0.5) +
   geom_errorbar(width = 0.3)+
   geom_hline(yintercept = 0.5, lty = 3)+
-  scale_x_discrete("") +
-  scale_fill_manual("Accuracy", labels=c("Incorrect","Correct"), values=c("red","forestgreen")) +
+  scale_x_discrete("Player") +
   facet_wrap(~gameid_num) +
-  ggtitle("Test Accuracy by dyad") +
+  ggtitle("Test Accuracy by Dyad") +
   theme_classic() +
   theme(plot.title = element_text(hjust=0.5, size=18, face="bold"))
-graph_totalCorrect 
+graph_totalCorrect
 ```
 
 # Test Accuracy by Dyad and Trial Number
 
-```{r echo=FALSE, warning=FALSE}
+```{r echo=FALSE, results='hide', message=FALSE, warning=FALSE, tidy=TRUE}
 trialNum_gameID <- test_data %>%
   mutate(correct = as.numeric(as.character(correct))) %>%
   group_by(trialNum, gameid_num) %>%
@@ -103,7 +102,7 @@ graph_trialNum_gameID <- ggplot(trialNum_gameID, aes(x=trialNum, y=percentCorrec
   scale_x_discrete("Trial Number") +
   scale_fill_manual("PercentCorrect") +
   facet_wrap(~gameid_num) +
-  ggtitle("Test Accuracy by Trial Number") +
+  ggtitle("Trial Test Accuracy by Dyad") +
   theme_minimal() +
   theme(plot.title = element_text(hjust=0.5, size=18, face="bold"))
 graph_trialNum_gameID
@@ -111,7 +110,7 @@ graph_trialNum_gameID
 
 # Test Accuracy by Dyad and Distribution
 
-```{r echo=FALSE, warning=FALSE}
+```{r echo=FALSE, results='hide', message=FALSE, warning=FALSE, tidy=TRUE}
 distribution_gameID <- test_data %>%
   group_by(distribution, gameid_num) %>%
   summarise(correctCount = sum(correct),
@@ -124,7 +123,7 @@ graph_distribution_gameID <- ggplot(distribution_gameID, aes(x=gameid_num, y=per
     geom_hline(yintercept = 0.5, lty = 3)+
   scale_fill_manual("PercentCorrect") +
   facet_wrap(~distribution) +
-  ggtitle("Test Accuracy by Distribution and Dyad") +
+  ggtitle("Test Accuracy by Dyad and Distribution") +
   theme_minimal() +
   theme(plot.title = element_text(hjust=0.5, size=18, face="bold"),
         axis.text.x = element_text(angle = 90 ))
@@ -133,7 +132,7 @@ graph_distribution_gameID
 
 # Test Accuracy by Trial Number
 
-```{r echo=FALSE, warning=FALSE}
+```{r echo=FALSE, results='hide', message=FALSE, warning=FALSE, tidy=TRUE}
 trialCorrect <- test_data %>%
   mutate(correct = as.numeric(as.character(correct))) %>%
   group_by(trialNum) %>%
@@ -152,7 +151,7 @@ graph_trialCorrect <- ggplot(trialCorrect,
   scale_y_continuous("Percent Correct", limits=c(0,1), expand=c(0,0)) +
   ggtitle("Test Accuracy by Trial Number") +
   theme_classic() +
-  theme(plot.title = element_text(hjust=0.5, size=36, face="bold"),
+  theme(plot.title = element_text(hjust=0.5, size=30, face="bold"),
         axis.title = element_text(size=24),
         axis.text.x = element_text(size=20, face="bold"),
         axis.text.y = element_text(size=20))
@@ -163,7 +162,7 @@ graph_trialCorrect
 
 # Test Accuracy by Distribution Condition
 
-```{r echo=FALSE, warning=FALSE}
+```{r echo=FALSE, results='hide', message=FALSE, warning=FALSE, tidy=TRUE}
 distributionCorrect <- test_data %>%
   mutate(correct = as.numeric(as.character(correct))) %>%
   group_by(distribution) %>%
@@ -184,11 +183,11 @@ graph_distributionCorrect <- ggplot(distributionCorrect,
   geom_errorbar(size=1.0, width=0.3)+
   scale_x_discrete("Distribution", limits=distribution_order) +
   scale_y_continuous("Percent Correct", limits=c(0,1), expand=c(0,0)) +
-  ggtitle("Test Accuracy by Distribution Condition") +
+  ggtitle("Test Accuracy by Distribution") +
   theme_classic() +
-  theme(plot.title = element_text(hjust=0.5, size=36, face="bold"),
+  theme(plot.title = element_text(hjust=0.5, size=30, face="bold"),
         axis.title = element_text(size=24),
-        axis.text.x = element_text(size=20),
+        axis.text.x = element_text(size=16),
         axis.text.y = element_text(size=20))
 
 graph_distributionCorrect 
@@ -198,7 +197,7 @@ graph_distributionCorrect
 
 # Test Accuracy by Critter Species
 
-```{r echo=FALSE, warning=FALSE}
+```{r echo=FALSE, results='hide', message=FALSE, warning=FALSE, tidy=TRUE}
 speciesCorrect <- test_data %>%
   mutate(correct = as.numeric(as.character(correct))) %>%
   group_by(species) %>%

@@ -25,7 +25,7 @@
     else throw 'mymodule requires underscore, see http://underscorejs.org';
   }
 
-  var game_core = function(options){
+var game_core = function(options){
   // Store a flag if we are the server instance
   console.log('inside game core function')
   this.server = options.server ;
