@@ -81,8 +81,11 @@ function make_slides(f) {
       this.creat_type = shuffledCritters[0]["critter"];
 
       // This generates all the critters
+      globalGame.presentRows = 3;
+      globalGame.presentCols = globalGame.trainN/globalGame.presentRows;
       create_table(globalGame.presentRows,globalGame.presentCols,"critter_display");
-
+      
+      console.log(shuffledCritters)
       for (var i=0; i<shuffledCritters.length; i++) {
         var scale = 0.5;
         Ecosystem.draw(
@@ -213,8 +216,11 @@ slides.test_critters = slide({
    );
 
     // Generates critters for test phase
+    globalGame.presentRows = 2;
+      globalGame.presentCols = globalGame.testN/globalGame.presentRows;
     create_table(globalGame.presentRows,globalGame.presentCols,"critter_test_display");
 
+     console.log(shuffledCritters)
     for (var i=0; i<shuffledCritters.length; i++) {
      var scale = 0.5;
      Ecosystem.draw(

@@ -62,13 +62,15 @@
   // number of different species
   this.creatureTypesN = 3;
   // number of exemplars displayed in a block
-  this.creatureN = 12;
+  this.testN = 12;
+  this.trainN = 24;
+
   // number of each critter of a species
-  this.exemplarN = this.creatureN/this.creatureTypesN;
+  this.exemplarN = this.testN/this.creatureTypesN;
 
   // Number of rows & columns in table presenting critters
-  this.presentRows = 2;
-  this.presentCols = this.creatureN/this.presentRows;
+  this.presentRows = 3;
+  this.presentCols = this.trainN/this.presentRows//this.creatureN/this.presentRows;
 
   this.creatureNames = [
       {list:0,category: "morseths", exemplar:"morseth"},
@@ -299,21 +301,33 @@
       A: ["fish", "bug", "tree", "bird"],
       B: ["tree", "bird", "fish", "bug"]
     }
-    var aOrder = [], bOrder = [];
+    var aTrain = [], aTest = [], bTrain = [], bTest = [],
+    train = false;
+    test = true;
     for (i = 0; i<playerDistributions.A.length; i++){
       // console.log(playerDistributions.A[i])
-      aOrder.push(
+      aTrain.push(
         this.genCreatures(critterOrders.A[i],
           0,
-          playerDistributions.A[i])
+          playerDistributions.A[i], train)
         )
 
+      aTest.push(
+        this.genCreatures(critterOrders.A[i],
+          0,
+          playerDistributions.A[i], test)
+        )
         // console.log(playerDistributions.B[i])
 
-      bOrder.push(
+      bTrain.push(
         this.genCreatures(critterOrders.B[i],
           1,
-          playerDistributions.B[i])
+          playerDistributions.B[i], train)
+        )
+      bTest.push(
+        this.genCreatures(critterOrders.B[i],
+          1,
+          playerDistributions.B[i], test)
         )
 
     }
@@ -321,15 +335,26 @@
     // console.log(aOrder)
     // assigns the critters to their respective players
     this.trialList = {
-      playerA: aOrder,
-      playerB: bOrder
+      playerA: aTrain,
+      playerB: bTrain
     };
 
     // this is switched so the they will get tested on the information their partner relayed to them
     this.testList = {
-      playerA: bOrder,
-      playerB: aOrder
+      playerA: null,//bTest,
+      playerB: null//aTest
     };
+
+    this.testList["playerA"] = _.shuffle(fillArray(this.numRounds/2, bTest).concat(fillArray(this.numRounds/2, aTest)))
+    for(var i = 0; i < this.testList["playerA"].length; i++) {
+      var test;
+      this.testList["playerA"][i] == bTest ? test=aTest : test=bTest;
+      this.testList["playerB"].push(test);
+    }
+
+    console.log(testList["playerA"])
+    console.log("hello")
+
 
     // console.log(this.testList)
 
@@ -416,19 +441,22 @@ var probToCount = function(p, n){
   return Math.round(p*n);
 }
 
-game_core.prototype.createFeatureArray = function(creatureLabel, creatureCategory, num){ //add num as parameter too
+game_core.prototype.createFeatureArray = function(creatureLabel, creatureCategory, num, phase){ //add num as parameter too
   var creatureOpts = this.categories[creatureCategory][num];
   var creatOpts = _.filter(creatureOpts, {name: creatureLabel})[0];
   var creatureColors = [];
   var creatureColorNames = [];
   var creatureLocation = [];
-  var nRemaining = this.exemplarN; // number of exemplars in category
+  var numCreats;
+  // train is 0 test is 1
+  phase ? numCreats = this.exemplarN : numCreats = this.trainN/this.creatureTypesN
+  var nRemaining = numCreats; // number of exemplars in category
   // 2 possible colors (so loop for i < 2)
   for (var i=0; i < creatOpts.globalColors.length; i++ ){
     var colorProps = creatOpts.globalColors[i];
 
     var n_creatures_of_this_color =  probToCount(
-      colorProps.p, this.exemplarN
+      colorProps.p, numCreats
       );
 
     var ncrit = n_creatures_of_this_color == 0 ?
@@ -444,7 +472,7 @@ game_core.prototype.createFeatureArray = function(creatureLabel, creatureCategor
     creatureLocation = 0;
 
     creatureColorNames = creatureColorNames.concat(
-      fillArray(ncrit, color_dict[colorProps["props"]["color_mean"]]   )
+      fillArray(ncrit, this.color_dict[colorProps["props"]["color_mean"]]   )
       )
 
     nRemaining = nRemaining-ncrit;
@@ -467,7 +495,7 @@ game_core.prototype.representativeFlip = function(p, n){
 }
 
 
-game_core.prototype.genCreatures = function(creatureCategory, num, internalFeature_probs){ //include num as parameter
+game_core.prototype.genCreatures = function(creatureCategory, num, internalFeature_probs, phase){ //include num as parameter
   var j = 0;
   // Generates the characteristics for each critter
   var allCreatures = [];
@@ -483,7 +511,10 @@ game_core.prototype.genCreatures = function(creatureCategory, num, internalFeatu
     //  console.log(creatureColor)
     var n_with_feature =  this.representativeFlip(internalFeature_probs[i], this.exemplarN);
     var localCounter = 0;
-    while (j<(this.exemplarN*(i+1))) {
+    var numCreats;
+    // train is 0 test is 1
+    phase ? numCreats = this.exemplarN : numCreats = this.trainN/this.creatureTypesN
+    while (j<(numCreats*(i+1))) {
      allCreatures.push({
       "col1": creatureColor["color"][localCounter],
       "col2": creatureColor["color"][localCounter],
@@ -501,7 +532,7 @@ game_core.prototype.genCreatures = function(creatureCategory, num, internalFeatu
       "internal_prop": n_with_feature[j % this.exemplarN],
       "internalFeature_probs": internalFeature_probs[i],
       "internalFeature_dist" : internalFeature_probs.join(','),
-      "meanColorName": _.invert(color_dict)[creatureColor["creatureColorNames"][localCounter]]
+      "meanColorName": _.invert(this.color_dict)[creatureColor["creatureColorNames"][localCounter]],
       "creatureOpts": creatureOpts, //?
       // "critter_full_info": creatOpts
     })

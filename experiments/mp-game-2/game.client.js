@@ -211,8 +211,9 @@ var customSetup = function(game) {
     // set mouse-tracking event handler
     if (globalGame.my_role === globalGame.playerRoleNames.role2) {
       // only role2 gets to see Continue button and press Continue
+      console.log("dies here")
       var continueButton = document.getElementById("chatCont")
-      var nSecondsTimeOut = 30;
+      var nSecondsTimeOut = 3;
       setTimeout(function() { $("#chatCont").show() }, nSecondsTimeOut*1000)
       continueButton.addEventListener("click", buttonClickListener, false);
     }
