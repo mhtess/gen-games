@@ -1,16 +1,12 @@
 CritterGame\_MP-1\_DataAnalysis\_Pilot\_1
 ================
 Lauren Oey
-8/14/2017
+8/14/2017 (updated 8/22/2017)
 
 Test Accuracy by Game ID and Player
 ===================================
 
-    ## `summarise_each()` is deprecated.
-    ## Use `summarise_all()`, `summarise_at()` or `summarise_if()` instead.
-    ## To map `funs` over a selection of variables, use `summarise_at()`
-
-    ## Joining, by = c("gameid_num", "role")
+![](CritterGame_MP-1_DataAnalysis_Pilot_08_14_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-1-1.png)
 
 Test Accuracy by Dyad and Trial Number
 ======================================
@@ -25,22 +21,10 @@ Test Accuracy by Dyad and Distribution
 Test Accuracy by Trial Number
 =============================
 
-    ## `summarise_each()` is deprecated.
-    ## Use `summarise_all()`, `summarise_at()` or `summarise_if()` instead.
-    ## To map `funs` over a selection of variables, use `summarise_at()`
-
-    ## Joining, by = "trialNum"
-
 ![](CritterGame_MP-1_DataAnalysis_Pilot_08_14_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-4-1.png)
 
 Test Accuracy by Distribution Condition
 =======================================
-
-    ## `summarise_each()` is deprecated.
-    ## Use `summarise_all()`, `summarise_at()` or `summarise_if()` instead.
-    ## To map `funs` over a selection of variables, use `summarise_at()`
-
-    ## Joining, by = "distribution"
 
 ![](CritterGame_MP-1_DataAnalysis_Pilot_08_14_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-5-1.png)
 
