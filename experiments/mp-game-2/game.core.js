@@ -59,7 +59,7 @@ var game_core = function(options){
   // number of different species
   this.creatureTypesN = 3;
   // number of exemplars displayed in a block
-  this.creatureN = 12;
+  this.creatureN = 8;
   // number of each critter of a species
   this.exemplarN = this.creatureN/this.creatureTypesN;
 
@@ -187,12 +187,16 @@ var game_core = function(options){
     var negativeExamples = this.getComplementConcept(positiveExamples); // subtract positiveExamples from allBinaryPossibilities
     var featureOrder = _.shuffle(this.threeFeatures); // randomize what creature features correspond to the boolean slots e.g., [1,0,0]
     var labelPositiveOrNegative = (0.5 > Math.random()) ? 1 : 0; // does the label get assigned to the "positive examples" or "negative examples"?
-    var label = this.ourCreatNames.pop().exemplar; // a name (e.g., wug)
+    var categoryLabelInfo = this.ourCreatNames.pop();
+    var categoryLabel = categoryLabelInfo.exemplar; // a name (e.g., wug)
+    var categoryPluralLabel = categoryLabelInfo.category;
+
     var colorName = _.shuffle(this.colorOptions).pop(); // a color name (e.g., "blue") [all exemplars will be of the same color]
     var blockOfStims = [];
     for (var j = 0; j < 2; j++){ // loop over positive and negative examples
       var categoryExemplars = [positiveExamples, negativeExamples][j];
-      var categoryLabel = (labelPositiveOrNegative == j) ? label : "unlabeled";
+      // var categoryLabel = (labelPositiveOrNegative == j) ? label : "unlabeled";
+      var labeled = (labelPositiveOrNegative == j)
 
       for (var i = 0; i < categoryExemplars.length; i++){ // loop over each exemplar
         var basicOptions = _.clone(this.defaultCritterOptions);
@@ -200,7 +204,7 @@ var game_core = function(options){
         var featureObj = _.fromPairs(_.zip(featureOrder, featureValues)); // e.g., {tar1: 1, tar2: 0, prop1: 0}
 
         blockOfStims.push(_.assign(basicOptions,
-          featureObj,  { categoryLabel,
+          featureObj,  { categoryLabel, categoryPluralLabel, labeled,
                     colorName,
                     genus },
           _.fromPairs(_.zip(

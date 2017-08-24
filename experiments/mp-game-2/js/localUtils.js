@@ -27,7 +27,10 @@ function mark_critter_display(el) {
   $('#'+el.id+'critname').css({'opacity': all_opacity_clicked});
   $('#'+el.id).attr("data-selected",'1'); //keeps track of whether cell was clicked at all in a given round, used in check function
 
-  check(allCreatures.length);
+
+  // FIX ME: have function examine table to see how many cells there are in total...
+  // check(allCreatures.length);
+  check(0)
 }
 
 // same as above but able to highlight multiple for the test trials
@@ -49,6 +52,9 @@ function gray(el) {
    $('#'+el.id+'critname').css({'opacity': cell_opacity_gray, 'font-weight': critname_fontweight_unclicked});
    $('#'+ el.id+'internalprop').css({'opacity': symbol_opacity_gray})
 }
+
+
+// FIX ME: have function examine table to see how many cells there are in total...
 
 // checks if all cells were clicked in order to show learning continue button, used in learning trial
 function check(num){
@@ -140,18 +146,15 @@ function score(correctAnswer, selectedAnswer){
   }
 }
 
-function scoreSingle(correctAnswer, selectedAnswer){
-  if(correctAnswer && selectedAnswer=='1'){
-    return 'hits';
-  }
-  else if(!correctAnswer && selectedAnswer=='1'){
-    return 'falseAlarms';
-  }
-  else if(correctAnswer && selectedAnswer=='0'){
-    return 'misses';
-  }
-  else if(!correctAnswer && selectedAnswer=='0'){
-    return 'correctRejections';
+function scoreSingle(isLabeled, selectedAnswer){
+  if (isLabeled) {
+    if (selectedAnswer == "1") {
+      return 'hit'
+    } else { return 'miss' }
+  } else {
+    if (selectedAnswer == "1") {
+      return 'falseAlarm'
+    } else { return 'correctRejection' }
   }
 }
 

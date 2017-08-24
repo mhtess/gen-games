@@ -74,30 +74,26 @@ function make_slides(f) {
       $(".critname").hide();
       $(".err").hide();
 
-      allCreatures = this.crittersFromServer;
-      shuffledCritters = _.shuffle(allCreatures)
-
-      this.num_creats = allCreatures.length;
-      this.creat_type = shuffledCritters[0]["genus"];
+      this.shuffledCritters = _.shuffle(this.crittersFromServer)
+      this.num_creats = this.shuffledCritters.length;
+      this.creat_type = this.shuffledCritters[0]["genus"];
 
       // This generates all the critters
       create_table(globalGame.presentRows,globalGame.presentCols,"critter_display");
 
-      for (var i=0; i<shuffledCritters.length; i++) {
+      $('#internalprops_instruct').html(
+        "Click on each one to discover whether or not it is a <strong>" + this.shuffledCritters[0]["categoryLabel"]+
+        "</strong>"
+      );
+
+      for (var i=0; i<this.shuffledCritters.length; i++) {
         var scale = 0.5;
         Ecosystem.draw(
-          shuffledCritters[i]["genus"], shuffledCritters[i],
+          this.shuffledCritters[i]["genus"], this.shuffledCritters[i],
           "critter"+i, scale)
 
-
-        $('#internalprops_instruct').html(
-          "Click on each one to discover whether <strong>" +
-          globalGame.critter_instructions[shuffledCritters[i]["genus"]]["internal_prop_instruct"] +
-          "</strong>"
-        );
-
-        if (shuffledCritters[i]["categoryLabel"] != "unlabeled") {
-          $('#cell'+i+'critname').html(shuffledCritters[i]["categoryLabel"]);
+        if (this.shuffledCritters[i]["labeled"]) {
+          $('#cell'+i+'critname').html(this.shuffledCritters[i]["categoryLabel"]);
         }
 
         $('#cell'+i+'critname').css({'opacity': 0});
@@ -113,7 +109,7 @@ function make_slides(f) {
 
       // clears table
       for (var i = 0; i < this.num_creats; i++) {
-        var dataToSend = _.extend(shuffledCritters[i], {
+        var dataToSend = _.extend(this.shuffledCritters[i], {
           "block_num" : exp.block,
           "time_in_ms" : this.time_spent,
           "block": "learnCritters",
@@ -129,8 +125,7 @@ function make_slides(f) {
         prev = null;
       }
 
-      allCreatures = [];
-      shuffledCritters = [];
+      this.shuffledCritters = [];
       exp.go()
 
     },
@@ -167,10 +162,11 @@ slides.test_instructions = slide({
     globalGame.socket.send("enterSlide.test_critters.");
 
     this.creat_type = exp.slides.test_critters.crittersFromServer
-[0]["critter"];
+[0]["genus"];
   $('#test_instructs').html(
-    "<br>On the next slide, select the " +
-    globalGame.critter_instructions[this.creat_type]["test_instruct"]
+    "<br>On the next slide, click on the <strong>" +
+    exp.slides.test_critters.crittersFromServer
+[0]["categoryPluralLabel"] + "</strong>."
   );
 
   },
@@ -183,7 +179,7 @@ slides.chat_instructions = slide({
   name : "chat_instructions",
   start : function() {
     $('#chat_instructs').html("On the next page, you will enter into a chatroom with your partner. " +
-    " After 45 seconds, a continue button will appear for Player B, which, when clicked, will advance the game for both players. " +
+    " After 30 seconds, a continue button will appear for Player B, which, when clicked, will advance the game for both players. " +
     "You are " +  roleDictionary[globalGame.my_role] + ".")
   },
   button : function() {
@@ -201,25 +197,24 @@ slides.test_critters = slide({
 
    this.start_time = Date.now()
    $(".err").hide();
-   allCreatures = this.crittersFromServer;
-   shuffledCritters = _.shuffle(allCreatures)
-   this.num_creats = allCreatures.length;
-   this.creat_type = shuffledCritters[0]["critter"];
+
+   this.shuffledCritters = _.shuffle(this.crittersFromServer)
+   this.num_creats = this.shuffledCritters.length;
+   this.creat_type = this.shuffledCritters[0]["genus"];
 
    $('#chooseCrit').html(
      "Click on the " +
-     globalGame.critter_instructions[this.creat_type]["test_instruct"]
+     this.shuffledCritters[0]["categoryPluralLabel"]
    );
 
     // Generates critters for test phase
     create_table(globalGame.presentRows,globalGame.presentCols,"critter_test_display");
 
-    for (var i=0; i<shuffledCritters.length; i++) {
+    for (var i=0; i<this.shuffledCritters.length; i++) {
      var scale = 0.5;
      Ecosystem.draw(
-       shuffledCritters[i]["critter"], shuffledCritters[i],
+       this.shuffledCritters[i]["genus"], this.shuffledCritters[i],
        "critter"+i, scale)
-     $('#cell'+i+'critname').html(shuffledCritters[i]["creatureName"]);
    }
 
  },
@@ -229,26 +224,31 @@ slides.test_critters = slide({
   this.time_spent = end_time - this.start_time;
 
   var blockScores = {
-    hits:0, misses:0, falseAlarms: 0, correctRejections: 0
+    hit:0, miss:0, falseAlarm: 0, correctRejection: 0
   }
-  for (i = 0; i < shuffledCritters.length; i++){
-    var correctAnswer = shuffledCritters[i].internal_prop;
-    var selectedAnswer = $('#cell' + i).attr("data-selected");
-    blockScores[scoreSingle(correctAnswer, selectedAnswer)]++
-  }
+
+  // for (i = 0; i < this.shuffledCritters.length; i++){
+  //   var correctAnswer = this.shuffledCritters[i].labeled;
+  //   var selectedAnswer = $('#cell' + i).attr("data-selected");
+  //   blockScores[scoreSingle(correctAnswer, selectedAnswer)]++
+  // }
 
   //log responses
   for (var i=0; i<this.num_creats; i++) {
-    var correctAnswer = shuffledCritters[i]["internal_prop"];
+
+    var isLabeled = this.shuffledCritters[i].labeled;
     var selectedAnswer = $('#cell' + i).attr("data-selected");
-    var dataToSend = _.extend(shuffledCritters[i], {
+
+    blockScores[scoreSingle(isLabeled, selectedAnswer)]++
+
+    var dataToSend = _.extend(this.shuffledCritters[i], {
       "block_num" : exp.block,
       "block_type": "testCritters",
       "time_in_ms" : this.time_spent,
       "critter_num" : i,
-      "internal_prop" : correctAnswer,
+      "isLabeled" : isLabeled ? 1 : 0,
       "selected" : selectedAnswer,
-      "categorizedResponse" : score(correctAnswer, selectedAnswer)
+      "categorizedResponse" : scoreSingle(isLabeled, selectedAnswer)
     })
 
     globalGame.socket.send("logTest.testCritters." + _.pairs(encodeData(dataToSend)).join('.'));
@@ -260,8 +260,7 @@ slides.test_critters = slide({
   globalGame.socket.send("logScores.score_report." + _.pairs(blockScores).join('.'));
 
   // empties the critter arrays so they can be repopulated without overlap
-  allCreatures = [];
-  shuffledCritters = [];
+  this.shuffledCritters = [];
 
   // resets table
   for (var i = 0; i < this.num_creats; i++) {
@@ -345,7 +344,6 @@ slides.thanks = slide({
     exp.data= {
       "trials" : exp.data_trials,
       "system" : exp.system,
-      "condition" : exp.condition,
       "subject_information" : exp.subj_data,
       "time_in_minutes" : (Date.now() - exp.startT)/60000
     };
@@ -365,11 +363,8 @@ return slides;
 
 /// init ///
 function init() {
-  exp.trials = [];
-  exp.test_trials = [];
-  allCreatures = [];
-  shuffledCritters = [];
-  exp.condition = _.sample(["CONDITION 1", "condition 2"]); //can randomize between subject conditions here
+  exp.data_trials = [];
+
   exp.system = {
     Browser : BrowserDetect.browser,
     OS : BrowserDetect.OS,
@@ -446,7 +441,6 @@ function init() {
   //exp.data_trials = [];
   //make corresponding slides:
   exp.slides = make_slides(exp);
-  exp.data_trials = [];
 
   exp.nQs = utils.get_exp_length(); //this does not work if there are stacks of stims (but does work for an experiment with this structure)
                     //relies on structure and slides being defined
