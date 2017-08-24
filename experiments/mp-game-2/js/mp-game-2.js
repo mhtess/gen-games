@@ -227,12 +227,6 @@ slides.test_critters = slide({
     hit:0, miss:0, falseAlarm: 0, correctRejection: 0
   }
 
-  // for (i = 0; i < this.shuffledCritters.length; i++){
-  //   var correctAnswer = this.shuffledCritters[i].labeled;
-  //   var selectedAnswer = $('#cell' + i).attr("data-selected");
-  //   blockScores[scoreSingle(correctAnswer, selectedAnswer)]++
-  // }
-
   //log responses
   for (var i=0; i<this.num_creats; i++) {
 
