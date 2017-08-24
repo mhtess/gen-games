@@ -9,12 +9,6 @@ var critname_fontweight_unclicked = 'bold';
 var cell_opacity_gray = '0.5';
 var symbol_opacity_gray = '0.7';
 
-//record score
-var hits = 0;
-var falseAlarms = 0;
-var misses = 0;
-var correctRejections = 0;
-
 // Allows the border of each critter to be highlighted when chosed
 function mark_critter_display(el) {
   if(prev != null){
@@ -68,8 +62,6 @@ function check(num){
     $("#learning_button").show();
   }
 }
-
-
 
 // Puts the critters we have in a table so we can use borders to our advantage
 function create_table(rows, cols, display_type) { //rows * cols = number of exemplars
@@ -127,25 +119,6 @@ function encodeData(dataObj){
   });
 }
 
-function score(correctAnswer, selectedAnswer){
-  if(correctAnswer && selectedAnswer=='1'){
-    hits++;
-    return 'hit';
-  }
-  else if(!correctAnswer && selectedAnswer=='1'){
-    falseAlarms++;
-    return 'falseAlarm';
-  }
-  else if(correctAnswer && selectedAnswer=='0'){
-    misses++;
-    return 'miss';
-  }
-  else if(!correctAnswer && selectedAnswer=='0'){
-    correctRejections++;
-    return 'correctRejection';
-  }
-}
-
 function scoreSingle(isLabeled, selectedAnswer){
   if (isLabeled) {
     if (selectedAnswer == "1") {
@@ -158,15 +131,6 @@ function scoreSingle(isLabeled, selectedAnswer){
   }
 }
 
-function calculateScore(){
-  return {
-    "hits" : hits,
-    "falseAlarms" : falseAlarms,
-    "misses" : misses,
-    "correctRejections" : correctRejections
-  }
-}
-
 function calculate_end_game_bonus(){
     console.log(this.testScores)
     console.log(this.bonusAmt)
@@ -174,7 +138,7 @@ function calculate_end_game_bonus(){
     for(var i=0; i<this.numRounds; i++){
       for (var j=0; j<2; j++){
         var role_index = j == 0 ? "playerA" : "playerB";
-        correctSelect += this.testScores[role_index][i].hits + this.testScores[role_index][i].correctRejections;
+        correctSelect += this.testScores[role_index][i].hit + this.testScores[role_index][i].correctRejection;
       }
     }
     var reward = correctSelect * this.bonusAmt;
