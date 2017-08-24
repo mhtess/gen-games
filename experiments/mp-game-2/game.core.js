@@ -244,24 +244,24 @@ var game_core = function(options){
   // }
 
 
-  this.speciesFeatureParams = {
-    "bird": [
-      [{prop1: 0, prop2: 0}, {tar1: 0, tar2: 0}],
-      [{prop1: 0.8, prop2: 0.8}, {tar1: 1, tar2: 1}]
-    ],
-    "bug": [
-      [{prop1: 0, prop2: 0}, {tar1: 0, tar2: 0}],
-      [{prop1: 0.8, prop2: 0.8}, {tar1: 1, tar2: 1}]
-    ],
-    "fish":[
-      [{prop1: 0, prop2: 0}, {tar1: 0, tar2: 0}],
-      [{prop1: 0.8, prop2: 0.8}, {tar1: 1, tar2: 1}]
-    ],
-    "tree": [
-      [{prop1: 0.2, prop2: 0.2}, {tar1: 0, tar2: 0}],
-      [{prop1: 0.8, prop2: 0.8}, {tar1: 0, tar2: 0}]
-    ],
-  }
+  // this.speciesFeatureParams = {
+  //   "bird": [
+  //     [{prop1: 0, prop2: 0}, {tar1: 0, tar2: 0}],
+  //     [{prop1: 0.8, prop2: 0.8}, {tar1: 1, tar2: 1}]
+  //   ],
+  //   "bug": [
+  //     [{prop1: 0, prop2: 0}, {tar1: 0, tar2: 0}],
+  //     [{prop1: 0.8, prop2: 0.8}, {tar1: 1, tar2: 1}]
+  //   ],
+  //   "fish":[
+  //     [{prop1: 0, prop2: 0}, {tar1: 0, tar2: 0}],
+  //     [{prop1: 0.8, prop2: 0.8}, {tar1: 1, tar2: 1}]
+  //   ],
+  //   "tree": [
+  //     [{prop1: 0.2, prop2: 0.2}, {tar1: 0, tar2: 0}],
+  //     [{prop1: 0.8, prop2: 0.8}, {tar1: 0, tar2: 0}]
+  //   ],
+  // }
 
 
   // 4 rounds, 3 categories per round
@@ -270,83 +270,83 @@ var game_core = function(options){
   // prop is shape / size (e.g., fat)
 
 
-  this.createDeterministicColorArray = function(colorLabel){
-    return [{p:1, mean: colorLabel}, {p:0, mean: colorLabel}]
-  }
+  // this.createDeterministicColorArray = function(colorLabel){
+  //   return [{p:1, mean: colorLabel}, {p:0, mean: colorLabel}]
+  // }
+  //
+  // this.distributions = {
+  //   internal:  [
+  //       [0, 0, 1],
+  //       [0.5, 0.5, 0.5],
+  //       [0, 0.75, 1],
+  //       [0, 0.25, 1]
+  //     ],
+  //   colors: []
+  //   // _.map(_.range(this.numRounds * 2), function(i){
+  //   //   return _.map(_.shuffle(this.colorOptions).slice(0, 3), this.createDeterministicColorArray)
+  //   // })
+  //     // [{p:1, mean: "blue"}, {p:0, mean: "blue"}],
+  //     // [{p:1, mean: "yellow"}, {p:0, mean: "yellow"}],
+  //     // [{p:1, mean: "red"}, {p:0, mean: "red"}]
+  // //  ]
+  //   // tar1: [
+  //   //
+  //   // ],
+  //   // tar2: [
+  //   //
+  //   // ],
+  //   // prop1: [
+  //   //
+  //   // ],
+  //
+  //   // prop2: [
+  //   //
+  //   // ]
+  // }
 
-  this.distributions = {
-    internal:  [
-        [0, 0, 1],
-        [0.5, 0.5, 0.5],
-        [0, 0.75, 1],
-        [0, 0.25, 1]
-      ],
-    colors: []
-    // _.map(_.range(this.numRounds * 2), function(i){
-    //   return _.map(_.shuffle(this.colorOptions).slice(0, 3), this.createDeterministicColorArray)
-    // })
-      // [{p:1, mean: "blue"}, {p:0, mean: "blue"}],
-      // [{p:1, mean: "yellow"}, {p:0, mean: "yellow"}],
-      // [{p:1, mean: "red"}, {p:0, mean: "red"}]
-  //  ]
-    // tar1: [
-    //
-    // ],
-    // tar2: [
-    //
-    // ],
-    // prop1: [
-    //
-    // ],
+  // for (i = 0; i < this.numRounds * 2; i++){
+  //   this.distributions.colors.push(
+  //     _.map(
+  //       _.shuffle(this.colorOptions).slice(0, this.creatureTypesN), this.createDeterministicColorArray)
+  //   )
+  // }
+  //
+  // // console.log(this.distributions.colors)
+  // var testCreatNames = _.clone(this.ourCreatNames);
 
-    // prop2: [
-    //
-    // ]
-  }
-
-  for (i = 0; i < this.numRounds * 2; i++){
-    this.distributions.colors.push(
-      _.map(
-        _.shuffle(this.colorOptions).slice(0, this.creatureTypesN), this.createDeterministicColorArray)
-    )
-  }
-
-  // console.log(this.distributions.colors)
-  var testCreatNames = _.clone(this.ourCreatNames);
-
-  this.createCreatureOptsObj = function(creature, shapeParams, featureParams, colors) {
-    var newName = testCreatNames.pop()
-    // var colors = this.distributions.colors.pop();
-    // console.log(creature)
-    // console.log(colors);
-    return _.extend({ creature, name: newName.exemplar,
-      globalColors: [
-      { p: colors[0].p, props: { color_mean: colors[0].mean, color_var: 0.001 } },
-      { p: colors[1].p, props: { color_mean: colors[1].mean, color_var: 0.001 } }
-    ] }, shapeParams, featureParams)
-  }
+  // this.createCreatureOptsObj = function(creature, shapeParams, featureParams, colors) {
+  //   var newName = testCreatNames.pop()
+  //   // var colors = this.distributions.colors.pop();
+  //   // console.log(creature)
+  //   // console.log(colors);
+  //   return _.extend({ creature, name: newName.exemplar,
+  //     globalColors: [
+  //     { p: colors[0].p, props: { color_mean: colors[0].mean, color_var: 0.001 } },
+  //     { p: colors[1].p, props: { color_mean: colors[1].mean, color_var: 0.001 } }
+  //   ] }, shapeParams, featureParams)
+  // }
 
 
   // GENERATE CREATURE OPTS
-  for (repeatSpecies = 0; repeatSpecies < 2; repeatSpecies++){
-    for (speciesInd = 0; speciesInd < this.species.length; speciesInd++){
-      var speciesLabel = this.species[speciesInd]
-      var colorDistribution = this.distributions.colors.pop(); // set of colors (one for each category)
-
-      var blockCreatureOpts = []; // the current format for creatureOpts is an array of arrays
-      // so this will be that inner array
-      for (i=0; i<this.creatureTypesN; i++){
-        // prop and tar info (can be different for the repetitions of species [eg bird, bug] across blocks)
-        var speciesFeatureParams = this.speciesFeatureParams[speciesLabel][repeatSpecies];
-
-        blockCreatureOpts.push(this.createCreatureOptsObj(speciesLabel,
-            speciesFeatureParams[0], speciesFeatureParams[1],colorDistribution[i])
-        )
-
-      }
-      this.categories[speciesLabel].push(blockCreatureOpts)
-    }
-  }
+  // for (repeatSpecies = 0; repeatSpecies < 2; repeatSpecies++){
+  //   for (speciesInd = 0; speciesInd < this.species.length; speciesInd++){
+  //     var speciesLabel = this.species[speciesInd]
+  //     var colorDistribution = this.distributions.colors.pop(); // set of colors (one for each category)
+  //
+  //     var blockCreatureOpts = []; // the current format for creatureOpts is an array of arrays
+  //     // so this will be that inner array
+  //     for (i=0; i<this.creatureTypesN; i++){
+  //       // prop and tar info (can be different for the repetitions of species [eg bird, bug] across blocks)
+  //       var speciesFeatureParams = this.speciesFeatureParams[speciesLabel][repeatSpecies];
+  //
+  //       blockCreatureOpts.push(this.createCreatureOptsObj(speciesLabel,
+  //           speciesFeatureParams[0], speciesFeatureParams[1],colorDistribution[i])
+  //       )
+  //
+  //     }
+  //     this.categories[speciesLabel].push(blockCreatureOpts)
+  //   }
+  // }
 
   // console.log(this.categories)
   // console.log(this.categories.fish)
@@ -403,11 +403,11 @@ var game_core = function(options){
     this.id = options.id;
     this.expName = options.expName;
     this.player_count = options.player_count;
-
-    var playerDistributions = {
-      A: _.shuffle(this.distributions.internal),
-      B: _.shuffle(this.distributions.internal)
-    };
+    // 
+    // var playerDistributions = {
+    //   A: _.shuffle(this.distributions.internal),
+    //   B: _.shuffle(this.distributions.internal)
+    // };
 
     // needs to be generalized
     // determines what critters will be used and who sees what when
@@ -535,118 +535,118 @@ var fillArray = function(n, fillVal){
 var probToCount = function(p, n){
   return Math.round(p*n);
 }
-
-game_core.prototype.createFeatureArray = function(creatureLabel, creatureCategory, num){ //add num as parameter too
-  var creatureOpts = this.categories[creatureCategory][num];
-  var creatOpts = _.filter(creatureOpts, {name: creatureLabel})[0];
-  var creatureColors = [];
-  var creatureColorNames = [];
-  var creatureLocation = [];
-  var nRemaining = this.exemplarN; // number of exemplars in category
-  // 2 possible colors (so loop for i < 2)
-  for (var i=0; i < creatOpts.globalColors.length; i++ ){
-    var colorProps = creatOpts.globalColors[i];
-
-    var n_creatures_of_this_color =  probToCount(
-      colorProps.p, this.exemplarN
-      );
-
-    var ncrit = n_creatures_of_this_color == 0 ?
-    ((colorProps.p > 0) && (nRemaining > 0)) ? 1 : 0 :
-    n_creatures_of_this_color
-    creatureColors = creatureColors.concat(
-      fillArray(ncrit,
-        utils.genColor(
-          this.color_dict[colorProps["props"]["color_mean"]],
-          colorProps["props"]["color_var"]
-          ))
-      )
-    creatureLocation = 0;
-
-    creatureColorNames = creatureColorNames.concat(
-      fillArray(ncrit,
-        this.color_dict[colorProps["props"]["color_mean"]]   )
-      )
-
-    nRemaining = nRemaining-ncrit;
-  }
-  return {color: creatureColors, location: creatureLocation,  creatureColorNames: creatureColorNames}
-}
-
-
-game_core.prototype.representativeFlip = function(p, n){
-  var creatureBooleans = [];
-  var n_creatures_w_feature =  probToCount(p, n);
-  var ncrit = n_creatures_w_feature == 0 ?
-      (p > 0) ? 1 : 0 :
-        n_creatures_w_feature
-  creatureBooleans = creatureBooleans.concat(
-      fillArray(ncrit, 1),
-      fillArray(n - ncrit, 0)
-      )
-  return _.shuffle(creatureBooleans)
-}
-
-
-game_core.prototype.genCreatures = function(creatureCategory, num, internalFeature_probs){ //include num as parameter
-  var j = 0;
-  // Generates the characteristics for each critter
-  var allCreatures = [];
-  var creatureOpts = this.categories[creatureCategory][num];
-  // get unique labels (e.g., wug, fep, lorch); should be number of unique kinds in each block
-  uniqueCreatures =  _.uniqBy(_.map(creatureOpts, "name"));
-  for (var i = 0; i < uniqueCreatures.length; i++){
-    var creatOpts = _.filter(creatureOpts, {name: uniqueCreatures[i]})[0];
-    // console.log(uniqueCreatures[i])
-    var creatureColor = this.createFeatureArray(
-     uniqueCreatures[i], creatureCategory, num
-     );
-    //  console.log(creatureColor)
-    var n_with_feature =  this.representativeFlip(internalFeature_probs[i], this.exemplarN);
-    var localCounter = 0;
-    while (j<(this.exemplarN*(i+1))) {
-     allCreatures.push({
-      "col1": creatureColor["color"][localCounter],
-      "col2": creatureColor["color"][localCounter],
-      "col3": creatureColor["color"][localCounter] == null ? null : creatureColor["color"][localCounter] ,
-      "col4": creatureColor["color"][localCounter] == null ? null : creatureColor["color"][localCounter],
-      "col5": creatureColor["color"][localCounter] == null ? null : creatureColor["color"][localCounter],
-      "prop1": creatOpts.prop1 == null ? utils.randProp() : creatOpts.prop1,
-      "prop2": creatOpts.prop2 == null ? utils.randProp() : creatOpts.prop2,
-      "tar1": utils.flip(creatOpts.tar1),
-      "tar2": utils.flip(creatOpts.tar2),
-      "tar3": utils.flip(creatOpts.tar3),
-      "creatureName": uniqueCreatures[i],
-      "critter" : creatureCategory,
-      "stimID": j,
-      "internal_prop": n_with_feature[j % this.exemplarN],
-      "internalFeature_probs": internalFeature_probs[i],
-      "internalFeature_dist" : internalFeature_probs.join(','),
-      "meanColorName": _.invert(this.color_dict)[creatureColor["creatureColorNames"][localCounter]],
-      "creatureOpts": creatureOpts, //?
-      // "critter_full_info": creatOpts
-    })
-     localCounter++;
-     j++;
-   }
- }
- return allCreatures
-}
+//
+// game_core.prototype.createFeatureArray = function(creatureLabel, creatureCategory, num){ //add num as parameter too
+//   var creatureOpts = this.categories[creatureCategory][num];
+//   var creatOpts = _.filter(creatureOpts, {name: creatureLabel})[0];
+//   var creatureColors = [];
+//   var creatureColorNames = [];
+//   var creatureLocation = [];
+//   var nRemaining = this.exemplarN; // number of exemplars in category
+//   // 2 possible colors (so loop for i < 2)
+//   for (var i=0; i < creatOpts.globalColors.length; i++ ){
+//     var colorProps = creatOpts.globalColors[i];
+//
+//     var n_creatures_of_this_color =  probToCount(
+//       colorProps.p, this.exemplarN
+//       );
+//
+//     var ncrit = n_creatures_of_this_color == 0 ?
+//     ((colorProps.p > 0) && (nRemaining > 0)) ? 1 : 0 :
+//     n_creatures_of_this_color
+//     creatureColors = creatureColors.concat(
+//       fillArray(ncrit,
+//         utils.genColor(
+//           this.color_dict[colorProps["props"]["color_mean"]],
+//           colorProps["props"]["color_var"]
+//           ))
+//       )
+//     creatureLocation = 0;
+//
+//     creatureColorNames = creatureColorNames.concat(
+//       fillArray(ncrit,
+//         this.color_dict[colorProps["props"]["color_mean"]]   )
+//       )
+//
+//     nRemaining = nRemaining-ncrit;
+//   }
+//   return {color: creatureColors, location: creatureLocation,  creatureColorNames: creatureColorNames}
+// }
+//
+//
+// game_core.prototype.representativeFlip = function(p, n){
+//   var creatureBooleans = [];
+//   var n_creatures_w_feature =  probToCount(p, n);
+//   var ncrit = n_creatures_w_feature == 0 ?
+//       (p > 0) ? 1 : 0 :
+//         n_creatures_w_feature
+//   creatureBooleans = creatureBooleans.concat(
+//       fillArray(ncrit, 1),
+//       fillArray(n - ncrit, 0)
+//       )
+//   return _.shuffle(creatureBooleans)
+// }
+//
+//
+// game_core.prototype.genCreatures = function(creatureCategory, num, internalFeature_probs){ //include num as parameter
+//   var j = 0;
+//   // Generates the characteristics for each critter
+//   var allCreatures = [];
+//   var creatureOpts = this.categories[creatureCategory][num];
+//   // get unique labels (e.g., wug, fep, lorch); should be number of unique kinds in each block
+//   uniqueCreatures =  _.uniqBy(_.map(creatureOpts, "name"));
+//   for (var i = 0; i < uniqueCreatures.length; i++){
+//     var creatOpts = _.filter(creatureOpts, {name: uniqueCreatures[i]})[0];
+//     // console.log(uniqueCreatures[i])
+//     var creatureColor = this.createFeatureArray(
+//      uniqueCreatures[i], creatureCategory, num
+//      );
+//     //  console.log(creatureColor)
+//     var n_with_feature =  this.representativeFlip(internalFeature_probs[i], this.exemplarN);
+//     var localCounter = 0;
+//     while (j<(this.exemplarN*(i+1))) {
+//      allCreatures.push({
+//       "col1": creatureColor["color"][localCounter],
+//       "col2": creatureColor["color"][localCounter],
+//       "col3": creatureColor["color"][localCounter] == null ? null : creatureColor["color"][localCounter] ,
+//       "col4": creatureColor["color"][localCounter] == null ? null : creatureColor["color"][localCounter],
+//       "col5": creatureColor["color"][localCounter] == null ? null : creatureColor["color"][localCounter],
+//       "prop1": creatOpts.prop1 == null ? utils.randProp() : creatOpts.prop1,
+//       "prop2": creatOpts.prop2 == null ? utils.randProp() : creatOpts.prop2,
+//       "tar1": utils.flip(creatOpts.tar1),
+//       "tar2": utils.flip(creatOpts.tar2),
+//       "tar3": utils.flip(creatOpts.tar3),
+//       "creatureName": uniqueCreatures[i],
+//       "critter" : creatureCategory,
+//       "stimID": j,
+//       "internal_prop": n_with_feature[j % this.exemplarN],
+//       "internalFeature_probs": internalFeature_probs[i],
+//       "internalFeature_dist" : internalFeature_probs.join(','),
+//       "meanColorName": _.invert(this.color_dict)[creatureColor["creatureColorNames"][localCounter]],
+//       "creatureOpts": creatureOpts, //?
+//       // "critter_full_info": creatOpts
+//     })
+//      localCounter++;
+//      j++;
+//    }
+//  }
+//  return allCreatures
+// }
 
 
 // this gets run when the game is created and creates all trial information
 // functionally equivalent to making something like exp.stims in init() in template.js
-game_core.prototype.makeTrialList = function () {
-  var local_this = this;
-  var conditionList = this.getRandomizedConditions();
-  var trialList = [];
-  for (var i = 0; i < conditionList.length; i++) {
-    var condition = conditionList[i];
-    var objList = sampleTrial(condition); // Sample three objects
-    var locs = this.sampleStimulusLocs(); // Sample locations for those objects
-  };
-  return(trialList);
-};
+// game_core.prototype.makeTrialList = function () {
+//   var local_this = this;
+//   var conditionList = this.getRandomizedConditions();
+//   var trialList = [];
+//   for (var i = 0; i < conditionList.length; i++) {
+//     var condition = conditionList[i];
+//     var objList = sampleTrial(condition); // Sample three objects
+//     var locs = this.sampleStimulusLocs(); // Sample locations for those objects
+//   };
+//   return(trialList);
+// };
 
 game_core.prototype.server_send_update = function(){
   //Make a snapshot of the current state, for updating the clients
