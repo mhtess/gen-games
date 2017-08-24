@@ -78,7 +78,7 @@ function make_slides(f) {
       shuffledCritters = _.shuffle(allCreatures)
 
       this.num_creats = allCreatures.length;
-      this.creat_type = shuffledCritters[0]["critter"];
+      this.creat_type = shuffledCritters[0]["genus"];
 
       // This generates all the critters
       create_table(globalGame.presentRows,globalGame.presentCols,"critter_display");
@@ -86,22 +86,21 @@ function make_slides(f) {
       for (var i=0; i<shuffledCritters.length; i++) {
         var scale = 0.5;
         Ecosystem.draw(
-          shuffledCritters[i]["critter"], shuffledCritters[i],
+          shuffledCritters[i]["genus"], shuffledCritters[i],
           "critter"+i, scale)
 
-        $('#cell'+i+'critname').html(shuffledCritters[i]["creatureName"]);
 
         $('#internalprops_instruct').html(
           "Click on each one to discover whether <strong>" +
-          globalGame.critter_instructions[shuffledCritters[i]["critter"]]["internal_prop_instruct"] +
+          globalGame.critter_instructions[shuffledCritters[i]["genus"]]["internal_prop_instruct"] +
           "</strong>"
         );
 
-        if (shuffledCritters[i]["internal_prop"]) {
-          $('#cell'+i+'internalprop').html(globalGame.critter_instructions[shuffledCritters[i]["critter"]]["internal_prop_symbol"]);
+        if (shuffledCritters[i]["categoryLabel"] != "unlabeled") {
+          $('#cell'+i+'critname').html(shuffledCritters[i]["categoryLabel"]);
         }
 
-        $('#cell'+i+'internalprop').css({'opacity': 0});
+        $('#cell'+i+'critname').css({'opacity': 0});
 
       }
 
@@ -145,7 +144,7 @@ slides.learning_instructions = slide({
 
 
     this.creat_type = exp.slides.learning_critters.crittersFromServer
-[0]["critter"];
+[0]["genus"];
 
     switch (this.creat_type) {
       case 'bird': case 'bug':

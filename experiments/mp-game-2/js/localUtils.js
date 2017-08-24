@@ -24,7 +24,7 @@ function mark_critter_display(el) {
   $('#'+el.id).css({"border":cell_border_clicked,
     'opacity': all_opacity_clicked});
   $('#'+ el.id + 'critname').css({'opacity': all_opacity_clicked, 'font-weight': critname_fontweight_unclicked});
-  $('#'+el.id+'internalprop').css({'opacity': all_opacity_clicked});
+  $('#'+el.id+'critname').css({'opacity': all_opacity_clicked});
   $('#'+el.id).attr("data-selected",'1'); //keeps track of whether cell was clicked at all in a given round, used in check function
 
   check(allCreatures.length);
@@ -177,7 +177,5 @@ function calculate_end_game_bonus(){
     var reward = correctSelect * this.bonusAmt;
     console.log("reward is " + reward);
     return reward;
-    
+
   }
-
-

@@ -192,9 +192,6 @@ var game_core = function(options){
     var blockOfStims = [];
     for (var j = 0; j < 2; j++){ // loop over positive and negative examples
       var categoryExemplars = [positiveExamples, negativeExamples][j];
-      console.log(j)
-      console.log(labelPositiveOrNegative)
-      console.log(labelPositiveOrNegative == j)
       var categoryLabel = (labelPositiveOrNegative == j) ? label : "unlabeled";
 
       for (var i = 0; i < categoryExemplars.length; i++){ // loop over each exemplar
@@ -241,8 +238,6 @@ var game_core = function(options){
   //  "creatureOpts": creatureOpts, //?
   //  // "critter_full_info": creatOpts
   // }
-
-
 
 
   this.speciesFeatureParams = {
@@ -397,7 +392,7 @@ var game_core = function(options){
 
   if(this.server) {
 
-    console.log(this.generateBlock(this.shepardConcepts.i, "bird"))
+    // console.log(this.generateBlock(this.shepardConcepts.i, "bird"))
 
     // If we're initializing the server game copy, pre-create the list of trials
     // we'll use, make a player object, and tell the player who they are
@@ -417,20 +412,22 @@ var game_core = function(options){
       B: ["tree", "bird", "fish", "bug"]
     }
     var aOrder = [], bOrder = [];
-    for (i = 0; i<playerDistributions.A.length; i++){
+    // for (i = 0; i<playerDistributions.A.length; i++){
+    for (i = 0; i<critterOrders.A.length; i++){
       // console.log(playerDistributions.A[i])
       aOrder.push(
-        this.genCreatures(critterOrders.A[i],
-          0,
-          playerDistributions.A[i])
+        this.generateBlock(this.shepardConcepts.i,
+        critterOrders.A[i])
+        // this.genCreatures(critterOrders.A[i],
+          // 0,
+          // playerDistributions.A[i])
         )
 
         // console.log(playerDistributions.B[i])
 
       bOrder.push(
-        this.genCreatures(critterOrders.B[i],
-          1,
-          playerDistributions.B[i])
+        this.generateBlock(this.shepardConcepts.i,
+          critterOrders.B[i])
         )
 
     }
@@ -442,7 +439,7 @@ var game_core = function(options){
       playerB: bOrder
     };
 
-    console.log(JSON.stringify(aOrder[0][0]))
+    // console.log(JSON.stringify(aOrder[0][0]))
 
     // this is switched so the they will get tested on the information their partner relayed to them
     this.testList = {
