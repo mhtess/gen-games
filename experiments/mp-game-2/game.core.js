@@ -59,13 +59,19 @@ var game_core = function(options){
   // number of different species
   this.creatureTypesN = 3;
   // number of exemplars displayed in a block
+<<<<<<< HEAD
   this.creatureN = 8;
+=======
+  this.testN = 12;
+  this.trainN = 24;
+
+>>>>>>> 28b470b1f90da763e136e83e3795b659116e0c3e
   // number of each critter of a species
-  this.exemplarN = this.creatureN/this.creatureTypesN;
+  this.exemplarN = this.testN/this.creatureTypesN;
 
   // Number of rows & columns in table presenting critters
-  this.presentRows = 2;
-  this.presentCols = this.creatureN/this.presentRows;
+  this.presentRows = 3;
+  this.presentCols = this.trainN/this.presentRows//this.creatureN/this.presentRows;
 
   this.creatureNames = [
       {list:0,category: "morseths", exemplar:"morseth"},
@@ -404,6 +410,7 @@ var game_core = function(options){
       A: ["fish", "bug", "tree", "bird"],
       B: ["tree", "bird", "fish", "bug"]
     }
+<<<<<<< HEAD
     var aOrder = [], bOrder = [];
     // for (i = 0; i<playerDistributions.A.length; i++){
     for (i = 0; i<critterOrders.A.length; i++){
@@ -414,13 +421,41 @@ var game_core = function(options){
         // this.genCreatures(critterOrders.A[i],
           // 0,
           // playerDistributions.A[i])
+=======
+    var aTrain = [], aTest = [], bTrain = [], bTest = [],
+    train = false;
+    test = true;
+    for (i = 0; i<playerDistributions.A.length; i++){
+      // console.log(playerDistributions.A[i])
+      aTrain.push(
+        this.genCreatures(critterOrders.A[i],
+          0,
+          playerDistributions.A[i], train)
+>>>>>>> 28b470b1f90da763e136e83e3795b659116e0c3e
         )
 
+      aTest.push(
+        this.genCreatures(critterOrders.A[i],
+          0,
+          playerDistributions.A[i], test)
+        )
         // console.log(playerDistributions.B[i])
 
+<<<<<<< HEAD
       bOrder.push(
         this.generateBlock(this.shepardConcepts.i,
           critterOrders.B[i])
+=======
+      bTrain.push(
+        this.genCreatures(critterOrders.B[i],
+          1,
+          playerDistributions.B[i], train)
+        )
+      bTest.push(
+        this.genCreatures(critterOrders.B[i],
+          1,
+          playerDistributions.B[i], test)
+>>>>>>> 28b470b1f90da763e136e83e3795b659116e0c3e
         )
 
     }
@@ -428,17 +463,28 @@ var game_core = function(options){
     // console.log(aOrder)
     // assigns the critters to their respective players
     this.trialList = {
-      playerA: aOrder,
-      playerB: bOrder
+      playerA: aTrain,
+      playerB: bTrain
     };
 
     // console.log(JSON.stringify(aOrder[0][0]))
 
     // this is switched so the they will get tested on the information their partner relayed to them
     this.testList = {
-      playerA: bOrder,
-      playerB: aOrder
+      playerA: null,//bTest,
+      playerB: null//aTest
     };
+
+    this.testList["playerA"] = _.shuffle(fillArray(this.numRounds/2, bTest).concat(fillArray(this.numRounds/2, aTest)))
+    for(var i = 0; i < this.testList["playerA"].length; i++) {
+      var test;
+      this.testList["playerA"][i] == bTest ? test=aTest : test=bTest;
+      this.testList["playerB"].push(test);
+    }
+
+    console.log(testList["playerA"])
+    console.log("hello")
+
 
     // console.log(this.testList)
 
@@ -524,6 +570,7 @@ var fillArray = function(n, fillVal){
 var probToCount = function(p, n){
   return Math.round(p*n);
 }
+<<<<<<< HEAD
 //
 // game_core.prototype.createFeatureArray = function(creatureLabel, creatureCategory, num){ //add num as parameter too
 //   var creatureOpts = this.categories[creatureCategory][num];
@@ -621,6 +668,110 @@ var probToCount = function(p, n){
 //  }
 //  return allCreatures
 // }
+=======
+
+game_core.prototype.createFeatureArray = function(creatureLabel, creatureCategory, num, phase){ //add num as parameter too
+  var creatureOpts = this.categories[creatureCategory][num];
+  var creatOpts = _.filter(creatureOpts, {name: creatureLabel})[0];
+  var creatureColors = [];
+  var creatureColorNames = [];
+  var creatureLocation = [];
+  var numCreats;
+  // train is 0 test is 1
+  phase ? numCreats = this.exemplarN : numCreats = this.trainN/this.creatureTypesN
+  var nRemaining = numCreats; // number of exemplars in category
+  // 2 possible colors (so loop for i < 2)
+  for (var i=0; i < creatOpts.globalColors.length; i++ ){
+    var colorProps = creatOpts.globalColors[i];
+
+    var n_creatures_of_this_color =  probToCount(
+      colorProps.p, numCreats
+      );
+
+    var ncrit = n_creatures_of_this_color == 0 ?
+    ((colorProps.p > 0) && (nRemaining > 0)) ? 1 : 0 :
+    n_creatures_of_this_color
+    creatureColors = creatureColors.concat(
+      fillArray(ncrit,
+        utils.genColor(
+          this.color_dict[colorProps["props"]["color_mean"]],
+          colorProps["props"]["color_var"]
+          ))
+      )
+    creatureLocation = 0;
+
+    creatureColorNames = creatureColorNames.concat(
+      fillArray(ncrit, this.color_dict[colorProps["props"]["color_mean"]]   )
+      )
+
+    nRemaining = nRemaining-ncrit;
+  }
+  return {color: creatureColors, location: creatureLocation,  creatureColorNames: creatureColorNames}
+}
+
+
+game_core.prototype.representativeFlip = function(p, n){
+  var creatureBooleans = [];
+  var n_creatures_w_feature =  probToCount(p, n);
+  var ncrit = n_creatures_w_feature == 0 ?
+      (p > 0) ? 1 : 0 :
+        n_creatures_w_feature
+  creatureBooleans = creatureBooleans.concat(
+      fillArray(ncrit, 1),
+      fillArray(n - ncrit, 0)
+      )
+  return _.shuffle(creatureBooleans)
+}
+
+
+game_core.prototype.genCreatures = function(creatureCategory, num, internalFeature_probs, phase){ //include num as parameter
+  var j = 0;
+  // Generates the characteristics for each critter
+  var allCreatures = [];
+  var creatureOpts = this.categories[creatureCategory][num];
+  // get unique labels (e.g., wug, fep, lorch); should be number of unique kinds in each block
+  uniqueCreatures =  _.uniqBy(_.map(creatureOpts, "name"));
+  for (var i = 0; i < uniqueCreatures.length; i++){
+    var creatOpts = _.filter(creatureOpts, {name: uniqueCreatures[i]})[0];
+    // console.log(uniqueCreatures[i])
+    var creatureColor = this.createFeatureArray(
+     uniqueCreatures[i], creatureCategory, num
+     );
+    //  console.log(creatureColor)
+    var n_with_feature =  this.representativeFlip(internalFeature_probs[i], this.exemplarN);
+    var localCounter = 0;
+    var numCreats;
+    // train is 0 test is 1
+    phase ? numCreats = this.exemplarN : numCreats = this.trainN/this.creatureTypesN
+    while (j<(numCreats*(i+1))) {
+     allCreatures.push({
+      "col1": creatureColor["color"][localCounter],
+      "col2": creatureColor["color"][localCounter],
+      "col3": creatureColor["color"][localCounter] == null ? null : creatureColor["color"][localCounter] ,
+      "col4": creatureColor["color"][localCounter] == null ? null : creatureColor["color"][localCounter],
+      "col5": creatureColor["color"][localCounter] == null ? null : creatureColor["color"][localCounter],
+      "prop1": creatOpts.prop1 == null ? utils.randProp() : creatOpts.prop1,
+      "prop2": creatOpts.prop2 == null ? utils.randProp() : creatOpts.prop2,
+      "tar1": utils.flip(creatOpts.tar1),
+      "tar2": utils.flip(creatOpts.tar2),
+      "tar3": utils.flip(creatOpts.tar3),
+      "creatureName": uniqueCreatures[i],
+      "critter" : creatureCategory,
+      "stimID": j,
+      "internal_prop": n_with_feature[j % this.exemplarN],
+      "internalFeature_probs": internalFeature_probs[i],
+      "internalFeature_dist" : internalFeature_probs.join(','),
+      "meanColorName": _.invert(this.color_dict)[creatureColor["creatureColorNames"][localCounter]],
+      "creatureOpts": creatureOpts, //?
+      // "critter_full_info": creatOpts
+    })
+     localCounter++;
+     j++;
+   }
+ }
+ return allCreatures
+}
+>>>>>>> 28b470b1f90da763e136e83e3795b659116e0c3e
 
 
 // this gets run when the game is created and creates all trial information

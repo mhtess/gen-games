@@ -79,6 +79,8 @@ function make_slides(f) {
       this.creat_type = this.shuffledCritters[0]["genus"];
 
       // This generates all the critters
+      globalGame.presentRows = 3;
+      globalGame.presentCols = globalGame.trainN/globalGame.presentRows;
       create_table(globalGame.presentRows,globalGame.presentCols,"critter_display");
 
       $('#internalprops_instruct').html(
@@ -208,6 +210,8 @@ slides.test_critters = slide({
    );
 
     // Generates critters for test phase
+    globalGame.presentRows = 2;
+      globalGame.presentCols = globalGame.testN/globalGame.presentRows;
     create_table(globalGame.presentRows,globalGame.presentCols,"critter_test_display");
 
     for (var i=0; i<this.shuffledCritters.length; i++) {
