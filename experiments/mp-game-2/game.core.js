@@ -132,19 +132,8 @@ var game_core = function(options){
     lightpurple: "#dda0dd"
   }
 
-  this.categories = {
-    bird: [],
-    bug: [],
-    fish: [],
-    tree: [],
-  }
-
   this.colorOptions = _.keys(this.color_dict);
-  this.species = _.keys(this.categories);
-
-
   this.threeFeatures = ["tar1","tar2","prop1"]
-
 
   this.allBinaryPossibilities = [
     [0,0,0], [0,0,1], [0,1,0], [0,1,1],
@@ -204,9 +193,9 @@ var game_core = function(options){
         var featureObj = _.fromPairs(_.zip(featureOrder, featureValues)); // e.g., {tar1: 1, tar2: 0, prop1: 0}
 
         blockOfStims.push(_.assign(basicOptions,
-          featureObj,  { categoryLabel, categoryPluralLabel, labeled,
-                    colorName,
-                    genus },
+          featureObj,
+          { categoryLabel, categoryPluralLabel,
+            labeled, colorName, genus },
           _.fromPairs(_.zip(
             ["col1", "col2", "col3", "col4", "col5"],
             fillArray(5, this.color_dict[colorName])
@@ -403,7 +392,7 @@ var game_core = function(options){
     this.id = options.id;
     this.expName = options.expName;
     this.player_count = options.player_count;
-    // 
+    //
     // var playerDistributions = {
     //   A: _.shuffle(this.distributions.internal),
     //   B: _.shuffle(this.distributions.internal)
