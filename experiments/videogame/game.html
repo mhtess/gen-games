@@ -1,0 +1,615 @@
+<!doctype html> 
+<html lang="en"> 
+<head> 
+	<meta charset="UTF-8" />
+    <title>Game</title>
+    <script type="text/javascript" src="node_modules/socket.io-client/dist/socket.io.js"></script>
+    <script src="node_modules/phaser/build/phaser.min.js"></script>
+    <!-- <script src="cdn.jsdelivr.net/phaser/2.2.2/phaser.min.js"></script> -->
+    <script src="config.js"></script>
+
+    <!-- To include Erin's critters -->
+    <script src="../_shared/js/jquery-1.11.1.min.js" type="text/javascript"></script>
+    <script src="../_shared/js/raphael-min.js" type="text/javascript"></script>
+    <script src="../_shared/js/ecosystem.js" type="text/javascript"></script>
+
+    <script src="local_utils.js" type="text/javascript"></script>
+
+
+    <style type="text/css">
+        body {
+            margin: 0
+        }
+    </style>
+    <style>
+        .inventory-box {
+            display: inline-flex;
+            width: 420px;
+            height: 80px;
+            border: 3px solid #000000;
+            margin: 3px;
+        }
+        .pocket-image {
+            display: inline-block;
+            width: 30px;
+            height: 70px;
+            margin: 3px;
+        }
+        p.counter-label {
+            font-size: 1.25em;
+            font-family: "Arial";
+        }
+        p.time-label { 
+            font-size: 1.25em;
+            font-family: "Arial";
+        }
+        .score-box{
+            display: inline-flex;
+            width: 200px;
+            height: 80px;
+            border: 3px solid #BF0000;
+        }
+        .score{
+            display: inline-block;
+            width: 190px;
+            height: 70px;
+            margin: 3px;
+        }
+        p.score-label {
+            font-size: 1.75em;
+            font-family: "Arial";
+            font-weight: bold;
+            color: #BF0000;
+        }
+    </style>
+</head>
+<body>
+
+<svg id="blueTree"></svg>
+<img id="blueTreeImg"></img>
+
+<!-- To do this: write svg and img versions of every ecosystem thing in HTML -->
+
+
+<script type="text/javascript">
+
+var socket = io('/game-nsp')
+
+var param = function(param) { 
+    param = param.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+    var regexS = "[\\?&]"+param+"=([^&#]*)"; 
+    var regex = new RegExp( regexS ); 
+    var tmpURL = window.location.href
+    var results = regex.exec( tmpURL ); 
+    console.log("param: " + param + ", URL: " + tmpURL)
+    if( results == null ) { 
+        return ""; 
+    } else { 
+        return results[1];    
+    } 
+}
+
+socket.on('redirect', function(extension){
+    var assignmentId = param("assignmentId")
+    var hitId = param("hitId")
+    var workerId = param("workerId")
+    var turkSubmitTo = param("turkSubmitTo")
+    var condition = param("condition")
+    var question_order = param("qord")
+    var destination = extension + '?condition=' + condition + '&qord=' + question_order + '&assignmentId=' + assignmentId + '&hitId=' + hitId + '&workerId=' + workerId + '&turkSubmitTo=' + turkSubmitTo
+    window.location.href = destination
+})
+
+socket.on('timer', function(seconds){
+    if(seconds == 0){
+        document.getElementById("timelabel").innerHTML = "Redirecting you soon..."
+    } else {
+        document.getElementById("timelabel").innerHTML = "Time remaining: " + seconds + " seconds."
+    }
+})
+
+var game = new Phaser.Game(720, 540, Phaser.CANVAS, '', { preload: preload, create: create, update: update })
+
+var player
+var facing = 'right'
+var cursors
+var score = 0
+// internal features that pop out of the critters - they have to pick them up and put in pocket
+var pocket = {
+    rock: 0,
+    apple: 0,
+    lemon: 0,
+    grape: 0,
+    cow: 0,
+    chicken: 0,
+    pig: 0,
+    fish: 0,
+    whale: 0,
+    crab: 0
+}
+
+var rocks
+
+var trees // make these trees
+var apples
+var lemons
+var grapes
+
+var mountains // make these flowers
+var cows
+var chickens
+var pigs
+
+var ponds // make these fish
+var fishes
+var whales
+var crabs
+
+var condition = (param("condition") == "") ? "a" : param("condition")
+
+var groups = {
+    'fruits': ['apple', 'grape', 'lemon'],
+    'animals': ['cow', 'chicken', 'pig'],
+    'aquatics': ['fish', 'whale', 'crab'],
+    'scoring_objects': ['apple', 'grape', 'lemon', 'cow', 'chicken', 'pig', 'fish', 'whale', 'crab'],
+    'pocket_objects': ['rock', 'apple', 'lemon', 'grape', 'cow', 'chicken', 'pig', 'fish', 'whale', 'crab']
+}
+
+var pond_aquatic_pairings = {
+    'red pond': 'fish',
+    'green pond': 'whale',
+    'blue pond': 'crab'
+}
+
+var pond_list = [{x:1300, y:60, color: 'red pond'}, {x:900, y: 750, color:'green pond'}, {x:1200, y:250, color: 'blue pond'}, {x:500, y:850, color:'red pond'}, {x:10, y:150, color: 'green pond'}, {x:400, y:750, color:'blue pond'}]
+
+var tree_fruit_pairings = {
+    'green tree': 'apple',
+    'blue tree': 'grape',
+    'purple tree': 'lemon'
+}
+
+var tree_list = [{x:720, y:500, color:'green tree'}, {x:100, y:950, color:'purple tree'}, {x:370, y:950, color:'blue tree'}, {x:250, y:620, color: 'green tree'}, {x:300, y:500, color:'purple tree'},{x:480, y:140, color: 'blue tree'}, {x:20, y:400, color: 'blue tree'}, {x:700, y:190, color: 'purple tree'}, {x:1000, y:300, color: 'green tree'}]
+
+var mountain_animal_pairings = {
+    'brown mountain': 'cow',
+    'green mountain': 'chicken',
+    'blue mountain': 'pig'
+}
+
+var mountain_list = [{x:1200, y:740, color:'green mountain'}, {x:700, y:750, color:'brown mountain'}, {x:1200, y:500, color:'blue mountain'}, {x:750, y:950, color:'green mountain'},{x:1100, y:850, color:'brown mountain'}, {x:200, y:300, color:'blue mountain'}, {x:60, y:800, color: 'green mountain'}, {x:500, y:250, color: 'brown mountain'}, {x:850, y:640, color: 'blue mountain'}]
+
+var rock_list = [{x:100, y:0}, {x:400, y:30}, {x:180, y:150}, {x:320, y:180}, {x:400, y:400}, {x:30, y:1000}, {x:250, y:880}, {x:500, y:650}, {x:60, y:550}, {x:680, y:1000}, {x:200, y:740}, {x:700, y:400}, {x:870, y:30}, {x:1100, y:100}, {x:870, y:320}, {x:1050, y:480}, {x:1200, y:420}, {x:800, y:520}, {x:1400, y:340}, {x:1350, y:970}, {x:900, y:980}, {x:1050, y:750}, {x:1300, y:650}, {x:1150, y:1020}]
+
+// To do this: draw to the svgs you need to, then convert to images and use the id of the respective img as the address to pass to game.load.image
+var scale = 0.25;
+Ecosystem.draw("tree", {"tar1":true, "tar2":true, "prop1":1, "prop2":1, "col3":"#0000ff"}, "blueTree", scale)
+
+var blueTreeImg = toImg("blueTree");
+
+// The above lines should be one function because it will be repeated many times
+
+
+function preload() {
+    game.load.image('background', 'assets/background.png')
+    game.load.image('player', 'assets/player.png')
+    game.load.image('rock', 'assets/rock.png')
+
+    game.load.image('blue tree', blueTreeImg)
+    game.load.image('green tree', 'assets/tree-green.png')
+    game.load.image('purple tree', 'assets/tree-purple.png')
+    game.load.image('apple', 'assets/apple.png')
+    game.load.image('lemon', 'assets/lemon.png')
+    game.load.image('grape', 'assets/grape.png')
+    
+    game.load.image('brown mountain', 'assets/mountains-brown.png')
+    game.load.image('green mountain', 'assets/mountains-green.png')
+    game.load.image('blue mountain', 'assets/mountains-blue.png')
+    game.load.image('cow', 'assets/cow.png')
+    game.load.image('chicken', 'assets/chicken.png')
+    game.load.image('pig', 'assets/pig.png')
+
+    game.load.image('blue pond', 'assets/pond-blue.png')
+    game.load.image('red pond', 'assets/pond-red.png')
+    game.load.image('green pond', 'assets/pond-green.png')
+    game.load.image('fish', 'assets/fish.png')
+    game.load.image('whale', 'assets/whale.png')
+    game.load.image('crab', 'assets/crab.png')
+}
+
+function create() {
+
+    game.physics.startSystem(Phaser.Physics.ARCADE)
+    game.add.tileSprite(0, 0, 1440, 1080, 'background');
+    game.world.setBounds(0, 0, 1440, 1080)
+
+    cursors = game.input.keyboard.createCursorKeys()
+
+    trees = game.add.group()
+    trees.enableBody = true
+
+    for (var i = 0; i < tree_list.length; i++){
+        var tree = trees.create(tree_list[i].x, tree_list[i].y, tree_list[i].color)
+        tree.body.immovable = true
+    }
+
+    for (var i = 0; i < trees.children.length; i++){
+        trees.children[i].fruitToSpawn = 3
+        trees.children[i].colorOfThisTree = tree_list[i].color
+    }
+
+    apples = game.add.group()
+    apples.enableBody = true
+
+    lemons = game.add.group()
+    lemons.enableBody = true
+
+    grapes = game.add.group()
+    grapes.enableBody = true
+
+    mountains = game.add.group()
+    mountains.enableBody = true
+
+    for (var i = 0; i < mountain_list.length; i++){
+        var mountain = mountains.create(mountain_list[i].x, mountain_list[i].y, mountain_list[i].color)
+        mountain.body.immovable = true
+    }
+
+    for (var i = 0; i < mountains.children.length; i++){
+        mountains.children[i].animalsToSpawn = 3
+        mountains.children[i].colorOfThisMountain = mountain_list[i].color
+    }
+
+    cows = game.add.group()
+    cows.enableBody = true
+
+    chickens = game.add.group()
+    chickens.enableBody = true
+
+    pigs = game.add.group()
+    pigs.enableBody = true
+
+    ponds = game.add.group()
+    ponds.enableBody = true
+
+    for (var i = 0; i < pond_list.length; i++){
+        var pond = ponds.create(pond_list[i].x, pond_list[i].y, pond_list[i].color)
+        pond.body.immovable = true
+    }
+
+    for (var i = 0; i < ponds.children.length; i++){
+        ponds.children[i].aquaticsToSpawn = 3
+        ponds.children[i].colorOfThisPond = pond_list[i].color
+    }
+
+    fishes = game.add.group()
+    fishes.enableBody = true
+
+    whales = game.add.group()
+    whales.enableBody = true
+
+    crabs = game.add.group()
+    crabs.enableBody = true
+
+    rocks = game.add.group()
+    rocks.enableBody = true
+
+    for (var i = 0; i < rock_list.length; i++){
+        var rock = rocks.create(rock_list[i].x, rock_list[i].y, 'rock')
+        rock.body.immovable = true
+    }
+
+    player = game.add.sprite(40, 40, 'player')
+    player.anchor.setTo(0.5, 0.5)
+    game.physics.arcade.enable(player)
+    player.body.collideWorldBounds = true
+    game.camera.follow(player)
+}
+
+function update() {
+
+    game.physics.arcade.overlap(player, rocks, collectItem, null, this)
+    game.physics.arcade.collide(rocks, rocks)
+    game.physics.arcade.collide(rocks, apples)
+    game.physics.arcade.collide(rocks, lemons)
+    game.physics.arcade.collide(rocks, grapes)
+    game.physics.arcade.collide(rocks, cows)
+    game.physics.arcade.collide(rocks, chickens)
+    game.physics.arcade.collide(rocks, pigs)
+    game.physics.arcade.collide(rocks, fishes)
+    game.physics.arcade.collide(rocks, whales)
+    game.physics.arcade.collide(rocks, crabs)
+
+    game.physics.arcade.collide(player, trees)
+    game.physics.arcade.overlap(rocks, trees, treeCollision, null, this)
+
+    game.physics.arcade.overlap(player, apples, collectItem, null, this)
+    game.physics.arcade.overlap(player, grapes, collectItem, null, this)
+    game.physics.arcade.overlap(player, lemons, collectItem, null, this)
+    game.physics.arcade.collide(apples, trees)
+    game.physics.arcade.collide(apples, mountains)
+    game.physics.arcade.collide(lemons, trees)
+    game.physics.arcade.collide(lemons, mountains)
+    game.physics.arcade.collide(grapes, trees)
+    game.physics.arcade.collide(grapes, mountains)
+
+    game.physics.arcade.overlap(apples, ponds, pondCollision, null, this)
+    game.physics.arcade.overlap(lemons, ponds, pondCollision, null, this)
+    game.physics.arcade.overlap(grapes, ponds, pondCollision, null, this)
+
+    game.physics.arcade.collide(player, mountains)
+    game.physics.arcade.overlap(rocks, mountains, mountainCollision, null, this)
+
+    game.physics.arcade.overlap(player, cows, collectItem, null, this)
+    game.physics.arcade.overlap(player, chickens, collectItem, null, this)
+    game.physics.arcade.overlap(player, pigs, collectItem, null, this)
+    game.physics.arcade.collide(cows, trees)
+    game.physics.arcade.collide(cows, mountains)
+    game.physics.arcade.collide(cows, ponds)
+    game.physics.arcade.collide(chickens, trees)
+    game.physics.arcade.collide(chickens, mountains)
+    game.physics.arcade.collide(chickens, ponds)
+    game.physics.arcade.collide(pigs, trees)
+    game.physics.arcade.collide(pigs, mountains)
+    game.physics.arcade.collide(pigs, ponds)
+
+    game.physics.arcade.collide(player, ponds)
+    game.physics.arcade.overlap(rocks, ponds, pondCollision, null, this)
+
+    game.physics.arcade.overlap(player, fishes, collectItem, null, this)
+    game.physics.arcade.overlap(player, whales, collectItem, null, this)
+    game.physics.arcade.overlap(player, crabs, collectItem, null, this)
+    game.physics.arcade.collide(fishes, trees)
+    game.physics.arcade.collide(fishes, mountains)
+    game.physics.arcade.collide(fishes, ponds)
+    game.physics.arcade.collide(whales, trees)
+    game.physics.arcade.collide(whales, mountains)
+    game.physics.arcade.collide(whales, ponds)
+    game.physics.arcade.collide(crabs, trees)
+    game.physics.arcade.collide(crabs, mountains)
+    game.physics.arcade.collide(crabs, ponds)
+
+    //  Reset the players velocity (movement)
+    player.body.velocity.x = 0
+    player.body.velocity.y = 0
+
+    if(cursors.left.isDown || cursors.right.isDown){
+    	if (cursors.left.isDown && cursors.right.isDown){
+    		player.body.velocity.x = 0
+    	} else if (cursors.left.isDown){
+    		player.body.velocity.x = -150
+            if (facing == 'right'){
+                facing = 'left'
+                player.scale.setTo(-1, 1)
+            }
+    	} else if (cursors.right.isDown){
+    		player.body.velocity.x = 150
+            if (facing == 'left'){
+                facing = 'right'
+                player.scale.setTo(1, 1)
+            }
+    	}
+    } else {
+    	player.body.velocity.x = 0
+    }
+
+    if(cursors.up.isDown || cursors.down.isDown){
+    	if (cursors.up.isDown && cursors.down.isDown){
+    		player.body.velocity.y = 0
+    	} else if (cursors.up.isDown){
+    		player.body.velocity.y = -150
+    	} else if (cursors.down.isDown){
+    		player.body.velocity.y = 150
+    	}
+    } else {
+    	player.body.velocity.y = 0
+    }
+}
+
+function treeCollision(rock, tree){
+    console.log("Tree collision")
+    socket.emit('action', 'shoot ' + tree.key)
+    rock.kill()
+    for (var i = 0; i < trees.children.length; i++){
+        if(trees.children[i].body.position.x == tree.x && trees.children[i].body.position.y == tree.y){
+            tree.x += 5
+            setTimeout(function(){
+                tree.x -= 5
+            }, 5)
+            setTimeout(function(){
+                tree.x += 5
+            }, 10)
+            setTimeout(function(){
+                tree.x -= 5
+            }, 15)
+            if(trees.children[i].fruitToSpawn > 0){
+                var color = trees.children[i].colorOfThisTree
+                var fruit = (condition == 'a') ? tree_fruit_pairings[color] : groups['fruits'][Math.floor(Math.random()*3)]
+                spawnObject(fruit, tree.x, tree.y+60, 1)
+                trees.children[i].fruitToSpawn -= 1
+            }
+        }
+    }
+}
+
+function mountainCollision(rock, mountain){
+    console.log("Mountain collision")
+    socket.emit('action', 'shoot ' + mountain.key)
+    rock.kill()
+    for (var i = 0; i < mountains.children.length; i++){
+        if(mountains.children[i].body.position.x == mountain.x && mountains.children[i].body.position.y == mountain.y){
+            mountain.x += 5
+            setTimeout(function(){
+                mountain.x -= 5
+            }, 5)
+            setTimeout(function(){
+                mountain.x += 5
+            }, 10)
+            setTimeout(function(){
+                mountain.x -= 5
+            }, 15)
+            if(mountains.children[i].animalsToSpawn > 0){
+            var color = mountains.children[i].colorOfThisMountain
+                var animal = (condition == 'a') ? mountain_animal_pairings[color] : groups['animals'][Math.floor(Math.random()*3)]
+                spawnObject(animal, mountain.x, mountain.y+40, 1)
+                mountains.children[i].animalsToSpawn -= 1
+            }
+        }
+    }
+}
+
+function pondCollision(item, pond){
+    console.log("Pond collision")
+    socket.emit('action', 'shoot ' + pond.key)
+    var numAquatics = 1
+    if(groups.fruits.indexOf(item.key) >= 0){
+        numAquatics = 3
+    }
+    item.kill()
+    for (var i = 0; i < ponds.children.length; i++){
+        if(ponds.children[i].body.position.x == pond.x && ponds.children[i].body.position.y == pond.y){
+            pond.x += 5
+            setTimeout(function(){
+                pond.x -= 5
+            }, 5)
+            setTimeout(function(){
+                pond.x += 5
+            }, 10)
+            setTimeout(function(){
+                pond.x -= 5
+            }, 15)
+            if(ponds.children[i].aquaticsToSpawn > 0){
+                var color = ponds.children[i].colorOfThisPond
+                var aquatic = (condition == 'a') ? pond_aquatic_pairings[color] : groups['aquatics'][Math.floor(Math.random()*3)]
+                spawnObject(aquatic, pond.x, pond.y+40, numAquatics)
+                ponds.children[i].aquaticsToSpawn -= numAquatics
+            }
+        }
+    }
+}
+
+function shootPocket(to_shoot){
+    if(pocket[to_shoot] > 0){
+        console.log("Shooting " + to_shoot)
+        socket.emit('action', 'shoot ' + to_shoot)
+        pocket[to_shoot] -= 1
+        var speed = (facing == 'right') ? 350 : -350
+        var offset = (facing == 'right') ? 30 : -80
+        var item
+        if(to_shoot == 'rock'){
+            item = rocks.create(player.x+offset, player.y, 'rock')
+        }else if(to_shoot == 'apple'){
+            item = apples.create(player.x+offset, player.y, 'apple')
+        }else if(to_shoot == 'lemon'){
+            item = lemons.create(player.x+offset, player.y, 'lemon')
+        }else if(to_shoot == 'grape'){
+            item = grapes.create(player.x+offset, player.y, 'grape')
+        }else if(to_shoot == 'cow'){
+            item = cows.create(player.x+offset, player.y, 'cow')
+        }else if(to_shoot == 'chicken'){
+            item = chickens.create(player.x+offset, player.y, 'chicken')
+        }else if(to_shoot == 'pig'){
+            item = pigs.create(player.x+offset, player.y, 'pig')
+        }else if(to_shoot == 'fish'){
+            item = fishes.create(player.x+offset, player.y, 'fish')
+        }else if(to_shoot == 'whale'){
+            item = whales.create(player.x+offset, player.y, 'whale')
+        }else if(to_shoot == 'crab'){
+            item = crabs.create(player.x+offset, player.y, 'crab')
+        }
+        item.body.velocity.x = speed
+        item.body.collideWorldBounds = true
+        if(groups.scoring_objects.indexOf(to_shoot) >= 0){
+            score -= 1
+        }
+        updatePocket()
+        //throw the item
+    }else{
+        console.log("Pocket devoid of " + item)
+        socket.emit('action', 'shoot empty ' + item)
+    }
+}
+
+function spawnObject(object, x, y, n){
+    for(var i = 0; i < n; i++){
+        if(object == 'apple'){
+            var apple = apples.create(x, y, 'apple')
+        }else if(object == 'lemon'){
+            var lemon = lemons.create(x, y, 'lemon')
+        }else if(object == 'grape'){
+            var grape = grapes.create(x, y, 'grape')
+        }else if(object == 'cow'){
+            var cow = cows.create(x, y, 'cow')
+        }else if(object == 'chicken'){
+            var chicken = chickens.create(x, y, 'chicken')
+        }else if(object == 'pig'){
+            var pig = pigs.create(x, y, 'pig')
+        }else if(object == 'fish'){
+            var fish = fishes.create(x, y, 'fish')
+        }else if(object == 'whale'){
+            var whale = whales.create(x, y, 'whale')
+        }else if(object == 'crab'){
+            var crab = crabs.create(x, y, 'crab')
+        }
+        y+= 50
+    }
+}
+
+function updatePocket(){
+    for(var i = 0; i < groups.pocket_objects.length; i++){
+        var object = groups.pocket_objects[i]
+        var photo_id = object + '-pic'
+        var label_id = object + '-num'
+        document.getElementById('score').innerHTML = "Score: " + score
+        if (pocket[object] > 0){
+            document.getElementById(photo_id).src = 'assets/' + object + '.png'
+            document.getElementById(label_id).innerHTML = pocket[object]
+        }else{
+            document.getElementById(photo_id).src = 'assets/empty.png'
+            document.getElementById(label_id).innerHTML = ''
+        }
+    }
+}
+
+function collectItem(player, item){
+    console.log("Collected: " + item.key)
+    socket.emit('action', 'get ' + item.key)
+    item.kill()
+    if(groups.scoring_objects.indexOf(item.key) >= 0){
+        score += 1
+        var score_box = document.getElementById("score box")
+        var score_label = document.getElementById("score")
+        score_box.style.border = '3px solid #FFFFFF'
+        score_label.style.color = '#FFFFFF'
+        setTimeout(function(){  
+            score_box.style.border = '3px solid #BF0000'
+            score_label.style.color = '#BF0000'
+        }, 500);
+    }
+    pocket[item.key] += 1
+    updatePocket()
+}
+
+</script>
+
+<p class="time-label" id="timelabel">Time remaining:</p>
+
+<div class="inventory-box">
+    <div class="pocket-image"><img id="rock-pic" src="assets/empty.png" onclick="shootPocket('rock')" style="width:30px;height:30px;"><p class="counter-label" id="rock-num" align="center"></p></div>
+    <div class="pocket-image"><img id="apple-pic" src="assets/empty.png" onclick="shootPocket('apple')" style="width:30px;height:30px;"><p class="counter-label" id="apple-num" align="center"></p></div>
+    <div class="pocket-image"><img id="lemon-pic" src="assets/empty.png" onclick="shootPocket('lemon')" style="width:30px;height:30px;"><p class="counter-label" id="lemon-num" align="center"></p></div>
+    <div class="pocket-image"><img id="grape-pic" src="assets/empty.png" onclick="shootPocket('grape')" style="width:30px;height:30px;"><p class="counter-label" id="grape-num" align="center"></p></div>
+    <div class="pocket-image"><img id="cow-pic" src="assets/empty.png" onclick="shootPocket('cow')" style="width:30px;height:30px;"><p class="counter-label" id="cow-num" align="center"></p></div>
+    <div class="pocket-image"><img id="chicken-pic" src="assets/empty.png" onclick="shootPocket('chicken')" style="width:30px;height:30px;"><p class="counter-label" id="chicken-num" align="center"></p></div>
+    <div class="pocket-image"><img id="pig-pic" src="assets/empty.png" onclick="shootPocket('pig')" style="width:30px;height:30px;"><p class="counter-label" id="pig-num" align="center"></p></div>
+    <div class="pocket-image"><img id="fish-pic" src="assets/empty.png" onclick="shootPocket('fish')" style="width:30px;height:30px;"><p class="counter-label" id="fish-num" align="center"></p></div>
+    <div class="pocket-image"><img id="whale-pic" src="assets/empty.png" onclick="shootPocket('whale')" style="width:30px;height:30px;"><p class="counter-label" id="whale-num" align="center"></p></div>
+    <div class="pocket-image"><img id="crab-pic" src="assets/empty.png" onclick="shootPocket('crab')" style="width:30px;height:30px;"><p class="counter-label" id="crab-num" align="center"></p></div>
+</div>
+
+<div class="score-box" id="score box"> 
+    <div class="score"><p class="score-label" align="center" id="score">Score: 0</p></div>
+</div>
+
+</body>
+</html>
