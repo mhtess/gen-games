@@ -1,7 +1,3 @@
-//draws to img1 which is an svg file
-// var scale = 0.5;
-// Ecosystem.draw("tree", {"tar1":true, "tar2":true, "prop1":1, "prop2":1}, "img1", scale)
-
 var toImg = function(original) {
 	//converts
 	function svgDataURL(svg) {
@@ -17,10 +13,6 @@ var toImg = function(original) {
 
 	targetImage.src = svgDataURL(svg);
 
-	//console.log("!" + newPic)
-
-	// targetImage.width = can.width
-	// targetImage.height = can.height
 	loader.width = can.width
 	loader.height = can.height
 
@@ -30,9 +22,6 @@ var toImg = function(original) {
 	}
 
 	loader.src = svgDataURL(svg)
-	// targetImage.style.display = "none"
 
 	return loader.src
 }
-
-// toImg("img1")

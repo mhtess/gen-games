@@ -65,22 +65,14 @@
 </head>
 <body>
 
-<!-- <div id='testdiv'></div> -->
-<svg id="blueTree"></svg>
-<img id="blueTreeImg"></img>
+<div id='testdiv'></div>
 
 <!-- To do this: write svg and img versions of every ecosystem thing in HTML -->
 
 
 <script type="text/javascript">
-//
-// var treeSVG = document.createElement("svg");
-// treeSVG.setAttribute("id", "blueTree")
-// var treeIMG = document.createElement("img");
-// treeIMG.setAttribute("id", "blueTreeImg")
-// var element = document.getElementById("testdiv");
-// element.appendChild(treeSVG);
-// element.appendChild(treeIMG);
+
+
 
 var socket = io('/game-nsp')
 
@@ -190,13 +182,19 @@ var mountain_list = [{x:1200, y:740, color:'green mountain'}, {x:700, y:750, col
 
 var rock_list = [{x:100, y:0}, {x:400, y:30}, {x:180, y:150}, {x:320, y:180}, {x:400, y:400}, {x:30, y:1000}, {x:250, y:880}, {x:500, y:650}, {x:60, y:550}, {x:680, y:1000}, {x:200, y:740}, {x:700, y:400}, {x:870, y:30}, {x:1100, y:100}, {x:870, y:320}, {x:1050, y:480}, {x:1200, y:420}, {x:800, y:520}, {x:1400, y:340}, {x:1350, y:970}, {x:900, y:980}, {x:1050, y:750}, {x:1300, y:650}, {x:1150, y:1020}]
 
+
+var treeIMG = document.createElement("img");
+treeIMG.id='blueTreeImg';
+var element = document.getElementById("testdiv");
+$('#testdiv').append("<svg id='blueTree'></svg>")
+element.appendChild(treeIMG);
+$('#testdiv').hide()
 // To do this: draw to the svgs you need to, then convert to images and use the id of the respective img as the address to pass to game.load.image
-var scale = 0.25;
+
+
+var scale = 0.23;
 Ecosystem.draw("flower", {"tar1":true, "tar2":true, "prop1":1, "prop2":1, "col3":"#0000ff"}, "blueTree", scale)
-
 var blueTreeImg = toImg("blueTree");
-
-// The above lines should be one function because it will be repeated many times
 
 
 function preload() {
