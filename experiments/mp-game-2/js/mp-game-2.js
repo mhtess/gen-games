@@ -79,7 +79,7 @@ function make_slides(f) {
       this.creat_type = this.shuffledCritters[0]["genus"];
 
       // This generates all the critters
-      globalGame.presentRows = 3;
+      globalGame.presentRows = 2;
       globalGame.presentCols = globalGame.trainN/globalGame.presentRows;
       create_table(globalGame.presentRows,globalGame.presentCols,"critter_display");
 
