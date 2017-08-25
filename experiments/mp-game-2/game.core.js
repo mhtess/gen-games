@@ -471,10 +471,10 @@ var game_core = function(options){
     // console.log(JSON.stringify(aOrder[0][0]))
 
     // this is switched so the they will get tested on the information their partner relayed to them
-    // this.testList = {
-    //   playerA: null,//bTest,
-    //   playerB: null//aTest
-    // };
+    this.testList = {
+      playerA: bOrder,
+      playerB: aOrder
+    };
     //
     // this.testList["playerA"] = _.shuffle(fillArray(this.numRounds/2, bTest).concat(fillArray(this.numRounds/2, aTest)))
     // for(var i = 0; i < this.testList["playerA"].length; i++) {
