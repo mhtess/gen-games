@@ -213,7 +213,7 @@ var customSetup = function(game) {
       // only role2 gets to see Continue button and press Continue
       console.log("dies here")
       var continueButton = document.getElementById("chatCont")
-      var nSecondsTimeOut = 3;
+      var nSecondsTimeOut = 1;
       setTimeout(function() { $("#chatCont").show() }, nSecondsTimeOut*1000)
       continueButton.addEventListener("click", buttonClickListener, false);
     }
@@ -245,7 +245,7 @@ var customSetup = function(game) {
           score_role="other";
           role_index=partner_role;
         }
-        var player_score = Number(data[role_index][ind].hits) + Number(data[role_index][ind].correctRejections);
+        var player_score = Number(data[role_index][ind].hit) + Number(data[role_index][ind].correctRejection);
         $('#'+score_role+'_score').html(player_score);
         totalScore += player_score;
         // console.log("Total Score: " + totalScore);
