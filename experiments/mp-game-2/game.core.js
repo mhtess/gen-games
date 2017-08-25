@@ -117,10 +117,30 @@ var game_core = function(options){
     // bug: {antennae: "tar1", wings: "tar2", headSize: "prop1", bodySize: "prop2"},
     // fish: {fangs: "tar1", whiskers: "tar2", bodySize: "prop1", tailSize: "prop2"},
     // flower: {thorns: "tar1", spots: "tar2", centerSize: "prop1", petalLength: "prop2"}
-    bird: {tar1: "tail", tar2: "crest", prop1: "height", prop2: "fatness"},
-    bug: {tar1: "antennae", tar2: "wings", prop1: "headSize", prop2: "bodySize"},
-    fish: {tar1: "fangs", tar2: "whiskers", prop1: "bodySize", prop2: "tailSize"},
-    flower: {tar1: "thorns", tar2: "spots", prop1: "centerSize", prop2: "petalLength"}
+    bird: {
+      tar1: {name: "tail", values: [0, 1]},
+      tar2:  {name: "crest", values: [0, 1]},
+      prop1:  {name: "height", values: [0, 1]},
+      prop2:  {name: "fatness", values: [0, 1]}
+    },
+    bug: {
+      tar1:  {name: "antennae", values: [0, 1]},
+      tar2:  {name: "wings", values: [0, 1]},
+      prop1:  {name: "headSize", values: [0, 1]},
+      prop2:  {name: "bodySize", values: [0, 1]}
+    },
+    fish: {
+      tar1:  {name: "fangs", values: [0, 1]},
+      tar2:  {name: "whiskers", values: [0, 1]},
+      prop1:  {name: "bodySize", values: [0, 0.8]},
+      prop2:  {name: "tailSize", values: [0, 1]}
+    },
+    flower: {
+      tar1:  {name: "thorns", values: [0, 1]},
+      tar2:  {name: "spots", values: [0, 1]},
+      prop1:  {name: "centerSize", values: [0, 1]},
+      prop2:  {name: "petalLength", values: [0, 1]}
+    }
   }
 
   // allows us to write (and record) what color we want without needing hex codes
@@ -193,9 +213,20 @@ var game_core = function(options){
       var labeled = (labelPositiveOrNegative == j)
 
       for (var i = 0; i < categoryExemplars.length; i++){ // loop over each exemplar
+
         var basicOptions = _.clone(this.defaultCritterOptions);
         var featureValues = categoryExemplars[i]; // e.g., [1, 0, 0]
-        var featureObj = _.fromPairs(_.zip(featureOrder, featureValues)); // e.g., {tar1: 1, tar2: 0, prop1: 0}
+        var featureValuePairs = _.zip(featureOrder, featureValues);
+        var featurePairs = [];
+
+        for (k = 0; k < featureValuePairs.length; k++){
+          var featureValPair = featureValuePairs[k];
+          var feature = featureValPair[0], val = featureValPair[1];
+          featurePairs.push(
+            [feature, this.booleanFeatures[genus][feature]["values"][val]]
+          )
+        }
+        var featureObj = _.fromPairs(featurePairs); // e.g., {tar1: 1, tar2: 0, prop1: 0}
 
         blockOfStims.push(_.assign(basicOptions,
           featureObj,
@@ -212,6 +243,7 @@ var game_core = function(options){
       }
 
     }
+    // console.log(blockOfStims)
     return blockOfStims
   }
 
@@ -406,8 +438,8 @@ var game_core = function(options){
     // needs to be generalized
     // determines what critters will be used and who sees what when
     var critterOrders = {
-      A: ["fish", "bug", "tree", "bird"],
-      B: ["tree", "bird", "fish", "bug"]
+      A: ["fish", "bug", "flower", "bird"],
+      B: ["flower", "bird", "fish", "bug"]
     }
 
     var aOrder = [], bOrder = [];
@@ -429,7 +461,7 @@ var game_core = function(options){
 
     }
 
-    // console.log(aOrder)
+    // console.log(aOrder[0])
     // assigns the critters to their respective players
     this.trialList = {
       playerA: aOrder,

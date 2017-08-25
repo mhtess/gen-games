@@ -147,7 +147,7 @@ slides.learning_instructions = slide({
       case 'bird': case 'bug':
       $("#learning_instructs").html(globalGame.task_welcome_critter["bird_bug"]);
       break;
-      case 'tree': case 'fish':
+      case 'flower': case 'fish':
       $("#learning_instructs").html(globalGame.task_welcome_critter["tree_fish"]);
       break;
     }
@@ -163,8 +163,9 @@ slides.test_instructions = slide({
     // send signal to server to send stimuli
     globalGame.socket.send("enterSlide.test_critters.");
 
-    this.creat_type = exp.slides.test_critters.crittersFromServer
-[0]["genus"];
+    // this.creat_type = exp.slides.test_critters.crittersFromServer
+// [0]["genus"];
+
   $('#test_instructs').html(
     "<br>On the next slide, click on the <strong>" +
     exp.slides.test_critters.crittersFromServer
