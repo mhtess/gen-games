@@ -25,3 +25,24 @@ var toImg = function(original) {
 
 	return loader.src
 }
+
+// call this with blueTree to get blueTreeImg and blueTreeSvg created
+var generateJS = function(idPrefix) {
+	var imgID = idPrefix + "Img";
+	var svgID = idPrefix + "Svg"; 
+
+	var imgElement = document.createElement("img");
+	imgElement.id=imgID;
+	var element = document.getElementById("testdiv");
+	$('#testdiv').append("<svg id='blueTree'></svg>")
+	element.appendChild(imgElement);
+	
+}
+
+var createGameCritters = function(name, species, properties) {
+	generateJS(name);
+	var scale = 0.23;
+	Ecosystem.draw(species, properties, name, scale)
+	return toImg(name);
+}
+
