@@ -1,7 +1,6 @@
 # Game 2
 
 ## Structure
-- Only uses experiment template
 1. Slide with all critters on it
 1. Uses CritterDex for all conditions
 1. Learning trials: creature, click use Dex -> name, note to remember
