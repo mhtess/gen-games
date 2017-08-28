@@ -184,7 +184,7 @@ var rock_list = [{x:100, y:0}, {x:400, y:30}, {x:180, y:150}, {x:320, y:180}, {x
 
 
 
-var blueTreeImg = createGameCritters("blueTree", "flower", {"tar1":true, "tar2":true, "prop1":1, "prop2":1, "col3":"#0000ff"})
+var blueBirdImg = createGameCritters("blueBird", "bird", {"tar1":0, "tar2":0, "prop1":0, "prop2":0, "col2":color_dict["blue"]})
 
 
 function preload() {
@@ -192,7 +192,7 @@ function preload() {
     game.load.image('player', 'assets/player.png')
     game.load.image('rock', 'assets/rock.png')
 
-    game.load.image('blue tree', blueTreeImg)
+    game.load.image('blue tree', blueBirdImg)
     game.load.image('green tree', 'assets/tree-green.png')
     game.load.image('purple tree', 'assets/tree-purple.png')
     game.load.image('apple', 'assets/apple.png')
