@@ -4,7 +4,7 @@
 
 ## Emanates from `mp-game.js` file
 
-1. ##### Update `gc.currentSlide`
+1. **Update `gc.currentSlide`**
 - When either user enters a new slide there is a `.send`
   - In each of the `start` fn’s on important slides
   - e.g. `globalGame.socket.send("enterSlide.instructions.")`
