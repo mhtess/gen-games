@@ -219,16 +219,16 @@ var customSetup = function(game) {
     }
   });
 
-  game.socket.on('enterTestPage', function(data){
-    exp.slides.test_critters.crittersFromServer = data.thisRoundTest;
-    exp.slides.learning_critters.crittersFromServer = data.nextRoundLearning;
-    exp.go();
-  });
+  // game.socket.on('enterTestPage', function(data){
+  //   exp.slides.test_critters.crittersFromServer = data.thisRoundTest;
+  //   exp.slides.learning_critters.crittersFromServer = data.nextRoundLearning;
+  //   exp.go();
+  // });
 
+  // Creates the score reports for the players
   game.socket.on('sendingTestScores', function(data){
     console.log("sendingTestScores");
     console.log("scores: " + JSON.stringify(data));
-    //console.log("this does what I want: " + data["playerA"][0].hits);
     //exp.slides.test_critters.crittersFromServer = data.thisRoundTest;
     enterScoreReport++;
     if(enterScoreReport % 2 == 0){ //hacky way to handle error thrown when only one player finishes the test
