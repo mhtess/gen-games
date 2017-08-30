@@ -20,11 +20,12 @@
 4. `globalGame.socket.send("sendingTestScores." + globalGame.my_role + "." + {data})`
   - in `slides.test_critters`, on `button()` call
   - in `game.server.js`: `onMessage()`
-    - add `{data}` to `gc.testScores` for that player
-    - `p.player.instance.emit("sendingTestScores", gc.testScores)`
+    - push `{data}` to `gc.testScores` for that player
+    - for each player: `p.player.instance.emit("sendingTestScores", gc.testScores)`
   - in `game.client.js`: `game.socket.on('sendingTestScores', fn)
-    - computes player's score for that round (e.g., hits + correct rejections)
-    - displays score in html
+    - if this is the second time this is called (because the slower player has completed test):
+      - compute each player's score for that round (e.g., hits + correct rejections)
+      - display each player's score in client's html
 
 5. ##### Collect data to the `logScores` key in the `dataOutput` object
 - After all the individual critter scores from the test phase are done being sent
