@@ -1,0 +1,71 @@
+##### Event
+- Trigger
+  - Command
+
+## Emanates from `mp-game.js` file
+
+1. ##### Update `gc.currentSlide`
+- When either user enters a new slide there is a `.send`
+  - In each of the `start` fn’s on important slides
+  - e.g. `globalGame.socket.send("enterSlide.instructions.")`
+
+2. ##### Collect data to the `logTrain` key in the `dataOutput` object
+- After all the critters are generated and the player clicks to complete the learning slide
+  - `globalGame.socket.send("logTrain.learnCritters." + {data})`
+
+Collecting data to the logTest key in the dataOutput object
+After a player selects the critters in the test phase and hits continue
+globalGame.socket.send("logTest.testCritters." + {data})
+
+Server: adds the total score to gc.testScores for that player
+Client: creates the score reports for the players
+Has total scores for current player and is sent after test phase is finished
+globalGame.socket.send("sendingTestScores." + globalGame.my_role + "." + {data})
+
+Collecting data to the logScores key in the dataOutput object
+After all the individual critter scores from the test phase are done being sent
+globalGame.socket.send("logScores.score_report." + _.pairs(blockScores).join('.'));
+
+Server: shows wait message until both are in the chatroom
+Client: When both players have sent enterslide chatroom, they may send messages and the waiting message is hidden
+When a player enters the chatroom
+ globalGame.socket.send("enterChatRoom.");
+
+Server: ensures what happens below happens for both players
+Client: calculates the total reward and console.logs it
+When player moves to subject info screen
+globalGame.socket.send("calculatingReward.")
+
+Collecting data to the logSubjInfo key in the dataOutput object
+When a player hits submit on their subject info survey
+globalGame.socket.send("logSubjInfo.subjInfo." + _.pairs(encodeData(exp.subj_data)).join('.'));
+
+Only between server and client js files
+Server: Moves to the next slide and collects data to packet
+Client: updats crittersFromServer and roundNum
+When playerB clicks the chatroom continue button
+p.player.instance.emit("exitChatRoom", dataPacket)
+
+Clears chatboxes, update round number
+When playerB clicks the chatroom continue button
+ p.player.instance.emit('newRoundUpdate', {user: client.userid});
+
+Results in "other player is typing" on others' chatboxes
+When a player is typing into the chatbox
+p.player.instance.emit( 'playerTyping', {typing: message_parts[1]});
+
+Server: will only allow the message to be sent if both players are in the room
+When a player sends a message
+p.player.instance.emit( 'chatMessage', {user: client.userid, msg: msg});});
+
+Client only: ensures one player can’t type into the chatroom, shows wait message
+Only one player is in the chatroom
+target.instance.emit("chatWait", {})
+
+Client only: “Connected” pops up in the player who got to the wait room first, moves both players to the next slide
+When both players are in the wait room
+p.player.instance.emit("enterWaitRoom", {})
+
+Updates roundNum and the data packet
+When playerB continues out of the chatroom
+globalGame.socket.send("clickedObj.");
