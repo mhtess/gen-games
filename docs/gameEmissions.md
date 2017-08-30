@@ -26,8 +26,9 @@
 - After all the individual critter scores from the test phase are done being sent
   - globalGame.socket.send("logScores.score_report." + _.pairs(blockScores).join('.'));
 
-6. ##### Server: shows wait message until both are in the chatroom
-    ##### Client: When both players have sent enterslide chatroom, they may send messages and the waiting message is hidden
+6a. **Server: shows wait message until both are in the chatroom**
+
+6b. **Client: When both players have sent enterslide chatroom, they may send messages and the waiting message is hidden**
 - When a player enters the chatroom
   - globalGame.socket.send("enterChatRoom.");
 
