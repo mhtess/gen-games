@@ -22,7 +22,7 @@
   - in `game.server.js`: `onMessage()`
     - push `{data}` to `gc.testScores` for that player
     - for each player: `p.player.instance.emit("sendingTestScores", gc.testScores)`
-  - in `game.client.js`: `game.socket.on('sendingTestScores', fn)
+  - in `game.client.js`: `game.socket.on('sendingTestScores', fn)`
     - if this is the second time this is called (because the slower player has completed test):
       - compute each player's score for that round (e.g., hits + correct rejections)
       - display each player's score in client's html
