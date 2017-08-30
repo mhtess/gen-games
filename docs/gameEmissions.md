@@ -17,10 +17,14 @@
 - After a player selects the critters in the test phase and hits continue
   - `globalGame.socket.send("logTest.testCritters." + {data})`
 
-4. ##### Server: add the total score to `gc.testScores` for that player
-    ##### Client: create the score reports for the players
-- Has total scores for current player and is sent after test phase is finished
-  - `globalGame.socket.send("sendingTestScores." + globalGame.my_role + "." + {data})`
+4. `globalGame.socket.send("sendingTestScores." + globalGame.my_role + "." + {data})`
+  - in `slides.test_critters`, on `button()` call
+  - in `game.server.js`: `onMessage()`
+    - add `{data}` to `gc.testScores` for that player
+    - `p.player.instance.emit("sendingTestScores", gc.testScores)`
+  - in `game.client.js`: `game.socket.on('sendingTestScores', fn)
+    - computes player's score for that round (e.g., hits + correct rejections)
+    - displays score in html
 
 5. ##### Collect data to the `logScores` key in the `dataOutput` object
 - After all the individual critter scores from the test phase are done being sent
