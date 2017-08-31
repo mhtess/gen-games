@@ -76,14 +76,13 @@
 
 ## Only between server and client js files
 10. `p.player.instance.emit("exitChatRoom", dataPacket)`
-     Client: update `crittersFromServer` and `roundNum`
 - When playerB clicks the chatroom continue button
   - in `game.server.js`: `onMessage()`
     - in `clickedObj` (chat continue)
       - For each player: `p.player.instance.emit("exitChatRoom", dataPacket)`
         - Move to the next slide and collect data to packet
   - in `game.client.js`: `customSetup(game)`
-    - update `crittersFromServer` and `roundNum`
+    - update critters from server for the upcoming test critters and next learning critters; and update `roundNum`
 
 11. `p.player.instance.emit('newRoundUpdate', {user: client.userid});` 
 - When playerB clicks the chatroom continue button
