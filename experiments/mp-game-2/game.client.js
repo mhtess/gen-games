@@ -129,7 +129,7 @@ var client_onMessage = function(data) {
 // };
 
 // Set up new round on client's browsers after submit round button is pressed.
-// This means clear the chatboxes, update round number, and update score on screen
+// This means clear the chatboxes, update round number
 var customSetup = function(game) {
   game.socket.on('newRoundUpdate', function(data){
     $('#chatbox').removeAttr("disabled");
@@ -138,11 +138,9 @@ var customSetup = function(game) {
     $('#roundnumber').empty();
   });
 
-  // here we will want to set the subject's stimuli (that are coming in data) to be what gets presented.
-  // this may be able to be done by modifying the slides e.g., exp.slides.learning_trial.present
+  // update critters from server for the upcoming test critters and next learning critters
   game.socket.on('exitChatRoom', function(data){
     console.log("exitChatRoom")
-    // console.log(data)
     exp.slides.test_critters.crittersFromServer = data.thisRoundTest;
     exp.slides.learning_critters.crittersFromServer = data.nextRoundLearning;
 
@@ -211,7 +209,6 @@ var customSetup = function(game) {
     // set mouse-tracking event handler
     if (globalGame.my_role === globalGame.playerRoleNames.role2) {
       // only role2 gets to see Continue button and press Continue
-      console.log("dies here")
       var continueButton = document.getElementById("chatCont")
       var nSecondsTimeOut = 1;
       setTimeout(function() { $("#chatCont").show() }, nSecondsTimeOut*1000)
@@ -219,18 +216,13 @@ var customSetup = function(game) {
     }
   });
 
-  // game.socket.on('enterTestPage', function(data){
-  //   exp.slides.test_critters.crittersFromServer = data.thisRoundTest;
-  //   exp.slides.learning_critters.crittersFromServer = data.nextRoundLearning;
-  //   exp.go();
-  // });
-
   // Creates the score reports for the players
   game.socket.on('sendingTestScores', function(data){
     console.log("sendingTestScores");
     console.log("scores: " + JSON.stringify(data));
     //exp.slides.test_critters.crittersFromServer = data.thisRoundTest;
     enterScoreReport++;
+    // only works when both players have reached this, then it generates scores for both players
     if(enterScoreReport % 2 == 0){ //hacky way to handle error thrown when only one player finishes the test
       var ind = (enterScoreReport / 2) - 1;
       var my_role = globalGame.my_role;

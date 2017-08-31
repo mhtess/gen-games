@@ -121,9 +121,6 @@ var onMessage = function(client,message) {
       }
       break;
 
-    case 'logResponse' :
-       break
-
     // Receive message when browser focus shifts
     case 'h' :
       target.visible = message_parts[1];
@@ -197,8 +194,9 @@ var dataOutput = function() {
     return _.fromPairs(_.map(m_data, function(i){return i.split(',')}))
   }
 
+  // takes the data sent from client and packages it into logResponseOutput 
   var logResponseOutput = function(client, message_data) {
-    // message_data contrains the flattened JSON object with test trial info.
+    // message_data contrains the flattened JSON object with learning/test trial info.
     return _.extend(
       commonOutput(client, message_data),
       decodeData(flattenedArrayToObj(message_data.slice(2)))

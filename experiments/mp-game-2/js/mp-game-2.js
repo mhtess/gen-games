@@ -1,4 +1,4 @@
-// To add a slide to experiment structure (to ensure it shows up) proceed to line 337
+// To add a slide to experiment structure (to ensure it shows up) proceed to line 392
 
 var roleDictionary = {
   playerA: "Player A",
@@ -10,6 +10,7 @@ function make_slides(f) {
   var   slides = {};
 
   // Information page - legal and about the experiment
+  // Only function is to keep track of time; we will know how long the experiment took
   slides.i0 = slide({
     name : "i0",
     start: function() {
@@ -60,7 +61,7 @@ function make_slides(f) {
     name : "learning_critters",
     crittersFromServer : "",
     start : function(stim) {
-
+      globalGame.socket.send("enterSlide.learning_critters.");
       // The hide / show is so we can put more specific (to which critter they see) instructions
       // Note: do we need all these show() statements?
       $("#welcome").show();
