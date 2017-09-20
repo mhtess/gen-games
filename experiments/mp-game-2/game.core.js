@@ -121,25 +121,29 @@ var game_core = function(options){
       tar1: {name: "tail", values: [0, 1]},
       tar2:  {name: "crest", values: [0, 1]},
       prop1:  {name: "height", values: [0, 1]},
-      prop2:  {name: "fatness", values: [0, 1]}
+      prop2:  {name: "fatness", values: [0, 1]},
+      booleanProperty: "tar1",
     },
     bug: {
       tar1:  {name: "antennae", values: [0, 1]},
       tar2:  {name: "wings", values: [0, 1]},
       prop1:  {name: "headSize", values: [0, 1]},
-      prop2:  {name: "bodySize", values: [0, 1]}
+      prop2:  {name: "bodySize", values: [0, 1]},
+      booleanProperty: "tar2"
     },
     fish: {
       tar1:  {name: "fangs", values: [0, 1]},
       tar2:  {name: "whiskers", values: [0, 1]},
       prop1:  {name: "bodySize", values: [0, 0.8]},
-      prop2:  {name: "tailSize", values: [0, 1]}
+      prop2:  {name: "tailSize", values: [0, 1]},
+      booleanProperty: "tar2"
     },
     flower: {
       tar1:  {name: "thorns", values: [0, 1]},
       tar2:  {name: "spots", values: [0, 1]},
       prop1:  {name: "centerSize", values: [0, 1]},
-      prop2:  {name: "petalLength", values: [0, 1]}
+      prop2:  {name: "petalLength", values: [0, 1]},
+      booleanProperty: "tar1"
     }
   }
 
@@ -158,7 +162,8 @@ var game_core = function(options){
   }
 
   this.colorOptions = _.keys(this.color_dict);
-  this.threeFeatures = ["tar1","tar2","prop1"]
+  // this.threeFeatures = ["tar1","tar2","prop1"];
+  this.threeFeatures = ["property","size", "colors"];
 
   this.allBinaryPossibilities = [
     [0,0,0], [0,0,1], [0,1,0], [0,1,1],
@@ -200,12 +205,16 @@ var game_core = function(options){
   this.generateBlock = function(positiveExamples, genus){
     var negativeExamples = this.getComplementConcept(positiveExamples); // subtract positiveExamples from allBinaryPossibilities
     var featureOrder = _.shuffle(this.threeFeatures); // randomize what creature features correspond to the boolean slots e.g., [1,0,0]
+    // console.log(featureOrder)
+
     var labelPositiveOrNegative = (0.5 > Math.random()) ? 1 : 0; // does the label get assigned to the "positive examples" or "negative examples"?
     var categoryLabelInfo = this.ourCreatNames.pop();
     var categoryLabel = categoryLabelInfo.exemplar; // a name (e.g., wug)
     var categoryPluralLabel = categoryLabelInfo.category;
 
-    var colorName = _.shuffle(this.colorOptions).pop(); // a color name (e.g., "blue") [all exemplars will be of the same color]
+    // var colorName = _.shuffle(this.colorOptions).pop(); // a color name (e.g., "blue") [all exemplars will be of the same color]
+    var colorNames = _.shuffle(this.colorOptions).slice(0, 2); // two color names
+
     var blockOfStims = [];
     for (var j = 0; j < 2; j++){ // loop over positive and negative examples
       var categoryExemplars = [positiveExamples, negativeExamples][j];
@@ -216,170 +225,38 @@ var game_core = function(options){
 
         var basicOptions = _.clone(this.defaultCritterOptions);
         var featureValues = categoryExemplars[i]; // e.g., [1, 0, 0]
-        var featureValuePairs = _.zip(featureOrder, featureValues);
+        var featureValuePairs = _.zip(featureOrder, featureValues); // featureOrder is now ["color","size","property"]
         var featurePairs = [];
-
-        for (k = 0; k < featureValuePairs.length; k++){
+        for (k = 0; k < featureValuePairs.length; k++){ // loop over 3 boolean features
           var featureValPair = featureValuePairs[k];
           var feature = featureValPair[0], val = featureValPair[1];
-          featurePairs.push(
-            [feature, this.booleanFeatures[genus][feature]["values"][val]]
-          )
+
+          if (feature == "size") {
+            featureKey = ["prop1"];
+            featureVals = [this.booleanFeatures[genus][featureKey]["values"][val]]
+          } else if (feature == "property") {
+            featureKey = [this.booleanFeatures[genus]["booleanProperty"]];
+            featureVals = [this.booleanFeatures[genus][featureKey]["values"][val]]
+          } else if (feature == "colors") {
+            featureKey = ["col1", "col2", "col3", "col4", "col5"]
+            // console.log(val)
+            this.colorName = colorNames[val]
+            featureVals = fillArray(5, this.color_dict[this.colorName])
+          }
+          // loop over each color bodypart
+          for (c = 0; c < featureVals.length; c++){
+            featurePairs.push([featureKey[c], featureVals[c]])
+          }
         }
         var featureObj = _.fromPairs(featurePairs); // e.g., {tar1: 1, tar2: 0, prop1: 0}
-
-        blockOfStims.push(_.assign(basicOptions,
-          featureObj,
-          { categoryLabel, categoryPluralLabel,
-            labeled, colorName, genus },
-          _.fromPairs(_.zip(
-            ["col1", "col2", "col3", "col4", "col5"],
-            fillArray(5, this.color_dict[colorName])
-            )
-          )
-          )
+        _.assign(basicOptions, featureObj,
+          { categoryLabel, categoryPluralLabel, labeled, colorName: this.colorName, genus }
         )
-
+        blockOfStims.push(basicOptions)
       }
-
     }
-    // console.log(blockOfStims)
     return blockOfStims
   }
-
-  // {
-  //  "col1": creatureColor["color"][localCounter],
-  //  "col2": creatureColor["color"][localCounter],
-  //  "col3": creatureColor["color"][localCounter] == null ? null : creatureColor["color"][localCounter] ,
-  //  "col4": creatureColor["color"][localCounter] == null ? null : creatureColor["color"][localCounter],
-  //  "col5": creatureColor["color"][localCounter] == null ? null : creatureColor["color"][localCounter],
-  //  "prop1": creatOpts.prop1 == null ? utils.randProp() : creatOpts.prop1,
-  //  "prop2": creatOpts.prop2 == null ? utils.randProp() : creatOpts.prop2,
-  //  "tar1": utils.flip(creatOpts.tar1),
-  //  "tar2": utils.flip(creatOpts.tar2),
-  //  "tar3": utils.flip(creatOpts.tar3),
-  //  "creatureName": uniqueCreatures[i],
-  //  "critter" : creatureCategory,
-  //  "stimID": j,
-  //  "internal_prop": n_with_feature[j % this.exemplarN],
-  //  "internalFeature_probs": internalFeature_probs[i],
-  //  "internalFeature_dist" : internalFeature_probs.join(','),
-  //  "meanColorName": _.invert(this.color_dict)[creatureColor["creatureColorNames"][localCounter]],
-  //  "creatureOpts": creatureOpts, //?
-  //  // "critter_full_info": creatOpts
-  // }
-
-
-  // this.speciesFeatureParams = {
-  //   "bird": [
-  //     [{prop1: 0, prop2: 0}, {tar1: 0, tar2: 0}],
-  //     [{prop1: 0.8, prop2: 0.8}, {tar1: 1, tar2: 1}]
-  //   ],
-  //   "bug": [
-  //     [{prop1: 0, prop2: 0}, {tar1: 0, tar2: 0}],
-  //     [{prop1: 0.8, prop2: 0.8}, {tar1: 1, tar2: 1}]
-  //   ],
-  //   "fish":[
-  //     [{prop1: 0, prop2: 0}, {tar1: 0, tar2: 0}],
-  //     [{prop1: 0.8, prop2: 0.8}, {tar1: 1, tar2: 1}]
-  //   ],
-  //   "tree": [
-  //     [{prop1: 0.2, prop2: 0.2}, {tar1: 0, tar2: 0}],
-  //     [{prop1: 0.8, prop2: 0.8}, {tar1: 0, tar2: 0}]
-  //   ],
-  // }
-
-
-  // 4 rounds, 3 categories per round
-  // assuming each property is boolean
-  // tar is a feature (e.g., whiskers)
-  // prop is shape / size (e.g., fat)
-
-
-  // this.createDeterministicColorArray = function(colorLabel){
-  //   return [{p:1, mean: colorLabel}, {p:0, mean: colorLabel}]
-  // }
-  //
-  // this.distributions = {
-  //   internal:  [
-  //       [0, 0, 1],
-  //       [0.5, 0.5, 0.5],
-  //       [0, 0.75, 1],
-  //       [0, 0.25, 1]
-  //     ],
-  //   colors: []
-  //   // _.map(_.range(this.numRounds * 2), function(i){
-  //   //   return _.map(_.shuffle(this.colorOptions).slice(0, 3), this.createDeterministicColorArray)
-  //   // })
-  //     // [{p:1, mean: "blue"}, {p:0, mean: "blue"}],
-  //     // [{p:1, mean: "yellow"}, {p:0, mean: "yellow"}],
-  //     // [{p:1, mean: "red"}, {p:0, mean: "red"}]
-  // //  ]
-  //   // tar1: [
-  //   //
-  //   // ],
-  //   // tar2: [
-  //   //
-  //   // ],
-  //   // prop1: [
-  //   //
-  //   // ],
-  //
-  //   // prop2: [
-  //   //
-  //   // ]
-  // }
-
-  // for (i = 0; i < this.numRounds * 2; i++){
-  //   this.distributions.colors.push(
-  //     _.map(
-  //       _.shuffle(this.colorOptions).slice(0, this.creatureTypesN), this.createDeterministicColorArray)
-  //   )
-  // }
-  //
-  // // console.log(this.distributions.colors)
-  // var testCreatNames = _.clone(this.ourCreatNames);
-
-  // this.createCreatureOptsObj = function(creature, shapeParams, featureParams, colors) {
-  //   var newName = testCreatNames.pop()
-  //   // var colors = this.distributions.colors.pop();
-  //   // console.log(creature)
-  //   // console.log(colors);
-  //   return _.extend({ creature, name: newName.exemplar,
-  //     globalColors: [
-  //     { p: colors[0].p, props: { color_mean: colors[0].mean, color_var: 0.001 } },
-  //     { p: colors[1].p, props: { color_mean: colors[1].mean, color_var: 0.001 } }
-  //   ] }, shapeParams, featureParams)
-  // }
-
-
-  // GENERATE CREATURE OPTS
-  // for (repeatSpecies = 0; repeatSpecies < 2; repeatSpecies++){
-  //   for (speciesInd = 0; speciesInd < this.species.length; speciesInd++){
-  //     var speciesLabel = this.species[speciesInd]
-  //     var colorDistribution = this.distributions.colors.pop(); // set of colors (one for each category)
-  //
-  //     var blockCreatureOpts = []; // the current format for creatureOpts is an array of arrays
-  //     // so this will be that inner array
-  //     for (i=0; i<this.creatureTypesN; i++){
-  //       // prop and tar info (can be different for the repetitions of species [eg bird, bug] across blocks)
-  //       var speciesFeatureParams = this.speciesFeatureParams[speciesLabel][repeatSpecies];
-  //
-  //       blockCreatureOpts.push(this.createCreatureOptsObj(speciesLabel,
-  //           speciesFeatureParams[0], speciesFeatureParams[1],colorDistribution[i])
-  //       )
-  //
-  //     }
-  //     this.categories[speciesLabel].push(blockCreatureOpts)
-  //   }
-  // }
-
-  // console.log(this.categories)
-  // console.log(this.categories.fish)
-
-
-    //this.uniqueCreatures =  _.uniq(_.pluck(this.creatureOpts, "name")); //might need to comment back in
-
 
   // Which round are we on (initialize at -1 so that first round is 0-indexed)
   this.roundNum = -1;
@@ -422,8 +299,6 @@ var game_core = function(options){
 
   if(this.server) {
 
-    // console.log(this.generateBlock(this.shepardConcepts.i, "bird"))
-
     // If we're initializing the server game copy, pre-create the list of trials
     // we'll use, make a player object, and tell the player who they are
     this.id = options.id;
@@ -438,8 +313,8 @@ var game_core = function(options){
     // needs to be generalized
     // determines what critters will be used and who sees what when
     var critterOrders = {
-      A: ["fish", "bug", "flower", "bird"],
-      B: ["flower", "bird", "fish", "bug"]
+      A: ["fish"],// "bug", "flower", "bird"],
+      B: ["flower"]//, "bird", "fish", "bug"]
     }
 
     var aOrder = [], bOrder = [];
