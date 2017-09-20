@@ -354,7 +354,7 @@ var game_core = function(options){
     };
 
     // assign half of test rounds as self and half as partner
-    var testOrders = {
+    this.testOrders = {
       a: _.shuffle(
           fillArray(this.numRounds / 2, "self").concat(
           fillArray(this.numRounds / 2, "partner"))
@@ -369,10 +369,10 @@ var game_core = function(options){
     }
 
     for (i=0; i<this.numRounds; i++){
-      testOrders.a[i] == "self" ?
+      this.testOrders.a[i] == "self" ?
         this.testList.a.push(this.trialList.a[i]) :
         this.testList.a.push(this.trialList.b[i])
-      testOrders.b[i] == "self" ?
+      this.testOrders.b[i] == "self" ?
           this.testList.b.push(this.trialList.b[i]) :
           this.testList.b.push(this.trialList.a[i])
     }
@@ -385,7 +385,7 @@ var game_core = function(options){
         score: 0
       }
     };
-    
+
     this.players = [{
       id: options.player_instances[0].id,
       instance: options.player_instances[0].player,

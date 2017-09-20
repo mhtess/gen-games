@@ -59,6 +59,7 @@ var onMessage = function(client,message) {
             console.log("Enter block num ==== " + (gc.roundNum + 1) + " ====")
 
             var dataPacket = {
+              thisRoundTestType: gc.testOrders[playerRole][gc.roundNum],
               thisRoundTest: gc.testList[playerRole][gc.roundNum],
               nextRoundLearning: gc.trialList[playerRole][gc.roundNum + 1],
               currentRoundNum: gc.state.roundNum

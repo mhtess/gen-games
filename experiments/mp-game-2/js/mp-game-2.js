@@ -196,7 +196,7 @@ slides.test_critters = slide({
  name : "test_critters",
 
  crittersFromServer : "",
-
+ selfOrPartner : "",
  start : function() {
 
    this.start_time = Date.now()
@@ -244,6 +244,7 @@ slides.test_critters = slide({
     var dataToSend = _.extend(this.shuffledCritters[i], {
       "block_num" : exp.block,
       "block_type": "testCritters",
+      "tested_on": this.selfOrPartner,
       "time_in_ms" : this.time_spent,
       "critter_num" : i,
       "isLabeled" : isLabeled ? 1 : 0,

@@ -142,6 +142,7 @@ var customSetup = function(game) {
   game.socket.on('exitChatRoom', function(data){
     console.log("exitChatRoom")
     exp.slides.test_critters.crittersFromServer = data.thisRoundTest;
+    exp.slides.test_critters.selfOrPartner = data.thisRoundTestType;
     exp.slides.learning_critters.crittersFromServer = data.nextRoundLearning;
 
     globalGame.roundNum = data['currentRoundNum'];
@@ -220,7 +221,6 @@ var customSetup = function(game) {
   game.socket.on('sendingTestScores', function(data){
     console.log("sendingTestScores");
     console.log("scores: " + JSON.stringify(data));
-    //exp.slides.test_critters.crittersFromServer = data.thisRoundTest;
     enterScoreReport++;
     // only works when both players have reached this, then it generates scores for both players
     if(enterScoreReport % 2 == 0){ //hacky way to handle error thrown when only one player finishes the test
