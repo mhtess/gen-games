@@ -15,9 +15,12 @@ library(coreNLP)
 library(cleanNLP)
 library(reticulate)
 library(langcog)
-
+library(ggthemes)
+library(forcats)
+theme_set(theme_few())
 #setting the directory
 setwd("../../data/mp-game-1/logTest/")
+output_fig_path <- "~/Documents/dissertation/proposal/"
 
 data_1 <- read.delim("2017-8-11-16h-2m-26s-7270-103c2178-9638-4a00-9ca6-5ed29429346a.csv", header=TRUE)
 data_2 <- read.delim("2017-8-13-11h-36m-21s-0092-4cf18622-eb4d-46de-9e81-4bedec469478.csv", header=TRUE)
@@ -75,7 +78,7 @@ totalCorrect <- test_data %>%
   group_by(gameid_num, role) %>%
   multi_boot_standard(column = "correct")
 
-graph_totalCorrect <- ggplot(totalCorrect, aes(x=role, y = mean, ymin = summary_ci_lower, ymax = summary_ci_upper)) +
+graph_totalCorrect <- ggplot(totalCorrect, aes(x=role, y = mean, ymin =ci_lower, ymax = ci_upper)) +
   geom_bar(stat="identity",  position="dodge", width = 0.5) +
   geom_errorbar(width = 0.3)+
   geom_hline(yintercept = 0.5, lty = 3)+
@@ -112,23 +115,68 @@ graph_trialNum_gameID
 
 ```{r echo=FALSE, results='hide', message=FALSE, warning=FALSE, tidy=TRUE}
 distribution_gameID <- test_data %>%
+  mutate(gameid_num = gsub("game_", "dyad", gameid_num),
+         distribution = fct_relevel(distribution,"[0, 1, 0]","[0, 1, 0.75]","[0, 1, 0.25]", "[0.5, 0.5, 0.5]"
+                                    )) %>%
   group_by(distribution, gameid_num) %>%
   summarise(correctCount = sum(correct),
             totalCount = n(),
             percentCorrect = correctCount/totalCount)
 
-graph_distribution_gameID <- ggplot(distribution_gameID, aes(x=gameid_num, y=percentCorrect)) +
+graph_distribution_gameID <- ggplot(distribution_gameID, aes(x=gameid_num, y=correctCount)) +
   geom_bar(stat="identity",  position="dodge") +
-  scale_x_discrete("Trial Number") +
-    geom_hline(yintercept = 0.5, lty = 3)+
   scale_fill_manual("PercentCorrect") +
-  facet_wrap(~distribution) +
-  ggtitle("Test Accuracy by Dyad and Distribution") +
-  theme_minimal() +
-  theme(plot.title = element_text(hjust=0.5, size=18, face="bold"),
-        axis.text.x = element_text(angle = 90 ))
-graph_distribution_gameID
+  facet_wrap(~distribution, nrow=1) +
+  ggtitle("Test Performance by Dyad and Distribution") +
+  theme(plot.title = element_text(hjust=0.5),
+        axis.text.x = element_text(angle = 45, vjust =1 ,hjust=1 ))+
+  scale_y_continuous(limits = c(0, 24), breaks = c(0, 12, 24))+
+  ylab("hits + correct rejections")+
+  xlab("")
+
+ggsave(graph_distribution_gameID,
+       file = paste(output_fig_path, "gengames-pilot-test_dyad_distribution.pdf", sep = ""),
+       height = 3.25, width = 7)
 ```
+
+# Test Accuracy by Dyad, Role, and Distribution
+
+```{r echo=FALSE, results='hide', message=FALSE, warning=FALSE, tidy=TRUE}
+distribution_role_gameID <- test_data %>%
+  mutate(gameid_num = gsub("game_", "dyad", gameid_num),
+         distribution = fct_relevel(distribution,"[0, 1, 0]","[0, 1, 0.75]","[0, 1, 0.25]", "[0.5, 0.5, 0.5]"
+                                    ),
+         role = gsub("player", "", role)) %>%
+  group_by(distribution, gameid_num, role, block_num) %>%
+  summarise(correctCount = sum(correct),
+            totalCount = n(),
+            percentCorrect = correctCount/totalCount)
+
+graph_distribution_role_gameID <- ggplot(distribution_role_gameID, 
+                                         aes(x=gameid_num, y=correctCount, fill = role)) +
+  geom_bar(stat="identity",  position=position_dodge(), color = 'black') +
+  scale_fill_solarized()+
+  facet_wrap(~distribution, nrow=1) +
+  ggtitle("Test Performance by Participant and Distribution") +
+  theme(plot.title = element_text(hjust=0.5),
+        axis.text.x = element_text(angle = 45, vjust =1 ,hjust=1 ))+
+  scale_y_continuous(limits = c(0, 12), breaks = c(0, 6, 12))+
+  ylab("hits + correct rejections")+
+  xlab("")
+
+ggsave(graph_distribution_role_gameID,
+       file = paste(output_fig_path, "gengames-pilot-test_dyad_role_distribution.pdf", sep = ""),
+       height = 3.25, width = 11)
+
+graph_distribution_role_gameID
+```
+
+```{r}
+test_data %>%
+  select( gameid_num, distribution, role, trialNum, species,full_globalColor1_color_mean, internal_prop, selected, score ) %>%
+  View()
+```
+
 
 # Test Accuracy by Trial Number
 

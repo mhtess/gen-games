@@ -137,7 +137,7 @@ function calculate_end_game_bonus(){
     var correctSelect = 0;
     for(var i=0; i<this.numRounds; i++){
       for (var j=0; j<2; j++){
-        var role_index = j == 0 ? "playerA" : "playerB";
+        var role_index = j == 0 ? "a" : "b";
         correctSelect += this.testScores[role_index][i].hit + this.testScores[role_index][i].correctRejection;
       }
     }

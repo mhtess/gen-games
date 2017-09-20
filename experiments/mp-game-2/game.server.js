@@ -33,7 +33,7 @@ var onMessage = function(client,message) {
   var gc = client.game;
   var id = gc.id;
   var all = gc.get_active_players();
-  gc.rounds = {"playerA": 1, "playerB": 1};
+  gc.rounds = {"a": 1, "b": 1};
   // gets current player and differentiates them from other players
   var target = gc.get_player(client.userid);
   var others = gc.get_others(client.userid);
@@ -44,8 +44,8 @@ var onMessage = function(client,message) {
     // will update (through use of globalGame.socket.send("enterSlide.slide_name.");) in game js file
     case 'enterSlide' :
       gc.currentSlide[target.instance.role] = message_parts[1]
-      console.log("Player A is in: ==== " + gc.currentSlide["playerA"] + " ====")
-      console.log("Player B is in: ==== " + gc.currentSlide["playerB"] + " ====")
+      console.log("Player A is in: ==== " + gc.currentSlide["a"] + " ====")
+      console.log("Player B is in: ==== " + gc.currentSlide["b"] + " ====")
       break;
 
     // continue button from chat room
@@ -86,7 +86,7 @@ var onMessage = function(client,message) {
     // Only allows a message to be sent when both players are present in the chatroom
     // If this is true, the message will be relayed
     case 'chatMessage' :
-      if(gc.currentSlide["playerA"] == gc.currentSlide["playerB"]) {
+      if(gc.currentSlide["a"] == gc.currentSlide["b"]) {
           // Update others
           var msg = message_parts[1].replace(/~~~/g,'.');
           _.map(all, function(p){
@@ -97,7 +97,7 @@ var onMessage = function(client,message) {
     // Will show a wait message if only one player is in the chatroom
     // Will allow them to enter the chatroom
     case 'enterChatRoom' :
-      if (gc.currentSlide["playerA"] != gc.currentSlide["playerB"]) {
+      if (gc.currentSlide["a"] != gc.currentSlide["b"]) {
         target.instance.emit("chatWait", {})
       } else {
         setTimeout(function() {
@@ -112,7 +112,7 @@ var onMessage = function(client,message) {
     // Seems confusing, but this fn actually goes to the wait room and only moves forward,
     // (enterWaitRoom) when both the speaker (playerA) and listener (playerB) are in the wait room
     case 'enterWaitRoom' :
-      if (gc.currentSlide["playerA"] == gc.currentSlide["playerB"]) {
+      if (gc.currentSlide["a"] == gc.currentSlide["b"]) {
         setTimeout(function() {
           _.map(all, function(p){
             p.player.instance.emit("enterWaitRoom", {})
@@ -194,7 +194,7 @@ var dataOutput = function() {
     return _.fromPairs(_.map(m_data, function(i){return i.split(',')}))
   }
 
-  // takes the data sent from client and packages it into logResponseOutput 
+  // takes the data sent from client and packages it into logResponseOutput
   var logResponseOutput = function(client, message_data) {
     // message_data contrains the flattened JSON object with learning/test trial info.
     return _.extend(

@@ -16,6 +16,7 @@ library(coreNLP)
 library(cleanNLP)
 library(reticulate)
 library(xtable)
+library(gridExtra)
 
 #setting the directory
 setwd("../../data/mp-game-1/chatMessage/")
@@ -226,6 +227,18 @@ str(text_df)
 
 ```
 
+```{r}
+example_dyads <- text_df %>% 
+  filter(gameid_num %in% c("game_1","game_2","game_4", "game_6"))
+
+save(example_dyads, file = "~/Documents/dissertation/proposal/exampleTranscripts.RData")
+
+example_dyads %>%
+  select(gameid_num, trialNum, distribution, role, text) %>% 
+  mutate(role = gsub("player", "", role),
+         trialNum = factor(trialNum)) %>%
+  kable(.)
+```
 
 ```{r echo=FALSE, results='hide', message=FALSE, warning=FALSE, tidy=TRUE}
 # Stanford CoreNLP Pre-Processing

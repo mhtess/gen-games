@@ -45,17 +45,17 @@ var game_core = function(options){
   // How many players in the game?
   this.players_threshold = 2;
   this.playerRoleNames = {
-    role1 : 'playerA',
-    role2 : 'playerB'
+    role1 : 'a',
+    role2 : 'b'
   };
 
   this.testScores = {
-    "playerA": [],
-    "playerB": []
+    "a": [],
+    "b": []
   }
 
   // How many rounds do we want people to complete? MAKE SURE THIS ALIGNS WITH EXP TEMPLATE SLIDE AMT
-  this.numRounds = 8;
+  this.numRounds = 6;
   // number of different species
   this.creatureTypesN = 2;
   // number of exemplars displayed in a block
@@ -185,12 +185,12 @@ var game_core = function(options){
   this.allBinaryStrings = _.map(this.allBinaryPossibilities, this.arrayToString)
 
   this.shepardConcepts = {
-    i:  [ [0,0,0], [0,0,1], [0,1,0], [0,1,1]],
-    ii: [ [0,0,0], [0,0,1], [1,1,0], [1,1,1]],
-    iii:[ [0,0,0], [0,0,1], [0,1,0], [1,0,1]],
-    iv: [ [0,0,0], [0,0,1], [0,1,0], [1,0,0]],
-    v:  [ [0,0,0], [0,0,1], [0,1,0], [1,1,1]],
-    vi: [ [0,0,0], [1,0,1], [1,1,0], [0,1,1]],
+    i:  [ [0,0,0], [0,0,1], [0,1,0], [0,1,1] ],
+    ii: [ [0,0,0], [0,0,1], [1,1,0], [1,1,1] ],
+    iii:[ [0,0,0], [0,0,1], [0,1,0], [1,0,1] ],
+    iv: [ [0,0,0], [0,0,1], [0,1,0], [1,0,0] ],
+    v:  [ [0,0,0], [0,0,1], [0,1,0], [1,1,1] ],
+    vi: [ [0,0,0], [1,0,1], [1,1,0], [0,1,1] ]
   }
 
   this.defaultCritterOptions = {
@@ -202,7 +202,9 @@ var game_core = function(options){
 
   // positiveExamples = array of arrays (one of this.shepardConcepts)
   // genus is bird, bug, fish ...
-  this.generateBlock = function(positiveExamples, genus){
+  this.generateBlock = function(conceptNumber, genus){
+    console.log(genus)
+    var positiveExamples = this.shepardConcepts[conceptNumber]
     var negativeExamples = this.getComplementConcept(positiveExamples); // subtract positiveExamples from allBinaryPossibilities
     var featureOrder = _.shuffle(this.threeFeatures); // randomize what creature features correspond to the boolean slots e.g., [1,0,0]
     // console.log(featureOrder)
@@ -250,7 +252,7 @@ var game_core = function(options){
         }
         var featureObj = _.fromPairs(featurePairs); // e.g., {tar1: 1, tar2: 0, prop1: 0}
         _.assign(basicOptions, featureObj,
-          { categoryLabel, categoryPluralLabel, labeled, colorName: this.colorName, genus }
+          { conceptNumber, categoryLabel, categoryPluralLabel, labeled, colorName: this.colorName, genus, featureValues: featureValues.join(','), featureOrder: featureOrder.join(',') }
         )
         blockOfStims.push(basicOptions)
       }
@@ -262,8 +264,8 @@ var game_core = function(options){
   this.roundNum = -1;
 
   this.currentSlide = {
-    playerA: "i0",
-    playerB: "i0"
+    a: "i0",
+    b: "i0"
   }
 
   // This will be populated with the critters shown
@@ -312,56 +314,68 @@ var game_core = function(options){
 
     // needs to be generalized
     // determines what critters will be used and who sees what when
+    this.generateCreatureOrder = function(){
+      return _.shuffle(_.flatten([
+        _.keys(this.booleanFeatures),
+        _.keys(this.booleanFeatures)
+      ])).slice(0, this.numRounds)
+    }
+
     var critterOrders = {
-      A: ["fish"],// "bug", "flower", "bird"],
-      B: ["flower"]//, "bird", "fish", "bug"]
+      a: this.generateCreatureOrder(),
+      b: this.generateCreatureOrder()
+    }
+    console.log(critterOrders.A)
+
+    var conceptOrders = {
+      a: _.shuffle(_.keys(this.shepardConcepts)),
+      b: _.shuffle(_.keys(this.shepardConcepts))
     }
 
     var aOrder = [], bOrder = [];
-    // for (i = 0; i<playerDistributions.A.length; i++){
-    for (i = 0; i<critterOrders.A.length; i++){
-      // console.log(playerDistributions.A[i])
+    for (i = 0; i < this.numRounds; i++){
+
       aOrder.push(
-        this.generateBlock(this.shepardConcepts.i,
-        critterOrders.A[i])
-        // this.genCreatures(critterOrders.A[i],
-          // 0,
-          // playerDistributions.A[i])
-        )
+        this.generateBlock(conceptOrders.a[i],
+        critterOrders.a[i])
+      )
 
       bOrder.push(
-        this.generateBlock(this.shepardConcepts.i,
-          critterOrders.B[i])
-        )
+        this.generateBlock(conceptOrders.b[i],
+          critterOrders.b[i])
+      )
 
     }
 
-    // console.log(aOrder[0])
     // assigns the critters to their respective players
     this.trialList = {
-      playerA: aOrder,
-      playerB: bOrder
+      a: aOrder,
+      b: bOrder
     };
 
-    // console.log(JSON.stringify(aOrder[0][0]))
-
-    // this is switched so the they will get tested on the information their partner relayed to them
+    // assign half of test rounds as self and half as partner
+    var testOrders = {
+      a: _.shuffle(
+          fillArray(this.numRounds / 2, "self").concat(
+          fillArray(this.numRounds / 2, "partner"))
+        ),
+      b: _.shuffle(
+        fillArray(this.numRounds / 2, "self").concat(
+        fillArray(this.numRounds / 2, "partner"))
+      )
+    }
     this.testList = {
-      playerA: bOrder,
-      playerB: aOrder
-    };
-    //
-    // this.testList["playerA"] = _.shuffle(fillArray(this.numRounds/2, bTest).concat(fillArray(this.numRounds/2, aTest)))
-    // for(var i = 0; i < this.testList["playerA"].length; i++) {
-    //   var test;
-    //   this.testList["playerA"][i] == bTest ? test=aTest : test=bTest;
-    //   this.testList["playerB"].push(test);
-    // }
-    //
-    // console.log(testList["playerA"])
+      a:[],b:[]
+    }
 
-    // console.log(this.testList)
-
+    for (i=0; i<this.numRounds; i++){
+      testOrders.a[i] == "self" ?
+        this.testList.a.push(this.trialList.a[i]) :
+        this.testList.a.push(this.trialList.b[i])
+      testOrders.b[i] == "self" ?
+          this.testList.b.push(this.trialList.b[i]) :
+          this.testList.b.push(this.trialList.a[i])
+    }
     this.data = {
       id : this.id,
       trials : [],
@@ -371,6 +385,7 @@ var game_core = function(options){
         score: 0
       }
     };
+    
     this.players = [{
       id: options.player_instances[0].id,
       instance: options.player_instances[0].player,

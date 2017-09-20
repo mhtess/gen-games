@@ -1,8 +1,8 @@
 // To add a slide to experiment structure (to ensure it shows up) proceed to line 392
 
 var roleDictionary = {
-  playerA: "Player A",
-  playerB: "Player B"
+  a: "Player A",
+  b: "Player B"
 }
 
 // All slides must have a slides.slide_name function in this function

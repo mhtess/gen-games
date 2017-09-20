@@ -226,7 +226,7 @@ var customSetup = function(game) {
     if(enterScoreReport % 2 == 0){ //hacky way to handle error thrown when only one player finishes the test
       var ind = (enterScoreReport / 2) - 1;
       var my_role = globalGame.my_role;
-      var partner_role = my_role === "playerA" ? "playerB" : "playerA"
+      var partner_role = my_role === "a" ? "b" : "a"
       for(var i=0; i<2; i++){
         var score_role, role_index;
         if(i==0){
