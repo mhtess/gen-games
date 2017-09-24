@@ -1,8 +1,8 @@
 html , body {
-     background: #FFFFFF; 
-     color: #000; 
+     background: #FFFFFF;
+     color: #000;
      font-family: Helvetica;
-     margin: 0; 
+     margin: 0;
      padding: 0;
 }
 
@@ -112,7 +112,7 @@ ALOT...don't understand how to adjust that.*/
     border:solid 0px #333;
     height: 0vh;
     width: 0vh;
-    margin: center;    
+    margin: center;
     /*margin-right: 2.5%;*/
     background: #FFFFFF;
     /*opacity: .5;*/
@@ -122,13 +122,13 @@ ALOT...don't understand how to adjust that.*/
 #message_panel {
 	height: 40vh;
 	width: 100vh;
- 
+
 	float: top;
 	/*centers message_panel*/
 	margin: auto;
-	list-style-type: none; 
+	list-style-type: none;
 
-	border: solid 1px #999; 
+	border: solid 1px #999;
 }
 
 #messages {
@@ -139,16 +139,16 @@ ALOT...don't understand how to adjust that.*/
 }
 
 #chatarea form {
-	padding: 3px; 
+	padding: 3px;
 	height: 5vh;
-	width: 100vh; 
+	width: 100vh;
 }
 
 #chatarea input {
-	border: 0; 
+	border: 0;
 	height: 99%;
 	font-size: 125%;
-	width: 89%; 
+	width: 89%;
 	margin-left: .5%;
 	margin-right: .5%;
 	margin-top: .5%;
@@ -158,11 +158,11 @@ ALOT...don't understand how to adjust that.*/
 }
 
 #chatarea button {
-	width: 9%; 
+	width: 9%;
 	height: 5vh;
 	font-size: 125%;
-	background: rgb(130, 224, 255); 
-	border: none; 
+	background: rgb(130, 224, 255);
+	border: none;
 	padding: 5px;
 	margin-left: .5%;
 	margin-right: .5%;
@@ -179,9 +179,14 @@ ALOT...don't understand how to adjust that.*/
 }
 
 .score_value {
-	font-size: 50px;
+	font-size: 30px;
 	text-align: center;
 }
+.subscore_value {
+	font-size: 16px;
+	text-align: center;
+}
+
 
 
 ::-webkit-scrollbar {

@@ -86,7 +86,7 @@ function make_slides(f) {
 
       $('#internalprops_instruct').html(
         "Click on each one to discover whether or not it is a <strong>" + this.shuffledCritters[0]["categoryLabel"]+
-        "</strong>"
+        "</strong>.<br> Study them carefully. You or your partner will have to identify them later."
       );
 
       for (var i=0; i<this.shuffledCritters.length; i++) {
@@ -144,14 +144,10 @@ slides.learning_instructions = slide({
     this.creat_type = exp.slides.learning_critters.crittersFromServer
 [0]["genus"];
 
-    switch (this.creat_type) {
-      case 'bird': case 'bug':
-      $("#learning_instructs").html(globalGame.task_welcome_critter["bird_bug"]);
-      break;
-      case 'flower': case 'fish':
-      $("#learning_instructs").html(globalGame.task_welcome_critter["tree_fish"]);
-      break;
-    }
+  $("#learning_instructs").html(
+    globalGame.task_welcome_critter[this.creat_type] + "Press Continue to begin."
+  );
+
   },
   button : function() {
     exp.go()

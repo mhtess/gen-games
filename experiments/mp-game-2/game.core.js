@@ -272,8 +272,11 @@ var game_core = function(options){
   this.trialInfo = [];
 
   this.task_welcome_critter = {
-    bird_bug: "<h2>Save the population</h2><p><br> The population of birds on the island is dwindling because of poisonous bugs. Learn about the birds and bugs with your partner to try to save the birds.</p>",
-    tree_fish: "<h2>Protect the fish</h2><p><br> Fish off the shore of the island are under threat by crocodiles. They can be helped by putting them near plants with leaves that can protect them. Learn about the fish and the plants with your partner to try to save the fish.</p>"
+    bird: "<h2>Birds</h2><p><br> In this round, you will learn about a kind of bird.</p>",
+    tree: "<h2>Trees</h2><p><br>  In this round, you will learn about a kind of tree.</p>",
+    fish: "<h2>Fish</h2><p><br>  In this round, you will learn about a kind of fish.</p>",
+    flower: "<h2>Flowers</h2><p><br>  In this round, you will learn about a kind of flower.</p>",
+    bug: "<h2>Bugs</h2><p><br>  In this round, you will learn about a kind of bug.</p>",
   }
 
   this.critter_instructions = {

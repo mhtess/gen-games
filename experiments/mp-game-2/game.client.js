@@ -237,13 +237,20 @@ var customSetup = function(game) {
           score_role="other";
           role_index=partner_role;
         }
-        var player_score = Number(data[role_index][ind].hit) + Number(data[role_index][ind].correctRejection);
-        $('#'+score_role+'_score').html(player_score);
-        totalScore += player_score;
+        var player_score = Number(data[role_index][ind].hit) - Number(data[role_index][ind].falseAlarm);
+
+        console.log(player_score)
+
+        var positive_score = player_score > 0 ? player_score : 0
+        $('#'+score_role+'_score').html(positive_score);
+        totalScore += positive_score;
         // console.log("Total Score: " + totalScore);
 
-        // $('#'+score_role+'_hits').html("Hits: " + data[role_index][ind].hits);
-        // $('#'+score_role+'_falseAlarms').html("False Alarms: " + data[role_index][ind].falseAlarms);
+        $('#'+score_role+'_hits').html("Correctly selected: " + data[role_index][ind].hit + " out of " + (Number(data[role_index][ind].hit) + Number(data[role_index][ind].miss)));
+        $('#'+score_role+'_falseAlarms').html("Selected incorrectly: " + data[role_index][ind].falseAlarm + " out of "+ (Number(data[role_index][ind].falseAlarm) + Number(data[role_index][ind].correctRejection)));
+
+        $('#'+score_role+'_score').html("Round score: " + positive_score);
+
         // $('#'+score_role+'_misses').html("Misses: "+ data[role_index][ind].misses);
         // $('#'+score_role+'_correctRejections').html("Correct Rejections: "+ data[role_index][ind].correctRejections);
       }
