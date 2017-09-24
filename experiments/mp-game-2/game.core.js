@@ -317,18 +317,25 @@ var game_core = function(options){
 
     // needs to be generalized
     // determines what critters will be used and who sees what when
-    this.generateCreatureOrder = function(){
-      return _.shuffle(_.flatten([
-        _.keys(this.booleanFeatures),
-        _.keys(this.booleanFeatures)
-      ])).slice(0, this.numRounds)
+
+    this.uniquePairs = []
+    for (i=0; i<_.keys(this.booleanFeatures).length; i++){
+      for (j=0; j<_.keys(this.booleanFeatures).length; j++){
+        _.keys(this.booleanFeatures)[i] != _.keys(this.booleanFeatures)[j] ?
+      this.uniquePairs.push(
+        _.shuffle(
+          [_.keys(this.booleanFeatures)[i], _.keys(this.booleanFeatures)[j]]
+        )
+      ) : null
+      }
     }
 
+    this.creatureOrders = _.shuffle(this.uniquePairs).slice(0, this.numRounds)
+
     var critterOrders = {
-      a: this.generateCreatureOrder(),
-      b: this.generateCreatureOrder()
+      a: _.map(this.creatureOrders, function(x){return x[0] }),
+      b: _.map(this.creatureOrders, function(x){return x[1] })
     }
-    console.log(critterOrders.A)
 
     var conceptOrders = {
       a: _.shuffle(_.keys(this.shepardConcepts)),
