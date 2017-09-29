@@ -155,13 +155,24 @@ var game_core = function(options){
     green: "#228b22",
     orange: "#ff8c00",
     purple: "#b62fef",
-    pink: "#f97ada",
-    lightblue: "#11edf4",
-    lightgreen: "#11f427",
-    lightpurple: "#dda0dd"
+    // pink: "#f97ada",
+    // lightblue: "#11edf4",
+    // lightgreen: "#11f427",
+    // lightpurple: "#dda0dd"
   }
 
+  this.trialColorPairs = [[], []]
   this.colorOptions = _.keys(this.color_dict);
+
+
+  for (i = 0; i < this.numRounds; i++){
+    var roundColors = _.shuffle(this.colorOptions).slice(0, 4)
+    this.trialColorPairs[0].push(roundColors.slice(0, 2))
+    this.trialColorPairs[1].push(roundColors.slice(2))
+  }
+
+  console.log(this.trialColorPairs )
+
   // this.threeFeatures = ["tar1","tar2","prop1"];
   this.threeFeatures = ["property","size", "colors"];
 
@@ -202,8 +213,7 @@ var game_core = function(options){
 
   // positiveExamples = array of arrays (one of this.shepardConcepts)
   // genus is bird, bug, fish ...
-  this.generateBlock = function(conceptNumber, genus){
-    console.log(genus)
+  this.generateBlock = function(conceptNumber, genus, playerIndex){
     var positiveExamples = this.shepardConcepts[conceptNumber]
     var negativeExamples = this.getComplementConcept(positiveExamples); // subtract positiveExamples from allBinaryPossibilities
     var featureOrder = _.shuffle(this.threeFeatures); // randomize what creature features correspond to the boolean slots e.g., [1,0,0]
@@ -215,7 +225,7 @@ var game_core = function(options){
     var categoryPluralLabel = categoryLabelInfo.category;
 
     // var colorName = _.shuffle(this.colorOptions).pop(); // a color name (e.g., "blue") [all exemplars will be of the same color]
-    var colorNames = _.shuffle(this.colorOptions).slice(0, 2); // two color names
+    var colorNames = _.shuffle(this.trialColorPairs[playerIndex].pop()) // two color names
 
     var blockOfStims = [];
     for (var j = 0; j < 2; j++){ // loop over positive and negative examples
@@ -322,11 +332,11 @@ var game_core = function(options){
     for (i=0; i<_.keys(this.booleanFeatures).length; i++){
       for (j=0; j<_.keys(this.booleanFeatures).length; j++){
         _.keys(this.booleanFeatures)[i] != _.keys(this.booleanFeatures)[j] ?
-      this.uniquePairs.push(
-        _.shuffle(
-          [_.keys(this.booleanFeatures)[i], _.keys(this.booleanFeatures)[j]]
-        )
-      ) : null
+          this.uniquePairs.push(
+            _.shuffle(
+              [_.keys(this.booleanFeatures)[i], _.keys(this.booleanFeatures)[j]]
+            )
+          ) : null
       }
     }
 
@@ -346,13 +356,11 @@ var game_core = function(options){
     for (i = 0; i < this.numRounds; i++){
 
       aOrder.push(
-        this.generateBlock(conceptOrders.a[i],
-        critterOrders.a[i])
+        this.generateBlock(conceptOrders.a[i], critterOrders.a[i], 0)
       )
 
       bOrder.push(
-        this.generateBlock(conceptOrders.b[i],
-          critterOrders.b[i])
+        this.generateBlock(conceptOrders.b[i], critterOrders.b[i], 1)
       )
 
     }
@@ -469,6 +477,21 @@ var fillArray = function(n, fillVal){
 var probToCount = function(p, n){
   return Math.round(p*n);
 }
+
+// var transpose = function(array) {
+//     var result = {};
+//     for (var i=0; l=array.length; i<l){
+//       for (var prop in array[i]) {
+//         if (prop in result) {
+//           result[prop].push(array[i][prop]);
+//
+//         } else {
+//           result[prop] = [ array[i][prop] ];
+//         }
+//       }
+//     }
+//     return result;
+// };
 
 //
 // game_core.prototype.createFeatureArray = function(creatureLabel, creatureCategory, num){ //add num as parameter too
