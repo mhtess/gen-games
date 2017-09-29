@@ -17,8 +17,10 @@ function mark_critter_display(el) {
   prev = el;
   $('#'+el.id).css({"border":cell_border_clicked,
     'opacity': all_opacity_clicked});
-  $('#'+ el.id + 'critname').css({'opacity': all_opacity_clicked, 'font-weight': critname_fontweight_unclicked});
-  $('#'+el.id+'critname').css({'opacity': all_opacity_clicked});
+  if($('#'+el.id + 'critname').attr("labeled")=='1'){
+    $('#'+ el.id + 'critname').css({'opacity': all_opacity_clicked, 'font-weight': critname_fontweight_unclicked});
+  }
+  //$('#'+el.id+'critname').css({'opacity': all_opacity_clicked});
   $('#'+el.id).attr("data-selected",'1'); //keeps track of whether cell was clicked at all in a given round, used in check function
 
 
@@ -41,10 +43,12 @@ function mark_critter_test_display(el) {
 
 // grays out after clicked for learning phase
 function gray(el) {
-   $('#'+el.id).css({"border": cell_border_unclicked,
+  $('#'+el.id).css({"border": cell_border_unclicked,
                     'opacity': cell_opacity_gray});
-   $('#'+el.id+'critname').css({'opacity': cell_opacity_gray, 'font-weight': critname_fontweight_unclicked});
-   $('#'+ el.id+'internalprop').css({'opacity': symbol_opacity_gray})
+  if($('#'+el.id + 'critname').attr("labeled")=='1'){
+    $('#'+el.id+'critname').css({'opacity': cell_opacity_gray, 'font-weight': critname_fontweight_unclicked});
+  }
+  $('#'+ el.id+'internalprop').css({'opacity': symbol_opacity_gray})
 }
 
 
@@ -89,7 +93,7 @@ function create_table(rows, cols, display_type) { //rows * cols = number of exem
       table += "<tr>";
       table += "<td>";
       table += "<div class='critlabel' id='cell" + ind + "critlabel'>"; //critter species name + emoji
-      table += "<div class='critname' id='cell" + ind + "critname' style='float:center'></div>";
+      table += "<div class='critname' id='cell" + ind + "critname' labeled='0' style='float:center'>x</div>";
       table += "<td><div class='critname' id='cell" + ind + "internalprop' style='float: left'></div></td></div>";
       table += "</td><br>";
       table += "</tr>";

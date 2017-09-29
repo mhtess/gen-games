@@ -97,6 +97,7 @@ function make_slides(f) {
 
         if (this.shuffledCritters[i]["labeled"]) {
           $('#cell'+i+'critname').html(this.shuffledCritters[i]["categoryLabel"]);
+          $('#cell'+i+'critname').attr("labeled",'1')
         }
 
         $('#cell'+i+'critname').css({'opacity': 0});

@@ -36,7 +36,7 @@ var game_core = function(options){
   this.dataStore = ['csv']; //maybe change to just csv
   this.email = 'mtessler@stanford.edu';
   this.projectName = 'genGames';
-  this.experimentName = 'mpGame1';
+  this.experimentName = 'mpGame2';
   // This has replaced expid - see if this is recorded
   this.iterationName = 'pilot1';
   this.anonymizeCSV = true;

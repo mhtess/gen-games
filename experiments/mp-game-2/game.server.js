@@ -174,7 +174,7 @@ var dataOutput = function() {
       iterationName: client.game.iterationName,
       gameid: client.game.id,
       time: Date.now(),
-      trialNum : client.game.state.roundNum + 1,
+      trialNum : client.game.state.roundNum,
       workerId: client.workerid,
       assignmentId: client.assignmentid,
       role: client.role
