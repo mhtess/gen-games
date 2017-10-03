@@ -31,6 +31,9 @@ function mark_critter_display(el) {
 
 // same as above but able to highlight multiple for the test trials
 function mark_critter_test_display(el) {
+  //if($('#'+el.id + 'critname').attr("labeled")=='1'){
+    //$('#'+ el.id + 'critname').css({'opacity': 0});
+  //}
   if($('#' + el.id).attr("data-selected")=='0'){
     $('#'+el.id).css({"border": cell_border_clicked,
       'opacity': all_opacity_clicked});
@@ -93,7 +96,7 @@ function create_table(rows, cols, display_type) { //rows * cols = number of exem
       table += "<tr>";
       table += "<td>";
       table += "<div class='critlabel' id='cell" + ind + "critlabel'>"; //critter species name + emoji
-      table += "<div class='critname' id='cell" + ind + "critname' labeled='0' style='float:center'>x</div>";
+      table += "<div class='critname' id='cell" + ind + "critname' labeled='0' style='float:center; opacity:0'>x</div>";
       table += "<td><div class='critname' id='cell" + ind + "internalprop' style='float: left'></div></td></div>";
       table += "</td><br>";
       table += "</tr>";

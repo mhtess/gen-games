@@ -25,11 +25,13 @@ setwd("../../data/mp-game-2/")
 
 data_1 <- read.delim("logScores/2017-9-28-23h-20m-42s-4437-0f3b8d69-8b75-48e9-b408-b75d41725443.csv", header=TRUE)
 data_2 <- read.delim("logTest/2017-9-28-23h-20m-42s-4437-0f3b8d69-8b75-48e9-b408-b75d41725443.csv", header=TRUE)
+data_3 <- read.delim("logTrain/2017-9-28-23h-19m-25s-4437-0f3b8d69-8b75-48e9-b408-b75d41725443.csv", header=TRUE)
 View(data_1)
 View(data_2)
+View(data_3)
 
 
-#data_3 <- read.delim("2017-8-13-12h-25m-9s-7133-1d5911cf-3f2a-4997-a39d-f565df4b3126.csv", header=TRUE)
+
 data_4 <- read.delim("2017-8-13-13h-36m-41s-7480-f3534652-26df-4fb1-848f-859a2cc64c33.csv", header=TRUE)
 #data_5 <- read.delim("2017-8-13-15h-27m-8s-7735-8d70b20e-2b53-4895-92ee-41e98df7fb15.csv", header=TRUE)
 data_6 <- read.delim("2017-8-14-10h-37m-22s-3416-c018ab1b-f022-41c4-893c-462e12108278.csv", header=TRUE)
