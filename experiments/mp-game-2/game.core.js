@@ -262,7 +262,7 @@ var game_core = function(options){
         }
         var featureObj = _.fromPairs(featurePairs); // e.g., {tar1: 1, tar2: 0, prop1: 0}
         _.assign(basicOptions, featureObj,
-          { conceptNumber, categoryLabel, categoryPluralLabel, labeled, colorName: this.colorName, genus, featureValues: featureValues.join(','), featureOrder: featureOrder.join(',') }
+          { conceptNumber, categoryLabel, categoryPluralLabel, labeled, colorName: this.colorName, genus, featureValues: featureValues.join('_'), featureOrder: featureOrder.join('_') }
         )
         blockOfStims.push(basicOptions)
       }
