@@ -211,7 +211,7 @@ var customSetup = function(game) {
     if (globalGame.my_role === globalGame.playerRoleNames.role2) {
       // only role2 gets to see Continue button and press Continue
       var continueButton = document.getElementById("chatCont")
-      var nSecondsTimeOut = 1;
+      var nSecondsTimeOut = 30;
       setTimeout(function() { $("#chatCont").show() }, nSecondsTimeOut*1000)
       continueButton.addEventListener("click", buttonClickListener, false);
     }

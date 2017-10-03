@@ -25,8 +25,10 @@ function mark_critter_display(el) {
 
 
   // FIX ME: have function examine table to see how many cells there are in total...
-  // check(allCreatures.length);
-  check(0)
+  nCells = document.getElementById('creature_table').rows.length *
+  document.getElementById('creature_table').rows[0].cells.length
+  check(nCells);
+  // check(0)
 }
 
 // same as above but able to highlight multiple for the test trials
