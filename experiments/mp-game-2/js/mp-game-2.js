@@ -220,6 +220,8 @@ slides.test_critters = slide({
        "critter"+i, scale)
    }
 
+   $(".critname").hide();
+
  },
 
  button : function() {
@@ -393,6 +395,22 @@ function init() {
     "learning_instructions",
     "learning_critters",
     "chat_instructions",
+    "chatRoom",
+    "test_instructions",
+    "test_critters",
+    "wait_room",
+    "score_report",
+
+    "learning_instructions",
+    "learning_critters",
+    "chatRoom",
+    "test_instructions",
+    "test_critters",
+    "wait_room",
+    "score_report",
+
+    "learning_instructions",
+    "learning_critters",
     "chatRoom",
     "test_instructions",
     "test_critters",

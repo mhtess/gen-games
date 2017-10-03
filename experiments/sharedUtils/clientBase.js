@@ -126,7 +126,7 @@ var sharedSetup = function(game) {
 
      var otherRole = (globalGame.my_role === game.playerRoleNames.role1 ?
  		     game.playerRoleNames.role2 : game.playerRoleNames.role1);
-     var source = data.user === globalGame.my_id ? "You" : otherRole;
+     var source = data.user === globalGame.my_id ? "You" : "player " +otherRole;
      // To bar responses until speaker has uttered at least one message
      if(source !== "You"){
        globalGame.messageSent = true;
