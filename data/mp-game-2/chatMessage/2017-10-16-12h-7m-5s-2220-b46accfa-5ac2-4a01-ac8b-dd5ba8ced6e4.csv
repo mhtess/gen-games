@@ -1,0 +1,48 @@
+iterationName	gameid	time	trialNum	role	text	reactionTime	eventType
+pilot1	2220-b46accfa-5ac2-4a01-ac8b-dd5ba8ced6e4	1508180825125	0	b	Hi there. I studied Ackles	7038	chatMessage
+pilot1	2220-b46accfa-5ac2-4a01-ac8b-dd5ba8ced6e4	1508180844345	0	b	I can describe them to you.	11901	chatMessage
+pilot1	2220-b46accfa-5ac2-4a01-ac8b-dd5ba8ced6e4	1508180884169	0	b	There were 8 birds and only 4 were ackles	8657	chatMessage
+pilot1	2220-b46accfa-5ac2-4a01-ac8b-dd5ba8ced6e4	1508180887174	0	a	Hey, I studied Mox, a bug. There was no particular reason that a bug was a mox or not. I can tell you that the right half was all mox. Color or shape didn't matter.	55923	chatMessage
+pilot1	2220-b46accfa-5ac2-4a01-ac8b-dd5ba8ced6e4	1508180935996	0	b	if it was yellow with long legs and not tail feather = Ackle	12924	chatMessage
+pilot1	2220-b46accfa-5ac2-4a01-ac8b-dd5ba8ced6e4	1508180936621	0	a	Was there anything that made a bird an ackle?	20584	chatMessage
+pilot1	2220-b46accfa-5ac2-4a01-ac8b-dd5ba8ced6e4	1508180959160	0	b	it was a combination of color, legs and tail feathers	16780	chatMessage
+pilot1	2220-b46accfa-5ac2-4a01-ac8b-dd5ba8ced6e4	1508181013989	0	b	1- yellow, long legs, no tail 2- geen, long legs, has tail feathers, 3- yellow, small legs, no tail feathers, 4 - green, small legs and has tail feathers	48076	chatMessage
+pilot1	2220-b46accfa-5ac2-4a01-ac8b-dd5ba8ced6e4	1508181030106	0	b	all the above were ackles	4492	chatMessage
+pilot1	2220-b46accfa-5ac2-4a01-ac8b-dd5ba8ced6e4	1508181040914	0	b	so no combination for any of the Mox?	8218	chatMessage
+pilot1	2220-b46accfa-5ac2-4a01-ac8b-dd5ba8ced6e4	1508181060993	0	a	Alright I had a mow that was orange and had butterfly wings and a large flat head.	23226	chatMessage
+pilot1	2220-b46accfa-5ac2-4a01-ac8b-dd5ba8ced6e4	1508181065943	0	a	*mox	864	chatMessage
+pilot1	2220-b46accfa-5ac2-4a01-ac8b-dd5ba8ced6e4	1508181090288	0	a	The same version with butterfly wings and a large flat head was also a mox	21570	chatMessage
+pilot1	2220-b46accfa-5ac2-4a01-ac8b-dd5ba8ced6e4	1508181112604	0	a	Then the other was orange with no wings and a small head	21248	chatMessage
+pilot1	2220-b46accfa-5ac2-4a01-ac8b-dd5ba8ced6e4	1508181120105	0	a	then red with no wings and a small head.	6917	chatMessage
+pilot1	2220-b46accfa-5ac2-4a01-ac8b-dd5ba8ced6e4	1508181149598	0	b	first two you described sounded the same?	9928	chatMessage
+pilot1	2220-b46accfa-5ac2-4a01-ac8b-dd5ba8ced6e4	1508181155464	0	a	Opps	744	chatMessage
+pilot1	2220-b46accfa-5ac2-4a01-ac8b-dd5ba8ced6e4	1508181157010	0	a	sorry	1025	chatMessage
+pilot1	2220-b46accfa-5ac2-4a01-ac8b-dd5ba8ced6e4	1508181164225	0	a	one was red and one was orange	6138	chatMessage
+pilot1	2220-b46accfa-5ac2-4a01-ac8b-dd5ba8ced6e4	1508181253679	0	b	got it. you ready to go?	31753	chatMessage
+pilot1	2220-b46accfa-5ac2-4a01-ac8b-dd5ba8ced6e4	1508181264508	0	a	Yep, good luck!	5539	chatMessage
+pilot1	2220-b46accfa-5ac2-4a01-ac8b-dd5ba8ced6e4	1508181468322	1	a	oller - fish 1 - small, red, whiskers 2- small, blue, no whiskers 3- small, red, whiskers 4- big, red, whiskers	1237	chatMessage
+pilot1	2220-b46accfa-5ac2-4a01-ac8b-dd5ba8ced6e4	1508181501894	1	b	glippets were all green	235792	chatMessage
+pilot1	2220-b46accfa-5ac2-4a01-ac8b-dd5ba8ced6e4	1508181525417	1	a	Is that it for them?	3517	chatMessage
+pilot1	2220-b46accfa-5ac2-4a01-ac8b-dd5ba8ced6e4	1508181532695	1	b	1 and 3 are the same?	3638	chatMessage
+pilot1	2220-b46accfa-5ac2-4a01-ac8b-dd5ba8ced6e4	1508181578860	1	b	seemed too easy but there were yellow and green flowers - all the green ones were glippets	23732	chatMessage
+pilot1	2220-b46accfa-5ac2-4a01-ac8b-dd5ba8ced6e4	1508181656988	1	a	I think 1 and 3 were the same, but now I am doubting myself. The 3rd one maybe could have been no whiskers	56077	chatMessage
+pilot1	2220-b46accfa-5ac2-4a01-ac8b-dd5ba8ced6e4	1508181835032	2	a	I had Pangolin	3130	chatMessage
+pilot1	2220-b46accfa-5ac2-4a01-ac8b-dd5ba8ced6e4	1508181836248	2	a	1- Orange, Big, No Whiskers 2- Orange, Big, Whiskers 3- Red, Small, No Whiskers 4- Red, Small, Whiskers	431	chatMessage
+pilot1	2220-b46accfa-5ac2-4a01-ac8b-dd5ba8ced6e4	1508181886148	2	a	Hello	999	chatMessage
+pilot1	2220-b46accfa-5ac2-4a01-ac8b-dd5ba8ced6e4	1508181899126	2	a	???	698	chatMessage
+pilot1	2220-b46accfa-5ac2-4a01-ac8b-dd5ba8ced6e4	1508181903823	2	b	Zoov: 1-Yellow, Big Flower, no stem spikes 2- green, big flower, stem spikes 3- yellow, small flower, stem spikes 4- yellow, big flower, stem spikes	211262	chatMessage
+pilot1	2220-b46accfa-5ac2-4a01-ac8b-dd5ba8ced6e4	1508181921685	2	a	Got it	1077	chatMessage
+pilot1	2220-b46accfa-5ac2-4a01-ac8b-dd5ba8ced6e4	1508181957484	2	a	Ready when you are.	2572	chatMessage
+pilot1	2220-b46accfa-5ac2-4a01-ac8b-dd5ba8ced6e4	1508181962456	2	b	ready	3181	chatMessage
+pilot1	2220-b46accfa-5ac2-4a01-ac8b-dd5ba8ced6e4	1508182134374	3	b	Luzak: 1 – Blue, big flower, no spikes 2 – green, small flower, no spikes 3 – green, big flower, spikes 4 – blue, small flower, spikes	1901	chatMessage
+pilot1	2220-b46accfa-5ac2-4a01-ac8b-dd5ba8ced6e4	1508182147897	3	a	I had Stup, a bird.  1- Tall, Orange, No Tail 2- Short, Orange, Tail 3- Short, Orange, No Tail 4- Tall, Purple, Tail	1234	chatMessage
+pilot1	2220-b46accfa-5ac2-4a01-ac8b-dd5ba8ced6e4	1508182162940	3	a	Got it.	1163	chatMessage
+pilot1	2220-b46accfa-5ac2-4a01-ac8b-dd5ba8ced6e4	1508182197670	3	b	got it	1436	chatMessage
+pilot1	2220-b46accfa-5ac2-4a01-ac8b-dd5ba8ced6e4	1508182319133	4	a	1-short, red, no tail, 2-short, red, tail 3-tall, red, no tail 4-short, orange, no tail	1206	chatMessage
+pilot1	2220-b46accfa-5ac2-4a01-ac8b-dd5ba8ced6e4	1508182325310	4	b	Kaz flowers - all are yellow	7901	chatMessage
+pilot1	2220-b46accfa-5ac2-4a01-ac8b-dd5ba8ced6e4	1508182333401	4	a	got it	766	chatMessage
+pilot1	2220-b46accfa-5ac2-4a01-ac8b-dd5ba8ced6e4	1508182368990	4	b	ready!	3202	chatMessage
+pilot1	2220-b46accfa-5ac2-4a01-ac8b-dd5ba8ced6e4	1508182507356	5	b	Fish - cheeba 1 blue, big, no whiskers 2 blue, small, whiskers 3 red, big, whiskers 4 blue, small, no whiskers	1380	chatMessage
+pilot1	2220-b46accfa-5ac2-4a01-ac8b-dd5ba8ced6e4	1508182512763	5	a	they all have wide heads. 	2806	chatMessage
+pilot1	2220-b46accfa-5ac2-4a01-ac8b-dd5ba8ced6e4	1508182528036	5	a	got yours	2104	chatMessage
+pilot1	2220-b46accfa-5ac2-4a01-ac8b-dd5ba8ced6e4	1508182533895	5	b	okay!	5798	chatMessage
