@@ -19,21 +19,20 @@ library(ggthemes)
 library(forcats)
 theme_set(theme_few())
 #setting the directory
-setwd("../../data/mp-game-2/logTest/")
+#setwd("../../data/mp-game-2/logTest/")
 #reads in all files in folder
-temp <- list.files(pattern="*.csv")
+temp <- list.files(path="../../data/mp-game-2/logTest/", pattern="*.csv", full.names=TRUE)
 for(i in 1:length(temp)){
   assign(paste0("data_",i), read.delim(temp[i]))
 }
-
 
 #output_fig_path <- "~/Documents/dissertation/proposal/"
 
 
 
 
-
-test_data <- rbindlist(lapply(list.files(), fread), fill=TRUE, idcol="dyad_id")
+#View(test_data)
+test_data <- rbindlist(lapply(list.files(path="../../data/mp-game-2/logTest/", pattern="*.csv", full.names=TRUE), fread), fill=TRUE, idcol="dyad_id")
 unique(test_data$dyad_id)
 max(test_data$dyad_id) > 10
 
@@ -51,11 +50,11 @@ test_data$falseAlarm <- as.factor(ifelse(test_data$categorizedResponse=="falseAl
 
 #Bonus Data
 bonus_data <- test_data %>%
-  group_by(dyad_id, role) %>%
+  group_by(gameid, role) %>%
   summarise(hitCount = sum(as.numeric(hit)),
          falseAlarmCount = sum(as.numeric(falseAlarm)),
           bonus = ifelse(hitCount-falseAlarmCount >= 0, (hitCount - falseAlarmCount) * 0.02, 0))
-bonus_data
+#write.csv(bonus_data, "../../../r_data_analysis/MP-2_Pilot_10_16/CritterGame_MP-2_DataAnalysis_Pilot_08_29_files/mp_pilot_2_bonus_data.csv")
 
 
 distribution_condition <- test_data %>%
