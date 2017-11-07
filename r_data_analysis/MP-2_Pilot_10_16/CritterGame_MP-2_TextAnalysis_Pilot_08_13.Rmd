@@ -1,23 +1,131 @@
 ---
 title: "CritterGame_MP-1_TextAnalysis_Pilot_1"
-author: "Lauren Oey"
-date: "8/13/2017 (updated 8/22/2017)" 
+author: "Lauren Oey, MH Tessler"
+date: "8/13/2017 (updated 10/6/2017)" 
 output: github_document
 ---
 
-```{r preamble, echo=FALSE, results='hide', message=FALSE, warning=FALSE, tidy=TRUE}
+```{r preamble}
 library(dplyr)
 library(tidyr)
 library(knitr)
 library(ggplot2)
 library(data.table)
 library(tidytext)
-library(coreNLP)
-library(cleanNLP)
-library(reticulate)
+#library(coreNLP)
+#library(cleanNLP)
+#library(reticulate)
 library(xtable)
 library(gridExtra)
+library(forcats)
+theme_set(theme_few())
+```
 
+
+Load message data
+
+```{r}
+df.chat <- rbindlist(
+  lapply(list.files(path="../../data/mp-game-2/chatMessage/", 
+                    pattern="*.csv", full.names=TRUE), fread), 
+  fill=TRUE, idcol="dyad_id") %>%
+  mutate(
+    dyad_id = as.factor(ifelse(dyad_id < 10,
+                            paste0("dyad_0", dyad_id),
+                            paste0("dyad_", dyad_id))),
+    gameid = as.factor(gameid),
+    role = as.factor(role),
+    trialNum = trialNum
+  )
+
+df.chat %>%
+  select(dyad_id, trialNum, role, text) %>%
+  kable()
+```
+
+Load training data
+
+```{r}
+df.train <- rbindlist(
+  lapply(list.files(path="../../data/mp-game-2/logTrain/", 
+                    pattern="*.csv", full.names=TRUE), fread), 
+  fill=TRUE, idcol="dyad_id") %>%
+  mutate(
+    dyad_id = as.factor(ifelse(dyad_id < 10,
+                            paste0("dyad_0", dyad_id),
+                            paste0("dyad_", dyad_id))),
+    gameid = as.factor(gameid),
+    role = as.factor(role),
+    trialNum = trialNum
+  )
+
+df.train.trials <- df.train %>%
+  select(dyad_id,trialNum,  role,
+         genus, conceptNumber, categoryPluralLabel, featureOrder, time_in_ms) %>%
+  distinct()
+```
+
+
+Load and preprocess test data
+
+```{r}
+df.test <- rbindlist(lapply(list.files(path="../../data/mp-game-2/logTest/", pattern="*.csv", full.names=TRUE), fread), fill=TRUE, idcol="dyad_id") %>%
+  mutate(
+    dyad_id = as.factor(ifelse(dyad_id < 10,
+                            paste0("dyad_0", dyad_id),
+                            paste0("dyad_", dyad_id))),
+    gameid = as.factor(gameid),
+    role = as.factor(role),
+    trialNum = trialNum - 1,
+    correct = ifelse(categorizedResponse=="hit" |
+                       categorizedResponse=="correctRejection", 1, 0),
+    hit =  ifelse(categorizedResponse=="hit", 1, 0),
+    falseAlarm = ifelse(categorizedResponse=="falseAlarm", 1, 0),
+    conceptNumber = factor(conceptNumber),
+    featureOrder = factor(featureOrder),
+    genus = factor(genus)
+  )
+
+df.test.trials <- df.test %>%
+  group_by(dyad_id, trialNum, genus, categoryPluralLabel, conceptNumber, featureOrder, role,
+           tested_on) %>%
+  summarize(n_correct = sum(correct),
+            prop_correct = sum(correct) / n())
+```
+
+
+
+```{r}
+df.chat.test <- left_join(
+  left_join(
+    df.chat %>% select(dyad_id, trialNum, role, text), 
+    df.test.trials %>% ungroup() %>% select(-featureOrder, -n_correct) %>%
+      rename(categoryTested = categoryPluralLabel,
+             genusTested = genus,
+             conceptTested = conceptNumber)
+    ),
+  df.train.trials %>%
+    select(dyad_id, trialNum, role, genus, conceptNumber, categoryPluralLabel) %>%
+    rename(categoryTrained = categoryPluralLabel,
+             genusTrained = genus,
+             conceptTrained = conceptNumber)
+)
+
+df.chat.test %>% 
+  select(dyad_id, trialNum,
+         genusTrained, categoryTrained, conceptTrained, 
+        role,
+         text,
+         tested_on,
+         genusTested, categoryTested, conceptTested, 
+         prop_correct
+         ) %>% kable()
+```
+
+
+
+
+```{r}
 #setting the directory
 setwd("../../data/mp-game-1/chatMessage/")
 
