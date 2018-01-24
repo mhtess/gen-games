@@ -8,14 +8,50 @@
 // --------------------------
 
 function render_prev_sets(prev_sets) {
-  console.log("Previous Sets");
   console.log(prev_sets);
 
-    // var scale = 0.5;
-    // Ecosystem.draw(
-    //   stim.critter, stim,
-    //   "critterSVG", scale)
+  for (var i = 0; i < prev_sets.length; i++) {
+    $("#prev_sets").append(`<H4>Example: ${i+1} </H4>`);
+    render_prev_set(prev_sets[i]);
+  }
 }
+
+function render_prev_set(set) {
+  var rows = 1;
+  var cols = set.length;
+
+  var table = "<table>";
+  for(var i=0; i <rows; i++) {
+    table += "<tr>";
+    for(var j=0; j<cols; j++) {
+      table += "<td>";
+      var ind = i * cols + j;
+      table += "<table class ='cell' id='cell" + ind + "'\">";
+
+      table += "<td>";
+      table += "<svg id='critter" + ind +
+        "' style='max-width:100px;max-height:100px\'></svg></td>";
+
+      table += "<tr>";
+      table += "<div class='critname' id='cell" + ind + "critname'></div></tr>";
+      table += "</table>";
+      table += "</td>";
+      
+    }
+    table += "</tr>"
+  }
+  table += "</table>";
+  $("#prev_sets").append(table);
+
+  for (var i = 0 ; i < cols; i++) {
+    var scale = 0.5;
+    var stim = set[i];
+    Ecosystem.draw(
+      stim.critter, stim.props,
+      "critter" + i, scale);
+  }
+}
+
 
 function render_curr_set(set) {
 
@@ -38,27 +74,29 @@ function make_slides(exp) {
     },
   });
 
-  slide.concept_1 = slide({
+  slides.concept_1 = slide({
     name: "concept_1",
     present: exp.allCreatures[1],
     trial_num: 0,
+    start: function() {
+      this.prev_sets = []
+    },
 
     present_handle : function(stim) {
-      console.log("hi");
       // hide + disable stuff
       $(".err").hide();
-      $("#continueButton").disable(true);
+      $("#prev_sets").empty();
+      // $("#continueButton").disable(true);
 
       // Render slide
-      $(".set_number").text() = "Item " + String(this.trial_num + 1) + " of 25";
-      console.log(exp.allCreatures[1]);
-
-      render_prev_sets(exp.allCreatures[1].slice(0, trial_num));
+      $(".set_number").text("Item " + String(this.trial_num + 1) + " of 25");
+      render_prev_sets(this.prev_sets);
       render_curr_set(this.stim);
 
       // Time Markers
       this.start_time = Date.now()
       this.trial_num++;
+      this.prev_sets.push(stim);
     },    
 
     button : function() {
@@ -69,17 +107,15 @@ function make_slides(exp) {
     },
 
     log_responses : function(){
-      exp.catch_trials.push({
+      exp.concept_1_trials.push({
           "concept_number" : 1,
           "trial_num" : this.trial_num,
           "time_in_seconds" : this.time_spent/1000,
-          "critter" : this.stim["critter"],
-          "belongs_to_concept" : this.stim["belongs_to_concept"],
         });
     }
   });
 
-  slide.concept_switch_1 = slide({
+  slides.concept_switch_1 = slide({
     name: "concept_switch",
       button : function() {
         exp.go(); // use exp.go() if and only if there is no "present" data.
@@ -191,7 +227,7 @@ function init() {
     "i0",
     "instructions",
     "concept_1",
-    "concept_switch_1",
+    // "concept_switch_1",
     // "concept_2",
     'subj_info',
     'thanks'
