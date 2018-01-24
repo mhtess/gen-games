@@ -146,7 +146,6 @@ function make_slides(exp) {
     button : function() {
       var allFormsFilled = true;
       $(".critter_label_form").each(function () {
-          // console.log($(this).find("input[type=radio]:checked"))
           if ($("input[type=radio]:checked", this).length == 0) {
             allFormsFilled = false;
           }
@@ -163,10 +162,17 @@ function make_slides(exp) {
     },
 
     log_responses : function(){
-      exp.concept_1_trials.push({
+      var labels = []
+      $(".critter_label_form").each(function () {
+          labels.push($('input[name=radioName]:checked', this).val());
+      });
+
+
+      exp.trials.push({
           "concept_number" : 1,
           "trial_num" : this.trial_num,
           "time_in_seconds" : this.time_spent/1000,
+          "labels": labels,
         });
     }
   });
@@ -242,8 +248,7 @@ function init() {
     };
 
   // Define trials
-  exp.concept_1_trials = [];
-  exp.concept_2_trials = [];
+  exp.trials = [];
 
   // Expriment slide structure
   exp.structure=[
