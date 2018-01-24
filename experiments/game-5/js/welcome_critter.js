@@ -144,14 +144,14 @@ var example = function() {
 // ----
 // MAIN
 // ----
-
+var numSets = 2;
 var easy_rule = function(props) {
 	// Rule: If critter is small and has a blue body
 	return props["col1"] === color_dict["blue"] && props["tar1"] === tar1_dict["small"];
 } 
-var easy_rule_data = createDatset(easy_rule, 25);
+var easy_rule_data = createDatset(easy_rule, numSets);
 console.log(String(easy_rule_data.length) + " Sets for Easy Rule Data Generated");
-saveDatasetToFile(easy_rule_data, './easy_rule_data.json');
+saveDatasetToFile(easy_rule_data, './easy_rule_data.js');
 
 var medium_rule = function(props) {
 	// Rule: If critter has green fin XOR blue body
@@ -160,6 +160,6 @@ var medium_rule = function(props) {
 		!(props["col2"] === color_dict["green"] && props["col1"] === color_dict["blue"])
 	);
 } 
-var medium_rule_data = createDatset(medium_rule, 25);
+var medium_rule_data = createDatset(medium_rule, numSets);
 console.log(String(medium_rule_data.length) + " Sets for Medium Rule Data Generated");
-saveDatasetToFile(medium_rule_data, './medium_rule_data.json');
+saveDatasetToFile(medium_rule_data, './medium_rule_data.js');

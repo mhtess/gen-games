@@ -32,8 +32,8 @@
 
     <!-- experiment file -->
     <script src="js/game-5.js"></script>
-    <script src="js/welcome_critter.js"></script>
-
+    <script src="js/easy_rule_data.js"></script>
+    <script src="js/medium_rule_data.js"></script>
     <script src="../_shared/js/uniqueturker.js"></script>
 
 </head>
@@ -52,80 +52,42 @@
   <div class="slide" id="instructions">
     <h3>Instructions</h3>
     <p>
-      You will explore a new world called Critter Country, where scientists have discovered seeral new species: the "wudsy", "fep", and "blaar". <br><br>
+      You will explore a new world called Critter Country, where scientists have discovered several new species: the "wudsy", "fep", and "blaar". <br><br>
 
-      You will try to learn about one critter at a time. For example, you might start, by learning about the "wudsy". As you explore the world and see examples of the "wudsy", your knowledge will be tested, and you will have to identify which critters in a given line up, can be labeled "wudsy". This will repeat for the remaining critters as well.<br><br>
+      You will try to learn about one critter at a time. For example, you might start, by learning about the "wudsy". For each species, you will be given 25 sets of critters. For each set, you will have to determine which of the displayed creatures belong to the speices and which do not. After you label the creatures, the correct labels will be displayed and will remain on screen for futher reference. After the 25 sets of "wudsy" / not "wudsy" creatures have been labeled, you will repeat this identification game for two additional species. <br><br>
 
-      You will receive 25 sets of examples per critter type. Please note, if you incorrectly identify a critter, you will have to wait 5 seconds before the next round of critters. <br><br>
+      <b>Please note that the species are completely independent of one another. A creature that was previously defined as a "wudsy" may be defined as "fep", when learning about the second species. </b> Do not use knowledge of a prior species to help identify subsequent species. A critter that was in the "wudsy" species previously, may also be a "fep" or a "blaar". <br><br>
+
+      Please note, if you incorrectly label a critter within a set, you will have to wait 5 seconds before the next round of critters. <br><br>
 
     </p>
     <button onclick="_s.button()">Continue</button>
   </div>
 
+  <div class="slide" id="concept_1">
+    <p class="set_number"></p>
+    <p class="critterInfo"> The wudsy objects in each set are surrounded by a square.</p>
 
-  <div class="slide" id="welcome_critterLand">
-    <h3>Welcome to Critter Country</h3>
-    <p>Meet the Critters of Critter Country. These are some of the different critters you encounter. Use the CritterDex on each critter by clicking on them in order to proceed:</p>
-    <div id='critter_display'></div>
+    <div class="prev_sets"></div>
 
-    <button id="learning_button" onclick="_s.button()">Continue</button>
-  </div>
-
-  <div class="slide" id="condition">
-    <br><br><br><br>
-    <div id="get_cond"></div>
-    <br><br><br>
-    <button onclick="_s.button()">Continue</button>
-  </div>
-
-  <div class="slide" id="learning_trial">
-    <p class="critterInfo"></p>
-
-    <div><svg id="critterSVG"></svg></div>
-    <p class="prompt"></p>
-
-    <button onclick="_s.detector()" id="detectorButton">Use CritterDex</button>
-
-    <p class="notePrompt"></p>
-
-    <textarea id="participantNote" rows="2" cols="30" spellcheck=false></textarea>
+    <p class="label_prompt">Given the above examples, which of the objects in this set are wudsy?</p>
+    <div class="curr_set"></div>
 
     <br>
     <br>
 
-    <!-- <p class="attentionCheck"></p>
-    <label><input type="radio"  name="trial_response" value="Yes"/>Yes</label>
-    <label><input type="radio"  name="trial_response" value="No"/>No</label><br><br> -->
     <button onclick="_s.button()" id="continueButton">Continue</button>
-    <p class="err">Please write yourself a note.</p>
   </div>
 
-  <div class="slide" id="test_trial">
-    <p>You come across the following creature:</p>
-    <div><svg id="critterTestSVG"></svg></div>
-
-    <p class="testQuestion">What is it?</p>
-    <!-- <textarea id="testFreeResponse" rows="1" cols="20" spellcheck=false></textarea>-->
-    <label><input type="radio"  name="response" value="wug"/>wug</label>
-    <label><input type="radio"  name="response" value="fep"/>fep</label>
-    <label><input type="radio"  name="response" value="lorch"/>lorch</label>
+  <div class="slide" id="concept_switch_1">
+    <p class="concept_introduction"></p>
 
     <br>
     <br>
+    <button onclick="_s.button()" id="continueButton">Continue</button>
 
-    <button onclick="_s.button()">Continue</button>
-    <p class="err">Please answer the question.</p>
   </div>
 
-
-
-  <div class="slide" id="messagePassing">
-    <br>
-    <p id="messageInstructions"></p>
-      <textarea id="chat_response" rows="3" cols="50" spellcheck=false></textarea><br><br>
-      <button onclick="_s.button()">Continue</button>
-    <p class="err">Please write something before continuing.</p>
-  </div>
 
   <div class="slide"  id="subj_info">
     <div class="long_form">
