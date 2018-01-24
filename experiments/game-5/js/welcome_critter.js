@@ -14,7 +14,9 @@
 // Specifically, we only generate fish. 
 // Prop2 (tailsize) are held constant. Additionally, tar1
 // (fangs) is held false for all samples and tar2 (whiskers)
-// is held true for all samples. This reduces the
+// is held true for all samples. The stripe color is 
+// kept to the same as the body color, and all fish
+// have stripes. This reduces the
 // possible axes of variability to 3, like in the Piantadosi
 // experiment.
 //
@@ -41,9 +43,9 @@ var color_dict = {
 	"purple": "#dda0dd"
 }
 var prop1_dict = {
-	"small": Math.log(2),
-	"medium": Math.log(3),
-	"large": Math.log(4)
+	"small": Math.log(1.2),
+	"medium": Math.log(2.2),
+	"large": Math.log(4.2)
 }
 var prop2_dict = {
 	"small": 0.2
@@ -54,6 +56,9 @@ var tar1_dict = {
 var tar2_dict = {
 	"exists": true,
 }
+var tar3_dict = {
+	"exists": true,
+}
 
 var creatureOpts = {
 		"col1": ["blue", "red", "purple"],
@@ -61,7 +66,8 @@ var creatureOpts = {
 		"prop1": ["small", "medium", "large"],
 		"prop2": ["small"],
 		"tar1": ["does_not_exist"],
-		"tar2": ["exists"],	
+		"tar2": ["exists"],
+		"tar3": ["exists"],	
 }
 
 // ------------------
@@ -71,7 +77,7 @@ var createDatset = function(rule, numSets) {
 	// Define dataset of some number of sets of critters.
 	// ---------
 	// rule: function that evaluates a dictionary of "col1", "col2",
-	//		 "tar1", "tar2", "prop1", "prop2" values and returns T/F
+	//		 "tar1", "tar2", "tar3", "prop1", "prop2" values and returns T/F
 	//		 according to whether the critter fits the given concept rule
 	// numSets: number of sets in the dataset
 	var data = [];
@@ -86,10 +92,10 @@ var createCritterSet = function(rule) {
 	// Define critter set consisting of some number of critters (1-5).
 	// ---------
 	// rule: function that evaluates a dictionary of "col1", "col2",
-	//		 "tar1", "tar2", "prop1", "prop2" values and returns T/F
+	//		 "tar1", "tar2", "tar3", "prop1", "prop2" values and returns T/F
 	//		 according to whether the critter fits the given concept rule
 	var critterSet = [];
-	var numCritters = _.random(1, 6, false);
+	var numCritters = _.random(1, 5, false);
 	for (var i in _.range(numCritters)) {
 		var critter = createCritter(rule, color_dict, creatureOpts);
 		critterSet.push(critter);
@@ -101,7 +107,7 @@ var createCritter = function(rule) {
 	// Define critter and label it according to the given rule.
 	// ---------
 	// rule: function that evaluates a dictionary of "col1", "col2",
-	//		 "tar1", "tar2", "prop1", "prop2" values and returns T/F
+	//		 "tar1", "tar2", "tar3", "prop1", "prop2" values and returns T/F
 	//		 according to whether the critter fits the given concept rule
 	var critter = {
 		critter: "fish",
@@ -110,11 +116,13 @@ var createCritter = function(rule) {
 			"col2": color_dict[_.sample(creatureOpts["col2"])],
 			"tar1": tar1_dict[_.sample(creatureOpts["tar1"])],
 			"tar2": tar2_dict[_.sample(creatureOpts["tar2"])],
+			"tar3": tar3_dict[_.sample(creatureOpts["tar3"])],
 			"prop1": prop1_dict[_.sample(creatureOpts["prop1"])],
 			"prop2": prop2_dict[_.sample(creatureOpts["prop2"])],
 		}
 	};
-	critter['belongs_to_concept'] = rule(critter.props);
+	critter["belongs_to_concept"] = rule(critter.props);
+	critter["props"]["col3"] = critter["props"]["col1"]; // Critter stripe color = body color
 	return critter;
 }
 
@@ -144,7 +152,7 @@ var example = function() {
 // ----
 // MAIN
 // ----
-var numSets = 2;
+var numSets = 10;
 var easy_rule = function(props) {
 	// Rule: If critter is small and has a blue body
 	return props["col1"] === color_dict["blue"] && props["prop1"] === prop1_dict["small"];

@@ -8,15 +8,17 @@
 // --------------------------
 
 function render_prev_sets(prev_sets) {
-  console.log(prev_sets);
-
   for (var i = 0; i < prev_sets.length; i++) {
     $("#prev_sets").append(`<H4>Example: ${i+1} </H4>`);
-    render_prev_set(prev_sets[i]);
+    render_prev_set(i, prev_sets[i]);
   }
 }
 
-function render_prev_set(set) {
+function mark(id) {
+  $('#' + id).parent().css({"border":'2px solid black'});
+}
+
+function render_prev_set(set_num, set) {
   var rows = 1;
   var cols = set.length;
 
@@ -29,8 +31,8 @@ function render_prev_set(set) {
       table += "<table class ='cell' id='cell" + ind + "'\">";
 
       table += "<td>";
-      table += "<svg id='critter" + ind +
-        "' style='max-width:100px;max-height:100px\'></svg></td>";
+      table += "<svg id='" + "set" + set_num + "_critter" + ind +
+        "' style='max-width:150px;max-height:150px\'></svg></td>";
 
       table += "<tr>";
       table += "<div class='critname' id='cell" + ind + "critname'></div></tr>";
@@ -46,9 +48,14 @@ function render_prev_set(set) {
   for (var i = 0 ; i < cols; i++) {
     var scale = 0.5;
     var stim = set[i];
+    var id = "set" + set_num + "_critter" + i;
     Ecosystem.draw(
       stim.critter, stim.props,
-      "critter" + i, scale);
+      id, scale
+    );
+    if (stim.belongs_to_concept) {
+      mark(id);
+    }
   }
 }
 
@@ -160,39 +167,6 @@ function make_slides(exp) {
   return slides;
 }
 
-// -------------------
-// Set Rendering
-// -------------------
-var prev = null;
-
-function mark(el, otherEls) {
-  if(prev != null){
-    gray(prev);
-  }
-  prev = el;
-
-    el.style.border=='' ? 
-    $('#'+el.id).css({"border":'2px solid red',
-                    'background-color': 'white','opacity': '1'}) &
-    $('#'+el.id+'critname').css({'opacity': '1', 'font-weight': 'bold'})
-                     : 
-    $('#'+el.id).css({"border":'',
-                    'background-color': 'white'})
-    otherEls.map(function(cell){$('#'+cell).css({"border":'',
-      'background-color': 'white'})})
-
-  $('#'+el.id+'critname').css({'opacity': '1'});
-  check(allCreatures.length);
-
-}
-
-
-function gray(el) {
-   $('#'+el.id).css({'opacity': '0.5'})
-   $('#'+el.id+'critname').css({'opacity': '0.5', 'font-weight': 'normal'});
-
-}
-
 // -----------------
 // Initialize Game
 // -----------------
@@ -236,7 +210,7 @@ function init() {
   // Load critters for the game
   exp.allCreatures = {
     1: easy_rule_data, // Easy Concept Critter Sets
-    2: medium_rule_data, // Medium Concept Critter Sets
+    // 2: medium_rule_data, // Medium Concept Critter Sets
   }
 
   // Generate the slides for the game
