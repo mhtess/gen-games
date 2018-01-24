@@ -59,9 +59,46 @@ function render_prev_set(set_num, set) {
   }
 }
 
-
 function render_curr_set(set) {
+  var rows = 1;
+  var cols = set.length;
 
+  var table = "<table>";
+  for(var i=0; i <rows; i++) {
+    table += "<tr>";
+    for(var j=0; j<cols; j++) {
+      table += "<td>";
+      var ind = i * cols + j;
+      table += "<table class ='cell' id='cell" + ind + "'\">";
+
+      table += "<td>";  
+      table += "<svg id='critter" + ind +
+        "' style='max-width:150px;max-height:150px\'></svg>";
+      table += "<form id='critter_form" + ind + "' class='critter_label_form'>";
+      table += "<input type='radio' name='belongs_to_concept' value=true> Yes ";
+      table += "<input type='radio' name='belongs_to_concept' value=false> No ";
+      table += "</form></td>";
+
+      table += "<tr>";
+      table += "<div class='critname' id='cell" + ind + "critname'></div></tr>";
+      table += "</table>";
+      table += "</td>";
+      
+    }
+    table += "</tr>"
+  }
+  table += "</table>";
+  $("#curr_set").append(table);
+
+  for (var i = 0 ; i < cols; i++) {
+    var scale = 0.5;
+    var stim = set[i];
+    var id = "critter" + i;
+    Ecosystem.draw(
+      stim.critter, stim.props,
+      id, scale
+    );
+  }
 }
 
 function make_slides(exp) {
@@ -93,12 +130,12 @@ function make_slides(exp) {
       // hide + disable stuff
       $(".err").hide();
       $("#prev_sets").empty();
-      // $("#continueButton").disable(true);
+      $("#curr_set").empty();
 
       // Render slide
       $(".set_number").text("Item " + String(this.trial_num + 1) + " of 25");
       render_prev_sets(this.prev_sets);
-      render_curr_set(this.stim);
+      render_curr_set(stim);
 
       // Time Markers
       this.start_time = Date.now()
@@ -107,10 +144,22 @@ function make_slides(exp) {
     },    
 
     button : function() {
-      var end_time = Date.now();
-      this.time_spent = end_time - this.start_time;
-      this.log_responses();
-      _stream.apply(this); //make sure this is at the *end*, after you log your data
+      var allFormsFilled = true;
+      $(".critter_label_form").each(function () {
+          // console.log($(this).find("input[type=radio]:checked"))
+          if ($("input[type=radio]:checked", this).length == 0) {
+            allFormsFilled = false;
+          }
+      });
+
+      if (allFormsFilled) {
+        var end_time = Date.now();
+        this.time_spent = end_time - this.start_time;
+        this.log_responses();
+        _stream.apply(this); //make sure this is at the *end*, after you log your data
+      } else {
+        alert("Please make sure to label all the critters, before proceeding");
+      }
     },
 
     log_responses : function(){
