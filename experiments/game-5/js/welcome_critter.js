@@ -45,7 +45,7 @@ var color_dict = {
 var prop1_dict = {
 	"small": Math.log(1.2),
 	"medium": Math.log(2.2),
-	"large": Math.log(4.2)
+	"large": Math.log(3.2)
 }
 var prop2_dict = {
 	"small": 0.2
@@ -61,8 +61,8 @@ var tar3_dict = {
 }
 
 var creatureOpts = {
-		"col1": ["blue", "red", "purple"],
-		"col2": ["green", "yellow", "orange"],
+		"col1": ["blue", "yellow", "purple"],
+		"col2": ["green", "red", "orange"],
 		"prop1": ["small", "medium", "large"],
 		"prop2": ["small"],
 		"tar1": ["does_not_exist"],
@@ -73,29 +73,31 @@ var creatureOpts = {
 // ------------------
 // Dataset Generation
 // ------------------
-var createDatset = function(rule, numSets) {
+var createDatset = function(rule, numSets, upper_bound_num_critters) {
 	// Define dataset of some number of sets of critters.
 	// ---------
 	// rule: function that evaluates a dictionary of "col1", "col2",
 	//		 "tar1", "tar2", "tar3", "prop1", "prop2" values and returns T/F
 	//		 according to whether the critter fits the given concept rule
 	// numSets: number of sets in the dataset
+	// upper_bound_num_critters: upper bound on the number of critters
 	var data = [];
 	for (var i in _.range(numSets)) {
-		var critterSet = createCritterSet(rule, color_dict, creatureOpts);
+		var critterSet = createCritterSet(rule, upper_bound_num_critters);
 		data.push(critterSet);
 	}
 	return data;
 }
 
-var createCritterSet = function(rule) {
+var createCritterSet = function(rule, upper_bound_num_critters) {
 	// Define critter set consisting of some number of critters (1-5).
 	// ---------
 	// rule: function that evaluates a dictionary of "col1", "col2",
 	//		 "tar1", "tar2", "tar3", "prop1", "prop2" values and returns T/F
 	//		 according to whether the critter fits the given concept rule
+	// upper_bound_num_critters: upper bound on the number of critters
 	var critterSet = [];
-	var numCritters = _.random(1, 5, false);
+	var numCritters = _.random(1, 1, false);
 	for (var i in _.range(numCritters)) {
 		var critter = createCritter(rule, color_dict, creatureOpts);
 		critterSet.push(critter);
@@ -154,20 +156,28 @@ var example = function() {
 // ----
 var numSets = 10;
 var easy_rule = function(props) {
-	// Rule: If critter is small and has a blue body
-	return props["col1"] === color_dict["blue"] && props["prop1"] === prop1_dict["small"];
+	// Rule: If critter has orange fins
+	return props["col2"] === color_dict["orange"]
 } 
 var easy_rule_data = createDatset(easy_rule, numSets);
 console.log(String(easy_rule_data.length) + " Sets for Easy Rule Data Generated");
 saveDatasetToFile(easy_rule_data, './easy_rule_data.js');
 
 var medium_rule = function(props) {
-	// Rule: If critter has green fin XOR blue body
-	return (
-		(props["col2"] === color_dict["green"] || props["col1"] === color_dict["blue"]) &&
-		!(props["col2"] === color_dict["green"] && props["col1"] === color_dict["blue"])
-	);
+	// Rule: If critter is small and has a blue body
+	return props["col1"] === color_dict["blue"] && props["prop1"] === prop1_dict["small"];
 } 
 var medium_rule_data = createDatset(medium_rule, numSets);
 console.log(String(medium_rule_data.length) + " Sets for Medium Rule Data Generated");
 saveDatasetToFile(medium_rule_data, './medium_rule_data.js');
+
+var hard_rule = function(props) {
+	// Rule: If critter has green fin XOR blue body
+	return (
+		(props["col2"] === color_dict["green"] || props["col1"] === color_dict["blue"]) &&
+		!(props["col2"] === color_dict["green"] && props["col1"] === color_dict["blue"])
+	);	
+}
+var hard_rule_data = createDatset(medium_rule, numSets);
+console.log(String(hard_rule_data.length) + " Sets for Hard Rule Data Generated");
+saveDatasetToFile(hard_rule_data, './hard_rule_data.js');
