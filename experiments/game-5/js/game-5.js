@@ -15,7 +15,7 @@ function render_prev_sets(prev_sets, one_table) {
         all_items = all_items.concat(prev_sets[i]);
       } 
       console.log(all_items);
-      render_prev_set(1, all_items, 5);
+      render_prev_set(1, all_items, 8);
   } else {
      for (var i = 0; i < prev_sets.length; i++) {
         $("#prev_sets").append(`<H4>Example: ${i+1} </H4>`);
@@ -217,12 +217,17 @@ function make_slides(exp) {
     }
   });
 
-  slides.concept_switch_1 = slide({
-    name: "concept_switch",
-      button : function() {
+  slides.concept_explanation = slide({
+    name : "concept_explanation",
+    button : function() {
+      if (!$("#concept").val()) {
+        alert("Please enter your description of the wudsy species");
+      } else {
         exp.go(); // use exp.go() if and only if there is no "present" data.
+      }
     },
   });
+
 
   slides.subj_info =  slide({
     name : "subj_info",
@@ -295,8 +300,7 @@ function init() {
     "i0",
     "instructions",
     "concept_1",
-    // "concept_switch_1",
-    // "concept_2",
+    "concept_explanation",
     'subj_info',
     'thanks'
   ];

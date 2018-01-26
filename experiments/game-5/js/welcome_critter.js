@@ -155,7 +155,7 @@ var example = function() {
 // ----
 // MAIN
 // ----
-var numSets = 40;
+var numSets = 1;
 var easy_rule = function(critter) {
 	// Rule: If critter is orange
 	return critter["props"]["col1"] === color_dict["orange"]
