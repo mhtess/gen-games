@@ -7,11 +7,22 @@
 // Slide Creation & Rendering
 // --------------------------
 
-function render_prev_sets(prev_sets) {
-  for (var i = 0; i < prev_sets.length; i++) {
-    $("#prev_sets").append(`<H4>Example: ${i+1} </H4>`);
-    render_prev_set(i, prev_sets[i]);
+function render_prev_sets(prev_sets, one_table) {
+  if (one_table) {
+    $("#prev_sets").append(`<H4>Previous Examples: </H4>`);
+    var all_items = [];
+      for (var i = 0; i < prev_sets.length; i++) {
+        all_items = all_items.concat(prev_sets[i]);
+      } 
+      console.log(all_items);
+      render_prev_set(1, all_items, 5);
+  } else {
+     for (var i = 0; i < prev_sets.length; i++) {
+        $("#prev_sets").append(`<H4>Example: ${i+1} </H4>`);
+        render_prev_set(i, prev_sets[i], prev_sets[i].length);
+      }  
   }
+
 }
 
 function mark(id) {
@@ -22,16 +33,22 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function render_prev_set(set_num, set) {
-  var rows = 1;
-  var cols = set.length;
+function render_prev_set(set_num, set, table_width) {
+  var rows = Math.ceil(set.length / table_width);
+  var cols = table_width;
+
+  console.log("Num rows: " + rows);
+  console.log("Num columns: " + table_width);
+  console.log("Set Length: " + set.length);
 
   var table = "<table>";
+  var ind = 0;
   for(var i=0; i <rows; i++) {
     table += "<tr>";
     for(var j=0; j<cols; j++) {
+      console.log(ind);
       table += "<td>";
-      var ind = i * cols + j;
+      if (ind >= set.length) break;
       table += "<table class ='cell' id='cell" + ind + "'\">";
 
       table += "<td>";
@@ -42,14 +59,14 @@ function render_prev_set(set_num, set) {
       table += "<div class='critname' id='cell" + ind + "critname'></div></tr>";
       table += "</table>";
       table += "</td>";
-      
+      ind += 1;
     }
     table += "</tr>"
   }
   table += "</table>";
   $("#prev_sets").append(table);
 
-  for (var i = 0 ; i < cols; i++) {
+  for (var i = 0 ; i < set.length; i++) {
     var scale = 0.5;
     var stim = set[i];
     var id = "set" + set_num + "_critter" + i;
@@ -139,7 +156,7 @@ function make_slides(exp) {
 
       // Render slide
       $(".set_number").text("Item " + String(this.trial_num + 1) + " of 25");
-      render_prev_sets(this.prev_sets);
+      render_prev_sets(this.prev_sets, true);
       render_curr_set(stim);
       this.stim = stim;
 
@@ -167,10 +184,6 @@ function make_slides(exp) {
         var i = 0;
         $(".critter_label_form").each(function () {
             var turker_label = $("input[type=radio]:checked", this).val() == "true";
-
-            console.log(turker_label);
-            console.log(stim[i]['belongs_to_concept']);
-
             if (turker_label != stim[i]['belongs_to_concept']) correct_answer = false;
             i +=1 ;
         });
@@ -290,8 +303,8 @@ function init() {
 
   // Load critters for the game
   exp.allCreatures = {
-    1: easy_rule_data, // Easy Concept Critter Sets
-    // 2: medium_rule_data, // Medium Concept Critter Sets
+    // 1: easy_rule_data, // Easy Concept Critter Sets
+    1: medium_rule_data, // Medium Concept Critter Sets
   }
 
   // Generate the slides for the game

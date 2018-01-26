@@ -9,9 +9,9 @@
 1. Each concept is taught by presenting a series of pre-generated trials. In the original paper, there are 2 lists per concept, where the value of discrimination, e.g. blue versus green, is different between the two lists. We don't do that here. There is only one list of pre-generated trials per concept.
 
 2. Concepts:
-    - Fin Color Orange (Easy) --> Original Paper: Blue
-    - Body Size Small and Body Color Blue (Medium)   ---> Original Paper: Size 1 and Blue
-    - Fin Color Green XOR Body Color Blue (Hard) ---> Original Paper: Circle XOR Blue
+    - Color Orange (Easy) --> Original Paper: Blue
+    - Size Small and Body Color Green (Medium)   ---> Original Paper: Size 1 and Blue
+    - Critter Fish XOR Body Color Blue (Hard) ---> Original Paper: Circle XOR Blue
 
 
 ## TODOS

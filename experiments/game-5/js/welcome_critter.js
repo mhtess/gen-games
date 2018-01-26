@@ -11,7 +11,7 @@
 // replication, we are using Erin DB's Stimuli Genearation
 // package. 
 //
-// Specifically, we only generate fish. 
+// Specifically, we only generate fish, bugs, and birds. 
 // Prop2 (tailsize) are held constant. Additionally, tar1
 // (fangs) is held false for all samples and tar2 (whiskers)
 // is held true for all samples. The stripe color is 
@@ -20,8 +20,8 @@
 // possible axes of variability to 3, like in the Piantadosi
 // experiment.
 //
-// These 3 dimensions are namely: col1 (body color), col2 (fin color),
-// and prop1 (bodysize). We shall randomly sample values for
+// These 3 dimensions are namely: col1/col2/col3, prop1 (bodysize),
+// and critter type. We shall randomly sample values for
 // each of this dimensions from sets of size 3.
 // -------------------------------------------------------
 
@@ -43,8 +43,8 @@ var color_dict = {
 	"purple": "#dda0dd"
 }
 var prop1_dict = {
-	"small": Math.log(1.2),
-	"medium": Math.log(2.2),
+	"small": Math.log(1.0),
+	"medium": Math.log(2.0),
 	"large": Math.log(3.2)
 }
 var prop2_dict = {
@@ -61,13 +61,13 @@ var tar3_dict = {
 }
 
 var creatureOpts = {
-		"col1": ["blue", "yellow", "purple"],
-		"col2": ["green", "red", "orange"],
-		"prop1": ["small", "medium", "large"],
-		"prop2": ["small"],
-		"tar1": ["does_not_exist"],
-		"tar2": ["exists"],
-		"tar3": ["exists"],	
+	"critterTypes": ["fish", "bug", "bird"],
+	"col1": ["blue", "green", "orange"],
+	"prop1": ["small", "medium", "large"],
+	"prop2": ["small"],
+	"tar1": ["does_not_exist"],
+	"tar2": ["exists"],
+	"tar3": ["exists"],	
 }
 
 // ------------------
@@ -112,10 +112,9 @@ var createCritter = function(rule) {
 	//		 "tar1", "tar2", "tar3", "prop1", "prop2" values and returns T/F
 	//		 according to whether the critter fits the given concept rule
 	var critter = {
-		critter: "fish",
+		critter: _.sample(creatureOpts["critterTypes"]),
 		props: {
 			"col1": color_dict[_.sample(creatureOpts["col1"])],
-			"col2": color_dict[_.sample(creatureOpts["col2"])],
 			"tar1": tar1_dict[_.sample(creatureOpts["tar1"])],
 			"tar2": tar2_dict[_.sample(creatureOpts["tar2"])],
 			"tar3": tar3_dict[_.sample(creatureOpts["tar3"])],
@@ -123,8 +122,11 @@ var createCritter = function(rule) {
 			"prop2": prop2_dict[_.sample(creatureOpts["prop2"])],
 		}
 	};
-	critter["belongs_to_concept"] = rule(critter.props);
-	critter["props"]["col3"] = critter["props"]["col1"]; // Critter stripe color = body color
+	critter["belongs_to_concept"] = rule(critter);
+	critter["props"]["col2"] = critter["props"]["col1"];
+	critter["props"]["col3"] = critter["props"]["col1"]; // Constant color 
+	critter["props"]["col4"] = critter["props"]["col1"]; // Constant color 
+	critter["props"]["col5"] = critter["props"]["col1"]; // Constant color 
 	return critter;
 }
 
@@ -142,40 +144,39 @@ var saveDatasetToFile = function(dataset, filepath) {
 // ------------------
 var example = function() {
 	// Creates and logs an example dataset to the console.
-	var rule = function(props) {
+	var rule = function(critter) {
 		// Example Rule: If critter is small and has a blue body
-		return props["col1"] === color_dict["blue"] && props["prop1"] === prop1_dict["small"];
+		return critter["props"]["col1"] === color_dict["blue"] && critter["props"]["prop1"] === prop1_dict["small"];
 	} 
 	var data = createDatset(rule, 5);
 	var data_str = JSON.stringify(data, null, 4);
-	console.log(data_str);	
 }
 
 // ----
 // MAIN
 // ----
-var numSets = 10;
-var easy_rule = function(props) {
-	// Rule: If critter has orange fins
-	return props["col2"] === color_dict["orange"]
+var numSets = 40;
+var easy_rule = function(critter) {
+	// Rule: If critter is orange
+	return critter["props"]["col1"] === color_dict["orange"]
 } 
 var easy_rule_data = createDatset(easy_rule, numSets);
 console.log(String(easy_rule_data.length) + " Sets for Easy Rule Data Generated");
 saveDatasetToFile(easy_rule_data, './easy_rule_data.js');
 
-var medium_rule = function(props) {
-	// Rule: If critter is small and has a blue body
-	return props["col1"] === color_dict["blue"] && props["prop1"] === prop1_dict["small"];
+var medium_rule = function(critter) {
+	// Rule: If critter has small and green
+	return critter["props"]["col1"] === color_dict["green"] && critter["props"]["prop1"] === prop1_dict["small"];
 } 
 var medium_rule_data = createDatset(medium_rule, numSets);
 console.log(String(medium_rule_data.length) + " Sets for Medium Rule Data Generated");
 saveDatasetToFile(medium_rule_data, './medium_rule_data.js');
 
-var hard_rule = function(props) {
-	// Rule: If critter has green fin XOR blue body
+var hard_rule = function(critter) {
+	// Rule: If critter is a fish XOR blue body
 	return (
-		(props["col2"] === color_dict["green"] || props["col1"] === color_dict["blue"]) &&
-		!(props["col2"] === color_dict["green"] && props["col1"] === color_dict["blue"])
+		(critter["critter"] === "fish" || critter["props"]["col1"] === color_dict["blue"]) &&
+		!(critter["critter"] === "fish" && critter["props"]["col1"] === color_dict["blue"])
 	);	
 }
 var hard_rule_data = createDatset(medium_rule, numSets);
