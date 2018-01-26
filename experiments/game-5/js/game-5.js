@@ -18,6 +18,10 @@ function mark(id) {
   $('#' + id).parent().css({"border":'2px solid black'});
 }
 
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 function render_prev_set(set_num, set) {
   var rows = 1;
   var cols = set.length;
@@ -131,11 +135,13 @@ function make_slides(exp) {
       $(".err").hide();
       $("#prev_sets").empty();
       $("#curr_set").empty();
+      $('#continueButton').prop('disabled', false);
 
       // Render slide
       $(".set_number").text("Item " + String(this.trial_num + 1) + " of 25");
       render_prev_sets(this.prev_sets);
       render_curr_set(stim);
+      this.stim = stim;
 
       // Time Markers
       this.start_time = Date.now()
@@ -144,18 +150,39 @@ function make_slides(exp) {
     },    
 
     button : function() {
-      var allFormsFilled = true;
+      var all_forms_filled = true;
       $(".critter_label_form").each(function () {
           if ($("input[type=radio]:checked", this).length == 0) {
-            allFormsFilled = false;
+            all_forms_filled = false;
           }
       });
 
-      if (allFormsFilled) {
+      if (all_forms_filled) {
         var end_time = Date.now();
         this.time_spent = end_time - this.start_time;
         this.log_responses();
-        _stream.apply(this); //make sure this is at the *end*, after you log your data
+
+        var stim = this.stim;
+        var correct_answer = true;
+        var i = 0;
+        $(".critter_label_form").each(function () {
+            var turker_label = $("input[type=radio]:checked", this).val() == "true";
+
+            console.log(turker_label);
+            console.log(stim[i]['belongs_to_concept']);
+
+            if (turker_label != stim[i]['belongs_to_concept']) correct_answer = false;
+            i +=1 ;
+        });
+
+
+        if (!correct_answer) {
+          $('#continueButton').prop('disabled', true);
+          alert("Incorrect Label Applied to Creature ... You Will Have to Wait 5 Seconds Before the Next Round");
+          sleep(5000).then(() => _stream.apply(this));
+        } else {
+          _stream.apply(this); //make sure this is at the *end*, after you log your data
+        }
       } else {
         alert("Please make sure to label all the critters, before proceeding");
       }
