@@ -14,7 +14,6 @@ function render_prev_sets(prev_sets, one_table) {
       for (var i = 0; i < prev_sets.length; i++) {
         all_items = all_items.concat(prev_sets[i]);
       } 
-      console.log(all_items);
       render_prev_set(1, all_items, 8);
   } else {
      for (var i = 0; i < prev_sets.length; i++) {
@@ -37,16 +36,11 @@ function render_prev_set(set_num, set, table_width) {
   var rows = Math.ceil(set.length / table_width);
   var cols = table_width;
 
-  console.log("Num rows: " + rows);
-  console.log("Num columns: " + table_width);
-  console.log("Set Length: " + set.length);
-
   var table = "<table>";
   var ind = 0;
   for(var i=0; i <rows; i++) {
     table += "<tr>";
     for(var j=0; j<cols; j++) {
-      console.log(ind);
       table += "<td>";
       if (ind >= set.length) break;
       table += "<table class ='cell' id='cell" + ind + "'\">";
@@ -202,12 +196,13 @@ function make_slides(exp) {
     },
 
     log_responses : function(){
-      var labels = []
+      var labels = [];
       $(".critter_label_form").each(function () {
+        console.log($('input[name=radioName]:checked', this));
           labels.push($('input[name=radioName]:checked', this).val());
       });
 
-
+      console.log(labels);
       exp.trials.push({
           "concept_number" : 1,
           "trial_num" : this.trial_num,
@@ -252,8 +247,7 @@ function make_slides(exp) {
     name : "thanks",
     start : function() {
       exp.data= {
-          "trials" : exp.data_trials,
-          "catch_trials" : exp.catch_trials,
+          "trials" : exp.trials,
           "system" : exp.system,
           "question": exp.question,
           "distribution": JSON.stringify(exp.distribution),          
@@ -307,8 +301,8 @@ function init() {
 
   // Load critters for the game
   exp.allCreatures = {
-    // 1: easy_rule_data, // Easy Concept Critter Sets
-    1: medium_rule_data, // Medium Concept Critter Sets
+    1: easy_rule_data, // Easy Concept Critter Sets
+    // 1: medium_rule_data, // Medium Concept Critter Sets
   }
 
   // Generate the slides for the game
