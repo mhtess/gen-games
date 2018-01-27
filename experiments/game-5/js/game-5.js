@@ -89,9 +89,10 @@ function render_curr_set(set) {
       table += "<td>";  
       table += "<svg id='critter" + ind +
         "' style='max-width:150px;max-height:150px\'></svg>";
-      table += "<form id='critter_form" + ind + "' class='critter_label_form'>";
-      table += "<input type='radio' name='belongs_to_concept' value=true> Yes ";
-      table += "<input type='radio' name='belongs_to_concept' value=false> No ";
+
+      table += "<br><br><form id='critter_form" + ind + "' class='critter_label_form'>";
+      table += "<input type='radio' name='belongs_to_concept' id='t' value=true> <label for='t'>Yes</label>";
+      table += "<input type='radio' name='belongs_to_concept' id='f' value=false> <label for='f'>No</label>";   
       table += "</form></td>";
 
       table += "<tr>";
@@ -149,7 +150,7 @@ function make_slides(exp) {
       $('#continueButton').prop('disabled', false);
 
       // Render slide
-      $(".set_number").text("Item " + String(this.trial_num + 1) + " of " + String(exp.allCreatures[exp.concept_number].length));
+      $(".set_number").text("Item " + String(this.trial_num + 1) + " of " + String(exp.num_trials));
       render_prev_sets(this.prev_sets, true);
       render_curr_set(stim);
       this.stim = stim;
@@ -297,7 +298,6 @@ function init() {
     'thanks'
   ];
 
-  exp.concept_number = 1;
 
   // Load critters for the game
   exp.allCreatures = {
@@ -305,6 +305,8 @@ function init() {
     2: medium_rule_data, // Medium Concept Critter Sets
     3: hard_rule_data, // Hard Concept Critter Sets
   }
+  exp.concept_number = 1;
+  exp.num_trials = exp.allCreatures[exp.concept_number].length;
 
   // Generate the slides for the game
   exp.slides = make_slides(exp);
