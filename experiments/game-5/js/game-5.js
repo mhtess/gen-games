@@ -14,7 +14,7 @@ function render_prev_sets(prev_sets, one_table) {
       for (var i = 0; i < prev_sets.length; i++) {
         all_items = all_items.concat(prev_sets[i]);
       } 
-      render_prev_set(1, all_items, 8);
+      render_prev_set(1, all_items, 6);
   } else {
      for (var i = 0; i < prev_sets.length; i++) {
         $("#prev_sets").append(`<H4>Example: ${i+1} </H4>`);
@@ -133,9 +133,9 @@ function make_slides(exp) {
     },
   });
 
-  slides.concept_1 = slide({
-    name: "concept_1",
-    present: exp.allCreatures[1],
+  slides.concept = slide({
+    name: "concept",
+    present: exp.allCreatures[exp.concept_number],
     trial_num: 0,
     start: function() {
       this.prev_sets = []
@@ -149,7 +149,7 @@ function make_slides(exp) {
       $('#continueButton').prop('disabled', false);
 
       // Render slide
-      $(".set_number").text("Item " + String(this.trial_num + 1) + " of 25");
+      $(".set_number").text("Item " + String(this.trial_num + 1) + " of " + String(exp.allCreatures[exp.concept_number].length));
       render_prev_sets(this.prev_sets, true);
       render_curr_set(stim);
       this.stim = stim;
@@ -198,13 +198,10 @@ function make_slides(exp) {
     log_responses : function(){
       var labels = [];
       $(".critter_label_form").each(function () {
-        console.log($('input[name=radioName]:checked', this));
-          labels.push($('input[name=radioName]:checked', this).val());
+          labels.push($('input[name=belongs_to_concept]:checked', this).val() === "true");
       });
-
-      console.log(labels);
       exp.trials.push({
-          "concept_number" : 1,
+          "concept_number" : exp.concept_number,
           "trial_num" : this.trial_num,
           "time_in_seconds" : this.time_spent/1000,
           "labels": labels,
@@ -215,7 +212,8 @@ function make_slides(exp) {
   slides.concept_explanation = slide({
     name : "concept_explanation",
     button : function() {
-      if (!$("#concept").val()) {
+      console.log($("#concept").val());
+      if (!$("#concept_text").val()) {
         alert("Please enter your description of the wudsy species");
       } else {
         exp.go(); // use exp.go() if and only if there is no "present" data.
@@ -293,16 +291,19 @@ function init() {
   exp.structure=[
     "i0",
     "instructions",
-    "concept_1",
+    "concept",
     "concept_explanation",
     'subj_info',
     'thanks'
   ];
 
+  exp.concept_number = 1;
+
   // Load critters for the game
   exp.allCreatures = {
     1: easy_rule_data, // Easy Concept Critter Sets
-    // 1: medium_rule_data, // Medium Concept Critter Sets
+    2: medium_rule_data, // Medium Concept Critter Sets
+    3: hard_rule_data, // Hard Concept Critter Sets
   }
 
   // Generate the slides for the game
