@@ -213,6 +213,7 @@ function make_slides(exp) {
           "trial_num" : this.trial_num,
           "time_in_seconds" : this.time_spent/1000,
           "labels": labels,
+          "true_labels": true_labels,
         });
     }
   });
