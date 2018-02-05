@@ -197,10 +197,17 @@ function make_slides(exp) {
     },
 
     log_responses : function(){
+      var stim = this.stim;
       var labels = [];
+      var true_labels = [];
+      var i = 0;
       $(".critter_label_form").each(function () {
           labels.push($('input[name=belongs_to_concept]:checked', this).val() === "true");
+          true_labels.push(stim[i]['belongs_to_concept']);
+          i += 1;
       });
+
+
       exp.trials.push({
           "concept_number" : exp.concept_number,
           "trial_num" : this.trial_num,
