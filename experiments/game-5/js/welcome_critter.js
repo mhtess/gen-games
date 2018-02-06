@@ -156,21 +156,21 @@ var example = function() {
 // MAIN
 // ----
 var numSets = 50;
-var easy_rule = function(critter) {
-	// Rule: If critter is orange
-	return critter["props"]["col1"] === color_dict["orange"]
-} 
-var easy_rule_data = createDatset(easy_rule, numSets);
-console.log(String(easy_rule_data.length) + " Sets for Easy Rule Data Generated");
-saveDatasetToFile(easy_rule_data, './easy_rule_data.js');
+// var easy_rule = function(critter) {
+// 	// Rule: If critter is orange
+// 	return critter["props"]["col1"] === color_dict["orange"]
+// } 
+// var easy_rule_data = createDatset(easy_rule, numSets);
+// console.log(String(easy_rule_data.length) + " Sets for Easy Rule Data Generated");
+// saveDatasetToFile(easy_rule_data, './easy_rule_data.js');
 
-var medium_rule = function(critter) {
-	// Rule: If critter has small and green
-	return critter["props"]["col1"] === color_dict["green"] && critter["props"]["prop1"] === prop1_dict["small"];
-} 
-var medium_rule_data = createDatset(medium_rule, numSets);
-console.log(String(medium_rule_data.length) + " Sets for Medium Rule Data Generated");
-saveDatasetToFile(medium_rule_data, './medium_rule_data.js');
+// var medium_rule = function(critter) {
+// 	// Rule: If critter has small and green
+// 	return critter["props"]["col1"] === color_dict["green"] && critter["props"]["prop1"] === prop1_dict["small"];
+// } 
+// var medium_rule_data = createDatset(medium_rule, numSets);
+// console.log(String(medium_rule_data.length) + " Sets for Medium Rule Data Generated");
+// saveDatasetToFile(medium_rule_data, './medium_rule_data.js');
 
 var hard_rule = function(critter) {
 	// Rule: If critter is a fish XOR blue body
@@ -179,6 +179,6 @@ var hard_rule = function(critter) {
 		!(critter["critter"] === "fish" && critter["props"]["col1"] === color_dict["blue"])
 	);	
 }
-var hard_rule_data = createDatset(medium_rule, numSets);
+var hard_rule_data = createDatset(hard_rule, numSets);
 console.log(String(hard_rule_data.length) + " Sets for Hard Rule Data Generated");
 saveDatasetToFile(hard_rule_data, './hard_rule_data.js');
