@@ -313,7 +313,7 @@ function init() {
     2: medium_rule_data, // Medium Concept Critter Sets
     3: hard_rule_data, // Hard Concept Critter Sets
   }
-  exp.concept_number = 1;
+  exp.concept_number = 3;
   exp.num_trials = exp.allCreatures[exp.concept_number].length;
 
   // Generate the slides for the game
