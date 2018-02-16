@@ -1,0 +1,95 @@
+---
+title: "Concept Learning: Pilot Analysis"
+author: Sahil Chopra
+date: "Wednesday, February 07, 2018"
+output: html_notebook
+---
+
+## Introduction
+
+Here, we attempt to try to replicate some of the results from Piantadosi 2016 (The Logical Primitives of Thought: Empirical Foundation for Compositional Cognitive Models). As a part of this replication, we use different stimuli - but mantain three axes of variability with three potential values for a total of 27 possible objects. To examine some examples of stimuli and play the concept learning game for yourself, please checkout [this link](http://web.stanford.edu/~schopra8/gen-games/experiments/game-5/game-5.html).
+
+## Experimental Setup
+
+### Selected Concepts
+For this initial pilot, we attempted to replicate two concepts from Piantadosi 2016. We chose one concept that seemed relatively easy and one concept that seemed relatively difficult for participants in the original paper. We purposely avoided using any rules that required quantifiers, selecting two boolean concepts. This focus on boolean concepts, allowed us to leverage a more traditional concept learning paradigm -- showing one object at a time, rather than a set of objects as in the Piantadosi paper. 
+
+Instead of using shapes, size, and color for the three axes of variability, we user different critters from the [stimuli project](https://github.com/erindb/stimuli). Specifically, we use three different types of critters: fish, bugs, and birds. Each critter could be one of three different sizes and one of three different colors.  
+
+The two selected concepts for ths initial pilot were:
+
+1. Easy: ORANGE
+
+2. Hard: FISH XOR BLUE
+
+### Stimuli Generation
+For this experiment, we create the stimuli from randomly sampling the three properties described above with replacement. We then stored this set of randomly sampled objects.
+
+### Running the Experiment
+We ran the experiment on MTurk such that each participant had 50 rounds, where they had to a label the given critter as "wudsy" or "not wudsy". At first participants had to guess, but after each round we added the previous stimulus to a table, boxing the "wudsy" ones. If the participant incorrectly labeled a critter they had to wait 5 seconds before the next round.
+
+We ran the easy concept across 4 participants and the hard concept across 5 participants.
+ 
+### Results
+If I were to repeat this pilot experiment, I would fix a bug in my game -- where I did not correctly log how participants would have described the concept to another person. Additionally, I would have had an extra test to gauge performance. I could theoretically still do this analysis by using the first 40 exampels are "training" and last 10 as "test".
+
+#### Acccuracy Across Learning
+```{r}
+library(readr)
+library(dplyr)
+library(ggplot2)
+setwd("../../mturk/game-5/pilot")
+easy_concept_data <- read_csv(file="./easy_concept/game-5-trials.csv", col_names=TRUE, col_types = "iilild")
+hard_concept_data <- read_csv(file="./hard_concept/game-5-trials.csv", col_names=TRUE, col_types = "iilild")
+
+# Get the accuracies for the individual participants
+num_easy = 4
+num_hard = 5
+num_trials = 50
+
+get_accuracy <- function(num_participants, num_trials, data) {
+  acc <- vector("list", num_participants)
+  i = 0
+  while (i < num_participants) {
+    single_worker_data <- data %>% filter(workerid == i)
+    num_correct = length(which(single_worker_data$labels == single_worker_data$true_labels))
+    acc[i+1] = num_correct / num_trials
+    i = i + 1
+  }
+  acc
+}
+
+# Accuracy throughout learning process
+easy_acc <- data.frame(partcipant_num=1:num_easy, accuracy=unlist(get_accuracy(num_easy, num_trials, easy_concept_data)))
+hard_acc <- data.frame(partcipant_num=1:num_hard, accuracy=unlist(get_accuracy(num_hard, num_trials, hard_concept_data)))
+
+# Plot
+ggplot() +
+  geom_dotplot(data=easy_acc, aes(x=partcipant_num, y=accuracy), binaxis = 'y') +
+  geom_dotplot(data=hard_acc, aes(x=partcipant_num, y=accuracy), binaxis = 'y')
+
+# qplot(, y=unlist(easy_acc), xlab="Participant #", ylab="Accuracy", main="Easy Concept", ylim=as.numeric(c(.75, 1)))
+# qplot(x=1:num_hard, y=unlist(hard_acc), xlab="Participant #", ylab="Accuracy", main="Hard Concept", ylim=as.numeric(c(.75, 1)))
+```
+
+#### Accuracy First 25% Vs. Last 25%
+```{r}
+# Accuracy throughout learning process
+trials_25p = ceiling(num_trials * 0.25)
+easy_acc_first_25p <- get_accuracy(num_easy, trials_25p, easy_concept_data %>% filter(trial_num <= num_trials * 0.25))
+hard_acc_first_25p <- get_accuracy(num_hard, trials_25p, hard_concept_data %>% filter(trial_num <= num_trials * 0.25))
+
+easy_acc_final_25p <- get_accuracy(num_easy, trials_25p, easy_concept_data %>% filter(num_trials * 0.75 <= trial_num))
+hard_acc_final_25p <- get_accuracy(num_hard, trials_25p, hard_concept_data %>% filter(num_trials * 0.75 <= trial_num))
+
+print (mean(unlist(easy_acc_first_25p)))
+print (mean(unlist(easy_acc_final_25p)))
+print (mean(unlist(hard_acc_first_25p)))
+print (mean(unlist(hard_acc_final_25p)))
+
+# Plot
+#qplot(x=1:num_easy, y=unlist(easy_acc), xlab="Participant #", ylab="Accuracy", main="Easy Concept", ylim=as.numeric(c(.75, 1)))
+#qplot(x=1:num_hard, y=unlist(hard_acc), xlab="Participant #", ylab="Accuracy", main="Hard Concept", ylim=as.numeric(c(.75, 1)))
+```
+
+#### TODO: Rational Rules Analysis
