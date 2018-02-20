@@ -45,36 +45,30 @@
 
   <h2><center>Instructions</center></h2>
   <p>
-    You are on a new planet called Crittun, studying creatures with a "wudsy detector" and a "lumsy detector".
-    The wudsy detector will tell you whether or not a creature is "wudsy", while the "lumsy detector" will tell you whether a creature is "lumsy".
-    You will be paired with another turker with the goal of identifying creatures that are "wudsy" and creatures that are "lumsy". There may be overlap between "wudsy" and "lumsy" creatures.
+    You are on a new planet called Crittun, studying creatures with a "wudsy detector". The wudsy detector will tell you whether or not a creature is "wudsy". 
+    Your goal is to learn how to identify creatures that are "wudsy". You will be assigned the role of "player 1" or "player 2". 
     <br> <br>
-    At the beginning, you will be given either the "wudsy" or "lumsy detector". Your partner will receive the other detector.
-    You will particpate in a series of trials. On each trial, you will make a guess as to whether or not a new creature belongs to the category, and then use the detector to find out if you were right.
+    If you are player 1, you will receive the "wudsy" detector and participate in a series of trials.
+    On each trial, you will make a guess as to whether or not a new creature belongs to the category, and then use the detector to find out if you were right.
     If you guess incorrectly, you will have to wait 5 seconds before using the detector again. 
-    We will keep a log of all the creatures you see and put a box around the ones that belonged to the detector's category.<br> 
-	<p>
+    We will keep a log of all the creatures you see and put a box around the ones that belonged to the detector's category.
+    After you play several trials, you will be asked to identify a series of creatures, without help from your "wudsy dector". 
+    Additionally, if you are player 1, you <b>might be asked</b> to communicate your findings about "wudsy" critters to player 2.
+    There is a chance that you are "player 1" and not have a partner.    
+    <br> <br>
+    If you are player 2, you will wait for a few minutes until player 1 has completed playing through trials with the assistance of the "wudsy detector".
+    Then you both will enter a chatroom, where you must communicate for at least 30 seconds. You can chat for as long as you need to properly discuss the properties of "wudsy creatures".
+    Then you will be asked to identify a series of creatures, without help from your "wudsy dector".
+	<p> 
 
   <p>
-    After learning about your creature category, you will be a given a short quiz on your critter category without the help of your detector.
-    Then, you will enter a chatroom with your partner and teach other about your critter type. You must chat for at least 30 seconds. At which point a "continue" button will appear for one of the players to move the game along, once your chat is complete.
-    Then, you will be given a short quiz, where you are asked to identify critters that belong to your partner's category.
-    Then, you will be given their detector - engaging in similar trials as before, for the other critter category.
-    And finally, you will be given a last small quiz, to gauge your understanding of the second critter category. 
-  </p>
-
-  <p>
-    We will then sum up the amount of critters you and your partner correctly identified in the three quizzes. 
-    For every critter you identify correctly, you will get 1 point.
-    For each one you incorrectly identify, you will lose 1 point.
-    At the end of the game you will see how many points you and your parnter acuqired across the three quizzes.
-    You and your partner's points will be combined at the end for a total score.
-    For each point in the total score, you will each get <b> a bonus of $0.02 per point</b>, so
-    pay attention! (Your score cannot go below 0 so you cannot lose any money.)
+    If you are player 1 and are playing alone, we will give you a score you according to the number of critters that you identify correctly without the "wudsy" detector.
+    If you are playing with a second person, we will give you a score according to the number of critters that you and your partner identify correctly without the "wudsy" detector.
+    For each point in the score, you will each get <b> a bonus of $0.02 per point</b>, so pay attention! (Your score cannot go below 0 so you cannot lose any money.)
   </p>
 
 
-	<p> A few final notes: First, since you are playing with
+	<p> A few final notes: If you are playing with
 	  another player, you may see this screen before the game
 	  begins:
 	<p>
@@ -114,11 +108,11 @@
       <div class="well" style="width:800px; margin: 0 auto">
 
   <br>
-  There may be overlap between critters that are "wudsy" and "lumsy".
+  You are guaranteed to be paired with another player.
   <br>
-  <input type="radio" name="overlap" value="no"> False
+  <input type="radio" name="matched" value="no"> True
   <br>
-  <input type="radio" name="overlap" value="yes"> True
+  <input type="radio" name="matched" value="yes"> False
   <br>
         
 	<br>
@@ -129,17 +123,16 @@
 	<input type="radio" name="mgoal" value="yes"> True
 	<br>
 
+	<br>
+	Player 2s are tested only on the critters that their partner learned about.
+	<br>
+	<input type="radio" name="message" value="no"> False
+	<br>
+	<input type="radio" name="message" value="yes"> True
+	<br>
 
 	<br>
-	Players are tested only on the critters that their partner learned about.
-	<br>
-	<input type="radio" name="message" value="no"> True
-	<br>
-	<input type="radio" name="message" value="yes"> False
-	<br>
-
-	<br>
-	Players will be rewarded based on how well they, and not their partner, do.
+  Players with a partner will be rewarded based on how well they, and not their partner, do.
 	<br>
 	<input type="radio" name="comp" value="no"> True
 	<br>
@@ -179,7 +172,7 @@
 
       var counter = 0;
       document.getElementById("quiz_submit").onclick = function () {
-        var ans1 = $('input[name="overlap"]:checked').val();
+        var ans1 = $('input[name="matched"]:checked').val();
         var ans2 = $('input[name="mgoal"]:checked').val();
         var ans3 = $('input[name="message"]:checked').val();
         var ans4 = $('input[name="comp"]:checked').val();

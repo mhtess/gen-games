@@ -127,11 +127,6 @@ var initialize = function(query, client, id) {
     console.log('\t socket.io:: client id ' + client.userid
                 + ' disconnected from game id ' + client.game.id);
 
-    // in colorReference, we don't mind duplicates across games
-    if(exp == "colorReference" || exp == "colorReference/") {
-      delete global_player_set[client.userid];
-    }
-
     //If the client was in a game set by gameServer.findGame,
     //we can tell the game server to update that game state.
     if(client.userid && client.game && client.game.id)
