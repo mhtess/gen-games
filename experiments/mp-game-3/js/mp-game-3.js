@@ -9,26 +9,6 @@ var roleDictionary = {
 function make_slides(f) {
   var   slides = {};
 
-  // Information page - legal and about the experiment
-  // Only function is to keep track of time; we will know how long the experiment took
-  slides.i0 = slide({
-    name : "i0",
-    start: function() {
-    exp.startT = Date.now();
-    }
-  });
-
-  // Instructions slide for the experiment
-  slides.instructions = slide({
-    name : "instructions",
-    start: function(){
-      globalGame.socket.send("enterSlide.instructions.");
-    },
-    button : function() {
-      exp.go(); //use exp.go() if and only if there is no "present" data.
-    },
-  });
-
   // This slide will be seen by one of the players while until the other player reaches the same screen
   slides.wait_room = slide({
     name: "wait_room",
@@ -53,6 +33,26 @@ function make_slides(f) {
           clearInterval(blinking_wait);
         }
       }, 2000);
+    }
+  });
+
+  slides.learning_instructions = slide({
+    name : "learning_instructions",
+    start : function() {
+      // send signal to server to send stimuli
+      globalGame.socket.send("enterSlide.learning_instructions.");
+  
+  
+      this.creat_type = exp.slides.learning_critters.crittersFromServer
+  [0]["genus"];
+  
+    $("#learning_instructs").html(
+      globalGame.task_welcome_critter[this.creat_type] + "Press Continue to begin."
+    );
+  
+    },
+    button : function() {
+      exp.go()
     }
   });
 
@@ -135,25 +135,6 @@ function make_slides(f) {
     },
   });
 
-slides.learning_instructions = slide({
-  name : "learning_instructions",
-  start : function() {
-    // send signal to server to send stimuli
-    globalGame.socket.send("enterSlide.learning_instructions.");
-
-
-    this.creat_type = exp.slides.learning_critters.crittersFromServer
-[0]["genus"];
-
-  $("#learning_instructs").html(
-    globalGame.task_welcome_critter[this.creat_type] + "Press Continue to begin."
-  );
-
-  },
-  button : function() {
-    exp.go()
-  }
-});
 
 slides.test_instructions = slide({
   name : "test_instructions",
@@ -373,7 +354,6 @@ function init() {
     screenW: screen.width,
     screenUW: exp.width
   };
-  exp.block = 0;
 
   // learning - chat - test rounds
   var roundGenerator = function(num) {
@@ -390,52 +370,17 @@ function init() {
 
   // blocks of the experiment:
   exp.structure=[
-
     "wait_room",
     "learning_instructions",
     "learning_critters",
+    "test_instructions",
+    "test_critters",
     "chat_instructions",
     "chatRoom",
     "test_instructions",
     "test_critters",
-    "wait_room",
-    "score_report",
-
     "learning_instructions",
     "learning_critters",
-    "chatRoom",
-    "test_instructions",
-    "test_critters",
-    "wait_room",
-    "score_report",
-
-    "learning_instructions",
-    "learning_critters",
-    "chatRoom",
-    "test_instructions",
-    "test_critters",
-    "wait_room",
-    "score_report",
-
-    "learning_instructions",
-    "learning_critters",
-    "chatRoom",
-    "test_instructions",
-    "test_critters",
-    "wait_room",
-    "score_report",
-
-    "learning_instructions",
-    "learning_critters",
-    "chatRoom",
-    "test_instructions",
-    "test_critters",
-    "wait_room",
-    "score_report",
-
-    "learning_instructions",
-    "learning_critters",
-    "chatRoom",
     "test_instructions",
     "test_critters",
     "wait_room",
@@ -445,17 +390,6 @@ function init() {
     'thanks',
     ]
 
-  // var start_exp = [];//"i0", "instructions"]
-  // // change this as you please - plus find way to make one globalGame.numRounds
-  // var middle_exp = roundGenerator(1)
-  // var end_exp = ['wait_room', 'score_report', 'subj_info','thanks']
-  // start_exp.push.apply(start_exp, middle_exp)
-  // start_exp.pop();
-  // start_exp.push.apply(start_exp, end_exp)
-  // exp.structure = start_exp
-
-  //exp.data_trials = [];
-  //make corresponding slides:
   exp.slides = make_slides(exp);
 
   exp.nQs = utils.get_exp_length(); //this does not work if there are stacks of stims (but does work for an experiment with this structure)

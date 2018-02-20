@@ -184,20 +184,6 @@ var customSetup = function(game) {
     console.log("in chatWait");
     $("#waiting").show();
 
-    //not perfect but does the job
-    // var ready = false;
-    // var blinking = setInterval(function() {
-    //   if(!($('#chatbox').prop("disabled"))){
-    //     $("#waiting").fadeOut(0);
-    //     ready = true;
-    //     clearInterval(blinking);
-    //   };
-    //   if (!ready) {
-    //     $("#waiting").fadeOut(1000);
-    //     $("#waiting").fadeIn(1000);
-    //   }
-
-    // }, 2500);
   });
 
   // Both players are now in the chatroom, so they may send messages

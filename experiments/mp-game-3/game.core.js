@@ -1,7 +1,7 @@
 /*  Copyright (c) 2012 Sven "FuzzYspo0N" Bergström,
                   2013 Robert XD Hawkins
 
- written by : http://underscorediscovery.com
+    written by : http://underscorediscovery.com
     written for : http://buildnewgames.com/real-time-multiplayer/
 
     substantially modified for collective behavior experiments on the web
@@ -34,9 +34,9 @@ var game_core = function(options){
   this.server = options.server ;
 
   this.dataStore = ['csv']; //maybe change to just csv
-  this.email = 'mtessler@stanford.edu';
+  this.email = 'schopra8@stanford.edu';
   this.projectName = 'genGames';
-  this.experimentName = 'mpGame2';
+  this.experimentName = 'mpGame3';
   // This has replaced expid - see if this is recorded
   this.iterationName = 'pilot1';
   this.anonymizeCSV = true;
@@ -49,13 +49,25 @@ var game_core = function(options){
     role2 : 'b'
   };
 
-  this.testScores = {
+  this.test1Scores = {
     "a": [],
-    "b": []
+    "b": [],
+  }
+
+  this.test2Scores = {
+    "a": [],
+    "b": [],
+  }
+
+  this.transferScores = {
+    "a": [],
+    "b": [],
   }
 
   // How many rounds do we want people to complete? MAKE SURE THIS ALIGNS WITH EXP TEMPLATE SLIDE AMT
   this.numRounds = 6;
+
+
   // number of different species
   this.creatureTypesN = 2;
   // number of exemplars displayed in a block
@@ -478,134 +490,6 @@ var probToCount = function(p, n){
   return Math.round(p*n);
 }
 
-// var transpose = function(array) {
-//     var result = {};
-//     for (var i=0; l=array.length; i<l){
-//       for (var prop in array[i]) {
-//         if (prop in result) {
-//           result[prop].push(array[i][prop]);
-//
-//         } else {
-//           result[prop] = [ array[i][prop] ];
-//         }
-//       }
-//     }
-//     return result;
-// };
-
-//
-// game_core.prototype.createFeatureArray = function(creatureLabel, creatureCategory, num){ //add num as parameter too
-//   var creatureOpts = this.categories[creatureCategory][num];
-//   var creatOpts = _.filter(creatureOpts, {name: creatureLabel})[0];
-//   var creatureColors = [];
-//   var creatureColorNames = [];
-//   var creatureLocation = [];
-//   var nRemaining = this.exemplarN; // number of exemplars in category
-//   // 2 possible colors (so loop for i < 2)
-//   for (var i=0; i < creatOpts.globalColors.length; i++ ){
-//     var colorProps = creatOpts.globalColors[i];
-//
-//     var n_creatures_of_this_color =  probToCount(
-//       colorProps.p, this.exemplarN
-//       );
-//
-//     var ncrit = n_creatures_of_this_color == 0 ?
-//     ((colorProps.p > 0) && (nRemaining > 0)) ? 1 : 0 :
-//     n_creatures_of_this_color
-//     creatureColors = creatureColors.concat(
-//       fillArray(ncrit,
-//         utils.genColor(
-//           this.color_dict[colorProps["props"]["color_mean"]],
-//           colorProps["props"]["color_var"]
-//           ))
-//       )
-//     creatureLocation = 0;
-//
-//     creatureColorNames = creatureColorNames.concat(
-//       fillArray(ncrit,
-//         this.color_dict[colorProps["props"]["color_mean"]]   )
-//       )
-//
-//     nRemaining = nRemaining-ncrit;
-//   }
-//   return {color: creatureColors, location: creatureLocation,  creatureColorNames: creatureColorNames}
-// }
-//
-//
-// game_core.prototype.representativeFlip = function(p, n){
-//   var creatureBooleans = [];
-//   var n_creatures_w_feature =  probToCount(p, n);
-//   var ncrit = n_creatures_w_feature == 0 ?
-//       (p > 0) ? 1 : 0 :
-//         n_creatures_w_feature
-//   creatureBooleans = creatureBooleans.concat(
-//       fillArray(ncrit, 1),
-//       fillArray(n - ncrit, 0)
-//       )
-//   return _.shuffle(creatureBooleans)
-// }
-//
-//
-// game_core.prototype.genCreatures = function(creatureCategory, num, internalFeature_probs){ //include num as parameter
-//   var j = 0;
-//   // Generates the characteristics for each critter
-//   var allCreatures = [];
-//   var creatureOpts = this.categories[creatureCategory][num];
-//   // get unique labels (e.g., wug, fep, lorch); should be number of unique kinds in each block
-//   uniqueCreatures =  _.uniqBy(_.map(creatureOpts, "name"));
-//   for (var i = 0; i < uniqueCreatures.length; i++){
-//     var creatOpts = _.filter(creatureOpts, {name: uniqueCreatures[i]})[0];
-//     // console.log(uniqueCreatures[i])
-//     var creatureColor = this.createFeatureArray(
-//      uniqueCreatures[i], creatureCategory, num
-//      );
-//     //  console.log(creatureColor)
-//     var n_with_feature =  this.representativeFlip(internalFeature_probs[i], this.exemplarN);
-//     var localCounter = 0;
-//     while (j<(this.exemplarN*(i+1))) {
-//      allCreatures.push({
-//       "col1": creatureColor["color"][localCounter],
-//       "col2": creatureColor["color"][localCounter],
-//       "col3": creatureColor["color"][localCounter] == null ? null : creatureColor["color"][localCounter] ,
-//       "col4": creatureColor["color"][localCounter] == null ? null : creatureColor["color"][localCounter],
-//       "col5": creatureColor["color"][localCounter] == null ? null : creatureColor["color"][localCounter],
-//       "prop1": creatOpts.prop1 == null ? utils.randProp() : creatOpts.prop1,
-//       "prop2": creatOpts.prop2 == null ? utils.randProp() : creatOpts.prop2,
-//       "tar1": utils.flip(creatOpts.tar1),
-//       "tar2": utils.flip(creatOpts.tar2),
-//       "tar3": utils.flip(creatOpts.tar3),
-//       "creatureName": uniqueCreatures[i],
-//       "critter" : creatureCategory,
-//       "stimID": j,
-//       "internal_prop": n_with_feature[j % this.exemplarN],
-//       "internalFeature_probs": internalFeature_probs[i],
-//       "internalFeature_dist" : internalFeature_probs.join(','),
-//       "meanColorName": _.invert(this.color_dict)[creatureColor["creatureColorNames"][localCounter]],
-//       "creatureOpts": creatureOpts, //?
-//       // "critter_full_info": creatOpts
-//     })
-//      localCounter++;
-//      j++;
-//    }
-//  }
-//  return allCreatures
-// }
-
-
-// this gets run when the game is created and creates all trial information
-// functionally equivalent to making something like exp.stims in init() in template.js
-// game_core.prototype.makeTrialList = function () {
-//   var local_this = this;
-//   var conditionList = this.getRandomizedConditions();
-//   var trialList = [];
-//   for (var i = 0; i < conditionList.length; i++) {
-//     var condition = conditionList[i];
-//     var objList = sampleTrial(condition); // Sample three objects
-//     var locs = this.sampleStimulusLocs(); // Sample locations for those objects
-//   };
-//   return(trialList);
-// };
-
 game_core.prototype.server_send_update = function(){
   //Make a snapshot of the current state, for updating the clients
   var local_game = this;
@@ -639,17 +523,3 @@ game_core.prototype.server_send_update = function(){
   });
 };
 
-// var calculate_end_game_bonus = function(){
-//     console.log(this.testScores)
-//     console.log(this.bonusAmt)
-//     var reward = 0;
-//     for(var i=0; i<this.numRounds; i++){
-//       for (var j=0; j<2; j++){
-//         var role_index = j == 0 ? "playerA" : "playerB";
-//         reward += this.testScores[role_index][i].hits + this.testScores[role_index][i].correctRejections;
-//       }
-//     }
-//     console.log("reward is " + reward);
-//     return reward;
-
-//   }
