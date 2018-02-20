@@ -60,36 +60,161 @@ get_accuracy <- function(num_participants, num_trials, data) {
 }
 
 # Accuracy throughout learning process
-easy_acc <- data.frame(partcipant_num=1:num_easy, accuracy=unlist(get_accuracy(num_easy, num_trials, easy_concept_data)))
-hard_acc <- data.frame(partcipant_num=1:num_hard, accuracy=unlist(get_accuracy(num_hard, num_trials, hard_concept_data)))
+easy_acc <- data.frame(partcipant_num=1:num_easy, accuracy=unlist(get_accuracy(num_easy, num_trials, easy_concept_data)), concept=rep(1, num_easy))
+hard_acc <- data.frame(partcipant_num=1:num_hard, accuracy=unlist(get_accuracy(num_hard, num_trials, hard_concept_data)), concept=rep(2, num_hard))
+acc <- rbind(easy_acc, hard_acc)
+acc$concept <- as.factor(acc$concept)
 
 # Plot
-ggplot() +
-  geom_dotplot(data=easy_acc, aes(x=partcipant_num, y=accuracy), binaxis = 'y') +
-  geom_dotplot(data=hard_acc, aes(x=partcipant_num, y=accuracy), binaxis = 'y')
+ggplot(acc, aes(x=partcipant_num, fill=concept, y=accuracy)) +
+  geom_dotplot(binaxis = "y", stackdir = "center")
 
-# qplot(, y=unlist(easy_acc), xlab="Participant #", ylab="Accuracy", main="Easy Concept", ylim=as.numeric(c(.75, 1)))
-# qplot(x=1:num_hard, y=unlist(hard_acc), xlab="Participant #", ylab="Accuracy", main="Hard Concept", ylim=as.numeric(c(.75, 1)))
 ```
 
 #### Accuracy First 25% Vs. Last 25%
 ```{r}
-# Accuracy throughout learning process
+# Accuracy throughout learning process (Easy Concept)
 trials_25p = ceiling(num_trials * 0.25)
-easy_acc_first_25p <- get_accuracy(num_easy, trials_25p, easy_concept_data %>% filter(trial_num <= num_trials * 0.25))
-hard_acc_first_25p <- get_accuracy(num_hard, trials_25p, hard_concept_data %>% filter(trial_num <= num_trials * 0.25))
-
-easy_acc_final_25p <- get_accuracy(num_easy, trials_25p, easy_concept_data %>% filter(num_trials * 0.75 <= trial_num))
-hard_acc_final_25p <- get_accuracy(num_hard, trials_25p, hard_concept_data %>% filter(num_trials * 0.75 <= trial_num))
-
-print (mean(unlist(easy_acc_first_25p)))
-print (mean(unlist(easy_acc_final_25p)))
-print (mean(unlist(hard_acc_first_25p)))
-print (mean(unlist(hard_acc_final_25p)))
+easy_acc_first_25p <- data.frame(partcipant_num=1:num_easy, accuracy=unlist(get_accuracy(num_easy, trials_25p, easy_concept_data %>% filter(trial_num <= num_trials * 0.25))), concept=rep(1, num_easy), time=rep(1, num_easy))
+easy_acc_final_25p <- data.frame(partcipant_num=1:num_easy, accuracy=unlist(get_accuracy(num_easy, trials_25p, easy_concept_data %>% filter(num_trials * 0.75 <= trial_num))), concept=rep(1, num_easy), time=rep(2, num_easy))
+easy_acc_delta <- rbind(easy_acc_first_25p, easy_acc_final_25p)
+easy_acc_delta$time <- as.factor(easy_acc_delta$time)
+easy_acc_delta$partcipant_num <- as.factor(easy_acc_delta$partcipant_num)
 
 # Plot
-#qplot(x=1:num_easy, y=unlist(easy_acc), xlab="Participant #", ylab="Accuracy", main="Easy Concept", ylim=as.numeric(c(.75, 1)))
-#qplot(x=1:num_hard, y=unlist(hard_acc), xlab="Participant #", ylab="Accuracy", main="Hard Concept", ylim=as.numeric(c(.75, 1)))
+ggplot(data=easy_acc_delta, aes(x=partcipant_num, fill=time, y=accuracy)) +
+  geom_dotplot(binaxis = "y", stackdir = "center") +
+  labs(title = "Easy Concept: Participant Accuracy First 25% vs. Last 25%")
+
+# Accuracy throughout learning process (Hard Concept)
+hard_acc_first_25p <- data.frame(partcipant_num=1:num_hard, accuracy=unlist(get_accuracy(num_hard, trials_25p, hard_concept_data %>% filter(trial_num <= num_trials * 0.25))), concept=rep(1, num_hard), time=rep(1, num_hard))
+hard_acc_final_25p <- data.frame(partcipant_num=1:num_hard, accuracy=unlist(get_accuracy(num_hard, trials_25p, hard_concept_data %>% filter(num_trials * 0.75 <= trial_num))), concept=rep(1, num_hard), time=rep(2, num_hard))
+hard_acc_delta <- rbind(hard_acc_first_25p, hard_acc_final_25p)
+hard_acc_delta$time <- as.factor(hard_acc_delta$time)
+hard_acc_delta$partcipant_num <- as.factor(hard_acc_delta$partcipant_num)
+
+# Plot
+ggplot(data=hard_acc_delta, aes(x=partcipant_num, fill=time, y=accuracy)) +
+  geom_dotplot(binaxis = "y", stackdir = "center") +
+  labs(title = "Hard Concept: Participant Accuracy First 25% vs. Last 25%")
+
+```
+
+#### Stimuli Anaylsis
+Now we examine the breakdown of the stimuli to see what the accuracy base rates would be if a participant selected one label for all critters. First we start with the easy concept.
+
+```{r}
+# easy_25p_num_pos = sum((easy_concept_data %>% filter(trial_num <= num_trials * 0.25))$true_labels, na.rm=TRUE) / num_easy
+# sprintf("Number of Positive Labels in first 25%% of Easy Game: %i", easy_25p_num_pos)
+# sprintf("Number of Negative Labels in first 25%% of Easy Game: %i", floor(num_trials * 0.25) - easy_25p_num_pos)
+# sprintf("%% of Positive Labels in first 25%% of Easy Game: %f", easy_25p_num_pos / floor(num_trials * 0.25))
+# sprintf("%% of Negative Labels in first 25%% of Easy Game: %f", 1 - easy_25p_num_pos / floor(num_trials * 0.25))
+# 
+# print('-----------------')
+# 
+# easy_75p_num_pos = sum((easy_concept_data %>% filter(num_trials * 0.75 <= trial_num))$true_labels, na.rm=TRUE) / num_easy
+# sprintf("Number of Positive Labels in last 25%% of Easy Game: %i", easy_75p_num_pos)
+# sprintf("Number of Negative Labels in last 25%% of Easy Game: %i", floor(num_trials * 0.25) - easy_75p_num_pos)
+# sprintf("%% of Positive Labels in first last 25%% of Easy Game: %f", easy_75p_num_pos / floor(num_trials * 0.25))
+# sprintf("%% of Negative Labels in first last 25%% of Easy Game: %f", 1 - easy_75p_num_pos / floor(num_trials * 0.25))
+```
+
+Next we look at the hard concept.
+```{r}
+# hard_25p_num_pos = sum((hard_concept_data %>% filter(trial_num <= num_trials * 0.25))$true_labels, na.rm=TRUE) / num_hard
+# sprintf("Number of Positive Labels in first 25%% of Hard Game: %i", hard_25p_num_pos)
+# sprintf("Number of Negative Labels in first 25%% of Hard Game: %i", floor(num_trials * 0.25) - hard_25p_num_pos)
+# sprintf("%% of Positive Labels in first 25%% of Hard Game: %f", hard_25p_num_pos / floor(num_trials * 0.25))
+# sprintf("%% of Negative Labels in first 25%% of Hard Game: %f", 1 - hard_25p_num_pos / floor(num_trials * 0.25))
+# 
+# print('-----------------')
+# 
+# hard_75p_num_pos = sum((hard_concept_data %>% filter(num_trials * 0.75 <= trial_num))$true_labels, na.rm=TRUE) / num_hard
+# sprintf("Number of Positive Labels in last 25%% of Hard Game: %i", hard_75p_num_pos)
+# sprintf("Number of Negative Labels in last 25%% of Hard Game: %i", floor(num_trials * 0.25) - hard_75p_num_pos)
+# sprintf("%% of Positive Labels in first last 25%% of Hard Game: %f", hard_75p_num_pos / floor(num_trials * 0.25))
+# sprintf("%% of Negative Labels in first last 25%% of Hard Game: %f", 1 - hard_75p_num_pos / floor(num_trials * 0.25))
+```
+
+### Response Analysis
+```{r}
+easy_acc <- easy_concept_data %>%
+  mutate(answer = ifelse(true_labels,
+                          ifelse(labels, "correct", "incorrect"),
+                          ifelse(labels, "incorrect", "correct")
+                         )) %>%
+  group_by(workerid) %>% # for each workerid, pick out their max
+    mutate(max_n_trials = max(trial_num)) %>%
+  ungroup() %>%
+  mutate(trial_quartile = ceiling(4*(trial_num/max_n_trials) )) %>%
+  group_by(workerid, trial_quartile, answer) %>%
+  count()
+
+hard_acc <- hard_concept_data %>%
+  mutate(answer = ifelse(true_labels,
+                          ifelse(labels, "correct", "incorrect"),
+                          ifelse(labels, "incorrect", "correct")
+                         )) %>%
+  group_by(workerid) %>% # for each workerid, pick out their max
+    mutate(max_n_trials = max(trial_num)) %>%
+  ungroup() %>%
+  mutate(trial_quartile = ceiling(4*(trial_num/max_n_trials) )) %>%
+  group_by(workerid, trial_quartile, answer) %>%
+  count()
+```
+```{r fig.width= 6, fig.height=3}
+ggplot(easy_acc, aes(x = trial_quartile, fill = answer, y = n))+
+  geom_col() +
+  facet_wrap(~workerid, nrow = 1) +
+  labs(title = "Easy Concept")
+```
+```{r fig.width= 6, fig.height=3}
+ggplot(hard_acc, aes(x = trial_quartile, fill = answer, y = n))+
+  geom_col() +
+  facet_wrap(~workerid, nrow = 1) +
+  labs(title = "Hard Concept")
+```
+
+```{r}
+easy_concept_data_quartileSummary <- easy_concept_data %>%
+  mutate(responseType = ifelse(true_labels, 
+                               ifelse(labels, "hit", "miss"), 
+                               ifelse(labels, "false alarm", "correct rejection")
+                               )) %>%
+  group_by(workerid) %>% # for each workerid, pick out their max
+    mutate(max_n_trials = max(trial_num)) %>% 
+  ungroup() %>%
+  mutate(trial_quartile = ceiling(4*(trial_num/max_n_trials) )) %>%
+  group_by(workerid, trial_quartile, responseType) %>%
+  count()
+```
+
+```{r fig.width= 6, fig.height=3}
+ggplot(easy_concept_data_quartileSummary, aes(x = trial_quartile, fill = responseType, y = n))+
+  geom_col()+#position = position_dodge())+
+  facet_wrap(~workerid, nrow = 1) +
+  labs(title = "Easy Concept")
+```
+```{r}
+hard_concept_data_quartileSummary <- hard_concept_data %>%
+  mutate(responseType = ifelse(true_labels, 
+                               ifelse(labels, "hit", "miss"), 
+                               ifelse(labels, "false alarm", "correct rejection")
+                               )) %>%
+  group_by(workerid) %>% # for each workerid, pick out their max
+    mutate(max_n_trials = max(trial_num)) %>% 
+  ungroup() %>%
+  mutate(trial_quartile = ceiling(4*(trial_num/max_n_trials) )) %>%
+  group_by(workerid, trial_quartile, responseType) %>%
+  count()
+```
+
+```{r fig.width= 6, fig.height=3}
+ggplot(hard_concept_data_quartileSummary, aes(x = trial_quartile, fill = responseType, y = n))+
+  geom_col()+#position = position_dodge())+
+  facet_wrap(~workerid, nrow = 1) + 
+  labs(title="Hard Concept")
 ```
 
 #### TODO: Rational Rules Analysis
+
