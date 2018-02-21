@@ -1,0 +1,89 @@
+// first set up the training (cat A/B) and test objects:
+var numFeatures = 3;
+var cat_mapping = {
+  "critter": {
+    "bug": 0,
+    "bird": 1,
+    "fish": 2,
+  },
+  "col2": {
+    "#228b22": 0, // Green
+    "#5da5db": 1, // Blue
+    "#ff8c00": 2, // Orange
+  },
+  "prop1": {
+    "0": 0, // Small
+    "0.693147180559945": 1, // Medium
+    "1.16315080980568": 2, // Large
+  }
+};
+
+var makeObj = function(o) {
+  // TODO: Fix this hackiness, but right now o is encapsulated in a list
+  var true_o = o[0];
+  return {
+    "critter": cat_mapping["critter"][true_o["critter"][0]], 
+    "color": cat_mapping["col2"][true_o["props"]["col2"]],
+    "size": cat_mapping["prop1"][true_o["props"]["prop1"].toString()],
+  }
+}
+
+var critters = map(makeObj, data);
+console.log(critters);
+
+
+// //here are the human results from Nosofsky et al, for comparison:
+// var humanA = [.77, .78, .83, .64, .61]
+// var humanB = [.39, .41, .21, .15]
+// var humanT = [.56, .41, .82, .40, .32, .53, .20]
+
+// // two parameters: stopping probability of the grammar, and noise probability:
+// var tau = 0.3;
+// var noiseParam = Math.exp(-1.5)
+
+// // a generative process for disjunctive normal form propositional equations:
+// var traitPrior = Categorical({vs: ['trait1', 'trait2', 'trait3', 'trait4'],
+//                               ps: [.25, .25, .25, .25]});
+// var samplePred = function() {
+//   var trait = sample(traitPrior);
+//   var value = flip()
+//   return function(x) {return x[trait] == value};
+// }
+
+// var sampleConj = function() {
+//   if(flip(tau)) {
+//     var c = sampleConj();
+//     var p = samplePred();
+//     return function(x) {return c(x) && p(x)};
+//   } else {    return samplePred();
+//   }
+// }
+
+// var getFormula = function() {
+//   if(flip(tau)) {
+//     var c = sampleConj();
+//     var f = getFormula();
+//     return function(x) {return c(x) || f(x)};
+//   } else {
+//     return sampleConj();
+//   }
+// }
+
+// var rulePosterior = Infer({method: 'MCMC', samples: 20000}, function() {
+//   // sample a classification formula
+//   var rule = getFormula();
+//   // condition on correctly (up to noise) accounting for A & B categories
+//   var obsFnA = function(datum){observe(Bernoulli({p: rule(datum) ? 0.999999999 : noiseParam}), true)}
+//   mapData({data:AObjects}, obsFnA)
+//   var obsFnB = function(datum){observe(Bernoulli({p: !rule(datum) ? 0.999999999 : noiseParam}), true)}
+//   mapData({data:BObjects}, obsFnB)
+//   // return posterior predictive
+//   var allObjs = TObjects.concat(AObjects).concat(BObjects);
+//   return _.object(_.range(allObjs.length), map(rule, allObjs));
+// })
+
+// //build predictive distribution for each item
+// var predictives = map(function(item){return expectation(rulePosterior,function(x){x[item]})}, _.range(15))
+
+// var humanData = humanT.concat(humanA).concat(humanB)
+// viz.scatter(predictives, humanData)

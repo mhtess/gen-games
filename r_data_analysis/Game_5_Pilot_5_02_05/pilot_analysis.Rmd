@@ -38,6 +38,8 @@ If I were to repeat this pilot experiment, I would fix a bug in my game -- where
 library(readr)
 library(dplyr)
 library(ggplot2)
+library(rwebppl)
+library(rjson)
 setwd("../../mturk/game-5/pilot")
 easy_concept_data <- read_csv(file="./easy_concept/game-5-trials.csv", col_names=TRUE, col_types = "iilild")
 hard_concept_data <- read_csv(file="./hard_concept/game-5-trials.csv", col_names=TRUE, col_types = "iilild")
@@ -216,5 +218,9 @@ ggplot(hard_concept_data_quartileSummary, aes(x = trial_quartile, fill = respons
   labs(title="Hard Concept")
 ```
 
-#### TODO: Rational Rules Analysis
-
+#### Rational Rules Analysis
+```{r}
+setwd("~/Desktop/Research/Cultural_Evolution/gen-games/r_data_analysis/Game_5_Pilot_5_02_05")
+hard_rule_stimuli <- fromJSON(file="./hard_rule_data.json")
+webppl(program_file = "/Users/Sahil/Desktop/Research/Cultural_Evolution/gen-games/r_data_analysis/Game_5_Pilot_5_02_05/rational_rules.wppl", data = hard_rule_stimuli, data_var="data")
+```
