@@ -37,6 +37,7 @@ If I were to repeat this pilot experiment, I would fix a bug in my game -- where
 ```{r}
 library(readr)
 library(dplyr)
+library(tidyr)
 library(ggplot2)
 library(rwebppl)
 library(rjson)
@@ -100,42 +101,6 @@ ggplot(data=hard_acc_delta, aes(x=partcipant_num, fill=time, y=accuracy)) +
   geom_dotplot(binaxis = "y", stackdir = "center") +
   labs(title = "Hard Concept: Participant Accuracy First 25% vs. Last 25%")
 
-```
-
-#### Stimuli Anaylsis
-Now we examine the breakdown of the stimuli to see what the accuracy base rates would be if a participant selected one label for all critters. First we start with the easy concept.
-
-```{r}
-# easy_25p_num_pos = sum((easy_concept_data %>% filter(trial_num <= num_trials * 0.25))$true_labels, na.rm=TRUE) / num_easy
-# sprintf("Number of Positive Labels in first 25%% of Easy Game: %i", easy_25p_num_pos)
-# sprintf("Number of Negative Labels in first 25%% of Easy Game: %i", floor(num_trials * 0.25) - easy_25p_num_pos)
-# sprintf("%% of Positive Labels in first 25%% of Easy Game: %f", easy_25p_num_pos / floor(num_trials * 0.25))
-# sprintf("%% of Negative Labels in first 25%% of Easy Game: %f", 1 - easy_25p_num_pos / floor(num_trials * 0.25))
-# 
-# print('-----------------')
-# 
-# easy_75p_num_pos = sum((easy_concept_data %>% filter(num_trials * 0.75 <= trial_num))$true_labels, na.rm=TRUE) / num_easy
-# sprintf("Number of Positive Labels in last 25%% of Easy Game: %i", easy_75p_num_pos)
-# sprintf("Number of Negative Labels in last 25%% of Easy Game: %i", floor(num_trials * 0.25) - easy_75p_num_pos)
-# sprintf("%% of Positive Labels in first last 25%% of Easy Game: %f", easy_75p_num_pos / floor(num_trials * 0.25))
-# sprintf("%% of Negative Labels in first last 25%% of Easy Game: %f", 1 - easy_75p_num_pos / floor(num_trials * 0.25))
-```
-
-Next we look at the hard concept.
-```{r}
-# hard_25p_num_pos = sum((hard_concept_data %>% filter(trial_num <= num_trials * 0.25))$true_labels, na.rm=TRUE) / num_hard
-# sprintf("Number of Positive Labels in first 25%% of Hard Game: %i", hard_25p_num_pos)
-# sprintf("Number of Negative Labels in first 25%% of Hard Game: %i", floor(num_trials * 0.25) - hard_25p_num_pos)
-# sprintf("%% of Positive Labels in first 25%% of Hard Game: %f", hard_25p_num_pos / floor(num_trials * 0.25))
-# sprintf("%% of Negative Labels in first 25%% of Hard Game: %f", 1 - hard_25p_num_pos / floor(num_trials * 0.25))
-# 
-# print('-----------------')
-# 
-# hard_75p_num_pos = sum((hard_concept_data %>% filter(num_trials * 0.75 <= trial_num))$true_labels, na.rm=TRUE) / num_hard
-# sprintf("Number of Positive Labels in last 25%% of Hard Game: %i", hard_75p_num_pos)
-# sprintf("Number of Negative Labels in last 25%% of Hard Game: %i", floor(num_trials * 0.25) - hard_75p_num_pos)
-# sprintf("%% of Positive Labels in first last 25%% of Hard Game: %f", hard_75p_num_pos / floor(num_trials * 0.25))
-# sprintf("%% of Negative Labels in first last 25%% of Hard Game: %f", 1 - hard_75p_num_pos / floor(num_trials * 0.25))
 ```
 
 ### Response Analysis
@@ -222,5 +187,16 @@ ggplot(hard_concept_data_quartileSummary, aes(x = trial_quartile, fill = respons
 ```{r}
 setwd("~/Desktop/Research/Cultural_Evolution/gen-games/r_data_analysis/Game_5_Pilot_5_02_05")
 hard_rule_stimuli <- fromJSON(file="./hard_rule_data.json")
-webppl(program_file = "/Users/Sahil/Desktop/Research/Cultural_Evolution/gen-games/r_data_analysis/Game_5_Pilot_5_02_05/rational_rules.wppl", data = hard_rule_stimuli, data_var="data")
+rr_predictives <- webppl(program_file = "/Users/Sahil/Desktop/Research/Cultural_Evolution/gen-games/r_data_analysis/Game_5_Pilot_5_02_05/rational_rules.wppl", data = hard_rule_stimuli, data_var="data")
+rr_predictives <- as.data.frame(rr_predictives)
+
+
+
+
+# rs %>%  # rs is posterior predictive distribution
+#   group_by(Parameter) %>%
+#   summarize(isWuggy = mean(value)) %>%
+#   ungroup() %>%
+#   separate(Parameter, into = c("critter", "color", "size", "correctLabel"))
+
 ```
