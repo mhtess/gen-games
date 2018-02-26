@@ -1,28 +1,18 @@
 // -------------------------------------------------------
-// Generate Critters for Piantadosi Replication Experiment
+// Generate Critters for Multiplayer Concept Learning Game
 // -------------------------------------------------------
-// For this replication experiment, we mimic the Piantadosi
-// experimental paradigm, where there are 3 dimensions
-// of variability allowed for any given object. And each
-// dimension has three possible values, yielding 27 possible
-// objects for the replication experiment.
-// 
-// For any set, there can be between 1 - 5 objects. In this
-// replication, we are using Erin DB's Stimuli Genearation
-// package. 
+// Here we generate critters with 4 properties and 3 possible
+// values for each property. These 4 properties are critter
+// type, body size, primary color, and secondary color.
 //
-// Specifically, we only generate fish, bugs, and birds. 
-// Prop2 (tailsize) are held constant. Additionally, tar1
-// (fangs) is held false for all samples and tar2 (whiskers)
-// is held true for all samples. The stripe color is 
-// kept to the same as the body color, and all fish
-// have stripes. This reduces the
-// possible axes of variability to 3, like in the Piantadosi
-// experiment.
+// Critter Types: Fish, Bugs, Birds
+// Body Size: Small, Medium, Large
+// Primary Color: Blue, Green, Orange
+// Secondary Color: Purple, Yellow, Red
 //
-// These 3 dimensions are namely: col1/col2/col3, prop1 (bodysize),
-// and critter type. We shall randomly sample values for
-// each of this dimensions from sets of size 3.
+// This provides a set of 81 possible critters.
+// 50 critters are mantained for a training set, and 31 critters
+// are left for a test set.
 // -------------------------------------------------------
 
 // -------
@@ -60,74 +50,166 @@ var tar3_dict = {
 	"exists": true,
 }
 
-var creatureOpts = {
+var creature_opts = {
 	"critterTypes": ["fish", "bug", "bird"],
 	"col1": ["blue", "green", "orange"],
+	"col2": ["red", "yellow", "purple"],
 	"prop1": ["small", "medium", "large"],
 	"prop2": ["small"],
 	"tar1": ["does_not_exist"],
 	"tar2": ["exists"],
-	"tar3": ["exists"],	
+	"tar3": ["exists"],
 }
+
+var enumerable_opts = ["critterTypes", "col1", "col2", "prop1"];
 
 // ------------------
 // Dataset Generation
 // ------------------
-var createDatset = function(rule, numSets, upper_bound_num_critters) {
+var createDatset = function(rule, training_set_sz, enumerable_opts, creature_opts) {
 	// Define dataset of some number of sets of critters.
 	// ---------
 	// rule: function that evaluates a dictionary of "col1", "col2",
 	//		 "tar1", "tar2", "tar3", "prop1", "prop2" values and returns T/F
 	//		 according to whether the critter fits the given concept rule
-	// numSets: number of sets in the dataset
-	// upper_bound_num_critters: upper bound on the number of critters
-	var data = [];
-	for (var i in _.range(numSets)) {
-		var critterSet = createCritterSet(rule, upper_bound_num_critters);
-		data.push(critterSet);
+	// training_set_sz: Training set size. If training set size >= possible
+	//					unique creatures (given enumerable opts and creature_opts),
+	//					then the test size becomes 0.
+	// enumerable_opts: List of traits with multiple values
+	// creature_opts: Possible trait options
+
+	// Establish Base Critter (Constant Features)
+	var base_critter = {};
+	base_critter["props"] = {};
+	for (let opt of Object.keys(creature_opts)) {
+		if (enumerable_opts.indexOf(opt) < 0) {
+			if (opt === "critterTypes") {
+				base_critter.critter = creature_opts[opt][0];
+			} else if (_.startsWith(opt, "col")) {
+				base_critter["props"][opt] = color_dict[creature_opts[opt][0]];
+			} else if (opt == "tar1") {
+				base_critter["props"][opt] = tar1_dict[creature_opts[opt][0]];
+			} else if (opt == "tar2") {
+				base_critter["props"][opt] = tar2_dict[creature_opts[opt][0]];
+			} else if (opt == "tar3") {
+				base_critter["props"][opt] = tar3_dict[creature_opts[opt][0]];
+			} else if (opt == "prop1") {
+				base_critter["props"][opt] = prop1_dict[creature_opts[opt][0]];
+			} else if (opt == "prop2") {
+				base_critter["props"][opt] = prop2_dict[creature_opts[opt][0]];
+			}
+		}
 	}
-	return data;
+
+	// Enumerate all possible stimuli
+	var num_vals_per_opt = [];
+	var num_critters = 1;
+	for (let trait of enumerable_opts) {
+		num_critters *= creature_opts[trait].length;
+		num_vals_per_opt.push(creature_opts[trait].length);
+	}
+	var enumerate_opts = function(num_vals_per_opt, stimuli_descriptions) {
+		if (num_vals_per_opt.length == 0) {
+			return stimuli_descriptions;
+		} else {
+			var num_vals = num_vals_per_opt[0];
+			var updated_stimuli_descriptions = [];
+
+			for (let val of _.range(num_vals)) {
+				if (stimuli_descriptions.length === 0) {
+					updated_stimuli_descriptions.push([val]);
+				} else {
+					for (let stim of stimuli_descriptions) {
+						var stim_copy = stim.slice(0);
+						stim_copy.push(val);
+						updated_stimuli_descriptions.push(stim_copy);
+					}
+				}
+			}
+			return enumerate_opts(num_vals_per_opt.slice(1), updated_stimuli_descriptions);
+		}
+	}
+	var stimuli_descriptions = enumerate_opts(num_vals_per_opt, []);
+
+	// Create all critters
+	var stimuli = [];
+	var num_satisfy_rule = 0;
+	for (let descrip of stimuli_descriptions) {
+		var critter = createCritter(base_critter, enumerable_opts, creature_opts, descrip, rule);
+		if (critter["belongs_to_concept"] === true) {
+			num_satisfy_rule++;
+		}
+		stimuli.push(critter);
+	}
+
+	// Split critters into train and test sets
+	var shuffled_stimuli = _.shuffle(stimuli);
+	var num_satisfy_rule_training_set = Math.floor(num_satisfy_rule / num_critters * training_set_sz);
+	var training_stimuli = [];
+	var test_stimuli = [];
+	var satisfy_rule_training_set_count = 0;
+	var training_set_count = 0;
+	for (let critter of shuffled_stimuli) {
+		if (critter["belongs_to_concept"] === true && satisfy_rule_training_set_count < num_satisfy_rule_training_set) {
+			training_stimuli.push(critter);
+			satisfy_rule_training_set_count++;
+			training_set_count++;
+		} else if (critter["belongs_to_concept"]) {
+			test_stimuli.push(critter);
+		} else if (training_set_count < training_set_sz) {
+			training_stimuli.push(critter);
+			training_set_count++;
+		} else {
+			test_stimuli.push(critter);
+		}
+	}
+
+	return [training_stimuli, test_stimuli]
 }
 
-var createCritterSet = function(rule, upper_bound_num_critters) {
-	// Define critter set consisting of some number of critters (1-5).
-	// ---------
-	// rule: function that evaluates a dictionary of "col1", "col2",
-	//		 "tar1", "tar2", "tar3", "prop1", "prop2" values and returns T/F
-	//		 according to whether the critter fits the given concept rule
-	// upper_bound_num_critters: upper bound on the number of critters
-	var critterSet = [];
-	var numCritters = _.random(1, 1, false);
-	for (var i in _.range(numCritters)) {
-		var critter = createCritter(rule, color_dict, creatureOpts);
-		critterSet.push(critter);
-	}
-	return critterSet;
-}
-
-var createCritter = function(rule) {
+var createCritter = function(base_critter, enumerable_opts, creature_opts, description, rule) {
 	// Define critter and label it according to the given rule.
 	// ---------
+	// base_critter: critter object where certain fields are held fixed
+	// enumerable_opts: list of opts that we have changing values over
+	// creature_opts: mapping of critter property -> categorical value
+	// description: list of values in  the order of enumerable values,
+	//				that indexes into the list of possible categorical values
+	//				given by creature_opts
 	// rule: function that evaluates a dictionary of "col1", "col2",
 	//		 "tar1", "tar2", "tar3", "prop1", "prop2" values and returns T/F
 	//		 according to whether the critter fits the given concept rule
-	var critter = {
-		critter: _.sample(creatureOpts["critterTypes"]),
-		props: {
-			"col1": color_dict[_.sample(creatureOpts["col1"])],
-			"tar1": tar1_dict[_.sample(creatureOpts["tar1"])],
-			"tar2": tar2_dict[_.sample(creatureOpts["tar2"])],
-			"tar3": tar3_dict[_.sample(creatureOpts["tar3"])],
-			"prop1": prop1_dict[_.sample(creatureOpts["prop1"])],
-			"prop2": prop2_dict[_.sample(creatureOpts["prop2"])],
+	var critter = JSON.parse(JSON.stringify(base_critter));
+	for (var i = 0; i < enumerable_opts.length; i++){
+		var opt = enumerable_opts[i];
+		var opt_val_idx = description[i];
+		if (opt == "critterTypes") {
+			critter.critter = creature_opts["critterTypes"][opt_val_idx];
+		} else if (_.startsWith(opt, "col")) {
+			critter["props"][opt] = color_dict[creature_opts[opt][opt_val_idx]];
+		} else if (opt == "tar1") {
+			critter["props"][opt] = tar1_dict[creature_opts[opt][opt_val_idx]];
+		} else if (opt == "tar2") {
+			critter["props"][opt] = tar2_dict[creature_opts[opt][opt_val_idx]];
+		} else if (opt == "tar3") {
+			critter["props"][opt] = tar3_dict[creature_opts[opt][opt_val_idx]];
+		} else if (opt == "prop1") {
+			critter["props"][opt] = prop1_dict[creature_opts[opt][opt_val_idx]];
+		} else if (opt == "prop2") {
+			critter["props"][opt] = prop2_dict[creature_opts[opt][opt_val_idx]];
 		}
-	};
-	critter["belongs_to_concept"] = rule(critter);
-	critter["props"]["col2"] = critter["props"]["col1"];
-	critter["props"]["col3"] = critter["props"]["col1"]; // Constant color 
-	critter["props"]["col4"] = critter["props"]["col1"]; // Constant color 
-	critter["props"]["col5"] = critter["props"]["col1"]; // Constant color 
-	return critter;
+	}
+
+	var belongs_to_concept = rule(critter);
+	critter["belongs_to_concept"] = belongs_to_concept;
+
+	// TODO: Generalize This. For now, we just assume that col3, col4, and col5
+	// aren't used anywhere at all.
+	critter["props"]["col3"] = critter["props"]["col1"]; // Constant color
+	critter["props"]["col4"] = critter["props"]["col1"]; // Constant color
+	critter["props"]["col5"] = critter["props"]["col1"]; // Constant color
+
+	return critter
 }
 
 // ------------------
@@ -147,38 +229,21 @@ var example = function() {
 	var rule = function(critter) {
 		// Example Rule: If critter is small and has a blue body
 		return critter["props"]["col1"] === color_dict["blue"] && critter["props"]["prop1"] === prop1_dict["small"];
-	} 
-	var data = createDatset(rule, 5);
-	var data_str = JSON.stringify(data, null, 4);
+	}
+	var data = createDatset(rule, 50, enumerable_opts, creature_opts);
 }
+example()
 
 // ----
 // MAIN
 // ----
-var numSets = 50;
-// var easy_rule = function(critter) {
-// 	// Rule: If critter is orange
-// 	return critter["props"]["col1"] === color_dict["orange"]
-// } 
-// var easy_rule_data = createDatset(easy_rule, numSets);
-// console.log(String(easy_rule_data.length) + " Sets for Easy Rule Data Generated");
-// saveDatasetToFile(easy_rule_data, './easy_rule_data.js');
-
-// var medium_rule = function(critter) {
-// 	// Rule: If critter has small and green
-// 	return critter["props"]["col1"] === color_dict["green"] && critter["props"]["prop1"] === prop1_dict["small"];
-// } 
-// var medium_rule_data = createDatset(medium_rule, numSets);
-// console.log(String(medium_rule_data.length) + " Sets for Medium Rule Data Generated");
-// saveDatasetToFile(medium_rule_data, './medium_rule_data.js');
-
 var hard_rule = function(critter) {
 	// Rule: If critter is a fish XOR blue body
 	return (
 		(critter["critter"] === "fish" || critter["props"]["col1"] === color_dict["blue"]) &&
 		!(critter["critter"] === "fish" && critter["props"]["col1"] === color_dict["blue"])
-	);	
+	);
 }
-var hard_rule_data = createDatset(hard_rule, numSets);
-console.log(String(hard_rule_data.length) + " Sets for Hard Rule Data Generated");
-saveDatasetToFile(hard_rule_data, './hard_rule_data.js');
+var hard_rule_data = createDatset(hard_rule, 50, enumerable_opts, creature_opts);
+saveDatasetToFile(hard_rule_data[0], './training_data.js');
+saveDatasetToFile(hard_rule_data[1], './test_data.js');
