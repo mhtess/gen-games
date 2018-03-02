@@ -1,55 +1,51 @@
-/*  Copyright (c) 2012 Sven "FuzzYspo0N" Bergström, 2013 Robert XD Hawkins
+//   Copyright (c) 2012 Sven "FuzzYspo0N" Bergström,
+//                 2013 Robert XD Hawkins
+//   Written by : http://underscorediscovery.com
+//   Written for : http://buildnewgames.com/real-time-multiplayer/
+//   Modified for collective behavior experiments on Amazon Mechanical Turk
+//   MIT Licensed.
 
-    written by : http://underscorediscovery.com
-    written for : http://buildnewgames.com/real-time-multiplayer/
-
-    modified for collective behavior experiments on Amazon Mechanical Turk
-
-    MIT Licensed.
-    */
-    var
-    fs    = require('fs'),
-    utils = require(__base + 'sharedUtils/sharedUtils.js');
-
+// ----------------
+// GLOBAL VARIABLES
+// ----------------
+var
+  fs    = require('fs'),
+  utils = require(__base + 'sharedUtils/sharedUtils.js');
+var startTime;
+    
+var onMessage = function(client,message) {
 // This is the function where the server parses and acts on messages
 // sent from 'clients' aka the browsers of people playing the
 // game. For example, if someone clicks on the map, they send a packet
 // to the server (check the client_on_click function in game.client.js)
 // with the coordinates of the click, which this function reads and
 // applies.
-var startTime;
 
-
-
-
-var onMessage = function(client,message) {
-  //Cut the message up into sub components
+  // Cut the message up into sub components
   var message_parts = message.split('.');
-
-  //The first is always the type of message
   var message_type = message_parts[0];
 
-  //Extract important variables
+  // Get game information
   var gc = client.game;
   var id = gc.id;
   var all = gc.get_active_players();
   gc.rounds = {"a": 1, "b": 1};
-  // gets current player and differentiates them from other players
+
+  // Get current player and differentiates him/her from others
   var target = gc.get_player(client.userid);
   var others = gc.get_others(client.userid);
 
   switch(message_type) {
-
-    // keeps track of which "experiment template" slide each particular user is on
-    // will update (through use of globalGame.socket.send("enterSlide.slide_name.");) in game js file
     case 'enterSlide' :
+      // keeps track of which "experiment template" slide each particular user is on
+      // will update (through use of globalGame.socket.send("enterSlide.slide_name.");) in game js file
       gc.currentSlide[target.instance.role] = message_parts[1]
       console.log("Player A is in: ==== " + gc.currentSlide["a"] + " ====")
       console.log("Player B is in: ==== " + gc.currentSlide["b"] + " ====")
       break;
 
-    // continue button from chat room
     case 'clickedObj' :
+    // continue button from chat room
       gc.state.roundNum += 1;
       setTimeout(function() {
         _.map(all, function(p){
@@ -76,17 +72,17 @@ var onMessage = function(client,message) {
         }, 3);
       break;
 
-    // will result in "other player is typing" on others' chatboxes
     case 'playerTyping' :
+      // will result in "other player is typing" on others' chatboxes
       _.map(others, function(p) {
         p.player.instance.emit( 'playerTyping',
          {typing: message_parts[1]});
       });
       break;
 
-    // Only allows a message to be sent when both players are present in the chatroom
-    // If this is true, the message will be relayed
     case 'chatMessage' :
+      // Only allows a message to be sent when both players are present in the chatroom
+      // If this is true, the message will be relayed
       if(gc.currentSlide["a"] == gc.currentSlide["b"]) {
           // Update others
           var msg = message_parts[1].replace(/~~~/g,'.');
@@ -95,9 +91,9 @@ var onMessage = function(client,message) {
       }
       break;
 
-    // Will show a wait message if only one player is in the chatroom
-    // Will allow them to enter the chatroom
     case 'enterChatRoom' :
+      // Will show a wait message if only one player is in the chatroom
+      // Will allow them to enter the chatroom
       if (gc.currentSlide["a"] != gc.currentSlide["b"]) {
         target.instance.emit("chatWait", {})
       } else {
@@ -110,9 +106,9 @@ var onMessage = function(client,message) {
       }
       break;
 
-    // Seems confusing, but this fn actually goes to the wait room and only moves forward,
-    // (enterWaitRoom) when both the speaker (playerA) and listener (playerB) are in the wait room
     case 'enterWaitRoom' :
+      // Seems confusing, but this fn actually goes to the wait room and only moves forward,
+      // (enterWaitRoom) when both the speaker (playerA) and listener (playerB) are in the wait room
       if (gc.currentSlide["a"] == gc.currentSlide["b"]) {
         setTimeout(function() {
           _.map(all, function(p){
@@ -133,21 +129,15 @@ var onMessage = function(client,message) {
         function(i){return i.split(',')}))
 
       gc.testScores[target.instance.role].push(scoreObj);
-
-
-      // if (gc.currentSlide["playerA"] == gc.currentSlide["playerB"]) {
-        //var msg = message_parts[1].replace(/~~~/g,'.');
-        setTimeout(function() {
-          _.map(all, function(p){
-            p.player.instance.emit("sendingTestScores",
-              gc.testScores)
-          });
-        }, 300);
-      // }
+      setTimeout(function() {
+        _.map(all, function(p){
+          p.player.instance.emit("sendingTestScores",
+            gc.testScores)
+        });
+      }, 300);
       break;
 
     case 'calculatingReward' :
-
       setTimeout(function() {
           _.map(all, function(p){
             p.player.instance.emit("calculatingReward",
@@ -228,6 +218,5 @@ var dataOutput = function() {
 var setCustomEvents = function(socket) {
   //empty
 };
-
 
 module.exports = {dataOutput, setCustomEvents, onMessage}

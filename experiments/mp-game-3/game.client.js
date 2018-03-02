@@ -1,31 +1,75 @@
 //   Copyright (c) 2012 Sven "FuzzYspo0N" Bergström,
-//                   2013 Robert XD Hawkins
+//                 2013 Robert XD Hawkins
+//   Written by : http://underscorediscovery.com
+//   Written for : http://buildnewgames.com/real-time-multiplayer/
+//   Modified for collective behavior experiments on Amazon Mechanical Turk
+//   MIT Licensed.
 
-//     written by : http://underscorediscovery.com
-//     written for : http://buildnewgames.com/real-time-multiplayer/
+// ----------------
+// GLOBAL VARIABLES
+// ----------------
 
-//     modified for collective behavior experiments on Amazon Mechanical Turk
-
-//     MIT Licensed.
-
-
-// /*
-//    THE FOLLOWING FUNCTIONS MAY NEED TO BE CHANGED
-// */
-
-// A window global for our game root variable.
 var globalGame = {};
 var enterScoreReport = 0;
 var totalScore = 0;
-//var totalRounds = null;
+var timeOut = 1000 * 60 * 15; // 15 Minutes
 
-// Update client versions of variables with data received from
-// server_send_update function in game.core.js
-// data refers to server information
+// ----------------
+// ACTION HANDLERS
+// ---------------
+
+function buttonClickListener(evt) {
+  console.log("cliked button")
+  globalGame.socket.send("clickedObj.");
+};
+
+// ----------------
+// EVENT HANDLERS
+// ---------------
+
+// Procedure for creating a new player, upon joining a globalGame
+var client_onjoingame = function(num_players, role) {
+  console.log("Inside client_onjoingame");
+  console.log(globalGame);
+
+  // Set player role
+  globalGame.my_role = role;
+  globalGame.get_player(globalGame.my_id).role = globalGame.my_role;
+
+  // Create player
+  _.map(_.range(num_players - 1), function(i){
+    globalGame.players.unshift({id: null, player: new game_player(globalGame)});
+  });
+
+  // Update w/ role (can only move stuff if agent)
+  $('#roleLabel').append(role + '.');
+
+  // Set 15 minute timeout only for first player...
+  if(num_players == 1) {
+    this.timeoutID = setTimeout(function() {
+      if(_.size(this.urlParams) == 4) {
+       this.submitted = true;
+       window.opener.turk.submit(this.data, true);
+       window.close();
+     } else {
+       console.log("would have submitted the following :");
+       console.log(this.data);
+     }
+   }, timeOut);
+  }
+
+};
+
+// Procedure for handling updates from server.
+// Note: data holds the server's copy of variables.
 var client_onserverupdate_received = function(data){
+  console.log("received update from server");
+  console.log(this.globalGame);
 
+  // Copy players to local globalGame
   if(data.players) {
     _.map(_.zip(data.players, globalGame.players),function(z){
+      console.log(z);
       z[1].id = z[0].id;
     });
   }
@@ -35,20 +79,19 @@ var client_onserverupdate_received = function(data){
   globalGame.player_count = data.pc;
   globalGame.roundNum = data.roundNum;
   globalGame.testScores = data.testScores;
-  //globalGame.bonusAmt = data.bonusAmt;
 
   // update data object on first round, don't overwrite (FIXME)
   if(!_.has(globalGame, 'data')) {
     globalGame.data = data.dataObj;
   }
 
+  // TODO: Change logic here such that player 2 doesn't have learning critters
   var myCritters = data.initialLearningCritters;
   exp.slides.learning_critters.crittersFromServer = myCritters;
 };
 
-// gets messages from the server/game file, parses them
+// Procedure for parsing messages from server.
 var client_onMessage = function(data) {
-
   var commands = data.split('.');
   var command = commands[0];
   var subcommand = commands[1] || null;
@@ -57,8 +100,8 @@ var client_onMessage = function(data) {
   switch(command) {
     case 's': //server message
     switch(subcommand) {
-      case 'end' :
-        // Redirect to exit survey only if it is not the last round
+      
+      case 'end' :         // Redirect to exit survey only if it is not the last round
         if(globalGame.roundNum < globalGame.numRounds || globalGame.numRounds == null) {
           $('#thanks').hide();
           ondisconnect();
@@ -66,72 +109,27 @@ var client_onMessage = function(data) {
         }
         break;
 
-        case 'feedback' :
-          // Prevent them from sending messages b/w trials
-          $('#chatbox').attr("disabled", "disabled");
-          var objToHighlight;
-          var upperLeftX;
-          var upperLeftY;
-          var strokeColor;
-          var clickedObjStatus = commanddata;
-
-          // update local score
-          globalGame.data.subject_information.score += clickedObjStatus === "target";
-
-          // draw feedback
-          if (globalGame.my_role === globalGame.playerRoleNames.role1) {
-           objToHighlight = _.filter(globalGame.currStim, function(x){
-             return x.targetStatus == clickedObjStatus;
-           })[0];
-           upperLeftX = objToHighlight.speakerCoords.gridPixelX;
-           upperLeftY = objToHighlight.speakerCoords.gridPixelY;
-          } else {
-           objToHighlight = _.filter(globalGame.currStim, function(x){
-             return x.targetStatus == "target";
-           })[0];
-           upperLeftX = objToHighlight.listenerCoords.gridPixelX;
-           upperLeftY = objToHighlight.listenerCoords.gridPixelY;
-          }
-          if (upperLeftX != null && upperLeftY != null) {
-            globalGame.ctx.beginPath();
-            globalGame.ctx.lineWidth="10";
-            globalGame.ctx.strokeStyle="green";
-            globalGame.ctx.rect(upperLeftX+5, upperLeftY+5,290,290);
-            globalGame.ctx.stroke();
-          }
-          break;
-
-      // Not in database, so you can't play...
-      case 'alert' :
+      case 'alert' :       // Not in database, so you can't play...
         alert('You did not enter an ID');
         window.location.replace('http://nodejs.org'); break;
-
-      //join a game requested
-      case 'join' :
+      
+      case 'join' :       // Game join request
         var num_players = commanddata;
         client_onjoingame(num_players, commands[3]); break;
-
-      // New player joined... Need to add them to our list.
-      case 'add_player' :
+      
+      case 'add_player' :   // New player joined... Need to add them to our list.
         console.log("adding player" + commanddata);
         console.log("cancelling timeout");
         clearTimeout(globalGame.timeoutID);
-        // if(hidden === 'hidden') {
-        //   flashTitle("Connected!");
-        // }
         globalGame.players.push({id: commanddata, player: new game_player(globalGame)}); break;
     }
   }
 };
 
-// var client_addnewround = function(game) {
-//   $('#roundnumber').append(game.roundNum);
-// };
-
 // Set up new round on client's browsers after submit round button is pressed.
 // This means clear the chatboxes, update round number
-var customSetup = function(game) {
-  game.socket.on('newRoundUpdate', function(data){
+var customSetup = function(globalGame) {
+  globalGame.socket.on('newRoundUpdate', function(data){
     $('#chatbox').removeAttr("disabled");
     $('#chatbox').focus();
     $('#messages').empty();
@@ -139,7 +137,7 @@ var customSetup = function(game) {
   });
 
   // update critters from server for the upcoming test critters and next learning critters
-  game.socket.on('exitChatRoom', function(data){
+  globalGame.socket.on('exitChatRoom', function(data){
     console.log("exitChatRoom")
     exp.slides.test_critters.crittersFromServer = data.thisRoundTest;
     exp.slides.test_critters.selfOrPartner = data.thisRoundTestType;
@@ -151,8 +149,8 @@ var customSetup = function(game) {
 
   // Means both players are in the wait room, results in moving to next slide
   // Most code is so the the first player who gets there will see "Connected!" on
-  // the tab when the second player enters. This will allow users to konw when they can move forward
-  game.socket.on('enterWaitRoom', function(data){
+  // the tab when the second player enters. This will allow users to know when they can move forward
+  globalGame.socket.on('enterWaitRoom', function(data){
     $('#chatbox').val('');
     var original = document.title;
     var timeout;
@@ -179,7 +177,7 @@ var customSetup = function(game) {
   });
 
   // One player has not yet made it to the chatroom, so sending messages is impossible
-  game.socket.on('chatWait', function(data){
+  globalGame.socket.on('chatWait', function(data){
     $('#chatbox').attr("disabled", "disabled");
     console.log("in chatWait");
     $("#waiting").show();
@@ -188,7 +186,7 @@ var customSetup = function(game) {
 
   // Both players are now in the chatroom, so they may send messages
   // the waiting message is therefore now hidden
-  game.socket.on('enterChatRoom', function(data){
+  globalGame.socket.on('enterChatRoom', function(data){
     console.log("enterChatRoom")
     $('#chatbox').removeAttr("disabled");
     $('#waiting').hide();
@@ -204,7 +202,7 @@ var customSetup = function(game) {
   });
 
   // Creates the score reports for the players
-  game.socket.on('sendingTestScores', function(data){
+  globalGame.socket.on('sendingTestScores', function(data){
     console.log("sendingTestScores");
     console.log("scores: " + JSON.stringify(data));
     enterScoreReport++;
@@ -236,58 +234,16 @@ var customSetup = function(game) {
         $('#'+score_role+'_falseAlarms').html("Selected incorrectly: " + data[role_index][ind].falseAlarm + " out of "+ (Number(data[role_index][ind].falseAlarm) + Number(data[role_index][ind].correctRejection)));
 
         $('#'+score_role+'_score').html("Round score: " + positive_score);
-
-        // $('#'+score_role+'_misses').html("Misses: "+ data[role_index][ind].misses);
-        // $('#'+score_role+'_correctRejections').html("Correct Rejections: "+ data[role_index][ind].correctRejections);
       }
     }
   });
 
-  game.socket.on('calculatingReward', function(data){
+  globalGame.socket.on('calculatingReward', function(data){
     console.log("calculatingReward");
     var reward = totalScore * globalGame.bonusAmt * 0.01;
     console.log("reward: $" + reward);
   });
 
-
   // initialize experiment_template
-  init()
-};
-
-// called when a player joins the game / gets connected
-var client_onjoingame = function(num_players, role) {
-  // set role locally
-  globalGame.my_role = role;
-  console.log(role)
-  globalGame.get_player(globalGame.my_id).role = globalGame.my_role;
-
-  _.map(_.range(num_players - 1), function(i){
-    globalGame.players.unshift({id: null, player: new game_player(globalGame)});
-  });
-
-  // Update w/ role (can only move stuff if agent)
-  $('#roleLabel').append(role + '.');
-
-  if(num_players == 1) {
-    // Set timeout only for first player...
-    this.timeoutID = setTimeout(function() {
-      if(_.size(this.urlParams) == 4) {
-       this.submitted = true;
-       window.opener.turk.submit(this.data, true);
-       window.close();
-     } else {
-       console.log("would have submitted the following :");
-       console.log(this.data);
-     }
-   }, 1000 * 60 * 15);
-  }
-};
-
-
-/*
- MOUSE EVENT LISTENERS
- */
-function buttonClickListener(evt) {
-  console.log("cliked button")
-  globalGame.socket.send("clickedObj.");
+  init();
 };

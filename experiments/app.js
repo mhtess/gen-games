@@ -19,6 +19,7 @@ var
     Server        = require('./sharedUtils/serverBase.js');
 
 var gameport;
+var requiredFiles;
 
 if(argv.gameport) {
   gameport = argv.gameport;
@@ -49,7 +50,6 @@ try {
 }
 
 var utils = require('./sharedUtils/sharedUtils.js');
-
 var global_player_set = {};
 
 // Log something so we know that server-side setup succeeded
@@ -126,6 +126,11 @@ var initialize = function(query, client, id) {
   client.on('disconnect', function () {
     console.log('\t socket.io:: client id ' + client.userid
                 + ' disconnected from game id ' + client.game.id);
+
+    // in colorReference, we don't mind duplicates across games
+    if(exp == "colorReference" || exp == "colorReference/") {
+      delete global_player_set[client.userid];
+    }
 
     //If the client was in a game set by gameServer.findGame,
     //we can tell the game server to update that game state.
