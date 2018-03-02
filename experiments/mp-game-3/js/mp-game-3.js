@@ -35,7 +35,8 @@ function init() {
 
   // Initialize experiment variables
   exp.block = 0;
-  exp.data_trials = [];
+  exp.training_data_trials = [];
+  exp.testing_data_trials = [];  
   exp.num_learning_trials = 0;
   exp.num_testing_trials = 0;
   exp.structure = [
@@ -134,12 +135,12 @@ function render_curr_critter(stim) {
   table += "<table class ='cell' id='cell'\">";
   table += "<td>";  
   table += "<svg id='critter' style='max-width:150px;max-height:150px\'></svg>";
-  table += "<br><br><form id='critter_form" + ind + "' class='critter_label_form'>";
+  table += "<br><br><form id='critter_form' class='critter_label_form'>";
   table += "<input type='radio' name='belongs_to_concept' id='t' value=true> <label for='t'>Yes</label>";
   table += "<input type='radio' name='belongs_to_concept' id='f' value=false> <label for='f'>No</label>";   
   table += "</form></td>";
   table += "<tr>";
-  table += "<div class='critname' id='cell" + ind + "critname'></div></tr>";
+  table += "<div class='critname' id='cellcritname'></div></tr>";
   table += "</table>";
   table += "</td>";
   table += "</tr>"
@@ -253,6 +254,11 @@ function make_slides(f) {
       } else {
         alert("Please make sure to label all the critters, before proceeding");
       }
+      if (this.learning_trial_idx - 1 == exp.num_learning_trials) {
+        globalGame.socket.send("logTrain.learnCritters." + _.pairs(encodeData(exp.training_data_trials)).join('.'));
+        exp.go()
+      }
+
     },
     log_responses : function(){
       var stim = this.stim;
@@ -260,7 +266,8 @@ function make_slides(f) {
       var true_labels = [];
       labels.push($('input[name=belongs_to_concept]:checked', this).val() === "true");
       true_labels.push(stim['belongs_to_concept']);
-      exp.data_trials.push({
+      exp.training_data_trials.push({
+          "player": globalGame.my_role,
           "training": true,
           "trial_num" : this.trial_num,
           "time_in_seconds" : this.time_spent/1000,
@@ -269,34 +276,8 @@ function make_slides(f) {
         });
       },
     });
-  //   button: function() {
-  //     var end_time = Date.now()
-  //     this.time_spent = end_time - this.start_time;
 
-  //     // TODO: Replace with code for submitting data to
-  //     // server for Game-3.
-  //     for (var i = 0; i < this.num_creats; i++) {
-  //       var dataToSend = _.extend(this.shuffledCritters[i], {
-  //         "block_num" : exp.block,
-  //         "time_in_ms" : this.time_spent,
-  //         "block": "learnCritters",
-  //         "critter_num" : i,
-  //       })
-  //       globalGame.socket.send("logTrain.learnCritters." + _.pairs(encodeData(dataToSend)).join('.'));
-  //       exp.data_trials.push(dataToSend);
-
-  //       $('#critter' + i).empty();
-  //       $('#cell' + i).css({'opacity': '1'});
-  //       $('#cell' + i).css({'border': ''});
-  //       $('#creature_table').remove();
-  //       prev = null;
-  //     }
-
-  //     this.shuffledCritters = [];
-  //     exp.go()
-  //   },
-  // });
-
+  // Chat instructions slide
   slides.chat_instructions = slide({
     name : "chat_instructions",
     start : function() {

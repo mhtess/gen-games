@@ -82,10 +82,12 @@ var client_onserverupdate_received = function(data){
   exp.slides.learning_critters.present = data.training_critters;
   exp.slides.testing_critters.present = data.testing_critters;
   if (Array.isArray(data.training_critters)) {
-    exp.num_learning_trials = data.training_critters.length;
+    // exp.num_learning_trials = data.training_critters.length;
+    exp.num_learning_trials = 2;
   }
   if (Array.isArray(data.testing_critters)) {
-    exp.num_testing_trials = data.testing_critters.length;
+    // exp.num_testing_trials = data.testing_critters.length;
+    exp.num_testing_trials = 2;
   }
 };
 

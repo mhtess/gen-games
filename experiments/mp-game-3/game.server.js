@@ -148,8 +148,6 @@ var onMessage = function(client,message) {
   }
 };
 
-
-
 /*
   Associates events in onMessage with callback returning json to be saved
   {
