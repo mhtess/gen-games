@@ -8,7 +8,6 @@
 // ----------------
 // GLOBAL VARIABLES
 // ----------------
-
 var globalGame = {};
 var enterScoreReport = 0;
 var totalScore = 0;
@@ -17,7 +16,6 @@ var timeOut = 1000 * 60 * 15; // 15 Minutes
 // ----------------
 // ACTION HANDLERS
 // ---------------
-
 function buttonClickListener(evt) {
   console.log("cliked button")
   globalGame.socket.send("clickedObj.");
@@ -26,7 +24,6 @@ function buttonClickListener(evt) {
 // ----------------
 // EVENT HANDLERS
 // ---------------
-
 // Procedure for creating a new player, upon joining a globalGame
 var client_onjoingame = function(num_players, role) {
   console.log("Inside client_onjoingame");
@@ -57,23 +54,19 @@ var client_onjoingame = function(num_players, role) {
      }
    }, timeOut);
   }
-
 };
 
 // Procedure for handling updates from server.
 // Note: data holds the server's copy of variables.
 var client_onserverupdate_received = function(data){
-  console.log("received update from server");
-  console.log(this.globalGame);
-
   // Copy players to local globalGame
   if(data.players) {
     _.map(_.zip(data.players, globalGame.players),function(z){
-      console.log(z);
       z[1].id = z[0].id;
     });
   }
 
+  // Copy game parameters to local globalGame
   globalGame.game_started = data.gs;
   globalGame.players_threshold = data.pt;
   globalGame.player_count = data.pc;
@@ -85,9 +78,15 @@ var client_onserverupdate_received = function(data){
     globalGame.data = data.dataObj;
   }
 
-  // TODO: Change logic here such that player 2 doesn't have learning critters
-  var myCritters = data.initialLearningCritters;
-  exp.slides.learning_critters.crittersFromServer = myCritters;
+  // Add the training critters and test critters to the exp slides
+  exp.slides.learning_critters.present = data.training_critters;
+  exp.slides.testing_critters.present = data.testing_critters;
+  if (Array.isArray(data.training_critters)) {
+    exp.num_learning_trials = data.training_critters.length;
+  }
+  if (Array.isArray(data.testing_critters)) {
+    exp.num_testing_trials = data.testing_critters.length;
+  }
 };
 
 // Procedure for parsing messages from server.
@@ -101,7 +100,7 @@ var client_onMessage = function(data) {
     case 's': //server message
     switch(subcommand) {
       
-      case 'end' :         // Redirect to exit survey only if it is not the last round
+      case 'end' : // Redirect to exit survey only if it is not the last round
         if(globalGame.roundNum < globalGame.numRounds || globalGame.numRounds == null) {
           $('#thanks').hide();
           ondisconnect();
@@ -109,15 +108,15 @@ var client_onMessage = function(data) {
         }
         break;
 
-      case 'alert' :       // Not in database, so you can't play...
+      case 'alert' : // Not in database, so you can't play...
         alert('You did not enter an ID');
         window.location.replace('http://nodejs.org'); break;
       
-      case 'join' :       // Game join request
+      case 'join' : // Game join request
         var num_players = commanddata;
         client_onjoingame(num_players, commands[3]); break;
       
-      case 'add_player' :   // New player joined... Need to add them to our list.
+      case 'add_player' : // New player joined... Need to add them to our list.
         console.log("adding player" + commanddata);
         console.log("cancelling timeout");
         clearTimeout(globalGame.timeoutID);

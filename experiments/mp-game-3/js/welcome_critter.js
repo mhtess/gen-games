@@ -245,5 +245,5 @@ var hard_rule = function(critter) {
 	);
 }
 var hard_rule_data = createDatset(hard_rule, 50, enumerable_opts, creature_opts);
-saveDatasetToFile(hard_rule_data[0], './training_data.js');
-saveDatasetToFile(hard_rule_data[1], './test_data.js');
+saveDatasetToFile(hard_rule_data[0], './training_data.json');
+saveDatasetToFile(hard_rule_data[1], './test_data.json');

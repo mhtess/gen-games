@@ -74,6 +74,7 @@
     <button class="continuebutton" id='waitCont'>Continue</button>
   </div>
 
+  <!-- This is the slide in which users will learn how they will play the game. -->
   <div class="slide" id="learning_instructions">
     <br><br>
     <h3>Instructions</h3>
@@ -92,16 +93,19 @@
 
   <!-- This is the learning slide in which users will uncover information about the critters -->
   <div class="slide" id="learning_critters">
-    <br><br>
-    <p id="internalprops_instruct"></p>
-    <div id='critter_display'></div>
+    <h3 class="trial_number"></h3>
+    <p class="label_prompt">Do you belive this creature is <i>wudsy</i>?</p>
+    <div id="curr_critter"></div>
     <br>
-    <!--  TO CLICK THROUGH QUICKLY-->
-    <!-- <button class="continuebutton"  onclick="_s.button()">Continue</button> -->
-    <button class="continuebutton" id="learning_button" onclick="_s.button()">Continue</button>
+    <br>
+    <button onclick="_s.button()" id="continueButton">Use Wudsy Detector</button>
+    <br>
+    <br>
+    <p class="critterInfo"> The <i>wudsy</i> creatures from previous trials are surrounded by a square.</p>
+    <div id="prev_critters"></div>
   </div>
 
-  <div class="slide" id="test_instructions">
+  <div class="slide" id="testing_instructions">
     <br><br>
     <div id="test_instructs"></div><br>
     <button class="continuebutton" onclick="_s.button()">Continue</button>
@@ -114,7 +118,7 @@
   </div>
 
   <!-- Generates critters that the partner learned about and tests the user -->
-  <div class="slide" id="test_critters">
+  <div class="slide" id="testing_critters">
     <br><br>
    <p id="chooseCrit"><br></p>
    <div id='critter_test_display'></div>

@@ -8,7 +8,6 @@
 // -----------------------------
 // LOAD DEPENDENCIES (IF SERVER)
 // -----------------------------
-
 var has_require = typeof require !== 'undefined';
 if( typeof _ === 'undefined' ) {
   if( has_require ) _ = require('lodash');
@@ -21,6 +20,7 @@ if (has_require) {
   test_data = require('./js/test_data.json');
 }
 
+// Functional form, for game creation 
 var game_core = function(options){
   // Log, whether this server version
   this.server = options.server ;
@@ -75,6 +75,10 @@ var game_core = function(options){
       }
     };
 
+    // Player creation is entirely handled by the server.
+    // The client simply mantains a dummy / empty player object
+    // and then copies values into this object, once a server
+    // update is registered.
     this.players = [{
       id: options.player_instances[0].id,
       instance: options.player_instances[0].player,
@@ -84,14 +88,13 @@ var game_core = function(options){
     this.server_send_update();
   } else {
     // If we're initializing a player's local game copy, create the player object
-    console.log("Loading local player!!!")
+    // and the game object. We'll be copying real values into these items
+    // on a server update.
     this.players = [{
       id: null,
       instance: null,
       player: new game_player(this)
     }];
-
-    console.log(this.game);
   }
 };
 
@@ -112,7 +115,6 @@ if('undefined' != typeof global) {
 // ----------------
 // HELPER FUNCTIONS
 // -----------------
-
 game_core.prototype.get_player = function(id) {
   // Method to easily look up player
   var result = _.find(this.players, function(e){ return e.id == id; });
@@ -159,7 +161,10 @@ game_core.prototype.server_send_update = function(){
   //Send the snapshot to the players
   this.state = state;
   _.map(local_game.get_active_players(), function(p){
-    var playerState = p.instance.role == "a" ? _.extend(state, {learningCritters: local_game.trainingStimuli[p.instance.role]}) : state;
+    // Depending on player type (A vs. B), append training simuli
+    // All players get test stimuli
+    var playerState = p.instance.role == "a" ? _.extend(state, {training_critters: local_game.trainingStimuli[p.instance.role]}) : state;
+    playerState = _.extend(playerState, {testing_critters: local_game.testStimuli[p.instance.role]});
     p.player.instance.emit('onserverupdate', playerState);
   });
 };
