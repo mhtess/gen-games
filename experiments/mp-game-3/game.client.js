@@ -17,7 +17,6 @@ var timeOut = 1000 * 60 * 15; // 15 Minutes
 // ACTION HANDLERS
 // ---------------
 function buttonClickListener(evt) {
-  console.log("cliked button")
   globalGame.socket.send("clickedObj.");
 };
 
@@ -140,11 +139,6 @@ var customSetup = function(globalGame) {
   // update critters from server for the upcoming test critters and next learning critters
   globalGame.socket.on('exitChatRoom', function(data){
     console.log("exitChatRoom")
-    exp.slides.test_critters.crittersFromServer = data.thisRoundTest;
-    exp.slides.test_critters.selfOrPartner = data.thisRoundTestType;
-    exp.slides.learning_critters.crittersFromServer = data.nextRoundLearning;
-
-    globalGame.roundNum = data['currentRoundNum'];
     exp.go();
   });
 

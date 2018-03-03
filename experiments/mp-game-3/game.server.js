@@ -46,23 +46,12 @@ var onMessage = function(client,message) {
 
     case 'clickedObj' :
     // continue button from chat room
-      gc.state.roundNum += 1;
       setTimeout(function() {
         _.map(all, function(p){
             // tell client to advance to next slide
             var playerRole = p.instance.role;
             // here, decide what data to pass to each subject
-            console.log("Enter block num ==== " + (gc.roundNum + 1) + " ====")
-
-            var dataPacket = {
-              thisRoundTestType: gc.testOrders[playerRole][gc.roundNum],
-              thisRoundTest: gc.testList[playerRole][gc.roundNum],
-              nextRoundLearning: gc.trialList[playerRole][gc.roundNum + 1],
-              currentRoundNum: gc.state.roundNum
-            };
-            // calls exitChatRoom to move to next slide and collect data to the packet
-            p.player.instance.emit("exitChatRoom", dataPacket)
-
+            p.player.instance.emit("exitChatRoom", {});
             _.map(all,function(p){
                 p.player.instance.emit('newRoundUpdate', {user: client.userid});
             });
@@ -156,7 +145,6 @@ var onMessage = function(client,message) {
   Note: If no function provided for an event, no data will be written
 */
 var dataOutput = function() {
-
   function commonOutput (client, message_data) {
     return {
       iterationName: client.game.iterationName,

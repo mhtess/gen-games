@@ -96,7 +96,7 @@
   <div class="slide" id="learning_critters">
     <h3 class="trial_number"></h3>
     <p class="label_prompt">Do you belive this creature is <i>wudsy</i>?</p>
-    <div id="curr_critter"></div>
+    <div id="curr_critter_training"></div>
     <br>
     <br>
     <button onclick="_s.button()" id="continueButton">Use Wudsy Detector</button>
@@ -120,10 +120,11 @@
 
   <!-- Generates critters that the partner learned about and tests the user -->
   <div class="slide" id="testing_critters">
-    <br><br>
-   <p id="chooseCrit"><br></p>
-   <div id='critter_test_display'></div>
-   <br>
+    <h3 class="trial_number"></h3>
+    <p class="label_prompt">Do you belive this creature is <i>wudsy</i>?</p>
+    <div id="curr_critter_testing"></div>
+    <br>
+    <br>
    <button class="continuebutton" id="test_button" onclick="_s.button()">Continue</button>
  </div>
 

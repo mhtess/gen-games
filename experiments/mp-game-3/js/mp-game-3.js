@@ -126,7 +126,8 @@ function sleep(ms) {
 }
 
 // Render the current critter
-function render_curr_critter(stim) {
+function render_curr_critter(stim, training) {
+  var critter_id = "training_critter";
   var rows = 1;
   var cols = 1;
   var table = "<table>";
@@ -134,7 +135,12 @@ function render_curr_critter(stim) {
   table += "<td>";
   table += "<table class ='cell' id='cell'\">";
   table += "<td>";  
-  table += "<svg id='critter' style='max-width:150px;max-height:150px\'></svg>";
+  if (training) {
+    table += "<svg id='training_critter' style='max-width:150px;max-height:150px\'></svg>";
+  } else {
+    table += "<svg id='testing_critter' style='max-width:150px;max-height:150px\'></svg>"; 
+    critter_id = "testing_critter";
+  }
   table += "<br><br><form id='critter_form' class='critter_label_form'>";
   table += "<input type='radio' name='belongs_to_concept' id='t' value=true> <label for='t'>Yes</label>";
   table += "<input type='radio' name='belongs_to_concept' id='f' value=false> <label for='f'>No</label>";   
@@ -145,10 +151,14 @@ function render_curr_critter(stim) {
   table += "</td>";
   table += "</tr>"
   table += "</table>";
-  $("#curr_critter").append(table);
+  if (training) {
+    $("#curr_critter_training").append(table);
+  } else {
+    $("#curr_critter_testing").append(table);
+  }
   Ecosystem.draw(
     stim.critter, stim.props,
-    "critter", 0.5
+    critter_id, 0.5
   );
 }
 
@@ -213,13 +223,13 @@ function make_slides(f) {
     present_handle : function(stim) {
       // hide + disable stuff
       $("#prev_critters").empty();
-      $("#curr_critter").empty();
+      $("#curr_critter_training").empty();
       $('#continueButton').prop('disabled', false);
 
       // Render slide
       $(".trial_number").text("Critter " + String(this.learning_trial_idx + 1) + " of " + String(exp.num_learning_trials));
       render_prev_critters(this.prev_critters, 6);
-      render_curr_critter(stim);
+      render_curr_critter(stim, true);
       this.stim = stim;
 
       // Time Markers
@@ -258,7 +268,6 @@ function make_slides(f) {
         globalGame.socket.send("logTrain.learnCritters." + _.pairs(encodeData(exp.training_data_trials)).join('.'));
         exp.go()
       }
-
     },
     log_responses : function(){
       var stim = this.stim;
@@ -290,118 +299,6 @@ function make_slides(f) {
     }
   });
 
-  // Test instructions slide
-  slides.testing_instructions = slide({
-    name : "testing_instructions",
-    start : function() {
-      globalGame.socket.send("enterSlide.testing_critters.");
-    },
-    button : function() {
-      exp.go()
-    }
-  });
-
-
-
-  // Generates critters that the partner learned about and tests the user
-  slides.testing_critters = slide({
-  name : "testing_critters",
-
-  crittersFromServer : "",
-  selfOrPartner : "",
-  start : function() {
-
-    this.start_time = Date.now()
-    $(".err").hide();
-
-    this.shuffledCritters = _.shuffle(this.crittersFromServer)
-    this.num_creats = this.shuffledCritters.length;
-    this.creat_type = this.shuffledCritters[0]["genus"];
-
-    $('#chooseCrit').html(
-      "Click on the " +
-      this.shuffledCritters[0]["categoryPluralLabel"]
-    );
-
-      // Generates critters for test phase
-      globalGame.presentRows = 2;
-        globalGame.presentCols = globalGame.testN/globalGame.presentRows;
-      create_table(globalGame.presentRows,globalGame.presentCols,"critter_test_display");
-
-      for (var i=0; i<this.shuffledCritters.length; i++) {
-      var scale = 0.5;
-      Ecosystem.draw(
-        this.shuffledCritters[i]["genus"], this.shuffledCritters[i],
-        "critter"+i, scale)
-    }
-
-    $(".critname").hide();
-
-  },
-
-  button : function() {
-    var end_time = Date.now()
-    this.time_spent = end_time - this.start_time;
-
-    var blockScores = {
-      hit:0, miss:0, falseAlarm: 0, correctRejection: 0
-    }
-
-    //log responses
-    for (var i=0; i<this.num_creats; i++) {
-
-      var isLabeled = this.shuffledCritters[i].labeled;
-      var selectedAnswer = $('#cell' + i).attr("data-selected");
-
-      blockScores[scoreSingle(isLabeled, selectedAnswer)]++
-
-      var dataToSend = _.extend(this.shuffledCritters[i], {
-        "block_num" : exp.block,
-        "block_type": "testCritters",
-        "tested_on": this.selfOrPartner,
-        "time_in_ms" : this.time_spent,
-        "critter_num" : i,
-        "isLabeled" : isLabeled ? 1 : 0,
-        "selected" : selectedAnswer,
-        "categorizedResponse" : scoreSingle(isLabeled, selectedAnswer)
-      })
-
-      globalGame.socket.send("logTest.testCritters." + _.pairs(encodeData(dataToSend)).join('.'));
-      exp.data_trials.push(dataToSend);
-
-    }
-
-    globalGame.socket.send("sendingTestScores." + globalGame.my_role + "." + _.pairs(blockScores).join('.'));
-    globalGame.socket.send("logScores.score_report." + _.pairs(blockScores).join('.'));
-
-    // empties the critter arrays so they can be repopulated without overlap
-    this.shuffledCritters = [];
-
-    // resets table
-    for (var i = 0; i < this.num_creats; i++) {
-      $('#critter' + i).empty();
-      $('#cell' + i).css({'opacity': '1'});
-      $('#cell' + i).css({'border': ''});
-      $('#creature_table').remove();
-      prev = null;
-    }
-
-    exp.block++;
-    exp.go(); // use exp.go() if and only if there is no "present" data.
-
-    }
-  });
-
-  slides.score_report = slide({
-    name: "score_report",
-    // start: function() {
-
-    // },
-    button : function() {
-      exp.go()
-    }
-  });
-
   // Connected players can discuss what they have learned in 'welcome_critter' here using a chatbox
   slides.chatRoom = slide({
     name: "chatRoom",
@@ -414,6 +311,88 @@ function make_slides(f) {
       globalGame.socket.send("enterChatRoom.");
       $(".err").hide();
       $('#waiting').show();
+    }
+  });
+
+  // Test instructions slide
+  slides.testing_instructions = slide({
+    name : "testing_instructions",
+    start : function() {
+      globalGame.socket.send("enterSlide.testing_critters.");
+    },
+    button : function() {
+      exp.go()
+    }
+  });
+
+  // Generates critters that the partner learned about and tests the user
+  slides.testing_critters = slide({
+  name : "testing_critters",
+  present: exp.testing_critters,
+  start: function() {
+    this.testing_trial_idx = 0;
+  },
+  present_handle : function(stim) {
+    // hide + disable stuff
+    $("#curr_critter_testing").empty();
+    $('#continueButton').prop('disabled', false);
+
+    // Render slide
+    $(".trial_number").text("Critter " + String(this.testing_trial_idx + 1) + " of " + String(exp.num_testing_trials));
+    render_curr_critter(stim, false);
+    this.stim = stim;
+
+    // Time Markers
+    this.start_time = Date.now()
+    this.testing_trial_idx++;
+  },
+  button : function() {
+    var all_forms_filled = true;
+    if ($("input[type=radio]:checked").length == 0) {
+      all_forms_filled = false;
+    }
+    if (all_forms_filled) {
+      var end_time = Date.now();
+      this.time_spent = end_time - this.start_time;
+      this.log_responses();
+
+      var stim = this.stim;
+      var correct_answer = true;
+      var turker_label = $("input[type=radio]:checked").val() === "true";
+      if (turker_label != stim['belongs_to_concept']) correct_answer = false;
+      _stream.apply(this); //make sure this is at the *end*, after you log your data
+    } else {
+      alert("Please make sure to label all the critters, before proceeding");
+    }
+    if (this.testing_trial_idx - 1 == exp.num_testing_trials) {
+      globalGame.socket.send("logTest.testCritters." + _.pairs(encodeData(dataToSend)).join('.'));;
+      exp.go()
+    }
+  },
+  log_responses : function(){
+    var stim = this.stim;
+    var labels = [];
+    var true_labels = [];
+    labels.push($('input[name=belongs_to_concept]:checked', this).val() === "true");
+    true_labels.push(stim['belongs_to_concept']);
+    exp.testing_data_trials.push({
+        "player": globalGame.my_role,
+        "training": false,
+        "trial_num" : this.trial_num,
+        "time_in_seconds" : this.time_spent/1000,
+        "labels": labels,
+        "true_labels": true_labels,
+      });
+    },
+  });
+
+  slides.score_report = slide({
+    name: "score_report",
+    // start: function() {
+
+    // },
+    button : function() {
+      exp.go()
     }
   });
 
