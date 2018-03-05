@@ -34,9 +34,22 @@ function init() {
   };
 
   // Initialize experiment variables
+  exp.startT = Date.now()
   exp.block = 0;
   exp.training_data_trials = [];
-  exp.testing_data_trials = [];  
+  exp.testing_data_trials = [];
+  exp.training_summary_stats = {
+    hits: 0,
+    misses: 0,
+    correct_rejections: 0,
+    false_alarms: 0,
+  };
+  exp.testing_summary_stats = {
+    hits: 0,
+    misses: 0,
+    correct_rejections: 0,
+    false_alarms: 0,
+  };
   exp.num_learning_trials = 0;
   exp.num_testing_trials = 0;
   exp.structure = [
@@ -293,18 +306,26 @@ function make_slides(f) {
       if (all_forms_filled) {
         var end_time = Date.now();
         this.time_spent = end_time - this.start_time;
-        this.log_responses();
 
         var stim = this.stim;
-        var correct_answer = true;
-          var turker_label = $("input[type=radio]:checked").val() === "true";
-          if (turker_label != stim['belongs_to_concept']) correct_answer = false;
+        var turker_label = $("input[type=radio]:checked").val() === "true";
+        this.is_correct = (turker_label === stim['belongs_to_concept']);
+        if (turker_label === false && stim['belongs_to_concept'] === false) {
+          exp.training_summary_stats.correct_rejections += 1;
+        } else if (turker_label === false && stim['belongs_to_concept'] === true){
+          exp.training_summary_stats.misses += 1;
+        } else if (turker_label === true && stim['belongs_to_concept'] === false) {
+          exp.training_summary_stats.false_alarms += 1;
+        } else {
+          exp.training_summary_stats.hits += 1;
+        }
 
-        if (!correct_answer) {
+        if (!this.is_correct) {
           $('#continueButton').prop('disabled', true);
           alert("Incorrect Label Applied to Creature ... You Will Have to Wait 5 Seconds Before the Next Round");
           sleep(5000).then(() => _stream.apply(this));
         } else {
+          this.log_responses();
           _stream.apply(this); //make sure this is at the *end*, after you log your data
         }
       } else {
@@ -324,10 +345,11 @@ function make_slides(f) {
       exp.training_data_trials.push({
           "player": globalGame.my_role,
           "training": true,
-          "trial_num" : this.trial_num,
+          "trial_num" : this.learning_trial_idx,
           "time_in_seconds" : this.time_spent/1000,
           "labels": labels,
           "true_labels": true_labels,
+          "is_correct": this.is_correct,
         });
       },
     });
@@ -392,7 +414,6 @@ function make_slides(f) {
         <button class="continuebutton" onclick="_s.button()">Continue</button>`;
         $("#testing_instructions").html(playerBInstructions);
       }
-
     },
     button : function() {
       exp.go()
@@ -428,18 +449,26 @@ function make_slides(f) {
     if (all_forms_filled) {
       var end_time = Date.now();
       this.time_spent = end_time - this.start_time;
-      this.log_responses();
 
       var stim = this.stim;
-      var correct_answer = true;
       var turker_label = $("input[type=radio]:checked").val() === "true";
-      if (turker_label != stim['belongs_to_concept']) correct_answer = false;
+      this.is_correct = (turker_label === stim['belongs_to_concept']);
+      if (turker_label === false && stim['belongs_to_concept'] === false) {
+        exp.testing_summary_stats.correct_rejections += 1;
+      } else if (turker_label === false && stim['belongs_to_concept'] === true){
+        exp.testing_summary_stats.misses += 1;
+      } else if (turker_label === true && stim['belongs_to_concept'] === false) {
+        exp.testing_summary_stats.false_alarms += 1;
+      } else {
+        exp.testing_summary_stats.hits += 1;
+      }
+      this.log_responses();
       _stream.apply(this); //make sure this is at the *end*, after you log your data
     } else {
       alert("Please make sure to label all the critters, before proceeding");
     }
     if (this.testing_trial_idx - 1 == exp.num_testing_trials) {
-      globalGame.socket.send("logTest.testCritters." + _.pairs(encodeData(dataToSend)).join('.'));;
+      globalGame.socket.send("logTest.testCritters." + _.pairs(encodeData(exp.testing_data_trials)).join('.'));;
       exp.go()
     }
   },
@@ -452,19 +481,20 @@ function make_slides(f) {
     exp.testing_data_trials.push({
         "player": globalGame.my_role,
         "training": false,
-        "trial_num" : this.trial_num,
+        "trial_num" : this.testing_trial_idx,
         "time_in_seconds" : this.time_spent/1000,
         "labels": labels,
         "true_labels": true_labels,
+        "is_correct": this.is_correct
       });
     },
   });
 
   slides.score_report = slide({
     name: "score_report",
-    // start: function() {
+    start: function() {
 
-    // },
+    },
     button : function() {
       exp.go()
     }
@@ -480,7 +510,6 @@ function make_slides(f) {
 
     },
     submit : function(e){
-        //if (e.preventDefault) e.preventDefault(); // I don't know what this means.
         globalGame.socket.send("enterSlide.subj_info.");
         exp.subj_data = {
           nativeEnglish : $("#nativeEnglish").val(),
@@ -509,12 +538,16 @@ function make_slides(f) {
     start : function() {
       globalGame.socket.send("enterSlide.thanks.");
 
+
       exp.data= {
-        "training_trials" : exp.training_trials,
-        "testing_trials": exp.testing_trials,
+        "role": globalGame.my_role,
+        "training_trials" : exp.training_data_trials,
+        "testing_trials": exp.testing_data_trials,
         "system" : exp.system,
         "subject_information" : exp.subj_data,
-        "time_in_minutes" : (Date.now() - exp.startT)/60000
+        "time_in_minutes" : (Date.now() - exp.startT)/60000,
+        "training_summary_stats": exp.training_summary_stats,
+        "testing_summary_stats": exp.testing_summary_stats,
       };
       setTimeout(function(){
         if(_.size(globalGame.urlParams) == 4) {
@@ -523,9 +556,13 @@ function make_slides(f) {
         } else {
           console.log("would have submitted the following :")
           console.log(exp.data);
-        } }, 1000)
+        } }, 1000);
+        for (let p of globalGame.get_active_players()) {
+          console.log(p.player.instance);
+          p.player.instance.disconnect();
+        }
+
     }
   });
-
   return slides;
 }

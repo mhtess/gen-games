@@ -158,6 +158,7 @@ var dataOutput = function() {
   };
 
   function decodeData(dataObj){
+    console.log(dataObj);
     return _.mapValues(dataObj, function(val){
       if (utils.isNumeric(val)) {
         return val

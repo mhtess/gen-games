@@ -85,7 +85,7 @@ var client_onserverupdate_received = function(data){
   }
   if (Array.isArray(data.testing_critters)) {
     // exp.num_testing_trials = data.testing_critters.length;
-    exp.num_testing_trials = 2;
+    exp.num_testing_trials = 5;
   }
 };
 
