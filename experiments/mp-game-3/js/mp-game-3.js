@@ -319,6 +319,34 @@ function make_slides(f) {
     name : "testing_instructions",
     start : function() {
       globalGame.socket.send("enterSlide.testing_critters.");
+      if (globalGame.my_role == "a") {
+        var playerAInstructions = `<br><br>
+        <h3>Instructions</h3>
+        <br>
+        <p>
+        Six months later, you return to Crittun, this time with your partner. You have accidentally left your "wudsy detector" at home and must identify creatures without its help.
+        <br> <br>
+        On each trial, you will identify a creature as "wudsy" or "not wudsy". You will be awarded a bonus according to how well you and your partner perform on this task.
+        <br> <br>
+        Press Continue to start the game.</p>
+        <br> <br>
+        <button class="continuebutton" onclick="_s.button()">Continue</button>`;
+        $("#testing_instructions").html(playerAInstructions);
+      } else {
+        var playerBInstructions = `<br><br>
+        <h3>Instructions</h3>
+        <br>
+        <p> Your partner has brought you to the planet Crittun but left their "wudsy detector" at home.
+        <br> <br>
+        In the chatroom, your partner should have told you about the "wudsy creatures". Now it\'s time to use that knowledge!
+        On each trial, you must identify creatures as "wudsy" or not "wudsy". You will be awarded a bonus according to how well you and your partner perform on this task.
+        <br>
+        Press Continue to start the game. </p>
+        <br> <br>
+        <button class="continuebutton" onclick="_s.button()">Continue</button>`;
+        $("#testing_instructions").html(playerBInstructions);
+      }
+
     },
     button : function() {
       exp.go()
@@ -436,7 +464,8 @@ function make_slides(f) {
       globalGame.socket.send("enterSlide.thanks.");
 
       exp.data= {
-        "trials" : exp.data_trials,
+        "training_trials" : exp.training_trials,
+        "testing_trials": exp.testing_trials,
         "system" : exp.system,
         "subject_information" : exp.subj_data,
         "time_in_minutes" : (Date.now() - exp.startT)/60000

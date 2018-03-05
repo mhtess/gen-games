@@ -203,6 +203,8 @@ var createCritter = function(base_critter, enumerable_opts, creature_opts, descr
 	var belongs_to_concept = rule(critter);
 	critter["belongs_to_concept"] = belongs_to_concept;
 
+	if critter
+
 	// TODO: Generalize This. For now, we just assume that col3, col4, and col5
 	// aren't used anywhere at all.
 	critter["props"]["col3"] = critter["props"]["col1"]; // Constant color

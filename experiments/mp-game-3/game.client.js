@@ -26,7 +26,6 @@ function buttonClickListener(evt) {
 // Procedure for creating a new player, upon joining a globalGame
 var client_onjoingame = function(num_players, role) {
   console.log("Inside client_onjoingame");
-  console.log(globalGame);
 
   // Set player role
   globalGame.my_role = role;
