@@ -205,9 +205,55 @@ function make_slides(f) {
       // 1) Player has entered the learning instructions slide for book keeping.
       // 2) Player needs the learning critters.
       globalGame.socket.send("enterSlide.learning_instructions.");
+
+      var playerAInstructions = `
+      <br><br>
+      <h3>Instructions</h3>
+      <br>
+      <p>
+        You are on a new planet called Crittun, studying creatures with a "wudsy detector".
+        The wudsy detector will tell you whether or not a creature is "wudsy".
+        <br> <br>
+        On each trial, you will make a guess as to whether or not a new creature is wudsy, and then use the detector to find out if you were right.
+        If you guess incorrectly, you will have to wait 5 seconds before using the detector again. 
+        We will keep a log of all the creatures you see and put a box around the ones that were "wudsy" for your reference.<br> 
+        <br>
+        Press Continue to start the game.
+        <br><br>
+      </p>
+      <button class="continuebutton" onclick="_s.button()">Continue</button>`;
+
+      var playerBInstructions = `
+        <br><br>
+        <h3>Instructions</h3>
+        <br>
+        <p>
+          Your partner is currently exploring a new planet caleld Critten, studying "wudsy" creatures. 
+          <br> <br>
+          It will take them approximately 10 - 15 minutes to finish exploring. After which, they will join you in a chatroom and you both will discuss what they learned about "wudsy creatures".
+          <br> <br>
+          During your partner's 10 - 15 exploration period, you are free to do as you desire. Just stay at the computer and DO NOT CLOSE THIS TAB. Otherwise, you will be disconnected from the game and we won't be able to reward you for the hit.
+          Please keep checking the chat window, as the status will update when the other player has also entered the room.
+          <br> <br> 
+          Press Continue to start the game.
+          <br> <br> 
+        </p>
+        <button class="continuebutton" onclick="_s.button()">Continue</button>`;      
+
+      if (globalGame.my_role == "a") {
+        $("#learning_instructions").html(playerAInstructions);
+      } else {
+        $("#learning_instructions").html(playerBInstructions);
+      }
+
     },
     button : function() {
-      exp.go()
+      if (globalGame.my_role == "a") {
+        exp.go();
+      } else {
+        exp.go();
+        exp.go();
+      }
     }
   });
 
@@ -310,7 +356,7 @@ function make_slides(f) {
       globalGame.socket.send("enterSlide.chatRoom.");
       globalGame.socket.send("enterChatRoom.");
       $(".err").hide();
-      $('#waiting').show();
+      $('#status').show();
     }
   });
 
@@ -340,7 +386,7 @@ function make_slides(f) {
         <br> <br>
         In the chatroom, your partner should have told you about the "wudsy creatures". Now it\'s time to use that knowledge!
         On each trial, you must identify creatures as "wudsy" or not "wudsy". You will be awarded a bonus according to how well you and your partner perform on this task.
-        <br>
+        <br> <br>
         Press Continue to start the game. </p>
         <br> <br>
         <button class="continuebutton" onclick="_s.button()">Continue</button>`;

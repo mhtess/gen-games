@@ -174,8 +174,12 @@ var customSetup = function(globalGame) {
   globalGame.socket.on('chatWait', function(data){
     $('#chatbox').attr("disabled", "disabled");
     console.log("in chatWait");
-    $("#waiting").show();
-
+    // Pretty Animation (Fade In / Out)
+    globalGame.blinking_wait = setInterval(function() {
+      $("#status").fadeOut(1000);
+      $("#status").fadeIn(1000);
+    });
+    $("#status").show();
   });
 
   // Both players are now in the chatroom, so they may send messages
@@ -183,7 +187,8 @@ var customSetup = function(globalGame) {
   globalGame.socket.on('enterChatRoom', function(data){
     console.log("enterChatRoom")
     $('#chatbox').removeAttr("disabled");
-    $('#waiting').hide();
+    $('#status').show();
+    $('#status').html('<div id = "status"><p style="color:green;">Chatroom has connected with your partner!  <br>You may begin messaging!</p></div>');
 
     // set mouse-tracking event handler
     if (globalGame.my_role === globalGame.playerRoleNames.role2) {

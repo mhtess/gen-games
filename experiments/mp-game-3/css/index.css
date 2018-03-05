@@ -19,7 +19,7 @@ html , body {
     width: 100%;
     text-align: center;
     margin-left: auto;
-    margin-right: auto;
+	margin-right: auto;
 }
 
 #roleLabel {
@@ -40,7 +40,7 @@ html , body {
 	margin-left: auto;
 	margin-right: auto;
 	margin-bottom: auto ;
-	left:0; right:0; top:4%; bottom: 0;
+	left:0; right:0; top:10%; bottom: 0;
 	position: absolute;
 	font-size: 120%
 }
@@ -94,6 +94,16 @@ html , body {
 /*trying to change around attributes of click button reduces the clickable area
 ALOT...don't understand how to adjust that.*/
 }
+#status {
+	height: auto;
+	width: auto;
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: auto ;
+	left:0; right:0; top:0; bottom: 0;
+	position: absolute;	
+}
 
 #main {
 	height: auto;
@@ -101,8 +111,8 @@ ALOT...don't understand how to adjust that.*/
 	text-align: center;
 	margin-left: auto;
 	margin-right: auto;
-	margin-bottom: auto ;
-	left:0; right:0; top:10%; bottom: 0;
+	margin-bottom: auto;
+	left:0; right:0; top:20%; bottom: 0;
 	position: absolute;
 }
 
