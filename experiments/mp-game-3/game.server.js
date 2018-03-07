@@ -76,7 +76,8 @@ var onMessage = function(client,message) {
           // Update others
           var msg = message_parts[1].replace(/~~~/g,'.');
           _.map(all, function(p){
-           p.player.instance.emit( 'chatMessage', {user: client.userid, msg: msg});});
+            p.player.instance.emit( 'chatMessage', {user: client.userid, msg: msg});
+          });
       }
       break;
 
@@ -113,10 +114,10 @@ var onMessage = function(client,message) {
       break;
 
     case 'sendingTestScores' :
-       var scoreObj = _.fromPairs(_.map(
-        message_parts.slice(2), // get relevant part of message
-        function(i){return i.split(',')}))
-
+      var scoreObj = _.fromPairs(_.map(
+        message_parts.slice(1), // get relevant part of message
+        function(i){return i.split(',')}
+      ));
       gc.testScores[target.instance.role].push(scoreObj);
       setTimeout(function() {
         _.map(all, function(p){
@@ -182,7 +183,6 @@ var dataOutput = function() {
   };
 
   var chatMessageOutput = function(client, message_data) {
-    // var intendedName = getIntendedTargetName(client.game.trialInfo.currStim);
     console.log(client.role + " said " + message_data[1].replace(/~~~/g, '.'))
     return _.extend(
       commonOutput(client, message_data), {

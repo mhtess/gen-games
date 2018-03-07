@@ -454,12 +454,16 @@ function make_slides(f) {
       var turker_label = $("input[type=radio]:checked").val() === "true";
       this.is_correct = (turker_label === stim['belongs_to_concept']);
       if (turker_label === false && stim['belongs_to_concept'] === false) {
+        console.log("Correct rejection");
         exp.testing_summary_stats.correct_rejections += 1;
       } else if (turker_label === false && stim['belongs_to_concept'] === true){
+        console.log("Miss");
         exp.testing_summary_stats.misses += 1;
       } else if (turker_label === true && stim['belongs_to_concept'] === false) {
+        console.log("False Alarm");
         exp.testing_summary_stats.false_alarms += 1;
       } else {
+        console.log("Hit");
         exp.testing_summary_stats.hits += 1;
       }
       this.log_responses();
@@ -468,8 +472,8 @@ function make_slides(f) {
       alert("Please make sure to label all the critters, before proceeding");
     }
     if (this.testing_trial_idx - 1 == exp.num_testing_trials) {
-      globalGame.socket.send("logTest.testCritters." + _.pairs(encodeData(exp.testing_data_trials)).join('.'));;
-      exp.go()
+      globalGame.socket.send("logTest.testCritters." + _.pairs(encodeData(exp.testing_data_trials)).join('.'));
+      exp.go();
     }
   },
   log_responses : function(){
@@ -493,7 +497,9 @@ function make_slides(f) {
   slides.score_report = slide({
     name: "score_report",
     start: function() {
-
+      console.log(encodeData(exp.testing_summary_stats));
+      console.log(_.pairs(encodeData(exp.testing_summary_stats)).join('.'));
+      globalGame.socket.send("sendingTestScores." + _.pairs(encodeData(exp.testing_summary_stats)).join('.'));
     },
     button : function() {
       exp.go()

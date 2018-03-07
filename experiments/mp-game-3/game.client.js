@@ -193,9 +193,10 @@ var customSetup = function(globalGame) {
     // set mouse-tracking event handler
     if (globalGame.my_role === globalGame.playerRoleNames.role2) {
       // only role2 gets to see Continue button and press Continue
-      var continueButton = document.getElementById("chatCont")
-      var nSecondsTimeOut = 30;
-      setTimeout(function() { $("#chatCont").show() }, nSecondsTimeOut*1000)
+      var continueButton = document.getElementById("chatCont");
+      // var nSecondsTimeOut = 30;
+      var nSecondsTimeOut = 2;
+      setTimeout(function() { $("#chatCont").show() }, nSecondsTimeOut*1000);
       continueButton.addEventListener("click", buttonClickListener, false);
     }
   });
@@ -220,18 +221,16 @@ var customSetup = function(globalGame) {
           score_role="other";
           role_index=partner_role;
         }
-        var player_score = Number(data[role_index][ind].hit) - Number(data[role_index][ind].falseAlarm);
 
+        console.log(data);
+        console.log(role_index);
+        var player_score = Number(data[role_index][0].hits) - Number(data[role_index][0].false_alarms);
         console.log(player_score)
-
         var positive_score = player_score > 0 ? player_score : 0
         $('#'+score_role+'_score').html(positive_score);
         totalScore += positive_score;
-        // console.log("Total Score: " + totalScore);
-
-        $('#'+score_role+'_hits').html("Correctly selected: " + data[role_index][ind].hit + " out of " + (Number(data[role_index][ind].hit) + Number(data[role_index][ind].miss)));
-        $('#'+score_role+'_falseAlarms').html("Selected incorrectly: " + data[role_index][ind].falseAlarm + " out of "+ (Number(data[role_index][ind].falseAlarm) + Number(data[role_index][ind].correctRejection)));
-
+        $('#'+score_role+'_hits').html("Correctly selected: " + data[role_index][0].hits + " out of " + (Number(data[role_index][0].hits) + Number(data[role_index][0].misses)));
+        $('#'+score_role+'_falseAlarms').html("Selected incorrectly: " + data[role_index][0].false_alarms + " out of "+ (Number(data[role_index][0].false_alarms) + Number(data[role_index][0].correct_rejections)));
         $('#'+score_role+'_score').html("Round score: " + positive_score);
       }
     }
