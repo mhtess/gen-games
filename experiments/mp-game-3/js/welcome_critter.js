@@ -49,11 +49,11 @@ var tar2_dict = {
 var tar3_dict = {
 	"exists": true,
 }
-
 var creature_opts = {
 	"critterTypes": ["fish", "bug", "bird"],
-	"col1": ["blue", "green", "orange"],
-	"col2": ["red", "yellow", "purple"],
+	"body_color": ["blue", "green", "orange"],
+	"secondary_color": ["red", "yellow", "purple"],
+	"constant_color": ["brown"],
 	"prop1": ["small", "medium", "large"],
 	"prop2": ["small"],
 	"tar1": ["does_not_exist"],
@@ -61,15 +61,34 @@ var creature_opts = {
 	"tar3": ["exists"],
 }
 
-var enumerable_opts = ["critterTypes", "col1", "col2", "prop1"];
+var critter_to_color_props = {
+	"fish": {
+		"body_color": ["col1"], // Body
+		"secondary_color": ["col2"], // Fins
+		"constant_color": ["col3", "col4", "col5"],
+	},
+	"bug": {
+		"body_color": ["col5"], // Wings
+		"secondary_color": ["col2"], // Head
+		"constant_color": ["col1", "col4", "col3"], // Head, Antennae, Wings
+	},
+	"bird": {
+		"body_color": ["col2"], // Body
+		"secondary_color": ["col1"], // Crest/Tail
+		"constant_color": ["col3", "col4", "col5"], // Wings
+	},
+
+};
+
+var enumerable_opts = ["critterTypes", "body_color", "secondary_color", "prop1"];
 
 // ------------------
 // Dataset Generation
 // ------------------
-var createDatset = function(rule, training_set_sz, enumerable_opts, creature_opts) {
+var createDatset = function(rule, training_set_sz, enumerable_opts, creature_opts, critter_to_color_props) {
 	// Define dataset of some number of sets of critters.
 	// ---------
-	// rule: function that evaluates a dictionary of "col1", "col2",
+	// rule: function that evaluates a dictionary of "body_color", "secondary_color",
 	//		 "tar1", "tar2", "tar3", "prop1", "prop2" values and returns T/F
 	//		 according to whether the critter fits the given concept rule
 	// training_set_sz: Training set size. If training set size >= possible
@@ -78,15 +97,13 @@ var createDatset = function(rule, training_set_sz, enumerable_opts, creature_opt
 	// enumerable_opts: List of traits with multiple values
 	// creature_opts: Possible trait options
 
-	// Establish Base Critter (Constant Features)
+	// Establish Base Critter (Constant Features Except Color)
 	var base_critter = {};
 	base_critter["props"] = {};
 	for (let opt of Object.keys(creature_opts)) {
 		if (enumerable_opts.indexOf(opt) < 0) {
 			if (opt === "critterTypes") {
 				base_critter.critter = creature_opts[opt][0];
-			} else if (_.startsWith(opt, "col")) {
-				base_critter["props"][opt] = color_dict[creature_opts[opt][0]];
 			} else if (opt == "tar1") {
 				base_critter["props"][opt] = tar1_dict[creature_opts[opt][0]];
 			} else if (opt == "tar2") {
@@ -97,7 +114,7 @@ var createDatset = function(rule, training_set_sz, enumerable_opts, creature_opt
 				base_critter["props"][opt] = prop1_dict[creature_opts[opt][0]];
 			} else if (opt == "prop2") {
 				base_critter["props"][opt] = prop2_dict[creature_opts[opt][0]];
-			}
+			} 
 		}
 	}
 
@@ -135,7 +152,7 @@ var createDatset = function(rule, training_set_sz, enumerable_opts, creature_opt
 	var stimuli = [];
 	var num_satisfy_rule = 0;
 	for (let descrip of stimuli_descriptions) {
-		var critter = createCritter(base_critter, enumerable_opts, creature_opts, descrip, rule);
+		var critter = createCritter(base_critter, enumerable_opts, creature_opts, descrip, rule, critter_to_color_props);
 		if (critter["belongs_to_concept"] === true) {
 			num_satisfy_rule++;
 		}
@@ -167,7 +184,7 @@ var createDatset = function(rule, training_set_sz, enumerable_opts, creature_opt
 	return [training_stimuli, test_stimuli]
 }
 
-var createCritter = function(base_critter, enumerable_opts, creature_opts, description, rule) {
+var createCritter = function(base_critter, enumerable_opts, creature_opts, description, rule, critter_to_color_props) {
 	// Define critter and label it according to the given rule.
 	// ---------
 	// base_critter: critter object where certain fields are held fixed
@@ -185,8 +202,6 @@ var createCritter = function(base_critter, enumerable_opts, creature_opts, descr
 		var opt_val_idx = description[i];
 		if (opt == "critterTypes") {
 			critter.critter = creature_opts["critterTypes"][opt_val_idx];
-		} else if (_.startsWith(opt, "col")) {
-			critter["props"][opt] = color_dict[creature_opts[opt][opt_val_idx]];
 		} else if (opt == "tar1") {
 			critter["props"][opt] = tar1_dict[creature_opts[opt][opt_val_idx]];
 		} else if (opt == "tar2") {
@@ -197,20 +212,31 @@ var createCritter = function(base_critter, enumerable_opts, creature_opts, descr
 			critter["props"][opt] = prop1_dict[creature_opts[opt][opt_val_idx]];
 		} else if (opt == "prop2") {
 			critter["props"][opt] = prop2_dict[creature_opts[opt][opt_val_idx]];
-		}
+		} else if (opt == "body_color") {
+			var body_color_opt = critter_to_color_props[critter.critter][opt][0];
+			var c = color_dict[creature_opts[opt][opt_val_idx]];
+			critter["props"][body_color_opt] = c;
+			critter["body_color"] = c;
+			// console.log("Inside primary color for critter: " + critter.critter + " section under: " + body_color_opt + " , color: " + c);
+		} else if (opt == "secondary_color") {
+			var secondary_color_opt = critter_to_color_props[critter.critter][opt][0];
+			var c = color_dict[creature_opts[opt][opt_val_idx]];
+			critter["props"][secondary_color_opt] = c;
+			critter["secondary_color"] = c;			
+		} 
 	}
 
+	// Set constant color properties
+	var opt = "constant_color";
+	var constant_color_opts = critter_to_color_props[critter.critter][opt];
+	for (let constant_color_opt of constant_color_opts) {
+		var c = critter.secondary_color;
+		critter["props"][constant_color_opt] = c;
+	}			
+
+	// Belongs to concept?
 	var belongs_to_concept = rule(critter);
 	critter["belongs_to_concept"] = belongs_to_concept;
-
-	if critter
-
-	// TODO: Generalize This. For now, we just assume that col3, col4, and col5
-	// aren't used anywhere at all.
-	critter["props"]["col3"] = critter["props"]["col1"]; // Constant color
-	critter["props"]["col4"] = critter["props"]["col1"]; // Constant color
-	critter["props"]["col5"] = critter["props"]["col1"]; // Constant color
-
 	return critter
 }
 
@@ -232,7 +258,7 @@ var example = function() {
 		// Example Rule: If critter is small and has a blue body
 		return critter["props"]["col1"] === color_dict["blue"] && critter["props"]["prop1"] === prop1_dict["small"];
 	}
-	var data = createDatset(rule, 50, enumerable_opts, creature_opts);
+	var data = createDatset(rule, 50, enumerable_opts, creature_opts, critter_to_color_props);
 }
 example()
 
@@ -242,10 +268,10 @@ example()
 var hard_rule = function(critter) {
 	// Rule: If critter is a fish XOR blue body
 	return (
-		(critter["critter"] === "fish" || critter["props"]["col1"] === color_dict["blue"]) &&
-		!(critter["critter"] === "fish" && critter["props"]["col1"] === color_dict["blue"])
+		(critter["critter"] === "fish" || critter["body_color"] === color_dict["blue"]) &&
+		!(critter["critter"] === "fish" && critter["body_color"] === color_dict["blue"])
 	);
 }
-var hard_rule_data = createDatset(hard_rule, 50, enumerable_opts, creature_opts);
+var hard_rule_data = createDatset(hard_rule, 50, enumerable_opts, creature_opts, critter_to_color_props);
 saveDatasetToFile(hard_rule_data[0], './training_data.json');
 saveDatasetToFile(hard_rule_data[1], './test_data.json');
