@@ -37,21 +37,21 @@ var game_core = function(options){
   // Player parameters
   this.players_threshold = 2;
   this.playerRoleNames = {
-    role1 : 'a',
-    role2 : 'b'
+    role1 : "explorer",
+    role2 : "student"
   };
   this.currentSlide = {
-    a: "i0",
-    b: "i0"
+    explorer: "i0",
+    student: "i0"
   }
 
   // Scores
   this.trainingScores = {
-    'a': [],
+    "explorer": [],
   };
   this.testScores = {
-    'a': [],
-    'b': [],
+    "explorer": [],
+    "student": [],
   }
 
   if(this.server) {
@@ -61,11 +61,11 @@ var game_core = function(options){
     this.expName = options.expName;
     this.player_count = options.player_count;
     this.trainingStimuli = {
-      a: training_data,
+      explorer: training_data,
     };
     this.testStimuli = {
-      a: test_data,
-      b: test_data,
+      explorer: test_data,
+      student: test_data,
     }
     this.data = {
       id: this.id,
@@ -163,7 +163,7 @@ game_core.prototype.server_send_update = function(){
   _.map(local_game.get_active_players(), function(p){
     // Depending on player type (A vs. B), append training simuli
     // All players get test stimuli
-    var playerState = p.instance.role == "a" ? _.extend(state, {training_critters: local_game.trainingStimuli[p.instance.role]}) : state;
+    var playerState = p.instance.role == "explorer" ? _.extend(state, {training_critters: local_game.trainingStimuli[p.instance.role]}) : state;
     playerState = _.extend(playerState, {testing_critters: local_game.testStimuli[p.instance.role]});
     p.player.instance.emit('onserverupdate', playerState);
   });

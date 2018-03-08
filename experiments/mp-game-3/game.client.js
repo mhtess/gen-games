@@ -81,7 +81,7 @@ var client_onserverupdate_received = function(data){
   exp.slides.testing_critters.present = data.testing_critters;
   if (Array.isArray(data.training_critters)) {
     // exp.num_learning_trials = data.training_critters.length;
-    exp.num_learning_trials = 20;
+    exp.num_learning_trials = 3;
   }
   if (Array.isArray(data.testing_critters)) {
     // exp.num_testing_trials = data.testing_critters.length;
@@ -210,7 +210,7 @@ var customSetup = function(globalGame) {
     if(enterScoreReport % 2 == 0){ //hacky way to handle error thrown when only one player finishes the test
       var ind = (enterScoreReport / 2) - 1;
       var my_role = globalGame.my_role;
-      var partner_role = my_role === "a" ? "b" : "a"
+      var partner_role = my_role === "explorer" ? "student" : "explorer"
       for(var i=0; i<2; i++){
         var score_role, role_index;
         if(i==0){

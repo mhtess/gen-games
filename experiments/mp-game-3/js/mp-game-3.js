@@ -17,9 +17,9 @@
 // GLOBAL VARIABLES
 // ----------------
 var roleDictionary = {
-  a: "Player A",
-  b: "Player B"
-}
+  explorer: "Explorer",
+  student: "Student"
+};
 
 // Initialize the game and it's slides
 function init() {
@@ -224,12 +224,12 @@ function make_slides(f) {
       <h3>Instructions</h3>
       <br>
       <p>
-        You are on a new planet called Crittun, studying creatures with a "wudsy detector".
-        The wudsy detector will tell you whether or not a creature is "wudsy".
+        You are on a new planet called Crittun, studying creatures with a wudsy detector.
+        The wudsy detector will tell you whether or not a creature is wudsy.
         <br> <br>
         On each trial, you will make a guess as to whether or not a new creature is wudsy, and then use the detector to find out if you were right.
         If you guess incorrectly, you will have to wait 5 seconds before using the detector again. 
-        We will keep a log of all the creatures you see and put a box around the ones that were "wudsy" for your reference.<br> 
+        We will keep a log of all the creatures you see and put a box around the ones that were wudsy for your reference.<br> 
         <br>
         Press Continue to start the game.
         <br><br>
@@ -241,19 +241,19 @@ function make_slides(f) {
         <h3>Instructions</h3>
         <br>
         <p>
-          Your partner is currently exploring a new planet caleld Critten, studying "wudsy" creatures. 
+          Your partner is currently exploring a new planet caleld Crittun, studying wudsy creatures. 
           <br> <br>
-          It will take them approximately 10 - 15 minutes to finish exploring. After which, they will join you in a chatroom and you both will discuss what they learned about "wudsy creatures".
+          It will take them approximately 1 - 15 minutes to finish exploring. After which, they will join you in a chatroom and you both will discuss what they learned about wudsy creatures.
           <br> <br>
-          During your partner's 10 - 15 exploration period, you are free to do as you desire. Just stay at the computer and DO NOT CLOSE THIS TAB. Otherwise, you will be disconnected from the game and we won't be able to reward you for the hit.
+          During your partner's 1 - 15 exploration period, you are free to do as you desire. Just stay at the computer and DO NOT CLOSE THIS TAB. Otherwise, you will be disconnected from the game and we won't be able to reward you for the hit.
           Please keep checking the chat window, as the status will update when the other player has also entered the room.
           <br> <br> 
-          Press Continue to start the game.
+          Press Continue to join the chatroom.
           <br> <br> 
         </p>
         <button class="continuebutton" onclick="_s.button()">Continue</button>`;      
 
-      if (globalGame.my_role == "a") {
+      if (globalGame.my_role == "explorer") {
         $("#learning_instructions").html(playerAInstructions);
       } else {
         $("#learning_instructions").html(playerBInstructions);
@@ -261,9 +261,10 @@ function make_slides(f) {
 
     },
     button : function() {
-      if (globalGame.my_role == "a") {
+      if (globalGame.my_role == "explorer") {
         exp.go();
       } else {
+        exp.go();
         exp.go();
         exp.go();
       }
@@ -359,7 +360,7 @@ function make_slides(f) {
     name : "chat_instructions",
     start : function() {
       $('#chat_instructs').html("On the next page, you will enter into a chatroom with your partner. " +
-      " After 30 seconds, a continue button will appear for Player B, which, when clicked, will advance the game for both players. " +
+      " After 30 seconds, a continue button will appear for the student, which, when clicked, will advance the game for both players. " +
       "You are " +  roleDictionary[globalGame.my_role] + ".")
     },
     button : function() {
@@ -387,7 +388,7 @@ function make_slides(f) {
     name : "testing_instructions",
     start : function() {
       globalGame.socket.send("enterSlide.testing_critters.");
-      if (globalGame.my_role == "a") {
+      if (globalGame.my_role == "explorer") {
         var playerAInstructions = `<br><br>
         <h3>Instructions</h3>
         <br>
@@ -563,11 +564,6 @@ function make_slides(f) {
           console.log("would have submitted the following :")
           console.log(exp.data);
         } }, 1000);
-        for (let p of globalGame.get_active_players()) {
-          console.log(p.player.instance);
-          p.player.instance.disconnect();
-        }
-
     }
   });
   return slides;
