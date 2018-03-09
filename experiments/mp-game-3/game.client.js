@@ -152,22 +152,9 @@ var customSetup = function(globalGame) {
       clearTimeout(timeout);
       document.title = original;
     };
-    console.log("enterWaitRoom")
-    if(hidden === 'hidden') {
-      newMsg = "Connected!"
-      function step() {
-        document.title = (document.title == original) ? newMsg : original;
-        if (visible === "hidden") {
-          timeout = setTimeout(step, 500);
-        } else {
-          document.title = original;
-        }
-      };
-      cancelFlashTitle(timeout);
-      step();
+    if (exp.slideIndex == 0 || exp.slideIndex == 7) {
+      exp.go();
     }
-
-    exp.go()
   });
 
   // One player has not yet made it to the chatroom, so sending messages is impossible
@@ -189,6 +176,26 @@ var customSetup = function(globalGame) {
     $('#chatbox').removeAttr("disabled");
     $('#status').show();
     $('#status').html('<div id = "status"><p style="color:green;">Chatroom has connected with your partner!  <br>You may begin messaging!</p></div>');
+
+    var original = document.title;
+    var timeout;
+    var visible = 'hidden';
+    var cancelFlashTitle = function (timeout) {
+      clearTimeout(timeout);
+      document.title = original;
+    };
+    if(hidden === 'hidden' && globalGame.my_role == "student") {
+      newMsg = "Connected!"
+      function step() {
+        document.title = (document.title == original) ? newMsg : original;
+        if (visible === "hidden") {
+          timeout = setTimeout(step, 500);
+        } else {
+          document.title = original;
+        }
+      };
+      step();
+    }
 
     // set mouse-tracking event handler
     if (globalGame.my_role === globalGame.playerRoleNames.role2) {

@@ -99,7 +99,14 @@ var onMessage = function(client,message) {
     case 'enterWaitRoom' :
       // Seems confusing, but this fn actually goes to the wait room and only moves forward,
       // (enterWaitRoom) when both the speaker (playerA) and listener (playerB) are in the wait room
-      if (gc.currentSlide["explorer"] == gc.currentSlide["student"]) {
+      if (
+        (gc.currentSlide["explorer"] == "wait_room" && gc.currentSlide["student"] == "i0") ||
+        (gc.currentSlide["explorer"] == gc.currentSlide["student"]) ||
+        ((gc.currentSlide["explorer"] == "learning_instructions") && (gc.currentSlide["student"] == "wait_room")) ||    
+        ((gc.currentSlide["explorer"] == "learning_critters") && (gc.currentSlide["student"] == "wait_room")) ||
+        ((gc.currentSlide["explorer"] == "chat_instructions") && (gc.currentSlide["student"] == "wait_room")) ||
+        ((gc.currentSlide["explorer"] == "chatRoom") && (gc.currentSlide["student"] == "wait_room"))    
+      )  {
         setTimeout(function() {
           _.map(all, function(p){
             p.player.instance.emit("enterWaitRoom", {})

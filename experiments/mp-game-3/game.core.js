@@ -160,6 +160,7 @@ game_core.prototype.server_send_update = function(){
 
   //Send the snapshot to the players
   this.state = state;
+
   _.map(local_game.get_active_players(), function(p){
     // Depending on player type (A vs. B), append training simuli
     // All players get test stimuli

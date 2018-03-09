@@ -156,7 +156,6 @@ window.onload = function(){
 // This gets called when someone selects something in the menu during the exit survey...
 // collects data from drop-down menus and submits using mmturkey
 function dropdownTip(data){
-  // console.log(globalGame);
   var commands = data.split('::');
   switch(commands[0]) {
   case 'human' :
