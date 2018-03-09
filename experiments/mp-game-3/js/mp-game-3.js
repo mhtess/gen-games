@@ -387,6 +387,16 @@ function make_slides(f) {
   slides.testing_instructions = slide({
     name : "testing_instructions",
     start : function() {
+      // Remove flash from chat room
+      var cancelFlashTitle = function (timeout) {
+        clearTimeout(timeout);
+        document.title = original;
+        timeoutIndex = -1;
+      };
+      if (timeoutIndex != -1) {
+        cancelFlashTitle(timeoutIndex);
+      }
+
       globalGame.socket.send("enterSlide.testing_critters.");
       if (globalGame.my_role == "explorer") {
         var playerAInstructions = `<br><br>

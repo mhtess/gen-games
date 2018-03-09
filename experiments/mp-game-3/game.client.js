@@ -12,6 +12,8 @@ var globalGame = {};
 var enterScoreReport = 0;
 var totalScore = 0;
 var timeOut = 1000 * 60 * 15; // 15 Minutes
+var timeoutIndex;
+var original = document.title;
 
 // ----------------
 // ACTION HANDLERS
@@ -146,12 +148,6 @@ var customSetup = function(globalGame) {
   // the tab when the second player enters. This will allow users to know when they can move forward
   globalGame.socket.on('enterWaitRoom', function(data){
     $('#chatbox').val('');
-    var original = document.title;
-    var timeout;
-    var cancelFlashTitle = function (timeout) {
-      clearTimeout(timeout);
-      document.title = original;
-    };
     if (exp.slideIndex == 0 || exp.slideIndex == 7) {
       exp.go();
     }
@@ -176,20 +172,13 @@ var customSetup = function(globalGame) {
     $('#chatbox').removeAttr("disabled");
     $('#status').show();
     $('#status').html('<div id = "status"><p style="color:green;">Chatroom has connected with your partner!  <br>You may begin messaging!</p></div>');
-
-    var original = document.title;
-    var timeout;
     var visible = 'hidden';
-    var cancelFlashTitle = function (timeout) {
-      clearTimeout(timeout);
-      document.title = original;
-    };
-    if(hidden === 'hidden' && globalGame.my_role == "student") {
+    if(hidden === 'hidden') {
       newMsg = "Connected!"
       function step() {
         document.title = (document.title == original) ? newMsg : original;
         if (visible === "hidden") {
-          timeout = setTimeout(step, 500);
+          timeoutIndex = setTimeout(step, 500);
         } else {
           document.title = original;
         }
@@ -201,8 +190,7 @@ var customSetup = function(globalGame) {
     if (globalGame.my_role === globalGame.playerRoleNames.role2) {
       // only role2 gets to see Continue button and press Continue
       var continueButton = document.getElementById("chatCont");
-      // var nSecondsTimeOut = 30;
-      var nSecondsTimeOut = 2;
+      var nSecondsTimeOut = 30;
       setTimeout(function() { $("#chatCont").show() }, nSecondsTimeOut*1000);
       continueButton.addEventListener("click", buttonClickListener, false);
     }
