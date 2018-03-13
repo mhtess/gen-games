@@ -312,7 +312,7 @@ function make_slides(f) {
         this.time_spent = end_time - this.start_time;
 
         var stim = this.stim;
-        this.turker_label = $("input[type=radio]:checked").val() === "true";
+        this.turker_label = ($("input[type=radio]:checked").val() === "true");
         this.true_label = stim['belongs_to_concept'];
         this.is_correct = (this.turker_label === this.true_label);
 
@@ -477,9 +477,14 @@ function make_slides(f) {
       this.time_spent = end_time - this.start_time;
 
       var stim = this.stim;
-      this.turker_label = $("input[type=radio]:checked").val() === "true";
+      this.turker_label = ($("input[type=radio]:checked").val() === "true");
       this.true_label = stim['belongs_to_concept'];
-      this.is_correct = (this.turker_label === this.turker_label);
+      this.is_correct = (this.turker_label == this.true_label);
+
+      console.log(this.turker_label);
+      console.log(this.true_label);
+      console.log(this.is_correct);      
+
       if (this.turker_label === false && this.true_label === false) {
         exp.testing_summary_stats.correct_rejections += 1;
       } else if (this.turker_label=== false && this.true_label === true){
