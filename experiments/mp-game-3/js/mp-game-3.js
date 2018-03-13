@@ -315,10 +315,6 @@ function make_slides(f) {
         this.turker_label = $("input[type=radio]:checked").val() === "true";
         this.true_label = stim['belongs_to_concept'];
         this.is_correct = (this.turker_label === this.true_label);
-        console.log ("Turker Label: " + this.turker_label);
-        console.log("True Label: " + stim['belongs_to_concept']);
-        console.log("Correct: " + this.is_correct);
-        console.log(this.learning_trial_idx);
 
         if (this.turker_label === false && this.true_label === false) {
           exp.training_summary_stats.correct_rejections += 1;
@@ -481,19 +477,16 @@ function make_slides(f) {
       this.time_spent = end_time - this.start_time;
 
       var stim = this.stim;
-      var turker_label = $("input[type=radio]:checked").val() === "true";
-      this.is_correct = (turker_label === stim['belongs_to_concept']);
-      if (turker_label === false && stim['belongs_to_concept'] === false) {
-        console.log("Correct rejection");
+      this.turker_label = $("input[type=radio]:checked").val() === "true";
+      this.true_label = stim['belongs_to_concept'];
+      this.is_correct = (this.turker_label === this.turker_label);
+      if (this.turker_label === false && this.true_label === false) {
         exp.testing_summary_stats.correct_rejections += 1;
-      } else if (turker_label === false && stim['belongs_to_concept'] === true){
-        console.log("Miss");
+      } else if (this.turker_label=== false && this.true_label === true){
         exp.testing_summary_stats.misses += 1;
-      } else if (turker_label === true && stim['belongs_to_concept'] === false) {
-        console.log("False Alarm");
+      } else if (this.turker_label === true && this.true_label === false) {
         exp.testing_summary_stats.false_alarms += 1;
       } else {
-        console.log("Hit");
         exp.testing_summary_stats.hits += 1;
       }
       this.log_responses();
@@ -510,14 +503,11 @@ function make_slides(f) {
     }
   },
   log_responses : function(){
-    var stim = this.stim;
-    var turkerLabel = $('input[name=belongs_to_concept]:checked', this).val() === "true";
-    var trueLabel = stim['belongs_to_concept'];
     exp.testing_data_trials.push({
       "trial_num" : this.testing_trial_idx,
       "time_in_seconds" : this.time_spent/1000,
-      "turker_label": turkerLabel,
-      "true_label": trueLabel,
+      "turker_label": this.turker_label,
+      "true_label": this.true_label,
       "is_correct": this.is_correct,
     });
     },
@@ -572,8 +562,6 @@ function make_slides(f) {
     name : "thanks",
     start : function() {
       globalGame.socket.send("enterSlide.thanks.");
-
-
       exp.data= {
         "role": globalGame.my_role,
         "training_trials" : exp.training_data_trials,
