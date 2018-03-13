@@ -7,7 +7,7 @@ import csv
 import os
 import pandas as pd
 import json
-#import credentials ## This is sketchloop's amazon credentials        
+import credentials
 
 # extracts all reviewable hits from your mturk account
 def get_all_reviewable_hits(mtc):
@@ -76,7 +76,7 @@ ACCESS_ID = credentials.ACCESS_ID
 SECRET_KEY = credentials.SECRET_KEY
 HOST = 'mechanicalturk.amazonaws.com'
 message = "Thanks for participating!!" \
-          "Send us an email at rxdh@stanford.edu if you have any questions."
+          "Send us an email at schopra8@stanford.edu if you have any questions."
 
 ####================================================#######
 #### First, create CSV containing information about #######

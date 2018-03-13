@@ -10,3 +10,4 @@ experiments/node_modules/
 .Rproj.user
 .Rhistory
 *.Rproj
+credentials*
