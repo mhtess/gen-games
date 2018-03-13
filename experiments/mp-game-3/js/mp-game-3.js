@@ -39,16 +39,20 @@ function init() {
   exp.training_data_trials = [];
   exp.testing_data_trials = [];
   exp.training_summary_stats = {
+    type: "training",
     hits: 0,
     misses: 0,
     correct_rejections: 0,
     false_alarms: 0,
+    score: 0,
   };
   exp.testing_summary_stats = {
+    type: "testing",
     hits: 0,
     misses: 0,
     correct_rejections: 0,
     false_alarms: 0,
+    score: 0,
   };
   exp.num_learning_trials = 0;
   exp.num_testing_trials = 0;
@@ -63,7 +67,7 @@ function init() {
     "wait_room",
     "score_report",
     "subj_info",
-    'thanks',
+    "thanks",
   ];
   exp.slides = make_slides(exp);
 
@@ -294,7 +298,6 @@ function make_slides(f) {
 
       // Time Markers
       this.start_time = Date.now()
-      this.learning_trial_idx++;
       this.prev_critters.push(stim);
     },    
     button : function() {
@@ -309,13 +312,19 @@ function make_slides(f) {
         this.time_spent = end_time - this.start_time;
 
         var stim = this.stim;
-        var turker_label = $("input[type=radio]:checked").val() === "true";
-        this.is_correct = (turker_label === stim['belongs_to_concept']);
-        if (turker_label === false && stim['belongs_to_concept'] === false) {
+        this.turker_label = $("input[type=radio]:checked").val() === "true";
+        this.true_label = stim['belongs_to_concept'];
+        this.is_correct = (this.turker_label === this.true_label);
+        console.log ("Turker Label: " + this.turker_label);
+        console.log("True Label: " + stim['belongs_to_concept']);
+        console.log("Correct: " + this.is_correct);
+        console.log(this.learning_trial_idx);
+
+        if (this.turker_label === false && this.true_label === false) {
           exp.training_summary_stats.correct_rejections += 1;
-        } else if (turker_label === false && stim['belongs_to_concept'] === true){
+        } else if (this.turker_label=== false && this.true_label === true){
           exp.training_summary_stats.misses += 1;
-        } else if (turker_label === true && stim['belongs_to_concept'] === false) {
+        } else if (this.turker_label === true && this.true_label === false) {
           exp.training_summary_stats.false_alarms += 1;
         } else {
           exp.training_summary_stats.hits += 1;
@@ -324,32 +333,43 @@ function make_slides(f) {
         if (!this.is_correct) {
           $('#continueButton').prop('disabled', true);
           alert("Incorrect Label Applied to Creature ... You Will Have to Wait 5 Seconds Before the Next Round");
-          sleep(5000).then(() => _stream.apply(this));
+          sleep(5000).then(
+            () => {
+              this.log_responses();
+              _stream.apply(this);
+              globalGame.socket.send("logTrain.learnCritters." + _.pairs(encodeData(exp.training_data_trials[this.learning_trial_idx])).join('.'));  
+              this.learning_trial_idx++;
+              
+              if (this.learning_trial_idx == exp.num_learning_trials) {
+                exp.training_summary_stats.score = exp.training_summary_stats['hits'] - exp.training_summary_stats['false_alarms']
+                globalGame.socket.send("logScores.learnCritters." + _.pairs(encodeData(exp.training_summary_stats)).join('.'));
+                exp.go();
+              }
+            }
+          );
         } else {
           this.log_responses();
           _stream.apply(this); //make sure this is at the *end*, after you log your data
+          globalGame.socket.send("logTrain.learnCritters." + _.pairs(encodeData(exp.training_data_trials[this.learning_trial_idx])).join('.'));
+          this.learning_trial_idx++;
+
+          if (this.learning_trial_idx == exp.num_learning_trials) {
+            exp.training_summary_stats.score = exp.training_summary_stats['hits'] - exp.training_summary_stats['false_alarms']
+            globalGame.socket.send("logScores.learnCritters." + _.pairs(encodeData(exp.training_summary_stats)).join('.'));
+            exp.go();
+          }
         }
       } else {
         alert("Please make sure to label all the critters, before proceeding");
       }
-      if (this.learning_trial_idx - 1 == exp.num_learning_trials) {
-        globalGame.socket.send("logTrain.learnCritters." + _.pairs(encodeData(exp.training_data_trials)).join('.'));
-        exp.go()
-      }
+
     },
     log_responses : function(){
-      var stim = this.stim;
-      var labels = [];
-      var true_labels = [];
-      labels.push($('input[name=belongs_to_concept]:checked', this).val() === "true");
-      true_labels.push(stim['belongs_to_concept']);
       exp.training_data_trials.push({
-          "player": globalGame.my_role,
-          "training": true,
           "trial_num" : this.learning_trial_idx,
           "time_in_seconds" : this.time_spent/1000,
-          "labels": labels,
-          "true_labels": true_labels,
+          "turker_label": this.turker_label,
+          "true_label": this.true_label,
           "is_correct": this.is_correct,
         });
       },
@@ -450,7 +470,6 @@ function make_slides(f) {
 
     // Time Markers
     this.start_time = Date.now()
-    this.testing_trial_idx++;
   },
   button : function() {
     var all_forms_filled = true;
@@ -479,29 +498,28 @@ function make_slides(f) {
       }
       this.log_responses();
       _stream.apply(this); //make sure this is at the *end*, after you log your data
+      globalGame.socket.send("logTest.testCritters." + _.pairs(encodeData(exp.testing_data_trials[this.testing_trial_idx])).join('.'));
+      this.testing_trial_idx++; 
     } else {
       alert("Please make sure to label all the critters, before proceeding");
     }
-    if (this.testing_trial_idx - 1 == exp.num_testing_trials) {
-      globalGame.socket.send("logTest.testCritters." + _.pairs(encodeData(exp.testing_data_trials)).join('.'));
+    if (this.testing_trial_idx == exp.num_testing_trials) {
+      exp.testing_summary_stats.score = exp.testing_summary_stats['hits'] - exp.testing_summary_stats['false_alarms']
+      globalGame.socket.send("logScores.testCritters." + _.pairs(encodeData(exp.testing_summary_stats)).join('.'));
       exp.go();
     }
   },
   log_responses : function(){
     var stim = this.stim;
-    var labels = [];
-    var true_labels = [];
-    labels.push($('input[name=belongs_to_concept]:checked', this).val() === "true");
-    true_labels.push(stim['belongs_to_concept']);
+    var turkerLabel = $('input[name=belongs_to_concept]:checked', this).val() === "true";
+    var trueLabel = stim['belongs_to_concept'];
     exp.testing_data_trials.push({
-        "player": globalGame.my_role,
-        "training": false,
-        "trial_num" : this.testing_trial_idx,
-        "time_in_seconds" : this.time_spent/1000,
-        "labels": labels,
-        "true_labels": true_labels,
-        "is_correct": this.is_correct
-      });
+      "trial_num" : this.testing_trial_idx,
+      "time_in_seconds" : this.time_spent/1000,
+      "turker_label": turkerLabel,
+      "true_label": trueLabel,
+      "is_correct": this.is_correct,
+    });
     },
   });
 
