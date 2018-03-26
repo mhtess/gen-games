@@ -16,8 +16,10 @@ if( typeof _ === 'undefined' ) {
 if (has_require) {
   utils  = require(__base + 'sharedUtils/sharedUtils.js');
   assert = require('assert');
-  training_data = require('./js/training_data.json');
-  test_data = require('./js/test_data.json');
+  training_data_explorer = require('./js/training_data_explorer.json');
+  test_data_explorer = require('./js/test_data_explorer.json');
+  training_data_student = require('./js/training_data_student.json');
+  test_data_student = require('./js/test_data_student.json');
 }
 
 // Functional form, for game creation 
@@ -48,6 +50,7 @@ var game_core = function(options){
   // Scores
   this.trainingScores = {
     "explorer": [],
+    "student": [],
   };
   this.testScores = {
     "explorer": [],
@@ -61,11 +64,12 @@ var game_core = function(options){
     this.expName = options.expName;
     this.player_count = options.player_count;
     this.trainingStimuli = {
-      explorer: training_data,
+      explorer: training_data_explorer,
+      student: training_data_student,
     };
     this.testStimuli = {
-      explorer: test_data,
-      student: test_data,
+      explorer: test_data_explorer,
+      student: test_data_student,
     }
     this.data = {
       id: this.id,
@@ -164,7 +168,7 @@ game_core.prototype.server_send_update = function(){
   _.map(local_game.get_active_players(), function(p){
     // Depending on player type (A vs. B), append training simuli
     // All players get test stimuli
-    var playerState = p.instance.role == "explorer" ? _.extend(state, {training_critters: local_game.trainingStimuli[p.instance.role]}) : state;
+    var playerState = _.extend(state, {training_critters: local_game.trainingStimuli[p.instance.role]});
     playerState = _.extend(playerState, {testing_critters: local_game.testStimuli[p.instance.role]});
     p.player.instance.emit('onserverupdate', playerState);
   });

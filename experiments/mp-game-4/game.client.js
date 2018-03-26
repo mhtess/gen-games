@@ -140,7 +140,14 @@ var customSetup = function(globalGame) {
   // update critters from server for the upcoming test critters and next learning critters
   globalGame.socket.on('exitChatRoom', function(data){
     console.log("exitChatRoom")
-    exp.go();
+    if (globalGame.my_role  === globalGame.playerRoleNames.role2){
+      console.log("I'm the student and should be moving to learning instructions");
+      exp.go(); // Move to Learning Instructions
+    } else {
+      exp.go(); // Move to Learning Instructions
+      exp.go(); // Move to Learning Games
+      exp.go(); // Move to test instructions
+    }
   });
 
   // Means both players are in the wait room, results in moving to next slide
@@ -148,7 +155,7 @@ var customSetup = function(globalGame) {
   // the tab when the second player enters. This will allow users to know when they can move forward
   globalGame.socket.on('enterWaitRoom', function(data){
     $('#chatbox').val('');
-    if (exp.slideIndex == 0 || exp.slideIndex == 7) {
+    if (exp.slideIndex == 0) {
       exp.go();
     }
   });

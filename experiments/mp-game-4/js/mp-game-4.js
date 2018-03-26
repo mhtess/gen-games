@@ -23,6 +23,8 @@ var roleDictionary = {
 
 // Initialize the game and it's slides
 function init() {
+  var firstLearningInstructions = true;
+
   // Store information about Turker's browser setup
   exp.system = {
     Browser : BrowserDetect.browser,
@@ -62,9 +64,10 @@ function init() {
     "learning_critters",
     "chat_instructions",
     "chatRoom",
+    "learning_instructions",
+    "learning_critters",
     "testing_instructions",
     "testing_critters",
-    "wait_room",
     "score_report",
     "subj_info",
     "thanks",
@@ -223,7 +226,7 @@ function make_slides(f) {
       // 2) Player needs the learning critters.
       globalGame.socket.send("enterSlide.learning_instructions.");
 
-      var playerAInstructions = `
+      var learningInstructionsPlayerA = `
       <br><br>
       <h3>Instructions</h3>
       <br>
@@ -240,7 +243,26 @@ function make_slides(f) {
       </p>
       <button class="continuebutton" onclick="_s.button()">Continue</button>`;
 
-      var playerBInstructions = `
+      var learningInstructionsPlayerB = `
+      <br><br>
+      <h3>Instructions</h3>
+      <br>
+      <p>
+        In the chatroom, your partner should have told you about the "wudsy creatures". Now it\'s time to use that knowledge!
+        <br> <br>
+        You now have a wudsy detector, which will tell you whether or not a creature is wudsy.        
+        On each trial, you will make a guess as to whether or not a new creature is wudsy, and then use the detector to find out if you were right.
+        If you guess incorrectly, you will have to wait 5 seconds before using the detector again. 
+        We will keep a log of all the creatures you see and put a box around the ones that were wudsy for your reference.<br> 
+        <br>
+        Use the both the knowledge you gained from your partner and the experience you gain while playing the game to detect the wudsy creatures.
+        <br>
+        Press Continue to start the game.
+        <br><br>
+      </p>
+      <button class="continuebutton" onclick="_s.button()">Continue</button>`;
+
+      var chatroomInstructions = `
         <br><br>
         <h3>Instructions</h3>
         <br>
@@ -258,20 +280,23 @@ function make_slides(f) {
         <button class="continuebutton" onclick="_s.button()">Continue</button>`;      
 
       if (globalGame.my_role == "explorer") {
-        $("#learning_instructions").html(playerAInstructions);
+        $("#learning_instructions").html(learningInstructionsPlayerA);
+      } else if (globalGame.my_role == "student" && exp.firstLearningInstructions == false) {
+        $("#learning_instructions").html(learningInstructionsPlayerB);
       } else {
-        $("#learning_instructions").html(playerBInstructions);
+        $("#learning_instructions").html(chatroomInstructions);
       }
 
     },
     button : function() {
-      if (globalGame.my_role == "explorer") {
-        exp.go();
+      if (globalGame.my_role == "explorer" || (globalGame.my_role == "student" && exp.firstLearningInstructions == false)) {
+        exp.go(); // Continue to the Learning Critters Slide
       } else {
-        exp.go();
-        exp.go();
-        exp.go();
+        exp.go(); // Continue to the Learning Critters Slide -- Player B @ begining of game
+        exp.go(); // Continue to Chatroom Instructions  -- Player B @ beginning of game
+        exp.go(); // Continue to Chatroom -- Player B @ beginning of game
       }
+      exp.firstLearningInstructions = false;
     }
   });
 
@@ -414,33 +439,18 @@ function make_slides(f) {
       }
 
       globalGame.socket.send("enterSlide.testing_critters.");
-      if (globalGame.my_role == "explorer") {
-        var playerAInstructions = `<br><br>
-        <h3>Instructions</h3>
-        <br>
-        <p>
-        Six months later, you return to Crittun, this time with your partner. You have accidentally left your "wudsy detector" at home and must identify creatures without its help.
-        <br> <br>
-        On each trial, you will identify a creature as "wudsy" or "not wudsy". You will be awarded a bonus according to how well you and your partner perform on this task.
-        <br> <br>
-        Press Continue to start the game.</p>
-        <br> <br>
-        <button class="continuebutton" onclick="_s.button()">Continue</button>`;
-        $("#testing_instructions").html(playerAInstructions);
-      } else {
-        var playerBInstructions = `<br><br>
-        <h3>Instructions</h3>
-        <br>
-        <p> Your partner has brought you to the planet Crittun but left their "wudsy detector" at home.
-        <br> <br>
-        In the chatroom, your partner should have told you about the "wudsy creatures". Now it\'s time to use that knowledge!
-        On each trial, you must identify creatures as "wudsy" or not "wudsy". You will be awarded a bonus according to how well you and your partner perform on this task.
-        <br> <br>
-        Press Continue to start the game. </p>
-        <br> <br>
-        <button class="continuebutton" onclick="_s.button()">Continue</button>`;
-        $("#testing_instructions").html(playerBInstructions);
-      }
+        var instructions = `<br><br>
+          <h3>Instructions</h3>
+          <br>
+          <p>
+          Six months later, you return to Crittun, this time with your partner. You have accidentally left your "wudsy detector" at home and must identify creatures without its help.
+          <br> <br>
+          On each trial, you will identify a creature as "wudsy" or "not wudsy". You will be awarded a bonus according to how well you and your partner perform on this task.
+          <br> <br>
+          Press Continue to start the game.</p>
+          <br> <br>
+          <button class="continuebutton" onclick="_s.button()">Continue</button>`;
+        $("#testing_instructions").html(instructions);
     },
     button : function() {
       exp.go()
