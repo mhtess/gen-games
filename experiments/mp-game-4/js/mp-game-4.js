@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------
-//  Multiplayer Game 3: Multiplayer Concept Learning
+//  Multiplayer Game 4: Multiplayer Concept Learning
 //  By Sahil Chopra
 //  Goal: The purpose of this game is to set up  a multiplayer concept
 //        learning paradigm. Player A learns about "wudsy" creatures
@@ -568,6 +568,7 @@ function make_slides(f) {
     start : function() {
       globalGame.socket.send("enterSlide.thanks.");
       exp.data= {
+        "game_id": globalGame.data.id,
         "role": globalGame.my_role,
         "training_trials" : exp.training_data_trials,
         "testing_trials": exp.testing_data_trials,
