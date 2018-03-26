@@ -6,7 +6,8 @@
 //        over approximately 50 trials. Then Player A and Player B
 //        enter a chatroom together and forced to communicate for at
 //        least 30 seconds, in which Player A teaches Player B
-//        about "wudsy" creatures. Then, they both take a "post test"
+//        about "wudsy" creatures. Then, Player B gets 50 different
+//        training samples. They both take a "post test"
 //        where A and B are asked to identify creatures as "wudsy"
 //        or not on a test set of ~30 previously unseen critters.
 // Note: For greater details as to stimuli generation, please check out

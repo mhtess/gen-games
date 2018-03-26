@@ -11,3 +11,4 @@ experiments/node_modules/
 .Rhistory
 *.Rproj
 credentials*
+auth.json

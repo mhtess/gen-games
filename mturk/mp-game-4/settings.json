@@ -1,0 +1,14 @@
+{
+    "title":               "Language experiment (Crittun 121)",
+    "description":         "Explore a new world and answer short questions with a partner (~ 10 minutes)",
+    "keywords":            "language research stanford fun cognitive science university teaching",
+    "url":                 "https://rxdhawkins.me:8882/mp-game-4/forms/consent.html",
+    "frame_height":         650,
+    "assignment_duration":  "2 hour",
+    "auto_approval_delay":  "5 minutes",
+    "reward":               1.50,
+    "qualifications": {
+        "location": "US",
+        "approval_percentage": 95
+    }
+}
