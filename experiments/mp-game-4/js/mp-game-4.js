@@ -237,7 +237,7 @@ function make_slides(f) {
         On each trial, you will make a guess as to whether or not a new creature is wudsy, and then use the detector to find out if you were right.
         If you guess incorrectly, you will have to wait 5 seconds before using the detector again. 
         We will keep a log of all the creatures you see and put a box around the ones that were wudsy for your reference.<br> 
-        <br>
+        <br><br>
         Press Continue to start the game.
         <br><br>
       </p>
@@ -253,10 +253,10 @@ function make_slides(f) {
         You now have a wudsy detector, which will tell you whether or not a creature is wudsy.        
         On each trial, you will make a guess as to whether or not a new creature is wudsy, and then use the detector to find out if you were right.
         If you guess incorrectly, you will have to wait 5 seconds before using the detector again. 
-        We will keep a log of all the creatures you see and put a box around the ones that were wudsy for your reference.<br> 
-        <br>
+        We will keep a log of all the creatures you see and put a box around the ones that were wudsy for your reference.
+        <br><br>
         Use the both the knowledge you gained from your partner and the experience you gain while playing the game to detect the wudsy creatures.
-        <br>
+        <br><br>
         Press Continue to start the game.
         <br><br>
       </p>
@@ -491,10 +491,6 @@ function make_slides(f) {
       this.true_label = stim['belongs_to_concept'];
       this.is_correct = (this.turker_label == this.true_label);
 
-      console.log(this.turker_label);
-      console.log(this.true_label);
-      console.log(this.is_correct);      
-
       if (this.turker_label === false && this.true_label === false) {
         exp.testing_summary_stats.correct_rejections += 1;
       } else if (this.turker_label=== false && this.true_label === true){
@@ -531,8 +527,6 @@ function make_slides(f) {
   slides.score_report = slide({
     name: "score_report",
     start: function() {
-      console.log(encodeData(exp.testing_summary_stats));
-      console.log(_.pairs(encodeData(exp.testing_summary_stats)).join('.'));
       globalGame.socket.send("sendingTestScores." + _.pairs(encodeData(exp.testing_summary_stats)).join('.'));
     },
     button : function() {
@@ -546,7 +540,6 @@ function make_slides(f) {
     start: function(){
       $('#humanResult').hide();
       globalGame.socket.send("calculatingReward.")
-      //console.log("reward: " + globalGame.calculate_end_game_bonus());
 
     },
     submit : function(e){
