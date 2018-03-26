@@ -249,7 +249,7 @@ function make_slides(f) {
       <h3>Instructions</h3>
       <br>
       <p>
-        In the chatroom, your partner should have told you about the "wudsy creatures". Now it\'s time to use that knowledge!
+        Now it’s your turn to explore wudsy creatures.
         <br> <br>
         You now have a wudsy detector, which will tell you whether or not a creature is wudsy.        
         On each trial, you will make a guess as to whether or not a new creature is wudsy, and then use the detector to find out if you were right.
@@ -309,6 +309,16 @@ function make_slides(f) {
       globalGame.socket.send("enterSlide.learning_critters.");
       this.prev_critters = [];
       this.learning_trial_idx = 0;
+
+      // Remove flash from chat room
+      var cancelFlashTitle = function (timeout) {
+        clearTimeout(timeout);
+        document.title = original;
+        timeoutIndex = -1;
+      };
+      if (timeoutIndex != -1) {
+        cancelFlashTitle(timeoutIndex);
+      }
     },
     present_handle : function(stim) {
       // hide + disable stuff
@@ -429,16 +439,6 @@ function make_slides(f) {
   slides.testing_instructions = slide({
     name : "testing_instructions",
     start : function() {
-      // Remove flash from chat room
-      var cancelFlashTitle = function (timeout) {
-        clearTimeout(timeout);
-        document.title = original;
-        timeoutIndex = -1;
-      };
-      if (timeoutIndex != -1) {
-        cancelFlashTitle(timeoutIndex);
-      }
-
       globalGame.socket.send("enterSlide.testing_critters.");
         var instructions = `<br><br>
           <h3>Instructions</h3>
