@@ -1,0 +1,37 @@
+---
+title: "Preliminary Analysis: Multiplayer Concept Learning Pilot"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Experimental Setup
+
+### Selected Concepts
+Game Rule: BLUE XOR FISH
+Game Setup: One person is the explorer. The other is the student. The game comprises of a training and test split. 50 unique critters are displayed during training and 31 held out critters are displayed during test. The explorer gets the training set, before entering a chat room with the student. They discuss the nature of wudsy creatures, and then they are both given a test set. There were 4 properties (color 1, color 2, size, critter), each with 3 different possible values. 
+
+### Results
+#### Acccuracy Across Learning
+```{r}
+library(readr)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(rwebppl)
+library(rjson)
+
+agg <- read_csv(file="./mp-game-3/logScores/agg_clean.csv", col_names=TRUE, col_types = "cciiiic")
+
+quartileSummary_explorer_training <- agg %>%
+                                      filter(`Round` == 'Training' & `Role` == 'Explorer')
+                                      group_by(role) # %>% for each workerid, pick out their max
+                                      #   mutate(max_n_trials = max(trial_num)) %>%
+                                      # ungroup() %>%
+                                      # mutate(trial_quartile = ceiling(4*(trial_num/max_n_trials) )) %>%
+                                      # group_by(workerid, trial_quartile, responseType) %>%
+                                      # count()
+
+```
