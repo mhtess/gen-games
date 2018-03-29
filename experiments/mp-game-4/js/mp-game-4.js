@@ -347,6 +347,8 @@ function make_slides(f) {
         var end_time = Date.now();
         this.time_spent = end_time - this.start_time;
 
+        var cur_index = this.learning_trial_idx;
+        this.learning_trial_idx++;
         var stim = this.stim;
         this.turker_label = ($("input[type=radio]:checked").val() === "true");
         this.true_label = stim['belongs_to_concept'];
@@ -369,9 +371,8 @@ function make_slides(f) {
             () => {
               this.log_responses();
               _stream.apply(this);
-              globalGame.socket.send("logTrain.learnCritters." + _.pairs(encodeData(exp.training_data_trials[this.learning_trial_idx])).join('.'));  
-              this.learning_trial_idx++;
-              
+              globalGame.socket.send("logTrain.learnCritters." + _.pairs(encodeData(exp.training_data_trials[cur_index])).join('.'));  
+
               if (this.learning_trial_idx == exp.num_learning_trials) {
                 exp.training_summary_stats.score = exp.training_summary_stats['hits'] - exp.training_summary_stats['false_alarms']
                 globalGame.socket.send("logScores.learnCritters." + _.pairs(encodeData(exp.training_summary_stats)).join('.'));
@@ -380,11 +381,9 @@ function make_slides(f) {
             }
           );
         } else {
-          console.log("Correct Response!!!");
           this.log_responses();
           _stream.apply(this); //make sure this is at the *end*, after you log your data
-          globalGame.socket.send("logTrain.learnCritters." + _.pairs(encodeData(exp.training_data_trials[this.learning_trial_idx])).join('.'));
-          this.learning_trial_idx++;
+          globalGame.socket.send("logTrain.learnCritters." + _.pairs(encodeData(exp.training_data_trials[cur_index])).join('.'));
 
           if (this.learning_trial_idx == exp.num_learning_trials) {
             exp.training_summary_stats.score = exp.training_summary_stats['hits'] - exp.training_summary_stats['false_alarms']
@@ -470,6 +469,7 @@ function make_slides(f) {
     // hide + disable stuff
     $("#curr_critter_testing").empty();
     $('#continueButton').prop('disabled', false);
+    $("input[type=radio]").attr('checked', false);
 
     // Render slide
     $(".trial_number").text("Critter " + String(this.testing_trial_idx + 1) + " of " + String(exp.num_testing_trials));
@@ -489,6 +489,8 @@ function make_slides(f) {
     console.log("Number of checked radio buttonns: " + $("input[type=radio]:checked").length);
 
     if (all_forms_filled) {
+      var cur_idx = this.testing_trial_idx;
+      this.testing_trial_idx++;
       var end_time = Date.now();
       this.time_spent = end_time - this.start_time;
 
@@ -508,8 +510,7 @@ function make_slides(f) {
       }
       this.log_responses();
       _stream.apply(this); //make sure this is at the *end*, after you log your data
-      globalGame.socket.send("logTest.testCritters." + _.pairs(encodeData(exp.testing_data_trials[this.testing_trial_idx])).join('.'));
-      this.testing_trial_idx++; 
+      globalGame.socket.send("logTest.testCritters." + _.pairs(encodeData(exp.testing_data_trials[cur_idx])).join('.'));
     } else {
       alert("Please make sure to label all the critters, before proceeding");
     }
