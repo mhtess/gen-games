@@ -232,7 +232,7 @@ function make_slides(f) {
       <h3>Instructions</h3>
       <br>
       <p>
-        You are on a new planet called Crittun, studying creatures with a wudsy detector.
+        You are on a new planet, studying creatures with a wudsy detector.
         The wudsy detector will tell you whether or not a creature is wudsy.
         <br> <br>
         On each trial, you will make a guess as to whether or not a new creature is wudsy, and then use the detector to find out if you were right.
@@ -268,7 +268,7 @@ function make_slides(f) {
         <h3>Instructions</h3>
         <br>
         <p>
-          Your partner is currently exploring a new planet caleld Crittun, studying wudsy creatures. 
+          Your partner is currently exploring a new planet, studying wudsy creatures. 
           <br> <br>
           It will take them approximately 1 - 15 minutes to finish exploring. After which, they will join you in a chatroom and you both will discuss what they learned about wudsy creatures.
           <br> <br>
@@ -444,9 +444,9 @@ function make_slides(f) {
           <h3>Instructions</h3>
           <br>
           <p>
-          Six months later, you return to Crittun, this time with your partner. You have accidentally left your "wudsy detector" at home and must identify creatures without its help.
+          Now you must identify which creatures are wudsy without the detector.
           <br> <br>
-          On each trial, you will identify a creature as "wudsy" or "not wudsy". You will be awarded a bonus according to how well you and your partner perform on this task.
+          You will be awarded a bonus according to how well you and your partner perform across all the trials, in this portion of the task.
           <br> <br>
           Press Continue to start the game.</p>
           <br> <br>
