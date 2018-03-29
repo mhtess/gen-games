@@ -18,7 +18,7 @@ var getURLParams = function() {
   var ondisconnect = function(data) {
     if(isConnected) {
       // Redirect to exit survey
-      console.log("server booted");
+      console.log("Other user has exite the game.");
       var email = globalGame.email ? globalGame.email : '';
 
       var failMsg = [

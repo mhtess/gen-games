@@ -319,7 +319,7 @@ function make_slides(f) {
       if (timeoutIndex != -1) {
         cancelFlashTitle(timeoutIndex);
       }
-    },
+     },
     present_handle : function(stim) {
       // hide + disable stuff
       $("#prev_critters").empty();
@@ -483,6 +483,10 @@ function make_slides(f) {
     if ($("input[type=radio]:checked").length == 0) {
       all_forms_filled = false;
     }
+
+    console.log("All forms filled: " + all_forms_filled);
+    console.log("Number of checked radio buttonns: " + $("input[type=radio]:checked").length);
+
     if (all_forms_filled) {
       var end_time = Date.now();
       this.time_spent = end_time - this.start_time;

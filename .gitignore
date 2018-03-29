@@ -11,3 +11,4 @@ experiments/node_modules/
 *.Rproj
 credentials*
 auth.json
+.DS_Store
