@@ -380,6 +380,7 @@ function make_slides(f) {
             }
           );
         } else {
+          console.log("Correct Response!!!");
           this.log_responses();
           _stream.apply(this); //make sure this is at the *end*, after you log your data
           globalGame.socket.send("logTrain.learnCritters." + _.pairs(encodeData(exp.training_data_trials[this.learning_trial_idx])).join('.'));
