@@ -325,6 +325,7 @@ function make_slides(f) {
       $("#prev_critters").empty();
       $("#curr_critter_training").empty();
       $('#continueButton').prop('disabled', false);
+      $("input[type=radio]").attr('checked', false);
 
       // Render slide
       $(".trial_number").text("Critter " + String(this.learning_trial_idx + 1) + " of " + String(exp.num_learning_trials));
@@ -363,6 +364,9 @@ function make_slides(f) {
         } else {
           exp.training_summary_stats.hits += 1;
         }
+
+        
+        console.log("Learning Trial Index: " + this.learning_trial_idx);
 
         if (!this.is_correct) {
           $('#continueButton').prop('disabled', true);
@@ -484,9 +488,6 @@ function make_slides(f) {
     if ($("input[type=radio]:checked").length == 0) {
       all_forms_filled = false;
     }
-
-    console.log("All forms filled: " + all_forms_filled);
-    console.log("Number of checked radio buttonns: " + $("input[type=radio]:checked").length);
 
     if (all_forms_filled) {
       var cur_idx = this.testing_trial_idx;

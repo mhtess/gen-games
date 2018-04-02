@@ -2,5 +2,9 @@
     "sandbox": {
         "id": "3XDSWAMB225ST8X4XMW1K9ZAERFQCF",
         "type_id": "3ZBZJNFB56KWERHPZKLEI0ORQR2TF0"
+    },
+    "production": {
+        "id": "3XT3KXP24ZBQWT0KANIZJP0CB4II67",
+        "type_id": "3B0ESGGWP64TE9SHC2N5C7DRK3ND6U"
     }
 }
