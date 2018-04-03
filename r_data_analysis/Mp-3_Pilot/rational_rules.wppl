@@ -1,0 +1,170 @@
+// ------------------------------------------------------
+//                  Rational Rules Model
+// Here we apply the rational rules model proposed
+// by Goodman et al. (2008) to the colllected concept
+// learning pilot data. We first load in the data,
+// passed in from R (var data). We then find the formulae
+// that explain the data the most. Then, we compare the
+// model predictions to those of humans.
+// -------------------------------------------------------
+
+var trainingData = json.read('training_data.json');
+var testData = json.read('test_data.json');
+
+// Mapping from trait names -> trait values -> discrete value
+var cat_mapping = {
+  "critter": {
+    "bug": 0,
+    "bird": 1,
+    "fish": 2,
+  },
+  "body_color": {
+    "#5da5db": 0, // Blue
+    "#228b22": 1, // Green
+    "#ff8c00": 2, // Orange
+  },
+  "secondary_color": {
+    "#f42935": 0, // Red
+    "#eec900": 1, // Yellow
+    "#dda0dd": 2, // Purple
+  },
+  "prop1": {
+    "0": 0, // Small
+    "0.693147180559945": 1, // Medium
+    "1.16315080980568": 2, // Large
+  }
+};
+
+var cat_mapping_inv = {
+  "critter": _.invert(cat_mapping["critter"]),
+  "body_color": _.invert(cat_mapping["body_color"]),
+  "secondary_color": _.invert(cat_mapping["secondary_color"]),
+  "prop1": _.invert(cat_mapping["prop1"]),
+};
+
+var val_to_readable_val = {
+  "#5da5db": "blue",
+  "#228b22": "green",
+  "#ff8c00": "orange",
+  "#f42935": "red",
+  "#eec900": "yellow",
+  "#dda0dd": "purple",
+  "0": "small",
+  "0.693147180559945": "medium",
+  "1.16315080980568": "large",
+}
+
+// Given an object from the stimuli dataset, produce an equivalent object
+// where the defining values of the discriminative traits have been
+// properly mapped to discrete values.
+var makeObj = function(o) {
+  return {
+    "critter": cat_mapping["critter"][o["critter"]], 
+    "body_color": cat_mapping["body_color"][o["body_color"]],
+    "secondary_color": cat_mapping["secondary_color"][o["secondary_color"]],
+    "size": cat_mapping["prop1"][o["props"]["prop1"].toString()],
+    "belongs_to_concept": o["belongs_to_concept"],
+  }
+}
+
+// Create critters dataset from stimuli data.
+// Then split critters into 2 groups A (belongs to concept) and B (outside of concept).
+var trainingCritters = _.uniqWith(map(makeObj, trainingData), _.isEqual);
+var AObjects = filter(function(x) { return x["belongs_to_concept"] == true;}, trainingCritters);
+var BObjects = filter(function(x) { return x["belongs_to_concept"] == false;}, trainingCritters);
+var TObjects = _.uniqWith(map(makeObj, testData), _.isEqual);
+var allObjs = _.uniqWith(TObjects.concat(AObjects.concat(BObjects)), _.isEqual);
+
+// Define prior and sampling strategy for selecting both a trait
+// and a value to be assigned to the trait, for a proposal formula.
+var traitPrior = Categorical({vs: ["critter", "body_color", "secondary_color", "size"],
+                              ps: [1, 1, 1, 1]});
+var samplePred = function() {
+  var trait = sample(traitPrior);
+  var value = uniformDraw([0,1,2])
+  return function(x) {return x[trait] == value};
+}
+
+// Drift kernel for tau, the probability of continuing a proposed formula.
+// With the drift kernel, we bias tau samples towards smaller values,
+// without changing the underlying uniform distribution utilized by 
+// MCMC to compute importance sample weights.
+var TauKernel = function(prevVal) {
+  return Beta({a: 2, b: 4});
+};
+
+// Implementation of rational rules model.
+var rationalRules = function() {
+  var tau = sample(Beta({a:1, b:1}), {driftKernel: TauKernel});
+  var noiseParam = Math.exp(-1.5); // prior that a given sample is an outlier
+
+  // Recursive definition of producing terminal predicate
+  // or continuing a formula with "AND".
+  var sampleConj = function() {
+    if(flip(tau)) {
+      var c = sampleConj();
+      var p = samplePred();
+      return function(x) {return c(x) && p(x)};
+    } else {
+      return samplePred();
+    }
+  }
+  
+  // Recursive definition of producing a terminal conjunction or
+  // continuing a formula with "OR".
+  var getFormula = function() {
+    if(flip(tau)) {
+      var c = sampleConj();
+      var f = getFormula();
+      return function(x) {return c(x) || f(x)};
+    } else {
+      return sampleConj();
+    }
+  }
+
+  // Sample a proposed formula
+  var rule = getFormula();
+
+  // Conditioning on AObjects following the rule & BObjects violating the rule
+  var obsFnA = function(datum){observe(Bernoulli({p: rule(datum) ? 0.999999999 : noiseParam}), true)};
+  var obsFnB = function(datum){observe(Bernoulli({p: !rule(datum) ? 0.999999999 : noiseParam}), true)};
+  mapData({data:AObjects}, obsFnA);
+  mapData({data:BObjects}, obsFnB);
+
+  // Return [{'Parameter': critter_color_size, value: T/F} ]
+  return  _.fromPairs(map(function(obj){ return [_.values(obj).join('_'), rule(obj)] }, allObjs)); 
+}
+
+// Run MCMC Inference
+var rulePosterior = Infer({method: 'MCMC', samples: 20000}, rationalRules);
+var critterLabels = map(
+  function(obj){
+    _.join([
+        obj["belongs_to_concept"],
+        cat_mapping_inv["critter"][obj["critter"]],
+        val_to_readable_val[cat_mapping_inv["body_color"][obj["body_color"]]],
+        val_to_readable_val[cat_mapping_inv["secondary_color"][obj["secondary_color"]]],
+        val_to_readable_val[cat_mapping_inv["prop1"][obj["size"]]]
+      ],
+      '_'
+    );
+  },
+  allObjs
+);
+
+// Build posterior predictive for each critter in the training set
+var predictives = map(
+  function(item)
+  {
+    return expectation(
+      rulePosterior,
+      function(x) {
+        var id = _.values(item).join('_');
+        x[id];
+      }
+    )
+  }, allObjs
+)
+
+var results = _.zip(critterLabels, predictives);
+results

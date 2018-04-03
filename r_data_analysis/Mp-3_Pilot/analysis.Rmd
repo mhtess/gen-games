@@ -61,6 +61,7 @@ library(reshape2)
 library(jsonlite)
 library(tidyjson)
 library(ggplot2)
+library(rwebppl)
 
 # Read Raw Data
 setwd("../../mturk/mp-game-3/pilot")
@@ -189,20 +190,31 @@ The teachers with the best performance on the test set were those in games 0716 
 Accordingly the student with the best performance, was the one from game 0716 (~84%). Examining the dialogue between teacher and student -- it's evident that the teacher completely understood the concept and conveyed it succinctly to the student, without enumerating every possible "wudsy" critter:
 
 L: Hi, what did you learn?
+
 T: There are 3 different creatures. A bird,	 a fish,  and a kind of bug.
+
 L: Got it. thanks
+
 L: what else (if anything)
+
 T: whether they are wudsy or not depends on their color. For the fish	if their MAIN color (not stripes) is green or orange they are wudsy. For birds if their body color is blue they are wudsy. For the bugs if their wings are blue they are wudsy
+
 L: got it thanks
-L:anything else?
+
+L: anything else?
+
 T: write that down and you will be set!
+
 L: done and done!
 
 Interestingly, the second best student was from game 7465, where the teacher had the poorest performance. Examining the dialogue for this specicifc pair:
 
-T:It seems like there is one color combo for each creature that is a wudsy	
+T:It seems like there is one color combo for each creature that is a wudsy
+
 T:blue and yellow fish for example	
+
 T:red and blue bird
+
 L: Ok perfect
 
 The former is incorrect according to the rule, while the latter is a single example of a wudsy creature; so it is not clear why the listener performed so well here, while the teacher struggled. Examining the plots below, examining the performance of the teachers and listeners in terms of hits/misses and correct rejections/false alarms -- we see that this teacher deemed many critters "wudsy", when they were not - i.e. many false alarms. The terseness of the exchange provided the speaker with an incomplete understanding of the wudsy concept -- but this may have allowed them to correctly reject many of the critters for which the teacher registered false alarms.
@@ -249,4 +261,11 @@ ggplot(melt(test_perf_listener, id.vars="game_id")) +
 It seems like the participants gravitated to one half of the XOR statement, usually towards color; so they captured a portion of the rule. This is a hard concept, so this is relatively expected.
 
 ### Rational Rules
-TODO as of March 28, 2018
+```{r}
+results <- webppl(program_file = "./rational_rules.wppl", packages=c("webppl-json"))
+# results <- as.data.frame(t(results))
+```
+```{r fig.width= 6, fig.height=3}
+ggplot(results, aes(x=V1, y=V2)) +
+  geom_point(size=2, shape=23)
+```
