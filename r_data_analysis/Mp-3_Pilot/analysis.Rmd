@@ -276,17 +276,15 @@ It seems like the participants gravitated to one half of the XOR statement, usua
 
 ### Rational Rules
 ```{r}
-jsonlite::toJSON(summary_data_reduced$testing_summary_stats)
-
-results <- webppl(program_file = "./rational_rules.wppl", packages=c("webppl-json"), data=summary_data_reduced$testing_summary_stats, data_var="humanData")
+results <- webppl(program_file = "./rational_rules.wppl", packages=c("webppl-json"))
 # results <- as.data.frame(t(results))
 
-fromJSON(summary_data_reduced$training_summary_stats)
-
-# data to pass to webppl
-plyr::ldply(
-  lapply(summary_data_reduced$training_summary_stats, function(x){ return(data.frame(fromJSON(x)))}),
-  data.frame)
+# fromJSON(summary_data_reduced$training_summary_stats)
+# 
+# # data to pass to webppl
+# plyr::ldply(
+#   lapply(summary_data_reduced$training_summary_stats, function(x){ return(data.frame(fromJSON(x)))}),
+#   data.frame)
 
 
 ``` 

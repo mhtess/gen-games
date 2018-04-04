@@ -57,7 +57,6 @@ var val_to_readable_val = {
 // where the defining values of the discriminative traits have been
 // properly mapped to discrete values.
 var makeObj = function(o) {
-  console.log(o);
   return {
     "critter": cat_mapping["critter"][o["critter"]], 
     "body_color": cat_mapping["body_color"][o["body_color"]],
@@ -75,7 +74,13 @@ var samplePred = function() {
   var trait = sample(traitPrior);
   var value = uniformDraw([0,1,2]);
   return {
-    f: function(x) {return x[trait] == value},
+    f: function(x) {
+      console.log("Inside predicate");
+      console.log("Trait: " + trait);
+      console.log("Value: " + value);
+      console.log(x);
+      return (x[trait] == value);
+    },
     s: _.join(['(', trait, '==', value, ')'], '')
   }
 }
@@ -91,37 +96,56 @@ var TauKernel = function(prevVal) {
 // Implementation of rational rules model.
 var genRationRulesFunc = function(AObjects, BObjects, TObjects, allObjs) {
   var rationalRules = function() {
-    var tau = 0.6;
+    // var tau = 0.6;
     // var tau = sample(Beta({a:1, b:1}), {driftKernel: TauKernel});
+    var tau = sample(Beta({a:1, b:1}));
     var noiseParam = Math.exp(-1.5); // prior that a given sample is an outlier
   
     // Recursive definition of producing terminal predicate
     // or continuing a formula with "AND".
     var sampleConj = function() {
+      var p = samplePred();
+      // console.log("P: " + p.s);
+      // console.log(p.f);
+
       if(flip(tau)) {
         var c = sampleConj();
-        var p = samplePred();
+        // console.log("C: " + c.s);
+        // console.log(c.f);
         return {
-          f: function(x) {return c.f(x) && p.f(x)},
+          f: function(x) {
+            console.log("Inside conjugate");
+            console.log(x);
+            return (c.f(x) && p.f(x));
+          },
           s: _.join(_.flatten(['(', c.s, 'AND', p.s, ')']), '')
         }
       } else {
-        return samplePred();
+        return p;
       }
     }
     
     // Recursive definition of producing a terminal conjunction or
     // continuing a formula with "OR".
     var getFormula = function() {
+      var c = sampleConj();
+      // console.log("C: " + c.s);
+      // console.log(c.f);
+      
       if(flip(tau)) {
-        var c = sampleConj();
         var f = getFormula();
+        // console.log("F: " + f.s);
+        // console.log(f.f);
         return {
-          f: function(x) {return c.f(x) || f.f(x)},
+          f: function(x) {
+            console.log("Inside formula");
+            console.log(x);
+            return (c.f(x) || f.f(x));
+          },
           s: _.join(_.flatten(['(', c.s, 'OR', f.s, ')']), '')
         } 
       } else {
-        return sampleConj();
+        return c;
       }
     }
   
@@ -129,6 +153,7 @@ var genRationRulesFunc = function(AObjects, BObjects, TObjects, allObjs) {
     var rule = getFormula();
     
     // Conditioning on AObjects following the rule & BObjects violating the rule
+    console.log(rule);
     var obsFnA = function(datum){observe(Bernoulli({p: rule.f(datum) ? 0.999999999 : noiseParam}), true)};
     var obsFnB = function(datum){observe(Bernoulli({p: !rule.f(datum) ? 0.999999999 : noiseParam}), true)};
     mapData({data:AObjects}, obsFnA);
@@ -145,8 +170,6 @@ var goldLabelsRationalRules = function() {
   var AObjects = filter(function(x) { return x["belongs_to_concept"] == true;}, trainingCritters);
   var BObjects = filter(function(x) { return x["belongs_to_concept"] == false;}, trainingCritters);
   var TObjects = _.uniqWith(map(makeObj, testData), _.isEqual);
-  console.log(TObjects);
-
   var allObjs = _.uniqWith(TObjects.concat(AObjects.concat(BObjects)), _.isEqual);
 
   // Run MCMC Inference
