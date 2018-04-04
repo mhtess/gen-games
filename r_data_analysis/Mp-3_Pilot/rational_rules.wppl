@@ -7,7 +7,6 @@
 // that explain the data the most. Then, we compare the
 // model predictions to those of humans.
 // -------------------------------------------------------
-
 var trainingData = json.read('training_data.json');
 var testData = json.read('test_data.json');
 
@@ -67,14 +66,6 @@ var makeObj = function(o) {
   }
 }
 
-// Create critters dataset from stimuli data.
-// Then split critters into 2 groups A (belongs to concept) and B (outside of concept).
-var trainingCritters = _.uniqWith(map(makeObj, trainingData), _.isEqual);
-var AObjects = filter(function(x) { return x["belongs_to_concept"] == true;}, trainingCritters);
-var BObjects = filter(function(x) { return x["belongs_to_concept"] == false;}, trainingCritters);
-var TObjects = _.uniqWith(map(makeObj, testData), _.isEqual);
-var allObjs = _.uniqWith(TObjects.concat(AObjects.concat(BObjects)), _.isEqual);
-
 // Define prior and sampling strategy for selecting both a trait
 // and a value to be assigned to the trait, for a proposal formula.
 var traitPrior = Categorical({vs: ["critter", "body_color", "secondary_color", "size"],
@@ -82,7 +73,10 @@ var traitPrior = Categorical({vs: ["critter", "body_color", "secondary_color", "
 var samplePred = function() {
   var trait = sample(traitPrior);
   var value = uniformDraw([0,1,2])
-  return function(x) {return x[trait] == value};
+  return {
+    f: function(x) {return x[trait] == value},
+    s: ['(', trait, '==', value, ')']
+  }
 }
 
 // Drift kernel for tau, the probability of continuing a proposed formula.
@@ -94,77 +88,114 @@ var TauKernel = function(prevVal) {
 };
 
 // Implementation of rational rules model.
-var rationalRules = function() {
-  var tau = sample(Beta({a:1, b:1}), {driftKernel: TauKernel});
-  var noiseParam = Math.exp(-1.5); // prior that a given sample is an outlier
-
-  // Recursive definition of producing terminal predicate
-  // or continuing a formula with "AND".
-  var sampleConj = function() {
-    if(flip(tau)) {
-      var c = sampleConj();
-      var p = samplePred();
-      return function(x) {return c(x) && p(x)};
-    } else {
-      return samplePred();
-    }
-  }
+var genRationRulesFunc = function(AObjects, BObjects, TObjects, allObjs) {
+  var rationalRules = function() {
+    var tau = sample(Beta({a:1, b:1}), {driftKernel: TauKernel});
+    var noiseParam = Math.exp(-1.5); // prior that a given sample is an outlier
   
-  // Recursive definition of producing a terminal conjunction or
-  // continuing a formula with "OR".
-  var getFormula = function() {
-    if(flip(tau)) {
-      var c = sampleConj();
-      var f = getFormula();
-      return function(x) {return c(x) || f(x)};
-    } else {
-      return sampleConj();
+    // Recursive definition of producing terminal predicate
+    // or continuing a formula with "AND".
+    var sampleConj = function() {
+      if(flip(tau)) {
+        var c = sampleConj();
+        var p = samplePred();
+        return {
+          f: function(x) {return c.f(x) && p.f(x)},
+          s: _.flatten(['(', c.s, 'AND', p.s, ')'])
+        }
+      } else {
+        return samplePred();
+      }
     }
+    
+    // Recursive definition of producing a terminal conjunction or
+    // continuing a formula with "OR".
+    var getFormula = function() {
+      if(flip(tau)) {
+        var c = sampleConj();
+        var f = getFormula();
+        return {
+          f: function(x) {return c.f(x) || f.f(x)},
+          s: _.flatten(['(', c.s, 'OR', f.s, ')'])
+        } 
+      } else {
+        return sampleConj();
+      }
+    }
+  
+    // Sample a proposed formula
+    var rule = getFormula();
+    var rule_string = _.join(rule.s, '');
+    
+    // Conditioning on AObjects following the rule & BObjects violating the rule
+    var obsFnA = function(datum){observe(Bernoulli({p: rule.f(datum) ? 0.999999999 : noiseParam}), true)};
+    var obsFnB = function(datum){observe(Bernoulli({p: !rule.f(datum) ? 0.999999999 : noiseParam}), true)};
+    mapData({data:AObjects}, obsFnA);
+    mapData({data:BObjects}, obsFnB);
+  
+    // Return [{'Parameter': critter_color_size, value: T/F} ]
+    return {
+      f: rule,
+      s: rule_string,
+    }
+    // return {
+    //   posterior: _.fromPairs(map(
+    //     function(obj){
+    //       return [_.values(obj).join('_'), rule.f(obj)]
+    //     }, allObjs)),
+    //   rule: rule_string,
+    // }
   }
-
-  // Sample a proposed formula
-  var rule = getFormula();
-
-  // Conditioning on AObjects following the rule & BObjects violating the rule
-  var obsFnA = function(datum){observe(Bernoulli({p: rule(datum) ? 0.999999999 : noiseParam}), true)};
-  var obsFnB = function(datum){observe(Bernoulli({p: !rule(datum) ? 0.999999999 : noiseParam}), true)};
-  mapData({data:AObjects}, obsFnA);
-  mapData({data:BObjects}, obsFnB);
-
-  // Return [{'Parameter': critter_color_size, value: T/F} ]
-  return  _.fromPairs(map(function(obj){ return [_.values(obj).join('_'), rule(obj)] }, allObjs)); 
+  return rationalRules
 }
 
-// Run MCMC Inference
-var rulePosterior = Infer({method: 'MCMC', samples: 20000}, rationalRules);
-var critterLabels = map(
-  function(obj){
-    _.join([
-        obj["belongs_to_concept"],
-        cat_mapping_inv["critter"][obj["critter"]],
-        val_to_readable_val[cat_mapping_inv["body_color"][obj["body_color"]]],
-        val_to_readable_val[cat_mapping_inv["secondary_color"][obj["secondary_color"]]],
-        val_to_readable_val[cat_mapping_inv["prop1"][obj["size"]]]
-      ],
-      '_'
-    );
-  },
-  allObjs
-);
+var goldLabelsRationalRules = function() {
+  // Create critters dataset from stimuli data.
+  // Then split critters into 2 groups A (belongs to concept) and B (outside of concept).
+  var trainingCritters = _.uniqWith(map(makeObj, trainingData), _.isEqual);
+  var AObjects = filter(function(x) { return x["belongs_to_concept"] == true;}, trainingCritters);
+  var BObjects = filter(function(x) { return x["belongs_to_concept"] == false;}, trainingCritters);
+  var TObjects = _.uniqWith(map(makeObj, testData), _.isEqual);
+  var allObjs = _.uniqWith(TObjects.concat(AObjects.concat(BObjects)), _.isEqual);
 
-// Build posterior predictive for each critter in the training set
-var predictives = map(
-  function(item)
-  {
-    return expectation(
-      rulePosterior,
-      function(x) {
-        var id = _.values(item).join('_');
-        x[id];
-      }
-    )
-  }, allObjs
-)
+  // Run MCMC Inference
+  var rationalRules = genRationRulesFunc(AObjects, BObjects, TObjects, allObjs);
+  var rulePosterior = Infer({method: 'MCMC', samples: 20000}, rationalRules);
+  var result = map(rulePosterior.support(), function(val) {
+    console.log(val);
+    // return {v: val, logProb: rulePosterior.score(val)}
+  });
+  result
 
-var results = _.zip(critterLabels, predictives);
-results
+  // var critterLabels = map(
+  //   function(obj){
+  //     _.join([
+  //         obj["belongs_to_concept"],
+  //         cat_mapping_inv["critter"][obj["critter"]],
+  //         val_to_readable_val[cat_mapping_inv["body_color"][obj["body_color"]]],
+  //         val_to_readable_val[cat_mapping_inv["secondary_color"][obj["secondary_color"]]],
+  //         val_to_readable_val[cat_mapping_inv["prop1"][obj["size"]]]
+  //       ],
+  //       '_'
+  //     );
+  //   },
+  //   allObjs
+  // );
+
+  // // Build posterior predictive for each critter in the training set
+  // var predictives = map(
+  //   function(item)
+  //   {
+  //     return expectation(
+  //       rulePosterior,
+  //       function(x) {
+  //         var id = _.values(item).join('_');
+  //         x[id];
+  //       }
+  //     )
+  //   }, allObjs
+  // )
+
+  // return _.zip(critterLabels, predictives);
+} 
+goldLabelsRationalRules();

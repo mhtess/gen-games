@@ -104,6 +104,20 @@ summary_data_reduced <- select(
       ~fromJSON(as.character(.x))
       )
   ) %>% 
+  unnest() %>%
+  mutate(
+    training_trials = map(
+      training_trials,
+      ~fromJSON(as.character(.x))
+      )
+  ) %>% 
+  unnest() %>%
+  mutate(
+    testing_trials = map(
+      testing_trials,
+      ~fromJSON(as.character(.x))
+      )
+  ) %>% 
   unnest()
 ```
 
@@ -262,9 +276,23 @@ It seems like the participants gravitated to one half of the XOR statement, usua
 
 ### Rational Rules
 ```{r}
-results <- webppl(program_file = "./rational_rules.wppl", packages=c("webppl-json"))
+jsonlite::toJSON(summary_data_reduced$testing_summary_stats)
+
+results <- webppl(program_file = "./rational_rules.wppl", packages=c("webppl-json"), data=summary_data_reduced$testing_summary_stats, data_var="humanData")
 # results <- as.data.frame(t(results))
-```
+
+fromJSON(summary_data_reduced$training_summary_stats)
+
+# data to pass to webppl
+plyr::ldply(
+  lapply(summary_data_reduced$training_summary_stats, function(x){ return(data.frame(fromJSON(x)))}),
+  data.frame)
+
+
+``` 
+
+
+
 ```{r fig.width= 6, fig.height=3}
 ggplot(results, aes(x=V1, y=V2)) +
   geom_point(size=2, shape=23)
