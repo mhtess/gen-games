@@ -75,7 +75,7 @@ var samplePred = function() {
   var value = uniformDraw([0,1,2])
   return {
     f: function(x) {return x[trait] == value},
-    s: ['(', trait, '==', value, ')']
+    s: _.join(['(', trait, '==', value, ')'], '')
   }
 }
 
@@ -101,7 +101,7 @@ var genRationRulesFunc = function(AObjects, BObjects, TObjects, allObjs) {
         var p = samplePred();
         return {
           f: function(x) {return c.f(x) && p.f(x)},
-          s: _.flatten(['(', c.s, 'AND', p.s, ')'])
+          s: _.join(_.flatten(['(', c.s, 'AND', p.s, ')']), '')
         }
       } else {
         return samplePred();
@@ -116,7 +116,7 @@ var genRationRulesFunc = function(AObjects, BObjects, TObjects, allObjs) {
         var f = getFormula();
         return {
           f: function(x) {return c.f(x) || f.f(x)},
-          s: _.flatten(['(', c.s, 'OR', f.s, ')'])
+          s: _.join(_.flatten(['(', c.s, 'OR', f.s, ')']), '')
         } 
       } else {
         return sampleConj();
@@ -125,7 +125,6 @@ var genRationRulesFunc = function(AObjects, BObjects, TObjects, allObjs) {
   
     // Sample a proposed formula
     var rule = getFormula();
-    var rule_string = _.join(rule.s, '');
     
     // Conditioning on AObjects following the rule & BObjects violating the rule
     var obsFnA = function(datum){observe(Bernoulli({p: rule.f(datum) ? 0.999999999 : noiseParam}), true)};
@@ -134,10 +133,7 @@ var genRationRulesFunc = function(AObjects, BObjects, TObjects, allObjs) {
     mapData({data:BObjects}, obsFnB);
   
     // Return [{'Parameter': critter_color_size, value: T/F} ]
-    return {
-      f: rule,
-      s: rule_string,
-    }
+    return rule;
     // return {
     //   posterior: _.fromPairs(map(
     //     function(obj){
@@ -146,7 +142,7 @@ var genRationRulesFunc = function(AObjects, BObjects, TObjects, allObjs) {
     //   rule: rule_string,
     // }
   }
-  return rationalRules
+  return rationalRules;
 }
 
 var goldLabelsRationalRules = function() {
@@ -160,10 +156,10 @@ var goldLabelsRationalRules = function() {
 
   // Run MCMC Inference
   var rationalRules = genRationRulesFunc(AObjects, BObjects, TObjects, allObjs);
-  var rulePosterior = Infer({method: 'MCMC', samples: 20000}, rationalRules);
+  var rulePosterior = Infer({method: 'MCMC', samples: 2000, lag: 50, burn:20000}, rationalRules);
+  var support = rulePosterior.support();
   var result = map(rulePosterior.support(), function(val) {
-    console.log(val);
-    // return {v: val, logProb: rulePosterior.score(val)}
+    return {v: val, logProb: rulePosterior.score(val)}
   });
   result
 
