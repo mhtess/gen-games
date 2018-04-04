@@ -158,9 +158,9 @@ var goldLabelsRationalRules = function() {
   var rationalRules = genRationRulesFunc(AObjects, BObjects, TObjects, allObjs);
   var rulePosterior = Infer({method: 'MCMC', samples: 2000, lag: 50, burn:20000}, rationalRules);
   var support = rulePosterior.support();
-  var result = map(rulePosterior.support(), function(val) {
+  var result = map(function(val) {
     return {v: val, logProb: rulePosterior.score(val)}
-  });
+  }, rulePosterior.support());
   result
 
   // var critterLabels = map(
