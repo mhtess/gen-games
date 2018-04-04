@@ -57,6 +57,7 @@ var val_to_readable_val = {
 // where the defining values of the discriminative traits have been
 // properly mapped to discrete values.
 var makeObj = function(o) {
+  console.log(o);
   return {
     "critter": cat_mapping["critter"][o["critter"]], 
     "body_color": cat_mapping["body_color"][o["body_color"]],
@@ -69,10 +70,10 @@ var makeObj = function(o) {
 // Define prior and sampling strategy for selecting both a trait
 // and a value to be assigned to the trait, for a proposal formula.
 var traitPrior = Categorical({vs: ["critter", "body_color", "secondary_color", "size"],
-                              ps: [1, 1, 1, 1]});
+                              ps: [0.25, 0.25, 0.25, 0.25]});
 var samplePred = function() {
   var trait = sample(traitPrior);
-  var value = uniformDraw([0,1,2])
+  var value = uniformDraw([0,1,2]);
   return {
     f: function(x) {return x[trait] == value},
     s: _.join(['(', trait, '==', value, ')'], '')
@@ -90,7 +91,8 @@ var TauKernel = function(prevVal) {
 // Implementation of rational rules model.
 var genRationRulesFunc = function(AObjects, BObjects, TObjects, allObjs) {
   var rationalRules = function() {
-    var tau = sample(Beta({a:1, b:1}), {driftKernel: TauKernel});
+    var tau = 0.6;
+    // var tau = sample(Beta({a:1, b:1}), {driftKernel: TauKernel});
     var noiseParam = Math.exp(-1.5); // prior that a given sample is an outlier
   
     // Recursive definition of producing terminal predicate
@@ -131,16 +133,7 @@ var genRationRulesFunc = function(AObjects, BObjects, TObjects, allObjs) {
     var obsFnB = function(datum){observe(Bernoulli({p: !rule.f(datum) ? 0.999999999 : noiseParam}), true)};
     mapData({data:AObjects}, obsFnA);
     mapData({data:BObjects}, obsFnB);
-  
-    // Return [{'Parameter': critter_color_size, value: T/F} ]
     return rule;
-    // return {
-    //   posterior: _.fromPairs(map(
-    //     function(obj){
-    //       return [_.values(obj).join('_'), rule.f(obj)]
-    //     }, allObjs)),
-    //   rule: rule_string,
-    // }
   }
   return rationalRules;
 }
@@ -152,46 +145,49 @@ var goldLabelsRationalRules = function() {
   var AObjects = filter(function(x) { return x["belongs_to_concept"] == true;}, trainingCritters);
   var BObjects = filter(function(x) { return x["belongs_to_concept"] == false;}, trainingCritters);
   var TObjects = _.uniqWith(map(makeObj, testData), _.isEqual);
+  console.log(TObjects);
+
   var allObjs = _.uniqWith(TObjects.concat(AObjects.concat(BObjects)), _.isEqual);
 
   // Run MCMC Inference
   var rationalRules = genRationRulesFunc(AObjects, BObjects, TObjects, allObjs);
-  var rulePosterior = Infer({method: 'MCMC', samples: 2000, lag: 50, burn:20000}, rationalRules);
-  var support = rulePosterior.support();
-  var result = map(function(val) {
+  var rulePosterior = Infer({method: 'MCMC', samples:2000, burn:20000}, rationalRules);
+  var support_probs = map(function(val) {
     return {v: val, logProb: rulePosterior.score(val)}
   }, rulePosterior.support());
-  result
 
-  // var critterLabels = map(
-  //   function(obj){
-  //     _.join([
-  //         obj["belongs_to_concept"],
-  //         cat_mapping_inv["critter"][obj["critter"]],
-  //         val_to_readable_val[cat_mapping_inv["body_color"][obj["body_color"]]],
-  //         val_to_readable_val[cat_mapping_inv["secondary_color"][obj["secondary_color"]]],
-  //         val_to_readable_val[cat_mapping_inv["prop1"][obj["size"]]]
-  //       ],
-  //       '_'
-  //     );
-  //   },
-  //   allObjs
-  // );
+  var critterLabels = map(
+    function(obj){
+      _.join([
+          obj["belongs_to_concept"],
+          cat_mapping_inv["critter"][obj["critter"]],
+          val_to_readable_val[cat_mapping_inv["body_color"][obj["body_color"]]],
+          val_to_readable_val[cat_mapping_inv["secondary_color"][obj["secondary_color"]]],
+          val_to_readable_val[cat_mapping_inv["prop1"][obj["size"]]]
+        ],
+        '_'
+      );
+    },
+    allObjs
+  );
 
-  // // Build posterior predictive for each critter in the training set
-  // var predictives = map(
-  //   function(item)
-  //   {
-  //     return expectation(
-  //       rulePosterior,
-  //       function(x) {
-  //         var id = _.values(item).join('_');
-  //         x[id];
-  //       }
-  //     )
-  //   }, allObjs
-  // )
+  // Build posterior predictive for each critter in the training set
+  var predictives = map(
+    function(item)
+    {
+      return expectation(
+        rulePosterior,
+        function(x) {
+          // console.log(item);
+          // console.log(x);
+          var result = x.f(item);
+          // console.log(result);
+          return result;
+        }
+      )
+    }, allObjs
+  )
 
-  // return _.zip(critterLabels, predictives);
+  return _.zip(critterLabels, predictives);
 } 
 goldLabelsRationalRules();
