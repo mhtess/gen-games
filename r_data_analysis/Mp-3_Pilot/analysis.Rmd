@@ -62,6 +62,7 @@ library(jsonlite)
 library(tidyjson)
 library(ggplot2)
 library(rwebppl)
+library(knitr)
 
 # Read Raw Data
 setwd("../../mturk/mp-game-3/pilot")
@@ -198,6 +199,9 @@ ggplot(melt(test_acc_listener, id=c("game_id"))) +
   labs(title = "Test Accuracy (Listener)") +
   scale_x_discrete(label=abbreviate)
 ```
+**tldr; Incorrect teachers lead to the worst performance amongst listeners -- with performance comparable between teachers and listeners. Partially informative but unsderspecific teachers lead to slightly better performances amongst listeners and better performance than the respective teachers, because of a greater rate of correct rejections. Teachers with the best performance lead to the best performing listeners, wherel listeners tend to slightly worse than their respective teachers.**
+
+------
 
 The teachers with the best performance on the test set were those in games 0716 (100% accuracy) and 7602 (~84%).
 
@@ -275,23 +279,41 @@ ggplot(melt(test_perf_listener, id.vars="game_id")) +
 It seems like the participants gravitated to one half of the XOR statement, usually towards color; so they captured a portion of the rule. This is a hard concept, so this is relatively expected.
 
 ### Rational Rules
-```{r}
-results <- webppl(program_file = "./rational_rules.wppl", packages=c("webppl-json"))
-# results <- as.data.frame(t(results))
+Before we examine the ability of rational rueles to model human performance on the task, we wanted to see if rational rules, with it's current CFG was powerful enough to learn the correct rule with which to classify the data, i.e. learn the "Body Color == Blue XOR Critter Type == Fish" rule.
 
-# fromJSON(summary_data_reduced$training_summary_stats)
-# 
-# # data to pass to webppl
-# plyr::ldply(
-#   lapply(summary_data_reduced$training_summary_stats, function(x){ return(data.frame(fromJSON(x)))}),
-#   data.frame)
+#### RR: Ground Truth Labels
 
+##### Posterior Predictives
+First we examine the posterior predictions produced by rational rules, when using ground truth labels as the given labels. Note that the critter description is written as "belongsToConcept_Critter_BodyColor_SecondaryColor_Size"
 
+```{r echo=FALSE, results='asis'}
+posteriorPreds <- as.data.frame(webppl(program_file = "./rational_rules.wppl", packages=c("webppl-json"), data_var = "param", data = "preds")) %>%
+  arrange(V2, V1) %>%
+  rename(prob = V2) %>%
+  rename(critter = V1)
+kable(posteriorPreds, caption="Posterior on Predictions (Rational Rules with Ground Truth Labels)")
 ``` 
 
+It seems like the model gets most of the classifications correct but fails on blue bodied fish. Next let's examine the posterior over rules.
 
+##### Posterior on Rules
 
-```{r fig.width= 6, fig.height=3}
-ggplot(results, aes(x=V1, y=V2)) +
-  geom_point(size=2, shape=23)
-```
+```{r echo=FALSE, results='asis'}
+support <- webppl(program_file = "./rational_rules.wppl", packages=c("webppl-json"), data_var = "param", data = "support") %>%
+  rename(rule = v.s) %>%
+  arrange(desc(logProb), rule) 
+kable(support[1:10,], caption="Posterior on Rules (Rational Rules with Ground Truth Labels)")
+``` 
+
+Examining the results of this experiment, we see that the rule with the greatest probability, by far is ((Body Color == 0) OR (Critter == 2)). This is ((Body Color == BLUE) OR (Critter == FISH)). It seems like the model is getting close to the true answer, but is still incorrect.
+
+(A == 1 XOR B == 1) can be expressed as (A == 1 && not B == 1) OR (Not A == 1 && B == 1). This short definition, requires the inclusion of a negation operand, which our CFG lacks currently. Our CFG can still express XOR, but it takes a lot longer of a formula: (A == 1 && (B == 0 OR B == 2)) OR ((A == 0 OR A == 2) && B == 1). 
+
+The longer the formula, the harder it is to generate, so our CFG may never be generating the proper rule to be applying as a proposal, when running MCMC to develop a distribution over possible rules. We might want to add negation to our CFG. 
+
+#### Teacher Labels
+Now, we try running rational rules on the labels provided by teachers in this experiment.
+
+##### Posterior Predictives
+
+##### Posterior over Rules

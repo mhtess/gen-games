@@ -11,7 +11,7 @@ var trainingData = json.read('training_data.json');
 var testData = json.read('test_data.json');
 
 // Mapping from trait names -> trait values -> discrete value
-var cat_mapping = {
+var catMapping = {
   "critter": {
     "bug": 0,
     "bird": 1,
@@ -34,14 +34,14 @@ var cat_mapping = {
   }
 };
 
-var cat_mapping_inv = {
-  "critter": _.invert(cat_mapping["critter"]),
-  "body_color": _.invert(cat_mapping["body_color"]),
-  "secondary_color": _.invert(cat_mapping["secondary_color"]),
-  "prop1": _.invert(cat_mapping["prop1"]),
+var catMapping_inv = {
+  "critter": _.invert(catMapping["critter"]),
+  "body_color": _.invert(catMapping["body_color"]),
+  "secondary_color": _.invert(catMapping["secondary_color"]),
+  "prop1": _.invert(catMapping["prop1"]),
 };
 
-var val_to_readable_val = {
+var readableValMapping = {
   "#5da5db": "blue",
   "#228b22": "green",
   "#ff8c00": "orange",
@@ -58,10 +58,10 @@ var val_to_readable_val = {
 // properly mapped to discrete values.
 var makeObj = function(o) {
   return {
-    "critter": cat_mapping["critter"][o["critter"]], 
-    "body_color": cat_mapping["body_color"][o["body_color"]],
-    "secondary_color": cat_mapping["secondary_color"][o["secondary_color"]],
-    "size": cat_mapping["prop1"][o["props"]["prop1"].toString()],
+    "critter": catMapping["critter"][o["critter"]], 
+    "body_color": catMapping["body_color"][o["body_color"]],
+    "secondary_color": catMapping["secondary_color"][o["secondary_color"]],
+    "size": catMapping["prop1"][o["props"]["prop1"].toString()],
     "belongs_to_concept": o["belongs_to_concept"],
   }
 }
@@ -150,7 +150,7 @@ var genRationRulesFunc = function(AObjects, BObjects, TObjects, allObjs) {
   return rationalRules;
 }
 
-var goldLabelsRationalRules = function() {
+var goldLabelsRationalRules = function(val) {
   // Create critters dataset from stimuli data.
   // Then split critters into 2 groups A (belongs to concept) and B (outside of concept).
   var trainingCritters = _.uniqWith(map(makeObj, trainingData), _.isEqual);
@@ -162,7 +162,7 @@ var goldLabelsRationalRules = function() {
   // Run MCMC Inference
   var rationalRules = genRationRulesFunc(AObjects, BObjects, TObjects, allObjs);
   var rulePosterior = Infer({method: 'MCMC', samples:2000, burn:20000}, rationalRules);
-  var support_probs = map(function(val) {
+  var supportProbs = map(function(val) {
     return {v: val, logProb: rulePosterior.score(val)}
   }, rulePosterior.support());
 
@@ -170,10 +170,10 @@ var goldLabelsRationalRules = function() {
     function(obj){
       _.join([
           obj["belongs_to_concept"],
-          cat_mapping_inv["critter"][obj["critter"]],
-          val_to_readable_val[cat_mapping_inv["body_color"][obj["body_color"]]],
-          val_to_readable_val[cat_mapping_inv["secondary_color"][obj["secondary_color"]]],
-          val_to_readable_val[cat_mapping_inv["prop1"][obj["size"]]]
+          catMapping_inv["critter"][obj["critter"]],
+          readableValMapping[catMapping_inv["body_color"][obj["body_color"]]],
+          readableValMapping[catMapping_inv["secondary_color"][obj["secondary_color"]]],
+          readableValMapping[catMapping_inv["prop1"][obj["size"]]]
         ],
         '_'
       );
@@ -182,7 +182,7 @@ var goldLabelsRationalRules = function() {
   );
 
   // Build posterior predictive for each critter in the training set
-  var predictives = map(
+  var preds = map(
     function(item)
     {
       return expectation(
@@ -193,8 +193,13 @@ var goldLabelsRationalRules = function() {
         }
       )
     }, allObjs
-  )
+  );
+  var posteriorPreds = _.zip(critterLabels, preds);
 
-  return _.zip(critterLabels, predictives);
+  if (val == 'support') {
+    return supportProbs;
+  } else {
+    return posteriorPreds;
+  }
 } 
-goldLabelsRationalRules();
+goldLabelsRationalRules(param);
