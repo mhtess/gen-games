@@ -1,9 +1,9 @@
 import json
 import pandas
 
-RESULTS_FILE = '../../mturk/mp-game-3/pilot/mp-game-3.csv'
-TRAINING_STIMULI = './training_data.json'
-TEST_STIMULI = './test_data.json'
+RESULTS_FILE = './mp-game-3-mturk.csv'
+TRAINING_STIMULI = '../../../experiments/mp-game-3/js/training_data.json'
+TEST_STIMULI = '../../../experiments/mp-game-3/js/test_data.json'
 
 def read_results(file=RESULTS_FILE):
     def CustomParser(data):
@@ -13,7 +13,7 @@ def read_results(file=RESULTS_FILE):
     training = 'Answer.training_trials'
     test = 'Answer.testing_trials'
     results = pandas.read_csv(file, converters={training: CustomParser, test: CustomParser})
-    return results[training], results[test]
+    return results, results[training], results[test]
 
 def read_stimuli(training=TRAINING_STIMULI, test=TEST_STIMULI):
     with open(TRAINING_STIMULI) as train:
@@ -37,15 +37,17 @@ def correct_labels(trials, stimuli):
         return parsed_trials
 
 if __name__ == '__main__':
-    training_data, test_data = read_results()
+    results, training_data, test_data = read_results()
     training_stimuli, test_stimuli = read_stimuli()
 
-    print training_data[1]
     for i, participant_data in enumerate(training_data):
-        training_data[i] = correct_labels(participant_data, training_stimuli)
+        labels = correct_labels(participant_data, training_stimuli)
+        results.loc[i,('Answer.training_trials')] = json.dumps(labels)
 
     for i, participant_data in enumerate(test_data):
-        test_data[i] = correct_labels(participant_data, test_stimuli)
-
-    print training_data[1]
+        labels = correct_labels(participant_data, test_stimuli)
+        results.loc[i,('Answer.testing_trials')] = json.dumps(labels)
     
+    results.to_csv(" mp-game-3-mturk-cleaned.csv", index=False)
+
+      

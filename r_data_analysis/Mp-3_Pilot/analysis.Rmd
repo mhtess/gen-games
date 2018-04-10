@@ -65,11 +65,11 @@ library(rwebppl)
 library(knitr)
 
 # Read Raw Data
-setwd("../../mturk/mp-game-3/pilot")
+#setwd("../../mturk/mp-game-3/pilot")
 summary_data <- read_csv(
-  file="./mp-game-3-mturk.csv",
+  file="./cleaned_data.csv",
   col_names=TRUE,
-  col_types = "icccccccccccccccccccccccccccccccccccc"
+  col_types = "iccccccccccccccccccccccccccccccccccc"
 )
 num_train = 50
 num_test = 31
@@ -313,7 +313,37 @@ The longer the formula, the harder it is to generate, so our CFG may never be ge
 
 #### Teacher Labels
 Now, we try running rational rules on the labels provided by teachers in this experiment.
+```{r}
+# Parse labels assigned to stimuli during training by teachers
+teachers_training_labels = plyr::ldply(
+  lapply(
+    summary_data_reduced$training_trials,
+    function(x){ return(data.frame(fromJSON(x)))}
+  ), data.frame
+) %>%
+  mutate("data" = "training")
+
+# Parse labels assigned to stimuli during testing by teachers
+teachers_test_labels = plyr::ldply(
+  lapply(
+    summary_data_reduced %>%
+      filter(role == "explorer") %>%
+      .$testing_trials,
+    function(x){
+      return(data.frame(fromJSON(x)))
+    }
+  ), data.frame
+) %>%
+  mutate("data" = "test")
+
+# Combine training & test labels, to pass to webppl
+teachers_combined_labels <- rbind(teachers_training_labels, teachers_test_labels)
+```
 
 ##### Posterior Predictives
+```{r}
+teacher_preds <- webppl(program_file = "./rational_rules.wppl", packages=c("webppl-json"), data=teachers_combined_labels, data_var="combinedTeacherLabels")
+```
 
 ##### Posterior over Rules
+

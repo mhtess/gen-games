@@ -7,8 +7,8 @@
 // that explain the data the most. Then, we compare the
 // model predictions to those of humans.
 // -------------------------------------------------------
-var trainingData = json.read('training_data.json');
-var testData = json.read('test_data.json');
+var trainingStimuli = json.read('training_data.json');
+var testStimuli = json.read('test_data.json');
 
 // Mapping from trait names -> trait values -> discrete value
 var catMapping = {
@@ -150,18 +150,10 @@ var genRationRulesFunc = function(AObjects, BObjects, TObjects, allObjs) {
   return rationalRules;
 }
 
-var goldLabelsRationalRules = function(val) {
-  // Create critters dataset from stimuli data.
-  // Then split critters into 2 groups A (belongs to concept) and B (outside of concept).
-  var trainingCritters = _.uniqWith(map(makeObj, trainingData), _.isEqual);
-  var AObjects = filter(function(x) { return x["belongs_to_concept"] == true;}, trainingCritters);
-  var BObjects = filter(function(x) { return x["belongs_to_concept"] == false;}, trainingCritters);  
-  var TObjects = _.uniqWith(map(makeObj, testData), _.isEqual);
-  var allObjs = _.uniqWith(TObjects.concat(AObjects.concat(BObjects)), _.isEqual);
-
+var rationalRulesAnalysis = function(val, AObjects, BObjects, TObjects, allObjs) {
   // Run MCMC Inference
   var rationalRules = genRationRulesFunc(AObjects, BObjects, TObjects, allObjs);
-  var rulePosterior = Infer({method: 'MCMC', samples:2000, burn:20000}, rationalRules);
+  var rulePosterior = Infer({method: 'MCMC', samples:2000, burn:30000}, rationalRules);
   var supportProbs = map(function(val) {
     return {v: val, logProb: rulePosterior.score(val)}
   }, rulePosterior.support());
@@ -200,6 +192,71 @@ var goldLabelsRationalRules = function(val) {
     return supportProbs;
   } else {
     return posteriorPreds;
-  }
+  } 
+}
+
+// Rational Rules Applied To Data w/ True Labels
+var goldLabelsRationalRules = function(val) {
+  // Create critters dataset from stimuli data.
+  // Then split critters into 2 groups A (belongs to concept) and B (outside of concept).
+  var trainingCritters = _.uniqWith(map(makeObj, trainingStimuli), _.isEqual);
+  var AObjects = filter(function(x) { return x["belongs_to_concept"] == true;}, trainingCritters);
+  var BObjects = filter(function(x) { return x["belongs_to_concept"] == false;}, trainingCritters);  
+  var TObjects = _.uniqWith(map(makeObj, testStimuli), _.isEqual);
+  var allObjs = _.uniqWith(TObjects.concat(AObjects.concat(BObjects)), _.isEqual);
+  return rationalRulesAnalysis(val, AObjects, BObjects, TObjects, allObjs);
 } 
-goldLabelsRationalRules(param);
+
+// Rational Rules Applied To Data w/ Teacher Labels
+// Note: Requires variable combinedTeacherLabels to be passed in from r script
+var pooledTeacherLabelsRationalRules = function(val) {
+  // Load critters from training stimuli file
+  var defaultTrainingCritters = _.uniqWith(map(makeObj, trainingStimuli), _.isEqual);
+  var defaultTestCritters = _.uniqWith(map(makeObj, testStimuli), _.isEqual);
+
+  // Subsitute "belongs_to_concept" gold label with the one provided
+  // by a teacher. Do this for each teacher, across trials.
+  var trainingCritters = filter(function(x) {
+    return x != null;
+  }, map(function(x) {
+    if (x["data"] == "training") {
+      var baseCritter = defaultTrainingCritters[x["trial_num"]];
+      var critter = {
+        critter: baseCritter["critter"],
+        body_color: baseCritter["body_color"],
+        secondary_color: baseCritter["secondary_color"],
+        size: baseCritter["size"],
+        belongs_to_concept: x["turker_label"],
+      };
+      return critter;
+    }
+  }, combinedTeacherLabels));
+  
+  // Subsitute "belongs_to_concept" gold label with the one provided
+  // by a teacher. Do this for each each participant, across trials.
+  var TObjects = filter(function(x) {
+    return x != null;
+  }, map(function(x) {
+    if (x["data"] == "test") {
+      var baseCritter = defaultTestCritters[x["trial_num"]];
+      var critter = {
+        critter: baseCritter["critter"],
+        body_color: baseCritter["body_color"],
+        secondary_color: baseCritter["secondary_color"],
+        size: baseCritter["size"],
+        belongs_to_concept: x["turker_label"],
+      };
+      return critter;
+    }
+  }, combinedTeacherLabels));
+
+  // Split into Training A/B Groups & Test Split
+  var AObjects = filter(function(x) { return x["belongs_to_concept"] == true;}, trainingCritters);
+  var BObjects = filter(function(x) { return x["belongs_to_concept"] == false;}, trainingCritters);  
+  var allObjs = _.uniqWith(TObjects.concat(AObjects.concat(BObjects)), _.isEqual);
+  return rationalRulesAnalysis(val, AObjects, BObjects, TObjects, allObjs);
+}
+
+// goldLabelsRationalRules('predictives');
+// goldLabelsRationalRules('support');
+pooledTeacherLabelsRationalRules('predictives');
