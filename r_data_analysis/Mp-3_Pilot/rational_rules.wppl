@@ -7,8 +7,8 @@
 // that explain the data the most. Then, we compare the
 // model predictions to those of humans.
 // -------------------------------------------------------
-var trainingStimuli = json.read('training_data.json');
-var testStimuli = json.read('test_data.json');
+var trainingStimuli = json.read('../../experiments/mp-game-3/js/training_data.json');
+var testStimuli = json.read('../../experiments/mp-game-3/js/test_data.json');
 
 // Mapping from trait names -> trait values -> discrete value
 var catMapping = {
@@ -253,7 +253,7 @@ var pooledTeacherLabelsRationalRules = function(val) {
   // Split into Training A/B Groups & Test Split
   var AObjects = filter(function(x) { return x["belongs_to_concept"] == true;}, trainingCritters);
   var BObjects = filter(function(x) { return x["belongs_to_concept"] == false;}, trainingCritters);  
-  var allObjs = _.uniqWith(TObjects.concat(AObjects.concat(BObjects)), _.isEqual);
+  var allObjs = _.uniqWith(_.concat(trainingCritters, TObjects), _.isEqual);
   return rationalRulesAnalysis(val, AObjects, BObjects, TObjects, allObjs);
 }
 
