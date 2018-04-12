@@ -289,6 +289,7 @@ function make_slides(f) {
       $("#prev_critters").empty();
       $("#curr_critter_training").empty();
       $('#continueButton').prop('disabled', false);
+      $("input[type=radio]").attr('checked', false);
 
       // Render slide
       $(".trial_number").text("Critter " + String(this.learning_trial_idx + 1) + " of " + String(exp.num_learning_trials));
@@ -311,31 +312,34 @@ function make_slides(f) {
         var end_time = Date.now();
         this.time_spent = end_time - this.start_time;
 
+        var cur_index = this.learning_trial_idx;
+        this.learning_trial_idx++;
         var stim = this.stim;
-        this.turker_label = ($("input[type=radio]:checked").val() === "true");
-        this.true_label = stim['belongs_to_concept'];
-        this.is_correct = (this.turker_label === this.true_label);
+        var turker_label = ($("input[type=radio]:checked").val() === "true");
+        var true_label = stim['belongs_to_concept'];
+        var is_correct = (turker_label === true_label);
 
-        if (this.turker_label === false && this.true_label === false) {
+        if (turker_label === false && true_label === false) {
           exp.training_summary_stats.correct_rejections += 1;
-        } else if (this.turker_label=== false && this.true_label === true){
+        } else if (turker_label=== false && true_label === true){
           exp.training_summary_stats.misses += 1;
-        } else if (this.turker_label === true && this.true_label === false) {
+        } else if (turker_label === true && true_label === false) {
           exp.training_summary_stats.false_alarms += 1;
         } else {
           exp.training_summary_stats.hits += 1;
         }
 
-        if (!this.is_correct) {
+        if (!is_correct) {
           $('#continueButton').prop('disabled', true);
           alert("Incorrect Label Applied to Creature ... You Will Have to Wait 5 Seconds Before the Next Round");
           sleep(5000).then(
             () => {
-              this.log_responses();
+              this.log_responses(cur_index, this.time_spent/1000, turker_label, true_label, is_correct);
               _stream.apply(this);
-              globalGame.socket.send("logTrain.learnCritters." + _.pairs(encodeData(exp.training_data_trials[this.learning_trial_idx])).join('.'));  
-              this.learning_trial_idx++;
+              globalGame.socket.send("logTrain.learnCritters." + _.pairs(encodeData(exp.training_data_trials[cur_index])).join('.'));  
               
+              console.log(this.learning_trial_idx);
+              console.log(exp.num_learning_trials);
               if (this.learning_trial_idx == exp.num_learning_trials) {
                 exp.training_summary_stats.score = exp.training_summary_stats['hits'] - exp.training_summary_stats['false_alarms']
                 globalGame.socket.send("logScores.learnCritters." + _.pairs(encodeData(exp.training_summary_stats)).join('.'));
@@ -344,11 +348,12 @@ function make_slides(f) {
             }
           );
         } else {
-          this.log_responses();
+          this.log_responses(cur_index, this.time_spent/1000, turker_label, true_label, is_correct);
           _stream.apply(this); //make sure this is at the *end*, after you log your data
-          globalGame.socket.send("logTrain.learnCritters." + _.pairs(encodeData(exp.training_data_trials[this.learning_trial_idx])).join('.'));
-          this.learning_trial_idx++;
+          globalGame.socket.send("logTrain.learnCritters." + _.pairs(encodeData(exp.training_data_trials[cur_index])).join('.'));
 
+          console.log(this.learning_trial_idx);
+          console.log(exp.num_learning_trials);
           if (this.learning_trial_idx == exp.num_learning_trials) {
             exp.training_summary_stats.score = exp.training_summary_stats['hits'] - exp.training_summary_stats['false_alarms']
             globalGame.socket.send("logScores.learnCritters." + _.pairs(encodeData(exp.training_summary_stats)).join('.'));
@@ -360,14 +365,16 @@ function make_slides(f) {
       }
 
     },
-    log_responses : function(){
-      exp.training_data_trials.push({
-          "trial_num" : this.learning_trial_idx,
-          "time_in_seconds" : this.time_spent/1000,
-          "turker_label": this.turker_label,
-          "true_label": this.true_label,
-          "is_correct": this.is_correct,
-        });
+    log_responses : function(trial_num, time_in_seconds, turker_label, true_label, is_correct){
+      var record = {
+        "trial_num" : trial_num,
+        "time_in_seconds" : time_in_seconds,
+        "turker_label": turker_label,
+        "true_label": true_label,
+        "is_correct": is_correct,
+      };
+      exp.training_data_trials.push(record);
+      console.log(record);
       },
     });
 
@@ -458,6 +465,7 @@ function make_slides(f) {
     // hide + disable stuff
     $("#curr_critter_testing").empty();
     $('#continueButton').prop('disabled', false);
+    $("input[type=radio]").attr('checked', false);
 
     // Render slide
     $(".trial_number").text("Critter " + String(this.testing_trial_idx + 1) + " of " + String(exp.num_testing_trials));
@@ -476,44 +484,45 @@ function make_slides(f) {
       var end_time = Date.now();
       this.time_spent = end_time - this.start_time;
 
+      var cur_index = this.testing_trial_idx;
+      this.testing_trial_idx++;
       var stim = this.stim;
-      this.turker_label = ($("input[type=radio]:checked").val() === "true");
-      this.true_label = stim['belongs_to_concept'];
-      this.is_correct = (this.turker_label == this.true_label);
+      var turker_label = ($("input[type=radio]:checked").val() === "true");
+      var true_label = stim['belongs_to_concept'];
+      var is_correct = (turker_label === true_label);
 
-      console.log(this.turker_label);
-      console.log(this.true_label);
-      console.log(this.is_correct);      
 
-      if (this.turker_label === false && this.true_label === false) {
+      if (turker_label === false && true_label === false) {
         exp.testing_summary_stats.correct_rejections += 1;
-      } else if (this.turker_label=== false && this.true_label === true){
+      } else if (turker_label=== false && true_label === true){
         exp.testing_summary_stats.misses += 1;
-      } else if (this.turker_label === true && this.true_label === false) {
+      } else if (turker_label === true && true_label === false) {
         exp.testing_summary_stats.false_alarms += 1;
       } else {
         exp.testing_summary_stats.hits += 1;
       }
-      this.log_responses();
+      this.log_responses(cur_index, this.time_spent/1000, turker_label, true_label, is_correct);
       _stream.apply(this); //make sure this is at the *end*, after you log your data
-      globalGame.socket.send("logTest.testCritters." + _.pairs(encodeData(exp.testing_data_trials[this.testing_trial_idx])).join('.'));
-      this.testing_trial_idx++; 
+      globalGame.socket.send("logTest.testCritters." + _.pairs(encodeData(exp.testing_data_trials[cur_index])).join('.'));
     } else {
       alert("Please make sure to label all the critters, before proceeding");
     }
+    
+    console.log(this.testing_trial_idx);
+    console.log(exp.num_testing_trials);
     if (this.testing_trial_idx == exp.num_testing_trials) {
       exp.testing_summary_stats.score = exp.testing_summary_stats['hits'] - exp.testing_summary_stats['false_alarms']
       globalGame.socket.send("logScores.testCritters." + _.pairs(encodeData(exp.testing_summary_stats)).join('.'));
       exp.go();
     }
   },
-  log_responses : function(){
+  log_responses : function(trial_num, time_in_seconds, turker_label, true_label, is_correct){
     exp.testing_data_trials.push({
-      "trial_num" : this.testing_trial_idx,
-      "time_in_seconds" : this.time_spent/1000,
-      "turker_label": this.turker_label,
-      "true_label": this.true_label,
-      "is_correct": this.is_correct,
+      "trial_num" : trial_num,
+      "time_in_seconds" : time_in_seconds,
+      "turker_label": turker_label,
+      "true_label": true_label,
+      "is_correct": is_correct,
     });
     },
   });
@@ -521,8 +530,6 @@ function make_slides(f) {
   slides.score_report = slide({
     name: "score_report",
     start: function() {
-      console.log(encodeData(exp.testing_summary_stats));
-      console.log(_.pairs(encodeData(exp.testing_summary_stats)).join('.'));
       globalGame.socket.send("sendingTestScores." + _.pairs(encodeData(exp.testing_summary_stats)).join('.'));
     },
     button : function() {
