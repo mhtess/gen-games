@@ -305,7 +305,8 @@ teachers_training_labels = plyr::ldply(
     }
   ), data.frame
 ) %>%
-  mutate("data" = "train")
+  mutate("data" = "train") %>%
+  mutate(participant=rep(0:8, each=num_train))
 
 
 # Parse labels assigned to stimuli during testing by teachers
@@ -319,7 +320,8 @@ teachers_test_labels = plyr::ldply(
     }
   ), data.frame
 ) %>%
-  mutate("data" = "test")
+  mutate("data" = "test") %>%
+  mutate(participant=rep(0:8, each=num_test))
 
 # Combine training & test labels, to pass to webppl
 teachers_combined_labels <- rbind(teachers_training_labels, teachers_test_labels)
@@ -342,5 +344,15 @@ ggplot(teacher_preds, aes(x=rational_rules, y=human)) +
   scale_x_continuous(limits = c(0,1), breaks = seq(0,1, .1))
 ```
 
-##### Posterior over Rules
+Pooling the data seems to result in a wash, when trying to predicting behavioral data. Let's see how well it works, when we try to predict individual user's performance
 
+#### Teacher Labels (Unpooled)
+Now, we try running rational rules on the labels provided by teachers in this experiment.\
+
+Best Teacher:
+```{r}
+teacher_preds <- as.data.frame(webppl(program_file = "./rational_rules.wppl", packages=c("webppl-json"), data=teachers_combined_labels, data_var="combinedTeacherLabels")) %>%
+  rename(critter = V1) %>%
+  rename(rational_rules= V2) %>%
+  rename(human = V3)
+```
