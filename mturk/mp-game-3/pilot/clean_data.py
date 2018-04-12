@@ -88,4 +88,4 @@ if __name__ == '__main__':
     test_preds_df.insert(2, 'type', 'test')
     test_preds_df.index = range(len(training_preds_df), len(training_preds_df) + len(test_preds_df))
     combined_preds = pandas.concat([training_preds_df, test_preds_df])
-    combined_preds.to_json("teacher_posterior_preds.json")
+    combined_preds.to_json("teacher_posterior_preds_pooled.json")

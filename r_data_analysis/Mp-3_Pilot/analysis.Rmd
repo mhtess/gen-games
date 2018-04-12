@@ -152,7 +152,6 @@ Examining the breakdown of hits/misses and correct rejections/false alarms it se
 ```{r}
 test_perf <- do.call(rbind.data.frame, lapply(summary_data_reduced$testing_summary_stats, fromJSON))
 
-
 test_acc <- summary_data_reduced %>%
   mutate(correct = test_perf$hits + test_perf$correct_rejections) %>%
   mutate(incorrect = test_perf$misses + test_perf$false_alarms) %>%
@@ -298,11 +297,16 @@ Now, we try running rational rules on the labels provided by teachers in this ex
 # Parse labels assigned to stimuli during training by teachers
 teachers_training_labels = plyr::ldply(
   lapply(
-    summary_data_reduced$training_trials,
-    function(x){ return(data.frame(fromJSON(x)))}
+    summary_data_reduced %>%
+      filter(role == "explorer") %>%
+      .$training_trials,
+    function(x){
+      bind_rows(fromJSON(x))
+    }
   ), data.frame
 ) %>%
-  mutate("data" = "training")
+  mutate("data" = "train")
+
 
 # Parse labels assigned to stimuli during testing by teachers
 teachers_test_labels = plyr::ldply(
@@ -311,7 +315,7 @@ teachers_test_labels = plyr::ldply(
       filter(role == "explorer") %>%
       .$testing_trials,
     function(x){
-      return(data.frame(fromJSON(x)))
+      bind_rows(fromJSON(x))
     }
   ), data.frame
 ) %>%
@@ -323,14 +327,19 @@ teachers_combined_labels <- rbind(teachers_training_labels, teachers_test_labels
 
 ##### Posterior Predictives
 Here we examine the posterior predictives, as determine by the rational rules model comapared with those provided by the teachers.
+
 ```{r}
-training_trial_predictives <- summary_data_reduced$training_trials
+teacher_preds <- as.data.frame(webppl(program_file = "./rational_rules.wppl", packages=c("webppl-json"), data=teachers_combined_labels, data_var="combinedTeacherLabels")) %>%
+  rename(critter = V1) %>%
+  rename(rational_rules= V2) %>%
+  rename(human = V3)
 ```
-
-```{r}
-teacher_preds <- webppl(program_file = "./rational_rules.wppl", packages=c("webppl-json"), data=teachers_combined_labels, data_var="combinedTeacherLabels")
-
-
+```{r fig.width= 6, fig.height=3}
+teacher_preds$rational_rules <- as.numeric(as.character(teacher_preds$rational_rules))
+teacher_preds$human <- as.numeric(as.character(teacher_preds$human))
+ggplot(teacher_preds, aes(x=rational_rules, y=human)) +
+  geom_point() +
+  scale_x_continuous(limits = c(0,1), breaks = seq(0,1, .1))
 ```
 
 ##### Posterior over Rules
