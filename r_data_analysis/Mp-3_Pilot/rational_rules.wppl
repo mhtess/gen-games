@@ -10,6 +10,7 @@
 var trainingStimuli = json.read('../../experiments/mp-game-3/js/training_data.json');
 var testStimuli = json.read('../../experiments/mp-game-3/js/test_data.json');
 var posteriorPredictivesTeachersPooled = json.read('../../mturk/mp-game-3/pilot/teacher_posterior_preds_pooled.json');
+var posteriorPredictivesTeachersUnpooled = json.read('../../mturk/mp-game-3/pilot/teacher_posterior_preds_unpooled.json');
 
 // Mapping from trait names -> trait values -> discrete value
 var catMapping = {
@@ -95,7 +96,7 @@ var TauKernel = function(prevVal) {
 var genRationRulesFunc = function(AObjects, BObjects, TObjects, allObjs) {
   var rationalRules = function() {
     var tau = sample(Beta({a:1, b:1}), {driftKernel: TauKernel});
-    var noiseParam = Math.exp(-1.5); // prior that a given sample is an outlier
+    var noiseParam = Math.exp(-10); // prior that a given sample is an outlier
   
     // Recursive definition of producing terminal predicate
     // or continuing a formula with "AND".
@@ -154,7 +155,7 @@ var genRationRulesFunc = function(AObjects, BObjects, TObjects, allObjs) {
 var rationalRulesAnalysis = function(val, AObjects, BObjects, TObjects, allObjs) {
   // Run MCMC Inference
   var rationalRules = genRationRulesFunc(AObjects, BObjects, TObjects, allObjs);
-  var rulePosterior = Infer({method: 'MCMC', samples:2000, burn:30000}, rationalRules);
+  var rulePosterior = Infer({method: 'MCMC', samples:2000, burn:70000}, rationalRules);
   var supportProbs = map(function(val) {
     return {v: val, logProb: rulePosterior.score(val)}
   }, rulePosterior.support());
@@ -266,6 +267,79 @@ var pooledTeacherLabelsRationalRules = function(val) {
   return flattenedResult;
 }
 
+// Rational Rules Applied To Data w/ Teacher Labels
+// Note: Requires variable combinedTeacherLabels to be passed in from r script
+var unpooledTeacherLabelsRationalRules = function(val, participant_index) {
+  // Load critters from training stimuli file
+  var defaultTrainingCritters = _.uniqWith(map(makeObj, trainingStimuli), _.isEqual);
+  var defaultTestCritters = _.uniqWith(map(makeObj, testStimuli), _.isEqual);
+
+  // Subsitute "belongs_to_concept" gold label with the one provided
+  // by a teacher. Do this for each teacher, across trials.
+  var participantLabels = filter(function(x) {
+      return x["participant"] == participant_index;
+    }, combinedTeacherLabels
+  );
+
+console.log(participantLabels);
+
+  var trainingCritters = filter(function(x) {
+    return x != null;
+  }, map(function(x) {
+    if (x["data"] == "training") {
+      var baseCritter = defaultTrainingCritters[x["trial_num"]];
+      var critter = {
+        critter: baseCritter["critter"],
+        body_color: baseCritter["body_color"],
+        secondary_color: baseCritter["secondary_color"],
+        size: baseCritter["size"],
+        belongs_to_concept: x["turker_label"],
+      };
+      return critter;
+    }
+  }, participantLabels));
+
+  
+  // Subsitute "belongs_to_concept" gold label with the one provided
+  // by a teacher. Do this for each each participant, across trials.
+  var TObjects = filter(function(x) {
+    return x != null;
+  }, map(function(x) {
+    if (x["data"] == "test") {
+      var baseCritter = defaultTestCritters[x["trial_num"]];
+      var critter = {
+        critter: baseCritter["critter"],
+        body_color: baseCritter["body_color"],
+        secondary_color: baseCritter["secondary_color"],
+        size: baseCritter["size"],
+        belongs_to_concept: x["turker_label"],
+      };
+      return critter;
+    }
+  }, participantLabels));
+
+  // Split into Training A/B Groups & Test Split
+  var AObjects = filter(function(x) { return x["belongs_to_concept"] == true;}, trainingCritters);
+  var BObjects = filter(function(x) { return x["belongs_to_concept"] == false;}, trainingCritters);  
+  var allObjs = _.uniqWith(_.concat(defaultTrainingCritters, defaultTestCritters), _.isEqual);
+
+  var posteriorPredictives= _.concat(
+    Object.values(posteriorPredictivesTeachersPooled["pred_train"][toString(participant_index)]),
+    Object.values(posteriorPredictivesTeachersPooled["pred_test"])[toString(participant_index)]
+  );
+
+  var rationalRulePredictives = rationalRulesAnalysis(val, AObjects, BObjects, TObjects, allObjs);
+
+
+  var result = _.zip(rationalRulePredictives, posteriorPredictives);
+  var flattenedResult = map(function(x) {
+    return _.flatten(x);
+  }, result);
+  return flattenedResult;
+}
+
+
 // goldLabelsRationalRules('predictives');
 // goldLabelsRationalRules('support');
 pooledTeacherLabelsRationalRules('predictives');
+// unpooledTeacherLabelsRationalRules('predictives', 7);
