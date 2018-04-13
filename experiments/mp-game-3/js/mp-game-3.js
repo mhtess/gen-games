@@ -426,9 +426,7 @@ function make_slides(f) {
         <h3>Instructions</h3>
         <br>
         <p>
-        Six months later, you return to Crittun, this time with your partner. You have accidentally left your "wudsy detector" at home and must identify creatures without its help.
-        <br> <br>
-        On each trial, you will identify a creature as "wudsy" or "not wudsy". You will be awarded a bonus according to how well you and your partner perform on this task.
+        On each trial, you will determine whether a creature is wudsy, without the help of the detector. You will be awarded a bonus according to how well you and your partner perform on this task.
         <br> <br>
         Press Continue to start the game.</p>
         <br> <br>
@@ -438,10 +436,8 @@ function make_slides(f) {
         var playerBInstructions = `<br><br>
         <h3>Instructions</h3>
         <br>
-        <p> Your partner has brought you to the planet Crittun but left their "wudsy detector" at home.
-        <br> <br>
-        In the chatroom, your partner should have told you about the "wudsy creatures". Now it\'s time to use that knowledge!
-        On each trial, you must identify creatures as "wudsy" or not "wudsy". You will be awarded a bonus according to how well you and your partner perform on this task.
+        In the chatroom, you and your partner should have talked about wudsy creatures.
+        On each trial, you will determine whether a creature is wudsy. You will be awarded a bonus according to how well you and your partner perform on this task.
         <br> <br>
         Press Continue to start the game. </p>
         <br> <br>
@@ -575,6 +571,7 @@ function make_slides(f) {
     start : function() {
       globalGame.socket.send("enterSlide.thanks.");
       exp.data= {
+        "game_id": globalGame.data.id,
         "role": globalGame.my_role,
         "training_trials" : exp.training_data_trials,
         "testing_trials": exp.testing_data_trials,
