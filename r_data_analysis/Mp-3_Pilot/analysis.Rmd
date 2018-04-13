@@ -350,9 +350,6 @@ Pooling the data seems to result in a wash, when trying to predicting behavioral
 Now, we try running rational rules on the labels provided by teachers in this experiment.\
 
 Best Teacher:
-```{r}
-teacher_preds <- as.data.frame(webppl(program_file = "./rational_rules.wppl", packages=c("webppl-json"), data=teachers_combined_labels, data_var="combinedTeacherLabels")) %>%
-  rename(critter = V1) %>%
-  rename(rational_rules= V2) %>%
-  rename(human = V3)
+```{r
+
 ```
