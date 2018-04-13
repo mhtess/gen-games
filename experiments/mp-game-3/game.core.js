@@ -32,7 +32,7 @@ var game_core = function(options){
   this.experimentName = 'mpGame3';
   this.iterationName = 'pilot1';
   this.anonymizeCSV = true;
-  this.bonusAmt = 2; // 2 cents
+  this.bonusAmt = 1; // 1 cent
 
   // Player parameters
   this.players_threshold = 2;
