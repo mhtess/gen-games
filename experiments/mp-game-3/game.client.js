@@ -140,17 +140,12 @@ var customSetup = function(globalGame) {
   // update critters from server for the upcoming test critters and next learning critters
   globalGame.socket.on('exitChatRoom', function(data){
     console.log("exitChatRoom")
-    exp.go();
+    exp.goToSlide("testing_instructions");
   });
 
-  // Means both players are in the wait room, results in moving to next slide
-  // Most code is so the the first player who gets there will see "Connected!" on
-  // the tab when the second player enters. This will allow users to know when they can move forward
   globalGame.socket.on('enterWaitRoom', function(data){
     $('#chatbox').val('');
-    if (exp.slideIndex == 0 || exp.slideIndex == 7) {
-      exp.go();
-    }
+    exp.goToSlide("score_report");
   });
 
   // One player has not yet made it to the chatroom, so sending messages is impossible

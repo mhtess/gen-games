@@ -57,7 +57,6 @@ function init() {
   exp.num_learning_trials = 0;
   exp.num_testing_trials = 0;
   exp.structure = [
-    "wait_room",
     "learning_instructions",
     "learning_critters",
     "chat_instructions",
@@ -77,10 +76,8 @@ function init() {
       $("#mustaccept").show();
     } else {
       $("#start_button").click(function() {$("#mustaccept").show();});
-      exp.go();
     }
   });
-  exp.go();
 }
 
 // --------------------------
@@ -183,36 +180,6 @@ function render_curr_critter(stim, training) {
 function make_slides(f) {
   var slides = {};
 
-  // Waiting room slide -- displayed, when a player is waiting for another
-  // to joing the game or to finish their training or test batch.
-  slides.wait_room = slide({
-    name: "wait_room",
-    start: function() {
-      // Display appropriate wait room text
-      $("#waitText").empty();
-      $(".err").hide();
-      if(exp.block == 0) $("#waitText").append("Waiting for another player to connect...")
-      else $("#waitText").append("Waiting for your partner to catch up...")
-      $("#waitCont").hide();
-
-      // Pretty Animation (Fade In / Out)
-      var blinking_wait = setInterval(function() {
-        $("#waitText").fadeOut(1000);
-        $("#waitText").fadeIn(1000);
-        if($("#welcome").is(':visible')){ //if it goes to next slide
-          clearInterval(blinking_wait);
-        }
-      }, 2000);
-
-      // Notify the server:
-      // 1) Player has entered the wait room slide for book keeping.
-      // 2) Player has entered the wait room and an action should be emitted,
-      //    once another player is found / the other player's action is completed.
-      globalGame.socket.send("enterSlide.wait_room.");
-      globalGame.socket.send("enterWaitRoom.");
-    }
-  });
-
   // Learning instructions slide -- information as how the learning trials
   // shall proceed for Player A.
   slides.learning_instructions = slide({
@@ -266,11 +233,9 @@ function make_slides(f) {
     },
     button : function() {
       if (globalGame.my_role == "explorer") {
-        exp.go();
+        exp.goToSlide("learning_critters");
       } else {
-        exp.go();
-        exp.go();
-        exp.go();
+        exp.goToSlide("chatRoom")
       }
     }
   });
@@ -337,29 +302,20 @@ function make_slides(f) {
               this.log_responses(cur_index, this.time_spent/1000, turker_label, true_label, is_correct);
               _stream.apply(this);
               globalGame.socket.send("logTrain.learnCritters." + _.pairs(encodeData(exp.training_data_trials[cur_index])).join('.'));  
-              
-              console.log(this.learning_trial_idx);
-              console.log(exp.num_learning_trials);
-              if (this.learning_trial_idx == exp.num_learning_trials) {
-                exp.training_summary_stats.score = exp.training_summary_stats['hits'] - exp.training_summary_stats['false_alarms']
-                globalGame.socket.send("logScores.learnCritters." + _.pairs(encodeData(exp.training_summary_stats)).join('.'));
-                exp.go();
-              }
             }
           );
         } else {
           this.log_responses(cur_index, this.time_spent/1000, turker_label, true_label, is_correct);
           _stream.apply(this); //make sure this is at the *end*, after you log your data
           globalGame.socket.send("logTrain.learnCritters." + _.pairs(encodeData(exp.training_data_trials[cur_index])).join('.'));
-
-          console.log(this.learning_trial_idx);
-          console.log(exp.num_learning_trials);
-          if (this.learning_trial_idx == exp.num_learning_trials) {
-            exp.training_summary_stats.score = exp.training_summary_stats['hits'] - exp.training_summary_stats['false_alarms']
-            globalGame.socket.send("logScores.learnCritters." + _.pairs(encodeData(exp.training_summary_stats)).join('.'));
-            exp.go();
-          }
         }
+
+        if (this.learning_trial_idx == exp.num_learning_trials) {
+          exp.training_summary_stats.score = exp.training_summary_stats['hits'] - exp.training_summary_stats['false_alarms']
+          globalGame.socket.send("logScores.learnCritters." + _.pairs(encodeData(exp.training_summary_stats)).join('.'));
+          exp.go();
+        }
+
       } else {
         alert("Please make sure to label all the critters, before proceeding");
       }
@@ -497,6 +453,7 @@ function make_slides(f) {
       } else {
         exp.testing_summary_stats.hits += 1;
       }
+
       this.log_responses(cur_index, this.time_spent/1000, turker_label, true_label, is_correct);
       _stream.apply(this); //make sure this is at the *end*, after you log your data
       globalGame.socket.send("logTest.testCritters." + _.pairs(encodeData(exp.testing_data_trials[cur_index])).join('.'));
@@ -504,8 +461,6 @@ function make_slides(f) {
       alert("Please make sure to label all the critters, before proceeding");
     }
     
-    console.log(this.testing_trial_idx);
-    console.log(exp.num_testing_trials);
     if (this.testing_trial_idx == exp.num_testing_trials) {
       exp.testing_summary_stats.score = exp.testing_summary_stats['hits'] - exp.testing_summary_stats['false_alarms']
       globalGame.socket.send("logScores.testCritters." + _.pairs(encodeData(exp.testing_summary_stats)).join('.'));
@@ -521,6 +476,35 @@ function make_slides(f) {
       "is_correct": is_correct,
     });
     },
+  });
+
+  // Waiting room slide -- displayed, when a player is waiting for another
+  // to joing the game or to finish their training or test batch.
+  slides.wait_room = slide({
+    name: "wait_room",
+    start: function() {
+      // Display appropriate wait room text
+      $("#waitText").empty();
+      $(".err").hide();
+      $("#waitText").append("Waiting for your partner to catch up...");
+      $("#waitCont").hide();
+
+      // Pretty Animation (Fade In / Out)
+      var blinking_wait = setInterval(function() {
+        $("#waitText").fadeOut(1000);
+        $("#waitText").fadeIn(1000);
+        if($("#welcome").is(':visible')){ //if it goes to next slide
+          clearInterval(blinking_wait);
+        }
+      }, 2000);
+
+      // Notify the server:
+      // 1) Player has entered the wait room slide for book keeping.
+      // 2) Player has entered the wait room and an action should be emitted,
+      //    once the other player has caught up.
+      globalGame.socket.send("enterSlide.wait_room.");
+      globalGame.socket.send("enterWaitRoom.");
+    }
   });
 
   slides.score_report = slide({
@@ -539,8 +523,6 @@ function make_slides(f) {
     start: function(){
       $('#humanResult').hide();
       globalGame.socket.send("calculatingReward.")
-      //console.log("reward: " + globalGame.calculate_end_game_bonus());
-
     },
     submit : function(e){
         globalGame.socket.send("enterSlide.subj_info.");

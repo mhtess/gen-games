@@ -85,6 +85,7 @@ var onMessage = function(client,message) {
       // Will show a wait message if only one player is in the chatroom
       // Will allow them to enter the chatroom
       if (gc.currentSlide["explorer"] != gc.currentSlide["student"]) {
+        console.log("Waiting for another player.....");
         target.instance.emit("chatWait", {})
       } else {
         setTimeout(function() {
@@ -166,7 +167,6 @@ var dataOutput = function() {
   };
 
   function decodeData(dataObj){
-    console.log(dataObj);
     return _.mapValues(dataObj, function(val){
       if (utils.isNumeric(val)) {
         return val
