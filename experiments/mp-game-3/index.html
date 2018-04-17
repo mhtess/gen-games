@@ -59,17 +59,6 @@
 <body>
   <noscript>This task requires JavaScript.</noscript>
 
-  <!-- This slide will be seen by one of the players while until the other player reaches the same screen -->
-  <div class="slide" id="wait_room">
-      <br><br>
-      <p id='waitText'></p>
-      <br>
-      <p>Please do not refresh the page!</p>
-      <br><br>
-    <hr>
-    <button class="continuebutton" id='waitCont'>Continue</button>
-  </div>
-
   <!-- This is the slide in which users will learn how they will play the game. -->
   <div class="slide" id="learning_instructions">
     <br><br>
@@ -95,7 +84,7 @@
     <div id="curr_critter_training"></div>
     <br>
     <br>
-    <button onclick="_s.button()" id="continuebutton">Use Wudsy Detector</button>
+    <button onclick="_s.button()" class="continuebutton">Use Wudsy Detector</button>
     <br>
     <br>
     <p class="critterInfo"> The <i>wudsy</i> creatures from previous trials are surrounded by a square.</p>
@@ -124,10 +113,21 @@
    <button class="continuebutton" id="test_button" onclick="_s.button()">Continue</button>
  </div>
 
+  <!-- This slide will be seen by one of the players while until the other player reaches the same screen -->
+  <div class="slide" id="wait_room">
+    <br><br>
+    <p id='waitText'></p>
+    <br>
+    <p>Please do not refresh the page!</p>
+    <br><br>
+    <hr>
+    <button class="continuebutton" id='waitCont'>Continue</button>
+  </div>
+
  <!-- Shows score report before allowing player to move on to next block -->
   <div class="slide" id="score_report">
    <h3 id="scoreTitle">Score Report</h3>
-   <p id="scoreInfo"><br>Here are the scores from this past section. <br> <br> If the scores are blank, please stay on this page for a minute or two. It will be updated with scores, once your partner has finished as well.</p>
+   <p id="scoreInfo"><br>Here are the scores from this past section. </p>
    <br>
    <div>
      <table>

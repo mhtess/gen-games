@@ -34,7 +34,6 @@ function init() {
   };
 
   // Initialize experiment variables
-  exp.startT = Date.now()
   exp.block = 0;
   exp.training_data_trials = [];
   exp.testing_data_trials = [];
@@ -76,8 +75,10 @@ function init() {
       $("#mustaccept").show();
     } else {
       $("#start_button").click(function() {$("#mustaccept").show();});
+      exp.go();
     }
   });
+  exp.go();
 }
 
 // --------------------------
