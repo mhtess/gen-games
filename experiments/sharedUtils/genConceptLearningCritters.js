@@ -85,7 +85,7 @@ var enumerable_opts = ["critterTypes", "body_color", "secondary_color", "prop1"]
 // ------------------
 // Dataset Generation
 // ------------------
-var createDatset = function(rule, training_set_sz, enumerable_opts, creature_opts, critter_to_color_props) {
+var createDatset = function(rule, training_set_sz) {
 	// Define dataset of some number of sets of critters.
 	// ---------
 	// rule: function that evaluates a dictionary of "body_color", "secondary_color",
@@ -94,8 +94,6 @@ var createDatset = function(rule, training_set_sz, enumerable_opts, creature_opt
 	// training_set_sz: Training set size. If training set size >= possible
 	//					unique creatures (given enumerable opts and creature_opts),
 	//					then the test size becomes 0.
-	// enumerable_opts: List of traits with multiple values
-	// creature_opts: Possible trait options
 
 	// Establish Base Critter (Constant Features Except Color)
 	var base_critter = {};
@@ -235,7 +233,7 @@ var createCritter = function(base_critter, enumerable_opts, creature_opts, descr
 	}			
 
 	// Belongs to concept?
-	var belongs_to_concept = rule(critter);
+	var belongs_to_concept = rule(critter, color_dict, prop1_dict);
 	critter["belongs_to_concept"] = belongs_to_concept;
 	return critter
 }
@@ -250,28 +248,51 @@ var saveDatasetToFile = function(dataset, filepath) {
 }
 
 // ------------------
+// Data File Creation
+// ------------------
+function genDatasets(rules, NUM_TRAIN) {
+	// Rules is a list of rule objects. Example included below.
+	// rule = {
+	// 		name: "body_color_orange",
+	// 		func: function(critter, color_dict, prop1_dict) {
+	// 			return critter["props"]["col1"] === color_dict["orange"];
+	// 		},
+	// 		type: SINGLE_FEAT,
+	// }
+
+	var rule_summary = {};
+	var index = 0;
+	for (let r of rules) {
+		var r_data = createDatset(r.func, NUM_TRAIN);
+		var training_data_fn = './training_data_' + r.name + '.json';
+		var test_data_fn = './test_data_' + r.name + '.json';
+		saveDatasetToFile(r_data[0], training_data_fn);
+		saveDatasetToFile(r_data[1], test_data_fn);
+
+		rule_summary[index] = {
+			name: r.name,
+			type: r.type,
+		}
+		index++;
+	}
+	jsonfile.writeFile("./rule_summary.json", rule_summary, function(err) {
+		console.log(err);
+	});
+}
+// ------------------
 // Example End-to-End
 // ------------------
 var example = function() {
 	// Creates and logs an example dataset to the console.
-	var rule = function(critter) {
+	var rule = function(critter, color_dict, prop1_dict) {
 		// Example Rule: If critter is small and has a blue body
 		return critter["props"]["col1"] === color_dict["blue"] && critter["props"]["prop1"] === prop1_dict["small"];
 	}
 	var data = createDatset(rule, 50, enumerable_opts, creature_opts, critter_to_color_props);
 }
-example()
 
-// ----
-// MAIN
-// ----
-var hard_rule = function(critter) {
-	// Rule: If critter is a fish XOR blue body
-	return (
-		(critter["critter"] === "fish" || critter["body_color"] === color_dict["blue"]) &&
-		!(critter["critter"] === "fish" && critter["body_color"] === color_dict["blue"])
-	);
+module.exports = {
+    createDatset: createDatset,
+	saveDatasetToFile: saveDatasetToFile,
+	genDatasets: genDatasets,
 }
-var hard_rule_data = createDatset(hard_rule, 50, enumerable_opts, creature_opts, critter_to_color_props);
-saveDatasetToFile(hard_rule_data[0], './training_data.json');
-saveDatasetToFile(hard_rule_data[1], './test_data.json');
