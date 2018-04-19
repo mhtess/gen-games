@@ -145,7 +145,7 @@ var customSetup = function(globalGame) {
 
   globalGame.socket.on('enterWaitRoom', function(data){
     $('#chatbox').val('');
-    exp.goToSlide("score_report");
+    exp.go();
   });
 
   // One player has not yet made it to the chatroom, so sending messages is impossible
