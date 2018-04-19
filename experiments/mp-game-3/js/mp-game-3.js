@@ -56,6 +56,7 @@ function init() {
   exp.num_learning_trials = 0;
   exp.num_testing_trials = 0;
   exp.structure = [
+    "wait_room",
     "learning_instructions",
     "learning_critters",
     "chat_instructions",
@@ -79,6 +80,7 @@ function init() {
     }
   });
   exp.go();
+  console.log(exp.cur_index);
 }
 
 // --------------------------
@@ -487,7 +489,13 @@ function make_slides(f) {
       // Display appropriate wait room text
       $("#waitText").empty();
       $(".err").hide();
-      $("#waitText").append("Waiting for your partner to catch up...");
+      console.log(exp.cur_index);
+      if (exp.cur_index == 0){
+        $("#waitText").append("Waiting for another player to join the game ...");
+      } else {
+        $("#waitText").append("Waiting for your partner to catch up...");
+      }
+
       $("#waitCont").hide();
 
       // Pretty Animation (Fade In / Out)
