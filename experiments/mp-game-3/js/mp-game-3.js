@@ -564,7 +564,11 @@ function make_slides(f) {
       exp.data= {
         "game_id": globalGame.data.id,
         "role": globalGame.my_role,
-        "training_trials" : exp.training_data_trials,
+        "training_data_fn": globalGame.training_data_fn,
+        "test_data_fn": globalGame.test_data_fn,
+        "rule_idx": globalGame.rule_idx,
+        "rule_type": globalGame.rule_type,
+        "training_trials": exp.training_data_trials,
         "testing_trials": exp.testing_data_trials,
         "system" : exp.system,
         "subject_information" : exp.subj_data,
