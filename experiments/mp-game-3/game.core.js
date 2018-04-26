@@ -1,3 +1,5 @@
+import { request } from 'http';
+
 //   Copyright (c) 2012 Sven "FuzzYspo0N" Bergström,
 //                 2013 Robert XD Hawkins
 //   Written by : http://underscorediscovery.com
@@ -16,8 +18,13 @@ if( typeof _ === 'undefined' ) {
 if (has_require) {
   utils  = require(__base + 'sharedUtils/sharedUtils.js');
   assert = require('assert');
-  training_data = require('./js/training_data.json');
-  test_data = require('./js/test_data.json');
+
+  training_data_fn = './js/training_data_body_color_blue.json';
+  test_data_fn = './js/test_data_body_color_blue.json';
+
+  rule_summary = require('./js/rule_summary.json');
+  training_data = require(training_data_fn);
+  test_data = require(test_data_fn);
 }
 
 // Functional form, for game creation 
@@ -67,6 +74,16 @@ var game_core = function(options){
       explorer: test_data,
       student: test_data,
     }
+    this.training_data_fn = training_data_fn;
+    this.test_data_fn = test_data_fn;
+    this.rule_idx = -1;
+    this.rule_type = "";
+    _.forOwn(rule_summary, function(rule_props, rule_idx) {
+      if (training_data_fn.includes(rule_props["name"]) && test_data_fn.includes(rule_props["name"])) {
+        this.rule_idx = parseInt(rule_idx);
+        this.rule_type = rule_props["type"];
+      }
+    });
     this.data = {
       id: this.id,
       system: {},
