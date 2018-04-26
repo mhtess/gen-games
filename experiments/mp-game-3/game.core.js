@@ -19,7 +19,7 @@ if (has_require) {
 
   training_data_fn = './js/training_data_body_color_orange_1.json';
   test_data_fn = './js/test_data_body_color_orange_1.json';
-
+  
   rule_summary = require('./js/rule_summary.json');
   training_data = require(training_data_fn);
   test_data = require(test_data_fn);
@@ -78,7 +78,8 @@ var game_core = function(options){
     var rule_idx = -1;
     var rule_type = "";
 
-    for (const [rule_idx, rule_props] of Object.entries(rule_summary)) {
+    for (const rule_idx of Object.keys(rule_summary)) {
+      var rule_props = rule_summary[rule_idx];
       var training_fn = "./js/training_data_" + rule_props["name"] + ".json";
       if (training_data_fn == training_fn) {  
         this.rule_idx = parseInt(rule_idx);
