@@ -557,6 +557,7 @@ function make_slides(f) {
   slides.thanks = slide({
     name : "thanks",
     start : function() {
+      console.log(globalGame);
       globalGame.socket.send("enterSlide.thanks.");
       exp.data= {
         "game_id": globalGame.data.id,
