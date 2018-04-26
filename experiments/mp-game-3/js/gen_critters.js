@@ -39,15 +39,17 @@ function genRules() {
 	// Rule: Body Color
 	rules.push({
 		name: "body_color_orange",
-		func: function(critter, color_dict, prop1_dict) {
-			return critter["props"]["col1"] === color_dict["orange"];
+		func: function(critter, color_dict, prop1_dict, critter_to_color_props) {
+			var critterBodyColorProp = critter_to_color_props[critter["critter"]]["body_color"][0];
+			return critter["props"][critterBodyColorProp] === color_dict["orange"];
 		},
 		type: SINGLE_FEAT,
 	});
 	rules.push({
 		name: "body_color_blue",
-		func: function(critter, color_dict, prop1_dict) {
-			return critter["props"]["col1"] === color_dict["blue"];
+		func: function(critter, color_dict, prop1_dict, critter_to_color_props) {
+			var critterBodyColorProp = critter_to_color_props[critter["critter"]]["body_color"][0];
+			return critter["props"][critterBodyColorProp] === color_dict["blue"];
 		},
 		type: SINGLE_FEAT,
 	});
@@ -55,15 +57,17 @@ function genRules() {
 	// Rule: Critter And Body Color
 	rules.push({
 		name: "critter_fish_body_color_blue",
-		func: function(critter, color_dict, prop1_dict) {
-			return critter["critter"] === "fish" && critter["props"]["col1"] === color_dict["blue"];
+		func: function(critter, color_dict, prop1_dict, critter_to_color_props) {
+			var critterBodyColorProp = critter_to_color_props[critter["critter"]]["body_color"][0];
+			return critter["critter"] === "fish" && critter["props"][critterBodyColorProp] === color_dict["blue"];
 		},
 		type: CONJUNCTION,
 	});
 	rules.push({
 		name: "critter_bird_body_color_green",
-		func: function(critter, color_dict, prop1_dict) {
-			return critter["critter"] === "bird" && critter["props"]["col1"] === color_dict["green"];
+		func: function(critter, color_dict, prop1_dict, critter_to_color_props) {
+			var critterBodyColorProp = critter_to_color_props[critter["critter"]]["body_color"][0];
+			return critter["critter"] === "bird" && critter["props"][critterBodyColorProp] === color_dict["green"];
 		},
 		type: CONJUNCTION,
 	});
@@ -71,15 +75,19 @@ function genRules() {
 	// Rule: Body Color AND Second Color
 	rules.push({
 		name: "body_color_orange_secondary_color_purple",
-		func: function(critter, color_dict, prop1_dict) {
-			return critter["props"]["col1"] === color_dict["orange"] && critter["props"]["col2"] === color_dict["purple"];
+		func: function(critter, color_dict, prop1_dict, critter_to_color_props) {
+			var critterBodyColorProp = critter_to_color_props[critter["critter"]]["body_color"][0];
+			var critterSecondaryColorProp = critter_to_color_props[critter["critter"]]["secondary_color"][0];	
+			return critter["props"][critterBodyColorProp] === color_dict["orange"] && critter["props"][critterSecondaryColorProp] === color_dict["purple"];
 		},
 		type: CONJUNCTION,
 	});
 	rules.push({
 		name: "body_color_green_secondary_color_red",
-		func: function(critter, color_dict, prop1_dict) {
-			return critter["props"]["col1"] === color_dict["green"] && critter["props"]["col2"] === color_dict["red"];
+		func: function(critter, color_dict, prop1_dict, critter_to_color_props) {
+			var critterBodyColorProp = critter_to_color_props[critter["critter"]]["body_color"][0];
+			var critterSecondaryColorProp = critter_to_color_props[critter["critter"]]["secondary_color"][0];	
+			return critter["props"][critterBodyColorProp] === color_dict["green"] && critter["props"][critterSecondaryColorProp] === color_dict["red"];
 		},
 		type: CONJUNCTION,
 	});
@@ -88,15 +96,17 @@ function genRules() {
 	// Rule: Critter OR Secondary Color
 	rules.push({
 		name: "critter_bug_or_secondary_color_yellow",
-		func: function(critter, color_dict, prop1_dict) {
-			return critter["critter"] === "bug" || critter["props"]["col2"] === color_dict["yellow"];
+		func: function(critter, color_dict, prop1_dict, critter_to_color_props) {
+			var critterSecondaryColorProp = critter_to_color_props[critter["critter"]]["secondary_color"][0];	
+			return critter["critter"] === "bug" || critter["props"][critterSecondaryColorProp] === color_dict["yellow"];
 		},
 		type: DISJUNCTION,
 	});
 	rules.push({
 		name: "critter_fish_or_secondary_color_purple",
-		func: function(critter, color_dict, prop1_dict) {
-			return critter["critter"] === "fish" || critter["props"]["col2"] === color_dict["purple"];
+		func: function(critter, color_dict, prop1_dict, critter_to_color_props) {
+			var critterSecondaryColorProp = critter_to_color_props[critter["critter"]]["secondary_color"][0];	
+			return critter["critter"] === "fish" || critter["props"][critterSecondaryColorProp] === color_dict["purple"];
 		},
 		type: DISJUNCTION,
 	});
@@ -104,15 +114,17 @@ function genRules() {
 	// Rule: Critter OR Primary Color
 	rules.push({
 		name: "critter_bird_or_body_color_green",
-		func: function(critter, color_dict, prop1_dict) {
-			return critter["critter"] === "bird" || critter["props"]["col1"] === color_dict["green"];
+		func: function(critter, color_dict, prop1_dict, critter_to_color_props) {
+			var critterBodyColorProp = critter_to_color_props[critter["critter"]]["body_color"][0];
+			return critter["critter"] === "bird" || critter["props"][critterBodyColorProp] === color_dict["green"];
 		},
 		type: DISJUNCTION,
 	});
 	rules.push({
 		name: "critter_bug_or_body_color_orange",
-		func: function(critter, color_dict, prop1_dict) {
-			return critter["critter"] === "bug" || critter["props"]["col1"] === color_dict["orange"];
+		func: function(critter, color_dict, prop1_dict, critter_to_color_props) {
+			var critterBodyColorProp = critter_to_color_props[critter["critter"]]["body_color"][0];
+			return critter["critter"] === "bug" || critter["props"][critterBodyColorProp] === color_dict["orange"];
 		},
 		type: DISJUNCTION,
 	});	

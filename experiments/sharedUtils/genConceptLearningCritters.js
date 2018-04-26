@@ -233,7 +233,7 @@ var createCritter = function(base_critter, enumerable_opts, creature_opts, descr
 	}			
 
 	// Belongs to concept?
-	var belongs_to_concept = rule(critter, color_dict, prop1_dict);
+	var belongs_to_concept = rule(critter, color_dict, prop1_dict, critter_to_color_props);
 	critter["belongs_to_concept"] = belongs_to_concept;
 	return critter
 }
@@ -284,7 +284,7 @@ function genDatasets(rules, NUM_TRAIN) {
 // ------------------
 var example = function() {
 	// Creates and logs an example dataset to the console.
-	var rule = function(critter, color_dict, prop1_dict) {
+	var rule = function(critter, color_dict, prop1_dict, critter_to_color_props) {
 		// Example Rule: If critter is small and has a blue body
 		return critter["props"]["col1"] === color_dict["blue"] && critter["props"]["prop1"] === prop1_dict["small"];
 	}
