@@ -74,14 +74,24 @@ var game_core = function(options){
     }
     this.training_data_fn = training_data_fn;
     this.test_data_fn = test_data_fn;
-    this.rule_idx = -1;
-    this.rule_type = "";
-    _.forOwn(rule_summary, function(rule_props, rule_idx) {
-      if (training_data_fn.includes(rule_props["name"]) && test_data_fn.includes(rule_props["name"])) {
+
+    var rule_idx = -1;
+    var rule_type = "";
+
+    for (const [rule_idx, rule_props] of Object.entries(rule_summary)) {
+      var training_fn = "./js/training_data_" + rule_props["name"] + ".json";
+      if (training_data_fn == training_fn) {  
         this.rule_idx = parseInt(rule_idx);
         this.rule_type = rule_props["type"];
+        break;
       }
-    });
+    }
+
+    console.log(this.training_data_fn);
+    console.log(this.test_data_fn);
+    console.log(this.rule_idx);
+    console.log(this.rule_type);
+
     this.data = {
       id: this.id,
       system: {},

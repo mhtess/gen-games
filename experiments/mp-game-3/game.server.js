@@ -159,7 +159,7 @@ var dataOutput = function() {
 
   function decodeData(dataObj){
     var result = _.mapValues(dataObj, function(val){
-      if (result == undefined) {
+      if (val == undefined) {
         return '';
       } else if (utils.isNumeric(val)) {
         return val
