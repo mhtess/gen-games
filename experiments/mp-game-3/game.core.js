@@ -1,5 +1,3 @@
-import { request } from 'http';
-
 //   Copyright (c) 2012 Sven "FuzzYspo0N" Bergström,
 //                 2013 Robert XD Hawkins
 //   Written by : http://underscorediscovery.com
