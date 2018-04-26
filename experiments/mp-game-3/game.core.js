@@ -88,6 +88,9 @@ var game_core = function(options){
       }
     }
 
+    console.log(this.rule_idx);
+    console.log(this.rule_type);
+
     this.data = {
       id: this.id,
       system: {},
