@@ -80,7 +80,6 @@ function init() {
     }
   });
   exp.go();
-  console.log(exp.cur_index);
 }
 
 // --------------------------
@@ -284,12 +283,12 @@ function make_slides(f) {
         this.learning_trial_idx++;
         var stim = this.stim;
         var turker_label = ($("input[type=radio]:checked").val() === "true");
-        var true_label = stim['belongs_to_concept'];
+        var true_label = stim["belongs_to_concept"];
         var is_correct = (turker_label === true_label);
 
         if (turker_label === false && true_label === false) {
           exp.training_summary_stats.correct_rejections += 1;
-        } else if (turker_label=== false && true_label === true){
+        } else if (turker_label === false && true_label === true){
           exp.training_summary_stats.misses += 1;
         } else if (turker_label === true && true_label === false) {
           exp.training_summary_stats.false_alarms += 1;
@@ -300,13 +299,11 @@ function make_slides(f) {
         if (!is_correct) {
           $('#continueButton').prop('disabled', true);
           alert("Incorrect Label Applied to Creature ... You Will Have to Wait 5 Seconds Before the Next Round");
-          sleep(5000).then(
-            () => {
-              this.log_responses(cur_index, this.time_spent/1000, turker_label, true_label, is_correct);
-              _stream.apply(this);
-              globalGame.socket.send("logTrain.learnCritters." + _.pairs(encodeData(exp.training_data_trials[cur_index])).join('.'));  
-            }
-          );
+          sleep(5000).then(() => {
+            this.log_responses(cur_index, this.time_spent/1000, turker_label, true_label, is_correct);
+            _stream.apply(this); //make sure this is at the *end*, after you log your data
+            globalGame.socket.send("logTrain.learnCritters." + _.pairs(encodeData(exp.training_data_trials[cur_index])).join('.'));
+          });
         } else {
           this.log_responses(cur_index, this.time_spent/1000, turker_label, true_label, is_correct);
           _stream.apply(this); //make sure this is at the *end*, after you log your data
@@ -489,8 +486,8 @@ function make_slides(f) {
       // Display appropriate wait room text
       $("#waitText").empty();
       $(".err").hide();
-      console.log(exp.cur_index);
-      if (exp.cur_index == 0){
+      console.log(exp.slideIndex);
+      if (exp.slideIndex == 0){
         $("#waitText").append("Waiting for another player to join the game ...");
       } else {
         $("#waitText").append("Waiting for your partner to catch up...");
