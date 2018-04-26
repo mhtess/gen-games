@@ -17,8 +17,8 @@ if (has_require) {
   utils  = require(__base + 'sharedUtils/sharedUtils.js');
   assert = require('assert');
 
-  training_data_fn = './js/training_data_body_color_blue.json';
-  test_data_fn = './js/test_data_body_color_blue.json';
+  training_data_fn = './js/training_data_body_color_orange_1.json';
+  test_data_fn = './js/test_data_body_color_orange_1.json';
 
   rule_summary = require('./js/rule_summary.json');
   training_data = require(training_data_fn);
@@ -28,7 +28,7 @@ if (has_require) {
 // Functional form, for game creation 
 var game_core = function(options){
   // Log, whether this server version
-  this.server = options.server ;
+  this.server = options.server;
 
   // Data storage parameters
   this.dataStore = ['csv', 'mongo'];
@@ -86,11 +86,6 @@ var game_core = function(options){
         break;
       }
     }
-
-    console.log(this.training_data_fn);
-    console.log(this.test_data_fn);
-    console.log(this.rule_idx);
-    console.log(this.rule_type);
 
     this.data = {
       id: this.id,
