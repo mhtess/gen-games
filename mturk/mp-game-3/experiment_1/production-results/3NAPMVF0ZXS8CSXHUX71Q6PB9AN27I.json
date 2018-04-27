@@ -4,8 +4,8 @@
     "AssignmentId": "3NAPMVF0ZXS8CSXHUX71Q6PB9AN27I",
     "WorkerId": "A55CXM7QR7R0N",
     "answers": {
-        "rule_type": null,
-        "test_data_fn": null,
+        "rule_type": "SINGLE_FEAT",
+        "test_data_fn": "test_data_body_color_orange_1.json",
         "time_in_minutes": null,
         "training_summary_stats": {
             "hits": 13,
@@ -233,7 +233,7 @@
             "OS": "Windows",
             "Browser": "Chrome"
         },
-        "training_data_fn": null,
+        "training_data_fn": "training_data_body_color_orange_1.json",
         "role": "explorer",
         "training_trials": [
             {
@@ -617,7 +617,7 @@
             "type": "testing",
             "correct_rejections": 19
         },
-        "rule_idx": null
+        "rule_idx": 0
     },
     "AcceptTime": "2018-04-27T16:25:48Z",
     "HITId": "3VZYA8PITOBJ6UJQ1EJOLFMGUMY506",
