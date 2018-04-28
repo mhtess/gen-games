@@ -72,6 +72,7 @@ var game_core = function(options){
       explorer: test_data,
       student: test_data,
     }
+    // this.roundNum = 1;
     this.training_data_fn = training_data_fn;
     this.test_data_fn = test_data_fn;
 
@@ -87,9 +88,6 @@ var game_core = function(options){
         break;
       }
     }
-
-    console.log(this.rule_idx);
-    console.log(this.rule_type);
 
     this.data = {
       id: this.id,
@@ -159,8 +157,8 @@ game_core.prototype.get_active_players = function() {
 };
 
 game_core.prototype.newRound = function() {
-  // Transition to the next slide (Learning Instructions for Player A, Waiting Room for Player B)
-  this.server_send_update();
+    // Transition to the next slide (Learning Instructions for Player A, Waiting Room for Player B)
+    this.server_send_update();
 };
 
 game_core.prototype.server_send_update = function(){
@@ -190,6 +188,14 @@ game_core.prototype.server_send_update = function(){
     // All players get test stimuli
     var playerState = p.instance.role == "explorer" ? _.extend(state, {training_critters: local_game.trainingStimuli[p.instance.role]}) : state;
     playerState = _.extend(playerState, {testing_critters: local_game.testStimuli[p.instance.role]});
+    playerState = _.extend(playerState, {
+      testing_critters: local_game.testStimuli[p.instance.role],
+      training_data_fn: local_game.training_data_fn,
+      test_data_fn: local_game.test_data_fn,
+      rule_idx: local_game.rule_idx,
+      rule_type: local_game.rule_type,
+    });
+    console.log(playerState);
     p.player.instance.emit('onserverupdate', playerState);
   });
 };

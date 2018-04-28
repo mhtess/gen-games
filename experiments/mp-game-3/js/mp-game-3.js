@@ -486,7 +486,6 @@ function make_slides(f) {
       // Display appropriate wait room text
       $("#waitText").empty();
       $(".err").hide();
-      console.log(exp.slideIndex);
       if (exp.slideIndex == 0){
         $("#waitText").append("Waiting for another player to join the game ...");
       } else {
@@ -557,7 +556,6 @@ function make_slides(f) {
   slides.thanks = slide({
     name : "thanks",
     start : function() {
-      console.log(globalGame);
       globalGame.socket.send("enterSlide.thanks.");
       exp.data= {
         "game_id": globalGame.data.id,
