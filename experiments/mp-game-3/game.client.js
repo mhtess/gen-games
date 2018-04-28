@@ -72,6 +72,10 @@ var client_onserverupdate_received = function(data){
   globalGame.player_count = data.pc;
   globalGame.roundNum = data.roundNum;
   globalGame.testScores = data.testScores;
+  globalGame.training_data_fn = data.training_data_fn;
+  globalGame.test_data_fn = data.test_data_fn;
+  globalGame.rule_idx = data.rule_idx;
+  globalGame.rule_type = data.rule_type;
 
   // update data object on first round, don't overwrite (FIXME)
   if(!_.has(globalGame, 'data')) {
@@ -83,11 +87,11 @@ var client_onserverupdate_received = function(data){
   exp.slides.testing_critters.present = data.testing_critters;
   if (Array.isArray(data.training_critters)) {
     exp.num_learning_trials = data.training_critters.length;
-    // exp.num_learning_trials = 3;
+    exp.num_learning_trials = 3;
   }
   if (Array.isArray(data.testing_critters)) {
     exp.num_testing_trials = data.testing_critters.length;
-    // exp.num_testing_trials = 5;
+    exp.num_testing_trials = 5;
   }
 };
 
@@ -193,8 +197,6 @@ var customSetup = function(globalGame) {
 
   // Creates the score reports for the players
   globalGame.socket.on('sendingTestScores', function(data){
-    console.log("sendingTestScores");
-    console.log("scores: " + JSON.stringify(data));
     enterScoreReport++;
     // only works when both players have reached this, then it generates scores for both players
     if(enterScoreReport % 2 == 0){ //hacky way to handle error thrown when only one player finishes the test
