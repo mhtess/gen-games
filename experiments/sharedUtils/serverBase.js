@@ -12,10 +12,25 @@ class ReferenceGameServer {
     // Track ongoing games
     this.games = {};
     this.game_count = 0;
+
+    if (this.expName === 'mp-game-3') {
+      this.numGamesPerRule = {
+        "0": 0,
+        "1": 3,
+        "2": 3,
+        "3": 3,
+        "4": 3,
+        "5": 3,
+        "6": 3,
+        "7": 3,
+        "8": 3,
+        "9": 3,
+      }
+    }
   }
 
   startGame (game) {
-    game.newRound();
+      game.newRound();
   }
 
   writeData (client, eventType, message_parts) {
@@ -81,6 +96,7 @@ class ReferenceGameServer {
   createGame (player) {
     // Create a new game instance
     console.log("Creating a Game!!!")
+
     var options = {
       expName: this.expName,
       server: true,
@@ -88,6 +104,17 @@ class ReferenceGameServer {
       player_instances: [{id: player.userid, player: player}],
       player_count: 1
     };
+
+    if (this.expName === 'mp-game-3') {
+      for (const rule_idx of Object.keys(this.numGamesPerRule)) {
+        if (this.numGamesPerRule[rule_idx] !== 0) {
+          options.rule_idx = parseInt(rule_idx);
+          this.numGamesPerRule[rule_idx] -= 1;
+          break;
+        }
+      }
+    }
+
     var game = new this.core(options);
 
     // Assign a role to the player

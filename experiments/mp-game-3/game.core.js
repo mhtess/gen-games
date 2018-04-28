@@ -16,17 +16,13 @@ if( typeof _ === 'undefined' ) {
 if (has_require) {
   utils  = require(__base + 'sharedUtils/sharedUtils.js');
   assert = require('assert');
-
-  training_data_fn = './js/training_data_body_color_orange_1.json';
-  test_data_fn = './js/test_data_body_color_orange_1.json';
-  
   rule_summary = require('./js/rule_summary.json');
-  training_data = require(training_data_fn);
-  test_data = require(test_data_fn);
 }
 
 // Functional form, for game creation 
 var game_core = function(options){
+  console.log(options);
+
   // Log, whether this server version
   this.server = options.server;
 
@@ -65,28 +61,19 @@ var game_core = function(options){
     this.id = options.id;
     this.expName = options.expName;
     this.player_count = options.player_count;
+    this.roundNum = 1;
+
+    var rule_info = rule_summary[options.rule_idx];
+    this.rule_type = rule_info["type"];
+    this.training_data_fn = "./js/training_data_" + rule_info["name"] + ".json";
+    this.test_data_fn = "./js/test_data_" + rule_info["name"] + ".json";
+
     this.trainingStimuli = {
-      explorer: training_data,
+      explorer: require(this.training_data_fn),
     };
     this.testStimuli = {
-      explorer: test_data,
-      student: test_data,
-    }
-    // this.roundNum = 1;
-    this.training_data_fn = training_data_fn;
-    this.test_data_fn = test_data_fn;
-
-    var rule_idx = -1;
-    var rule_type = "";
-
-    for (const rule_idx of Object.keys(rule_summary)) {
-      var rule_props = rule_summary[rule_idx];
-      var training_fn = "./js/training_data_" + rule_props["name"] + ".json";
-      if (training_data_fn == training_fn) {  
-        this.rule_idx = parseInt(rule_idx);
-        this.rule_type = rule_props["type"];
-        break;
-      }
+      explorer: require(this.test_data_fn),
+      student: require(this.test_data_fn),
     }
 
     this.data = {
@@ -108,6 +95,9 @@ var game_core = function(options){
     }];
     this.streams = {};
     this.server_send_update();
+
+    console.log(this);
+
   } else {
     // If we're initializing a player's local game copy, create the player object
     // and the game object. We'll be copying real values into these items
@@ -158,7 +148,7 @@ game_core.prototype.get_active_players = function() {
 
 game_core.prototype.newRound = function() {
     // Transition to the next slide (Learning Instructions for Player A, Waiting Room for Player B)
-    this.server_send_update();
+    this.server_send_update()
 };
 
 game_core.prototype.server_send_update = function(){
