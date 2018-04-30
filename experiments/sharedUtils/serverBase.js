@@ -150,6 +150,11 @@ class ReferenceGameServer {
         delete this.games[gameid];
         this.game_count--;
         this.log('game removed. there are now ' + this.game_count + ' games' );
+        if (this.expName === 'mp-game-3' && (thegame.currentSlide.explorer !== 'thanks' || thegame.currentSlide.student !== 'thanks')) {
+          this.numGamesPerRule[thegame.rule_idx] += 1;
+          this.log('failed to complete a game with rule ' + thegame.rule_idx + " ; incrementing the count for this game type");
+          this.log(this.numGamesPerRule);
+        }
       }
     } else {
       this.log('that game was not found!');
