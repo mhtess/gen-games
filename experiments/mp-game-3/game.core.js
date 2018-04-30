@@ -21,8 +21,6 @@ if (has_require) {
 
 // Functional form, for game creation 
 var game_core = function(options){
-  console.log(options);
-
   // Log, whether this server version
   this.server = options.server;
 
@@ -68,6 +66,7 @@ var game_core = function(options){
     this.training_data_fn = "./js/training_data_" + rule_info.name + ".json";
     this.test_data_fn = "./js/test_data_" + rule_info.name + ".json";
     this.rule_idx = options.rule_idx;
+    console.log("Creating a Game with Rule: " + this.training_data_fn)
 
     this.trainingStimuli = {
       explorer: require(this.training_data_fn),

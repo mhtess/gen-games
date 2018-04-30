@@ -296,8 +296,8 @@ function make_slides(f) {
           exp.training_summary_stats.hits += 1;
         }
 
+        $('#continueButton').prop('disabled', true); // Prevent Double Clicking
         if (!is_correct) {
-          $('#continueButton').prop('disabled', true);
           alert("Incorrect Label Applied to Creature ... You Will Have to Wait 5 Seconds Before the Next Round");
           sleep(5000).then(() => {
             this.log_responses(cur_index, this.time_spent/1000, turker_label, true_label, is_correct);
@@ -428,6 +428,7 @@ function make_slides(f) {
     this.start_time = Date.now()
   },
   button : function() {
+    $('#continueButton').prop('disabled', true); // Prevent Double CLicking
     var all_forms_filled = true;
     if ($("input[type=radio]:checked").length == 0) {
       all_forms_filled = false;
