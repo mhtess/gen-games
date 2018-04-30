@@ -64,9 +64,10 @@ var game_core = function(options){
     this.roundNum = 1;
 
     var rule_info = rule_summary[options.rule_idx];
-    this.rule_type = rule_info["type"];
-    this.training_data_fn = "./js/training_data_" + rule_info["name"] + ".json";
-    this.test_data_fn = "./js/test_data_" + rule_info["name"] + ".json";
+    this.rule_type = rule_info.type;
+    this.training_data_fn = "./js/training_data_" + rule_info.name + ".json";
+    this.test_data_fn = "./js/test_data_" + rule_info.name + ".json";
+    this.rule_idx = options.rule_idx;
 
     this.trainingStimuli = {
       explorer: require(this.training_data_fn),
@@ -95,9 +96,6 @@ var game_core = function(options){
     }];
     this.streams = {};
     this.server_send_update();
-
-    console.log(this);
-
   } else {
     // If we're initializing a player's local game copy, create the player object
     // and the game object. We'll be copying real values into these items
@@ -185,7 +183,6 @@ game_core.prototype.server_send_update = function(){
       rule_idx: local_game.rule_idx,
       rule_type: local_game.rule_type,
     });
-    console.log(playerState);
     p.player.instance.emit('onserverupdate', playerState);
   });
 };
