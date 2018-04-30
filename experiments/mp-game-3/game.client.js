@@ -87,11 +87,11 @@ var client_onserverupdate_received = function(data){
   exp.slides.testing_critters.present = data.testing_critters;
   if (Array.isArray(data.training_critters)) {
     exp.num_learning_trials = data.training_critters.length;
-    exp.num_learning_trials = 3;
+    // exp.num_learning_trials = 30;
   }
   if (Array.isArray(data.testing_critters)) {
     exp.num_testing_trials = data.testing_critters.length;
-    exp.num_testing_trials = 5;
+    // exp.num_testing_trials = 5;
   }
 };
 
@@ -149,7 +149,11 @@ var customSetup = function(globalGame) {
 
   globalGame.socket.on('enterWaitRoom', function(data){
     $('#chatbox').val('');
-    exp.go();
+    if (exp.slideIndex === 0) {
+      exp.goToSlide("learning_instructions");
+    } else {
+      exp.goToSlide("score_report");
+    }
   });
 
   // One player has not yet made it to the chatroom, so sending messages is impossible
@@ -190,6 +194,7 @@ var customSetup = function(globalGame) {
       // only role2 gets to see Continue button and press Continue
       var continueButton = document.getElementById("chatCont");
       var nSecondsTimeOut = 30;
+      // var nSecondsTimeOut = 1;
       setTimeout(function() { $("#chatCont").show() }, nSecondsTimeOut*1000);
       continueButton.addEventListener("click", buttonClickListener, false);
     }
