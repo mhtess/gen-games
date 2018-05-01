@@ -1,0 +1,86 @@
+{
+    "AutoApprovalTime": "2018-04-30T21:27:43Z",
+    "AssignmentId": "3R08VXYT7D8UO8VO8HW8ED50DX87WR",
+    "WorkerId": "ALW6G6Z52AJ5D",
+    "answers": {
+        "rule_type": "CONJUNCTION",
+        "test_data_fn": "./js/test_data_critter_fish_body_color_blue_1.json",
+        "time_in_minutes": null,
+        "training_summary_stats": {
+            "hits": 0,
+            "misses": 0,
+            "score": 0,
+            "false_alarms": 1,
+            "type": "training",
+            "correct_rejections": 3
+        },
+        "testing_trials": [],
+        "system": {
+            "screenW": 1366,
+            "screenH": 768,
+            "OS": "Windows",
+            "Browser": "Chrome"
+        },
+        "training_data_fn": "./js/training_data_critter_fish_body_color_blue_1.json",
+        "role": "explorer",
+        "training_trials": [
+            {
+                "is_correct": true,
+                "trial_num": 0,
+                "turker_label": false,
+                "time_in_seconds": 11.606,
+                "true_label": false
+            },
+            {
+                "is_correct": false,
+                "trial_num": 1,
+                "turker_label": true,
+                "time_in_seconds": 9.674,
+                "true_label": false
+            },
+            {
+                "is_correct": true,
+                "trial_num": 2,
+                "turker_label": false,
+                "time_in_seconds": 5.927,
+                "true_label": false
+            },
+            {
+                "is_correct": true,
+                "trial_num": 3,
+                "turker_label": false,
+                "time_in_seconds": 3.919,
+                "true_label": false
+            }
+        ],
+        "subject_information": {
+            "enjoyment": "2",
+            "gender": "Female",
+            "age": "35",
+            "problems": "no, the problem was that my partner lost connection, or at least that is what I was told",
+            "nativeEnglish": "no",
+            "strategy": "I compare the creatures that identify correctly to figure out when ther was a wudsy or not wudsy one",
+            "assess": "yes",
+            "humanPartner": "yes",
+            "fairprice": "1 dollar",
+            "comments": "this hit was fun and the instructions were clear",
+            "likePartner": "not much",
+            "education": "3"
+        },
+        "game_id": "6190-66f6f77d-1d06-4000-93b4-3914134cd27a",
+        "testing_summary_stats": {
+            "hits": 0,
+            "misses": 0,
+            "score": 0,
+            "false_alarms": 0,
+            "type": "testing",
+            "correct_rejections": 0
+        },
+        "rule_idx": 2
+    },
+    "AcceptTime": "2018-04-30T21:11:21Z",
+    "HITId": "3VZYA8PITOBJ6UJQ1EJOLFMGUMY506",
+    "Assignment": "",
+    "AssignmentStatus": "Submitted",
+    "SubmitTime": "2018-04-30T21:22:43Z"
+}
