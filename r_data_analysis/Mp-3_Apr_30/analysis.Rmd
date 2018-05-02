@@ -1,0 +1,52 @@
+---
+title: 'Concept Learning Data Analysis'
+author: 'Sahil Chopra'
+date: 'May 2, 2018'
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Introduction
+Here, we present the preliminary analysis of the concept learning data collected April 30 - May 2, 2018. Before we delve into our analysis, we summurize the stimuli and concepts utilized in this experiment.
+
+The stimuli have four axes of variablity, each with three possible values -- allowing for 81 unique critters. 50 critters were used in training and 31 were held out for test. Teachers and Listeners, who were paired together, were provided the same critters during the test set.
+
+The four axes of variability were as follows:
+
+* Critter Type (Bug, Fish, Bird)
+
+* Primary Color (Blue, Green, Orange)
+
+* Secondary Color (Red, Yellow, Purple)
+
+* Size (Small, Medium, Large)
+
+We intentionally ommitted rules that relied on size. Unlike the other three properties, size is used described in relativeterms, e.g. "small", "medium", "large". Without visual grounding, it's unclear whether a listener would immediately understand what these terms refer to, when presented the test set. We will address this issue in later iterations of thise experiment.
+
+We ran 5 concepts:
+
+* 1 Single Feature Concept
+
+* 2 Logical Conjunctions
+
+* 2 Logical Disjunctions
+
+For each concept, there were two lists. Each list comprised of the same stimuli, with different test / train splits and orderings of stimuli. We ran two lists to make sure that learning at similar rates was possible for a concept irrespective of the specific ordering of stimuli.
+
+The 5 Concepts were:
+
+* Primary Color == Orange
+
+* Critter Type == Fish && Primary Color == Blue
+
+* Primary Color == Orange && Secondary Color == Purple
+
+* Critter Type == Bug || Secondary Color == Yellow
+
+* Critter Type == Bird || Primary Color == Green
+
