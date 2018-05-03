@@ -1,0 +1,57 @@
+{
+    "AutoApprovalTime": "2018-05-03T16:28:17Z",
+    "AssignmentId": "3YJ6NA41JCTXOUZPX47AP92DCCLJPU",
+    "WorkerId": "AAKBYJD64R6K",
+    "answers": {
+        "rule_type": "DISJUNCTION",
+        "test_data_fn": "./js/test_data_critter_bird_or_body_color_green_1.json",
+        "time_in_minutes": null,
+        "training_summary_stats": {
+            "hits": 0,
+            "misses": 0,
+            "score": 0,
+            "false_alarms": 0,
+            "type": "training",
+            "correct_rejections": 0
+        },
+        "testing_trials": [],
+        "system": {
+            "screenW": 1366,
+            "screenH": 768,
+            "OS": "Windows",
+            "Browser": "Chrome"
+        },
+        "training_data_fn": "./js/training_data_critter_bird_or_body_color_green_1.json",
+        "role": "student",
+        "training_trials": [],
+        "subject_information": {
+            "enjoyment": "1",
+            "gender": "Male",
+            "age": "44",
+            "problems": "Lost connection with partner",
+            "nativeEnglish": "yes",
+            "strategy": "NA",
+            "assess": "yes",
+            "humanPartner": "yes",
+            "fairprice": "yes",
+            "comments": "",
+            "likePartner": "not much",
+            "education": "3"
+        },
+        "game_id": "5540-1b0fe1b2-b896-49e9-9a50-f94c57777c2b",
+        "testing_summary_stats": {
+            "hits": 0,
+            "misses": 0,
+            "score": 0,
+            "false_alarms": 0,
+            "type": "testing",
+            "correct_rejections": 0
+        },
+        "rule_idx": 8
+    },
+    "AcceptTime": "2018-05-03T16:19:06Z",
+    "HITId": "3VZYA8PITOBJ6UJQ1EJOLFMGUMY506",
+    "Assignment": "",
+    "AssignmentStatus": "Submitted",
+    "SubmitTime": "2018-05-03T16:23:17Z"
+}
