@@ -50,18 +50,16 @@ The 5 Concepts were:
 
 * Critter Type == Bird || Primary Color == Green
 
-# Analysis: Accuracy
+# Data Processing
 ```{r}
 
 library(purrr)
 library(jsonlite)
+library(tidyr) 
+library(dplyr)
 
 # Load Player Responses
 temp <- list.files("../../mturk/mp-game-3/experiment_1/results-cleaned/data", pattern="*.json", full.names=TRUE)
-player_responses <- purrr::map_df(temp, function(x) { 
-  print(x)
-  purrr::map(jsonlite::fromJSON(x, flatten = TRUE), function(y) ifelse(is.null(y), NA, y)) 
-})
 
 # Load Stimuli
 
@@ -69,6 +67,9 @@ player_responses <- purrr::map_df(temp, function(x) {
 
 ```
 
+# Dataset Composition
+
+# Analysis: Accuracy
 
 # Analysis: Hits/Misses and Correct Rejections/False Alarms
 
