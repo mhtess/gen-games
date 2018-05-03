@@ -276,6 +276,10 @@ def construct_mturk_file(other_player_info):
     file_found_2 = fill_train_answers(game_id, missing_player_role, mturk_file_struct)
     file_found_3 = fill_test_answers(game_id, missing_player_role, mturk_file_struct)
 
+    # Generate a User ID
+    fake_worker_id = str(uuid.uuid1())
+    mturk_file_struct['WorkerId'] = fake_worker_id
+
     return (file_found_1 and file_found_2 and file_found_3), mturk_file_struct
 
 
@@ -310,11 +314,26 @@ def fix_incomplete_files():
     pp.pprint(still_incomplete)
 
 
-def save_train_data():
-    if not os.path.exists(directory):
-    os.makedirs(directory)
-    pass
-
+def save_train_data(dir=CLEANED_DIR):
+    for filename in os.listdir(dir):
+        if filename.endswith('.json'):
+            fp = os.path.join(dir, filename)
+            df = pd.read_json(fp)
+            player_role = df['answers']['role']
+            if player_role == ROLE_STUDENT:
+                continue
+            else:
+                if isinstance(df['WorkerId'], object):
+                    worker_id = df['WorkerId'].values[0]
+                else:
+                    worker_id = df['WorkerId']
+                training_trials = pd.DataFrame(df['answers']['training_trials'])
+                training_trials['game_id'] = df['answers']['game_id']
+                training_trials['rule_idx'] = df['answers']['rule_idx']
+                training_trials['training_data_fn'] = df['answers']['training_data_fn']
+                training_trials['rule_type'] = df['answers']['rule_type']
+                training_trials['role'] = player_role
+                training_trials['WorkerId'] = worker_id
 
 def save_test_data():
     pass
@@ -325,6 +344,8 @@ def save_training_summary_stats():
 
 
 def create_dirs():
+    ''' Create cleaned data directories. 
+    '''
     def create_dir(d):
         if not os.path.exists(d):
             os.makedirs(d)
@@ -336,8 +357,9 @@ def create_dirs():
 
 
 if __name__ == '__main__':
-    create_dirs()
-    fix_incomplete_files()
+    # create_dirs()
+    # fix_incomplete_files()
+    save_train_data()
 
 
     
