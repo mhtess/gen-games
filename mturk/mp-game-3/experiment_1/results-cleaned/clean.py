@@ -360,8 +360,51 @@ def save_test_data(dir=CLEANED_DIR):
             testing_trials.to_csv(csv_fp, index=False)
 
 
-def save_training_summary_stats():
-    pass
+def save_train_summary_stats(dir=CLEANED_DIR):
+    ''' Write CSVs for each player's training summary stats '''
+    for filename in os.listdir(dir):
+        if filename.endswith('.json'):
+            fp = os.path.join(dir, filename)
+            df = pd.read_json(fp)
+            player_role = df['answers']['role']
+            if player_role == ROLE_STUDENT:
+                continue
+            else:
+                if isinstance(df['WorkerId'], object):
+                    worker_id = df['WorkerId'].values[0]
+                else:
+                    worker_id = df['WorkerId']
+                training_summary_stats = pd.DataFrame([df['answers']['training_summary_stats']])
+                training_summary_stats.reset_index()
+                training_summary_stats['game_id'] = df['answers']['game_id']
+                training_summary_stats['rule_idx'] = df['answers']['rule_idx']
+                training_summary_stats['training_data_fn'] = df['answers']['training_data_fn']
+                training_summary_stats['rule_type'] = df['answers']['rule_type']
+                training_summary_stats['role'] = player_role
+                training_summary_stats['WorkerId'] = worker_id
+                csv_fp = os.path.join(CLEANED_TRAIN_SUMMARY_STATS, '{}_{}.csv'.format(df['answers']['game_id'], player_role))
+                training_summary_stats.to_csv(csv_fp, index=False)
+
+def save_test_summary_stats(dir=CLEANED_DIR):
+    ''' Write CSVs for each player's testing summary stats '''
+    for filename in os.listdir(dir):
+        if filename.endswith('.json'):
+            fp = os.path.join(dir, filename)
+            df = pd.read_json(fp)
+            player_role = df['answers']['role']
+            if isinstance(df['WorkerId'], object):
+                worker_id = df['WorkerId'].values[0]
+            else:
+                worker_id = df['WorkerId']
+            testing_summary_stats = pd.DataFrame([df['answers']['testing_summary_stats']])
+            testing_summary_stats['game_id'] = df['answers']['game_id']
+            testing_summary_stats['rule_idx'] = df['answers']['rule_idx']
+            testing_summary_stats['test_data_fn'] = df['answers']['test_data_fn']
+            testing_summary_stats['rule_type'] = df['answers']['rule_type']
+            testing_summary_stats['role'] = player_role
+            testing_summary_stats['WorkerId'] = worker_id
+            csv_fp = os.path.join(CLEANED_TEST_SUMMARY_STATS, '{}_{}.csv'.format(df['answers']['game_id'], player_role))
+            testing_summary_stats.to_csv(csv_fp, index=False)
 
 
 def create_dirs():
@@ -381,7 +424,8 @@ if __name__ == '__main__':
     # create_dirs()
     # fix_incomplete_files()
     # save_train_data()
-    save_test_data()
-
+    # save_test_data()
+    save_train_summary_stats()
+    save_test_summary_stats()
 
     
