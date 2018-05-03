@@ -4,8 +4,8 @@
     "AssignmentId": "3QEMNNSB2YCVF2VXRMRIMPGF61GD76",
     "WorkerId": "A1SIUJEL2LS8UO",
     "answers": {
-        "rule_type": null,
-        "test_data_fn": null,
+        "rule_type": "SINGLE_FEAT",
+        "test_data_fn": "./js/test_data_body_color_orange_1.json",
         "time_in_minutes": null,
         "training_summary_stats": {
             "hits": 0,
@@ -233,7 +233,7 @@
             "OS": "Linux",
             "Browser": "Chrome"
         },
-        "training_data_fn": null,
+        "training_data_fn": "./js/training_data_body_color_orange_1.json",
         "role": "student",
         "training_trials": [],
         "subject_information": {
@@ -259,7 +259,7 @@
             "type": "testing",
             "correct_rejections": 17
         },
-        "rule_idx": null
+        "rule_idx": 0
     },
     "AcceptTime": "2018-04-27T17:00:49Z",
     "HITId": "3VZYA8PITOBJ6UJQ1EJOLFMGUMY506",
