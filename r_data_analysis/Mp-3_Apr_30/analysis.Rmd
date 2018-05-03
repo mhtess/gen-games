@@ -176,6 +176,18 @@ For rule_idx 3 game 1264, we see that the student performs much worse than the t
 
 We also see significant discrepancies in performance on rule_idx 5. The rule here was Primary Color == Orange && Secondary Color == Purple. In Game 34589, the teacher correctly understood the concept, but said they also thought that fish couldn't be wudsy, mentioning that he had never seen orange and purple fish during training. In Game 9542, the teacher told the student that "I didn't notice any patterns at all." -- so again the student was left with no information, i.e. an uninformative prior.
 
+```{r}
+test_stats %>% 
+  mutate(acc = (hits + correct_rejections) / (hits + correct_rejections + false_alarms + misses)) %>%
+  group_by(rule_type, rule_idx, game_id, role) %>%
+  summarize(m = mean(acc)) %>%
+  ggplot(., aes(x = factor(game_id), y = m, fill = role))+
+  geom_col(position = position_dodge())+
+  facet_wrap(~rule_type + rule_idx, scales = 'free')+
+  theme(axis.text.x = element_blank())
+```
+Here we see relative accuracy of dyad pairs, grouped by rule type and rule index. Note that 0,1 are the same concept but with different lists. Same goes for 2,3; 4,5; 6,7; etc.
+
 # Analysis: Hits/Misses and Correct Rejections/False Alarms
 Nexr, we break down how people perform on the train and test splits, for each specific list.
 ```{r}
