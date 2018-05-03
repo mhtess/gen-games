@@ -15,16 +15,16 @@ class ReferenceGameServer {
 
     if (this.expName === 'mp-game-3') {
       this.numGamesPerRule = {
-        "0": 2,
+        "0": 0,
         "1": 0,
         "2": 0,
         "3": 0,
         "4": 0,
         "5": 0,
         "6": 0,
-        "7": 3,
-        "8": 3,
-        "9": 3,
+        "7": 0,
+        "8": 2,
+        "9": 4,
       }
     }
   }
