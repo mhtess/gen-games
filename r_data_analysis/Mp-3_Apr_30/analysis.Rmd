@@ -176,8 +176,65 @@ For rule_idx 3 game 1264, we see that the student performs much worse than the t
 
 We also see significant discrepancies in performance on rule_idx 5. The rule here was Primary Color == Orange && Secondary Color == Purple. In Game 34589, the teacher correctly understood the concept, but said they also thought that fish couldn't be wudsy, mentioning that he had never seen orange and purple fish during training. In Game 9542, the teacher told the student that "I didn't notice any patterns at all." -- so again the student was left with no information, i.e. an uninformative prior.
 
-
 # Analysis: Hits/Misses and Correct Rejections/False Alarms
+Nexr, we break down how people perform on the train and test splits, for each specific list.
+```{r}
+num_train = 5
+num_test = 31
+
+train_perf <- train_stats %>%
+  select(game_id, rule_idx, hits, misses, correct_rejections, false_alarms)
+
+test_perf_teacher <- test_stats %>%
+  filter(role == "explorer") %>%
+  select(game_id, rule_idx, hits, misses, correct_rejections, false_alarms)
+
+test_perf_listener <- test_stats %>%
+  filter(role == "student") %>%
+  select(game_id, rule_idx, hits, misses, correct_rejections, false_alarms)
+```
+
+```{r}
+temp <- melt(train_perf, id.var= c("game_id", 'rule_idx'))
+temp$variable <- factor(temp$variable, levels = c("hits", "misses", "correct_rejections", "false_alarms"))
+training_perf_plot <- ggplot(temp, aes(x=game_id, y=value, fill=variable)) +
+  geom_bar(stat = "identity") +
+  facet_grid(.~rule_idx, scales="free_x", space="free") +
+  ylab("Responses") + 
+  theme(axis.text.x=element_text(angle=90)) + 
+  scale_x_discrete(label=abbreviate) +
+  labs(title = "Train Performance (Teacher)")
+plot(training_perf_plot)
+```
+Note that the bars aren't always split evenly across games with the same rule -- except rule 7. I have to investigate why that's the case, as this shouldn't happen.
+We don't see this below for the test data.
+
+```{r}
+temp <- melt(test_perf_teacher, id.var= c("game_id", 'rule_idx'))
+temp$variable <- factor(temp$variable, levels = c("hits", "misses", "correct_rejections", "false_alarms"))
+test_perf_teacher_plot <- ggplot(temp, aes(x=game_id, y=value, fill=variable)) +
+  geom_bar(stat = "identity") +
+  facet_grid(.~rule_idx, scales="free_x", space="free") +
+  ylab("Responses") + 
+  theme(axis.text.x=element_text(angle=90)) + 
+  scale_x_discrete(label=abbreviate) +
+  labs(title = "Test Performance (Teacher)")
+plot(test_perf_teacher_plot)
+```
+
+```{r}
+temp <- melt(test_perf_listener, id.var= c("game_id", 'rule_idx'))
+temp$variable <- factor(temp$variable, levels = c("hits", "misses", "correct_rejections", "false_alarms"))
+test_perf_listener_plot <- ggplot(temp, aes(x=game_id, y=value, fill=variable)) +
+  geom_bar(stat = "identity") +
+  facet_grid(.~rule_idx, scales="free_x", space="free") +
+  ylab("Responses") + 
+  theme(axis.text.x=element_text(angle=90)) + 
+  scale_x_discrete(label=abbreviate) +
+  labs(title = "Test Performance (Listener)")
+plot(test_perf_listener_plot)
+```
+Performance for the listeners generally tracked the performance of the teachers on the test set. There are few exemplars that stand out though. Game 1264 in rule 3 had no dialogue, as discussed earlier. Games 3459 and 9452 have uninformative or poorly interpreted dialogue, as discussed earlier.
 
 # Analysis: Rational Rules
 
