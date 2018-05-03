@@ -58,9 +58,13 @@ library(jsonlite)
 library(tidyr) 
 library(dplyr)
 
-# Load Player Responses
+# Load Training Trial Responses
 temp <- list.files("../../mturk/mp-game-3/experiment_1/results-cleaned/train_trials", pattern="*", full.names=TRUE)
 train_trials <- do.call(rbind, lapply(temp, read.csv))
+
+# Load Test Trial Responses
+temp <- list.files("../../mturk/mp-game-3/experiment_1/results-cleaned/test_trials", pattern="*", full.names=TRUE)
+test_trials <- do.call(rbind, lapply(temp, read.csv))
 
 # Load Chat Messages
 

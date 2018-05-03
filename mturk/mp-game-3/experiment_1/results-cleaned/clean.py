@@ -338,8 +338,26 @@ def save_train_data(dir=CLEANED_DIR):
                 csv_fp = os.path.join(CLEANED_TRAIN_TRIALS, '{}_{}.csv'.format(df['answers']['game_id'], player_role))
                 training_trials.to_csv(csv_fp, index=False)
 
-def save_test_data():
-    pass
+def save_test_data(dir=CLEANED_DIR):
+    ''' Write CSVs for each player's set of test data '''
+    for filename in os.listdir(dir):
+        if filename.endswith('.json'):
+            fp = os.path.join(dir, filename)
+            df = pd.read_json(fp)
+            player_role = df['answers']['role']
+            if isinstance(df['WorkerId'], object):
+                worker_id = df['WorkerId'].values[0]
+            else:
+                worker_id = df['WorkerId']
+            testing_trials = pd.DataFrame(df['answers']['testing_trials'])
+            testing_trials['game_id'] = df['answers']['game_id']
+            testing_trials['rule_idx'] = df['answers']['rule_idx']
+            testing_trials['test_data_fn'] = df['answers']['test_data_fn']
+            testing_trials['rule_type'] = df['answers']['rule_type']
+            testing_trials['role'] = player_role
+            testing_trials['WorkerId'] = worker_id
+            csv_fp = os.path.join(CLEANED_TEST_TRIALS, '{}_{}.csv'.format(df['answers']['game_id'], player_role))
+            testing_trials.to_csv(csv_fp, index=False)
 
 
 def save_training_summary_stats():
@@ -362,7 +380,8 @@ def create_dirs():
 if __name__ == '__main__':
     # create_dirs()
     # fix_incomplete_files()
-    save_train_data()
+    # save_train_data()
+    save_test_data()
 
 
     
