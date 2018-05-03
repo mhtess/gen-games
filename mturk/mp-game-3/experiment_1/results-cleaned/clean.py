@@ -315,6 +315,7 @@ def fix_incomplete_files():
 
 
 def save_train_data(dir=CLEANED_DIR):
+    ''' Write CSVs for each player's set of training data '''
     for filename in os.listdir(dir):
         if filename.endswith('.json'):
             fp = os.path.join(dir, filename)
@@ -334,6 +335,8 @@ def save_train_data(dir=CLEANED_DIR):
                 training_trials['rule_type'] = df['answers']['rule_type']
                 training_trials['role'] = player_role
                 training_trials['WorkerId'] = worker_id
+                csv_fp = os.path.join(CLEANED_TRAIN_TRIALS, '{}_{}.csv'.format(df['answers']['game_id'], player_role))
+                training_trials.to_csv(csv_fp, index=False)
 
 def save_test_data():
     pass
