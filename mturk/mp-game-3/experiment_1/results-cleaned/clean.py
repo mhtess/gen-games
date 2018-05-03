@@ -9,6 +9,11 @@ import math
 
 DIR = '../production-results'
 CLEANED_DIR = './data'
+CLEANED_TRAIN_SUMMARY_STATS = './train_summary_stats'
+CLEANED_TEST_SUMMARY_STATS = './test_summary_stats'
+CLEANED_TRAIN_TRIALS = './train_trials'
+CLEANED_TEST_TRIALS = './test_trials'
+
 RAW_SERVER_LOGS = '../raw-server-data'
 RAW_SERVER_LOGS_CHAT_MESSAGES = os.path.join(RAW_SERVER_LOGS, 'chatMessage')
 RAW_SERVER_LOGS_SUMMARY_STATS = os.path.join(RAW_SERVER_LOGS, 'logScores')
@@ -252,6 +257,7 @@ def get_empty_mturk_struct():
     }
     return mturk_file_struct
 
+
 def construct_mturk_file(other_player_info):
     '''
     When we have an incomplete game, we can often recover the partner's data
@@ -272,7 +278,12 @@ def construct_mturk_file(other_player_info):
 
     return (file_found_1 and file_found_2 and file_found_3), mturk_file_struct
 
+
 def fix_incomplete_files():
+    ''' Fix incomplete files, craeting mturk equivalent files in './data' folder. 
+        Copy complete files, who have a paired component either after fixing
+        or in original dataset.
+    '''
     # pretty printing for debugging
     pp = pprint.PrettyPrinter(indent=4)
     incomplete_games, complete_games = identify_partnerless_results()
@@ -298,7 +309,34 @@ def fix_incomplete_files():
 
     pp.pprint(still_incomplete)
 
+
+def save_train_data():
+    if not os.path.exists(directory):
+    os.makedirs(directory)
+    pass
+
+
+def save_test_data():
+    pass
+
+
+def save_training_summary_stats():
+    pass
+
+
+def create_dirs():
+    def create_dir(d):
+        if not os.path.exists(d):
+            os.makedirs(d)
+    create_dir(CLEANED_DIR)
+    create_dir(CLEANED_TRAIN_SUMMARY_STATS)
+    create_dir(CLEANED_TEST_SUMMARY_STATS)
+    create_dir(CLEANED_TRAIN_TRIALS)
+    create_dir(CLEANED_TEST_TRIALS)
+
+
 if __name__ == '__main__':
+    create_dirs()
     fix_incomplete_files()
 
 
