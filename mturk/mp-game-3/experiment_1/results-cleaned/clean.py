@@ -14,6 +14,7 @@ RAW_SERVER_LOGS_TRAIN = os.path.join(RAW_SERVER_LOGS, 'logTrain')
 ROLE_STUDENT = 'student'
 ROLE_EXPLORER = 'explorer'
 
+
 def identify_partnerless_results():
     '''
     Sometimes results are submitted to Mturk, when a participant disconnected from the game.
@@ -47,6 +48,7 @@ def identify_partnerless_results():
             incomplete_games.append(players_info[0])
     return incomplete_games
 
+
 def fill_summary_stats(game_id, role, mturk_file_struct):
     '''
     Given game_id, role look up summary stats in raw server logs.
@@ -55,7 +57,6 @@ def fill_summary_stats(game_id, role, mturk_file_struct):
         if game_id in filename:
             fp = os.path.join(RAW_SERVER_LOGS_SUMMARY_STATS, filename)
             df = pd.read_csv(fp, sep='	')
-            print df
             
             # Training Summary Stats Extraction
             if role == ROLE_STUDENT:
@@ -69,7 +70,6 @@ def fill_summary_stats(game_id, role, mturk_file_struct):
                 }
             else:
                 training_results_row = df.loc[(df['role'] == role) & (df['type'] == 'training')]
-                import pdb; pdb.set_trace()
                 mturk_file_struct['answers']['training_summary_stats'] = {
                     'hits': training_results_row['hits'].values[0],
                     'misses': training_results_row['misses'].values[0],
@@ -91,20 +91,55 @@ def fill_summary_stats(game_id, role, mturk_file_struct):
             }                          
             break
 
-def get_train_answers(game_id, role):
+
+def create_answer_dict(row):
+    ''' Given a row from a raw server log (training or test), create a dictionary
+        representation of the row that can be then filled into an mturk_file_struct.
+    '''
+    return {
+        'is_correct': row['is_correct'],
+        'trial_num': row['trial_num'],
+        'turker_label': row['turker_label'],
+        'time_in_seconds': row['time_in_seconds'],
+        'true_label': row['true_label'],
+    }
+
+
+def fill_train_answers(game_id, role, mturk_file_struct):
     '''
     Given game_id, role look up training_answers in raw server logs.
     '''
     if role == ROLE_STUDENT:
-        return []
+        return
     else:
-        return [] # TODO: Implement
+        train_answers = []
+        for filename in os.listdir(RAW_SERVER_LOGS_TRAIN):
+            if game_id in filename:
+                fp = os.path.join(RAW_SERVER_LOGS_TRAIN, filename)
+                df = pd.read_csv(fp, sep='	')
+                training_answers_rows = df.loc[(df['role'] == role)]
+                for _, r in training_answers_rows.iterrows():
+                    train_answers.append(create_answer_dict(r))
+                mturk_file_struct['answers']['training_trials'] = train_answers
+                break
 
-def get_test_answers(game_id, role):
+
+
+def fill_test_answers(game_id, role, mturk_file_struct):
     '''
     Given game_id, role look up training_answers in raw server logs.
     '''
-    pass
+    test_answers = []
+    for filename in os.listdir(RAW_SERVER_LOGS_TEST):
+        if game_id in filename:
+            fp = os.path.join(RAW_SERVER_LOGS_TEST, filename)
+            df = pd.read_csv(fp, sep='	')
+            test_answers_rows = df.loc[(df['role'] == role)]
+            for _, r in test_answers_rows.iterrows():
+                test_answers.append(create_answer_dict(r))
+            mturk_file_struct['answers']['testing_trials'] = test_answers
+            break
+
 
 def fill_shared_info(other_player_info, missing_player_role, mturk_file_struct):
     ''' Fill information shared between two players in provided mturk_file_struct
@@ -120,6 +155,7 @@ def fill_shared_info(other_player_info, missing_player_role, mturk_file_struct):
     mturk_file_struct['answers']['training_data_fn'] = training_fn
     mturk_file_struct['answers']['test_data_fn'] = test_fn
     mturk_file_struct['answers']['rule_type'] = rule_type 
+
 
 def get_empty_mturk_struct():
     # Create MTURK File Structure
@@ -197,6 +233,8 @@ def construct_mturk_file(other_player_info):
 
     # Gather Info about Missing Player
     fill_summary_stats(game_id, missing_player_role, mturk_file_struct)
+    fill_train_answers(game_id, missing_player_role, mturk_file_struct)
+    fill_test_answers(game_id, missing_player_role, mturk_file_struct)
     pp = pprint.PrettyPrinter(indent=4)
     pp.pprint(mturk_file_struct)
 
@@ -205,5 +243,5 @@ if __name__ == '__main__':
     pp = pprint.PrettyPrinter(indent=4)
     incomplete_games = identify_partnerless_results()
 
-    pp.pprint(incomplete_games[0])
-    construct_mturk_file(incomplete_games[0])
+    for ig in incomplete_games:
+        construct_mturk_file(ig)
