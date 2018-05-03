@@ -1,0 +1,275 @@
+{
+    "AutoApprovalTime": "2018-04-30T22:25:25Z",
+    "AssignmentId": "345LHZDEDY5ZVL5WB5EHJ88NNFJU3I",
+    "WorkerId": "A2ZGAH6NOSU2PO",
+    "answers": {
+        "rule_type": "CONJUNCTION",
+        "test_data_fn": "./js/test_data_critter_fish_body_color_blue_2.json",
+        "time_in_minutes": null,
+        "training_summary_stats": {
+            "hits": 0,
+            "misses": 0,
+            "score": 0,
+            "false_alarms": 0,
+            "type": "training",
+            "correct_rejections": 0
+        },
+        "testing_trials": [
+            {
+                "is_correct": false,
+                "trial_num": 0,
+                "turker_label": false,
+                "time_in_seconds": 11.895,
+                "true_label": true
+            },
+            {
+                "is_correct": false,
+                "trial_num": 1,
+                "turker_label": false,
+                "time_in_seconds": 3.051,
+                "true_label": true
+            },
+            {
+                "is_correct": true,
+                "trial_num": 2,
+                "turker_label": false,
+                "time_in_seconds": 3.164,
+                "true_label": false
+            },
+            {
+                "is_correct": true,
+                "trial_num": 3,
+                "turker_label": false,
+                "time_in_seconds": 3.096,
+                "true_label": false
+            },
+            {
+                "is_correct": true,
+                "trial_num": 4,
+                "turker_label": true,
+                "time_in_seconds": 5.398,
+                "true_label": true
+            },
+            {
+                "is_correct": true,
+                "trial_num": 5,
+                "turker_label": false,
+                "time_in_seconds": 3.045,
+                "true_label": false
+            },
+            {
+                "is_correct": false,
+                "trial_num": 6,
+                "turker_label": true,
+                "time_in_seconds": 11.86,
+                "true_label": false
+            },
+            {
+                "is_correct": true,
+                "trial_num": 7,
+                "turker_label": false,
+                "time_in_seconds": 2.722,
+                "true_label": false
+            },
+            {
+                "is_correct": true,
+                "trial_num": 8,
+                "turker_label": false,
+                "time_in_seconds": 2.585,
+                "true_label": false
+            },
+            {
+                "is_correct": true,
+                "trial_num": 9,
+                "turker_label": false,
+                "time_in_seconds": 2.723,
+                "true_label": false
+            },
+            {
+                "is_correct": true,
+                "trial_num": 10,
+                "turker_label": false,
+                "time_in_seconds": 2.229,
+                "true_label": false
+            },
+            {
+                "is_correct": true,
+                "trial_num": 11,
+                "turker_label": false,
+                "time_in_seconds": 4.951,
+                "true_label": false
+            },
+            {
+                "is_correct": true,
+                "trial_num": 12,
+                "turker_label": false,
+                "time_in_seconds": 2.824,
+                "true_label": false
+            },
+            {
+                "is_correct": true,
+                "trial_num": 13,
+                "turker_label": false,
+                "time_in_seconds": 2.507,
+                "true_label": false
+            },
+            {
+                "is_correct": true,
+                "trial_num": 14,
+                "turker_label": false,
+                "time_in_seconds": 2.841,
+                "true_label": false
+            },
+            {
+                "is_correct": true,
+                "trial_num": 15,
+                "turker_label": false,
+                "time_in_seconds": 2.849,
+                "true_label": false
+            },
+            {
+                "is_correct": false,
+                "trial_num": 16,
+                "turker_label": true,
+                "time_in_seconds": 6.211,
+                "true_label": false
+            },
+            {
+                "is_correct": true,
+                "trial_num": 17,
+                "turker_label": false,
+                "time_in_seconds": 2.701,
+                "true_label": false
+            },
+            {
+                "is_correct": true,
+                "trial_num": 18,
+                "turker_label": false,
+                "time_in_seconds": 2.468,
+                "true_label": false
+            },
+            {
+                "is_correct": true,
+                "trial_num": 19,
+                "turker_label": false,
+                "time_in_seconds": 3.362,
+                "true_label": false
+            },
+            {
+                "is_correct": true,
+                "trial_num": 20,
+                "turker_label": false,
+                "time_in_seconds": 2.724,
+                "true_label": false
+            },
+            {
+                "is_correct": true,
+                "trial_num": 21,
+                "turker_label": false,
+                "time_in_seconds": 2.093,
+                "true_label": false
+            },
+            {
+                "is_correct": true,
+                "trial_num": 22,
+                "turker_label": true,
+                "time_in_seconds": 3.282,
+                "true_label": true
+            },
+            {
+                "is_correct": false,
+                "trial_num": 23,
+                "turker_label": true,
+                "time_in_seconds": 3.086,
+                "true_label": false
+            },
+            {
+                "is_correct": true,
+                "trial_num": 24,
+                "turker_label": false,
+                "time_in_seconds": 2.946,
+                "true_label": false
+            },
+            {
+                "is_correct": true,
+                "trial_num": 25,
+                "turker_label": false,
+                "time_in_seconds": 2.503,
+                "true_label": false
+            },
+            {
+                "is_correct": true,
+                "trial_num": 26,
+                "turker_label": false,
+                "time_in_seconds": 2.268,
+                "true_label": false
+            },
+            {
+                "is_correct": false,
+                "trial_num": 27,
+                "turker_label": true,
+                "time_in_seconds": 4.332,
+                "true_label": false
+            },
+            {
+                "is_correct": true,
+                "trial_num": 28,
+                "turker_label": false,
+                "time_in_seconds": 2.419,
+                "true_label": false
+            },
+            {
+                "is_correct": true,
+                "trial_num": 29,
+                "turker_label": false,
+                "time_in_seconds": 2.319,
+                "true_label": false
+            },
+            {
+                "is_correct": true,
+                "trial_num": 30,
+                "turker_label": false,
+                "time_in_seconds": 2.639,
+                "true_label": false
+            }
+        ],
+        "system": {
+            "screenW": 1093,
+            "screenH": 615,
+            "OS": "Windows",
+            "Browser": "Chrome"
+        },
+        "training_data_fn": "./js/training_data_critter_fish_body_color_blue_2.json",
+        "role": "student",
+        "training_trials": [],
+        "subject_information": {
+            "enjoyment": "1",
+            "gender": "Female",
+            "age": "54",
+            "problems": "no",
+            "nativeEnglish": "yes",
+            "strategy": "Going by the information that my partner gave me.",
+            "assess": "confused",
+            "humanPartner": "yes",
+            "fairprice": "yes",
+            "comments": "Very confused at the amount that I got wrong.  I enjoy experiments that involve another player though!",
+            "likePartner": "okay",
+            "education": "2"
+        },
+        "game_id": "4667-5e5d6809-f560-4e02-87f0-3427a7f957fa",
+        "testing_summary_stats": {
+            "hits": 2,
+            "misses": 2,
+            "score": -2,
+            "false_alarms": 4,
+            "type": "testing",
+            "correct_rejections": 23
+        },
+        "rule_idx": 3
+    },
+    "AcceptTime": "2018-04-30T22:02:20Z",
+    "HITId": "3VZYA8PITOBJ6UJQ1EJOLFMGUMY506",
+    "Assignment": "",
+    "AssignmentStatus": "Submitted",
+    "SubmitTime": "2018-04-30T22:20:25Z"
+}
