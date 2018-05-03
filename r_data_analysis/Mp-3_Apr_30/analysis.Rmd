@@ -57,6 +57,7 @@ library(purrr)
 library(jsonlite)
 library(tidyr) 
 library(dplyr)
+library(ggplot2)
 
 # Load Training Trial Responses
 temp <- list.files(
@@ -76,7 +77,7 @@ test_trials <- do.call(rbind, lapply(temp, read.csv))
 
 # Load Training Summary Stats
 temp <- list.files(
-  "../../mturk/mp-game-3/experiment_1/results-cleaned/train_summary_data",
+  "../../mturk/mp-game-3/experiment_1/results-cleaned/train_summary_stats",
   pattern="*.csv",
   full.names=TRUE
 )
@@ -84,17 +85,20 @@ train_stats <- do.call(rbind, lapply(temp, read.csv))
 
 # Load Test Summary Stats
 temp <- list.files(
-  "../../mturk/mp-game-3/experiment_1/results-cleaned/test_summary_data",
+  "../../mturk/mp-game-3/experiment_1/results-cleaned/test_summary_stats",
   pattern="*.csv",
   full.names=TRUE
 )
 test_stats <- do.call(rbind, lapply(temp, read.csv))
-
-# Load Chat Messages
-
 ```
 
 # Dataset Composition
+```{r}
+rule_freq <- as.data.frame(table(train_stats$rule_idx)) %>%
+  rename(rule_idx = Var1) %>%
+  rename(num_games = Freq)
+ggplot(rule_freq, aes(x=rule_idx, y = num_games)) + geom_bar(stat="identity")
+```
 
 # Analysis: Accuracy
 
