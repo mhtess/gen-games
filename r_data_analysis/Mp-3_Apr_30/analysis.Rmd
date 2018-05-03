@@ -50,3 +50,32 @@ The 5 Concepts were:
 
 * Critter Type == Bird || Primary Color == Green
 
+# Analysis: Accuracy
+```{r}
+
+library(purrr)
+library(jsonlite)
+
+# Load Player Responses
+temp <- list.files("../../mturk/mp-game-3/experiment_1/results-cleaned/data", pattern="*.json", full.names=TRUE)
+player_responses <- purrr::map_df(temp, function(x) { 
+  print(x)
+  purrr::map(jsonlite::fromJSON(x, flatten = TRUE), function(y) ifelse(is.null(y), NA, y)) 
+})
+
+# Load Stimuli
+
+# Load Chat Messages
+
+```
+
+
+# Analysis: Hits/Misses and Correct Rejections/False Alarms
+
+# Analysis: Rational Rules
+
+## Posterior Predictives
+
+## Rule Selection
+
+# Analysis: Hold One Out Predictions
