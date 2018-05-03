@@ -53,11 +53,13 @@ The 5 Concepts were:
 # Data Processing
 ```{r}
 
+library(reshape2)
 library(purrr)
 library(jsonlite)
 library(tidyr) 
 library(dplyr)
 library(ggplot2)
+library(scales)
 
 # Load Training Trial Responses
 temp <- list.files(
@@ -99,15 +101,88 @@ rule_freq <- as.data.frame(table(train_stats$rule_idx)) %>%
   rename(num_games = Freq)
 ggplot(rule_freq, aes(x=rule_idx, y = num_games)) + geom_bar(stat="identity")
 ```
+Due to some server issues early on we have a slight imbalance in the number of trials prescribed to each rule index. We intended to have ~3 per rule type originally.
 
 # Analysis: Accuracy
+First, we examine how people perform on the train and test splits, for each specific list.
+```{r}
+num_train = 5
+num_test = 31
+
+train_acc <- train_stats %>%
+  mutate(correct = hits + correct_rejections) %>%
+  mutate(incorrect = misses + false_alarms) %>%
+  select(game_id, rule_idx, correct, incorrect)
+
+test_acc_teacher <- test_stats %>%
+  filter(role == "explorer") %>%
+  mutate(correct = hits + correct_rejections) %>%
+  mutate(incorrect = misses + false_alarms) %>%
+  select(game_id, rule_idx, correct, incorrect)
+
+test_acc_listener <- test_stats %>%
+  filter(role == "student") %>%
+  mutate(correct = hits + correct_rejections) %>%
+  mutate(incorrect = misses + false_alarms) %>%
+  select(game_id, rule_idx, incorrect, correct)
+```
+
+## Training
+```{r}
+temp <- melt(train_acc, id.var= c("game_id", 'rule_idx'))
+temp$variable <- factor(temp$variable, levels = c("incorrect", "correct"))
+training_acc_plot <- ggplot(temp, aes(x=game_id, y=value, fill=variable)) +
+  geom_bar(stat = "identity") +
+  facet_grid(.~rule_idx, scales="free_x", space="free") +
+  ylab("Responses") + 
+  theme(axis.text.x=element_text(angle=90)) + 
+  scale_x_discrete(label=abbreviate) +
+  labs(title = "Train Accuracy (Teacher)") +
+  scale_fill_manual( values = c("#3ABFC3", "#F8766D"))
+plot(training_acc_plot)
+```
+
+## Test
+```{r}
+temp <- melt(test_acc_teacher, id.var= c("game_id", 'rule_idx'))
+temp$variable <- factor(temp$variable, levels = c("incorrect", "correct"))
+test_acc_teacher_plot <- ggplot(temp, aes(x=game_id, y=value, fill=variable)) +
+  geom_bar(stat = "identity") +
+  facet_grid(.~rule_idx, scales="free_x", space="free") +
+  ylab("Responses") + 
+  theme(axis.text.x=element_text(angle=90)) + 
+  scale_x_discrete(label=abbreviate) +
+  labs(title = "Test Accuracy (Teacher)") +
+  scale_fill_manual( values = c("#3ABFC3", "#F8766D"))
+plot(test_acc_teacher_plot)
+```
+
+```{r}
+temp <- melt(test_acc_listener, id.var= c("game_id", 'rule_idx'))
+temp$variable <- factor(temp$variable, levels = c("incorrect", "correct"))
+test_acc_listener_plot <- ggplot(temp, aes(x=game_id, y=value, fill=variable)) +
+  geom_bar(stat = "identity") +
+  facet_grid(.~rule_idx, scales="free_x", space="free") +
+  ylab("Responses") + 
+  theme(axis.text.x=element_text(angle=90)) + 
+  scale_x_discrete(label=abbreviate) +
+  labs(title = "Test Accuracy (Listener)") +
+  scale_fill_manual( values = c("#3ABFC3", "#F8766D"))
+plot(test_acc_listener_plot)
+```
+Note that test accuracy of listeners is often very similar to the test accuracy of teacher. There are few notable exceptions.
+
+For rule_idx 3 game 1264, we see that the student performs much worse than the teacher. Upon examination of the chat logs, it seems like the student "hit" continue without conversing with the explorer. They only said "hello" to each other, before moving on to the test set. Thus, their performance is indicative of random guessing.
+
+We also see significant discrepancies in performance on rule_idx 5. The rule here was Primary Color == Orange && Secondary Color == Purple. In Game 34589, the teacher correctly understood the concept, but said they also thought that fish couldn't be wudsy, mentioning that he had never seen orange and purple fish during training. In Game 9542, the teacher told the student that "I didn't notice any patterns at all." -- so again the student was left with no information, i.e. an uninformative prior.
+
 
 # Analysis: Hits/Misses and Correct Rejections/False Alarms
 
 # Analysis: Rational Rules
 
-## Posterior Predictives
+# Posterior Predictives
 
-## Rule Selection
+# Rule Selection
 
 # Analysis: Hold One Out Predictions
