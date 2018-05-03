@@ -1,0 +1,268 @@
+{
+    "AutoApprovalTime": "2018-05-01T00:00:08Z",
+    "AssignmentId": "379J5II41PTZMTYZRB3CBCG11E0ELL",
+    "WorkerId": "A38R7SIVV118KT",
+    "answers": {
+        "rule_type": "DISJUNCTION",
+        "test_data_fn": "./js/test_data_critter_bug_or_secondary_color_yellow_1.json",
+        "time_in_minutes": null,
+        "training_summary_stats": {
+            "hits": 0,
+            "misses": 0,
+            "score": 0,
+            "false_alarms": 0,
+            "type": "training",
+            "correct_rejections": 0
+        },
+        "testing_trials": [
+            {
+                "is_correct": true,
+                "trial_num": 0,
+                "turker_label": true,
+                "time_in_seconds": 8.381,
+                "true_label": true
+            },
+            {
+                "is_correct": true,
+                "trial_num": 1,
+                "turker_label": false,
+                "time_in_seconds": 4.577,
+                "true_label": false
+            },
+            {
+                "is_correct": false,
+                "trial_num": 2,
+                "turker_label": false,
+                "time_in_seconds": 2.892,
+                "true_label": true
+            },
+            {
+                "is_correct": true,
+                "trial_num": 3,
+                "turker_label": false,
+                "time_in_seconds": 2.55,
+                "true_label": false
+            },
+            {
+                "is_correct": true,
+                "trial_num": 4,
+                "turker_label": true,
+                "time_in_seconds": 3.907,
+                "true_label": true
+            },
+            {
+                "is_correct": true,
+                "trial_num": 5,
+                "turker_label": true,
+                "time_in_seconds": 2.944,
+                "true_label": true
+            },
+            {
+                "is_correct": true,
+                "trial_num": 6,
+                "turker_label": false,
+                "time_in_seconds": 4.217,
+                "true_label": false
+            },
+            {
+                "is_correct": false,
+                "trial_num": 7,
+                "turker_label": true,
+                "time_in_seconds": 2.662,
+                "true_label": false
+            },
+            {
+                "is_correct": false,
+                "trial_num": 8,
+                "turker_label": false,
+                "time_in_seconds": 3.904,
+                "true_label": true
+            },
+            {
+                "is_correct": true,
+                "trial_num": 9,
+                "turker_label": false,
+                "time_in_seconds": 4.085,
+                "true_label": false
+            },
+            {
+                "is_correct": true,
+                "trial_num": 10,
+                "turker_label": true,
+                "time_in_seconds": 2.16,
+                "true_label": true
+            },
+            {
+                "is_correct": true,
+                "trial_num": 11,
+                "turker_label": false,
+                "time_in_seconds": 2.008,
+                "true_label": false
+            },
+            {
+                "is_correct": true,
+                "trial_num": 12,
+                "turker_label": true,
+                "time_in_seconds": 2.25,
+                "true_label": true
+            },
+            {
+                "is_correct": true,
+                "trial_num": 13,
+                "turker_label": true,
+                "time_in_seconds": 3.002,
+                "true_label": true
+            },
+            {
+                "is_correct": false,
+                "trial_num": 14,
+                "turker_label": false,
+                "time_in_seconds": 3.851,
+                "true_label": true
+            },
+            {
+                "is_correct": true,
+                "trial_num": 15,
+                "turker_label": true,
+                "time_in_seconds": 2.389,
+                "true_label": true
+            },
+            {
+                "is_correct": false,
+                "trial_num": 16,
+                "turker_label": false,
+                "time_in_seconds": 6.607,
+                "true_label": true
+            },
+            {
+                "is_correct": true,
+                "trial_num": 17,
+                "turker_label": true,
+                "time_in_seconds": 4.044,
+                "true_label": true
+            },
+            {
+                "is_correct": false,
+                "trial_num": 18,
+                "turker_label": true,
+                "time_in_seconds": 3.029,
+                "true_label": false
+            },
+            {
+                "is_correct": false,
+                "trial_num": 19,
+                "turker_label": false,
+                "time_in_seconds": 4.271,
+                "true_label": true
+            },
+            {
+                "is_correct": true,
+                "trial_num": 20,
+                "turker_label": true,
+                "time_in_seconds": 5.732,
+                "true_label": true
+            },
+            {
+                "is_correct": false,
+                "trial_num": 21,
+                "turker_label": true,
+                "time_in_seconds": 4.209,
+                "true_label": false
+            },
+            {
+                "is_correct": true,
+                "trial_num": 22,
+                "turker_label": false,
+                "time_in_seconds": 2.812,
+                "true_label": false
+            },
+            {
+                "is_correct": false,
+                "trial_num": 23,
+                "turker_label": false,
+                "time_in_seconds": 2.322,
+                "true_label": true
+            },
+            {
+                "is_correct": false,
+                "trial_num": 24,
+                "turker_label": false,
+                "time_in_seconds": 3.086,
+                "true_label": true
+            },
+            {
+                "is_correct": true,
+                "trial_num": 25,
+                "turker_label": true,
+                "time_in_seconds": 2.01,
+                "true_label": true
+            },
+            {
+                "is_correct": true,
+                "trial_num": 26,
+                "turker_label": true,
+                "time_in_seconds": 2.508,
+                "true_label": true
+            },
+            {
+                "is_correct": true,
+                "trial_num": 27,
+                "turker_label": false,
+                "time_in_seconds": 1.416,
+                "true_label": false
+            },
+            {
+                "is_correct": false,
+                "trial_num": 28,
+                "turker_label": true,
+                "time_in_seconds": 1.797,
+                "true_label": false
+            },
+            {
+                "is_correct": true,
+                "trial_num": 29,
+                "turker_label": false,
+                "time_in_seconds": 2.038,
+                "true_label": false
+            }
+        ],
+        "system": {
+            "screenW": 1440,
+            "screenH": 900,
+            "OS": "Mac",
+            "Browser": "Chrome"
+        },
+        "training_data_fn": "./js/training_data_critter_bug_or_secondary_color_yellow_1.json",
+        "role": "student",
+        "training_trials": [],
+        "subject_information": {
+            "enjoyment": "2",
+            "gender": "Male",
+            "age": "62",
+            "problems": "no",
+            "nativeEnglish": "yes",
+            "strategy": "just tried to remember what my partner described to me",
+            "assess": "yes",
+            "humanPartner": "yes",
+            "fairprice": "1.50",
+            "comments": "ty",
+            "likePartner": "loved",
+            "education": "-1"
+        },
+        "game_id": "5416-a7363177-6367-46b3-9853-f7d1cb56a932",
+        "testing_summary_stats": {
+            "hits": 11,
+            "misses": 7,
+            "score": 7,
+            "false_alarms": 4,
+            "type": "testing",
+            "correct_rejections": 8
+        },
+        "rule_idx": 6
+    },
+    "AcceptTime": "2018-04-30T23:39:44Z",
+    "HITId": "3VZYA8PITOBJ6UJQ1EJOLFMGUMY506",
+    "Assignment": "",
+    "AssignmentStatus": "Submitted",
+    "SubmitTime": "2018-04-30T23:55:08Z"
+}

@@ -1,9 +1,13 @@
 import pandas as pd
 from collections import defaultdict
+from shutil import copyfile
 import os
 import pprint
+import uuid
+import json
 
 DIR = '../production-results'
+CLEANED_DIR = './data'
 RAW_SERVER_LOGS = '../raw-server-data'
 RAW_SERVER_LOGS_CHAT_MESSAGES = os.path.join(RAW_SERVER_LOGS, 'chatMessage')
 RAW_SERVER_LOGS_SUMMARY_STATS = os.path.join(RAW_SERVER_LOGS, 'logScores')
@@ -15,16 +19,16 @@ ROLE_STUDENT = 'student'
 ROLE_EXPLORER = 'explorer'
 
 
-def identify_partnerless_results():
+def identify_partnerless_results(dir=DIR):
     '''
     Sometimes results are submitted to Mturk, when a participant disconnected from the game.
     These leads to result files, where we only have 1/2 of the game, i.e. only the listener
     or only the teacher. Here we print a log of the game_ids and files that have only one player.
     '''
     games = defaultdict(list)
-    for filename in os.listdir(DIR):
+    for filename in os.listdir(dir):
         if filename.endswith('.json'):
-            fp = os.path.join(DIR, filename)
+            fp = os.path.join(dir, filename)
             df = pd.read_json(fp)
             game_id = df['answers']['game_id']
             player_role = df['answers']['role']
@@ -33,6 +37,8 @@ def identify_partnerless_results():
             test_fn = df['answers']['test_data_fn']
             rule_type = df['answers']['rule_type']
             games[game_id].append({
+                'file_path': fp,
+                'file_name': filename,
                 'game_id': game_id,
                 'rule_idx': rule_idx,
                 'role': player_role,
@@ -42,11 +48,14 @@ def identify_partnerless_results():
             })
         else:
             continue
+    complete_games = []
     incomplete_games = []
     for (game_id, players_info) in games.iteritems():
         if len(players_info) != 2:
             incomplete_games.append(players_info[0])
-    return incomplete_games
+        else: 
+            complete_games.extend(players_info)
+    return incomplete_games, complete_games
 
 
 def fill_summary_stats(game_id, role, mturk_file_struct):
@@ -89,7 +98,8 @@ def fill_summary_stats(game_id, role, mturk_file_struct):
                 'type': 'testing',
                 'correct_rejections': testing_summary_stats['correct_rejections'].values[0],
             }                          
-            break
+            return True
+    return False
 
 
 def create_answer_dict(row):
@@ -110,7 +120,7 @@ def fill_train_answers(game_id, role, mturk_file_struct):
     Given game_id, role look up training_answers in raw server logs.
     '''
     if role == ROLE_STUDENT:
-        return
+        return True
     else:
         train_answers = []
         for filename in os.listdir(RAW_SERVER_LOGS_TRAIN):
@@ -121,8 +131,8 @@ def fill_train_answers(game_id, role, mturk_file_struct):
                 for _, r in training_answers_rows.iterrows():
                     train_answers.append(create_answer_dict(r))
                 mturk_file_struct['answers']['training_trials'] = train_answers
-                break
-
+                return True
+    return False
 
 
 def fill_test_answers(game_id, role, mturk_file_struct):
@@ -138,7 +148,8 @@ def fill_test_answers(game_id, role, mturk_file_struct):
             for _, r in test_answers_rows.iterrows():
                 test_answers.append(create_answer_dict(r))
             mturk_file_struct['answers']['testing_trials'] = test_answers
-            break
+            return True
+    return False
 
 
 def fill_shared_info(other_player_info, missing_player_role, mturk_file_struct):
@@ -232,16 +243,37 @@ def construct_mturk_file(other_player_info):
     fill_shared_info(other_player_info, missing_player_role, mturk_file_struct)
 
     # Gather Info about Missing Player
-    fill_summary_stats(game_id, missing_player_role, mturk_file_struct)
-    fill_train_answers(game_id, missing_player_role, mturk_file_struct)
-    fill_test_answers(game_id, missing_player_role, mturk_file_struct)
-    pp = pprint.PrettyPrinter(indent=4)
-    pp.pprint(mturk_file_struct)
+    file_found_1 = fill_summary_stats(game_id, missing_player_role, mturk_file_struct)
+    file_found_2 = fill_train_answers(game_id, missing_player_role, mturk_file_struct)
+    file_found_3 = fill_test_answers(game_id, missing_player_role, mturk_file_struct)
 
+    return (file_found_1 and file_found_2 and file_found_3), mturk_file_struct
 
 if __name__ == '__main__':
+    # pretty printing for debugging
     pp = pprint.PrettyPrinter(indent=4)
-    incomplete_games = identify_partnerless_results()
+    incomplete_games, complete_games = identify_partnerless_results()
 
+    # Copy over complete games
+    for cg in complete_games:
+        cg_copy_path = os.path.join(CLEANED_DIR, cg['file_name'])
+        copyfile(cg['file_path'], cg_copy_path)
+
+    still_incomplete = []
     for ig in incomplete_games:
-        construct_mturk_file(ig)
+        file_found, mturk_file_struct = construct_mturk_file(ig)
+        if not file_found:
+            still_incomplete.append(ig)
+        else:
+            ig_copy_path = os.path.join(CLEANED_DIR, ig['file_name'])
+            copyfile(ig['file_path'], ig_copy_path)
+
+            new_file_name = str(uuid.uuid1())
+            new_file_path = os.path.join(CLEANED_DIR, '{}.json'.format(new_file_name))
+            with open(new_file_path, 'w') as fp:
+                json.dump(mturk_file_struct, fp)
+
+    pp.pprint(still_incomplete)
+
+
+    

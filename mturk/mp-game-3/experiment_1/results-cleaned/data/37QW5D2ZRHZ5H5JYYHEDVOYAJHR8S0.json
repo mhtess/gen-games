@@ -1,0 +1,268 @@
+{
+    "AutoApprovalTime": "2018-05-02T23:00:52Z",
+    "AssignmentId": "37QW5D2ZRHZ5H5JYYHEDVOYAJHR8S0",
+    "WorkerId": "A6WXIKRYMXNIN",
+    "answers": {
+        "rule_type": "DISJUNCTION",
+        "test_data_fn": "./js/test_data_critter_bug_or_secondary_color_yellow_2.json",
+        "time_in_minutes": null,
+        "training_summary_stats": {
+            "hits": 0,
+            "misses": 0,
+            "score": 0,
+            "false_alarms": 0,
+            "type": "training",
+            "correct_rejections": 0
+        },
+        "testing_trials": [
+            {
+                "is_correct": true,
+                "trial_num": 0,
+                "turker_label": true,
+                "time_in_seconds": 9.353,
+                "true_label": true
+            },
+            {
+                "is_correct": true,
+                "trial_num": 1,
+                "turker_label": false,
+                "time_in_seconds": 6.654,
+                "true_label": false
+            },
+            {
+                "is_correct": false,
+                "trial_num": 2,
+                "turker_label": true,
+                "time_in_seconds": 4.967,
+                "true_label": false
+            },
+            {
+                "is_correct": true,
+                "trial_num": 3,
+                "turker_label": true,
+                "time_in_seconds": 9.129,
+                "true_label": true
+            },
+            {
+                "is_correct": false,
+                "trial_num": 4,
+                "turker_label": false,
+                "time_in_seconds": 9.746,
+                "true_label": true
+            },
+            {
+                "is_correct": true,
+                "trial_num": 5,
+                "turker_label": true,
+                "time_in_seconds": 5.552,
+                "true_label": true
+            },
+            {
+                "is_correct": true,
+                "trial_num": 6,
+                "turker_label": false,
+                "time_in_seconds": 5.857,
+                "true_label": false
+            },
+            {
+                "is_correct": true,
+                "trial_num": 7,
+                "turker_label": true,
+                "time_in_seconds": 2.329,
+                "true_label": true
+            },
+            {
+                "is_correct": true,
+                "trial_num": 8,
+                "turker_label": false,
+                "time_in_seconds": 3.012,
+                "true_label": false
+            },
+            {
+                "is_correct": true,
+                "trial_num": 9,
+                "turker_label": true,
+                "time_in_seconds": 3.415,
+                "true_label": true
+            },
+            {
+                "is_correct": false,
+                "trial_num": 10,
+                "turker_label": false,
+                "time_in_seconds": 4.373,
+                "true_label": true
+            },
+            {
+                "is_correct": true,
+                "trial_num": 11,
+                "turker_label": true,
+                "time_in_seconds": 3.612,
+                "true_label": true
+            },
+            {
+                "is_correct": false,
+                "trial_num": 12,
+                "turker_label": false,
+                "time_in_seconds": 4.274,
+                "true_label": true
+            },
+            {
+                "is_correct": true,
+                "trial_num": 13,
+                "turker_label": false,
+                "time_in_seconds": 2.684,
+                "true_label": false
+            },
+            {
+                "is_correct": true,
+                "trial_num": 14,
+                "turker_label": false,
+                "time_in_seconds": 6.163,
+                "true_label": false
+            },
+            {
+                "is_correct": false,
+                "trial_num": 15,
+                "turker_label": false,
+                "time_in_seconds": 5.122,
+                "true_label": true
+            },
+            {
+                "is_correct": true,
+                "trial_num": 16,
+                "turker_label": true,
+                "time_in_seconds": 4.173,
+                "true_label": true
+            },
+            {
+                "is_correct": true,
+                "trial_num": 17,
+                "turker_label": false,
+                "time_in_seconds": 4.93,
+                "true_label": false
+            },
+            {
+                "is_correct": false,
+                "trial_num": 18,
+                "turker_label": false,
+                "time_in_seconds": 3.799,
+                "true_label": true
+            },
+            {
+                "is_correct": true,
+                "trial_num": 19,
+                "turker_label": false,
+                "time_in_seconds": 3.208,
+                "true_label": false
+            },
+            {
+                "is_correct": false,
+                "trial_num": 20,
+                "turker_label": true,
+                "time_in_seconds": 3.038,
+                "true_label": false
+            },
+            {
+                "is_correct": true,
+                "trial_num": 21,
+                "turker_label": true,
+                "time_in_seconds": 2.827,
+                "true_label": true
+            },
+            {
+                "is_correct": true,
+                "trial_num": 22,
+                "turker_label": false,
+                "time_in_seconds": 3.821,
+                "true_label": false
+            },
+            {
+                "is_correct": false,
+                "trial_num": 23,
+                "turker_label": false,
+                "time_in_seconds": 2.582,
+                "true_label": true
+            },
+            {
+                "is_correct": true,
+                "trial_num": 24,
+                "turker_label": true,
+                "time_in_seconds": 5.036,
+                "true_label": true
+            },
+            {
+                "is_correct": true,
+                "trial_num": 25,
+                "turker_label": true,
+                "time_in_seconds": 2.612,
+                "true_label": true
+            },
+            {
+                "is_correct": true,
+                "trial_num": 26,
+                "turker_label": true,
+                "time_in_seconds": 2.328,
+                "true_label": true
+            },
+            {
+                "is_correct": true,
+                "trial_num": 27,
+                "turker_label": true,
+                "time_in_seconds": 3.5,
+                "true_label": true
+            },
+            {
+                "is_correct": true,
+                "trial_num": 28,
+                "turker_label": false,
+                "time_in_seconds": 2.628,
+                "true_label": false
+            },
+            {
+                "is_correct": true,
+                "trial_num": 29,
+                "turker_label": false,
+                "time_in_seconds": 5.717,
+                "true_label": false
+            }
+        ],
+        "system": {
+            "screenW": 1280,
+            "screenH": 1024,
+            "OS": "Windows",
+            "Browser": "Chrome"
+        },
+        "training_data_fn": "./js/training_data_critter_bug_or_secondary_color_yellow_2.json",
+        "role": "student",
+        "training_trials": [],
+        "subject_information": {
+            "enjoyment": "1",
+            "gender": "Male",
+            "age": "52",
+            "problems": "Don't understand the score system.  If I \"Correctly selected: 12 out of 18\" then I should have incorrectly selected 6 out of 18, but it said 2 out of 12",
+            "nativeEnglish": "yes",
+            "strategy": "Used info gathered by other guy to try to identify the creatures",
+            "assess": "yes",
+            "humanPartner": "yes",
+            "fairprice": "4.00",
+            "comments": "",
+            "likePartner": "okay",
+            "education": "3"
+        },
+        "game_id": "9334-3f2cd488-cbfc-4387-a7a0-b8cfce65be04",
+        "testing_summary_stats": {
+            "hits": 12,
+            "misses": 6,
+            "score": 10,
+            "false_alarms": 2,
+            "type": "testing",
+            "correct_rejections": 10
+        },
+        "rule_idx": 7
+    },
+    "AcceptTime": "2018-05-02T22:17:43Z",
+    "HITId": "3VZYA8PITOBJ6UJQ1EJOLFMGUMY506",
+    "Assignment": "",
+    "AssignmentStatus": "Submitted",
+    "SubmitTime": "2018-05-02T22:55:52Z"
+}
