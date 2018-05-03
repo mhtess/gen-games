@@ -271,7 +271,7 @@ if __name__ == '__main__':
             new_file_name = str(uuid.uuid1())
             new_file_path = os.path.join(CLEANED_DIR, '{}.json'.format(new_file_name))
             with open(new_file_path, 'w') as fp:
-                json.dump(mturk_file_struct, fp)
+                json.dump(mturk_file_struct, fp, indent=4)
 
     pp.pprint(still_incomplete)
 
