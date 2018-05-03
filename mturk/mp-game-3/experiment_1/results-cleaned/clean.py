@@ -5,6 +5,7 @@ import os
 import pprint
 import uuid
 import json
+import math
 
 DIR = '../production-results'
 CLEANED_DIR = './data'
@@ -108,7 +109,7 @@ def create_answer_dict(row):
     '''
     return {
         'is_correct': row['is_correct'],
-        'trial_num': row['trial_num'],
+        'trial_num': int(row['trial_num']),
         'turker_label': row['turker_label'],
         'time_in_seconds': row['time_in_seconds'],
         'true_label': row['true_label'],
@@ -123,13 +124,24 @@ def fill_train_answers(game_id, role, mturk_file_struct):
         return True
     else:
         train_answers = []
+        true_trial_idx = -1
         for filename in os.listdir(RAW_SERVER_LOGS_TRAIN):
             if game_id in filename:
                 fp = os.path.join(RAW_SERVER_LOGS_TRAIN, filename)
                 df = pd.read_csv(fp, sep='	')
                 training_answers_rows = df.loc[(df['role'] == role)]
                 for _, r in training_answers_rows.iterrows():
-                    train_answers.append(create_answer_dict(r))
+                    if math.isnan(r['is_correct']):
+                        if len(train_answers):
+                            true_trial_idx = train_answers[-1]['trial_num']
+                        else:
+                            true_trial_idx = 0
+                        continue
+                    answer = create_answer_dict(r)
+                    if true_trial_idx != -1: # We've encountered a Nan
+                        true_trial_idx += 1
+                        answer['trial_num'] = true_trial_idx
+                    train_answers.append(answer)
                 mturk_file_struct['answers']['training_trials'] = train_answers
                 return True
     return False
@@ -140,13 +152,24 @@ def fill_test_answers(game_id, role, mturk_file_struct):
     Given game_id, role look up training_answers in raw server logs.
     '''
     test_answers = []
+    true_trial_idx = -1
     for filename in os.listdir(RAW_SERVER_LOGS_TEST):
         if game_id in filename:
             fp = os.path.join(RAW_SERVER_LOGS_TEST, filename)
             df = pd.read_csv(fp, sep='	')
             test_answers_rows = df.loc[(df['role'] == role)]
             for _, r in test_answers_rows.iterrows():
-                test_answers.append(create_answer_dict(r))
+                if math.isnan(r['is_correct']):
+                    if len(test_answers):
+                        true_trial_idx = test_answers[-1]['trial_num']
+                    else:
+                        true_trial_idx = 0
+                    continue
+                answer = create_answer_dict(r)
+                if true_trial_idx != -1: # We've encountered a Nan
+                    true_trial_idx += 1
+                    answer['trial_num'] = true_trial_idx
+                test_answers.append(answer)
             mturk_file_struct['answers']['testing_trials'] = test_answers
             return True
     return False
@@ -249,7 +272,7 @@ def construct_mturk_file(other_player_info):
 
     return (file_found_1 and file_found_2 and file_found_3), mturk_file_struct
 
-if __name__ == '__main__':
+def fix_incomplete_files():
     # pretty printing for debugging
     pp = pprint.PrettyPrinter(indent=4)
     incomplete_games, complete_games = identify_partnerless_results()
@@ -274,6 +297,9 @@ if __name__ == '__main__':
                 json.dump(mturk_file_struct, fp, indent=4)
 
     pp.pprint(still_incomplete)
+
+if __name__ == '__main__':
+    fix_incomplete_files()
 
 
     
