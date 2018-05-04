@@ -420,8 +420,14 @@ def save_chat_mesages(dir=CLEANED_DIR):
             for filename in os.listdir(RAW_SERVER_LOGS_CHAT_MESSAGES):
                 if game_id in filename:
                     chat_fp = os.path.join(RAW_SERVER_LOGS_CHAT_MESSAGES, filename)
+                    chat_df = pd.read_csv(chat_fp, sep='	')
+                    chat_df.fillna(1, inplace=True)
+                    chat_df['rule_idx'] = df['answers']['rule_idx']
+                    chat_df['rule_type'] = df['answers']['rule_type']
+                    chat_df.loc[:,'reactionTime'] /= 1000 # Convert millisecodns to seconds
+                    chat_df.rename(columns={'gameid': 'game_id'}, inplace=True)
                     chat_fp_dest = os.path.join( CLEANED_CHAT_MESSAGES, '{}.csv'.format(game_id))
-                    copyfile(chat_fp, chat_fp_dest)
+                    chat_df.to_csv(chat_fp_dest, index=False)
                     break
 
 
