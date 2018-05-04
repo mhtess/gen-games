@@ -13,6 +13,7 @@ CLEANED_TRAIN_SUMMARY_STATS = './train_summary_stats'
 CLEANED_TEST_SUMMARY_STATS = './test_summary_stats'
 CLEANED_TRAIN_TRIALS = './train_trials'
 CLEANED_TEST_TRIALS = './test_trials'
+CLEANED_CHAT_MESSAGES = './chat_messages'
 
 RAW_SERVER_LOGS = '../raw-server-data'
 RAW_SERVER_LOGS_CHAT_MESSAGES = os.path.join(RAW_SERVER_LOGS, 'chatMessage')
@@ -406,6 +407,23 @@ def save_test_summary_stats(dir=CLEANED_DIR):
             csv_fp = os.path.join(CLEANED_TEST_SUMMARY_STATS, '{}_{}.csv'.format(df['answers']['game_id'], player_role))
             testing_summary_stats.to_csv(csv_fp, index=False)
 
+def save_chat_mesages(dir=CLEANED_DIR):
+    ''' Write CSVs for each player's testing summary stats. 
+    '''
+    game_ids = set()
+    for filename in os.listdir(dir):
+        if filename.endswith('.json'):
+            fp = os.path.join(dir, filename)
+            df = pd.read_json(fp)
+            game_id = df['answers']['game_id']
+            game_ids.add(game_id)
+            for filename in os.listdir(RAW_SERVER_LOGS_CHAT_MESSAGES):
+                if game_id in filename:
+                    chat_fp = os.path.join(RAW_SERVER_LOGS_CHAT_MESSAGES, filename)
+                    chat_fp_dest = os.path.join( CLEANED_CHAT_MESSAGES, '{}.csv'.format(game_id))
+                    copyfile(chat_fp, chat_fp_dest)
+                    break
+
 
 def create_dirs():
     ''' Create cleaned data directories. 
@@ -418,14 +436,15 @@ def create_dirs():
     create_dir(CLEANED_TEST_SUMMARY_STATS)
     create_dir(CLEANED_TRAIN_TRIALS)
     create_dir(CLEANED_TEST_TRIALS)
+    create_dir(CLEANED_CHAT_MESSAGES)
 
 
 if __name__ == '__main__':
     create_dirs()
-    fix_incomplete_files()
-    save_train_data()
-    save_test_data()
-    save_train_summary_stats()
-    save_test_summary_stats()
-
+    # fix_incomplete_files()
+    # save_train_data()
+    # save_test_data()
+    # save_train_summary_stats()
+    # save_test_summary_stats()
+    save_chat_mesages()
     
