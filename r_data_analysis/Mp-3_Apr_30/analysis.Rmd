@@ -92,6 +92,14 @@ temp <- list.files(
   full.names=TRUE
 )
 test_stats <- do.call(rbind, lapply(temp, read.csv))
+
+# Load Chat Logs
+temp <- list.files(
+  "../../mturk/mp-game-3/experiment_1/results-cleaned/chat_messages",
+  pattern="*.csv",
+  full.names=TRUE
+)
+chat_logs <- do.call(rbind, lapply(temp, read.csv))
 ```
 
 # Dataset Composition
@@ -247,6 +255,54 @@ test_perf_listener_plot <- ggplot(temp, aes(x=game_id, y=value, fill=variable)) 
 plot(test_perf_listener_plot)
 ```
 Performance for the listeners generally tracked the performance of the teachers on the test set. There are few exemplars that stand out though. Game 1264 in rule 3 had no dialogue, as discussed earlier. Games 3459 and 9452 have uninformative or poorly interpreted dialogue, as discussed earlier.
+
+# Analysis: Time Spent Learning Versus Communicating
+There is a general hypothesis that communication allows one to learn with reasonable accuracy, with far less time expended. We've seen above that the teachers and listeners have comparable performance to one another, even though the the listener has no training samples. Here, we examine the the latter portion of the hypothesis by looking at time spent on learning versus communicating.
+
+First, we compare without normalizing for time penalties during training.
+```{r}
+train_trials %>% 
+  select(rule_type, rule_idx, game_id, trial_num, time_in_seconds) %>%
+  group_by(rule_type, rule_idx, game_id) %>%
+  summarize(m = sum(time_in_seconds)) %>%
+  mutate(phase='exploring') %>%
+  bind_rows(
+    chat_logs %>%
+      select(rule_type, rule_idx, game_id, reactionTime) %>%
+      group_by(rule_type, rule_idx, game_id) %>%
+      summarize(m = sum(reactionTime)) %>%
+      mutate(phase='communicating')
+  ) %>%
+  ggplot(., aes(x = factor(game_id), y = m, fill=factor(phase, levels=c('exploring', 'communicating'))))+
+  geom_col(position = position_dodge())+
+  facet_wrap(~rule_type + rule_idx, scales = 'free')+
+  ylab('Time (Seconds)') +
+  theme(axis.text.x = element_blank()) +
+  scale_fill_discrete("")
+```
+
+Now, we normalize for time penalties during training.
+```{r}
+time_penalty = 5
+train_trials %>% 
+  select(rule_type, rule_idx, game_id, trial_num, time_in_seconds, is_correct) %>%
+  group_by(rule_type, rule_idx, game_id) %>%
+  summarize(m = sum(time_in_seconds) - sum(is_correct == 'False') * time_penalty) %>%
+  mutate(phase='exploring') %>%
+  bind_rows(
+    chat_logs %>%
+      select(rule_type, rule_idx, game_id, reactionTime) %>%
+      group_by(rule_type, rule_idx, game_id) %>%
+      summarize(m = sum(reactionTime)) %>%
+      mutate(phase='communicating')
+  ) %>%
+  ggplot(., aes(x = factor(game_id), y = m, fill=factor(phase, levels=c('exploring', 'communicating'))))+
+  geom_col(position = position_dodge())+
+  facet_wrap(~rule_type + rule_idx, scales = 'free')+
+  ylab('Time (Seconds)') +
+  theme(axis.text.x = element_blank()) +
+  scale_fill_discrete("")
+```
 
 # Analysis: Rational Rules
 
