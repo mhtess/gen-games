@@ -305,6 +305,8 @@ train_trials %>%
 ```
 
 # Analysis: Rational Rules
+```{r}
+```
 
 # Posterior Predictives
 
