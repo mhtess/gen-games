@@ -15,6 +15,7 @@ CLEANED_TRAIN_TRIALS = './train_trials'
 CLEANED_TEST_TRIALS = './test_trials'
 CLEANED_CHAT_MESSAGES = './chat_messages'
 
+GAME_SUMMARY = './game_summary.csv'
 PREDICTIVES_POOLED_BY_LIST = './predictives_pooled_list'
 
 RAW_SERVER_LOGS = '../raw-server-data'
@@ -503,6 +504,29 @@ def save_human_predictives_pooled_by_lists():
         save_human_predictives_teacher_pooled_by_list(rule_idx)
 
 
+def game_summary(dir=CLEANED_DIR):
+    ''' Summarize Games in data directory '''
+    summary = []
+    for filename in os.listdir(dir):
+        if filename.endswith('.json'):
+            fp = os.path.join(dir, filename)
+            df = pd.read_json(fp)
+            game_id = df['answers']['game_id']
+            rule_idx = df['answers']['rule_idx']
+            training_fn = df['answers']['training_data_fn']
+            test_fn = df['answers']['test_data_fn']
+            rule_type = df['answers']['rule_type']
+            summary.append({
+                'game_id': game_id,
+                'rule_idx': rule_idx,
+                'training_data_fn': training_fn,
+                'test_data_fn': test_fn,
+                'rule_type': rule_type
+            })
+    summary_df = pd.DataFrame.from_dict(summary)
+    summary_df.to_csv(GAME_SUMMARY, index=False)
+    
+
 def create_dirs():
     ''' Create cleaned data directories. 
     '''
@@ -521,10 +545,11 @@ def create_dirs():
 if __name__ == '__main__':
     create_dirs()
     # fix_incomplete_files()
+    game_summary()
     # save_train_data()
     # save_test_data()
     # save_train_summary_stats()
     # save_test_summary_stats()
     # save_chat_mesages()
-    save_human_predictives_pooled_by_lists()
+    # save_human_predictives_pooled_by_lists()
     
