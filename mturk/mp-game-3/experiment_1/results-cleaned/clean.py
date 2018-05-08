@@ -28,7 +28,7 @@ RAW_SERVER_LOGS_TRAIN = os.path.join(RAW_SERVER_LOGS, 'logTrain')
 ROLE_STUDENT = 'student'
 ROLE_EXPLORER = 'explorer'
 
-NUM_LISTS = 10
+NUM_LISTS = 9
 
 def identify_partnerless_results(dir=DIR):
     '''
@@ -507,11 +507,16 @@ def save_human_predictives_pooled_by_lists():
 def game_summary(dir=CLEANED_DIR):
     ''' Summarize Games in data directory '''
     summary = []
+    game_ids = set()
     for filename in os.listdir(dir):
         if filename.endswith('.json'):
             fp = os.path.join(dir, filename)
             df = pd.read_json(fp)
             game_id = df['answers']['game_id']
+            if game_id in game_ids:
+                continue
+            else:
+                game_ids.add(game_id)
             rule_idx = df['answers']['rule_idx']
             training_fn = df['answers']['training_data_fn']
             test_fn = df['answers']['test_data_fn']
