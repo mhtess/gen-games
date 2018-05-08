@@ -6,14 +6,14 @@
 // passed in from R (var data). We then find the formulae
 // that explain the data the most. Then, we compare the
 // model predictions to those of humans.
+//
+// Note: This is meant to be executed via rwebppl.
 // -------------------------------------------------------
-var trainingStimuli = json.read('../../experiments/mp-game-3/js/training_data.json');
-var testStimuli = json.read('../../experiments/mp-game-3/js/test_data.json');
-var posteriorPredictivesTeachersPooled = json.read('../../mturk/mp-game-3/pilot/teacher_posterior_preds_pooled.json');
-var posteriorPredictivesTeachersUnpooled = json.read('../../mturk/mp-game-3/pilot/teacher_posterior_preds_unpooled.json');
 
-// Mapping from trait names -> trait values -> discrete value
-var catMapping = {
+// ----------------------
+// RATIONAL RULES HELPERS
+// ----------------------
+var traitToValueMapping = {
   "critter": {
     "bug": 0,
     "bird": 1,
@@ -36,14 +36,17 @@ var catMapping = {
   }
 };
 
-var catMapping_inv = {
-  "critter": _.invert(catMapping["critter"]),
-  "body_color": _.invert(catMapping["body_color"]),
-  "secondary_color": _.invert(catMapping["secondary_color"]),
-  "prop1": _.invert(catMapping["prop1"]),
+
+var traitToValueMappingInverted = {
+  "critter": _.invert(traitToValueMapping["critter"]),
+  "body_color": _.invert(traitToValueMapping["body_color"]),
+  "secondary_color": _.invert(traitToValueMapping["secondary_color"]),
+  "prop1": _.invert(traitToValueMapping["prop1"]),
 };
 
-var readableValMapping = {
+
+var valueToStringMapping = {
+  // Derive string repr from value
   "#5da5db": "blue",
   "#228b22": "green",
   "#ff8c00": "orange",
@@ -53,26 +56,34 @@ var readableValMapping = {
   "0": "small",
   "0.693147180559945": "medium",
   "1.16315080980568": "large",
-}
+};
 
-// Given an object from the stimuli dataset, produce an equivalent object
-// where the defining values of the discriminative traits have been
-// properly mapped to discrete values.
+
 var makeObj = function(o) {
+  // Given an object from the stimuli dataset, produce an equivalent object
+  // where the defining values of the discriminative traits have been
+  // properly mapped to discrete values.
   return {
-    "critter": catMapping["critter"][o["critter"]], 
-    "body_color": catMapping["body_color"][o["body_color"]],
-    "secondary_color": catMapping["secondary_color"][o["secondary_color"]],
-    "size": catMapping["prop1"][o["props"]["prop1"].toString()],
+    "critter": traitToValueMapping["critter"][o["critter"]], 
+    "body_color": traitToValueMapping["body_color"][o["body_color"]],
+    "secondary_color": traitToValueMapping["secondary_color"][o["secondary_color"]],
+    "size": traitToValueMapping["prop1"][o["props"]["prop1"].toString()],
     "belongs_to_concept": o["belongs_to_concept"],
   }
 }
 
+
 // Define prior and sampling strategy for selecting both a trait
 // and a value to be assigned to the trait, for a proposal formula.
-var traitPrior = Categorical({vs: ["critter", "body_color", "secondary_color", "size"],
-                              ps: [0.25, 0.25, 0.25, 0.25]});
+var traitPrior = Categorical(
+  {
+    vs: ["critter", "body_color", "secondary_color", "size"],
+    ps: [0.25, 0.25, 0.25, 0.25]
+  }
+);
+
 var samplePred = function() {
+  // Sample predicates and values
   var trait = sample(traitPrior);
   var value = uniformDraw([0,1,2]);
   var result = {
@@ -92,15 +103,16 @@ var TauKernel = function(prevVal) {
   return Beta({a: 2, b: 4});
 };
 
-// Implementation of rational rules model.
 var genRationRulesFunc = function(AObjects, BObjects, TObjects, allObjs) {
+  // Implementation of rational rules model.
+
   var rationalRules = function() {
     var tau = sample(Beta({a:1, b:1}), {driftKernel: TauKernel});
     var noiseParam = Math.exp(-10); // prior that a given sample is an outlier
   
-    // Recursive definition of producing terminal predicate
-    // or continuing a formula with "AND".
     var sampleConj = function() {
+      // Recursive definition of producing terminal predicate
+      // or continuing a formula with "AND".
       var p = samplePred();
       if(flip(tau)) {
         var c = sampleConj();
@@ -117,9 +129,9 @@ var genRationRulesFunc = function(AObjects, BObjects, TObjects, allObjs) {
       }
     }
     
-    // Recursive definition of producing a terminal conjunction or
-    // continuing a formula with "OR".
     var getFormula = function() {
+      // Recursive definition of producing a terminal conjunction or
+      // continuing a formula with "OR".
       var c = sampleConj();
       if(flip(tau)) {
         var f = getFormula();
@@ -137,9 +149,9 @@ var genRationRulesFunc = function(AObjects, BObjects, TObjects, allObjs) {
     }
   
     // Sample a proposed formula
+    // Note: Have to unpack the function like this because of a weird webppl quirk
+    // https://github.com/probmods/webppl/issues/358
     var rule = getFormula();
-     // Note: Have to unpack the function like this because of a weird webppl quirk
-     // https://github.com/probmods/webppl/issues/358
     var rule_fn = rule.f;
     
     // Conditioning on AObjects following the rule & BObjects violating the rule
@@ -152,7 +164,7 @@ var genRationRulesFunc = function(AObjects, BObjects, TObjects, allObjs) {
   return rationalRules;
 }
 
-var rationalRulesAnalysis = function(val, AObjects, BObjects, TObjects, allObjs) {
+var rationalRulesAnalysis = function(AObjects, BObjects, TObjects, allObjs) {
   // Run MCMC Inference
   var rationalRules = genRationRulesFunc(AObjects, BObjects, TObjects, allObjs);
   var rulePosterior = Infer({method: 'MCMC', samples:2000, burn:70000}, rationalRules);
@@ -164,10 +176,10 @@ var rationalRulesAnalysis = function(val, AObjects, BObjects, TObjects, allObjs)
     function(obj){
       _.join([
           obj["belongs_to_concept"],
-          catMapping_inv["critter"][obj["critter"]],
-          readableValMapping[catMapping_inv["body_color"][obj["body_color"]]],
-          readableValMapping[catMapping_inv["secondary_color"][obj["secondary_color"]]],
-          readableValMapping[catMapping_inv["prop1"][obj["size"]]]
+          traitToValueMappingInverted["critter"][obj["critter"]],
+          valueToStringMapping[traitToValueMappingInverted["body_color"][obj["body_color"]]],
+          valueToStringMapping[traitToValueMappingInverted["secondary_color"][obj["secondary_color"]]],
+          valueToStringMapping[traitToValueMappingInverted["prop1"][obj["size"]]]
         ],
         '_'
       );
@@ -189,157 +201,102 @@ var rationalRulesAnalysis = function(val, AObjects, BObjects, TObjects, allObjs)
     }, allObjs
   );
   var posteriorPreds = _.zip(critterLabels, preds);
+  return {
+    'ruleProbs': supportProbs,
+    'posteriorPreds': posteriorPreds,
+  }
+}
 
-  if (val == 'support') {
-    return supportProbs;
+var runRationalRules = function(trainingStimuli, testStimuli, humanPredictives, humanResponses) {
+  // Load critters from training stimuli file
+  var defaultTrainingCritters = _.uniqWith(map(makeObj, trainingStimuli), _.isEqual);
+  var defaultTestCritters = _.uniqWith(map(makeObj, testStimuli), _.isEqual);
+
+  // Subsitute "belongs_to_concept" gold label with the one provided
+  // by a teacher. Do this for each teacher, across trials.
+  var trainingCritters = filter(function(x) {
+    return x != null;
+  }, map(function(x) {
+    if (x["data"] == "training") {
+      var baseCritter = defaultTrainingCritters[x["trial_num"]];
+      var critter = {
+        critter: baseCritter["critter"],
+        body_color: baseCritter["body_color"],
+        secondary_color: baseCritter["secondary_color"],
+        size: baseCritter["size"],
+        belongs_to_concept: x["turker_label"],
+      };
+      return critter;
+    }
+  }, humanResponses));
+  
+  // Subsitute "belongs_to_concept" gold label with the one provided
+  // by a teacher. Do this for each each participant, across trials.
+  var TObjects = filter(function(x) {
+    return x != null;
+  }, map(function(x) {
+    if (x["data"] == "test") {
+      var baseCritter = defaultTestCritters[x["trial_num"]];
+      var critter = {
+        critter: baseCritter["critter"],
+        body_color: baseCritter["body_color"],
+        secondary_color: baseCritter["secondary_color"],
+        size: baseCritter["size"],
+        belongs_to_concept: x["turker_label"],
+      };
+      return critter;
+    }
+  }, humanResponses));
+
+  // Split into Training A/B Groups & Test Split
+  var AObjects = filter(function(x) { return x["belongs_to_concept"] == true;}, trainingCritters);
+  var BObjects = filter(function(x) { return x["belongs_to_concept"] == false;}, trainingCritters);  
+  var allObjs = _.uniqWith(_.concat(defaultTrainingCritters, defaultTestCritters), _.isEqual);
+
+  var posteriorPredictivesPooled = Object.values(humanPredictives["pred"]);
+  var rationalRulesResults =  rationalRulesAnalysis(AObjects, BObjects, TObjects, allObjs);
+
+  var result = _.zip(rationalRulesResults.posteriorPreds, posteriorPredictivesPooled);
+  var flattenedResult = map(function(x) {
+    return _.flatten(x);
+  }, result);
+  return flattenedResult;
+}
+
+// ---------------
+// MAIN FUNCTIONS
+// ---------------
+
+var parseRData = function() {
+  if (
+    !rationalRulesParams.hasOwnProperty('human_predictives_fp') ||
+    !rationalRulesAnalysis.hasOwnProperty('training_stim_fp') ||
+    !rationalRulesAnalysis.hasOwnProperty('test_stim_fp') ||
+    !rationalRulesAnalysis.hasOwnProperty('train_human_responses') || // List of files
+    !rationalRulesAnalysis.hasOwnProperty('test_human_response') // List of files
+  ) {
+    throw Error('Incorrect or Incomplete data passed from R!');
   } else {
-    return posteriorPreds;
-  } 
+    var humanPredictives = json.read(rationalRulesParams.human_predictives_fp);
+    var trainingStim = json.read(rationalRulesAnalysis.training_stim_fp);
+    var testStim = json.read(rationalRulesAnalysis.test_stim_fp);
+    var trainHumanResponses = map(json.read, rationalRulesAnalysis.train_human_responses);
+    var testHumanResponses = map(json.read, rationalRulesAnalysis.test_human_responses);
+    var humanResponses = _.assignIn(_.assignIn({}, trainHumanResponses), testHumanResponses)
+
+    return {
+      'humanPredictives': humanPredictives,
+      'trainingStim': trainingStim,
+      'testStim': testStim,
+      'humanResponses': humanResponses,
+    }
+  }
 }
 
-// Rational Rules Applied To Data w/ True Labels
-var goldLabelsRationalRules = function(val) {
-  // Create critters dataset from stimuli data.
-  // Then split critters into 2 groups A (belongs to concept) and B (outside of concept).
-  var trainingCritters = _.uniqWith(map(makeObj, trainingStimuli), _.isEqual);
-  var AObjects = filter(function(x) { return x["belongs_to_concept"] == true;}, trainingCritters);
-  var BObjects = filter(function(x) { return x["belongs_to_concept"] == false;}, trainingCritters);  
-  var TObjects = _.uniqWith(map(makeObj, testStimuli), _.isEqual);
-  var allObjs = _.uniqWith(TObjects.concat(AObjects.concat(BObjects)), _.isEqual);
-  return rationalRulesAnalysis(val, AObjects, BObjects, TObjects, allObjs);
-} 
-
-// Rational Rules Applied To Data w/ Teacher Labels
-// Note: Requires variable combinedTeacherLabels to be passed in from r script
-var pooledTeacherLabelsRationalRules = function(val) {
-  // Load critters from training stimuli file
-  var defaultTrainingCritters = _.uniqWith(map(makeObj, trainingStimuli), _.isEqual);
-  var defaultTestCritters = _.uniqWith(map(makeObj, testStimuli), _.isEqual);
-
-  // Subsitute "belongs_to_concept" gold label with the one provided
-  // by a teacher. Do this for each teacher, across trials.
-  var trainingCritters = filter(function(x) {
-    return x != null;
-  }, map(function(x) {
-    if (x["data"] == "training") {
-      var baseCritter = defaultTrainingCritters[x["trial_num"]];
-      var critter = {
-        critter: baseCritter["critter"],
-        body_color: baseCritter["body_color"],
-        secondary_color: baseCritter["secondary_color"],
-        size: baseCritter["size"],
-        belongs_to_concept: x["turker_label"],
-      };
-      return critter;
-    }
-  }, combinedTeacherLabels));
-  
-  // Subsitute "belongs_to_concept" gold label with the one provided
-  // by a teacher. Do this for each each participant, across trials.
-  var TObjects = filter(function(x) {
-    return x != null;
-  }, map(function(x) {
-    if (x["data"] == "test") {
-      var baseCritter = defaultTestCritters[x["trial_num"]];
-      var critter = {
-        critter: baseCritter["critter"],
-        body_color: baseCritter["body_color"],
-        secondary_color: baseCritter["secondary_color"],
-        size: baseCritter["size"],
-        belongs_to_concept: x["turker_label"],
-      };
-      return critter;
-    }
-  }, combinedTeacherLabels));
-
-  // Split into Training A/B Groups & Test Split
-  var AObjects = filter(function(x) { return x["belongs_to_concept"] == true;}, trainingCritters);
-  var BObjects = filter(function(x) { return x["belongs_to_concept"] == false;}, trainingCritters);  
-  var allObjs = _.uniqWith(_.concat(defaultTrainingCritters, defaultTestCritters), _.isEqual);
-
-  var posteriorPredictivesPooled = Object.values(posteriorPredictivesTeachersPooled["pred"]);
-  var rationalRulePredictives =  rationalRulesAnalysis(val, AObjects, BObjects, TObjects, allObjs);
-
-  var result = _.zip(rationalRulePredictives, posteriorPredictivesPooled);
-  var flattenedResult = map(function(x) {
-    return _.flatten(x);
-  }, result);
-  return flattenedResult;
+var runScript = function() {
+  var rData = parseRData();
+  rationalRulesResults =  runRationalRules(rData.trainingStim, rData.testStim, rData.humanPredictives, rData.humanResponses); 
+  return rationalRulesResults;
 }
 
-// Rational Rules Applied To Data w/ Teacher Labels
-// Note: Requires variable combinedTeacherLabels to be passed in from r script
-var unpooledTeacherLabelsRationalRules = function(val, participant_index) {
-  // Load critters from training stimuli file
-  var defaultTrainingCritters = _.uniqWith(map(makeObj, trainingStimuli), _.isEqual);
-  var defaultTestCritters = _.uniqWith(map(makeObj, testStimuli), _.isEqual);
-
-  // Subsitute "belongs_to_concept" gold label with the one provided
-  // by a teacher. Do this for each teacher, across trials.
-  var participantLabels = filter(function(x) {
-      return x["participant"] == participant_index;
-    }, combinedTeacherLabels
-  );
-
-console.log(participantLabels);
-
-  var trainingCritters = filter(function(x) {
-    return x != null;
-  }, map(function(x) {
-    if (x["data"] == "training") {
-      var baseCritter = defaultTrainingCritters[x["trial_num"]];
-      var critter = {
-        critter: baseCritter["critter"],
-        body_color: baseCritter["body_color"],
-        secondary_color: baseCritter["secondary_color"],
-        size: baseCritter["size"],
-        belongs_to_concept: x["turker_label"],
-      };
-      return critter;
-    }
-  }, participantLabels));
-
-  
-  // Subsitute "belongs_to_concept" gold label with the one provided
-  // by a teacher. Do this for each each participant, across trials.
-  var TObjects = filter(function(x) {
-    return x != null;
-  }, map(function(x) {
-    if (x["data"] == "test") {
-      var baseCritter = defaultTestCritters[x["trial_num"]];
-      var critter = {
-        critter: baseCritter["critter"],
-        body_color: baseCritter["body_color"],
-        secondary_color: baseCritter["secondary_color"],
-        size: baseCritter["size"],
-        belongs_to_concept: x["turker_label"],
-      };
-      return critter;
-    }
-  }, participantLabels));
-
-  // Split into Training A/B Groups & Test Split
-  var AObjects = filter(function(x) { return x["belongs_to_concept"] == true;}, trainingCritters);
-  var BObjects = filter(function(x) { return x["belongs_to_concept"] == false;}, trainingCritters);  
-  var allObjs = _.uniqWith(_.concat(defaultTrainingCritters, defaultTestCritters), _.isEqual);
-
-  var posteriorPredictives= _.concat(
-    Object.values(posteriorPredictivesTeachersPooled["pred_train"][toString(participant_index)]),
-    Object.values(posteriorPredictivesTeachersPooled["pred_test"])[toString(participant_index)]
-  );
-
-  var rationalRulePredictives = rationalRulesAnalysis(val, AObjects, BObjects, TObjects, allObjs);
-
-
-  var result = _.zip(rationalRulePredictives, posteriorPredictives);
-  var flattenedResult = map(function(x) {
-    return _.flatten(x);
-  }, result);
-  return flattenedResult;
-}
-
-
-// goldLabelsRationalRules('predictives');
-// goldLabelsRationalRules('support');
-pooledTeacherLabelsRationalRules('predictives');
-// unpooledTeacherLabelsRationalRules('predictives', 7);
+runScript();

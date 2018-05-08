@@ -446,11 +446,11 @@ def create_dirs():
 
 
 if __name__ == '__main__':
-    create_dirs()
+    # create_dirs()
     # fix_incomplete_files()
     # save_train_data()
     # save_test_data()
     # save_train_summary_stats()
     # save_test_summary_stats()
-    save_chat_mesages()
+    # save_chat_mesages()
     
