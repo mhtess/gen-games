@@ -273,7 +273,7 @@ var parseRData = function() {
     !rationalRulesAnalysis.hasOwnProperty('training_stim_fp') ||
     !rationalRulesAnalysis.hasOwnProperty('test_stim_fp') ||
     !rationalRulesAnalysis.hasOwnProperty('train_human_responses') || // List of files
-    !rationalRulesAnalysis.hasOwnProperty('test_human_response') // List of files
+    !rationalRulesAnalysis.hasOwnProperty('test_human_responses') // List of files
   ) {
     throw Error('Incorrect or Incomplete data passed from R!');
   } else {
