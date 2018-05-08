@@ -15,6 +15,8 @@ CLEANED_TRAIN_TRIALS = './train_trials'
 CLEANED_TEST_TRIALS = './test_trials'
 CLEANED_CHAT_MESSAGES = './chat_messages'
 
+PREDICTIVES_POOLED_BY_LIST = './predictives_pooled_list'
+
 RAW_SERVER_LOGS = '../raw-server-data'
 RAW_SERVER_LOGS_CHAT_MESSAGES = os.path.join(RAW_SERVER_LOGS, 'chatMessage')
 RAW_SERVER_LOGS_SUMMARY_STATS = os.path.join(RAW_SERVER_LOGS, 'logScores')
@@ -25,6 +27,7 @@ RAW_SERVER_LOGS_TRAIN = os.path.join(RAW_SERVER_LOGS, 'logTrain')
 ROLE_STUDENT = 'student'
 ROLE_EXPLORER = 'explorer'
 
+NUM_LISTS = 10
 
 def identify_partnerless_results(dir=DIR):
     '''
@@ -431,6 +434,75 @@ def save_chat_mesages(dir=CLEANED_DIR):
                     break
 
 
+def compute_human_predictives_teacher(training_data, test_data):
+    ''' Compute human predictives for the teacher.
+    '''
+    num_training, num_test = training_data['game_id'].nunique(), test_data['game_id'].nunique()
+    training_preds, test_preds = defaultdict(int), defaultdict(int)
+
+    for _, r in training_data.iterrows():
+        if ROLE_EXPLORER == r['role']:
+            training_preds[r['trial_num']] += int(r['turker_label'])
+
+    for _, r in test_data.iterrows():
+        if ROLE_EXPLORER == r['role']:
+            test_preds[r['trial_num']] += int(r['turker_label'])
+
+    training_preds = {trial_num: num_true / float(num_training) for trial_num, num_true in training_preds.iteritems()}
+    test_preds = {trial_num: num_true / float(num_test) for trial_num, num_true in test_preds.iteritems()}
+    return training_preds, test_preds
+
+
+def save_human_predictives_teacher_pooled_by_list(rule_idx):
+    ''' Save human predictives for the teacher, pooled by the list utilized.
+    '''
+    train_df, test_df = None, None
+
+    # Gather training trials for specified list
+    for filename in os.listdir(CLEANED_TRAIN_TRIALS):
+        if filename.endswith('.csv'):
+            fp = os.path.join(CLEANED_TRAIN_TRIALS, filename)
+            df = pd.read_csv(fp)
+            if df['rule_idx'].iloc[0] != rule_idx:
+                continue
+            if train_df is None:
+                train_df = df
+            else:
+                train_df = pd.concat([train_df, df])
+
+    # Gather test trials for specified list
+    for filename in os.listdir(CLEANED_TEST_TRIALS):
+        if filename.endswith('.csv'):
+            fp = os.path.join(CLEANED_TEST_TRIALS, filename)
+            df = pd.read_csv(fp)
+            if df['rule_idx'].iloc[0] != rule_idx:
+                continue
+            if test_df is None:
+                test_df = df
+            else:
+                test_df = pd.concat([test_df, df])        
+
+    # Save Pooled Predictives
+    training_preds, test_preds = compute_human_predictives_teacher(train_df, test_df)
+    items = training_preds.items()
+    preds = pd.DataFrame({'trial_num': [i[0] for i in items], 'pred': [i[1] for i in items]})
+    preds['type'] = 'train'
+    items = test_preds.items()
+    temp = pd.DataFrame({'trial_num': [i[0] for i in items], 'pred': [i[1] for i in items]})
+    temp['type'] = 'test'
+    preds = pd.concat([preds, temp])
+
+    new_file_path = os.path.join(PREDICTIVES_POOLED_BY_LIST, '{}.csv'.format(rule_idx))
+    preds.to_csv(new_file_path, index=False)
+
+
+def save_human_predictives_pooled_by_lists():
+    ''' Save human predictives for teacher, pooled by the list utilized. Do this for all lists.
+    '''
+    for rule_idx in xrange(NUM_LISTS):
+        save_human_predictives_teacher_pooled_by_list(rule_idx)
+
+
 def create_dirs():
     ''' Create cleaned data directories. 
     '''
@@ -443,14 +515,16 @@ def create_dirs():
     create_dir(CLEANED_TRAIN_TRIALS)
     create_dir(CLEANED_TEST_TRIALS)
     create_dir(CLEANED_CHAT_MESSAGES)
+    create_dir(PREDICTIVES_POOLED_BY_LIST)
 
 
 if __name__ == '__main__':
-    # create_dirs()
+    create_dirs()
     # fix_incomplete_files()
     # save_train_data()
     # save_test_data()
     # save_train_summary_stats()
     # save_test_summary_stats()
     # save_chat_mesages()
+    save_human_predictives_pooled_by_lists()
     
