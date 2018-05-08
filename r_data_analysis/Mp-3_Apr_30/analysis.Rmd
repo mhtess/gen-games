@@ -304,12 +304,35 @@ train_trials %>%
   scale_fill_discrete("")
 ```
 
-# Analysis: Rational Rules
+# Analysis: Rational Rules (List Pooled)
 ```{r}
+game_summary <- read.csv('../../mturk/mp-game-3/experiment_1/results-cleaned/game_summary.csv')
+
+rational_rules <- function(r_idx, game_summary) {
+  # Filter accordin to list idx
+  temp <- filter(game_summary, rule_idx == r_idx)
+  base_dir_1 = '../../mturk/mp-game-3/experiment_1/results-cleaned'
+  base_dir_2 = '../../experiments/mp-game-3/js'
+  
+  # Collect necessary file paths
+  human_predictives_fp <- file.path(base_dir_1, 'predictives_pooled_list', paste(r_idx, '.csv', sep=''))
+  training_stim_fp <- file.path(base_dir_2, basename(as.character(temp[1,"training_data_fn"])))  
+  test_stim_fp <- file.path(base_dir_2, basename(as.character(temp[1,"test_data_fn"])))  
+    
+  train_human_responses <- purrr::map(temp$game_id, function(game_id) {
+    file.path(base_dir_1, 'train_trials', paste(game_id, '_explorer.csv', sep=''))
+  })
+  
+  test_human_responses <-purrr::map(temp$game_id, function(game_id) {
+    file.path(base_dir_1, 'test_trials', paste(game_id, '_explorer.csv', sep=''))
+  })
+  
+  df = data.frame(human_predictives_fp, training_stim_fp, test_stim_fp, train_human_responses, test_human_responses)
+  print(df)
+  
+}
+
+rational_rules(0, game_summary)
 ```
-
-# Posterior Predictives
-
-# Rule Selection
 
 # Analysis: Hold One Out Predictions
