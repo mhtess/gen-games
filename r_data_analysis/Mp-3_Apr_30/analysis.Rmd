@@ -60,6 +60,7 @@ library(tidyr)
 library(dplyr)
 library(ggplot2)
 library(scales)
+library(rwebppl)
 
 # Load Training Trial Responses
 temp <- list.files(
@@ -319,17 +320,29 @@ rational_rules <- function(r_idx, game_summary) {
   training_stim_fp <- file.path(base_dir_2, basename(as.character(temp[1,"training_data_fn"])))  
   test_stim_fp <- file.path(base_dir_2, basename(as.character(temp[1,"test_data_fn"])))  
     
-  train_human_responses <- purrr::map(temp$game_id, function(game_id) {
+  train_human_responses <- purrr::map_chr(temp$game_id, function(game_id) {
     file.path(base_dir_1, 'train_trials', paste(game_id, '_explorer.csv', sep=''))
   })
   
-  test_human_responses <-purrr::map(temp$game_id, function(game_id) {
+  test_human_responses <-purrr::map_chr(temp$game_id, function(game_id) {
     file.path(base_dir_1, 'test_trials', paste(game_id, '_explorer.csv', sep=''))
   })
   
-  df = data.frame(human_predictives_fp, training_stim_fp, test_stim_fp, train_human_responses, test_human_responses)
-  print(df)
+
+  # Construct datframe to contain variables (passed as input to webppl script)
+  df = data.frame(human_predictives_fp, training_stim_fp, test_stim_fp)
+  df$train_human_responses = list(train_human_responses)
+  df$test_human_responses = list(test_human_responses)
   
+
+  result <-as.data.frame(
+    webppl(
+      program_file = "./rational_rules.wppl",
+      packages=c("webppl-json", "webppl-csv"),
+      data=df,
+      data_var="params"
+    )
+  )
 }
 
 rational_rules(0, game_summary)
