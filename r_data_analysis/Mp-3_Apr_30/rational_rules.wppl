@@ -10,6 +10,17 @@
 // Note: This is meant to be executed via rwebppl.
 // -------------------------------------------------------
 
+// ---------
+// CONSTANTS
+// ---------
+var TRAIN_TRIAL = 'train';
+var TEST_TRIAL = 'test';
+var obj = {   // Webppl is weird and bare parseFloat and parseInt calls lead to silent failures
+  parseFloat: parseFloat,
+  parseInt: parseInt,
+}
+
+
 // ----------------------
 // RATIONAL RULES HELPERS
 // ----------------------
@@ -267,36 +278,102 @@ var runRationalRules = function(trainingStimuli, testStimuli, humanPredictives, 
 // MAIN FUNCTIONS
 // ---------------
 
+var genPredictive = function(data) {
+  return {
+    pred: obj.parseFloat(data[0]),
+    trial_num: obj.parseInt(data[1]),
+    trial_type: data[2],
+  }
+}
+
+var genHumanResponse = function(data, trial_type){
+  return {
+    is_correct: data[0] == 'True',
+    time_in_seconds: obj.parseFloat(data[1]),
+    trial_num: obj.parseInt(data[2]),
+    true_label: data[3] == 'True',
+    turker_label: data[4] == 'True',
+    game_id: data[5],
+    rule_idx: obj.parseInt(data[6]),
+    training_data_fn: data[7],
+    rule_type: data[8],
+    role: data[9],
+    worker_id: data[10],
+    trial_type: trial_type,
+  }
+}
+
 var parseRData = function() {
+  if (params == undefined || params.length != 1) {
+    return {
+      'parsedCorrectly': false,
+    }
+  }
+
+  var rationalRulesParams = params[0];
   if (
     !rationalRulesParams.hasOwnProperty('human_predictives_fp') ||
-    !rationalRulesAnalysis.hasOwnProperty('training_stim_fp') ||
-    !rationalRulesAnalysis.hasOwnProperty('test_stim_fp') ||
-    !rationalRulesAnalysis.hasOwnProperty('train_human_responses') || // List of files
-    !rationalRulesAnalysis.hasOwnProperty('test_human_responses') // List of files
+    !rationalRulesParams.hasOwnProperty('training_stim_fp') ||
+    !rationalRulesParams.hasOwnProperty('test_stim_fp') ||
+    !rationalRulesParams.hasOwnProperty('train_human_responses') || // List of files
+    !rationalRulesParams.hasOwnProperty('test_human_responses') // List of files
   ) {
-    throw Error('Incorrect or Incomplete data passed from R!');
+    return {
+      'parsedCorrectly': false,
+    }
   } else {
-    var humanPredictives = json.read(rationalRulesParams.human_predictives_fp);
-    var trainingStim = json.read(rationalRulesAnalysis.training_stim_fp);
-    var testStim = json.read(rationalRulesAnalysis.test_stim_fp);
-    var trainHumanResponses = map(json.read, rationalRulesAnalysis.train_human_responses);
-    var testHumanResponses = map(json.read, rationalRulesAnalysis.test_human_responses);
-    var humanResponses = _.assignIn(_.assignIn({}, trainHumanResponses), testHumanResponses)
+    var humanPredictives = map(
+      genPredictive,
+      csv.read(rationalRulesParams.human_predictives_fp).slice(1)
+    );
+    var trainingStim = json.read(rationalRulesParams.training_stim_fp);
+    var testStim = json.read(rationalRulesParams.test_stim_fp);
+   
+    var processHumanResponseFile = function(fp) {
+      var trial_type = globalStore.trial_type;
+      var parsedFile = csv.read(fp);
+      var trimmedFile = parsedFile.slice(1, parsedFile.length - 1);
 
+      var parseResponse = function(row) {
+        var parsed = genHumanResponse(row, trial_type);
+        return parsed;
+      }
+      var responses = map(parseResponse, trimmedFile); // First row is header
+      return responses;
+    }
+
+    globalStore.trial_type = TRAIN_TRIAL;
+    var trainHumanResponses = _.flatten(
+      map(
+        processHumanResponseFile,
+        rationalRulesParams.train_human_responses
+      )
+    );
+
+    globalStore.trial_type = TEST_TRIAL;
+    var testHumanResponses = _.flatten(
+      map(
+        processHumanResponseFile,
+        rationalRulesParams.test_human_responses
+      )
+    );
+    globalStore.trial_type = undefined;
+    var humanResponses = _.concat(trainHumanResponses, testHumanResponses);
     return {
       'humanPredictives': humanPredictives,
       'trainingStim': trainingStim,
       'testStim': testStim,
       'humanResponses': humanResponses,
+      'parsedCorrectly': true,
     }
   }
 }
 
 var runScript = function() {
   var rData = parseRData();
-  rationalRulesResults =  runRationalRules(rData.trainingStim, rData.testStim, rData.humanPredictives, rData.humanResponses); 
-  return rationalRulesResults;
+  // rationalRulesResults =  runRationalRules(rData.trainingStim, rData.testStim, rData.humanPredictives, rData.humanResponses); 
+  // return rationalRulesResults;
+  return true;
 }
 
 runScript();
