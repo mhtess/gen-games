@@ -335,17 +335,32 @@ rational_rules <- function(r_idx, game_summary) {
   df$test_human_responses = list(test_human_responses)
   
 
-  result <-as.data.frame(
+  result <- as.data.frame(
     webppl(
       program_file = "./rational_rules.wppl",
       packages=c("webppl-json", "webppl-csv"),
       data=df,
       data_var="params"
     )
-  )
+  ) %>%
+  rename(critter = V1) %>%
+  rename(rational_rules= V2) %>%
+  rename(human = V3) %>%
+  mutate(rule_idx = r_idx)
 }
 
-rational_rules(0, game_summary)
+plot_results <- function(results) {
+  results$rational_rules <- as.numeric(as.character(results$rational_rules))
+  results$human <- as.numeric(as.character(results$human))
+  ggplot(results, aes(x=rational_rules, y=human)) +
+    geom_point() +
+    scale_x_continuous(limits = c(0,1), breaks = seq(0,1, .1)) +
+    facet_wrap(~rule_idx, scales = 'free')
+}
+```
+```{r}
+rule_idxs <- 0:8
+results <- do.call(rbind, lapply(rule_idxs, rational_rules, game_summary=game_summary))
+plot_results(results)
 ```
 
-# Analysis: Hold One Out Predictions

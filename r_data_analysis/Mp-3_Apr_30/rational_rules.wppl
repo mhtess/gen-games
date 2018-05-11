@@ -42,8 +42,8 @@ var traitToValueMapping = {
   },
   "prop1": {
     "0": 0, // Small
-    "0.693147180559945": 1, // Medium
-    "1.16315080980568": 2, // Large
+    "0.6931471805599453": 1, // Medium
+    "1.1631508098056809": 2, // Large
   }
 };
 
@@ -119,7 +119,7 @@ var genRationRulesFunc = function(AObjects, BObjects, TObjects, allObjs) {
 
   var rationalRules = function() {
     var tau = sample(Beta({a:1, b:1}), {driftKernel: TauKernel});
-    var noiseParam = Math.exp(-10); // prior that a given sample is an outlier
+    var noiseParam = Math.exp(-5); // prior that a given sample is an outlier
   
     var sampleConj = function() {
       // Recursive definition of producing terminal predicate
@@ -228,50 +228,54 @@ var runRationalRules = function(trainingStimuli, testStimuli, humanPredictives, 
   var trainingCritters = filter(function(x) {
     return x != null;
   }, map(function(x) {
-    if (x["data"] == "training") {
-      var baseCritter = defaultTrainingCritters[x["trial_num"]];
+    if (x.trial_type == TRAIN_TRIAL) {
+      var baseCritter = defaultTrainingCritters[x.trial_num];
       var critter = {
-        critter: baseCritter["critter"],
-        body_color: baseCritter["body_color"],
-        secondary_color: baseCritter["secondary_color"],
-        size: baseCritter["size"],
-        belongs_to_concept: x["turker_label"],
+        critter: baseCritter.critter,
+        body_color: baseCritter.body_color,
+        secondary_color: baseCritter.secondary_color,
+        size: baseCritter.size,
+        belongs_to_concept: x.turker_label,
       };
       return critter;
     }
   }, humanResponses));
+
   
   // Subsitute "belongs_to_concept" gold label with the one provided
   // by a teacher. Do this for each each participant, across trials.
   var TObjects = filter(function(x) {
     return x != null;
   }, map(function(x) {
-    if (x["data"] == "test") {
-      var baseCritter = defaultTestCritters[x["trial_num"]];
+    if (x.trial_type == TEST_TRIAL) {
+      var baseCritter = defaultTestCritters[x.trial_num];
       var critter = {
-        critter: baseCritter["critter"],
-        body_color: baseCritter["body_color"],
-        secondary_color: baseCritter["secondary_color"],
-        size: baseCritter["size"],
-        belongs_to_concept: x["turker_label"],
+        critter: baseCritter.critter,
+        body_color: baseCritter.body_color,
+        secondary_color: baseCritter.secondary_color,
+        size: baseCritter.size,
+        belongs_to_concept: x.turker_label,
       };
       return critter;
     }
   }, humanResponses));
 
+
   // Split into Training A/B Groups & Test Split
-  var AObjects = filter(function(x) { return x["belongs_to_concept"] == true;}, trainingCritters);
-  var BObjects = filter(function(x) { return x["belongs_to_concept"] == false;}, trainingCritters);  
+  var AObjects = filter(function(x) { return x.belongs_to_concept == true;}, trainingCritters);
+  var BObjects = filter(function(x) { return x.belongs_to_concept == false;}, trainingCritters);  
   var allObjs = _.uniqWith(_.concat(defaultTrainingCritters, defaultTestCritters), _.isEqual);
 
-  var posteriorPredictivesPooled = Object.values(humanPredictives["pred"]);
   var rationalRulesResults =  rationalRulesAnalysis(AObjects, BObjects, TObjects, allObjs);
-
-  var result = _.zip(rationalRulesResults.posteriorPreds, posteriorPredictivesPooled);
+  var predictivesExtracted = map(function(x){return x.pred}, humanPredictives);
+  var result = _.zip(rationalRulesResults.posteriorPreds, predictivesExtracted);
   var flattenedResult = map(function(x) {
     return _.flatten(x);
   }, result);
-  return flattenedResult;
+  return {
+    'support': rationalRulesResults.ruleProbs,
+    'posteriorPredictives': flattenedResult,
+  }
 }
 
 // ---------------
@@ -371,9 +375,9 @@ var parseRData = function() {
 
 var runScript = function() {
   var rData = parseRData();
-  // rationalRulesResults =  runRationalRules(rData.trainingStim, rData.testStim, rData.humanPredictives, rData.humanResponses); 
-  // return rationalRulesResults;
-  return true;
+  var rationalRulesResults =  runRationalRules(rData.trainingStim, rData.testStim, rData.humanPredictives, rData.humanResponses);
+  console.log(rationalRulesResults.posteriorPredictives);
+  return rationalRulesResults.posteriorPredictives;
 }
 
 runScript();
