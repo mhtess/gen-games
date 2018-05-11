@@ -178,7 +178,7 @@ var genRationRulesFunc = function(AObjects, BObjects, TObjects, allObjs) {
 var rationalRulesAnalysis = function(AObjects, BObjects, TObjects, allObjs) {
   // Run MCMC Inference
   var rationalRules = genRationRulesFunc(AObjects, BObjects, TObjects, allObjs);
-  var rulePosterior = Infer({method: 'MCMC', samples:2000, burn:70000}, rationalRules);
+  var rulePosterior = Infer({method: 'MCMC', samples:10000, burn:70000}, rationalRules);
   var supportProbs = map(function(val) {
     return {v: val, logProb: rulePosterior.score(val)}
   }, rulePosterior.support());
