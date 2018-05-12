@@ -30,7 +30,7 @@ ROLE_EXPLORER = 'explorer'
 
 NUM_LISTS = 9
 
-def identify_partnerless_results(dir=DIR):
+def identify_partnerless_results(ignored_game_ids, dir=DIR):
     '''
     Sometimes results are submitted to Mturk, when a participant disconnected from the game.
     These leads to result files, where we only have 1/2 of the game, i.e. only the listener
@@ -42,6 +42,8 @@ def identify_partnerless_results(dir=DIR):
             fp = os.path.join(dir, filename)
             df = pd.read_json(fp)
             game_id = df['answers']['game_id']
+            if game_id in ignored_game_ids:
+                continue
             player_role = df['answers']['role']
             rule_idx = df['answers']['rule_idx']
             training_fn = df['answers']['training_data_fn']
@@ -288,14 +290,14 @@ def construct_mturk_file(other_player_info):
     return (file_found_1 and file_found_2 and file_found_3), mturk_file_struct
 
 
-def fix_incomplete_files():
+def fix_incomplete_files(ignored_game_ids):
     ''' Fix incomplete files, craeting mturk equivalent files in './data' folder. 
         Copy complete files, who have a paired component either after fixing
         or in original dataset.
     '''
     # pretty printing for debugging
     pp = pprint.PrettyPrinter(indent=4)
-    incomplete_games, complete_games = identify_partnerless_results()
+    incomplete_games, complete_games = identify_partnerless_results(ignored_game_ids)
 
     # Copy over complete games
     for cg in complete_games:
@@ -319,12 +321,14 @@ def fix_incomplete_files():
     pp.pprint(still_incomplete)
 
 
-def save_train_data(dir=CLEANED_DIR):
+def save_train_data(ignored_game_ids, dir=CLEANED_DIR):
     ''' Write CSVs for each player's set of training data '''
     for filename in os.listdir(dir):
         if filename.endswith('.json'):
             fp = os.path.join(dir, filename)
             df = pd.read_json(fp)
+            if df['answers']['game_id'] in ignored_game_ids:
+                continue
             player_role = df['answers']['role']
             if player_role == ROLE_STUDENT:
                 continue
@@ -343,12 +347,14 @@ def save_train_data(dir=CLEANED_DIR):
                 csv_fp = os.path.join(CLEANED_TRAIN_TRIALS, '{}_{}.csv'.format(df['answers']['game_id'], player_role))
                 training_trials.to_csv(csv_fp, index=False)
 
-def save_test_data(dir=CLEANED_DIR):
+def save_test_data(ignored_game_ids, dir=CLEANED_DIR):
     ''' Write CSVs for each player's set of test data '''
     for filename in os.listdir(dir):
         if filename.endswith('.json'):
             fp = os.path.join(dir, filename)
             df = pd.read_json(fp)
+            if df['answers']['game_id'] in ignored_game_ids:
+                continue
             player_role = df['answers']['role']
             if isinstance(df['WorkerId'], object):
                 worker_id = df['WorkerId'].values[0]
@@ -365,12 +371,14 @@ def save_test_data(dir=CLEANED_DIR):
             testing_trials.to_csv(csv_fp, index=False)
 
 
-def save_train_summary_stats(dir=CLEANED_DIR):
+def save_train_summary_stats(ignored_game_ids, dir=CLEANED_DIR):
     ''' Write CSVs for each player's training summary stats '''
     for filename in os.listdir(dir):
         if filename.endswith('.json'):
             fp = os.path.join(dir, filename)
             df = pd.read_json(fp)
+            if df['answers']['game_id'] in ignored_game_ids:
+                continue
             player_role = df['answers']['role']
             if player_role == ROLE_STUDENT:
                 continue
@@ -390,12 +398,14 @@ def save_train_summary_stats(dir=CLEANED_DIR):
                 csv_fp = os.path.join(CLEANED_TRAIN_SUMMARY_STATS, '{}_{}.csv'.format(df['answers']['game_id'], player_role))
                 training_summary_stats.to_csv(csv_fp, index=False)
 
-def save_test_summary_stats(dir=CLEANED_DIR):
+def save_test_summary_stats(ignored_game_ids, dir=CLEANED_DIR):
     ''' Write CSVs for each player's testing summary stats '''
     for filename in os.listdir(dir):
         if filename.endswith('.json'):
             fp = os.path.join(dir, filename)
             df = pd.read_json(fp)
+            if df['answers']['game_id'] in ignored_game_ids:
+                continue
             player_role = df['answers']['role']
             if isinstance(df['WorkerId'], object):
                 worker_id = df['WorkerId'].values[0]
@@ -411,7 +421,7 @@ def save_test_summary_stats(dir=CLEANED_DIR):
             csv_fp = os.path.join(CLEANED_TEST_SUMMARY_STATS, '{}_{}.csv'.format(df['answers']['game_id'], player_role))
             testing_summary_stats.to_csv(csv_fp, index=False)
 
-def save_chat_mesages(dir=CLEANED_DIR):
+def save_chat_mesages(ignored_game_ids, dir=CLEANED_DIR):
     ''' Write CSVs for each player's testing summary stats. 
     '''
     game_ids = set()
@@ -419,6 +429,8 @@ def save_chat_mesages(dir=CLEANED_DIR):
         if filename.endswith('.json'):
             fp = os.path.join(dir, filename)
             df = pd.read_json(fp)
+            if df['answers']['game_id'] in ignored_game_ids:
+                continue
             game_id = df['answers']['game_id']
             game_ids.add(game_id)
             for filename in os.listdir(RAW_SERVER_LOGS_CHAT_MESSAGES):
@@ -454,7 +466,7 @@ def compute_human_predictives_teacher(training_data, test_data):
     return training_preds, test_preds
 
 
-def save_human_predictives_teacher_pooled_by_list(rule_idx):
+def save_human_predictives_teacher_pooled_by_list(ignored_game_ids, rule_idx):
     ''' Save human predictives for the teacher, pooled by the list utilized.
     '''
     train_df, test_df = None, None
@@ -464,6 +476,8 @@ def save_human_predictives_teacher_pooled_by_list(rule_idx):
         if filename.endswith('.csv'):
             fp = os.path.join(CLEANED_TRAIN_TRIALS, filename)
             df = pd.read_csv(fp)
+            if df['game_id'].iloc[0] in ignored_game_ids:
+                continue
             if df['rule_idx'].iloc[0] != rule_idx:
                 continue
             if train_df is None:
@@ -476,6 +490,8 @@ def save_human_predictives_teacher_pooled_by_list(rule_idx):
         if filename.endswith('.csv'):
             fp = os.path.join(CLEANED_TEST_TRIALS, filename)
             df = pd.read_csv(fp)
+            if df['game_id'].iloc[0] in ignored_game_ids:
+                continue
             if df['rule_idx'].iloc[0] != rule_idx:
                 continue
             if test_df is None:
@@ -497,14 +513,14 @@ def save_human_predictives_teacher_pooled_by_list(rule_idx):
     preds.to_csv(new_file_path, index=False)
 
 
-def save_human_predictives_pooled_by_lists():
+def save_human_predictives_pooled_by_lists(ignored_game_ids):
     ''' Save human predictives for teacher, pooled by the list utilized. Do this for all lists.
     '''
     for rule_idx in xrange(NUM_LISTS):
-        save_human_predictives_teacher_pooled_by_list(rule_idx)
+        save_human_predictives_teacher_pooled_by_list(ignored_game_ids, rule_idx)
 
 
-def game_summary(dir=CLEANED_DIR):
+def game_summary(ignored_game_ids, dir=CLEANED_DIR):
     ''' Summarize Games in data directory '''
     summary = []
     game_ids = set()
@@ -513,7 +529,7 @@ def game_summary(dir=CLEANED_DIR):
             fp = os.path.join(dir, filename)
             df = pd.read_json(fp)
             game_id = df['answers']['game_id']
-            if game_id in game_ids:
+            if game_id in game_ids or game_id in ignored_game_ids:
                 continue
             else:
                 game_ids.add(game_id)
@@ -549,12 +565,13 @@ def create_dirs():
 
 if __name__ == '__main__':
     create_dirs()
-    # fix_incomplete_files()
-    game_summary()
-    # save_train_data()
-    # save_test_data()
-    # save_train_summary_stats()
-    # save_test_summary_stats()
-    # save_chat_mesages()
-    # save_human_predictives_pooled_by_lists()
+    ignored_game_ids = ['8846-b611ef86-0a79-40c9-8dd4-64c3b4b6bf67']
+    fix_incomplete_files(ignored_game_ids)
+    game_summary(ignored_game_ids)
+    save_train_data(ignored_game_ids)
+    save_test_data(ignored_game_ids)
+    save_train_summary_stats(ignored_game_ids)
+    save_test_summary_stats(ignored_game_ids)
+    save_chat_mesages(ignored_game_ids)
+    save_human_predictives_pooled_by_lists(ignored_game_ids)
     
