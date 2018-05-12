@@ -362,12 +362,19 @@ plot_results <- function(results) {
 
 Here the prior on outliers is Meth.exp(-5), 20000 burn, and 2000 samples.
 ```{r}
-rule_idxs <- 0:0
+rule_idxs <- 0:8
 results <- do.call(rbind, lapply(rule_idxs, rational_rules, game_summary=game_summary))
 plot_results(results)
 ```
+```{r}
+train <- results %>% 
+  filter(trial_num < 52)
+plot_results(train)
+```
+
 
 ```{r}
 test <- results %>% 
-  select(trial_num >= 52)
+  filter(trial_num >= 52)
+plot_results(test)
 ```

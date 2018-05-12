@@ -565,7 +565,11 @@ def create_dirs():
 
 if __name__ == '__main__':
     create_dirs()
-    ignored_game_ids = ['8846-b611ef86-0a79-40c9-8dd4-64c3b4b6bf67']
+    ignored_game_ids = [
+        '8846-b611ef86-0a79-40c9-8dd4-64c3b4b6bf67',
+        '6395-177e9f73-0418-4430-9a6a-6fe59daef313',
+        '1264-d6d8fe98-9e3c-4f05-81ae-a39b703103f8',
+    ]
     fix_incomplete_files(ignored_game_ids)
     game_summary(ignored_game_ids)
     save_train_data(ignored_game_ids)
