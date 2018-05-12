@@ -346,7 +346,8 @@ rational_rules <- function(r_idx, game_summary) {
   rename(critter = V1) %>%
   rename(rational_rules= V2) %>%
   rename(human = V3) %>%
-  mutate(rule_idx = r_idx)
+  mutate(rule_idx = r_idx) %>%
+  mutate(trial_num = (1:81))
 }
 
 plot_results <- function(results) {
@@ -358,29 +359,15 @@ plot_results <- function(results) {
     facet_wrap(~rule_idx, scales = 'free')
 }
 ```
-```{r}
-rule_idxs <- 0:8
-results <- do.call(rbind, lapply(rule_idxs, rational_rules, game_summary=game_summary))
-plot_results(results)
-```
-Here prior on outliers is Math.exp(-15), 70000 burn, and 2000 samples.
 
-Here the prior on outliers is Meth.exp(-2), 70000 burn, and 2000 samples.
-```{r}
-rule_idxs <- 0:8
-results <- do.call(rbind, lapply(rule_idxs, rational_rules, game_summary=game_summary))
-plot_results(results)
-```
-
-Here the prior on outliers is Math.exp(-5), 100000 burn, and 20000 samples.
+Here the prior on outliers is Meth.exp(-5), 20000 burn, and 2000 samples.
 ```{r}
 rule_idxs <- 0:0
 results <- do.call(rbind, lapply(rule_idxs, rational_rules, game_summary=game_summary))
 plot_results(results)
 ```
-Here the prior on outliers is Math.exp(-5), 100000 burn, 20000 samples, lag of 10.
+
 ```{r}
-rule_idxs <- 0:0
-results <- do.call(rbind, lapply(rule_idxs, rational_rules, game_summary=game_summary))
-plot_results(results)
+test <- results %>% 
+  select(trial_num >= 52)
 ```
