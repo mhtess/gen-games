@@ -178,7 +178,7 @@ var genRationRulesFunc = function(AObjects, BObjects, TObjects, allObjs) {
 var rationalRulesAnalysis = function(AObjects, BObjects, TObjects, allObjs) {
   // Run MCMC Inference
   var rationalRules = genRationRulesFunc(AObjects, BObjects, TObjects, allObjs);
-  var rulePosterior = Infer({method: 'MCMC', samples:10000, burn:70000}, rationalRules);
+  var rulePosterior = Infer({method: 'MCMC', samples:2000, burn:20000}, rationalRules);
   var supportProbs = map(function(val) {
     return {v: val, logProb: rulePosterior.score(val)}
   }, rulePosterior.support());
@@ -235,7 +235,7 @@ var runRationalRules = function(trainingStimuli, testStimuli, humanPredictives, 
         body_color: baseCritter.body_color,
         secondary_color: baseCritter.secondary_color,
         size: baseCritter.size,
-        belongs_to_concept: x.turker_label,
+        belongs_to_concept: x.true_label,
       };
       return critter;
     }
@@ -254,7 +254,7 @@ var runRationalRules = function(trainingStimuli, testStimuli, humanPredictives, 
         body_color: baseCritter.body_color,
         secondary_color: baseCritter.secondary_color,
         size: baseCritter.size,
-        belongs_to_concept: x.turker_label,
+        belongs_to_concept: x.true_label,
       };
       return critter;
     }
@@ -326,10 +326,11 @@ var parseRData = function() {
       'parsedCorrectly': false,
     }
   } else {
-    var humanPredictives = map(
+    var humanPredictivesUntrimmed = map(
       genPredictive,
       csv.read(rationalRulesParams.human_predictives_fp).slice(1)
     );
+    var humanPredictives = humanPredictivesUntrimmed.slice(0, humanPredictivesUntrimmed.length - 1);
     var trainingStim = json.read(rationalRulesParams.training_stim_fp);
     var testStim = json.read(rationalRulesParams.test_stim_fp);
    
