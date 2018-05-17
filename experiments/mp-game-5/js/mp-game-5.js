@@ -86,12 +86,13 @@ function init() {
 // --------------------------
 // Slide Creation & Rendering
 // --------------------------
-// Render a table of previous critters from the learning trials
-// where "wudsy" creatures have black boxes around them to indicate
-// that they belong to the class.
-function render_prev_critters(prev_critters, table_width) {
-  $("#prev_critters").append(`<H4>Previous Examples: </H4>`);
-  var rows = Math.ceil(prev_critters.length / table_width);
+
+
+// Render the table of critters with all the 
+// labels hidden from the user
+function render_hidden_critters_table(critters, table_width) {
+  console.log(critters);
+  var rows = Math.ceil(critters.length / table_width);
   var cols = table_width;
 
   var table = "<table>";
@@ -100,7 +101,7 @@ function render_prev_critters(prev_critters, table_width) {
     table += "<tr>";
     for(var j=0; j<cols; j++) {
       table += "<td>";
-      if (ind >= prev_critters.length) break;
+      if (ind >= critters.length) break;
       table += "<table class ='cell' id='cell" + ind + "'\">";
 
       table += "<td>";
@@ -116,21 +117,19 @@ function render_prev_critters(prev_critters, table_width) {
     table += "</tr>"
   }
   table += "</table>";
-  $("#prev_critters").append(table);
+  $("#training_critters").append(table);
 
-  for (var i = 0 ; i < prev_critters.length; i++) {
+  for (var i = 0 ; i < critters.length; i++) {
     var scale = 0.5;
-    var stim = prev_critters[i];
+    var stim = critters[i];
     var id = "critter_" + i;
     Ecosystem.draw(
       stim.critter, stim.props,
       id, scale
     );
-    if (stim.belongs_to_concept) {
-      mark(id);
-    }
   }
 }
+
 
 // Mark a given stimulus with a black border box
 function mark(id) {
@@ -140,43 +139,6 @@ function mark(id) {
 // Sleep for given number of milliseconds
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-// Render the current critter
-function render_curr_critter(stim, training) {
-  var critter_id = "training_critter";
-  var rows = 1;
-  var cols = 1;
-  var table = "<table>";
-  table += "<tr>";
-  table += "<td>";
-  table += "<table class ='cell' id='cell'\">";
-  table += "<td>";  
-  if (training) {
-    table += "<svg id='training_critter' style='max-width:150px;max-height:150px\'></svg>";
-  } else {
-    table += "<svg id='testing_critter' style='max-width:150px;max-height:150px\'></svg>"; 
-    critter_id = "testing_critter";
-  }
-  table += "<br><br><form id='critter_form' class='critter_label_form'>";
-  table += "<input type='radio' name='belongs_to_concept' id='t' value=true> <label for='t'>Yes</label>";
-  table += "<input type='radio' name='belongs_to_concept' id='f' value=false> <label for='f'>No</label>";   
-  table += "</form></td>";
-  table += "<tr>";
-  table += "<div class='critname' id='cellcritname'></div></tr>";
-  table += "</table>";
-  table += "</td>";
-  table += "</tr>"
-  table += "</table>";
-  if (training) {
-    $("#curr_critter_training").append(table);
-  } else {
-    $("#curr_critter_testing").append(table);
-  }
-  Ecosystem.draw(
-    stim.critter, stim.props,
-    critter_id, 0.5
-  );
 }
 
 // Make slides for the experiment
@@ -199,11 +161,9 @@ function make_slides(f) {
       <br>
       <p>
         You are on a new planet called Crittun, studying creatures with a wudsy detector.
-        The wudsy detector will tell you whether or not a creature is wudsy.
         <br> <br>
-        On each trial, you will make a guess as to whether or not a new creature is wudsy, and then use the detector to find out if you were right.
-        If you guess incorrectly, you will have to wait 5 seconds before using the detector again. 
-        We will keep a log of all the creatures you see and put a box around the ones that were wudsy for your reference.<br> 
+        You will be presented with a panel of critters. Click on a critter to discover whether it is wudsy.
+        Pay close attention, as you will have to teach your partnery which critters are wudsy.
         <br>
         Press Continue to start the game.
         <br><br>
@@ -246,94 +206,28 @@ function make_slides(f) {
   // Learning critter slide -- training trials
   slides.learning_critters = slide({
     name : "learning_critters",
-    present: exp.training_critters,
     start: function() {
       globalGame.socket.send("enterSlide.learning_critters.");
-      this.prev_critters = [];
-      this.learning_trial_idx = 0;
-    },
-    present_handle : function(stim) {
-      // hide + disable stuff
-      $("#prev_critters").empty();
-      $("#curr_critter_training").empty();
-      $('#continueButton').prop('disabled', false);
-      $("input[type=radio]").attr('checked', false);
+      $("#training_critters").empty();
+      $('#continueButton').prop('disabled', true);
 
       // Render slide
-      $(".trial_number").text("Critter " + String(this.learning_trial_idx + 1) + " of " + String(exp.num_learning_trials));
-      render_prev_critters(this.prev_critters, 6);
-      render_curr_critter(stim, true);
-      this.stim = stim;
+      render_hidden_critters_table(exp.training_critters, 6);
 
       // Time Markers
       this.start_time = Date.now()
-      this.prev_critters.push(stim);
-    },    
+    },
     button : function() {
-      var all_forms_filled = true;
-      $(".critter_label_form").each(function () {
-          if ($("input[type=radio]:checked", this).length == 0) {
-            all_forms_filled = false;
-          }
-      });
+      var all_forms_filled = false; // TODO: Set true when all items clicked.
       if (all_forms_filled) {
         var end_time = Date.now();
         this.time_spent = end_time - this.start_time;
-
-        var cur_index = this.learning_trial_idx;
-        this.learning_trial_idx++;
-        var stim = this.stim;
-        var turker_label = ($("input[type=radio]:checked").val() === "true");
-        var true_label = stim["belongs_to_concept"];
-        var is_correct = (turker_label === true_label);
-
-        if (turker_label === false && true_label === false) {
-          exp.training_summary_stats.correct_rejections += 1;
-        } else if (turker_label === false && true_label === true){
-          exp.training_summary_stats.misses += 1;
-        } else if (turker_label === true && true_label === false) {
-          exp.training_summary_stats.false_alarms += 1;
-        } else {
-          exp.training_summary_stats.hits += 1;
-        }
-
-        $('#continueButton').prop('disabled', true); // Prevent Double Clicking
-        if (!is_correct) {
-          alert("Incorrect Label Applied to Creature ... You Will Have to Wait 5 Seconds Before the Next Round");
-          sleep(5000).then(() => {
-            this.log_responses(cur_index, this.time_spent/1000, turker_label, true_label, is_correct);
-            _stream.apply(this); //make sure this is at the *end*, after you log your data
-            globalGame.socket.send("logTrain.learnCritters." + _.pairs(encodeData(exp.training_data_trials[cur_index])).join('.'));
-          });
-        } else {
-          this.log_responses(cur_index, this.time_spent/1000, turker_label, true_label, is_correct);
-          _stream.apply(this); //make sure this is at the *end*, after you log your data
-          globalGame.socket.send("logTrain.learnCritters." + _.pairs(encodeData(exp.training_data_trials[cur_index])).join('.'));
-        }
-
-        if (this.learning_trial_idx == exp.num_learning_trials) {
-          exp.training_summary_stats.score = exp.training_summary_stats['hits'] - exp.training_summary_stats['false_alarms']
-          globalGame.socket.send("logScores.learnCritters." + _.pairs(encodeData(exp.training_summary_stats)).join('.'));
-          exp.go();
-        }
-
       } else {
-        alert("Please make sure to label all the critters, before proceeding");
+        alert("Please make sure to click all the critters, before proceeding");
       }
 
     },
-    log_responses : function(trial_num, time_in_seconds, turker_label, true_label, is_correct){
-      var record = {
-        "trial_num" : trial_num,
-        "time_in_seconds" : time_in_seconds,
-        "turker_label": turker_label,
-        "true_label": true_label,
-        "is_correct": is_correct,
-      };
-      exp.training_data_trials.push(record);
-      console.log(record);
-      },
-    });
+  });
 
   // Chat instructions slide
   slides.chat_instructions = slide({
