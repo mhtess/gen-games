@@ -569,6 +569,7 @@ if __name__ == '__main__':
         '8846-b611ef86-0a79-40c9-8dd4-64c3b4b6bf67',
         '6395-177e9f73-0418-4430-9a6a-6fe59daef313',
         '1264-d6d8fe98-9e3c-4f05-81ae-a39b703103f8',
+        '9542-eef3fde3-2e2a-4089-a7d7-c392d057dc0e',
     ]
     fix_incomplete_files(ignored_game_ids)
     game_summary(ignored_game_ids)
