@@ -13,18 +13,18 @@ class ReferenceGameServer {
     this.games = {};
     this.game_count = 0;
 
-    if (this.expName === 'mp-game-3') {
+    if (this.expName === 'mp-game-5') {
       this.numGamesPerRule = {
-        "0": 0,
-        "1": 0,
-        "2": 0,
-        "3": 0,
-        "4": 0,
-        "5": 0,
-        "6": 0,
-        "7": 0,
-        "8": 1,
-        "9": 4,
+        "0": 2,
+        "1": 2,
+        "2": 2,
+        "3": 2,
+        "4": 2,
+        "5": 2,
+        "6": 2,
+        "7": 2,
+        "8": 2,
+        "9": 2,
       }
     }
   }
@@ -105,7 +105,7 @@ class ReferenceGameServer {
       player_count: 1
     };
 
-    if (this.expName === 'mp-game-3') {
+    if (this.expName === 'mp-game-3' || this.expName === 'mp-game-5') {
       for (const rule_idx of Object.keys(this.numGamesPerRule)) {
         if (this.numGamesPerRule[rule_idx] !== 0) {
           options.rule_idx = parseInt(rule_idx);
