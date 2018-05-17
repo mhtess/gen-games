@@ -28,7 +28,7 @@ var game_core = function(options){
   this.dataStore = ['csv', 'mongo'];
   this.email = 'schopra8@stanford.edu';
   this.projectName = 'genGames';
-  this.experimentName = 'mpGame3';
+  this.experimentName = 'mpGame5';
   this.iterationName = 'pilot1';
   this.anonymizeCSV = true;
   this.bonusAmt = 1; // 1 cent
@@ -62,6 +62,9 @@ var game_core = function(options){
     this.roundNum = 1;
 
     var rule_info = rule_summary[options.rule_idx];
+    console.log(options);
+    console.log(rule_summary);
+
     this.rule_type = rule_info.type;
     this.training_data_fn = "./js/training_data_" + rule_info.name + ".json";
     this.test_data_fn = "./js/test_data_" + rule_info.name + ".json";
