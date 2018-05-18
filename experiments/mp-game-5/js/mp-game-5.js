@@ -36,7 +36,7 @@ function init() {
 
   // Initialize experiment variables
   exp.block = 0;
-  exp.training_data_trials = [];
+  exp.training_trial= {};
   exp.testing_data_trials = [];
   exp.training_summary_stats = {
     type: "training",
@@ -159,6 +159,43 @@ function render_hidden_critters_table(critters, table_width) {
   }
 }
 
+// Render the current critter
+function render_curr_critter(stim, training) {
+  var critter_id = "training_critter";
+  var rows = 1;
+  var cols = 1;
+  var table = "<table>";
+  table += "<tr>";
+  table += "<td>";
+  table += "<table class ='cell' id='cell'\">";
+  table += "<td>";  
+  if (training) {
+    table += "<svg id='training_critter' style='max-width:150px;max-height:150px\'></svg>";
+  } else {
+    table += "<svg id='testing_critter' style='max-width:150px;max-height:150px\'></svg>"; 
+    critter_id = "testing_critter";
+  }
+  table += "<br><br><form id='critter_form' class='critter_label_form'>";
+  table += "<input type='radio' name='belongs_to_concept' id='t' value=true> <label for='t'>Yes</label>";
+  table += "<input type='radio' name='belongs_to_concept' id='f' value=false> <label for='f'>No</label>";   
+  table += "</form></td>";
+  table += "<tr>";
+  table += "<div class='critname' id='cellcritname'></div></tr>";
+  table += "</table>";
+  table += "</td>";
+  table += "</tr>"
+  table += "</table>";
+  if (training) {
+    $("#curr_critter_training").append(table);
+  } else {
+    $("#curr_critter_testing").append(table);
+  }
+  Ecosystem.draw(
+    stim.critter, stim.props,
+    critter_id, 0.5
+  );
+}
+
 // Mark a given stimulus with a black border box
 function mark(id) {
   $(id).css({"border":'2px solid black'});
@@ -259,6 +296,18 @@ function make_slides(f) {
     button : function() {
       var end_time = Date.now();
       this.time_spent = end_time - this.start_time;
+      this.log_responses(this.time_spent);
+      _stream.apply(this); //make sure this is at the *end*, after you log your data
+      globalGame.socket.send("logTrain.learnCritters." + _.pairs(encodeData(exp.training_trial)).join('.'));
+
+      exp.go();
+    },
+    log_responses : function(time_spent){
+      var record = {
+        "training_time" : time_spent,
+      };
+      exp.training_trial = record;
+      console.log(record);
     },
   });
 
@@ -356,7 +405,7 @@ function make_slides(f) {
     this.start_time = Date.now()
   },
   button : function() {
-    $('#continueButton').prop('disabled', true); // Prevent Double CLicking
+    $('.continueButton').prop('disabled', true); // Prevent Double CLicking
     var all_forms_filled = true;
     if ($("input[type=radio]:checked").length == 0) {
       all_forms_filled = false;
@@ -493,7 +542,7 @@ function make_slides(f) {
         "test_data_fn": globalGame.test_data_fn,
         "rule_idx": globalGame.rule_idx,
         "rule_type": globalGame.rule_type,
-        "training_trials": exp.training_data_trials,
+        "training_trials": [exp.training_trial],
         "testing_trials": exp.testing_data_trials,
         "system" : exp.system,
         "subject_information" : exp.subj_data,
