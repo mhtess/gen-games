@@ -212,4 +212,8 @@ ALOT...don't understand how to adjust that.*/
 
 input[type="radio"]{
 	margin: 0 10px 0 10px;
-  }
+}
+
+.wudsy-label {
+	visibility: hidden;
+}
