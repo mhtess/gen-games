@@ -134,23 +134,28 @@ class ReferenceGameServer {
   // This gets called if someone disconnects
   endGame (gameid, userid) {
     var thegame = this.games[gameid];
+
     if(thegame) {
       // TODO: Figure out how to refactor this as a method override
       // so that this not break gameplay in other games, as this is shared code.
 
       // Continue game, if one player disconnected by finishing the game
-      if (thegame.currentSlide.explorer == 'thanks' && thegame.currentSlide.student == 'thanks') {
+      if ((thegame.currentSlide.explorer == 'thanks' && thegame.currentSlide.student != 'thanks') ||
+          (thegame.currentSlide.explorer != 'thanks' && thegame.currentSlide.student == 'thanks')
+        ){
+        this.log("One player disconnected, after finishing the game.");
+      } else { // Kill the game if one player disconnected without completing the game
         _.map(thegame.get_others(userid),function(p) {
           p.player.instance.send('s.end');
         });
         delete this.games[gameid];
         this.game_count--;
         this.log('game removed. there are now ' + this.game_count + ' games' );
-        // if (this.expName === 'mp-game-3' && (thegame.currentSlide.explorer !== 'thanks' || thegame.currentSlide.student !== 'thanks')) {
-          // this.numGamesPerRule[thegame.rule_idx] += 1;
-          // this.log('failed to complete a game with rule ' + thegame.rule_idx + " ; incrementing the count for this game type");
-          // this.log(this.numGamesPerRule);
-        // }
+        if (this.expName === 'mp-game-3' && (thegame.currentSlide.explorer !== 'thanks' || thegame.currentSlide.student !== 'thanks')) {
+          this.numGamesPerRule[thegame.rule_idx] += 1;
+          this.log('failed to complete a game with rule ' + thegame.rule_idx + " ; incrementing the count for this game type");
+          this.log(this.numGamesPerRule);
+        }
       }
     } else {
       this.log('that game was not found!');
