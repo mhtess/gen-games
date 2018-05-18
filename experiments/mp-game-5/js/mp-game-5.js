@@ -70,6 +70,8 @@ function init() {
     "thanks",
   ];
   exp.slides = make_slides(exp);
+  exp.selected_stim_idx = -1;
+  exp.selected_training_stim = [];
 
   // Ensure that Turker has accepted the hit, or that the use is not on MTurk
   $("#start_button").click(function() {
@@ -87,7 +89,6 @@ function init() {
 // Slide Creation & Rendering
 // --------------------------
 
-
 // Render the table of critters with all the 
 // labels hidden from the user
 function render_hidden_critters_table(critters, table_width) {
@@ -101,7 +102,7 @@ function render_hidden_critters_table(critters, table_width) {
     for(var j=0; j<cols; j++) {
       table += "<td>";
       if (ind >= critters.length) break;
-      table += "<table class ='cell' id='cell" + ind + "'\">";
+      table += "<table class ='cell' id='cell-" + ind + "'\">";
 
       table += "<td>";
       table += "<svg id='critter_" + ind +
@@ -117,7 +118,8 @@ function render_hidden_critters_table(critters, table_width) {
   table += "</table>";
   $("#training_critters").append(table);
 
-  for (var i = 0 ; i < critters.length; i++) {
+  for (var i = 0; i < critters.length; i++) {
+    // Create critter svgs
     var scale = 0.5;
     var stim = critters[i];
     var id = "critter_" + i;
@@ -126,6 +128,7 @@ function render_hidden_critters_table(critters, table_width) {
       id, scale
     );
 
+    // Construct "wudsy" labels
     var label = "";
     if (stim.belongs_to_concept) {
       label = "<div class='wudsy-label' id='cell-" + i + "-label'> wudsy </div>";
@@ -134,13 +137,43 @@ function render_hidden_critters_table(critters, table_width) {
     }
     $(label).insertAfter("#critter_" + i);
 
+    // Add click handlers
+    $("#cell-" + i).click(function(event) {
+      var id = '#' + $(event.target).parents('.cell')[0].id;
+      console.log("Clicked: " + id);
+      if (exp.selected_stim_idx != -1) {
+        fade(exp.selected_stim_idx);
+      }
+      exp.selected_stim_idx = id;
+      mark(id);
+      showLabel(id);
+      if (!exp.selected_training_stim.includes(id)) {
+        exp.selected_training_stim.push(id);
+        if (exp.selected_training_stim.length == exp.training_critters.length) {
+          $('#learning-critters-button').css('visibility', 'visible');
+          $('#learning-critters-button').prop('disabled', false);
+        }
+      }
+    });
+
   }
 }
 
-
 // Mark a given stimulus with a black border box
 function mark(id) {
-  $('#' + id).parent().css({"border":'2px solid black'});
+  $(id).css({"border":'2px solid black'});
+  $(id).css({"opacity": 1});
+}
+
+// Fade a given stimulus
+function fade(id) {
+  $(id).css({"border": 'none'});
+  $(id).css({"opacity": 0.3});
+}
+
+function showLabel(id) {
+  var labelID = id + '-label';
+  $(labelID).css('visibility', 'visible');
 }
 
 // Sleep for given number of milliseconds
@@ -216,7 +249,6 @@ function make_slides(f) {
     start: function() {
       globalGame.socket.send("enterSlide.learning_critters.");
       $("#training_critters").empty();
-      $('#continueButton').prop('disabled', true);
 
       // Render slide
       render_hidden_critters_table(exp.training_critters, 6);
@@ -225,14 +257,8 @@ function make_slides(f) {
       this.start_time = Date.now()
     },
     button : function() {
-      var all_forms_filled = false; // TODO: Set true when all items clicked.
-      if (all_forms_filled) {
-        var end_time = Date.now();
-        this.time_spent = end_time - this.start_time;
-      } else {
-        alert("Please make sure to click all the critters, before proceeding");
-      }
-
+      var end_time = Date.now();
+      this.time_spent = end_time - this.start_time;
     },
   });
 

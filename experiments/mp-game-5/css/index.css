@@ -217,3 +217,7 @@ input[type="radio"]{
 .wudsy-label {
 	visibility: hidden;
 }
+
+#learning-critters-button {
+	visibility: hidden;
+}
