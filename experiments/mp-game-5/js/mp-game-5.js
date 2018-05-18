@@ -91,7 +91,6 @@ function init() {
 // Render the table of critters with all the 
 // labels hidden from the user
 function render_hidden_critters_table(critters, table_width) {
-  console.log(critters);
   var rows = Math.ceil(critters.length / table_width);
   var cols = table_width;
 
@@ -109,7 +108,6 @@ function render_hidden_critters_table(critters, table_width) {
         "' style='max-width:150px;max-height:150px\'></svg></td>";
 
       table += "<tr>";
-      table += "<div class='critname' id='cell" + ind + "critname'></div></tr>";
       table += "</table>";
       table += "</td>";
       ind += 1;
@@ -127,6 +125,15 @@ function render_hidden_critters_table(critters, table_width) {
       stim.critter, stim.props,
       id, scale
     );
+
+    var label = "";
+    if (stim.belongs_to_concept) {
+      label = "<div class='wudsy-label' id='cell-" + i + "-label'> wudsy </div>";
+    } else {
+      label = "<div class='wudsy-label' id='cell-" + i + "-label'> </div>";
+    }
+    $(label).insertAfter("#critter_" + i);
+
   }
 }
 

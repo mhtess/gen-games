@@ -62,8 +62,6 @@ var game_core = function(options){
     this.roundNum = 1;
 
     var rule_info = rule_summary[options.rule_idx];
-    console.log(options);
-    console.log(rule_summary);
 
     this.rule_type = rule_info.type;
     this.training_data_fn = "./js/training_data_" + rule_info.name + ".json";
