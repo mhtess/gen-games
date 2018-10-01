@@ -1,0 +1,3 @@
+iterationName	gameid	time	trialNum	role	nativeEnglish	enjoyment	assess	age	gender	education	comments	problems	fairprice	strategy	humanPartner	likePartner	eventType
+pilot1	8204-74acbfd0-0fd5-4d65-bf85-3c0c8e28b8e3	1525129898571	1	explorer	yes	2	yes	30	Male	4		no	2.00	trial and error	yes	liked	logSubjInfo
+pilot1	8204-74acbfd0-0fd5-4d65-bf85-3c0c8e28b8e3	1525129918102	1	student	yes	1	yes	24	Male	3	Fun experiment	No	1.20	I listened to my partner	yes	okay	logSubjInfo

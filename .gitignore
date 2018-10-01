@@ -4,7 +4,6 @@ experiments/node_modules/
 *.success
 *.properties
 *.input
-*.csv
 *.md
 .Rproj.user
 .Rhistory

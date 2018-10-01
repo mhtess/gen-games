@@ -1,0 +1,3 @@
+iterationName	gameid	time	trialNum	role	nativeEnglish	enjoyment	assess	age	gender	education	comments	problems	fairprice	strategy	humanPartner	likePartner	eventType
+pilot1	4667-5e5d6809-f560-4e02-87f0-3427a7f957fa	1525126643044	1	explorer	yes	1	yes	20	Female	2		No	1.20	to pay attention to any patterns i saw	yes	okay	logSubjInfo
+pilot1	4667-5e5d6809-f560-4e02-87f0-3427a7f957fa	1525126813469	1	student	yes	1	confused	54	Female	2	Very confused at the amount that I got wrong		no	yes	Going by the information that my partner gave me		yes	okay	logSubjInfo
