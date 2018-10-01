@@ -309,7 +309,7 @@ train_trials %>%
 ```{r}
 game_summary <- read.csv('../../mturk/mp-game-3/experiment_1/results-cleaned/game_summary.csv')
 
-rational_rules <- function(r_idx, game_summary) {
+rational_rules <- function(r_idx, game_summary, incremental, num_train, max_trial_num) {
   # Filter accordin to list idx
   temp <- filter(game_summary, rule_idx == r_idx)
   base_dir_1 = '../../mturk/mp-game-3/experiment_1/results-cleaned'
@@ -334,7 +334,9 @@ rational_rules <- function(r_idx, game_summary) {
   df$train_human_responses = list(train_human_responses)
   df$test_human_responses = list(test_human_responses)
   
-
+  df$incremental = incremental
+  df$num_train = num_train
+  
   result <- as.data.frame(
     webppl(
       program_file = "./rational_rules.wppl",
@@ -360,21 +362,16 @@ plot_results <- function(results) {
 }
 ```
 
-Here the prior on outliers is Meth.exp(-5), 20000 burn, and 2000 samples.
-```{r}
-rule_idxs <- 0:8
-results <- do.call(rbind, lapply(rule_idxs, rational_rules, game_summary=game_summary))
-plot_results(results)
-```
-```{r}
-train <- results %>% 
-  filter(trial_num < 52)
-plot_results(train)
-```
+<!-- Here the prior on outliers is Meth.exp(-5), 20000 burn, and 2000 samples. ```{r} -->
+<!-- rule_idxs <- 0:8 results <- do.call(rbind, lapply(rule_idxs, rational_rules, -->
+<!-- game_summary=game_summary, incremental=FALSE, num_train=-1))  -->
+<!-- plot_results(results) ``` ```{r} train <- results %>% filter(trial_num < 52)  -->
+<!-- plot_results(train) ``` -->
 
 
-```{r}
-test <- results %>% 
-  filter(trial_num >= 52)
-plot_results(test)
-```
+<!-- ```{r} test <- results %>% filter(trial_num >= 52) plot_results(test) ``` -->
+
+
+<!-- ```{r} rule_idxs <- 0:0 results <- do.call(rbind, lapply(rule_idxs, -->
+<!-- rational_rules, game_summary=game_summary, incremental=TRUE, num_train=10))  -->
+<!-- plot_results(results) ``` -->
