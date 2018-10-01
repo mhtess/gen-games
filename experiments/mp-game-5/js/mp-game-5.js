@@ -161,6 +161,7 @@ function render_hidden_critters_table(critters, table_width) {
 
 // Render the current critter
 function render_curr_critter(stim, training) {
+  console.log("Rendering a critter: " + stim);
   var critter_id = "training_critter";
   var rows = 1;
   var cols = 1;
