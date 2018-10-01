@@ -1,0 +1,52 @@
+iterationName	gameid	time	trialNum	role		eventType
+pilot1	0150-60fe2d4a-b3ef-42fc-9972-01ec4e454c7c	1524778581864		explorer		logTrain
+pilot1	0150-60fe2d4a-b3ef-42fc-9972-01ec4e454c7c	1524778584079		explorer	1	11.509	false	false	true	logTrain
+pilot1	0150-60fe2d4a-b3ef-42fc-9972-01ec4e454c7c	1524778594824		explorer		logTrain
+pilot1	0150-60fe2d4a-b3ef-42fc-9972-01ec4e454c7c	1524778595107		explorer	4	10.523	false	false	true	logTrain
+pilot1	0150-60fe2d4a-b3ef-42fc-9972-01ec4e454c7c	1524778596339		explorer	2	10.523	true	false	false	logTrain
+pilot1	0150-60fe2d4a-b3ef-42fc-9972-01ec4e454c7c	1524778604393		explorer		logTrain
+pilot1	0150-60fe2d4a-b3ef-42fc-9972-01ec4e454c7c	1524778608871		explorer	6	7.902	false	false	true	logTrain
+pilot1	0150-60fe2d4a-b3ef-42fc-9972-01ec4e454c7c	1524778616024		explorer		logTrain
+pilot1	0150-60fe2d4a-b3ef-42fc-9972-01ec4e454c7c	1524778618555		explorer		logTrain
+pilot1	0150-60fe2d4a-b3ef-42fc-9972-01ec4e454c7c	1524778619284		explorer	8	6.888	false	false	true	logTrain
+pilot1	0150-60fe2d4a-b3ef-42fc-9972-01ec4e454c7c	1524778624024		explorer		logTrain
+pilot1	0150-60fe2d4a-b3ef-42fc-9972-01ec4e454c7c	1524778627235		explorer		logTrain
+pilot1	0150-60fe2d4a-b3ef-42fc-9972-01ec4e454c7c	1524778627708		explorer	11	4.393	false	false	true	logTrain
+pilot1	0150-60fe2d4a-b3ef-42fc-9972-01ec4e454c7c	1524778633007		explorer		logTrain
+pilot1	0150-60fe2d4a-b3ef-42fc-9972-01ec4e454c7c	1524778640095		explorer	14	4.938	false	false	true	logTrain
+pilot1	0150-60fe2d4a-b3ef-42fc-9972-01ec4e454c7c	1524778644198		explorer		logTrain
+pilot1	0150-60fe2d4a-b3ef-42fc-9972-01ec4e454c7c	1524778645930		explorer	17	3.635	false	false	true	logTrain
+pilot1	0150-60fe2d4a-b3ef-42fc-9972-01ec4e454c7c	1524778648984		explorer	15	3.635	false	true	false	logTrain
+pilot1	0150-60fe2d4a-b3ef-42fc-9972-01ec4e454c7c	1524778657229		explorer		logTrain
+pilot1	0150-60fe2d4a-b3ef-42fc-9972-01ec4e454c7c	1524778661772		explorer	19	7.538	false	false	true	logTrain
+pilot1	0150-60fe2d4a-b3ef-42fc-9972-01ec4e454c7c	1524778665397		explorer		logTrain
+pilot1	0150-60fe2d4a-b3ef-42fc-9972-01ec4e454c7c	1524778667534		explorer		logTrain
+pilot1	0150-60fe2d4a-b3ef-42fc-9972-01ec4e454c7c	1524778668355		explorer	22	3.165	false	false	true	logTrain
+pilot1	0150-60fe2d4a-b3ef-42fc-9972-01ec4e454c7c	1524778669509		explorer	23	1.607	false	false	true	logTrain
+pilot1	0150-60fe2d4a-b3ef-42fc-9972-01ec4e454c7c	1524778674080		explorer	24	3.952	true	true	true	logTrain
+pilot1	0150-60fe2d4a-b3ef-42fc-9972-01ec4e454c7c	1524778679780		explorer		logTrain
+pilot1	0150-60fe2d4a-b3ef-42fc-9972-01ec4e454c7c	1524778683878		explorer	26	5.026	true	true	true	logTrain
+pilot1	0150-60fe2d4a-b3ef-42fc-9972-01ec4e454c7c	1524778684781		explorer	27	0.069	false	false	true	logTrain
+pilot1	0150-60fe2d4a-b3ef-42fc-9972-01ec4e454c7c	1524778686871		explorer	28	1.301	false	false	true	logTrain
+pilot1	0150-60fe2d4a-b3ef-42fc-9972-01ec4e454c7c	1524778690374		explorer	29	2.714	false	false	true	logTrain
+pilot1	0150-60fe2d4a-b3ef-42fc-9972-01ec4e454c7c	1524778693422		explorer	30	2.142	true	true	true	logTrain
+pilot1	0150-60fe2d4a-b3ef-42fc-9972-01ec4e454c7c	1524778698695		explorer		logTrain
+pilot1	0150-60fe2d4a-b3ef-42fc-9972-01ec4e454c7c	1524778703412		explorer	32	4.36	false	false	true	logTrain
+pilot1	0150-60fe2d4a-b3ef-42fc-9972-01ec4e454c7c	1524778710254		explorer		logTrain
+pilot1	0150-60fe2d4a-b3ef-42fc-9972-01ec4e454c7c	1524778711091		explorer	36	6.099	true	true	true	logTrain
+pilot1	0150-60fe2d4a-b3ef-42fc-9972-01ec4e454c7c	1524778712200		explorer	33	6.099	true	false	false	logTrain
+pilot1	0150-60fe2d4a-b3ef-42fc-9972-01ec4e454c7c	1524778713700		explorer	34	6.099	false	true	false	logTrain
+pilot1	0150-60fe2d4a-b3ef-42fc-9972-01ec4e454c7c	1524778715931		explorer	37	1.238	false	false	true	logTrain
+pilot1	0150-60fe2d4a-b3ef-42fc-9972-01ec4e454c7c	1524778721223		explorer		logTrain
+pilot1	0150-60fe2d4a-b3ef-42fc-9972-01ec4e454c7c	1524778724094		explorer		logTrain
+pilot1	0150-60fe2d4a-b3ef-42fc-9972-01ec4e454c7c	1524778725193		explorer	39	4.288	false	false	true	logTrain
+pilot1	0150-60fe2d4a-b3ef-42fc-9972-01ec4e454c7c	1524778729699		explorer		logTrain
+pilot1	0150-60fe2d4a-b3ef-42fc-9972-01ec4e454c7c	1524778732037		explorer		logTrain
+pilot1	0150-60fe2d4a-b3ef-42fc-9972-01ec4e454c7c	1524778733187		explorer	42	3.493	true	true	true	logTrain
+pilot1	0150-60fe2d4a-b3ef-42fc-9972-01ec4e454c7c	1524778734636		explorer	44	0.506	true	true	true	logTrain
+pilot1	0150-60fe2d4a-b3ef-42fc-9972-01ec4e454c7c	1524778737973		explorer	45	2.243	false	false	true	logTrain
+pilot1	0150-60fe2d4a-b3ef-42fc-9972-01ec4e454c7c	1524778741346		explorer	46	2.314	false	false	true	logTrain
+pilot1	0150-60fe2d4a-b3ef-42fc-9972-01ec4e454c7c	1524778747509		explorer		logTrain
+pilot1	0150-60fe2d4a-b3ef-42fc-9972-01ec4e454c7c	1524778751119		explorer	48	4.833	true	true	true	logTrain
+pilot1	0150-60fe2d4a-b3ef-42fc-9972-01ec4e454c7c	1524778759668		explorer		logTrain
+pilot1	0150-60fe2d4a-b3ef-42fc-9972-01ec4e454c7c	1524778762053		explorer	50	7.521	false	false	true	logTrain

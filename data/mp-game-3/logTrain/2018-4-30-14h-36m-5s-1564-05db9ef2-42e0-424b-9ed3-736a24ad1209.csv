@@ -1,0 +1,13 @@
+iterationName	gameid	time	trialNum	role	trial_num	time_in_seconds	turker_label	true_label	is_correct	eventType
+pilot1	1564-05db9ef2-42e0-424b-9ed3-736a24ad1209	1525124165117	1	explorer	0	6.927	true	false	false	logTrain
+pilot1	1564-05db9ef2-42e0-424b-9ed3-736a24ad1209	1525124169482	1	explorer	1	6.927	true	false	false	logTrain
+pilot1	1564-05db9ef2-42e0-424b-9ed3-736a24ad1209	1525124174011	1	explorer		logTrain
+pilot1	1564-05db9ef2-42e0-424b-9ed3-736a24ad1209	1525124177001	1	explorer		logTrain
+pilot1	1564-05db9ef2-42e0-424b-9ed3-736a24ad1209	1525124177283	1	explorer	3	4.389	false	false	true	logTrain
+pilot1	1564-05db9ef2-42e0-424b-9ed3-736a24ad1209	1525124179149	1	explorer	5	1.687	false	false	true	logTrain
+pilot1	1564-05db9ef2-42e0-424b-9ed3-736a24ad1209	1525124184453	1	explorer		logTrain
+pilot1	1564-05db9ef2-42e0-424b-9ed3-736a24ad1209	1525124186045	1	explorer		logTrain
+pilot1	1564-05db9ef2-42e0-424b-9ed3-736a24ad1209	1525124187240	1	explorer		logTrain
+pilot1	1564-05db9ef2-42e0-424b-9ed3-736a24ad1209	1525124187996	1	explorer	7	5.042	false	false	true	logTrain
+pilot1	1564-05db9ef2-42e0-424b-9ed3-736a24ad1209	1525124192295	1	explorer	10	3.976	false	false	true	logTrain
+pilot1	1564-05db9ef2-42e0-424b-9ed3-736a24ad1209	1525124194343	1	explorer	11	1.722	false	false	true	logTrain
