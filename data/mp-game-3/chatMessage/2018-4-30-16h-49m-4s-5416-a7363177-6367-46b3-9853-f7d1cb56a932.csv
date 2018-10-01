@@ -1,0 +1,10 @@
+iterationName	gameid	time	trialNum	role	text	reactionTime	eventType
+pilot1	5416-a7363177-6367-46b3-9853-f7d1cb56a932	1525132144587	1	explorer	Hey, so there are three types of creatures. One is bird-like, one is a fish, and one is spider-like with wings.	18317	chatMessage
+pilot1	5416-a7363177-6367-46b3-9853-f7d1cb56a932	1525132156313	1	explorer	The spider-like ones with a lot of legs and wings are always wudsy creatures.	8830	chatMessage
+pilot1	5416-a7363177-6367-46b3-9853-f7d1cb56a932	1525132169977	1	explorer	The fish are wudsy if they are blue and yellow. Any other colors are not wudsy.	12798	chatMessage
+pilot1	5416-a7363177-6367-46b3-9853-f7d1cb56a932	1525132186129	1	explorer	And for the birds, if the bird is yellow/orange/green they are wudsy.	14342	chatMessage
+pilot1	5416-a7363177-6367-46b3-9853-f7d1cb56a932	1525132222759	1	explorer	If the bird has any other color like purple, they are not wudsy.	6455	chatMessage
+pilot1	5416-a7363177-6367-46b3-9853-f7d1cb56a932	1525132227470	1	explorer	Did that make sense?	4005	chatMessage
+pilot1	5416-a7363177-6367-46b3-9853-f7d1cb56a932	1525132248042	1	student	Great explanation but I'll just a lot remember 	45983	chatMessage
+pilot1	5416-a7363177-6367-46b3-9853-f7d1cb56a932	1525132262853	1	explorer	I agree. Take your time!	3749	chatMessage
+pilot1	5416-a7363177-6367-46b3-9853-f7d1cb56a932	1525132313544	1	student	k	1982	chatMessage
