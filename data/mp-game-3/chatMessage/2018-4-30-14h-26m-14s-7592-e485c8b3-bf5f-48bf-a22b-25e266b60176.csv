@@ -1,0 +1,4 @@
+iterationName	gameid	time	trialNum	role	text	reactionTime	eventType
+pilot1	7592-e485c8b3-bf5f-48bf-a22b-25e266b60176	1525123574900	1	student	hey what did you learn while detecting wudsy creatures?	10551	chatMessage
+pilot1	7592-e485c8b3-bf5f-48bf-a22b-25e266b60176	1525123575312	1	explorer	Hi there. I guess I'm the explorer... I took notes and what I found is, it seems to be mostly colors - orange and gold. Once in a while purple will be there too but only if it's with orange or gold.	53348	chatMessage
+pilot1	7592-e485c8b3-bf5f-48bf-a22b-25e266b60176	1525123627448	1	explorer	Red & orange works too.	5321	chatMessage

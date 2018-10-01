@@ -1,0 +1,8 @@
+iterationName	gameid	time	trialNum	role	text	reactionTime	eventType
+pilot1	2807-7f8322f8-93e1-4012-9db3-8fd50db5fc65	1522697598409		student	So I don't know anything about the wudsy creatures.  Anything important I should know about them?	23517	chatMessage
+pilot1	2807-7f8322f8-93e1-4012-9db3-8fd50db5fc65	1522697625376		explorer	yes	382	chatMessage
+pilot1	2807-7f8322f8-93e1-4012-9db3-8fd50db5fc65	1522697647588		explorer	if it's a bird, wudsy have blue bodies	17204	chatMessage
+pilot1	2807-7f8322f8-93e1-4012-9db3-8fd50db5fc65	1522697658950		explorer	if it's a fish, wudsy have orange or green bodies	10396	chatMessage
+pilot1	2807-7f8322f8-93e1-4012-9db3-8fd50db5fc65	1522697674438		explorer	if it's a bug, wudsy have blue wings	8908	chatMessage
+pilot1	2807-7f8322f8-93e1-4012-9db3-8fd50db5fc65	1522697679802		explorer	anything else, they are not wudsy	4645	chatMessage
+pilot1	2807-7f8322f8-93e1-4012-9db3-8fd50db5fc65	1522697689488		student	thank you for that!	4641	chatMessage

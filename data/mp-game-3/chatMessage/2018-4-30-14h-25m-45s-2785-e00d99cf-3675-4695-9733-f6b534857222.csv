@@ -1,0 +1,10 @@
+iterationName	gameid	time	trialNum	role	text	reactionTime	eventType
+pilot1	2785-e00d99cf-3675-4695-9733-f6b534857222	1525123545528	1	explorer	I think that the blue animals were the wudsy creatures. especially the ones that were blue and pink.	35914	chatMessage
+pilot1	2785-e00d99cf-3675-4695-9733-f6b534857222	1525123587082	1	student	is there anything else you noticed?	22310	chatMessage
+pilot1	2785-e00d99cf-3675-4695-9733-f6b534857222	1525123604608	1	explorer	no	1503	chatMessage
+pilot1	2785-e00d99cf-3675-4695-9733-f6b534857222	1525123613697	1	student	ok	3446	chatMessage
+pilot1	2785-e00d99cf-3675-4695-9733-f6b534857222	1525123648885	1	explorer	We should be able to submit, I guess just chat until the button appears	16519	chatMessage
+pilot1	2785-e00d99cf-3675-4695-9733-f6b534857222	1525123680123	1	student	I already have a continue button. Are you ready to continue?	19842	chatMessage
+pilot1	2785-e00d99cf-3675-4695-9733-f6b534857222	1525123691376	1	explorer	Yes, I am. Are you?	5157	chatMessage
+pilot1	2785-e00d99cf-3675-4695-9733-f6b534857222	1525123703897	1	explorer	Cheers	2501	chatMessage
+pilot1	2785-e00d99cf-3675-4695-9733-f6b534857222	1525123711233	1	student	yes. will hit the button now.	14469	chatMessage

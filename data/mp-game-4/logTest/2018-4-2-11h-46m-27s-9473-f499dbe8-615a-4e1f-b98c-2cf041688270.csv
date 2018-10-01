@@ -1,0 +1,9 @@
+iterationName	gameid	time	trialNum	role	trial_num	time_in_seconds	turker_label	true_label	is_correct	eventType
+pilot1	9473-f499dbe8-615a-4e1f-b98c-2cf041688270	1522694787585		explorer	1	4.499	true	false	false	logTest
+pilot1	9473-f499dbe8-615a-4e1f-b98c-2cf041688270	1522694790636		explorer	2	3.039	true	false	false	logTest
+pilot1	9473-f499dbe8-615a-4e1f-b98c-2cf041688270	1522694793738		explorer	3	3.081	false	false	true	logTest
+pilot1	9473-f499dbe8-615a-4e1f-b98c-2cf041688270	1522694796630		explorer	4	2.884	true	true	true	logTest
+pilot1	9473-f499dbe8-615a-4e1f-b98c-2cf041688270	1522694873074		student	1	2.255	false	true	false	logTest
+pilot1	9473-f499dbe8-615a-4e1f-b98c-2cf041688270	1522694876464		student	2	3.351	true	true	true	logTest
+pilot1	9473-f499dbe8-615a-4e1f-b98c-2cf041688270	1522694878688		student	3	2.22	true	false	false	logTest
+pilot1	9473-f499dbe8-615a-4e1f-b98c-2cf041688270	1522694881045		student	4	2.345	false	true	false	logTest

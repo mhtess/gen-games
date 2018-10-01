@@ -1,0 +1,11 @@
+iterationName	gameid	time	trialNum	role	text	reactionTime	eventType
+pilot1	5045-30e9f265-5311-4b87-8186-4fb8b20d2447	1524107469406		student	hello	2532	chatMessage
+pilot1	5045-30e9f265-5311-4b87-8186-4fb8b20d2447	1524107480311		explorer	hello	1189	chatMessage
+pilot1	5045-30e9f265-5311-4b87-8186-4fb8b20d2447	1524107487145		student	find anything cool?	3504	chatMessage
+pilot1	5045-30e9f265-5311-4b87-8186-4fb8b20d2447	1524107523888		explorer	actually, nothing much. But I can say green fish are good bet.	30646	chatMessage
+pilot1	5045-30e9f265-5311-4b87-8186-4fb8b20d2447	1524107545498		student	nice green fish... anything else?	8128	chatMessage
+pilot1	5045-30e9f265-5311-4b87-8186-4fb8b20d2447	1524107600583		explorer	I think it was a crab or something. Those crabs with blue midsection are good bets too.	47509	chatMessage
+pilot1	5045-30e9f265-5311-4b87-8186-4fb8b20d2447	1524107616229		student	green fish and crab with blue midsection got it!	9846	chatMessage
+pilot1	5045-30e9f265-5311-4b87-8186-4fb8b20d2447	1524107657986		explorer	For the birdlike creatures - red one are okay.	33597	chatMessage
+pilot1	5045-30e9f265-5311-4b87-8186-4fb8b20d2447	1524107671572		student	for real... I'll take note	5766	chatMessage
+pilot1	5045-30e9f265-5311-4b87-8186-4fb8b20d2447	1524107695843		explorer	That's all I have to say.	8952	chatMessage

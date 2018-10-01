@@ -1,0 +1,2 @@
+iterationName	gameid	time	trialNum	role	trial_num	time_in_seconds	turker_label	true_label	is_correct	eventType
+pilot1	1120-4044dc11-06ea-40b6-a6a0-99ed1f191e84	1522701286969		explorer	1	14.636	false	false	true	logTrain
