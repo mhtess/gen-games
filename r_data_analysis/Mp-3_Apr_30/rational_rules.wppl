@@ -176,9 +176,11 @@ var genRationRulesFunc = function(AObjects, BObjects, TObjects, allObjs) {
 }
 
 var rationalRulesAnalysis = function(AObjects, BObjects, TObjects, allObjs) {
+  console.log("Inside Rational Rules Analysis...");
+
   // Run MCMC Inference
   var rationalRules = genRationRulesFunc(AObjects, BObjects, TObjects, allObjs);
-  var rulePosterior = Infer({method: 'MCMC', samples:2000, burn:20000}, rationalRules);
+  var rulePosterior = Infer({method: 'MCMC', samples:10, burn:10}, rationalRules);
   var supportProbs = map(function(val) {
     return {v: val, logProb: rulePosterior.score(val)}
   }, rulePosterior.support());
@@ -218,7 +220,7 @@ var rationalRulesAnalysis = function(AObjects, BObjects, TObjects, allObjs) {
   }
 }
 
-var runRationalRules = function(trainingStimuli, testStimuli, humanPredictives, humanResponses) {
+var runRationalRules = function(trainingStimuli, testStimuli, humanPredictives, humanResponses, incremental, num_train) {  
   // Load critters from training stimuli file
   var defaultTrainingCritters = _.uniqWith(map(makeObj, trainingStimuli), _.isEqual);
   var defaultTestCritters = _.uniqWith(map(makeObj, testStimuli), _.isEqual);
@@ -236,6 +238,7 @@ var runRationalRules = function(trainingStimuli, testStimuli, humanPredictives, 
         secondary_color: baseCritter.secondary_color,
         size: baseCritter.size,
         belongs_to_concept: x.true_label,
+        trial_num: x.trial_num,
       };
       return critter;
     }
@@ -255,6 +258,7 @@ var runRationalRules = function(trainingStimuli, testStimuli, humanPredictives, 
         secondary_color: baseCritter.secondary_color,
         size: baseCritter.size,
         belongs_to_concept: x.true_label,
+        trial_num: x.trial_num,
       };
       return critter;
     }
@@ -262,20 +266,40 @@ var runRationalRules = function(trainingStimuli, testStimuli, humanPredictives, 
 
 
   // Split into Training A/B Groups & Test Split
-  var AObjects = filter(function(x) { return x.belongs_to_concept == true;}, trainingCritters);
-  var BObjects = filter(function(x) { return x.belongs_to_concept == false;}, trainingCritters);  
-  var allObjs = _.uniqWith(_.concat(defaultTrainingCritters, defaultTestCritters), _.isEqual);
-
-  var rationalRulesResults =  rationalRulesAnalysis(AObjects, BObjects, TObjects, allObjs);
-  var predictivesExtracted = map(function(x){return x.pred}, humanPredictives);
-  var result = _.zip(rationalRulesResults.posteriorPreds, predictivesExtracted);
-  var flattenedResult = map(function(x) {
-    return _.flatten(x);
-  }, result);
-  return {
-    'support': rationalRulesResults.ruleProbs,
-    'posteriorPredictives': flattenedResult,
+  var rationalRulesResults = null;
+  var postProcessing = function(rationalRulesResults) {
+    var predictivesExtracted = map(function(x){return x.pred}, humanPredictives);
+    var result = _.zip(rationalRulesResults.posteriorPreds, predictivesExtracted);
+    var flattenedResult = map(function(x) {
+      return _.flatten(x);
+    }, result);
+    return {
+      'support': rationalRulesResults.ruleProbs,
+      'posteriorPredictives': flattenedResult,
+    }
   }
+  console.log("Incremental: " + incremental);
+  console.log("Num Critters: " + num_train);
+  console.log("Training critters: " + trainingCritters.length);
+  if (incremental) {
+    var AObjects = _.uniqWith(filter(function(x) { return ((x.belongs_to_concept == true) && (x.trial_num < num_train));}, trainingCritters), _.isEqual);
+    var BObjects = _.uniqWith(filter(function(x) { return ((x.belongs_to_concept == false) && (x.trial_num < num_train));}, trainingCritters), _.isEqual);  
+    var TObjectsFiltered = _.uniqWith(filter(function(x) { return ((x.trial_num >= num_train) && (x.trial_num < num_train + 10));}, trainingCritters), _.isEqual);
+    var allObjs = _.uniqWith(_.concat(_.concat(AObjects, BObjects), TObjectsFiltered), _.isEqual);
+    console.log(AObjects.length);
+    console.log(BObjects.length);
+    console.log(TObjectsFiltered.length);
+    console.log(allObjs.length);
+    var rationalRulesResults =  rationalRulesAnalysis(AObjects, BObjects, TObjectsFiltered, allObjs);
+    return postProcessing(rationalRulesResults);
+  } else {
+    var AObjects = filter(function(x) { return x.belongs_to_concept == true;}, trainingCritters);
+    var BObjects = filter(function(x) { return x.belongs_to_concept == false;}, trainingCritters);  
+    var allObjs = _.uniqWith(_.concat(defaultTrainingCritters, defaultTestCritters), _.isEqual);
+    var rationalRulesResults = rationalRulesAnalysis(AObjects, BObjects, TObjects, allObjs);
+    return postProcessing(rationalRulesResults);
+  }
+
 }
 
 // ---------------
@@ -320,7 +344,9 @@ var parseRData = function() {
     !rationalRulesParams.hasOwnProperty('training_stim_fp') ||
     !rationalRulesParams.hasOwnProperty('test_stim_fp') ||
     !rationalRulesParams.hasOwnProperty('train_human_responses') || // List of files
-    !rationalRulesParams.hasOwnProperty('test_human_responses') // List of files
+    !rationalRulesParams.hasOwnProperty('test_human_responses') || // List of files
+    !rationalRulesParams.hasOwnProperty('incremental') || 
+    !rationalRulesParams.hasOwnProperty('num_train')
   ) {
     return {
       'parsedCorrectly': false,
@@ -370,13 +396,15 @@ var parseRData = function() {
       'testStim': testStim,
       'humanResponses': humanResponses,
       'parsedCorrectly': true,
+      'incremental': rationalRulesParams.incremental,
+      'num_train': obj.parseInt(rationalRulesParams.num_train),
     }
   }
 }
 
 var runScript = function() {
   var rData = parseRData();
-  var rationalRulesResults =  runRationalRules(rData.trainingStim, rData.testStim, rData.humanPredictives, rData.humanResponses);
+  var rationalRulesResults = runRationalRules(rData.trainingStim, rData.testStim, rData.humanPredictives, rData.humanResponses, rData.incremental, rData.num_train);
   console.log(rationalRulesResults.posteriorPredictives);
   return rationalRulesResults.posteriorPredictives;
 }
