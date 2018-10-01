@@ -1,0 +1,9 @@
+iterationName	gameid	time	trialNum	role	text	reactionTime	eventType
+pilot1	7109-b1889f8c-acb5-4786-b2ca-8ea088c1bee1	1525123205359	1	explorer	Orange	2047	chatMessage
+pilot1	7109-b1889f8c-acb5-4786-b2ca-8ea088c1bee1	1525123226398	1	explorer	If it is mostly or entirely orange it IS a wudsy	18714	chatMessage
+pilot1	7109-b1889f8c-acb5-4786-b2ca-8ea088c1bee1	1525123242017	1	explorer	'If it has NO orange.. It is NOT a wudsy	15608	chatMessage
+pilot1	7109-b1889f8c-acb5-4786-b2ca-8ea088c1bee1	1525123266042	1	student	Okay, any other pointers or just the orange?	19863	chatMessage
+pilot1	7109-b1889f8c-acb5-4786-b2ca-8ea088c1bee1	1525123296033	1	explorer	That really is about it. There was at least one or two if they had only a little orange, less than 30 percent they were not wudsy	26298	chatMessage
+pilot1	7109-b1889f8c-acb5-4786-b2ca-8ea088c1bee1	1525123313952	1	student	Okay cool, thank you!!	8160	chatMessage
+pilot1	7109-b1889f8c-acb5-4786-b2ca-8ea088c1bee1	1525123320336	1	explorer	good luck	2814	chatMessage
+pilot1	7109-b1889f8c-acb5-4786-b2ca-8ea088c1bee1	1525123325585	1	student	You too :)	2552	chatMessage

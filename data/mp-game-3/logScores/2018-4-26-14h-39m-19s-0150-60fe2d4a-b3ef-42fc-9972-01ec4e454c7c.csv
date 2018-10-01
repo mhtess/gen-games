@@ -1,0 +1,4 @@
+iterationName	gameid	time	trialNum	role	type	hits	misses	correct_rejections	false_alarms	score	eventType
+pilot1	0150-60fe2d4a-b3ef-42fc-9972-01ec4e454c7c	1524778759714		explorer	training	7	7	23	14	-7	logScores
+pilot1	0150-60fe2d4a-b3ef-42fc-9972-01ec4e454c7c	1524778942923		explorer	testing	6	5	12	7	-1	logScores
+pilot1	0150-60fe2d4a-b3ef-42fc-9972-01ec4e454c7c	1524778987598		student	testing	5	6	5	14	-9	logScores

@@ -1,0 +1,23 @@
+iterationName	gameid	time	trialNum	role	text	reactionTime	eventType
+pilot1	6380-d4f1a51c-6a72-45e6-bd9f-100c16065013	1525131150476	1	student	hello	4094	chatMessage
+pilot1	6380-d4f1a51c-6a72-45e6-bd9f-100c16065013	1525131155841	1	explorer	hi	1840	chatMessage
+pilot1	6380-d4f1a51c-6a72-45e6-bd9f-100c16065013	1525131158896	1	student	How was the experience?	6174	chatMessage
+pilot1	6380-d4f1a51c-6a72-45e6-bd9f-100c16065013	1525131165237	1	explorer	hard	3182	chatMessage
+pilot1	6380-d4f1a51c-6a72-45e6-bd9f-100c16065013	1525131172724	1	student	really?	4847	chatMessage
+pilot1	6380-d4f1a51c-6a72-45e6-bd9f-100c16065013	1525131183979	1	explorer	but i think i got it	17099	chatMessage
+pilot1	6380-d4f1a51c-6a72-45e6-bd9f-100c16065013	1525131188843	1	student	will it be hard to explain?	7353	chatMessage
+pilot1	6380-d4f1a51c-6a72-45e6-bd9f-100c16065013	1525131194146	1	explorer	yes	2146	chatMessage
+pilot1	6380-d4f1a51c-6a72-45e6-bd9f-100c16065013	1525131217868	1	explorer	there are 3 types of creatures	22098	chatMessage
+pilot1	6380-d4f1a51c-6a72-45e6-bd9f-100c16065013	1525131233882	1	explorer	one is fish	9831	chatMessage
+pilot1	6380-d4f1a51c-6a72-45e6-bd9f-100c16065013	1525131268557	1	explorer	if the fish has a gold color, its a wudsy	30838	chatMessage
+pilot1	6380-d4f1a51c-6a72-45e6-bd9f-100c16065013	1525131275191	1	student	ok	1014	chatMessage
+pilot1	6380-d4f1a51c-6a72-45e6-bd9f-100c16065013	1525131325160	1	explorer	2nd is an owl looking creature with feathers on its head	46954	chatMessage
+pilot1	6380-d4f1a51c-6a72-45e6-bd9f-100c16065013	1525131362574	1	explorer	if the feathers are yellow/gold its a wudsy	33964	chatMessage
+pilot1	6380-d4f1a51c-6a72-45e6-bd9f-100c16065013	1525131408806	1	explorer	3rd is a butterfly looking thing, they are all wudsy	38831	chatMessage
+pilot1	6380-d4f1a51c-6a72-45e6-bd9f-100c16065013	1525131436165	1	explorer	anything else is not wudsy	20362	chatMessage
+pilot1	6380-d4f1a51c-6a72-45e6-bd9f-100c16065013	1525131449894	1	student	alright sounds like gold fish, owl with gold/yellow feathers, and all butterflies are wudsy	34314	chatMessage
+pilot1	6380-d4f1a51c-6a72-45e6-bd9f-100c16065013	1525131464537	1	explorer	yep	5583	chatMessage
+pilot1	6380-d4f1a51c-6a72-45e6-bd9f-100c16065013	1525131474446	1	student	ok, thank you.	4658	chatMessage
+pilot1	6380-d4f1a51c-6a72-45e6-bd9f-100c16065013	1525131486146	1	student	I guess we can get started now	5544	chatMessage
+pilot1	6380-d4f1a51c-6a72-45e6-bd9f-100c16065013	1525131488649	1	explorer	good luck	8355	chatMessage
+pilot1	6380-d4f1a51c-6a72-45e6-bd9f-100c16065013	1525131495499	1	student	thanks	2233	chatMessage
