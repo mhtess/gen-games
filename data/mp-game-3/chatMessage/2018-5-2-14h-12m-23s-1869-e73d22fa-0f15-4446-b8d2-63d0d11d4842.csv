@@ -1,0 +1,9 @@
+iterationName	gameid	time	trialNum	role	text	reactionTime	eventType
+pilot1	1869-e73d22fa-0f15-4446-b8d2-63d0d11d4842	1525295543497	1	explorer	It seems that the little bugs are always wudsy.	11511	chatMessage
+pilot1	1869-e73d22fa-0f15-4446-b8d2-63d0d11d4842	1525295563386	1	student	ok	376	chatMessage
+pilot1	1869-e73d22fa-0f15-4446-b8d2-63d0d11d4842	1525295597968	1	explorer	The green fish with yellow stripes are wudsy too. Birds are rarely wudsy.	21110	chatMessage
+pilot1	1869-e73d22fa-0f15-4446-b8d2-63d0d11d4842	1525295684891	1	student	anything noticiable about the birds that were?	14692	chatMessage
+pilot1	1869-e73d22fa-0f15-4446-b8d2-63d0d11d4842	1525295717351	1	explorer	No, it was very random.	26511	chatMessage
+pilot1	1869-e73d22fa-0f15-4446-b8d2-63d0d11d4842	1525295722562	1	student	ok	310	chatMessage
+pilot1	1869-e73d22fa-0f15-4446-b8d2-63d0d11d4842	1525295732702	1	explorer	Safe bet is to say none are.	4607	chatMessage
+pilot1	1869-e73d22fa-0f15-4446-b8d2-63d0d11d4842	1525295742675	1	student	ok	5878	chatMessage

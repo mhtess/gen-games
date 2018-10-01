@@ -1,0 +1,6 @@
+iterationName	gameid	time	trialNum	role	text	reactionTime	eventType
+pilot1	9334-3f2cd488-cbfc-4387-a7a0-b8cfce65be04	1525300642283	1	explorer	Anything with butterfly wings is a wudsy. Fish with yellow stripes are wudsy.	41899	chatMessage
+pilot1	9334-3f2cd488-cbfc-4387-a7a0-b8cfce65be04	1525300687742	1	explorer	Birds with purple head feathers are wudsy.	31140	chatMessage
+pilot1	9334-3f2cd488-cbfc-4387-a7a0-b8cfce65be04	1525300745920	1	explorer	Any questions for me?	7526	chatMessage
+pilot1	9334-3f2cd488-cbfc-4387-a7a0-b8cfce65be04	1525301169586	1	student	Butterfly wings, fish with yellow stripes, purple head feathers.  Got it	32097	chatMessage
+pilot1	9334-3f2cd488-cbfc-4387-a7a0-b8cfce65be04	1525301194767	1	explorer	Okay	16677	chatMessage

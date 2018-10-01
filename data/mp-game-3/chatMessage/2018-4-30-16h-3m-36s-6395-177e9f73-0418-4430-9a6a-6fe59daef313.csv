@@ -1,0 +1,7 @@
+iterationName	gameid	time	trialNum	role	text	reactionTime	eventType
+pilot1	6395-177e9f73-0418-4430-9a6a-6fe59daef313	1525129416243	1	student	Hello?	1683	chatMessage
+pilot1	6395-177e9f73-0418-4430-9a6a-6fe59daef313	1525129436774	1	student	Not sure if this is sending.  I don't see updates in chat.	9561	chatMessage
+pilot1	6395-177e9f73-0418-4430-9a6a-6fe59daef313	1525129444345	1	student	Any insights into wudsy creatures?	6539	chatMessage
+pilot1	6395-177e9f73-0418-4430-9a6a-6fe59daef313	1525129456097	1	student	Hello?	2733	chatMessage
+pilot1	6395-177e9f73-0418-4430-9a6a-6fe59daef313	1525129551439	1	student	Not sure this is working	4426	chatMessage
+pilot1	6395-177e9f73-0418-4430-9a6a-6fe59daef313	1525129566890	1	student	Guess I need to try to figure out wudsy creatures alone?	11726	chatMessage
