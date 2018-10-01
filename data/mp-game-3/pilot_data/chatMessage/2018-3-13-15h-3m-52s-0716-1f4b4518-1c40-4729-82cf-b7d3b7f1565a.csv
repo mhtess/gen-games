@@ -1,0 +1,10 @@
+iterationName	gameid	time	trialNum	role	text	reactionTime	eventType
+pilot1	0716-1f4b4518-1c40-4729-82cf-b7d3b7f1565a	1520978632244		student	Hi, what did you learn?	3118	chatMessage
+pilot1	0716-1f4b4518-1c40-4729-82cf-b7d3b7f1565a	1520978648614		explorer	There are 3 different creatures. A bird, a fish, and a kind of bug.	19375	chatMessage
+pilot1	0716-1f4b4518-1c40-4729-82cf-b7d3b7f1565a	1520978672054		student	Got it, thanks	3295	chatMessage
+pilot1	0716-1f4b4518-1c40-4729-82cf-b7d3b7f1565a	1520978684140		student	what else? (if anything)	9496	chatMessage
+pilot1	0716-1f4b4518-1c40-4729-82cf-b7d3b7f1565a	1520978716935		explorer	whether they are wudsy or not, depends on their color. For the fish, if their MAIN color (not stripes) is green or orange they are wudsy. For birds, if their body color is blue they are wudsy. For the bugs if their wings are blue they are wudsy	67540	chatMessage
+pilot1	0716-1f4b4518-1c40-4729-82cf-b7d3b7f1565a	1520978776414		student	got it, thanks	1680	chatMessage
+pilot1	0716-1f4b4518-1c40-4729-82cf-b7d3b7f1565a	1520978781771		student	anything else?	2632	chatMessage
+pilot1	0716-1f4b4518-1c40-4729-82cf-b7d3b7f1565a	1520978787491		explorer	write that down and you will be set!	4449	chatMessage
+pilot1	0716-1f4b4518-1c40-4729-82cf-b7d3b7f1565a	1520978794070		student	done and done!	2710	chatMessage
