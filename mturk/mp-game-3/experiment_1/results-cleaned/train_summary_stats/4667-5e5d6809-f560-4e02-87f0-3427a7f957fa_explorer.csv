@@ -1,0 +1,2 @@
+correct_rejections,false_alarms,hits,misses,score,type,game_id,rule_idx,training_data_fn,rule_type,role,WorkerId
+40,5,1,4,-4,training,4667-5e5d6809-f560-4e02-87f0-3427a7f957fa,3,./js/training_data_critter_fish_body_color_blue_2.json,CONJUNCTION,explorer,A2P7Z2TKGACY2E

@@ -1,0 +1,6 @@
+workerid,language,enjoyment,gender,age,problems,comments,asses,fairprice,education
+0,"""English""","""2""","""Male""","""35""","""Yes, I had difficulty loading the game at first because the link is HTTPS but doesn&quotechart have a valid security certificate.""","""It was pretty easy to figure out. ""","""Yes""","""1.30""","""2"""
+1,"""English""","""2""","""Male""","""24""","""""","""""","""Yes""","""1.50""","""2"""
+2,"""english""","""2""","""Female""","""30""","""I tried once and the Mturk page wouldn&quotechart load, opened in a new window and ocmpleted but then it wouldn&quotechart submit, so I switched to another browser and did it again.""","""I had fun the first time, but having to complete it again to make it submit was annoying. My feedback was better the first time. It said it submitted, I hope you got it!""","""Yes""","""3.00""","""3"""
+3,"""english""","""2""","""Male""","""22""","""no""","""""","""Yes""","""1.20""","""3"""
+4,"""english""","""1""","""Male""","""31""","""no""","""""","""No""","""1.50""","""3"""

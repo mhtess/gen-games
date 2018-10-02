@@ -1,0 +1,4 @@
+iterationName,game_id,time,trialNum,role,text,reactionTime,eventType,rule_idx,rule_type
+pilot1,2476-35614035-5af8-43ef-8f25-50dc4a99bf1f,1524852712117,1.0,explorer,If it has orange its a wudsy ,5.044,chatMessage,0,SINGLE_FEAT
+pilot1,2476-35614035-5af8-43ef-8f25-50dc4a99bf1f,1524852726482,1.0,student,Anything else? Shapes? ,4.966,chatMessage,0,SINGLE_FEAT
+pilot1,2476-35614035-5af8-43ef-8f25-50dc4a99bf1f,1524852750357,1.0,explorer,"I didn't notice anything in particular, basically everything that had orange was identified as a wudsy",17.01,chatMessage,0,SINGLE_FEAT

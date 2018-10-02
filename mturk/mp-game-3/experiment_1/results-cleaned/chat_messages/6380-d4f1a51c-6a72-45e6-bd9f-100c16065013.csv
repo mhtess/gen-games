@@ -1,0 +1,23 @@
+iterationName,game_id,time,trialNum,role,text,reactionTime,eventType,rule_idx,rule_type
+pilot1,6380-d4f1a51c-6a72-45e6-bd9f-100c16065013,1525131150476,1,student,hello,4.094,chatMessage,6,DISJUNCTION
+pilot1,6380-d4f1a51c-6a72-45e6-bd9f-100c16065013,1525131155841,1,explorer,hi,1.84,chatMessage,6,DISJUNCTION
+pilot1,6380-d4f1a51c-6a72-45e6-bd9f-100c16065013,1525131158896,1,student,How was the experience?,6.174,chatMessage,6,DISJUNCTION
+pilot1,6380-d4f1a51c-6a72-45e6-bd9f-100c16065013,1525131165237,1,explorer,hard,3.182,chatMessage,6,DISJUNCTION
+pilot1,6380-d4f1a51c-6a72-45e6-bd9f-100c16065013,1525131172724,1,student,really?,4.847,chatMessage,6,DISJUNCTION
+pilot1,6380-d4f1a51c-6a72-45e6-bd9f-100c16065013,1525131183979,1,explorer,but i think i got it,17.099,chatMessage,6,DISJUNCTION
+pilot1,6380-d4f1a51c-6a72-45e6-bd9f-100c16065013,1525131188843,1,student,will it be hard to explain?,7.353,chatMessage,6,DISJUNCTION
+pilot1,6380-d4f1a51c-6a72-45e6-bd9f-100c16065013,1525131194146,1,explorer,yes,2.146,chatMessage,6,DISJUNCTION
+pilot1,6380-d4f1a51c-6a72-45e6-bd9f-100c16065013,1525131217868,1,explorer,there are 3 types of creatures,22.098,chatMessage,6,DISJUNCTION
+pilot1,6380-d4f1a51c-6a72-45e6-bd9f-100c16065013,1525131233882,1,explorer,one is fish,9.831,chatMessage,6,DISJUNCTION
+pilot1,6380-d4f1a51c-6a72-45e6-bd9f-100c16065013,1525131268557,1,explorer,"if the fish has a gold color, its a wudsy",30.838,chatMessage,6,DISJUNCTION
+pilot1,6380-d4f1a51c-6a72-45e6-bd9f-100c16065013,1525131275191,1,student,ok,1.014,chatMessage,6,DISJUNCTION
+pilot1,6380-d4f1a51c-6a72-45e6-bd9f-100c16065013,1525131325160,1,explorer,2nd is an owl looking creature with feathers on its head,46.954,chatMessage,6,DISJUNCTION
+pilot1,6380-d4f1a51c-6a72-45e6-bd9f-100c16065013,1525131362574,1,explorer,if the feathers are yellow/gold its a wudsy,33.964,chatMessage,6,DISJUNCTION
+pilot1,6380-d4f1a51c-6a72-45e6-bd9f-100c16065013,1525131408806,1,explorer,"3rd is a butterfly looking thing, they are all wudsy",38.831,chatMessage,6,DISJUNCTION
+pilot1,6380-d4f1a51c-6a72-45e6-bd9f-100c16065013,1525131436165,1,explorer,anything else is not wudsy,20.362,chatMessage,6,DISJUNCTION
+pilot1,6380-d4f1a51c-6a72-45e6-bd9f-100c16065013,1525131449894,1,student,"alright sounds like gold fish, owl with gold/yellow feathers, and all butterflies are wudsy",34.314,chatMessage,6,DISJUNCTION
+pilot1,6380-d4f1a51c-6a72-45e6-bd9f-100c16065013,1525131464537,1,explorer,yep,5.583,chatMessage,6,DISJUNCTION
+pilot1,6380-d4f1a51c-6a72-45e6-bd9f-100c16065013,1525131474446,1,student,"ok, thank you.",4.658,chatMessage,6,DISJUNCTION
+pilot1,6380-d4f1a51c-6a72-45e6-bd9f-100c16065013,1525131486146,1,student,I guess we can get started now,5.544,chatMessage,6,DISJUNCTION
+pilot1,6380-d4f1a51c-6a72-45e6-bd9f-100c16065013,1525131488649,1,explorer,good luck,8.355,chatMessage,6,DISJUNCTION
+pilot1,6380-d4f1a51c-6a72-45e6-bd9f-100c16065013,1525131495499,1,student,thanks,2.233,chatMessage,6,DISJUNCTION
