@@ -80,7 +80,7 @@ test_trials <- do.call(rbind, lapply(temp, read.csv))
 
 # Load Training Summary Stats
 temp <- list.files(
-  "../../../mturk/mp-game-3/experiment_1/results-cleaned/train_summary_stats",
+  "../../../mturk/mp-game-3/experiment/results-cleaned/train_summary_stats",
   pattern="*.csv",
   full.names=TRUE
 )
@@ -88,7 +88,7 @@ train_stats <- do.call(rbind, lapply(temp, read.csv))
 
 # Load Test Summary Stats
 temp <- list.files(
-  "../../../mturk/mp-game-3/experiment_1/results-cleaned/test_summary_stats",
+  "../../../mturk/mp-game-3/experiment/results-cleaned/test_summary_stats",
   pattern="*.csv",
   full.names=TRUE
 )
@@ -96,7 +96,7 @@ test_stats <- do.call(rbind, lapply(temp, read.csv))
 
 # Load Chat Logs
 temp <- list.files(
-  "../../../mturk/mp-game-3/experiment_1/results-cleaned/chat_messages",
+  "../../../mturk/mp-game-3/experiment/results-cleaned/chat_messages",
   pattern="*.csv",
   full.names=TRUE
 )
@@ -110,6 +110,7 @@ rule_freq <- as.data.frame(table(train_stats$rule_idx)) %>%
   rename(num_games = Freq)
 ggplot(rule_freq, aes(x=rule_idx, y = num_games)) + geom_bar(stat="identity")
 ```
+
 Due to some server issues early on we have a slight imbalance in the number of trials prescribed to each rule index. We intended to have ~3 per rule type originally.
 
 # Analysis: Accuracy

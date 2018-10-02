@@ -1,6 +1,6 @@
 is_correct,time_in_seconds,trial_num,true_label,turker_label,game_id,rule_idx,test_data_fn,rule_type,role,WorkerId
 True,3.779,0,False,False,0962-4160c79f-a457-4332-995c-1f66e3244f1b,0,test_data_body_color_orange_1.json,SINGLE_FEAT,explorer,A2OFN0A5CPLH57
-True,2.953,1,False,False,0962-4160c79f-a457-4332-995c-1f66e3244f1b,0,test_data_body_color_orange_1.json,SINGLE_FEAT,explorer,A2OFN0A5CPLH57
+True,2.9530000000000003,1,False,False,0962-4160c79f-a457-4332-995c-1f66e3244f1b,0,test_data_body_color_orange_1.json,SINGLE_FEAT,explorer,A2OFN0A5CPLH57
 True,2.038,2,False,False,0962-4160c79f-a457-4332-995c-1f66e3244f1b,0,test_data_body_color_orange_1.json,SINGLE_FEAT,explorer,A2OFN0A5CPLH57
 True,2.795,3,False,False,0962-4160c79f-a457-4332-995c-1f66e3244f1b,0,test_data_body_color_orange_1.json,SINGLE_FEAT,explorer,A2OFN0A5CPLH57
 True,2.168,4,False,False,0962-4160c79f-a457-4332-995c-1f66e3244f1b,0,test_data_body_color_orange_1.json,SINGLE_FEAT,explorer,A2OFN0A5CPLH57
@@ -18,14 +18,14 @@ True,1.916,15,True,True,0962-4160c79f-a457-4332-995c-1f66e3244f1b,0,test_data_bo
 True,2.578,16,False,False,0962-4160c79f-a457-4332-995c-1f66e3244f1b,0,test_data_body_color_orange_1.json,SINGLE_FEAT,explorer,A2OFN0A5CPLH57
 True,2.943,17,False,False,0962-4160c79f-a457-4332-995c-1f66e3244f1b,0,test_data_body_color_orange_1.json,SINGLE_FEAT,explorer,A2OFN0A5CPLH57
 True,2.872,18,False,False,0962-4160c79f-a457-4332-995c-1f66e3244f1b,0,test_data_body_color_orange_1.json,SINGLE_FEAT,explorer,A2OFN0A5CPLH57
-True,1.692,19,False,False,0962-4160c79f-a457-4332-995c-1f66e3244f1b,0,test_data_body_color_orange_1.json,SINGLE_FEAT,explorer,A2OFN0A5CPLH57
+True,1.6920000000000002,19,False,False,0962-4160c79f-a457-4332-995c-1f66e3244f1b,0,test_data_body_color_orange_1.json,SINGLE_FEAT,explorer,A2OFN0A5CPLH57
 True,3.089,20,False,False,0962-4160c79f-a457-4332-995c-1f66e3244f1b,0,test_data_body_color_orange_1.json,SINGLE_FEAT,explorer,A2OFN0A5CPLH57
 True,1.996,21,True,True,0962-4160c79f-a457-4332-995c-1f66e3244f1b,0,test_data_body_color_orange_1.json,SINGLE_FEAT,explorer,A2OFN0A5CPLH57
-True,1.684,22,False,False,0962-4160c79f-a457-4332-995c-1f66e3244f1b,0,test_data_body_color_orange_1.json,SINGLE_FEAT,explorer,A2OFN0A5CPLH57
+True,1.6840000000000002,22,False,False,0962-4160c79f-a457-4332-995c-1f66e3244f1b,0,test_data_body_color_orange_1.json,SINGLE_FEAT,explorer,A2OFN0A5CPLH57
 True,2.299,23,False,False,0962-4160c79f-a457-4332-995c-1f66e3244f1b,0,test_data_body_color_orange_1.json,SINGLE_FEAT,explorer,A2OFN0A5CPLH57
-True,3.28,24,True,True,0962-4160c79f-a457-4332-995c-1f66e3244f1b,0,test_data_body_color_orange_1.json,SINGLE_FEAT,explorer,A2OFN0A5CPLH57
+True,3.2800000000000002,24,True,True,0962-4160c79f-a457-4332-995c-1f66e3244f1b,0,test_data_body_color_orange_1.json,SINGLE_FEAT,explorer,A2OFN0A5CPLH57
 True,1.655,25,True,True,0962-4160c79f-a457-4332-995c-1f66e3244f1b,0,test_data_body_color_orange_1.json,SINGLE_FEAT,explorer,A2OFN0A5CPLH57
-True,1.894,26,False,False,0962-4160c79f-a457-4332-995c-1f66e3244f1b,0,test_data_body_color_orange_1.json,SINGLE_FEAT,explorer,A2OFN0A5CPLH57
+True,1.8940000000000001,26,False,False,0962-4160c79f-a457-4332-995c-1f66e3244f1b,0,test_data_body_color_orange_1.json,SINGLE_FEAT,explorer,A2OFN0A5CPLH57
 True,2.682,27,False,False,0962-4160c79f-a457-4332-995c-1f66e3244f1b,0,test_data_body_color_orange_1.json,SINGLE_FEAT,explorer,A2OFN0A5CPLH57
 True,1.713,28,True,True,0962-4160c79f-a457-4332-995c-1f66e3244f1b,0,test_data_body_color_orange_1.json,SINGLE_FEAT,explorer,A2OFN0A5CPLH57
 True,1.855,29,False,False,0962-4160c79f-a457-4332-995c-1f66e3244f1b,0,test_data_body_color_orange_1.json,SINGLE_FEAT,explorer,A2OFN0A5CPLH57
