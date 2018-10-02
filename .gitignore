@@ -11,3 +11,9 @@ experiments/node_modules/
 credentials*
 auth.json
 *.DS_Store
+
+./mturk/mp-game-3/production-results
+./mturk/mp-game-4/production-results
+
+./mturk/mp-game-3/raw-server-data
+./mturk/mp-game-4/raw-server-data
