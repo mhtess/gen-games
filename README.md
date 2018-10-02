@@ -24,9 +24,9 @@ Several of the generalization games center around multiplayer interactions. Thes
 
 The `./mturk` folder contains instructions for running the experiments on Mechanical turk, the results of the experiemnts pulled from Amazon's servers, data cleaning scripts, and cleaned data.
 
-## R Data Analysis
+## Analysis
 
-R markdown, webppl scripts, etc. utilzed for analysis of raw data can be found in the `./r_data_analysis` folder.
+R markdown, webppl scripts, etc. utilzed for analysis of raw data can be found in the `./analysis` folder.
 
 ## Docs
-Miscellaneous documentation.
+Miscellaneous documentation can be found in the `./docs` folder.
