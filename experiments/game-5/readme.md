@@ -18,7 +18,5 @@
 
 - `Easy_Rule`: concept learning, one item at a time, 50 trials. $0.13 / minute ~ 10 minutes
   - total experiment space: 3 axes of variability with 3 possible values = 27 possible items (sampled with replacement)
-  - target: n = 4 (1 batch) ==> ($.13 * 10) * 1. = 1.56
 - `Hard_Rule`: concept learning, one item at a time, 50 trials. $0.13 / minute ~ 10 minutes
   - total experiment space: 3 axes of variability with 3 possible values = 27 possible items (sampled with replacement)
-  - target: n = 5 (1 batch) ==> ($.13 * 10) * 1.2 = 1.56

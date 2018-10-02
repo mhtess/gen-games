@@ -1,6 +1,0 @@
-iterationName	gameid	time	trialNum	role	trial_num	time_in_seconds	turker_label	true_label	is_correct	eventType
-pilot1	4683-02c78d9d-0413-497f-ac96-f34ce5d17f86	1522709101190		explorer	1	122.606	true	false	false	logTrain
-pilot1	4683-02c78d9d-0413-497f-ac96-f34ce5d17f86	1522709112842		explorer	2	11.516	false	false	true	logTrain
-pilot1	4683-02c78d9d-0413-497f-ac96-f34ce5d17f86	1522709116857		explorer	3	3.899	true	true	true	logTrain
-pilot1	4683-02c78d9d-0413-497f-ac96-f34ce5d17f86	1522709121078		explorer	4	4.105	true	true	true	logTrain
-pilot1	4683-02c78d9d-0413-497f-ac96-f34ce5d17f86	1522709124502		explorer	5	3.296	true	true	true	logTrain
