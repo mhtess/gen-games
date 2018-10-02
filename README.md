@@ -18,22 +18,15 @@ Single player games are denoted by folder names such as `game-1`, `game-2`, etc.
 
 ### Multiplayer Experiments
 
-Several of the generalization games center around multiplayer interactions. These are built upon an unofficial fork of [reference_games](https://github.com/hawkrobe/reference_games) by [Robert Hawkins](https://github.com/hawkrobe).
-
-Multiplayer games are denoted by folder names such as `mp-game-1`, `mp-game-2`, etc.
-
-## Data
-
-Anonymized data from respective experiments can be found in the `./data` folder.
+Several of the generalization games center around multiplayer interactions. These are built upon an unofficial fork of [reference_games](https://github.com/hawkrobe/reference_games) by [Robert Hawkins](https://github.com/hawkrobe). Multiplayer games are denoted by folder names such as `mp-game-1`, `mp-game-2`, etc.
 
 ## Mturk
 
-Instructions for running these experiments on MTurk along with data cleaning functionality can be found in the `./mturk` folder.
-
+The `./mturk` folder contains instructions for running the experiments on Mechanical turk, the results of the experiemnts pulled from Amazon's servers, data cleaning scripts, and cleaned data.
 
 ## R Data Analysis
 
 R markdown, webppl scripts, etc. utilzed for analysis of raw data can be found in the `./r_data_analysis` folder.
- 
 
-
+## Docs
+Miscellaneous documentation.

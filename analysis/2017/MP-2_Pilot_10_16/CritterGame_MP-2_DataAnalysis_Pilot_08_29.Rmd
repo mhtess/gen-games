@@ -1,0 +1,215 @@
+---
+title: "CritterGame_MP-2_DataAnalysis_Pilot_1"
+author: "Lauren Oey, MH Tessler"
+date: "9/28/17"
+output: github_document
+---
+
+```{r preamble, echo=FALSE, results='hide', message=FALSE, warning=FALSE, tidy=TRUE}
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(data.table)
+library(tidytext)
+#library(coreNLP)
+#library(cleanNLP)
+#library(reticulate)
+library(tidyboot)
+library(ggthemes)
+library(forcats)
+theme_set(theme_few())
+#setting the directory
+#setwd("../../../mturk/mp-game-2/logTest/")
+#reads in all files in folder
+temp <- list.files(path="../../../mturk/mp-game-2/logTest/", pattern="*.csv", full.names=TRUE)
+for(i in 1:length(temp)){
+  assign(paste0("data_",i), read.delim(temp[i]))
+}
+
+#output_fig_path <- "~/Documents/dissertation/proposal/"
+
+
+
+mturk.data <- read.csv("../../mturk/mp-game-2/mp-game-2-mturk.csv")
+mturk.trials <- read.csv("../../mturk/mp-game-2/mp-game-2-trials.csv")
+
+test_data <- rbindlist(lapply(list.files(path="../../data/mp-game-2/logTest/", pattern="*.csv", full.names=TRUE), fread), fill=TRUE, idcol="dyad_id")
+
+left_join(
+  left_join(
+    test_data %>%
+      filter(trialNum == 0) %>%
+      select(gameid, role, categoryLabel) %>%
+      distinct(),
+    mturk.trials %>%
+      mutate(block = ifelse(is.na(block), "test", block)) %>% 
+      filter(block_num == 0 & block != 'test') %>%
+      select(workerid, categoryLabel) %>%
+      distinct()
+  ),
+  mturk.data %>%
+    select(workerid, assignmentid)
+) %>%
+  select(gameid, role, assignmentid) %>%
+  distinct()
+
+#View(test_data)
+unique(test_data$dyad_id)
+max(test_data$dyad_id) > 10
+```
+
+
+Tidy data
+
+```{r}
+df.test <- test_data %>%
+  mutate(
+    dyad_id = as.factor(ifelse(dyad_id < 10,
+                            paste0("dyad_0", dyad_id),
+                            paste0("dyad_", dyad_id))),
+    gameid = as.factor(gameid),
+    role = as.factor(role),
+    trialNum = trialNum - 1,
+    correct = ifelse(categorizedResponse=="hit" |
+                       categorizedResponse=="correctRejection", 1, 0),
+    hit =  ifelse(categorizedResponse=="hit", 1, 0),
+    falseAlarm = ifelse(categorizedResponse=="falseAlarm", 1, 0),
+    conceptNumber = factor(conceptNumber),
+    featureOrder = factor(featureOrder),
+    genus = factor(genus)
+  )
+```
+
+
+Bonus Data
+```{r}
+bonus_data <- test_data %>%
+  group_by(gameid, role) %>%
+  summarise(hitCount = sum(as.numeric(hit)),
+         falseAlarmCount = sum(as.numeric(falseAlarm)),
+          bonus = ifelse(hitCount-falseAlarmCount >= 0, (hitCount - falseAlarmCount) * 0.02, 0))
+#write.csv(bonus_data, "../../../r_data_analysis/MP-2_Pilot_10_16/CritterGame_MP-2_DataAnalysis_Pilot_08_29_files/mp_pilot_2_bonus_data.csv")
+```
+
+
+# Data analysis
+
+Compute proportion correct for each trial
+
+```{r  fig.height=2, fig.width=3}
+df.trials <- df.test %>%
+  group_by(dyad_id, trialNum, genus, conceptNumber, featureOrder, role,
+           tested_on) %>%
+  summarize(n_correct = sum(correct),
+            prop_correct = sum(correct) / n())
+
+df.trials %>%
+  ggplot(., aes(x = conceptNumber , y = prop_correct, fill = tested_on))+
+  geom_col(position = position_dodge())+
+  facet_wrap(~dyad_id)+
+  theme(axis.text.x = element_text(angle = 90))
+```
+
+How many trials did every dyad do?
+
+```{r}
+table(df.trials$trialNum)
+```
+```{r}
+data.frame(with(df.trials, table(tested_on, conceptNumber))) %>%
+  ggplot(., aes( x= conceptNumber, fill = tested_on, y = Freq))+
+  geom_col(color = 'black', position = position_dodge())+
+  scale_fill_solarized()+
+  ggtitle("trial histogram")+
+  ylab("count")
+```
+
+
+### Self vs. other
+
+```{r echo=FALSE, results='hide', message=FALSE, warning=FALSE, tidy=TRUE}
+df.correct_by_testedOn <- df.trials %>%
+  group_by(tested_on) %>%
+  tidyboot_mean(column = prop_correct)
+  
+ggplot(df.correct_by_testedOn, aes(x = tested_on, 
+                                 y = mean, 
+                                 ymin = ci_lower, 
+                                 ymax = ci_upper,
+                                 fill = tested_on) ) +
+  geom_col(position=position_dodge(), width = 0.5, color = 'black') +
+  geom_errorbar(width = 0.3)+
+  scale_fill_solarized()+
+  geom_hline(yintercept = 0.5, lty = 3)+
+  ggtitle("") +
+  theme(plot.title = element_text(hjust=0.5, size=18, face="bold"))+
+  guides(fill = F)
+```
+
+
+### Concept type
+
+```{r fig.height=2, fig.width=3}
+df.correct_by_concept <- df.trials %>%
+  group_by(conceptNumber, tested_on) %>%
+  tidyboot_mean(column = prop_correct)
+  
+ggplot(df.correct_by_concept, aes(x = conceptNumber, 
+                                 y = mean, 
+                                 ymin = ci_lower, 
+                                 ymax = ci_upper,
+                                 fill = tested_on) ) +
+  geom_col(position=position_dodge(), width = 0.5, color = 'black') +
+  geom_errorbar(width = 0.3, position = position_dodge(0.5))+
+  geom_hline(yintercept = 0.5, lty = 3)+
+  scale_fill_solarized()+
+  ggtitle("") +
+  theme(plot.title = element_text(hjust=0.5, size=18, face="bold"))+
+  ylab("Proportion HITS + CORRECT REJECTIONS")+
+  scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))+
+  xlab("Shepard concept")
+```
+
+### trial number
+
+```{r fig.height=2, fig.width=3}
+df.correct_by_trial <- df.trials %>%
+  group_by(trialNum) %>%
+  tidyboot_mean(column = prop_correct)
+  
+ggplot(df.correct_by_trial, aes(x = trialNum, 
+                                 y = mean, 
+                                 ymin = ci_lower, 
+                                 ymax = ci_upper) ) +
+  geom_col(position=position_dodge(), width = 0.5, color = 'black') +
+  geom_errorbar(width = 0.3, position = position_dodge(0.5))+
+  geom_hline(yintercept = 0.5, lty = 3)+
+  scale_fill_solarized()+
+  ggtitle("") +
+  theme(plot.title = element_text(hjust=0.5, size=18, face="bold"))+
+  ylab("Proportion HITS + CORRECT REJECTIONS")+
+  scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))+
+  xlab("Trial number")
+```
+
+### genus
+
+```{r fig.height=2, fig.width=3}
+df.correct_by_genus <- df.trials %>%
+  group_by(genus) %>%
+  tidyboot_mean(column = prop_correct)
+  
+ggplot(df.correct_by_genus, aes(x = genus, 
+                                 y = mean, 
+                                 ymin = ci_lower, 
+                                 ymax = ci_upper) ) +
+  geom_col(position=position_dodge(), width = 0.5, color = 'black') +
+  geom_errorbar(width = 0.3, position = position_dodge(0.5))+
+  geom_hline(yintercept = 0.5, lty = 3)+
+  scale_fill_solarized()+
+  ggtitle("") +
+  theme(plot.title = element_text(hjust=0.5, size=18, face="bold"))+
+  ylab("Proportion HITS + CORRECT REJECTIONS")+
+  scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))+
+  xlab("Genus")
+```
