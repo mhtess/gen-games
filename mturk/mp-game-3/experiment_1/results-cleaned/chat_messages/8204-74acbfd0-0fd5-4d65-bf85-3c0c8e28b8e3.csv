@@ -1,0 +1,9 @@
+iterationName,game_id,time,trialNum,role,text,reactionTime,eventType,rule_idx,rule_type
+pilot1,8204-74acbfd0-0fd5-4d65-bf85-3c0c8e28b8e3,1525129620872,1,explorer,wudsy creatures have specific colors,8.741,chatMessage,4,CONJUNCTION
+pilot1,8204-74acbfd0-0fd5-4d65-bf85-3c0c8e28b8e3,1525129629668,1,student,Ok,0.295,chatMessage,4,CONJUNCTION
+pilot1,8204-74acbfd0-0fd5-4d65-bf85-3c0c8e28b8e3,1525129659109,1,explorer,usually orange and pink combination is wudsy creature,25.111,chatMessage,4,CONJUNCTION
+pilot1,8204-74acbfd0-0fd5-4d65-bf85-3c0c8e28b8e3,1525129672486,1,student,Anything else?,1.6,chatMessage,4,CONJUNCTION
+pilot1,8204-74acbfd0-0fd5-4d65-bf85-3c0c8e28b8e3,1525129688666,1,explorer,I only found 3 of them out of 50,11.417,chatMessage,4,CONJUNCTION
+pilot1,8204-74acbfd0-0fd5-4d65-bf85-3c0c8e28b8e3,1525129694741,1,student,Ouch,0.663,chatMessage,4,CONJUNCTION
+pilot1,8204-74acbfd0-0fd5-4d65-bf85-3c0c8e28b8e3,1525129719639,1,student,"Alright, I'll give it a shot then",9.319,chatMessage,4,CONJUNCTION
+pilot1,8204-74acbfd0-0fd5-4d65-bf85-3c0c8e28b8e3,1525129731445,1,explorer,ok good luck,8.322,chatMessage,4,CONJUNCTION

@@ -1,0 +1,2 @@
+correct_rejections,false_alarms,hits,misses,score,type,game_id,rule_idx,training_data_fn,rule_type,role,WorkerId
+15,9,23,4,14,training,7544-4042403c-9b9b-4fc5-bd64-40e02e6d813b,7,./js/training_data_critter_bug_or_secondary_color_yellow_2.json,DISJUNCTION,explorer,A29VV2EDISMOHG

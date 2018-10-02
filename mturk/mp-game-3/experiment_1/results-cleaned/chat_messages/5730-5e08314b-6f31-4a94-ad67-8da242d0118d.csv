@@ -1,0 +1,15 @@
+iterationName,game_id,time,trialNum,role,text,reactionTime,eventType,rule_idx,rule_type
+pilot1,5730-5e08314b-6f31-4a94-ad67-8da242d0118d,1525124452376,1,student,Hi,0.368,chatMessage,3,CONJUNCTION
+pilot1,5730-5e08314b-6f31-4a94-ad67-8da242d0118d,1525124465268,1,explorer,"Hi, so the 'wudsy' creatures looked like fish",9.868,chatMessage,3,CONJUNCTION
+pilot1,5730-5e08314b-6f31-4a94-ad67-8da242d0118d,1525124475749,1,explorer,but the ones that are 'wudsy' are mostly blue,10.162,chatMessage,3,CONJUNCTION
+pilot1,5730-5e08314b-6f31-4a94-ad67-8da242d0118d,1525124486232,1,explorer,"so it didn't matter if it was a tall or skinny or fat fish, as long as it was blue",9.874,chatMessage,3,CONJUNCTION
+pilot1,5730-5e08314b-6f31-4a94-ad67-8da242d0118d,1525124492910,1,student,so they're only blue fish,9.969,chatMessage,3,CONJUNCTION
+pilot1,5730-5e08314b-6f31-4a94-ad67-8da242d0118d,1525124498105,1,student,are all blue fish wudsy?,4.042,chatMessage,3,CONJUNCTION
+pilot1,5730-5e08314b-6f31-4a94-ad67-8da242d0118d,1525124501673,1,explorer,they have stripes,4.516,chatMessage,3,CONJUNCTION
+pilot1,5730-5e08314b-6f31-4a94-ad67-8da242d0118d,1525124509393,1,explorer,so they can be two diff colors,4.752,chatMessage,3,CONJUNCTION
+pilot1,5730-5e08314b-6f31-4a94-ad67-8da242d0118d,1525124514644,1,explorer,but the ones that were 'wudsy' were mainly blue,6.154,chatMessage,3,CONJUNCTION
+pilot1,5730-5e08314b-6f31-4a94-ad67-8da242d0118d,1525124521808,1,explorer,"so if it was a red/orange fish, it was not wudsy",6.754,chatMessage,3,CONJUNCTION
+pilot1,5730-5e08314b-6f31-4a94-ad67-8da242d0118d,1525124526066,1,explorer,if it was blue/red it was ,4.038,chatMessage,3,CONJUNCTION
+pilot1,5730-5e08314b-6f31-4a94-ad67-8da242d0118d,1525124555926,1,student,"ok, i think i got it",16.987,chatMessage,3,CONJUNCTION
+pilot1,5730-5e08314b-6f31-4a94-ad67-8da242d0118d,1525124559246,1,student,thanks,1.452,chatMessage,3,CONJUNCTION
+pilot1,5730-5e08314b-6f31-4a94-ad67-8da242d0118d,1525124564108,1,explorer,"good luck, thanks!",3.122,chatMessage,3,CONJUNCTION
