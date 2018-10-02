@@ -1,2 +1,2 @@
 correct_rejections,false_alarms,hits,misses,score,type,game_id,rule_idx,training_data_fn,rule_type,role,WorkerId
-43,4,2,4,-2,training,2785-e00d99cf-3675-4695-9733-f6b534857222,2,./js/training_data_critter_fish_body_color_blue_1.json,CONJUNCTION,explorer,fd28ec99-559f-11e8-a404-3c15c2ddb69c
+43,4,2,4,-2,training,2785-e00d99cf-3675-4695-9733-f6b534857222,2,./js/training_data_critter_fish_body_color_blue_1.json,CONJUNCTION,explorer,82ff2c2a

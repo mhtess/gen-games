@@ -30,27 +30,19 @@ ROLE_EXPLORER = 'explorer'
 
 NUM_LISTS = 9
 
-USER_ID_TO_FAKE_ID = {}
+def get_worker_id(df):
+    ''' Extract worker id from data frame.
+    '''
+    if isinstance(df['WorkerId'], object):
+        return df['WorkerId'].values[0]
+    else:
+        return df['WorkerId']
 
 def gen_anonymized_worker_id():
     ''' We mantain worked ids for reference, but anonymize them by replacing them with
         generated uuids converted to strings.
     '''
-    return fake_worker_id = str(uuid.uuid1())
-
-def anonymize_worker(df, user_id_to_fake_id):
-    ''' Given a dataframe, either retreive the anonymized name or generate one.
-    '''
-    if isinstance(df['WorkerId'], object):
-        worker_id = df['WorkerId'].values[0]
-    else:
-        worker_id = df['WorkerId']
-    if worker_id in user_id_to_fake_id:
-        anonymized_id = user_id_to_fake_id[worker_id]
-    else:
-        anonymized_id = gen_anonymized_worker_id()
-        user_id_to_fake_id[worker_id] = anonymized_id
-    return anonymized_id
+    return str(uuid.uuid4().hex[:8])
 
 def identify_partnerless_results(ignored_game_ids, dir=DIR):
     '''
@@ -311,6 +303,33 @@ def construct_mturk_file(other_player_info):
     return (file_found_1 and file_found_2 and file_found_3), mturk_file_struct
 
 
+def fill_completed_game_struct(df):
+    return {
+        'AutoApprovalTime': df['AutoApprovalTime'].values[0],
+        'AssignmentId': df['AssignmentId'].values[0],
+        'WorkerId': df['WorkerId'].values[0],
+        'answers': {
+            'rule_type': df['answers']['rule_type'],
+            'test_data_fn': df['answers']['test_data_fn'],
+            'time_in_minutes': df['answers']['time_in_minutes'],
+            'training_summary_stats': df['answers']['training_summary_stats'],
+            'testing_trials': df['answers']['testing_trials'],
+            'system': df['answers']['system'],
+            'training_data_fn': df['answers']['training_data_fn'],
+            'role': df['answers']['role'],
+            'training_trials': df['answers']['training_trials'],
+            'subject_information': df['answers']['subject_information'],
+            'game_id': df['answers']['game_id'],
+            'testing_summary_stats': df['answers']['testing_summary_stats'],
+            'rule_idx': df['answers']['rule_idx'],
+        },
+        'AcceptTime': df['AcceptTime'].values[0],
+        'HITId': df['HITId'].values[0],
+        'Assignment': df['Assignment'].values[0],
+        'AssignmentStatus': df['AssignmentStatus'].values[0],
+        'SubmitTime': df['SubmitTime'].values[0]
+    }
+
 def fix_incomplete_files(ignored_game_ids):
     ''' Fix incomplete files, craeting mturk equivalent files in './data' folder. 
         Copy complete files, who have a paired component either after fixing
@@ -322,8 +341,16 @@ def fix_incomplete_files(ignored_game_ids):
 
     # Copy over complete games
     for cg in complete_games:
-        cg_copy_path = os.path.join(CLEANED_DIR, cg['file_name'])
-        copyfile(cg['file_path'], cg_copy_path)
+        # Read completed game and anonymize worker id
+        cp_file_path = os.path.join(DIR, cg['file_name'])
+        df = pd.read_json(cp_file_path)
+        df['WorkerId'] = gen_anonymized_worker_id()
+
+        # Write completed game to disk
+        cg_file_path = os.path.join(CLEANED_DIR, cg['file_name'])
+        mturk_file_struct = fill_completed_game_struct(df)
+        with open(cg_file_path, 'w') as fp:
+            json.dump(mturk_file_struct, fp, indent=4)
 
     still_incomplete = []
     for ig in incomplete_games:
@@ -342,7 +369,7 @@ def fix_incomplete_files(ignored_game_ids):
     pp.pprint(still_incomplete)
 
 
-def save_train_data(ignored_game_ids, dir=CLEANED_DIR, user_id_to_fake_id=USER_ID_TO_FAKE_ID):
+def save_train_data(ignored_game_ids, dir=CLEANED_DIR):
     ''' Write CSVs for each player's set of training data '''
     for filename in os.listdir(dir):
         if filename.endswith('.json'):
@@ -354,7 +381,7 @@ def save_train_data(ignored_game_ids, dir=CLEANED_DIR, user_id_to_fake_id=USER_I
             if player_role == ROLE_STUDENT:
                 continue
             else:
-                worker_id = anonymize_worker(df, user_id_to_fake_id)
+                worker_id = get_worker_id(df)
                 training_trials = pd.DataFrame(df['answers']['training_trials'])
                 training_trials['game_id'] = df['answers']['game_id']
                 training_trials['rule_idx'] = df['answers']['rule_idx']
@@ -374,7 +401,7 @@ def save_test_data(ignored_game_ids, dir=CLEANED_DIR):
             if df['answers']['game_id'] in ignored_game_ids:
                 continue
             player_role = df['answers']['role']
-            worker_id = anonymize_worker(df, user_id_to_fake_id)
+            worker_id = get_worker_id(df)
             testing_trials = pd.DataFrame(df['answers']['testing_trials'])
             testing_trials['game_id'] = df['answers']['game_id']
             testing_trials['rule_idx'] = df['answers']['rule_idx']
@@ -398,7 +425,7 @@ def save_train_summary_stats(ignored_game_ids, dir=CLEANED_DIR):
             if player_role == ROLE_STUDENT:
                 continue
             else:
-                worker_id = anonymize_worker(df, user_id_to_fake_id)
+                worker_id = get_worker_id(df)
                 training_summary_stats = pd.DataFrame([df['answers']['training_summary_stats']])
                 training_summary_stats.reset_index()
                 training_summary_stats['game_id'] = df['answers']['game_id']
@@ -419,7 +446,7 @@ def save_test_summary_stats(ignored_game_ids, dir=CLEANED_DIR):
             if df['answers']['game_id'] in ignored_game_ids:
                 continue
             player_role = df['answers']['role']
-            worker_id = anonymize_worker(df, user_id_to_fake_id)
+            worker_id = get_worker_id(df)
             testing_summary_stats = pd.DataFrame([df['answers']['testing_summary_stats']])
             testing_summary_stats['game_id'] = df['answers']['game_id']
             testing_summary_stats['rule_idx'] = df['answers']['rule_idx']
@@ -430,7 +457,7 @@ def save_test_summary_stats(ignored_game_ids, dir=CLEANED_DIR):
             csv_fp = os.path.join(CLEANED_TEST_SUMMARY_STATS, '{}_{}.csv'.format(df['answers']['game_id'], player_role))
             testing_summary_stats.to_csv(csv_fp, index=False)
 
-def save_chat_mesages(ignored_game_ids, dir=CLEANED_DIR):
+def save_chat_messages(ignored_game_ids, dir=CLEANED_DIR):
     ''' Write CSVs for each player's testing summary stats. 
     '''
     game_ids = set()
@@ -537,6 +564,7 @@ def game_summary(ignored_game_ids, dir=CLEANED_DIR):
         if filename.endswith('.json'):
             fp = os.path.join(dir, filename)
             df = pd.read_json(fp)
+            
             game_id = df['answers']['game_id']
             if game_id in game_ids or game_id in ignored_game_ids:
                 continue
@@ -586,6 +614,6 @@ if __name__ == '__main__':
     save_test_data(ignored_game_ids)
     save_train_summary_stats(ignored_game_ids)
     save_test_summary_stats(ignored_game_ids)
-    save_chat_mesages(ignored_game_ids)
+    save_chat_messages(ignored_game_ids)
     save_human_predictives_pooled_by_lists(ignored_game_ids)
     
