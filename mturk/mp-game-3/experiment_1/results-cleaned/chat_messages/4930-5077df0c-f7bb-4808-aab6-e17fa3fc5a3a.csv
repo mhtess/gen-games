@@ -1,0 +1,8 @@
+iterationName,game_id,time,trialNum,role,text,reactionTime,eventType,rule_idx,rule_type
+pilot1,4930-5077df0c-f7bb-4808-aab6-e17fa3fc5a3a,1525123704465,1,student,hi,0.89,chatMessage,2,CONJUNCTION
+pilot1,4930-5077df0c-f7bb-4808-aab6-e17fa3fc5a3a,1525123708888,1,explorer,Hello,1.261,chatMessage,2,CONJUNCTION
+pilot1,4930-5077df0c-f7bb-4808-aab6-e17fa3fc5a3a,1525123729780,1,explorer,"I've learned that the wudsy creatures are blue fish of any size, with different color stripes.",20.341,chatMessage,2,CONJUNCTION
+pilot1,4930-5077df0c-f7bb-4808-aab6-e17fa3fc5a3a,1525123757344,1,explorer,"Didn't matter what color the stripe or size of the fish, just had to mainly be blue.",13.826,chatMessage,2,CONJUNCTION
+pilot1,4930-5077df0c-f7bb-4808-aab6-e17fa3fc5a3a,1525123758361,1,student,ok thanks,3.202,chatMessage,2,CONJUNCTION
+pilot1,4930-5077df0c-f7bb-4808-aab6-e17fa3fc5a3a,1525123782770,1,student,"ready to proceed i guess, cheers",7.226,chatMessage,2,CONJUNCTION
+pilot1,4930-5077df0c-f7bb-4808-aab6-e17fa3fc5a3a,1525123788554,1,explorer,For sure,1.385,chatMessage,2,CONJUNCTION

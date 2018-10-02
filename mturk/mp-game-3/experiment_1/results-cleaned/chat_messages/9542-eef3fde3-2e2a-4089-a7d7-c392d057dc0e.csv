@@ -1,0 +1,15 @@
+iterationName,game_id,time,trialNum,role,text,reactionTime,eventType,rule_idx,rule_type
+pilot1,9542-eef3fde3-2e2a-4089-a7d7-c392d057dc0e,1525131151441,1,explorer,"Hello, I didn't see very many wudsy creatures. I didn't notice any patterns at all.",35.151,chatMessage,5,CONJUNCTION
+pilot1,9542-eef3fde3-2e2a-4089-a7d7-c392d057dc0e,1525131157062,1,student,what you learn ,21.246,chatMessage,5,CONJUNCTION
+pilot1,9542-eef3fde3-2e2a-4089-a7d7-c392d057dc0e,1525131168303,1,explorer,nothing! Haha!,6.513,chatMessage,5,CONJUNCTION
+pilot1,9542-eef3fde3-2e2a-4089-a7d7-c392d057dc0e,1525131179047,1,student,somethin special,16.541,chatMessage,5,CONJUNCTION
+pilot1,9542-eef3fde3-2e2a-4089-a7d7-c392d057dc0e,1525131185692,1,student,hahahaha,1.479,chatMessage,5,CONJUNCTION
+pilot1,9542-eef3fde3-2e2a-4089-a7d7-c392d057dc0e,1525131187385,1,explorer,most of them were not wudsy,12.206,chatMessage,5,CONJUNCTION
+pilot1,9542-eef3fde3-2e2a-4089-a7d7-c392d057dc0e,1525131197093,1,explorer,right?,4.14,chatMessage,5,CONJUNCTION
+pilot1,9542-eef3fde3-2e2a-4089-a7d7-c392d057dc0e,1525131204552,1,student,ok and its easy to know,13.388,chatMessage,5,CONJUNCTION
+pilot1,9542-eef3fde3-2e2a-4089-a7d7-c392d057dc0e,1525131219559,1,explorer,you noticed something?,6.378,chatMessage,5,CONJUNCTION
+pilot1,9542-eef3fde3-2e2a-4089-a7d7-c392d057dc0e,1525131254478,1,student,no i cant see anithing you have to tell me i don know even how are they,30.527,chatMessage,5,CONJUNCTION
+pilot1,9542-eef3fde3-2e2a-4089-a7d7-c392d057dc0e,1525131290823,1,explorer,they were all different. I did not notice any patterns. I guess we have to guess to get the bonus!,24.934,chatMessage,5,CONJUNCTION
+pilot1,9542-eef3fde3-2e2a-4089-a7d7-c392d057dc0e,1525131323807,1,student,"ok, nive to meet yu i hope we do the best so lets continue",21.959,chatMessage,5,CONJUNCTION
+pilot1,9542-eef3fde3-2e2a-4089-a7d7-c392d057dc0e,1525131328411,1,student,nice,1.654,chatMessage,5,CONJUNCTION
+pilot1,9542-eef3fde3-2e2a-4089-a7d7-c392d057dc0e,1525131348622,1,explorer,"sounds good, good luck! get a big bonus!",16.771,chatMessage,5,CONJUNCTION

@@ -1,0 +1,17 @@
+iterationName,game_id,time,trialNum,role,text,reactionTime,eventType,rule_idx,rule_type
+pilot1,7101-32546d56-35d1-4827-b562-bdb87134a8a5,1525127910730,1,student,hey,0.449,chatMessage,2,CONJUNCTION
+pilot1,7101-32546d56-35d1-4827-b562-bdb87134a8a5,1525127915031,1,student,so whats a wudsy?,3.764,chatMessage,2,CONJUNCTION
+pilot1,7101-32546d56-35d1-4827-b562-bdb87134a8a5,1525127938265,1,explorer,"I think a Wudsy is a fish, small or large, which has lavender as its primary color",28.222,chatMessage,2,CONJUNCTION
+pilot1,7101-32546d56-35d1-4827-b562-bdb87134a8a5,1525127952879,1,student,anything else to use to identify it?,6.276,chatMessage,2,CONJUNCTION
+pilot1,7101-32546d56-35d1-4827-b562-bdb87134a8a5,1525127964359,1,explorer,it does not matter what the fins and stripes are as long as the fish is blueish or lavender,18.386,chatMessage,2,CONJUNCTION
+pilot1,7101-32546d56-35d1-4827-b562-bdb87134a8a5,1525127973850,1,explorer,no that's all,3.212,chatMessage,2,CONJUNCTION
+pilot1,7101-32546d56-35d1-4827-b562-bdb87134a8a5,1525127989218,1,explorer,ignore all birds and even those manta ray like creatures,14.892,chatMessage,2,CONJUNCTION
+pilot1,7101-32546d56-35d1-4827-b562-bdb87134a8a5,1525128002256,1,explorer,all blue-ish fishes are Wudsys,7.684,chatMessage,2,CONJUNCTION
+pilot1,7101-32546d56-35d1-4827-b562-bdb87134a8a5,1525128045459,1,student,so are they lavender/blue-ish?,15.358,chatMessage,2,CONJUNCTION
+pilot1,7101-32546d56-35d1-4827-b562-bdb87134a8a5,1525128054366,1,explorer,yeah light blue,5.104,chatMessage,2,CONJUNCTION
+pilot1,7101-32546d56-35d1-4827-b562-bdb87134a8a5,1525128059736,1,explorer,some kind of light blue hue,5.108,chatMessage,2,CONJUNCTION
+pilot1,7101-32546d56-35d1-4827-b562-bdb87134a8a5,1525128064312,1,student,mmk,0.486,chatMessage,2,CONJUNCTION
+pilot1,7101-32546d56-35d1-4827-b562-bdb87134a8a5,1525128081641,1,student,ready to continue?,2.363,chatMessage,2,CONJUNCTION
+pilot1,7101-32546d56-35d1-4827-b562-bdb87134a8a5,1525128085090,1,explorer,"even if they have other colors, the fish's body is primarily of that hue",14.376,chatMessage,2,CONJUNCTION
+pilot1,7101-32546d56-35d1-4827-b562-bdb87134a8a5,1525128089829,1,explorer,yup we can go on,2.914,chatMessage,2,CONJUNCTION
+pilot1,7101-32546d56-35d1-4827-b562-bdb87134a8a5,1525128092411,1,student,mmk,0.436,chatMessage,2,CONJUNCTION

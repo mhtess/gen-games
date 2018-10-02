@@ -1,0 +1,2 @@
+correct_rejections,false_alarms,hits,misses,score,type,game_id,rule_idx,test_data_fn,rule_type,role,WorkerId
+10,2,12,6,10,testing,9334-3f2cd488-cbfc-4387-a7a0-b8cfce65be04,7,./js/test_data_critter_bug_or_secondary_color_yellow_2.json,DISJUNCTION,explorer,fcf9b614-559f-11e8-a818-3c15c2ddb69c
