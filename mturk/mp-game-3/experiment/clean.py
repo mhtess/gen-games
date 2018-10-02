@@ -30,6 +30,28 @@ ROLE_EXPLORER = 'explorer'
 
 NUM_LISTS = 9
 
+USER_ID_TO_FAKE_ID = {}
+
+def gen_anonymized_worker_id():
+    ''' We mantain worked ids for reference, but anonymize them by replacing them with
+        generated uuids converted to strings.
+    '''
+    return fake_worker_id = str(uuid.uuid1())
+
+def anonymize_worker(df, user_id_to_fake_id):
+    ''' Given a dataframe, either retreive the anonymized name or generate one.
+    '''
+    if isinstance(df['WorkerId'], object):
+        worker_id = df['WorkerId'].values[0]
+    else:
+        worker_id = df['WorkerId']
+    if worker_id in user_id_to_fake_id:
+        anonymized_id = user_id_to_fake_id[worker_id]
+    else:
+        anonymized_id = gen_anonymized_worker_id()
+        user_id_to_fake_id[worker_id] = anonymized_id
+    return anonymized_id
+
 def identify_partnerless_results(ignored_game_ids, dir=DIR):
     '''
     Sometimes results are submitted to Mturk, when a participant disconnected from the game.
@@ -284,8 +306,7 @@ def construct_mturk_file(other_player_info):
     file_found_3 = fill_test_answers(game_id, missing_player_role, mturk_file_struct)
 
     # Generate a User ID
-    fake_worker_id = str(uuid.uuid1())
-    mturk_file_struct['WorkerId'] = fake_worker_id
+    mturk_file_struct['WorkerId'] = gen_anonymized_worker_id()
 
     return (file_found_1 and file_found_2 and file_found_3), mturk_file_struct
 
@@ -321,7 +342,7 @@ def fix_incomplete_files(ignored_game_ids):
     pp.pprint(still_incomplete)
 
 
-def save_train_data(ignored_game_ids, dir=CLEANED_DIR):
+def save_train_data(ignored_game_ids, dir=CLEANED_DIR, user_id_to_fake_id=USER_ID_TO_FAKE_ID):
     ''' Write CSVs for each player's set of training data '''
     for filename in os.listdir(dir):
         if filename.endswith('.json'):
@@ -333,10 +354,7 @@ def save_train_data(ignored_game_ids, dir=CLEANED_DIR):
             if player_role == ROLE_STUDENT:
                 continue
             else:
-                if isinstance(df['WorkerId'], object):
-                    worker_id = df['WorkerId'].values[0]
-                else:
-                    worker_id = df['WorkerId']
+                worker_id = anonymize_worker(df, user_id_to_fake_id)
                 training_trials = pd.DataFrame(df['answers']['training_trials'])
                 training_trials['game_id'] = df['answers']['game_id']
                 training_trials['rule_idx'] = df['answers']['rule_idx']
@@ -356,10 +374,7 @@ def save_test_data(ignored_game_ids, dir=CLEANED_DIR):
             if df['answers']['game_id'] in ignored_game_ids:
                 continue
             player_role = df['answers']['role']
-            if isinstance(df['WorkerId'], object):
-                worker_id = df['WorkerId'].values[0]
-            else:
-                worker_id = df['WorkerId']
+            worker_id = anonymize_worker(df, user_id_to_fake_id)
             testing_trials = pd.DataFrame(df['answers']['testing_trials'])
             testing_trials['game_id'] = df['answers']['game_id']
             testing_trials['rule_idx'] = df['answers']['rule_idx']
@@ -383,10 +398,7 @@ def save_train_summary_stats(ignored_game_ids, dir=CLEANED_DIR):
             if player_role == ROLE_STUDENT:
                 continue
             else:
-                if isinstance(df['WorkerId'], object):
-                    worker_id = df['WorkerId'].values[0]
-                else:
-                    worker_id = df['WorkerId']
+                worker_id = anonymize_worker(df, user_id_to_fake_id)
                 training_summary_stats = pd.DataFrame([df['answers']['training_summary_stats']])
                 training_summary_stats.reset_index()
                 training_summary_stats['game_id'] = df['answers']['game_id']
@@ -407,10 +419,7 @@ def save_test_summary_stats(ignored_game_ids, dir=CLEANED_DIR):
             if df['answers']['game_id'] in ignored_game_ids:
                 continue
             player_role = df['answers']['role']
-            if isinstance(df['WorkerId'], object):
-                worker_id = df['WorkerId'].values[0]
-            else:
-                worker_id = df['WorkerId']
+            worker_id = anonymize_worker(df, user_id_to_fake_id)
             testing_summary_stats = pd.DataFrame([df['answers']['testing_summary_stats']])
             testing_summary_stats['game_id'] = df['answers']['game_id']
             testing_summary_stats['rule_idx'] = df['answers']['rule_idx']
