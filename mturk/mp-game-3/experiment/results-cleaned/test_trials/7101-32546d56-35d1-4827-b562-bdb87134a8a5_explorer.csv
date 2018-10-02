@@ -1,5 +1,5 @@
 is_correct,time_in_seconds,trial_num,true_label,turker_label,game_id,rule_idx,test_data_fn,rule_type,role,WorkerId
-True,2.736,0,False,False,7101-32546d56-35d1-4827-b562-bdb87134a8a5,2,./js/test_data_critter_fish_body_color_blue_1.json,CONJUNCTION,explorer,A3BBGFC0RG39HK
+True,2.7359999999999998,0,False,False,7101-32546d56-35d1-4827-b562-bdb87134a8a5,2,./js/test_data_critter_fish_body_color_blue_1.json,CONJUNCTION,explorer,A3BBGFC0RG39HK
 True,1.014,1,False,False,7101-32546d56-35d1-4827-b562-bdb87134a8a5,2,./js/test_data_critter_fish_body_color_blue_1.json,CONJUNCTION,explorer,A3BBGFC0RG39HK
 True,1.534,2,False,False,7101-32546d56-35d1-4827-b562-bdb87134a8a5,2,./js/test_data_critter_fish_body_color_blue_1.json,CONJUNCTION,explorer,A3BBGFC0RG39HK
 True,1.24,3,False,False,7101-32546d56-35d1-4827-b562-bdb87134a8a5,2,./js/test_data_critter_fish_body_color_blue_1.json,CONJUNCTION,explorer,A3BBGFC0RG39HK
@@ -14,11 +14,11 @@ True,1.148,11,False,False,7101-32546d56-35d1-4827-b562-bdb87134a8a5,2,./js/test_
 True,1.708,12,False,False,7101-32546d56-35d1-4827-b562-bdb87134a8a5,2,./js/test_data_critter_fish_body_color_blue_1.json,CONJUNCTION,explorer,A3BBGFC0RG39HK
 True,1.742,13,False,False,7101-32546d56-35d1-4827-b562-bdb87134a8a5,2,./js/test_data_critter_fish_body_color_blue_1.json,CONJUNCTION,explorer,A3BBGFC0RG39HK
 True,2.604,14,False,False,7101-32546d56-35d1-4827-b562-bdb87134a8a5,2,./js/test_data_critter_fish_body_color_blue_1.json,CONJUNCTION,explorer,A3BBGFC0RG39HK
-True,1.618,15,True,True,7101-32546d56-35d1-4827-b562-bdb87134a8a5,2,./js/test_data_critter_fish_body_color_blue_1.json,CONJUNCTION,explorer,A3BBGFC0RG39HK
+True,1.6179999999999999,15,True,True,7101-32546d56-35d1-4827-b562-bdb87134a8a5,2,./js/test_data_critter_fish_body_color_blue_1.json,CONJUNCTION,explorer,A3BBGFC0RG39HK
 True,2.418,16,False,False,7101-32546d56-35d1-4827-b562-bdb87134a8a5,2,./js/test_data_critter_fish_body_color_blue_1.json,CONJUNCTION,explorer,A3BBGFC0RG39HK
 True,4.342,17,False,False,7101-32546d56-35d1-4827-b562-bdb87134a8a5,2,./js/test_data_critter_fish_body_color_blue_1.json,CONJUNCTION,explorer,A3BBGFC0RG39HK
 True,1.296,18,False,False,7101-32546d56-35d1-4827-b562-bdb87134a8a5,2,./js/test_data_critter_fish_body_color_blue_1.json,CONJUNCTION,explorer,A3BBGFC0RG39HK
-True,1.648,19,False,False,7101-32546d56-35d1-4827-b562-bdb87134a8a5,2,./js/test_data_critter_fish_body_color_blue_1.json,CONJUNCTION,explorer,A3BBGFC0RG39HK
+True,1.6480000000000001,19,False,False,7101-32546d56-35d1-4827-b562-bdb87134a8a5,2,./js/test_data_critter_fish_body_color_blue_1.json,CONJUNCTION,explorer,A3BBGFC0RG39HK
 True,1.534,20,True,True,7101-32546d56-35d1-4827-b562-bdb87134a8a5,2,./js/test_data_critter_fish_body_color_blue_1.json,CONJUNCTION,explorer,A3BBGFC0RG39HK
 True,15.51,21,True,True,7101-32546d56-35d1-4827-b562-bdb87134a8a5,2,./js/test_data_critter_fish_body_color_blue_1.json,CONJUNCTION,explorer,A3BBGFC0RG39HK
 True,13.042,22,False,False,7101-32546d56-35d1-4827-b562-bdb87134a8a5,2,./js/test_data_critter_fish_body_color_blue_1.json,CONJUNCTION,explorer,A3BBGFC0RG39HK
