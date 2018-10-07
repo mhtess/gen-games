@@ -17,9 +17,8 @@ var getURLParams = function() {
 
   var ondisconnect = function(data) {
     if(isConnected) {
-
       // Redirect to exit survey
-      console.log("server booted");
+      console.log("Other user has exite the game.");
       var email = globalGame.email ? globalGame.email : '';
 
       var failMsg = [
@@ -47,7 +46,6 @@ var getURLParams = function() {
     }
 
     isConnected = false;
-
   };
 
   var onconnect = function(data) {
@@ -57,7 +55,6 @@ var getURLParams = function() {
     this.my_id = data.id;
     this.players[0].id = this.my_id;
     this.urlParams = getURLParams();
-    // console.log(this);
 };
 
 // Associates callback functions corresponding to different socket messages
@@ -104,26 +101,8 @@ var sharedSetup = function(game) {
     }
   });
 
-  // Update messages log when other players send chat
-  // game.socket.on('chatMessage', function(data){
-  //   // Just in case we want to bar responses until after some message received
-  //   globalGame.messageSent = true;
-  //   var otherRole = (globalGame.my_role === game.playerRoleNames.role1 ?
-  //    game.playerRoleNames.role2 : game.playerRoleNames.role1);
-  //   var source = data.user === globalGame.my_id ? "You" : otherRole;
-  //   var col = source === "You" ? "#f47777" : "#c66f6f";
-  //   $('.typing-msg').remove();
-  //   $('#messages')
-  //   .append($('<li style="padding: 5px 10px; background: ' + col + '">')
-  //    .text(source + ": " + data.msg))
-  //   .stop(true,true)
-  //   .animate({
-  //    scrollTop: $("#messages").prop("scrollHeight")
-  //  }, 800);
-
-   // Update messages log when other players send ch at
+   // Update messages log when other players send chat
    game.socket.on('chatMessage', function(data){
-
      var otherRole = (globalGame.my_role === game.playerRoleNames.role1 ?
  		     game.playerRoleNames.role2 : game.playerRoleNames.role1);
      var source = data.user === globalGame.my_id ? "You" : "player " +otherRole;
@@ -135,16 +114,11 @@ var sharedSetup = function(game) {
      $('.typing-msg').remove();
      $('#messages')
        .append($('<li style="padding: 5px 10px; background: ' + col + '">')
-     	      .text(source + ": " + data.msg))
+     	  .text(source + ": " + data.msg))
        .stop(true,true)
        .animate({
- 	scrollTop: $("#messages").prop("scrollHeight")
-       }, 800);
-
-
-
-
-
+          scrollTop: $("#messages").prop("scrollHeight")
+        }, 800);
   });
 
   //so that we can measure the duration of the game
@@ -175,33 +149,13 @@ window.onload = function(){
   sharedSetup(globalGame);
   customSetup(globalGame);
   globalGame.submitted = false;
-
-  // //Fetch the viewport
-  // globalGame.viewport = document.getElementById('viewport');
-  // globalGame.slides = document.getElementsByClassName('slide');
-
-  // //Adjust its size
-  // globalGame.viewport.width = globalGame.world.width;
-  // globalGame.viewport.height = globalGame.world.height;
-
-  //Fetch the rendering contexts
-  //globalGame.ctx = globalGame.viewport.getContext('2d');
-
-  //Set the draw style for the font
-  // globalGame.ctx.font = '11px "Helvetica"';
-
   document.getElementById('chatbox').focus();
 
 };
 
-
-
-
-
 // This gets called when someone selects something in the menu during the exit survey...
 // collects data from drop-down menus and submits using mmturkey
 function dropdownTip(data){
-  // console.log(globalGame);
   var commands = data.split('::');
   switch(commands[0]) {
   case 'human' :
@@ -284,16 +238,11 @@ function onchange (evt) {
   } else {
     document.body.className = evt.target.hidden ? "hidden" : "visible";
   }
-  // console.log(evt);
-  // console.log(document.body.className);
-  // console.log(globalGame);
   visible = document.body.className;
   globalGame.socket.send("h." + document.body.className);
-
 };
 
 (function () {
-
   var original = document.title;
   var timeout;
 
@@ -314,5 +263,4 @@ function onchange (evt) {
     clearTimeout(timeout);
     document.title = original;
   };
-
 }());

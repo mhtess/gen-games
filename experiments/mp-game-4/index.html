@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title> Learn about Critters</title>
+  <style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font: 13px Helvetica, Arial; }
+  #messages li { padding: 5px 10px; }
+  </style>
+
+  <!-- Load style sheet -->
+  <link href="css/index.css" media="screen" rel="stylesheet" type="text/css">
+
+  <!-- Notice the URL, this is handled by socket.io on the server automatically, via express -->
+  <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+
+  <script src="../_shared/js/jquery-1.11.1.min.js "></script>
+  <script src="../_shared/full-projects/jquery-ui/jquery-ui.min.js"></script>
+  <script src="../_shared/js/underscore-min.js"></script>
+
+  <!-- if you want to draw stuff: -->
+  <script src="../_shared/js/raphael-min.js"></script>
+  <script src="../_shared/js/exp-V2.js"></script>
+  <script src="../_shared/js/stream-V2.js"></script>
+
+  <!-- cocolab general utilities -->
+  <script src="../_shared/js/mmturkey.js "></script>
+  <script src="../_shared/js/browserCheck.js"></script>
+  <script src="../_shared/js/utils.js"></script>
+
+  <!-- Include some extra functional programming tools -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.2/underscore-min.js"> </script>
+
+  <!-- Load jQuery, which lets us handle mouse events -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+  <!-- if you want to draw cute creatures (depends on raphael): -->
+  <script src="../_shared/js/ecosystem.js"></script>
+
+  <!--CSS-->
+  <link href="../_shared/full-projects/jquery-ui/jquery-ui.min.css" rel="stylesheet" type="text/css"/>
+  <link href="../_shared/css/cocolab-style.css" rel="stylesheet" type="text/css"/>
+  <link href="css/local-style.css" rel="stylesheet" type="text/css"/>
+
+  <script src="../_shared/js/uniqueturker.js"></script>
+
+  <!-- Load the common game code. -->
+  <script type="text/javascript" src="game.core.js"></script>
+  
+  <!-- Finally, Load the game client code. -->
+  <script type="text/javascript" src="/sharedUtils/clientBase.js"></script>
+  <script type="text/javascript" src="game.client.js"></script>
+  <script type="text/javascript" src="js/localUtils.js"></script>
+  <script type="text/javascript" src ="js/mp-game-4.js"></script>
+  <script type="text/javascript" src ="js/localUtils.js"></script>
+
+</head>
+
+<body>
+  <noscript>This task requires JavaScript.</noscript>
+
+  <!-- Information page - legal and about the experiment -->
+  <div class="slide" id="i0" >
+  </div>
+
+  <!-- This slide will be seen by one of the players while until the other player reaches the same screen -->
+  <div class="slide" id="wait_room">
+      <br><br>
+      <p id='waitText'></p>
+      <br>
+      <p>Please do not refresh the page!</p>
+      <br><br>
+    <hr>
+    <button class="continuebutton" id='waitCont'>Continue</button>
+  </div>
+
+  <!-- This is the slide in which users will learn how they will play the game. -->
+  <div class="slide" id="learning_instructions">
+    <br><br>
+    <h3>Instructions</h3>
+    <br>
+    <p>
+      You are on a new planet, studying creatures with a wudsy detector.
+      The wudsy detector will tell you whether or not a creature is <it>wudsy</it>.
+      <br> <br>
+      On each trial, you will make a guess as to whether or not a new creature is wudsy, and then use the detector to find out if you were right.
+      If you guess incorrectly, you will have to wait 5 seconds before using the detector again. 
+      We will keep a log of all the creatures you see and put a box around the ones that were wudsy for your reference.<br> 
+      <br>
+      Press Continue to start the game.
+    </p>
+    <button class="continuebutton" onclick="_s.button()">Continue</button>
+  </div>
+
+  <!-- This is the learning slide in which users will uncover information about the critters -->
+  <div class="slide" id="learning_critters">
+    <h3 class="trial_number"></h3>
+    <p class="label_prompt">Do you belive this creature is <i>wudsy</i>?</p>
+    <div id="curr_critter_training"></div>
+    <br>
+    <br>
+    <button class="continuebutton" onclick="_s.button()">Use Wudsy Detector</button>
+    <br>
+    <br>
+    <p class="critterInfo"> The <i>wudsy</i> creatures from previous trials are surrounded by a square.</p>
+    <div id="prev_critters"></div>
+  </div>
+
+  <div class="slide" id="testing_instructions">
+    <br><br>
+    <div id="test_instructs"></div><br>
+    <button class="continuebutton" onclick="_s.button()">Continue</button>
+  </div>
+
+  <div class="slide" id="chat_instructions">
+    <br><br>
+    <div id="chat_instructs"></div><br>
+    <button class="continuebutton" onclick="_s.button()">Continue</button>
+  </div>
+
+  <!-- Generates critters that the partner learned about and tests the user -->
+  <div class="slide" id="testing_critters">
+    <h3 class="trial_number"></h3>
+    <p class="label_prompt">Do you belive this creature is <i>wudsy</i>?</p>
+    <div id="curr_critter_testing"></div>
+    <br>
+    <br>
+   <button class="continuebutton" id="test_button" onclick="_s.button()">Continue</button>
+ </div>
+
+ <!-- Shows score report before allowing player to move on to next block -->
+  <div class="slide" id="score_report">
+   <h3 id="scoreTitle">Score Report</h3>
+   <p id="scoreInfo"><br>Here are the scores from this past section.
+    <br><br>
+    Please Note: If you're partner's score is empty, this means that they are still playing.
+    <br>
+    Minimum Bonus = your score * $0.02. You will be bonused an additional amount according to your partner's performance.
+   <br><br>
+   <div>
+     <table>
+     <td>
+     <div class="score_table" id="your_report">
+
+       <h4 class="score_player">Your Score</h4><br><br>
+       <div class="report">
+         <p class="subscore_value" id="your_hits"></p><br>
+         <p class="subscore_value"  id="your_falseAlarms"></p><br>
+         <p class="score_value" id="your_score"></p><br><br>
+         <!-- <p id="your_misses"></p><br> -->
+         <!-- <p id="your_correctRejections"></p> -->
+       </div>
+
+     </div>
+     </td>
+     <td><div style="width:80px"></div></td>
+     <td>
+     <div class="score_table" id="partner_report">
+
+       <h4 class="score_player">Your Partner's Score</h4><br><br>
+       <div class="report">
+         <p class="subscore_value"  id="other_hits"></p><br>
+         <p class="subscore_value"  id="other_falseAlarms"></p><br>
+         <p class="score_value" id="other_score"></p><br><br>
+         <!-- <p id="other_misses"></p><br> -->
+         <!-- <p id="other_correctRejections"></p> -->
+       </div>
+
+     </div>
+     </td>
+     </table><br><br><br>
+   </div>
+   <button class="continuebutton" onclick="_s.button()">Continue</button>
+ </div>
+
+ <!-- Connected players can discuss what they have learned in 'welcome_critter' here using a chatbox -->
+ <div class="slide" id="chatRoom">
+  <div id = "status"><p style="color:red;">Waiting for your partner to reach the chat...</p>  <br>Please do not refresh the page!</p></div>
+  <div id='header'>
+    <div id='textInfo'>
+     <p id='instructs'>Discuss what the explorer learned while detecting wudsy creatures.</p>
+    </div>
+   <p style="color:green" id='score'> </p>
+  </div>
+
+  <div id='main'><br>
+      <div id='message_panel'>
+        <ul id="messages"></ul>
+        <hr>
+        <div id="chatarea">
+          <form action="">
+            <input id="chatbox" autocomplete="off" />
+            <button id="chatbutton">Send</button>
+          </form>
+        </div>
+        <br><br>
+      </div>
+      <div id="chatCont">
+        <br>
+        <button class="continuebutton">Continue</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Collects demographic information from users -->
+  <div class="slide"  id="subj_info">
+    <div class="long_form">
+     <div id="thanks_instructions"> <h3>Thanks for participating in our experiment!</h3>
+      <p>Before you submit your HIT, we'd like to ask you a few questions.</p></div>
+      <p> Did you read the instructions and do you think you did the
+    HIT correctly? </p>
+      <select id="assess">
+        <option value = ""></option>
+        <option value="yes">Yes</option>
+        <option value="no">No</option>
+        <option value="confused">I was confused</option>
+      </select>
+
+      <br><br>
+      <p> How would you describe the strategy you used in this experiment? </p>
+      <textarea id='strategy' rows="4" cols="50"></textarea>
+
+
+
+      <p> Did you believe you were playing against another human player? </p>
+      <select id="human">
+    <option value=""></option>
+    <option value="yes">Yes, I thought they were a human</option>
+    <option value="no">No, I thought it was a computer program</option>
+      </select>
+      <p id='humanResult' style="display:none;color:red"> Thank you for your response -- in fact, all players were paired with other human turkers! <p>
+
+
+
+        <p> Are you a native English speaker? </p>
+        <select id="nativeEnglish">
+      <option value = ""></option>
+      <option value="yes">Yes</option>
+      <option value="no">No</option>
+        </select>
+
+        <p> How much did you like working with your partner? </p>
+        <select id="likePartner">
+          <option value = ""></option>
+          <option value="not much">Not that much</option>
+          <option value="okay">My partner was fine</option>
+          <option value="liked">I liked working with my partner</option>
+          <option value="loved">I really enjoyed working with my partner</option>
+        </select>
+        <br><br>
+
+      <p>Were there any problems or bugs in the experiment?</p>
+      <textarea id="problems" rows="2" cols="50" spellcheck=false></textarea>
+
+      <p>What do you think is a fair price for the work you did?</p>
+      <textarea id="fairprice" rows="1" cols="10" spellcheck=false></textarea>
+
+      <p>Gender:
+        <select id="gender">
+          <label><option value=""/></label>
+          <label><option value="Male"/>Male</label>
+          <label><option value="Female"/>Female</label>
+          <label><option value="Other"/>Other</label>
+        </select>
+      </p>
+
+      <p>Age: <input type="text" id="age"/></p>
+
+      <p>Level Of Education:
+        <select id="education">
+          <label><option value="-1"/></label>
+          <label><option value="0"/>Some High School</label>
+          <label><option value="1"/>Graduated High School</label>
+          <label><option value="2"/>Some College</label>
+          <label><option value="3"/>Graduated College</label>
+          <label><option value="4"/>Hold a higher degree</label>
+        </select>
+      </p>
+
+      <p>Did you enjoy the hit?</p>
+      <select id="enjoyment">
+        <label><option value="-1"></option></label>
+        <label><option value="0">Worse than the Average HIT</option></label>
+        <label><option value="1" >An Average HIT</option></label>
+        <label><option value="2">Better than average HIT</option></label>
+      </select>
+
+      <p>We would be interested in any comments you have about this experiment. Please type them here:</p>
+      <textarea id="comments" rows="3" cols="50" spellcheck=false></textarea>
+      <br/>
+      <button class="continuebutton" onclick="_s.submit()">Submit</button>
+    </div>
+  </div>
+
+  <!-- Generic thanks page that collects some data -->
+  <div class="slide js" id="thanks" >
+    <p  class="big">Thanks for your Time!</p>
+  </div>
+
+  <!-- Creates a progress bar so the user can see how far they are into the experiment -->
+  <div class="progress">
+    <span>Progress:</span>
+    <div class="bar-wrapper">
+      <div class="bar" width="0%">
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

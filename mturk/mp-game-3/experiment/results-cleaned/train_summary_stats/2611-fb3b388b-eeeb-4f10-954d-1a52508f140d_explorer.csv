@@ -1,0 +1,2 @@
+correct_rejections,false_alarms,hits,misses,score,type,game_id,rule_idx,training_data_fn,rule_type,role,WorkerId
+21,2,25,2,23,training,2611-fb3b388b-eeeb-4f10-954d-1a52508f140d,8,./js/training_data_critter_bird_or_body_color_green_1.json,DISJUNCTION,explorer,25dee1c2

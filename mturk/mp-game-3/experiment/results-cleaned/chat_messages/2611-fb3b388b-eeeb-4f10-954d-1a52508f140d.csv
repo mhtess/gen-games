@@ -1,0 +1,6 @@
+iterationName,game_id,time,trialNum,role,text,reactionTime,eventType,rule_idx,rule_type
+pilot1,2611-fb3b388b-eeeb-4f10-954d-1a52508f140d,1525301313541,1,explorer,A character is wudsy if they are green and/or have two legs,12.417,chatMessage,8,DISJUNCTION
+pilot1,2611-fb3b388b-eeeb-4f10-954d-1a52508f140d,1525301335423,1,student,Green or two legs. OK. Is that it?,16.747,chatMessage,8,DISJUNCTION
+pilot1,2611-fb3b388b-eeeb-4f10-954d-1a52508f140d,1525301343964,1,explorer,Yep!,5.141,chatMessage,8,DISJUNCTION
+pilot1,2611-fb3b388b-eeeb-4f10-954d-1a52508f140d,1525301367100,1,student,Nice! Let's go wudsy hunting.,19.148,chatMessage,8,DISJUNCTION
+pilot1,2611-fb3b388b-eeeb-4f10-954d-1a52508f140d,1525301374101,1,explorer,Let's do it,3.721,chatMessage,8,DISJUNCTION

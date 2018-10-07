@@ -29,11 +29,13 @@
     <link href="../_shared/full-projects/jquery-ui/jquery-ui.min.css" rel="stylesheet" type="text/css"/>
     <link href="../_shared/css/cocolab-style.css" rel="stylesheet" type="text/css"/>
     <link href="css/local-style.css" rel="stylesheet" type="text/css"/>
+    
 
     <!-- experiment file -->
     <script src="js/game-5.js"></script>
     <script src="js/easy_rule_data.js"></script>
     <script src="js/medium_rule_data.js"></script>
+    <script src="js/hard_rule_data.js"></script>
     <script src="../_shared/js/uniqueturker.js"></script>
 
 </head>
@@ -52,40 +54,44 @@
   <div class="slide" id="instructions">
     <h3>Instructions</h3>
     <p>
-      You will explore a new world called Critter Country, where scientists have discovered several new species: the "wudsy", "fep", and "blaar". <br><br>
-
-      You will try to learn about one critter at a time. For example, you might start, by learning about the "wudsy". For each species, you will be given 25 sets of critters. For each set, you will have to determine which of the displayed creatures belong to the speices and which do not. After you label the creatures, the correct labels will be displayed and will remain on screen for futher reference. After the 25 sets of "wudsy" / not "wudsy" creatures have been labeled, you will repeat this identification game for two additional species. <br><br>
-
-      <b>Please note that the species are completely independent of one another. A creature that was previously defined as a "wudsy" may be defined as "fep", when learning about the second species. </b> Do not use knowledge of a prior species to help identify subsequent species. A critter that was in the "wudsy" species previously, may also be a "fep" or a "blaar". <br><br>
-
-      Please note, if you incorrectly label a critter within a set, you will have to wait 5 seconds before the next round of critters. <br><br>
+      You are on a new planet called Crittun, studying creatures with a "wudsy detector".
+      The wudsy detector will tell you whether or not a creature is "wudsy".
+      <br> <br>
+      On each trial, you will make a guess as to whether or not a new creature is wudsy, and then use the detector to find out if you were right.
+      If you guess incorrectly, you will have to wait 5 seconds before using the detector again. 
+      We will keep a log of all the creatures you see and put a box around the ones that were "wudsy" for your reference.<br> 
 
     </p>
     <button onclick="_s.button()">Continue</button>
   </div>
 
-  <div class="slide" id="concept_1">
-    <p class="set_number"></p>
-    <p class="critterInfo"> The wudsy objects in each set are surrounded by a square.</p>
-
-    <div class="prev_sets"></div>
-
-    <p class="label_prompt">Given the above examples, which of the objects in this set are wudsy?</p>
-    <div class="curr_set"></div>
+  <div class="slide" id="concept">
+    <h3 class="set_number"></h3>
+    <p class="label_prompt">Do you belive this creature is <i>wudsy</i>?</p>
+    <div id="curr_set"></div>
 
     <br>
     <br>
 
-    <button onclick="_s.button()" id="continueButton">Continue</button>
+    <button onclick="_s.button()" id="continueButton">Use Wudsy Detector</button>
+
+    <br>
+    <br>
+
+    <p class="critterInfo"> The <i>wudsy</i> creatures from previous trials are surrounded by a square.</p>
+    <div id="prev_sets"></div>
+
   </div>
 
-  <div class="slide" id="concept_switch_1">
-    <p class="concept_introduction"></p>
+  <div class="slide" id="concept_explanation">
+    <p id="post_prompt"> <H4> There is another turker who is going to play the same game.</H4> <br>
+      <H4> Please write down your description of the wudsy species, to help them out with the same task. </H4></p>
+    <br>
+    <br>
 
-    <br>
-    <br>
+    <textarea id="concept_text"></textarea>
+
     <button onclick="_s.button()" id="continueButton">Continue</button>
-
   </div>
 
 
