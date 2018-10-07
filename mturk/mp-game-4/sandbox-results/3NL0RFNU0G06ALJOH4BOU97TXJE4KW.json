@@ -1,0 +1,105 @@
+{
+    "ApprovalTime": "2018-03-29T22:22:53Z",
+    "AutoApprovalTime": "2018-03-29T22:22:42Z",
+    "AssignmentId": "3NL0RFNU0G06ALJOH4BOU97TXJE4KW",
+    "WorkerId": "A2QXZO4GR6V6NH",
+    "answers": {
+        "training_summary_stats": {
+            "hits": 1,
+            "misses": 0,
+            "score": 0,
+            "false_alarms": 1,
+            "type": "training",
+            "correct_rejections": 0
+        },
+        "testing_trials": [
+            {
+                "is_correct": true,
+                "trial_num": 0,
+                "turker_label": false,
+                "time_in_seconds": 4.984,
+                "true_label": false
+            },
+            {
+                "is_correct": true,
+                "trial_num": 1,
+                "turker_label": false,
+                "time_in_seconds": 1.936,
+                "true_label": false
+            },
+            {
+                "is_correct": true,
+                "trial_num": 2,
+                "turker_label": false,
+                "time_in_seconds": 1.633,
+                "true_label": false
+            },
+            {
+                "is_correct": false,
+                "trial_num": 3,
+                "turker_label": false,
+                "time_in_seconds": 2.559,
+                "true_label": true
+            },
+            {
+                "is_correct": false,
+                "trial_num": 4,
+                "turker_label": false,
+                "time_in_seconds": 1.199,
+                "true_label": true
+            }
+        ],
+        "system": {
+            "screenW": 1280,
+            "screenH": 800,
+            "OS": "Mac",
+            "Browser": "Safari"
+        },
+        "subject_information": {
+            "enjoyment": "-1",
+            "gender": "",
+            "age": "",
+            "problems": "",
+            "nativeEnglish": "",
+            "strategy": "",
+            "assess": "",
+            "humanPartner": "",
+            "fairprice": "",
+            "comments": "",
+            "likePartner": "",
+            "education": "-1"
+        },
+        "training_trials": [
+            {
+                "is_correct": false,
+                "trial_num": 0,
+                "turker_label": true,
+                "time_in_seconds": 4.29,
+                "true_label": false
+            },
+            {
+                "is_correct": true,
+                "trial_num": 1,
+                "turker_label": true,
+                "time_in_seconds": 3.195,
+                "true_label": true
+            }
+        ],
+        "game_id": "5242-cf29259c-2f39-4785-bfa5-9281a77cce45",
+        "role": "explorer",
+        "testing_summary_stats": {
+            "hits": 0,
+            "misses": 2,
+            "score": 0,
+            "false_alarms": 0,
+            "type": "testing",
+            "correct_rejections": 3
+        },
+        "time_in_minutes": 4.8369
+    },
+    "AcceptTime": "2018-03-29T22:09:49Z",
+    "HITId": "3XDSWAMB225ST8X4XMW1K9ZAERFQCF",
+    "Assignment": "",
+    "AssignmentStatus": "Approved",
+    "SubmitTime": "2018-03-29T22:17:42Z"
+}

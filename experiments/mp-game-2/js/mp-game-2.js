@@ -44,7 +44,7 @@ function make_slides(f) {
         $("#waitText").append("Waiting for another player to connect...")
       else
         $("#waitText").append("Waiting for your partner to catch up...")
-      $("#waitCont").hide();
+        $("#waitCont").hide();
 
       var blinking_wait = setInterval(function() {
         $("#waitText").fadeOut(1000);
