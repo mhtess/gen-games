@@ -27,6 +27,7 @@ for(i in 1:length(temp)){
 }
 
 #output_fig_path <- "~/Documents/dissertation/proposal/"
+fig.path <- "~/Documents/research/talks/generalization-games/markman-labmtg-171107/"
 
 
 
@@ -73,6 +74,7 @@ df.test <- test_data %>%
     correct = ifelse(categorizedResponse=="hit" |
                        categorizedResponse=="correctRejection", 1, 0),
     hit =  ifelse(categorizedResponse=="hit", 1, 0),
+    correctRejection =  ifelse(categorizedResponse=="correctRejection", 1, 0),
     falseAlarm = ifelse(categorizedResponse=="falseAlarm", 1, 0),
     conceptNumber = factor(conceptNumber),
     featureOrder = factor(featureOrder),
@@ -101,13 +103,36 @@ df.trials <- df.test %>%
   group_by(dyad_id, trialNum, genus, conceptNumber, featureOrder, role,
            tested_on) %>%
   summarize(n_correct = sum(correct),
-            prop_correct = sum(correct) / n())
+            prop_correct = sum(correct) / n(),
+            n_hit = sum(hit),
+            n_correctRejection = sum(correctRejection))
 
-df.trials %>%
-  ggplot(., aes(x = conceptNumber , y = prop_correct, fill = tested_on))+
-  geom_col(position = position_dodge())+
-  facet_wrap(~dyad_id)+
-  theme(axis.text.x = element_text(angle = 90))
+# copied over from text script
+complete.participants <- df.trials %>%
+  group_by(dyad_id) %>%
+  count() %>%
+  filter(n == 12) %>%
+  select(dyad_id)
+
+df.trials <- df.trials %>%
+  filter(dyad_id %in% complete.participants$dyad_id) %>%
+  rename(conceptNumber = conceptTested)
+
+df.dyad.performance <- df.trials %>%
+  group_by(dyad_id, tested_on) %>%
+  tidyboot_mean(column = prop_correct)
+
+
+ggplot(df.dyad.performance, aes(x = dyad_id , y = mean, 
+                                ymin = ci_lower, ymax = ci_upper, fill = tested_on))+
+  geom_col(position = position_dodge(), color= 'black')+
+  geom_errorbar(position = position_dodge())+
+  scale_fill_solarized()+
+  ylab("Proportion HITS + Correct Rejections")+
+  xlab("")+
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
+
+ggsave(paste(fig.path, "performance_dyads.pdf", sep= ""), height = 4, width = 9)
 ```
 
 How many trials did every dyad do?
@@ -116,21 +141,28 @@ How many trials did every dyad do?
 table(df.trials$trialNum)
 ```
 ```{r}
+
 data.frame(with(df.trials, table(tested_on, conceptNumber))) %>%
   ggplot(., aes( x= conceptNumber, fill = tested_on, y = Freq))+
   geom_col(color = 'black', position = position_dodge())+
   scale_fill_solarized()+
   ggtitle("trial histogram")+
   ylab("count")
+
+ggsave(paste(fig.path, "shepard_trialCounts.pdf", sep= ""))
 ```
 
 
 ### Self vs. other
 
 ```{r echo=FALSE, results='hide', message=FALSE, warning=FALSE, tidy=TRUE}
+
+
 df.correct_by_testedOn <- df.trials %>%
-  group_by(tested_on) %>%
-  tidyboot_mean(column = prop_correct)
+  gather(key, val, n_hit, n_correctRejection, prop_correct) %>% 
+  group_by(tested_on, key) %>%
+  tidyboot_mean(column = val)
+  
   
 ggplot(df.correct_by_testedOn, aes(x = tested_on, 
                                  y = mean, 
@@ -143,11 +175,39 @@ ggplot(df.correct_by_testedOn, aes(x = tested_on,
   geom_hline(yintercept = 0.5, lty = 3)+
   ggtitle("") +
   theme(plot.title = element_text(hjust=0.5, size=18, face="bold"))+
+  facet_wrap(~key, scales = "free")+
   guides(fill = F)
+
+ggsave(paste(fig.path, "performance_selfVother.pdf", sep= ""), height = 4, width = 7)
+
 ```
 
 
 ### Concept type
+
+
+```{r}
+
+df.correct_by_concept_collapsed <- df.trials %>%
+  group_by(conceptNumber) %>%
+  tidyboot_mean(column = prop_correct)
+
+ggplot(df.correct_by_concept_collapsed, aes(x = conceptNumber, 
+                                 y = mean, 
+                                 ymin = ci_lower, 
+                                 ymax = ci_upper) ) +
+  geom_col(position=position_dodge(), width = 0.5, color = 'black') +
+  geom_errorbar(width = 0.3, position = position_dodge(0.5))+
+  geom_hline(yintercept = 0.5, lty = 3)+
+  scale_fill_solarized()+
+  ggtitle("") +
+  theme(plot.title = element_text(hjust=0.5, size=18, face="bold"))+
+  ylab("Proportion HITS + CORRECT REJECTIONS")+
+  scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))+
+  xlab("Shepard concept")
+
+ggsave(paste(fig.path, "performance_concepts.pdf", sep= ""), height = 4, width = 7)
+```
 
 ```{r fig.height=2, fig.width=3}
 df.correct_by_concept <- df.trials %>%
@@ -168,6 +228,9 @@ ggplot(df.correct_by_concept, aes(x = conceptNumber,
   ylab("Proportion HITS + CORRECT REJECTIONS")+
   scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))+
   xlab("Shepard concept")
+
+ggsave(paste(fig.path, "performance_concepts_byTestedOn.pdf", sep= ""), height = 4, width = 7)
+
 ```
 
 ### trial number
@@ -190,16 +253,45 @@ ggplot(df.correct_by_trial, aes(x = trialNum,
   ylab("Proportion HITS + CORRECT REJECTIONS")+
   scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))+
   xlab("Trial number")
+
+ggsave(paste(fig.path, "performance_trialNum.pdf", sep= ""), height = 4, width = 7)
+
 ```
+
+
+```{r fig.height=2, fig.width=3}
+df.correct_by_trial_testedOn <- df.trials %>%
+  group_by(trialNum, tested_on) %>%
+  tidyboot_mean(column = prop_correct)
+  
+ggplot(df.correct_by_trial_testedOn, aes(x = trialNum, 
+                                 y = mean, 
+                                 ymin = ci_lower, 
+                                 ymax = ci_upper,
+                                 fill = tested_on) ) +
+  geom_col(position=position_dodge(), width = 0.5, color = 'black') +
+  geom_errorbar(width = 0.3, position = position_dodge(0.5))+
+  geom_hline(yintercept = 0.5, lty = 3)+
+  scale_fill_solarized()+
+  ggtitle("") +
+  theme(plot.title = element_text(hjust=0.5, size=18, face="bold"))+
+  ylab("Proportion HITS + CORRECT REJECTIONS")+
+  scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))+
+  xlab("Trial number")
+
+ggsave(paste(fig.path, "performance_trialNum_testedOn.pdf", sep= ""), height = 4, width = 7)
+
+```
+
 
 ### genus
 
 ```{r fig.height=2, fig.width=3}
 df.correct_by_genus <- df.trials %>%
-  group_by(genus) %>%
+  group_by(genusTested) %>%
   tidyboot_mean(column = prop_correct)
   
-ggplot(df.correct_by_genus, aes(x = genus, 
+ggplot(df.correct_by_genus, aes(x = genusTested, 
                                  y = mean, 
                                  ymin = ci_lower, 
                                  ymax = ci_upper) ) +

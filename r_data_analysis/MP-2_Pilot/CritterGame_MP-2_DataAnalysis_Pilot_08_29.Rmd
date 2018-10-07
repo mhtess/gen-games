@@ -38,7 +38,7 @@ data_6 <- read.delim("2017-8-14-10h-37m-22s-3416-c018ab1b-f022-41c4-893c-462e121
 data_7 <- read.delim("2017-8-14-12h-22m-40s-7885-73f4a3d7-c242-46d0-96f2-a0c9fb4c2307.csv", header=TRUE)
 data_8 <- read.delim("2017-8-14-12h-37m-51s-4168-ead62023-8119-4366-8c05-e2091e126643.csv", header=TRUE)
 
-
+test_data <- read.delim("../../data/mp-game-2/logTest/2017-10-3-8h-1m-20s-3950-67e1dc62-2b5c-4896-9801-61472047e53a.csv", header = T)
 test_data <- bind_rows(data_1,data_2,data_4,data_6,data_7,data_8)
 test_data$gameid <- as.factor(test_data$gameid)
 test_data$trialNum <- as.factor(test_data$trialNum-1)

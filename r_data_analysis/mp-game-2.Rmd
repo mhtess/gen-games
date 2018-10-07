@@ -1,9 +1,22 @@
 ---
-title: "CritterGame_MP-1_TextAnalysis_Pilot_1"
-author: "Lauren Oey, MH Tessler"
-date: "8/13/2017 (updated 10/6/2017)" 
+title: "Shepard Concept Pilot 1"
+author: "MH Tessler"
+date: "11/12/2017" 
 output: github_document
 ---
+
+Each game consisted of 6 trials, played simultaneously by 2 participants.
+On each trial, a participant saw a Shepard concept (i - vi), randomized for each participant.
+(It's possible that each participant in a dyad saw the same Shepard concept on the same round).
+
+After studying the concept (made of all 8 logically-possible exemplars), participants chatted with their partner.
+They would be randomly assigned to be tested on either their own concept or their partner's concept. 
+
+#### Notes on dyads
+
+- 9582: Seems to have had partner disconnected... or rather, perhaps they just never responded in the chat window?
+
+
 
 ```{r preamble}
 library(dplyr)
@@ -12,6 +25,7 @@ library(knitr)
 library(ggplot2)
 library(data.table)
 library(tidytext)
+library(tidyboot)
 #library(coreNLP)
 #library(cleanNLP)
 #library(reticulate)
@@ -19,6 +33,7 @@ library(xtable)
 library(gridExtra)
 library(forcats)
 theme_set(theme_few())
+fig.path <- "~/Documents/research/talks/generalization-games/cocolab-mtg-171114/"
 ```
 
 
@@ -26,42 +41,40 @@ Load message data
 
 ```{r}
 df.chat <- rbindlist(
-  lapply(list.files(path="../../data/mp-game-2/chatMessage/", 
+  lapply(list.files(path="../data/mp-game-2/chatMessage/", 
                     pattern="*.csv", full.names=TRUE), fread), 
   fill=TRUE, idcol="dyad_id") %>%
   mutate(
-    dyad_id = as.factor(ifelse(dyad_id < 10,
-                            paste0("dyad_0", dyad_id),
-                            paste0("dyad_", dyad_id))),
-    gameid = as.factor(gameid),
+    gameid = substr(gameid, 1, 4),
     role = as.factor(role),
     trialNum = trialNum
   )
 
 df.chat %>%
-  select(dyad_id, trialNum, role, text) %>%
+  select(gameid, trialNum, role, text) %>%
+  head() %>%
   kable()
 ```
+
+
 
 Load training data
 
 ```{r}
 df.train <- rbindlist(
-  lapply(list.files(path="../../data/mp-game-2/logTrain/", 
+  lapply(list.files(path="../data/mp-game-2/logTrain/", 
                     pattern="*.csv", full.names=TRUE), fread), 
   fill=TRUE, idcol="dyad_id") %>%
   mutate(
-    dyad_id = as.factor(ifelse(dyad_id < 10,
-                            paste0("dyad_0", dyad_id),
-                            paste0("dyad_", dyad_id))),
-    gameid = as.factor(gameid),
+    gameid = substr(gameid, 1, 4),
     role = as.factor(role),
     trialNum = trialNum
   )
 
 df.train.trials <- df.train %>%
-  select(gameid,trialNum,  role,
-         genus, conceptNumber, categoryPluralLabel, featureOrder, time_in_ms) %>%
+  select(gameid, trialNum,  role,
+         genus, conceptNumber, categoryPluralLabel, 
+         featureOrder, time_in_ms) %>%
   distinct()
 ```
 
@@ -69,12 +82,13 @@ df.train.trials <- df.train %>%
 Load and preprocess test data
 
 ```{r}
-df.test <- rbindlist(lapply(list.files(path="../../data/mp-game-2/logTest/", pattern="*.csv", full.names=TRUE), fread), fill=TRUE, idcol="dyad_id") %>%
+df.test <- rbindlist(
+  lapply(
+    list.files(path="../data/mp-game-2/logTest/", 
+               pattern="*.csv", full.names=TRUE), fread), 
+  fill=TRUE, idcol="dyad_id") %>%
   mutate(
-    dyad_id = as.factor(ifelse(dyad_id < 10,
-                            paste0("dyad_0", dyad_id),
-                            paste0("dyad_", dyad_id))),
-    gameid = as.factor(gameid),
+    gameid = substr(gameid, 1, 4),
     role = as.factor(role),
     trialNum = trialNum - 1,
     correct = ifelse(categorizedResponse=="hit" |
@@ -87,9 +101,13 @@ df.test <- rbindlist(lapply(list.files(path="../../data/mp-game-2/logTest/", pat
     genus = factor(genus)
   )
 
+# Proportion correct for each trial
 df.test.trials <- df.test %>%
-  group_by(gameid, trialNum, genus, categoryPluralLabel, conceptNumber, featureOrder, role,
-           tested_on) %>%
+  group_by(
+    gameid, trialNum, genus, 
+    categoryPluralLabel, conceptNumber, 
+    featureOrder, role, tested_on
+    ) %>%
   summarize(n_correct = sum(correct),
             prop_correct = sum(correct) / n(),
             n_hit = sum(hit),
@@ -97,39 +115,313 @@ df.test.trials <- df.test %>%
 ```
 
 
+**Merge training, test**
 
 ```{r}
-df.chat.test <- left_join(
-  left_join(
-    df.chat %>% select(gameid, trialNum, role, text), 
+df.trials <- left_join(
     df.test.trials %>% ungroup() %>% select(-featureOrder) %>%#, -n_correct, -prop_correct) %>%
       rename(categoryTested = categoryPluralLabel,
              genusTested = genus,
-             conceptTested = conceptNumber)
-    ),
+             conceptTested = conceptNumber),
   df.train.trials %>%
     select(gameid, trialNum, role, 
            genus, conceptNumber, categoryPluralLabel) %>%
     rename(categoryTrained = categoryPluralLabel,
              genusTrained = genus,
              conceptTrained = conceptNumber)
-) %>%
-  mutate(dyad_id = factor(gameid, labels = paste('dyad_', 
-                                                seq(0, length(unique(gameid))- 1),
-                                                sep="")))
+)
+
+# how many trials did each dyad do?
+df.dyad.counts <- df.trials %>%
+  group_by(gameid) %>%
+  count()
 ```
 
 
+
+**Remove chat data**
+
 ```{r}
-df.trials <- df.chat.test %>%
-  select(-text) %>%
-  distinct()
+# df.trials <- df.chat.test %>%
+#   select(-text) %>%
+#   distinct()
+
+# how many trials did each dyad do?
+df.dyad.counts <- df.trials %>%
+  group_by(gameid) %>%
+  count() 
+```
+
+# Data analysis
+
+Compute proportion correct for each trial
+
+```{r  fig.height=2, fig.width=3}
+complete.participants <- df.dyad.counts %>%
+  filter(n == 12) %>%
+  select(gameid)
+
+df.trials <- df.trials %>%
+  filter(gameid %in% complete.participants$gameid) 
+
+df.dyad.performance <- df.trials %>%
+  group_by(gameid, tested_on) %>%
+  tidyboot_mean(column = prop_correct)
 
 
-  summarize(n_correct = sum(correct),
-            prop_correct = sum(correct) / n(),
-            n_hit = sum(hit),
-            n_correctRejection = sum(correctRejection))
+ggplot(df.dyad.performance, aes(x = gameid , y = mean, 
+                                ymin = ci_lower, ymax = ci_upper, fill = tested_on))+
+  geom_col(position = position_dodge(), color= 'black')+
+  geom_errorbar(position = position_dodge())+
+  scale_fill_solarized()+
+  ylab("Proportion HITS + Correct Rejections")+
+  xlab("")+
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
+
+ggsave(paste(fig.path, "performance_dyads.pdf", sep= ""), height = 4, width = 9)
+```
+
+
+```{r  fig.height=2, fig.width=3}
+df.dyad.concept.performance <- df.trials %>%
+  group_by(gameid, conceptNumber) %>%
+  tidyboot_mean(column = prop_correct)
+
+
+ggplot(df.dyad.concept.performance, aes(x = conceptNumber , y = mean, 
+                                ymin = ci_lower, ymax = ci_upper))+
+  geom_col(position = position_dodge(), color= 'black')+
+  geom_errorbar(position = position_dodge())+
+  scale_fill_solarized()+
+  facet_wrap(~gameid)+
+  ylab("hits + CRs")+
+  xlab("")+
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
+
+ggsave(paste(fig.path, "performance_dyads_concepts.pdf", sep= ""), height = 4, width = 9)
+```
+
+```{r  fig.height=2, fig.width=3}
+df.individual.concept.performance <- df.trials %>%
+  group_by(gameid, role, conceptNumber) %>%
+  tidyboot_mean(column = prop_correct)
+
+
+ggplot(df.individual.concept.performance, aes(x = conceptNumber , y = mean,
+                      fill = role, group = role))+
+  geom_col(position = position_dodge(), color= 'black')+
+  #geom_line(position = position_dodge(0.2))+
+  scale_fill_solarized()+
+  facet_wrap(~gameid)+
+  ylab("hits + CRs")+
+  xlab("")+
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
+
+ggsave(paste(fig.path, "performance_individuals_concepts.pdf", sep= ""), height = 4, width = 9)
+```
+
+
+
+How many trials did every dyad do?
+
+
+```{r}
+table(df.trials$trialNum)
+```
+
+```{r}
+
+data.frame(with(df.trials, table(tested_on, conceptNumber))) %>%
+  ggplot(., aes( x= conceptNumber, fill = tested_on, y = Freq))+
+  geom_col(color = 'black', position = position_dodge())+
+  scale_fill_solarized()+
+  ggtitle("trial histogram")+
+  ylab("count")
+
+ggsave(paste(fig.path, "shepard_trialCounts.pdf", sep= ""))
+```
+
+### Self vs. other
+
+```{r echo=FALSE, results='hide', message=FALSE, warning=FALSE, tidy=TRUE}
+
+
+df.correct_by_testedOn <- df.trials %>%
+  gather(key, val, n_hit, n_correctRejection, prop_correct) %>% 
+  group_by(tested_on, key) %>%
+  tidyboot_mean(column = val)
+  
+  
+ggplot(df.correct_by_testedOn, aes(x = tested_on, 
+                                 y = mean, 
+                                 ymin = ci_lower, 
+                                 ymax = ci_upper,
+                                 fill = tested_on) ) +
+  geom_col(position=position_dodge(), width = 0.5, color = 'black') +
+  geom_errorbar(width = 0.3)+
+  scale_fill_solarized()+
+  geom_hline(yintercept = 0.5, lty = 3)+
+  ggtitle("") +
+  theme(plot.title = element_text(hjust=0.5, size=18, face="bold"))+
+  facet_wrap(~key, scales = "free")+
+  guides(fill = F)
+
+ggsave(paste(fig.path, "performance_selfVother.pdf", sep= ""), height = 3, width = 7)
+
+```
+
+
+### Concept type
+
+
+```{r}
+
+df.correct_by_concept_collapsed <- df.trials %>%
+  group_by(conceptNumber) %>%
+  tidyboot_mean(column = prop_correct)
+
+ggplot(df.correct_by_concept_collapsed, aes(x = conceptNumber, 
+                                 y = mean, 
+                                 ymin = ci_lower, 
+                                 ymax = ci_upper) ) +
+  geom_col(position=position_dodge(), width = 0.5, color = 'black') +
+  geom_errorbar(width = 0.3, position = position_dodge(0.5))+
+  geom_hline(yintercept = 0.5, lty = 3)+
+  scale_fill_solarized()+
+  ggtitle("") +
+  theme(plot.title = element_text(hjust=0.5, size=18, face="bold"))+
+  ylab("Proportion HITS + CORRECT REJECTIONS")+
+  scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))+
+  xlab("Shepard concept")
+
+ggsave(paste(fig.path, "performance_concepts.pdf", sep= ""), height = 3, width = 7)
+```
+
+```{r fig.height=2, fig.width=3}
+df.correct_by_concept <- df.trials %>%
+  group_by(conceptNumber, tested_on) %>%
+  tidyboot_mean(column = prop_correct)
+  
+ggplot(df.correct_by_concept, aes(x = conceptNumber, 
+                                 y = mean, 
+                                 ymin = ci_lower, 
+                                 ymax = ci_upper,
+                                 fill = tested_on) ) +
+  geom_col(position=position_dodge(), width = 0.5, color = 'black') +
+  geom_errorbar(width = 0.3, position = position_dodge(0.5))+
+  geom_hline(yintercept = 0.5, lty = 3)+
+  scale_fill_solarized()+
+  ggtitle("") +
+  theme(plot.title = element_text(hjust=0.5, size=18, face="bold"))+
+  ylab("Proportion HITS + CORRECT REJECTIONS")+
+  scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))+
+  xlab("Shepard concept")
+
+ggsave(paste(fig.path, "performance_concepts_byTestedOn.pdf", sep= ""), height = 3, width = 7)
+
+```
+
+### trial number
+
+```{r fig.height=2, fig.width=3}
+df.correct_by_trial <- df.trials %>%
+  group_by(trialNum) %>%
+  tidyboot_mean(column = prop_correct)
+  
+ggplot(df.correct_by_trial, aes(x = trialNum, 
+                                 y = mean, 
+                                 ymin = ci_lower, 
+                                 ymax = ci_upper) ) +
+  geom_col(position=position_dodge(), width = 0.5, color = 'black') +
+  geom_errorbar(width = 0.3, position = position_dodge(0.5))+
+  geom_hline(yintercept = 0.5, lty = 3)+
+  scale_fill_solarized()+
+  ggtitle("") +
+  theme(plot.title = element_text(hjust=0.5, size=18, face="bold"))+
+  ylab("Proportion HITS + CORRECT REJECTIONS")+
+  scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))+
+  xlab("Trial number")
+
+ggsave(paste(fig.path, "performance_trialNum.pdf", sep= ""), height = 3, width = 7)
+
+```
+
+
+```{r fig.height=2, fig.width=3}
+df.correct_by_trial_testedOn <- df.trials %>%
+  group_by(trialNum, tested_on) %>%
+  tidyboot_mean(column = prop_correct)
+  
+ggplot(df.correct_by_trial_testedOn, aes(x = trialNum, 
+                                 y = mean, 
+                                 ymin = ci_lower, 
+                                 ymax = ci_upper,
+                                 fill = tested_on) ) +
+  geom_col(position=position_dodge(), width = 0.5, color = 'black') +
+  geom_errorbar(width = 0.3, position = position_dodge(0.5))+
+  geom_hline(yintercept = 0.5, lty = 3)+
+  scale_fill_solarized()+
+  ggtitle("") +
+  theme(plot.title = element_text(hjust=0.5, size=18, face="bold"))+
+  ylab("Proportion HITS + CORRECT REJECTIONS")+
+  scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))+
+  xlab("Trial number")
+
+ggsave(paste(fig.path, "performance_trialNum_testedOn.pdf", sep= ""), height = 3, width = 7)
+
+```
+
+
+### genus
+
+```{r fig.height=2, fig.width=3}
+df.correct_by_genus <- df.trials %>%
+  group_by(genusTested) %>%
+  tidyboot_mean(column = prop_correct)
+  
+ggplot(df.correct_by_genus, aes(x = genusTested, 
+                                 y = mean, 
+                                 ymin = ci_lower, 
+                                 ymax = ci_upper) ) +
+  geom_col(position=position_dodge(), width = 0.5, color = 'black') +
+  geom_errorbar(width = 0.3, position = position_dodge(0.5))+
+  geom_hline(yintercept = 0.5, lty = 3)+
+  scale_fill_solarized()+
+  ggtitle("") +
+  theme(plot.title = element_text(hjust=0.5, size=18, face="bold"))+
+  ylab("Proportion HITS + CORRECT REJECTIONS")+
+  scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))+
+  xlab("Genus")
+
+ggsave(paste(fig.path, "performance_genera.pdf", sep= ""), height = 3, width = 5)
+
+```
+### Language data
+**Merge training, test, and chat data frames.**
+
+This has one line per message (so duplicate test / training results)
+
+```{r}
+df.chat.test <- left_join(
+    df.chat %>% select(gameid, trialNum, role, text), 
+    df.trials) %>%
+  filter(gameid %in% complete.participants$gameid)
+  
+  
+  
+#     df.test.trials %>% ungroup() %>% select(-featureOrder) %>%#, -n_correct, -prop_correct) %>%
+#       rename(categoryTested = categoryPluralLabel,
+#              genusTested = genus,
+#              conceptTested = conceptNumber)
+#     ),
+#   df.train.trials %>%
+#     select(gameid, trialNum, role, 
+#            genus, conceptNumber, categoryPluralLabel) %>%
+#     rename(categoryTrained = categoryPluralLabel,
+#              genusTrained = genus,
+#              conceptTrained = conceptNumber)
+# )
+
 ```
 
 
@@ -137,44 +429,40 @@ df.trials <- df.chat.test %>%
 ```{r}
 
 df.chat.test.display <- df.chat.test %>% 
-  select(dyad_id, trialNum,
+  select(gameid, trialNum,
          genusTrained, categoryTrained, conceptTrained, 
          role,
          text
          )
 
 #df.chat.test.display[with(df.chat.test.display, order(conceptTrained)),] %>%
-  df.chat.test.display %>%
-  select(dyad_id, trialNum, role, conceptTrained, text) %>%
+df.chat.test.display %>%
+  select(gameid, trialNum, role, conceptTrained, text) %>%
   kable()
 ```
 
 ```{r}
 df.chat.test.input <- left_join(
-  left_join(
-    df.test.trials %>% 
-      ungroup() %>% select(-featureOrder, 
-                           -n_correct,
-                           -prop_correct) %>%
-      rename(categoryTested = categoryPluralLabel,
-             genusTested = genus,
-             conceptTested = conceptNumber),
-    df.train.trials %>%
-      select(dyad_id, trialNum, role, 
-             genus, conceptNumber, categoryPluralLabel) %>%
-      rename(categoryTrained = categoryPluralLabel,
-               genusTrained = genus,
-               conceptTrained = conceptNumber)
-  ) %>% 
+ df.trials %>% 
   mutate(language_input = 
            ifelse(tested_on == "self", 
                   ifelse(role == "a", "a", "b"),
                   ifelse(role == "a", "b", "a")
                   )
   ),
-  df.chat %>% select(dyad_id, trialNum, role, text) %>%
+  df.chat %>% select(gameid, trialNum, role, text) %>%
     rename(language_input = role)
 )
+
+
+```
+```{r}
+df.chat.test.input %>% filter(gameid == 5071, tested_on == "partner") %>% 
+  select(gameid, role, trialNum, genusTested, 
+         conceptNumber, prop_correct, text) %>%
+  rename(trial = trialNum,genus = genusTested, concept = conceptNumber,
+         score = prop_correct, input = text) %>%
+  kable()
 ```
 
 # Quantitative text analysis
@@ -184,6 +472,7 @@ Words by concept learned
 ```{r}
 df.chat.test %>%
   unnest_tokens(word, text) %>%
+  anti_join(stop_words) %>%
   group_by(conceptTrained) %>%
   summarize(n_words = n()) %>%
   ggplot(., aes(x = conceptTrained, y = n_words))+
@@ -192,15 +481,28 @@ df.chat.test %>%
 ggsave(paste(fig.path, "words_concepts.pdf", sep= ""), height = 4, width = 9)
 ```
 
+```{r}
+df.chat.test %>%
+  unnest_tokens(word, text) %>%
+    anti_join(stop_words) %>%
+  group_by(trialNum) %>%
+  summarize(n_words = n()) %>%
+  ggplot(., aes(x = trialNum, y = n_words))+
+  geom_col()
+
+ggsave(paste(fig.path, "words_trials_noStopWords.pdf", sep= ""), height = 4, width = 9)
+```
+
 Words by dyad
 
 ```{r}
 df.chat.test %>%
-  filter(dyad_id %in% complete.participants$dyad_id) %>%
+  filter(gameid %in% complete.participants$gameid) %>%
   unnest_tokens(word, text) %>%
-  group_by(dyad_id) %>%
+  anti_join(stop_words) %>%
+  group_by(gameid) %>%
   summarize(n_words = n()) %>%
-  ggplot(., aes(x = dyad_id, y = n_words))+
+  ggplot(., aes(x = gameid, y = n_words))+
   geom_col()
 
 ggsave(paste(fig.path, "words_dyads.pdf", sep= ""), height = 4, width = 9)

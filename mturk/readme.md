@@ -5,7 +5,7 @@
 - n = 18 ($0.50) --> $9 + 20% = $10.80
 - Posted: 7/6/17 4pm
 
-1. Game-2
+2. Game-2
 - Single player, observe 12 critters (4 x 3 species)
 - 2 sets of distributions:
   - [1, 1, 0.25], [1, 1, 0.5]
@@ -14,3 +14,15 @@
   - Listener will have to "find feps" vs. "find all of the feps"
 - n = 9 x 4 = 36 ($0.75) --> $27 + 5.4 (20%) = $32.40
 - Posted: 7/6/17 4pm
+
+
+## Dyadic
+
+1.  
+
+2. Boolean category learning
+- 6 Shepard concept
+- n = 12 dyads (x participants)
+- N = 24
+- cost = $2.50 (+ bonus)
+- base pay = 2.5*24 = 60 + 40% = 84
