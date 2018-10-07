@@ -9,3 +9,26 @@
   font-size: 24px;
   text-align: left;
 }
+
+.critter_label_form label, .critter_label_form input {
+}
+
+.critter_label_form input[type="radio"] {
+    opacity:0.011;
+    z-index:100;
+}
+
+.critter_label_form input[type="radio"]:checked + label {
+    background:yellow;
+}
+
+.critter_label_form label {
+     padding:5px;
+     border:1px solid #CCC; 
+     cursor:pointer;
+    z-index:90;
+}
+
+.critter_label_form label:hover {
+     background:#DDD;
+}

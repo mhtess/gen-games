@@ -1,0 +1,412 @@
+// ------------------------------------------------------
+//                  Rational Rules Model
+// Here we apply the rational rules model proposed
+// by Goodman et al. (2008) to the colllected concept
+// learning pilot data. We first load in the data,
+// passed in from R (var data). We then find the formulae
+// that explain the data the most. Then, we compare the
+// model predictions to those of humans.
+//
+// Note: This is meant to be executed via rwebppl.
+// -------------------------------------------------------
+
+// ---------
+// CONSTANTS
+// ---------
+var TRAIN_TRIAL = 'train';
+var TEST_TRIAL = 'test';
+var obj = {   // Webppl is weird and bare parseFloat and parseInt calls lead to silent failures
+  parseFloat: parseFloat,
+  parseInt: parseInt,
+}
+
+
+// ----------------------
+// RATIONAL RULES HELPERS
+// ----------------------
+var traitToValueMapping = {
+  "critter": {
+    "bug": 0,
+    "bird": 1,
+    "fish": 2,
+  },
+  "body_color": {
+    "#5da5db": 0, // Blue
+    "#228b22": 1, // Green
+    "#ff8c00": 2, // Orange
+  },
+  "secondary_color": {
+    "#f42935": 0, // Red
+    "#eec900": 1, // Yellow
+    "#dda0dd": 2, // Purple
+  },
+  "prop1": {
+    "0": 0, // Small
+    "0.6931471805599453": 1, // Medium
+    "1.1631508098056809": 2, // Large
+  }
+};
+
+
+var traitToValueMappingInverted = {
+  "critter": _.invert(traitToValueMapping["critter"]),
+  "body_color": _.invert(traitToValueMapping["body_color"]),
+  "secondary_color": _.invert(traitToValueMapping["secondary_color"]),
+  "prop1": _.invert(traitToValueMapping["prop1"]),
+};
+
+
+var valueToStringMapping = {
+  // Derive string repr from value
+  "#5da5db": "blue",
+  "#228b22": "green",
+  "#ff8c00": "orange",
+  "#f42935": "red",
+  "#eec900": "yellow",
+  "#dda0dd": "purple",
+  "0": "small",
+  "0.693147180559945": "medium",
+  "1.16315080980568": "large",
+};
+
+
+var makeObj = function(o) {
+  // Given an object from the stimuli dataset, produce an equivalent object
+  // where the defining values of the discriminative traits have been
+  // properly mapped to discrete values.
+  return {
+    "critter": traitToValueMapping["critter"][o["critter"]], 
+    "body_color": traitToValueMapping["body_color"][o["body_color"]],
+    "secondary_color": traitToValueMapping["secondary_color"][o["secondary_color"]],
+    "size": traitToValueMapping["prop1"][o["props"]["prop1"].toString()],
+    "belongs_to_concept": o["belongs_to_concept"],
+  }
+}
+
+
+// Define prior and sampling strategy for selecting both a trait
+// and a value to be assigned to the trait, for a proposal formula.
+var traitPrior = Categorical(
+  {
+    vs: ["critter", "body_color", "secondary_color", "size"],
+    ps: [0.25, 0.25, 0.25, 0.25]
+  }
+);
+
+var samplePred = function() {
+  // Sample predicates and values
+  var trait = sample(traitPrior);
+  var value = uniformDraw([0,1,2]);
+  var result = {
+    f: function(x) {
+      return (x[trait] == value);
+    },
+    s: _.join(['(', trait, '==', value, ')'], '')    
+  }
+  return result;
+}
+
+// Drift kernel for tau, the probability of continuing a proposed formula.
+// With the drift kernel, we bias tau samples towards smaller values,
+// without changing the underlying uniform distribution utilized by 
+// MCMC to compute importance sample weights.
+var TauKernel = function(prevVal) {
+  return Beta({a: 2, b: 4});
+};
+
+var genRationRulesFunc = function(AObjects, BObjects, TObjects, allObjs) {
+  // Implementation of rational rules model.
+
+  var rationalRules = function() {
+    var tau = sample(Beta({a:1, b:1}), {driftKernel: TauKernel});
+    var noiseParam = Math.exp(-5); // prior that a given sample is an outlier
+  
+    var sampleConj = function() {
+      // Recursive definition of producing terminal predicate
+      // or continuing a formula with "AND".
+      var p = samplePred();
+      if(flip(tau)) {
+        var c = sampleConj();
+        return {
+          f: function(x) {
+            var c_fn = c.f;
+            var p_fn = p.f;
+            return (c_fn(x) && p_fn(x));
+          },
+          s: _.join(_.flatten(['(', c.s, 'AND', p.s, ')']), '')
+        }
+      } else {
+        return p;
+      }
+    }
+    
+    var getFormula = function() {
+      // Recursive definition of producing a terminal conjunction or
+      // continuing a formula with "OR".
+      var c = sampleConj();
+      if(flip(tau)) {
+        var f = getFormula();
+        return {
+          f: function(x) {
+            var c_fn = c.f;
+            var f_fn = f.f;
+            return (c_fn(x) || f_fn(x));
+          },
+          s: _.join(_.flatten(['(', c.s, 'OR', f.s, ')']), '')
+        } 
+      } else {
+        return c;
+      }
+    }
+  
+    // Sample a proposed formula
+    // Note: Have to unpack the function like this because of a weird webppl quirk
+    // https://github.com/probmods/webppl/issues/358
+    var rule = getFormula();
+    var rule_fn = rule.f;
+    
+    // Conditioning on AObjects following the rule & BObjects violating the rule
+    var obsFnA = function(datum){observe(Bernoulli({p: rule_fn(datum) ? 0.999999999 : noiseParam}), true)};
+    var obsFnB = function(datum){observe(Bernoulli({p: !rule_fn(datum) ? 0.999999999 : noiseParam}), true)};
+    mapData({data:AObjects}, obsFnA);
+    mapData({data:BObjects}, obsFnB);
+    return rule;
+  }
+  return rationalRules;
+}
+
+var rationalRulesAnalysis = function(AObjects, BObjects, TObjects, allObjs) {
+  console.log("Inside Rational Rules Analysis...");
+
+  // Run MCMC Inference
+  var rationalRules = genRationRulesFunc(AObjects, BObjects, TObjects, allObjs);
+  var rulePosterior = Infer({method: 'MCMC', samples:10, burn:10}, rationalRules);
+  var supportProbs = map(function(val) {
+    return {v: val, logProb: rulePosterior.score(val)}
+  }, rulePosterior.support());
+
+  var critterLabels = map(
+    function(obj){
+      _.join([
+          obj["belongs_to_concept"],
+          traitToValueMappingInverted["critter"][obj["critter"]],
+          valueToStringMapping[traitToValueMappingInverted["body_color"][obj["body_color"]]],
+          valueToStringMapping[traitToValueMappingInverted["secondary_color"][obj["secondary_color"]]],
+          valueToStringMapping[traitToValueMappingInverted["prop1"][obj["size"]]]
+        ],
+        '_'
+      );
+    },
+    allObjs
+  );
+
+  // Build posterior predictive for each critter in the training set
+  var preds = map(
+    function(item)
+    {
+      return expectation(
+        rulePosterior,
+        function(x) {
+          var x_fn = x.f;
+          return x_fn(item);
+        }
+      )
+    }, allObjs
+  );
+  var posteriorPreds = _.zip(critterLabels, preds);
+  return {
+    'ruleProbs': supportProbs,
+    'posteriorPreds': posteriorPreds,
+  }
+}
+
+var runRationalRules = function(trainingStimuli, testStimuli, humanPredictives, humanResponses, incremental, num_train) {  
+  // Load critters from training stimuli file
+  var defaultTrainingCritters = _.uniqWith(map(makeObj, trainingStimuli), _.isEqual);
+  var defaultTestCritters = _.uniqWith(map(makeObj, testStimuli), _.isEqual);
+
+  // Subsitute "belongs_to_concept" gold label with the one provided
+  // by a teacher. Do this for each teacher, across trials.
+  var trainingCritters = filter(function(x) {
+    return x != null;
+  }, map(function(x) {
+    if (x.trial_type == TRAIN_TRIAL) {
+      var baseCritter = defaultTrainingCritters[x.trial_num];
+      var critter = {
+        critter: baseCritter.critter,
+        body_color: baseCritter.body_color,
+        secondary_color: baseCritter.secondary_color,
+        size: baseCritter.size,
+        belongs_to_concept: x.true_label,
+        trial_num: x.trial_num,
+      };
+      return critter;
+    }
+  }, humanResponses));
+
+  
+  // Subsitute "belongs_to_concept" gold label with the one provided
+  // by a teacher. Do this for each each participant, across trials.
+  var TObjects = filter(function(x) {
+    return x != null;
+  }, map(function(x) {
+    if (x.trial_type == TEST_TRIAL) {
+      var baseCritter = defaultTestCritters[x.trial_num];
+      var critter = {
+        critter: baseCritter.critter,
+        body_color: baseCritter.body_color,
+        secondary_color: baseCritter.secondary_color,
+        size: baseCritter.size,
+        belongs_to_concept: x.true_label,
+        trial_num: x.trial_num,
+      };
+      return critter;
+    }
+  }, humanResponses));
+
+
+  // Split into Training A/B Groups & Test Split
+  var rationalRulesResults = null;
+  var postProcessing = function(rationalRulesResults) {
+    var predictivesExtracted = map(function(x){return x.pred}, humanPredictives);
+    var result = _.zip(rationalRulesResults.posteriorPreds, predictivesExtracted);
+    var flattenedResult = map(function(x) {
+      return _.flatten(x);
+    }, result);
+    return {
+      'support': rationalRulesResults.ruleProbs,
+      'posteriorPredictives': flattenedResult,
+    }
+  }
+  console.log("Incremental: " + incremental);
+  console.log("Num Critters: " + num_train);
+  console.log("Training critters: " + trainingCritters.length);
+  if (incremental) {
+    var AObjects = _.uniqWith(filter(function(x) { return ((x.belongs_to_concept == true) && (x.trial_num < num_train));}, trainingCritters), _.isEqual);
+    var BObjects = _.uniqWith(filter(function(x) { return ((x.belongs_to_concept == false) && (x.trial_num < num_train));}, trainingCritters), _.isEqual);  
+    var TObjectsFiltered = _.uniqWith(filter(function(x) { return ((x.trial_num >= num_train) && (x.trial_num < num_train + 10));}, trainingCritters), _.isEqual);
+    var allObjs = _.uniqWith(_.concat(_.concat(AObjects, BObjects), TObjectsFiltered), _.isEqual);
+    console.log(AObjects.length);
+    console.log(BObjects.length);
+    console.log(TObjectsFiltered.length);
+    console.log(allObjs.length);
+    var rationalRulesResults =  rationalRulesAnalysis(AObjects, BObjects, TObjectsFiltered, allObjs);
+    return postProcessing(rationalRulesResults);
+  } else {
+    var AObjects = filter(function(x) { return x.belongs_to_concept == true;}, trainingCritters);
+    var BObjects = filter(function(x) { return x.belongs_to_concept == false;}, trainingCritters);  
+    var allObjs = _.uniqWith(_.concat(defaultTrainingCritters, defaultTestCritters), _.isEqual);
+    var rationalRulesResults = rationalRulesAnalysis(AObjects, BObjects, TObjects, allObjs);
+    return postProcessing(rationalRulesResults);
+  }
+
+}
+
+// ---------------
+// MAIN FUNCTIONS
+// ---------------
+
+var genPredictive = function(data) {
+  return {
+    pred: obj.parseFloat(data[0]),
+    trial_num: obj.parseInt(data[1]),
+    trial_type: data[2],
+  }
+}
+
+var genHumanResponse = function(data, trial_type){
+  return {
+    is_correct: data[0] == 'True',
+    time_in_seconds: obj.parseFloat(data[1]),
+    trial_num: obj.parseInt(data[2]),
+    true_label: data[3] == 'True',
+    turker_label: data[4] == 'True',
+    game_id: data[5],
+    rule_idx: obj.parseInt(data[6]),
+    training_data_fn: data[7],
+    rule_type: data[8],
+    role: data[9],
+    worker_id: data[10],
+    trial_type: trial_type,
+  }
+}
+
+var parseRData = function() {
+  if (params == undefined || params.length != 1) {
+    return {
+      'parsedCorrectly': false,
+    }
+  }
+
+  var rationalRulesParams = params[0];
+  if (
+    !rationalRulesParams.hasOwnProperty('human_predictives_fp') ||
+    !rationalRulesParams.hasOwnProperty('training_stim_fp') ||
+    !rationalRulesParams.hasOwnProperty('test_stim_fp') ||
+    !rationalRulesParams.hasOwnProperty('train_human_responses') || // List of files
+    !rationalRulesParams.hasOwnProperty('test_human_responses') || // List of files
+    !rationalRulesParams.hasOwnProperty('incremental') || 
+    !rationalRulesParams.hasOwnProperty('num_train')
+  ) {
+    return {
+      'parsedCorrectly': false,
+    }
+  } else {
+    var humanPredictivesUntrimmed = map(
+      genPredictive,
+      csv.read(rationalRulesParams.human_predictives_fp).slice(1)
+    );
+    var humanPredictives = humanPredictivesUntrimmed.slice(0, humanPredictivesUntrimmed.length - 1);
+    var trainingStim = json.read(rationalRulesParams.training_stim_fp);
+    var testStim = json.read(rationalRulesParams.test_stim_fp);
+   
+    var processHumanResponseFile = function(fp) {
+      var trial_type = globalStore.trial_type;
+      var parsedFile = csv.read(fp);
+      var trimmedFile = parsedFile.slice(1, parsedFile.length - 1);
+
+      var parseResponse = function(row) {
+        var parsed = genHumanResponse(row, trial_type);
+        return parsed;
+      }
+      var responses = map(parseResponse, trimmedFile); // First row is header
+      return responses;
+    }
+
+    globalStore.trial_type = TRAIN_TRIAL;
+    var trainHumanResponses = _.flatten(
+      map(
+        processHumanResponseFile,
+        rationalRulesParams.train_human_responses
+      )
+    );
+
+    globalStore.trial_type = TEST_TRIAL;
+    var testHumanResponses = _.flatten(
+      map(
+        processHumanResponseFile,
+        rationalRulesParams.test_human_responses
+      )
+    );
+    globalStore.trial_type = undefined;
+    var humanResponses = _.concat(trainHumanResponses, testHumanResponses);
+    return {
+      'humanPredictives': humanPredictives,
+      'trainingStim': trainingStim,
+      'testStim': testStim,
+      'humanResponses': humanResponses,
+      'parsedCorrectly': true,
+      'incremental': rationalRulesParams.incremental,
+      'num_train': obj.parseInt(rationalRulesParams.num_train),
+    }
+  }
+}
+
+var runScript = function() {
+  var rData = parseRData();
+  var rationalRulesResults = runRationalRules(rData.trainingStim, rData.testStim, rData.humanPredictives, rData.humanResponses, rData.incremental, rData.num_train);
+  console.log(rationalRulesResults.posteriorPredictives);
+  return rationalRulesResults.posteriorPredictives;
+}
+
+runScript();
