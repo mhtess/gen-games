@@ -1,0 +1,2 @@
+correct_rejections,false_alarms,hits,misses,score,type,game_id,rule_idx,test_data_fn,rule_type,role,WorkerId
+23,4,0,4,-4,testing,1441-2dbfdebe-c350-4d24-92a8-c39a91a36301,5,./js/test_data_body_color_orange_secondary_color_purple_2.json,CONJUNCTION,student,adc7d0b7

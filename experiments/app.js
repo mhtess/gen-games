@@ -19,6 +19,7 @@ var
     Server        = require('./sharedUtils/serverBase.js');
 
 var gameport;
+var requiredFiles;
 
 if(argv.gameport) {
   gameport = argv.gameport;
@@ -49,7 +50,6 @@ try {
 }
 
 var utils = require('./sharedUtils/sharedUtils.js');
-
 var global_player_set = {};
 
 // Log something so we know that server-side setup succeeded

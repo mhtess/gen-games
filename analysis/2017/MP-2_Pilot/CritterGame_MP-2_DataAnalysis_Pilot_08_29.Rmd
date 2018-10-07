@@ -1,0 +1,273 @@
+---
+title: "CritterGame_MP-2_DataAnalysis_Pilot_1"
+author: "Lauren Oey"
+date: "9/28/17"
+output: github_document
+---
+
+```{r preamble, echo=FALSE, results='hide', message=FALSE, warning=FALSE, tidy=TRUE}
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(data.table)
+library(tidytext)
+library(coreNLP)
+library(cleanNLP)
+library(reticulate)
+library(langcog)
+library(ggthemes)
+library(forcats)
+theme_set(theme_few())
+#setting the directory
+setwd("../../../mturk/mp-game-2/")
+
+#output_fig_path <- "~/Documents/dissertation/proposal/"
+
+data_1 <- read.delim("logScores/2017-9-28-23h-20m-42s-4437-0f3b8d69-8b75-48e9-b408-b75d41725443.csv", header=TRUE)
+data_2 <- read.delim("logTest/2017-9-28-23h-20m-42s-4437-0f3b8d69-8b75-48e9-b408-b75d41725443.csv", header=TRUE)
+data_3 <- read.delim("logTrain/2017-9-28-23h-19m-25s-4437-0f3b8d69-8b75-48e9-b408-b75d41725443.csv", header=TRUE)
+View(data_1)
+View(data_2)
+View(data_3)
+
+
+
+data_4 <- read.delim("2017-8-13-13h-36m-41s-7480-f3534652-26df-4fb1-848f-859a2cc64c33.csv", header=TRUE)
+#data_5 <- read.delim("2017-8-13-15h-27m-8s-7735-8d70b20e-2b53-4895-92ee-41e98df7fb15.csv", header=TRUE)
+data_6 <- read.delim("2017-8-14-10h-37m-22s-3416-c018ab1b-f022-41c4-893c-462e12108278.csv", header=TRUE)
+data_7 <- read.delim("2017-8-14-12h-22m-40s-7885-73f4a3d7-c242-46d0-96f2-a0c9fb4c2307.csv", header=TRUE)
+data_8 <- read.delim("2017-8-14-12h-37m-51s-4168-ead62023-8119-4366-8c05-e2091e126643.csv", header=TRUE)
+
+test_data <- read.delim("../../data/mp-game-2/logTest/2017-10-3-8h-1m-20s-3950-67e1dc62-2b5c-4896-9801-61472047e53a.csv", header = T)
+test_data <- bind_rows(data_1,data_2,data_4,data_6,data_7,data_8)
+test_data$gameid <- as.factor(test_data$gameid)
+test_data$trialNum <- as.factor(test_data$trialNum-1)
+test_data$correct <- as.factor(ifelse(test_data$score=="hit" | test_data$score=="correctRejection", 1, 0))
+
+numGames = length(unique(test_data$gameid))
+test_data <- test_data %>%
+  mutate(gameid_num=gameid,
+         gameid_num=factor(gameid_num, labels=paste0("game_",seq(1,numGames))),
+         correct = as.numeric(as.character(correct)))
+
+distribution_condition <- test_data %>% 
+  mutate(game_with_species = paste(species, gameid)) %>%
+  group_by(gameid, block_num, role, critter, game_with_species, species) %>%
+  summarize(p = mean(internal_prop)) %>%
+  ungroup() %>% 
+  mutate( # want to spread based on species, but they each have a unique name
+    # instead, cooerce to numeric (making sure that they are ordered properly), and then spread
+    species = as.numeric(factor(game_with_species, 
+                                levels = game_with_species[
+                                  order(gameid, block_num, role, -p)
+                                  ])),
+    speciesNum = (as.numeric(species) %% 3) + 1) %>%
+  select(-species,-critter, -game_with_species) %>%
+  spread(speciesNum, p) %>%
+  mutate(distribution = paste("[",`1`,", ", `2`,", ", `3`,"]", sep="")) %>%
+  select(-`1`, -`2`, -`3`)
+
+test_data <- left_join(test_data, distribution_condition)
+
+
+str(test_data)
+#View(test_data)
+
+
+
+```
+
+
+# Test Accuracy by Game ID and Player
+
+```{r echo=FALSE, results='hide', message=FALSE, warning=FALSE, tidy=TRUE}
+totalCorrect <- test_data %>%
+  group_by(gameid_num, role) %>%
+  multi_boot_standard(column = "correct")
+
+graph_totalCorrect <- ggplot(totalCorrect, aes(x=role, y = mean, ymin =ci_lower, ymax = ci_upper)) +
+  geom_bar(stat="identity",  position="dodge", width = 0.5) +
+  geom_errorbar(width = 0.3)+
+  geom_hline(yintercept = 0.5, lty = 3)+
+  scale_x_discrete("Player") +
+  facet_wrap(~gameid_num) +
+  ggtitle("Test Accuracy by Dyad") +
+  theme_classic() +
+  theme(plot.title = element_text(hjust=0.5, size=18, face="bold"))
+graph_totalCorrect
+```
+
+# Test Accuracy by Dyad and Trial Number
+
+```{r echo=FALSE, results='hide', message=FALSE, warning=FALSE, tidy=TRUE}
+trialNum_gameID <- test_data %>%
+  mutate(correct = as.numeric(as.character(correct))) %>%
+  group_by(trialNum, gameid_num) %>%
+  summarise(correctCount = sum(correct),
+            totalCount = n(),
+            percentCorrect = correctCount/totalCount)
+
+graph_trialNum_gameID <- ggplot(trialNum_gameID, aes(x=trialNum, y=percentCorrect)) +
+  geom_bar(stat="identity",  position="dodge", fill="black") +
+  scale_x_discrete("Trial Number") +
+  scale_fill_manual("PercentCorrect") +
+  facet_wrap(~gameid_num) +
+  ggtitle("Trial Test Accuracy by Dyad") +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust=0.5, size=18, face="bold"))
+graph_trialNum_gameID
+```
+
+# Test Accuracy by Dyad and Distribution
+
+```{r echo=FALSE, results='hide', message=FALSE, warning=FALSE, tidy=TRUE}
+distribution_gameID <- test_data %>%
+  mutate(gameid_num = gsub("game_", "dyad", gameid_num),
+         distribution = fct_relevel(distribution,"[0, 1, 0]","[0, 1, 0.75]","[0, 1, 0.25]", "[0.5, 0.5, 0.5]"
+                                    )) %>%
+  group_by(distribution, gameid_num) %>%
+  summarise(correctCount = sum(correct),
+            totalCount = n(),
+            percentCorrect = correctCount/totalCount)
+
+graph_distribution_gameID <- ggplot(distribution_gameID, aes(x=gameid_num, y=correctCount)) +
+  geom_bar(stat="identity",  position="dodge") +
+  scale_fill_manual("PercentCorrect") +
+  facet_wrap(~distribution, nrow=1) +
+  ggtitle("Test Performance by Dyad and Distribution") +
+  theme(plot.title = element_text(hjust=0.5),
+        axis.text.x = element_text(angle = 45, vjust =1 ,hjust=1 ))+
+  scale_y_continuous(limits = c(0, 24), breaks = c(0, 12, 24))+
+  ylab("hits + correct rejections")+
+  xlab("")
+
+ggsave(graph_distribution_gameID,
+       file = paste(output_fig_path, "gengames-pilot-test_dyad_distribution.pdf", sep = ""),
+       height = 3.25, width = 7)
+```
+
+# Test Accuracy by Dyad, Role, and Distribution
+
+```{r echo=FALSE, results='hide', message=FALSE, warning=FALSE, tidy=TRUE}
+distribution_role_gameID <- test_data %>%
+  mutate(gameid_num = gsub("game_", "dyad", gameid_num),
+         distribution = fct_relevel(distribution,"[0, 1, 0]","[0, 1, 0.75]","[0, 1, 0.25]", "[0.5, 0.5, 0.5]"
+                                    ),
+         role = gsub("player", "", role)) %>%
+  group_by(distribution, gameid_num, role, block_num) %>%
+  summarise(correctCount = sum(correct),
+            totalCount = n(),
+            percentCorrect = correctCount/totalCount)
+
+graph_distribution_role_gameID <- ggplot(distribution_role_gameID, 
+                                         aes(x=gameid_num, y=correctCount, fill = role)) +
+  geom_bar(stat="identity",  position=position_dodge(), color = 'black') +
+  scale_fill_solarized()+
+  facet_wrap(~distribution, nrow=1) +
+  ggtitle("Test Performance by Participant and Distribution") +
+  theme(plot.title = element_text(hjust=0.5),
+        axis.text.x = element_text(angle = 45, vjust =1 ,hjust=1 ))+
+  scale_y_continuous(limits = c(0, 12), breaks = c(0, 6, 12))+
+  ylab("hits + correct rejections")+
+  xlab("")
+
+ggsave(graph_distribution_role_gameID,
+       file = paste(output_fig_path, "gengames-pilot-test_dyad_role_distribution.pdf", sep = ""),
+       height = 3.25, width = 11)
+
+graph_distribution_role_gameID
+```
+
+```{r}
+test_data %>%
+  select( gameid_num, distribution, role, trialNum, species,full_globalColor1_color_mean, internal_prop, selected, score ) %>%
+  View()
+```
+
+
+# Test Accuracy by Trial Number
+
+```{r echo=FALSE, results='hide', message=FALSE, warning=FALSE, tidy=TRUE}
+trialCorrect <- test_data %>%
+  mutate(correct = as.numeric(as.character(correct))) %>%
+  group_by(trialNum) %>%
+  multi_boot_standard(column = "correct")
+  # summarise(correctCount = sum(correct),
+  #           totalCount = n(),
+  #           percentCorrect = correctCount/totalCount)
+
+
+graph_trialCorrect <- ggplot(trialCorrect,
+                             aes(x=trialNum, y=mean,
+                                               ymin=summary_ci_lower, ymax=summary_ci_upper)) +
+  geom_bar(stat="identity", fill = 'gray22',color='black', width = 0.6, size = 1.0) +
+  geom_errorbar(size=1.0, width=0.3) +
+  scale_x_discrete("Trial Number") +
+  scale_y_continuous("Percent Correct", limits=c(0,1), expand=c(0,0)) +
+  ggtitle("Test Accuracy by Trial Number") +
+  theme_classic() +
+  theme(plot.title = element_text(hjust=0.5, size=30, face="bold"),
+        axis.title = element_text(size=24),
+        axis.text.x = element_text(size=20, face="bold"),
+        axis.text.y = element_text(size=20))
+
+graph_trialCorrect 
+#ggsave("~/Desktop/Research/Summer2017/CSLI/FinalPresentation/Graphics/accuracy_byTrial.png", graph_trialCorrect, height=8, width=12)
+```
+
+# Test Accuracy by Distribution Condition
+
+```{r echo=FALSE, results='hide', message=FALSE, warning=FALSE, tidy=TRUE}
+distributionCorrect <- test_data %>%
+  mutate(correct = as.numeric(as.character(correct))) %>%
+  group_by(distribution) %>%
+  multi_boot_standard(column = "correct")
+  # summarise(correctCount = sum(correct),
+  #           totalCount = n(),
+  #           percentCorrect = correctCount/totalCount)
+distribution_order = c(
+  "[0.5, 0.5, 0.5]",
+  "[0, 1, 0.25]",
+  "[0, 1, 0.75]",
+  "[0, 1, 0]"
+)
+graph_distributionCorrect <- ggplot(distributionCorrect,
+                                    aes(x=distribution, y=mean,
+                                        ymin=summary_ci_lower, ymax=summary_ci_upper)) +
+  geom_bar(stat="identity", fill = 'gray22',color='black', width = 0.6, size = 1.0) +
+  geom_errorbar(size=1.0, width=0.3)+
+  scale_x_discrete("Distribution", limits=distribution_order) +
+  scale_y_continuous("Percent Correct", limits=c(0,1), expand=c(0,0)) +
+  ggtitle("Test Accuracy by Distribution") +
+  theme_classic() +
+  theme(plot.title = element_text(hjust=0.5, size=30, face="bold"),
+        axis.title = element_text(size=24),
+        axis.text.x = element_text(size=16),
+        axis.text.y = element_text(size=20))
+
+graph_distributionCorrect 
+#ggsave("~/Desktop/Research/Summer2017/CSLI/FinalPresentation/Graphics/accuracy_byDistribution.png", graph_distributionCorrect, height=8, width=12)
+
+```
+
+# Test Accuracy by Critter Species
+
+```{r echo=FALSE, results='hide', message=FALSE, warning=FALSE, tidy=TRUE}
+speciesCorrect <- test_data %>%
+  mutate(correct = as.numeric(as.character(correct))) %>%
+  group_by(species) %>%
+  summarise(correctCount = sum(correct),
+            totalCount = n(),
+            percentCorrect = correctCount/totalCount)
+
+graph_speciesCorrect <- ggplot(speciesCorrect, aes(x=species, y=percentCorrect)) +
+  geom_bar(stat="identity",  fill="black") +
+  scale_x_discrete("Species Types") +
+  scale_y_continuous("Percent Correct") +
+  ggtitle("Test Accuracy by Species") +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust=0.5, size=18, face="bold"),
+        axis.text.x = element_text(angle = 90))
+
+graph_speciesCorrect 
+```

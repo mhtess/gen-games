@@ -1,0 +1,81 @@
+---
+title: "Critter Game - Sandbox Data"
+author: "Lauren Oey"
+date: "7/6/2017"
+output: github_document
+---
+
+```{r preamble, tidy=TRUE}
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(data.table)
+#library(xtable)
+
+
+#setting the directory
+setwd("../../mturk/game-1/sandbox/")
+
+
+sandbox_data <- read.csv("game-1-catch_trials.csv")
+
+#View(sandbox_data)
+
+str(sandbox_data)
+summary(sandbox_data)
+
+```
+
+# Adjusting Dataframe
+```{r}
+#attach(sandbox_data)
+sandbox_data$question_name <- as.factor(ifelse(sandbox_data$question=="tar1", "tail", "head"))
+sandbox_data$tar1_logic <- as.logical(sandbox_data$tar1)
+sandbox_data$tar2_logic <- as.logical(sandbox_data$tar2)
+sandbox_data$trial_num <- as.factor(sandbox_data$trial_num)
+sandbox_data$workerid <- as.factor(sandbox_data$workerid)
+sandbox_data$response_logic <- ifelse(sandbox_data$response=="Yes", TRUE, FALSE)
+sandbox_data$Correct <- ifelse(sandbox_data$question_name=="tail", ifelse(sandbox_data$tar1_logic==sandbox_data$response_logic, TRUE, FALSE), ifelse(sandbox_data$tar2_logic==sandbox_data$response_logic, TRUE, FALSE))
+
+
+  
+
+```
+
+# Proportion Correct By Subject
+
+```{r, results='asis'}
+sandbox_data_by_subj <- sandbox_data %>%
+  group_by(workerid, trial_num, condition) %>%
+  distinct() %>%
+  summarise(Total = 1, Correct_trial = ifelse(Correct==TRUE, 1, 0)) %>%
+  group_by(workerid, condition) %>%
+  summarise(Total_trials = sum(Total), Correct_trials = sum(Correct_trial)) %>%
+  mutate(Percentage_correct = Correct_trials/Total_trials) %>%
+  select(workerid, Percentage_correct, condition)
+
+#sandbox_data_by_subj
+
+#xt <- xtable(sandbox_data_by_subj, type="html", caption = "Percentage of correct catch trials per subject.", label = "sandbox_data_by_subj")
+#names(xt) <- c('Subject', 'Percentage of Correct Trials')
+#print(xt, comment=FALSE)
+
+Condition_lab <- c('Pepsin Detector')
+
+graph_by_subj <- ggplot(sandbox_data_by_subj, aes(x=workerid, y=Percentage_correct, colour=condition, fill=condition)) +
+  geom_bar(stat="identity") +
+  scale_x_discrete("Subject Number") +
+  scale_y_continuous("Percentage of Trials Correct") +
+  scale_colour_discrete(guide=guide_legend("Condition"), labels=Condition_lab) +
+  scale_fill_discrete(guide=guide_legend("Condition"), labels=Condition_lab) +
+  ggtitle("Accuracy on Catch Trials by Subject") +
+  theme_minimal()
+graph_by_subj
+
+
+```
+
+
+
+
+
