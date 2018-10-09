@@ -40,15 +40,15 @@ For each concept, there were two lists. Each list comprised of the same stimuli,
 
 The 5 Concepts were:
 
-* Primary Color == Orange
+* Primary Color == Orange ("Orange things")
 
-* Critter Type == Fish && Primary Color == Blue
+* Critter Type == Fish && Primary Color == Blue ("Blue fish")
 
-* Primary Color == Orange && Secondary Color == Purple
+* Primary Color == Orange && Secondary Color == Purple ("Purple and orange things")
 
-* Critter Type == Bug || Secondary Color == Yellow
+* Critter Type == Bug || Secondary Color == Yellow ("Bugs, or yellow things")
 
-* Critter Type == Bird || Primary Color == Green
+* Critter Type == Bird || Primary Color == Green ("Birds, or green things")
 
 # Data Processing
 ```{r}
@@ -64,7 +64,7 @@ library(rwebppl)
 
 # Load Training Trial Responses
 temp <- list.files(
-  "../../../mturk/mp-game-3/experiment_1/results-cleaned/train_trials",
+  "../../../mturk/mp-game-3/experiment/results-cleaned/train_trials",
   pattern="*.csv",
   full.names=TRUE
 )
@@ -72,7 +72,7 @@ train_trials <- do.call(rbind, lapply(temp, read.csv))
 
 # Load Test Trial Responses
 temp <- list.files(
-  "../../../mturk/mp-game-3/experiment_1/results-cleaned/test_trials",
+  "../../../mturk/mp-game-3/experiment/results-cleaned/test_trials",
   pattern="*.csv",
   full.names=TRUE
 )
@@ -113,8 +113,13 @@ ggplot(rule_freq, aes(x=rule_idx, y = num_games)) + geom_bar(stat="identity")
 
 Due to some server issues early on we have a slight imbalance in the number of trials prescribed to each rule index. We intended to have ~3 per rule type originally.
 
+**why 9 rules?**
+
 # Analysis: Accuracy
 First, we examine how people perform on the train and test splits, for each specific list.
+
+**These (e.g., `train_stats`) are already summarized results... better to do all the analysis in R**
+
 ```{r}
 num_train = 5
 num_test = 31
@@ -184,7 +189,10 @@ Note that test accuracy of listeners is often very similar to the test accuracy 
 
 For rule_idx 3 game 1264, we see that the student performs much worse than the teacher. Upon examination of the chat logs, it seems like the student "hit" continue without conversing with the explorer. They only said "hello" to each other, before moving on to the test set. Thus, their performance is indicative of random guessing.
 
-We also see significant discrepancies in performance on rule_idx 5. The rule here was Primary Color == Orange && Secondary Color == Purple. In Game 34589, the teacher correctly understood the concept, but said they also thought that fish couldn't be wudsy, mentioning that he had never seen orange and purple fish during training. In Game 9542, the teacher told the student that "I didn't notice any patterns at all." -- so again the student was left with no information, i.e. an uninformative prior.
+We also see significant discrepancies in performance on rule_idx 5. The rule here was Primary Color == Orange && Secondary Color == Purple. In Game 34589, the teacher correctly understood the concept, but said they also thought that fish couldn't be wudsy, mentioning that he had never seen orange and purple fish during training. 
+**were there a lot of purple/orange fish during test?**
+
+In Game 9542, the teacher told the student that "I didn't notice any patterns at all." -- so again the student was left with no information, i.e. an uninformative prior.
 
 ```{r}
 test_stats %>% 
@@ -308,12 +316,12 @@ train_trials %>%
 
 # Analysis: Rational Rules (List Pooled)
 ```{r}
-game_summary <- read.csv('../../../mturk/mp-game-3/experiment_1/results-cleaned/game_summary.csv')
+game_summary <- read.csv('../../../mturk/mp-game-3/experiment/results-cleaned/game_summary.csv')
 
 rational_rules <- function(r_idx, game_summary, incremental, num_train, max_trial_num) {
   # Filter accordin to list idx
   temp <- filter(game_summary, rule_idx == r_idx)
-  base_dir_1 = '../../mturk/mp-game-3/experiment_1/results-cleaned'
+  base_dir_1 = '../../mturk/mp-game-3/experiment/results-cleaned'
   base_dir_2 = '../../experiments/mp-game-3/js'
   
   # Collect necessary file paths
@@ -363,16 +371,27 @@ plot_results <- function(results) {
 }
 ```
 
-<!-- Here the prior on outliers is Meth.exp(-5), 20000 burn, and 2000 samples. ```{r} -->
-<!-- rule_idxs <- 0:8 results <- do.call(rbind, lapply(rule_idxs, rational_rules, -->
-<!-- game_summary=game_summary, incremental=FALSE, num_train=-1))  -->
-<!-- plot_results(results) ``` ```{r} train <- results %>% filter(trial_num < 52)  -->
-<!-- plot_results(train) ``` -->
+Here the prior on outliers is Meth.exp(-5), 20000 burn, and 2000 samples. 
+```{r}
+rule_idxs <- 0:8 
+results <- do.call(rbind, lapply(rule_idxs, rational_rules,
+game_summary=game_summary, incremental=FALSE, num_train=-1))
+plot_results(results)
+``` 
+
+```{r}
+train <- results %>% filter(trial_num < 52)
+plot_results(train)
+```
+
+```{r} 
+test <- results %>% filter(trial_num >= 52) plot_results(test)
+```
 
 
-<!-- ```{r} test <- results %>% filter(trial_num >= 52) plot_results(test) ``` -->
-
-
-<!-- ```{r} rule_idxs <- 0:0 results <- do.call(rbind, lapply(rule_idxs, -->
-<!-- rational_rules, game_summary=game_summary, incremental=TRUE, num_train=10))  -->
-<!-- plot_results(results) ``` -->
+```{r} 
+rule_idxs <- 0:0 
+results <- do.call(rbind, lapply(rule_idxs,
+rational_rules, game_summary=game_summary, incremental=TRUE, num_train=10))
+plot_results(results) 
+```
