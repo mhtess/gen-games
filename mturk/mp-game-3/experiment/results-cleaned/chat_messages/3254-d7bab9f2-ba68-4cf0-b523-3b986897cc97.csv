@@ -1,6 +1,0 @@
-iterationName,game_id,time,trialNum,role,text,reactionTime,eventType,rule_idx,rule_type
-pilot1,3254-d7bab9f2-ba68-4cf0-b523-3b986897cc97,1525125858739,1,student,Hi.  How did it go?,6.484,chatMessage,2,CONJUNCTION
-pilot1,3254-d7bab9f2-ba68-4cf0-b523-3b986897cc97,1525125896556,1,explorer,OK. The creatures are blue with 3 whiskers,33.483,chatMessage,2,CONJUNCTION
-pilot1,3254-d7bab9f2-ba68-4cf0-b523-3b986897cc97,1525125925029,1,student,Ok.  Thanks.  Is that really all there is to it?,14.731,chatMessage,2,CONJUNCTION
-pilot1,3254-d7bab9f2-ba68-4cf0-b523-3b986897cc97,1525125932309,1,explorer,The look like fish,25.997,chatMessage,2,CONJUNCTION
-pilot1,3254-d7bab9f2-ba68-4cf0-b523-3b986897cc97,1525125988116,1,explorer,The others look like bugs or something prehistoric,52.762,chatMessage,2,CONJUNCTION

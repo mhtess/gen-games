@@ -1,6 +1,0 @@
-iterationName,game_id,time,trialNum,role,text,reactionTime,eventType,rule_idx,rule_type
-pilot1,0953-0e7cfea2-2e66-419e-b197-244eaa7c7b14,1525292911540,1,explorer,I learned that the wudsy creatures have orange bodies and wings,17.879,chatMessage,0,SINGLE_FEAT
-pilot1,0953-0e7cfea2-2e66-419e-b197-244eaa7c7b14,1525292931660,1,student,interesting,1.086,chatMessage,0,SINGLE_FEAT
-pilot1,0953-0e7cfea2-2e66-419e-b197-244eaa7c7b14,1525292948796,1,student,anything else?,2.354,chatMessage,0,SINGLE_FEAT
-pilot1,0953-0e7cfea2-2e66-419e-b197-244eaa7c7b14,1525292959342,1,explorer,"As long as the body is ORANGE, or the wings are ORANGE, it's a wudsy. Size does not matter",23.096,chatMessage,0,SINGLE_FEAT
-pilot1,0953-0e7cfea2-2e66-419e-b197-244eaa7c7b14,1525292986621,1,student,okay sounds good,1.894,chatMessage,0,SINGLE_FEAT

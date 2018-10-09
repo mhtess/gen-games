@@ -1,6 +1,0 @@
-iterationName,game_id,time,trialNum,role,text,reactionTime,eventType,rule_idx,rule_type
-pilot1,4472-c2464183-e97f-4d6a-acbf-7108bf7a9a09,1525125027703,1,explorer,"hello, the wudsy creatures are the blue fish and blue shirmp ",23.19,chatMessage,2,CONJUNCTION
-pilot1,4472-c2464183-e97f-4d6a-acbf-7108bf7a9a09,1525125084138,1,student,Good to know it.  Any others?,23.664,chatMessage,2,CONJUNCTION
-pilot1,4472-c2464183-e97f-4d6a-acbf-7108bf7a9a09,1525125090330,1,explorer,nope,1.567,chatMessage,2,CONJUNCTION
-pilot1,4472-c2464183-e97f-4d6a-acbf-7108bf7a9a09,1525125115870,1,student,"Then, I think we are good to go.",10.066,chatMessage,2,CONJUNCTION
-pilot1,4472-c2464183-e97f-4d6a-acbf-7108bf7a9a09,1525125130759,1,explorer,yes. ,5.308,chatMessage,2,CONJUNCTION

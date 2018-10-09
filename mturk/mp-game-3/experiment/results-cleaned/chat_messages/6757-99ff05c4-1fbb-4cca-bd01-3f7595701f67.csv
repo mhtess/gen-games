@@ -1,6 +1,0 @@
-iterationName,game_id,time,trialNum,role,text,reactionTime,eventType,rule_idx,rule_type
-pilot1,6757-99ff05c4-1fbb-4cca-bd01-3f7595701f67,1524849477664,1.0,explorer,It doesn't matter which type of creature it is as long as it has orange color it is wudsy. All of the other colors are not.,29.295,chatMessage,0,SINGLE_FEAT
-pilot1,6757-99ff05c4-1fbb-4cca-bd01-3f7595701f67,1524849506416,1.0,explorer,"So, a creature can be yellow or blue or pink, if it has orange parts it is wudsy.",25.255,chatMessage,0,SINGLE_FEAT
-pilot1,6757-99ff05c4-1fbb-4cca-bd01-3f7595701f67,1524849516153,1.0,student,"okay, so orange is wudsy, and any other color (purple, blue, yellow) is not wudsy",14.213,chatMessage,0,SINGLE_FEAT
-pilot1,6757-99ff05c4-1fbb-4cca-bd01-3f7595701f67,1524849535470,1.0,explorer,"Correct, as long as it has orange somewhere it is wudsy.",13.754,chatMessage,0,SINGLE_FEAT
-pilot1,6757-99ff05c4-1fbb-4cca-bd01-3f7595701f67,1524849550144,1.0,student,"okay, got it",3.958,chatMessage,0,SINGLE_FEAT

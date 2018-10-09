@@ -1,7 +1,0 @@
-iterationName,game_id,time,trialNum,role,text,reactionTime,eventType,rule_idx,rule_type
-pilot1,2781-7b4d374f-7141-4793-9c77-05d791257176,1525124384282,1,explorer,Hai,1.635,chatMessage,1,SINGLE_FEAT
-pilot1,2781-7b4d374f-7141-4793-9c77-05d791257176,1525124390002,1,student,HI,1.119,chatMessage,1,SINGLE_FEAT
-pilot1,2781-7b4d374f-7141-4793-9c77-05d791257176,1525124407917,1,student,What did you discover?,4.262,chatMessage,1,SINGLE_FEAT
-pilot1,2781-7b4d374f-7141-4793-9c77-05d791257176,1525124436345,1,explorer,I think some are fishes and some are birds.,21.333,chatMessage,1,SINGLE_FEAT
-pilot1,2781-7b4d374f-7141-4793-9c77-05d791257176,1525124454999,1,student,What are they not?,2.902,chatMessage,1,SINGLE_FEAT
-pilot1,2781-7b4d374f-7141-4793-9c77-05d791257176,1525124503476,1,student,Like what else was present?,5.257,chatMessage,1,SINGLE_FEAT

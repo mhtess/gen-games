@@ -1,9 +1,0 @@
-iterationName,game_id,time,trialNum,role,text,reactionTime,eventType,rule_idx,rule_type
-pilot1,7544-4042403c-9b9b-4fc5-bd64-40e02e6d813b,1525301258387,1,explorer,The butterfly-looking creatures are always wudsy.,13.864,chatMessage,7,DISJUNCTION
-pilot1,7544-4042403c-9b9b-4fc5-bd64-40e02e6d813b,1525301271007,1,student,THANKS,2.0,chatMessage,7,DISJUNCTION
-pilot1,7544-4042403c-9b9b-4fc5-bd64-40e02e6d813b,1525301286577,1,explorer,Any fish with purple or red stripes is not wudsy,18.496,chatMessage,7,DISJUNCTION
-pilot1,7544-4042403c-9b9b-4fc5-bd64-40e02e6d813b,1525301302646,1,student,ANYTHING ELSE,3.965,chatMessage,7,DISJUNCTION
-pilot1,7544-4042403c-9b9b-4fc5-bd64-40e02e6d813b,1525301340608,1,explorer,Any of the peacock/bird looking things with red or purple hair are not wudsy.,21.738,chatMessage,7,DISJUNCTION
-pilot1,7544-4042403c-9b9b-4fc5-bd64-40e02e6d813b,1525301348868,1,explorer,That's all I got.,6.964,chatMessage,7,DISJUNCTION
-pilot1,7544-4042403c-9b9b-4fc5-bd64-40e02e6d813b,1525301379409,1,student,OK THANKS,3.976,chatMessage,7,DISJUNCTION
-pilot1,7544-4042403c-9b9b-4fc5-bd64-40e02e6d813b,1525301384084,1,explorer,Yep,0.612,chatMessage,7,DISJUNCTION

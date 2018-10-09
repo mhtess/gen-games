@@ -1,6 +1,0 @@
-iterationName,game_id,time,trialNum,role,text,reactionTime,eventType,rule_idx,rule_type
-pilot1,3459-d39aa68e-f315-496f-88a7-6fd7f0a8ec62,1525130164296,1,explorer,Hi! Wudsys are purple and gold. I know this for sure!,12.208,chatMessage,5,CONJUNCTION
-pilot1,3459-d39aa68e-f315-496f-88a7-6fd7f0a8ec62,1525130190804,1,student,"ok, are any of the others purple and gold?",19.02,chatMessage,5,CONJUNCTION
-pilot1,3459-d39aa68e-f315-496f-88a7-6fd7f0a8ec62,1525130238258,1,explorer,"So far I have seen no other creatures that are purple and gold. But they might exist. I think that in order to be a Wudsy, the creature has to be purple and gold, and also look like a bird or insect.",34.394,chatMessage,5,CONJUNCTION
-pilot1,3459-d39aa68e-f315-496f-88a7-6fd7f0a8ec62,1525130262394,1,explorer,"I think fish-like creatures are not wudsys ever, but I can't be sure because I've never seen a purple and gold fish.",22.483,chatMessage,5,CONJUNCTION
-pilot1,3459-d39aa68e-f315-496f-88a7-6fd7f0a8ec62,1525130269244,1,student,"OK, thanks,,,,,I got it",13.636,chatMessage,5,CONJUNCTION

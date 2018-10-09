@@ -1,2 +1,0 @@
-correct_rejections,false_alarms,hits,misses,score,type,game_id,rule_idx,training_data_fn,rule_type,role,WorkerId
-32,3,13,3,10,training,3744-99a474ce-0034-4e12-8564-28a9ce1b8544,0,training_data_body_color_orange_1.json,SINGLE_FEAT,explorer,2fca7f41

@@ -1,2 +1,0 @@
-correct_rejections,false_alarms,hits,misses,score,type,game_id,rule_idx,test_data_fn,rule_type,role,WorkerId
-13,0,16,2,16,testing,2611-fb3b388b-eeeb-4f10-954d-1a52508f140d,8,./js/test_data_critter_bird_or_body_color_green_1.json,DISJUNCTION,student,A14ADQ7RUN6TDY

@@ -1,2 +1,0 @@
-correct_rejections,false_alarms,hits,misses,score,type,game_id,rule_idx,test_data_fn,rule_type,role,WorkerId
-17,2,11,0,9,testing,4452-806525ef-b3d7-4665-af76-23867b46607d,0,test_data_body_color_orange_1.json,SINGLE_FEAT,student,072e9bcf
