@@ -92,7 +92,7 @@ def fill_summary_stats(game_id, role, mturk_file_struct):
     for filename in os.listdir(RAW_SERVER_LOGS_SUMMARY_STATS):
         if game_id in filename:
             fp = os.path.join(RAW_SERVER_LOGS_SUMMARY_STATS, filename)
-            df = pd.read_csv(fp, sep='	')
+            df = pd.read_csv(fp, sep='  ')
             
             # Training Summary Stats Extraction
             if role == ROLE_STUDENT:
@@ -154,7 +154,7 @@ def fill_train_answers(game_id, role, mturk_file_struct):
         for filename in os.listdir(RAW_SERVER_LOGS_TRAIN):
             if game_id in filename:
                 fp = os.path.join(RAW_SERVER_LOGS_TRAIN, filename)
-                df = pd.read_csv(fp, sep='	')
+                df = pd.read_csv(fp, sep='  ')
                 training_answers_rows = df.loc[(df['role'] == role)]
                 for _, r in training_answers_rows.iterrows():
                     if math.isnan(r['is_correct']):
@@ -182,7 +182,7 @@ def fill_test_answers(game_id, role, mturk_file_struct):
     for filename in os.listdir(RAW_SERVER_LOGS_TEST):
         if game_id in filename:
             fp = os.path.join(RAW_SERVER_LOGS_TEST, filename)
-            df = pd.read_csv(fp, sep='	')
+            df = pd.read_csv(fp, sep='  ')
             test_answers_rows = df.loc[(df['role'] == role)]
             for _, r in test_answers_rows.iterrows():
                 if math.isnan(r['is_correct']):
@@ -358,8 +358,12 @@ def fix_incomplete_files(ignored_game_ids):
         if not file_found:
             still_incomplete.append(ig)
         else:
-            ig_copy_path = os.path.join(CLEANED_DIR, ig['file_name'])
-            copyfile(ig['file_path'], ig_copy_path)
+            df = pd.read_json(os.path.join(DIR, ig['file_name']))
+            ig_file_path = os.path.join(CLEANED_DIR, ig['file_name'])
+            mturk_file_struct = fill_completed_game_struct(df)
+
+            with open(ig_file_path, 'w') as fp:
+                json.dump(mturk_file_struct, fp, indent=4)
 
             new_file_name = str(uuid.uuid1())
             new_file_path = os.path.join(CLEANED_DIR, '{}.json'.format(new_file_name))
@@ -472,7 +476,7 @@ def save_chat_messages(ignored_game_ids, dir=CLEANED_DIR):
             for filename in os.listdir(RAW_SERVER_LOGS_CHAT_MESSAGES):
                 if game_id in filename:
                     chat_fp = os.path.join(RAW_SERVER_LOGS_CHAT_MESSAGES, filename)
-                    chat_df = pd.read_csv(chat_fp, sep='	')
+                    chat_df = pd.read_csv(chat_fp, sep='    ')
                     chat_df.fillna(1, inplace=True)
                     chat_df['rule_idx'] = df['answers']['rule_idx']
                     chat_df['rule_type'] = df['answers']['rule_type']
@@ -536,6 +540,8 @@ def save_human_predictives_teacher_pooled_by_list(ignored_game_ids, rule_idx):
                 test_df = pd.concat([test_df, df])        
 
     # Save Pooled Predictives
+    if train_df is None or test_df is None:
+        import pdb; pdb.set_trace()
     training_preds, test_preds = compute_human_predictives_teacher(train_df, test_df)
     items = training_preds.items()
     preds = pd.DataFrame({'trial_num': [i[0] for i in items], 'pred': [i[1] for i in items]})
@@ -615,5 +621,5 @@ if __name__ == '__main__':
     save_train_summary_stats(ignored_game_ids)
     save_test_summary_stats(ignored_game_ids)
     save_chat_messages(ignored_game_ids)
-    save_human_predictives_pooled_by_lists(ignored_game_ids)
+    # save_human_predictives_pooled_by_lists(ignored_game_ids)
     
