@@ -1,0 +1,3 @@
+iterationName	gameid	time	trialNum	role	hits	misses	falseAlarms	correctRejections	eventType
+pilot1	7735-8d70b20e-2b53-4895-92ee-41e98df7fb15	1502663228188	2	playerB	2	4	2	4	logScores
+pilot1	7735-8d70b20e-2b53-4895-92ee-41e98df7fb15	1502663307888	2	playerA	3	3	3	3	logScores

@@ -1,0 +1,10 @@
+iterationName,game_id,time,trialNum,role,text,reactionTime,eventType,rule_idx,rule_type
+pilot1,3992-42693c58-9ed7-4912-9ccf-4a7b202e4bd3,1525131840228,1,student,Hello!,1.895,chatMessage,6,DISJUNCTION
+pilot1,3992-42693c58-9ed7-4912-9ccf-4a7b202e4bd3,1525131877901,1,explorer,"Hello!  If the creature has orange or yellow wings, feathers or stripes, it is wudsy.",33.229,chatMessage,6,DISJUNCTION
+pilot1,3992-42693c58-9ed7-4912-9ccf-4a7b202e4bd3,1525131920373,1,student,"Ok, that's all?",6.929,chatMessage,6,DISJUNCTION
+pilot1,3992-42693c58-9ed7-4912-9ccf-4a7b202e4bd3,1525131923403,1,explorer,"If it has green or purple wings, feathers or stripes, it is not.",40.805,chatMessage,6,DISJUNCTION
+pilot1,3992-42693c58-9ed7-4912-9ccf-4a7b202e4bd3,1525131959415,1,explorer,"I seem to have forgotten for blue, but I am pretty sure if it has blue wings, feathers or stripes, it is wudsy.  ",30.336,chatMessage,6,DISJUNCTION
+pilot1,3992-42693c58-9ed7-4912-9ccf-4a7b202e4bd3,1525131969730,1,explorer,The body color does not matter.,6.763,chatMessage,6,DISJUNCTION
+pilot1,3992-42693c58-9ed7-4912-9ccf-4a7b202e4bd3,1525132001286,1,student,Got it! Thanks for the info,13.46,chatMessage,6,DISJUNCTION
+pilot1,3992-42693c58-9ed7-4912-9ccf-4a7b202e4bd3,1525132035043,1,explorer,"Okay, best of luck.  Hopefully, I've remembered correctly, but I'm sure, we can deduce any mistakes as we go along.",30.355,chatMessage,6,DISJUNCTION
+pilot1,3992-42693c58-9ed7-4912-9ccf-4a7b202e4bd3,1525132049936,1,student,Cool!,2.727,chatMessage,6,DISJUNCTION

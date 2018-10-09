@@ -1,0 +1,5 @@
+iterationName	gameid	time	trialNum	role	text	reactionTime	eventType
+pilot1	6246-fc954350-1b9c-47b0-b145-78be1d3dd065	1502814344976	1	playerA	Hi there!	1734	chatMessage
+pilot1	6246-fc954350-1b9c-47b0-b145-78be1d3dd065	1502814349153	1	playerB	Heyyyyy	2471	chatMessage
+pilot1	6246-fc954350-1b9c-47b0-b145-78be1d3dd065	1502814365155	1	playerA	half of each critter type is eaten by crocodiles!	10042	chatMessage
+pilot1	6246-fc954350-1b9c-47b0-b145-78be1d3dd065	1502814373524	1	playerB	I wasn't paying attention at all!	6850	chatMessage

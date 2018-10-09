@@ -1,0 +1,13 @@
+iterationName	gameid	time	trialNum	role	hit	miss	falseAlarm	correctRejection	eventType
+pilot1	2220-b46accfa-5ac2-4a01-ac8b-dd5ba8ced6e4	1508181281053	1	a	2	2	2	2	logScores
+pilot1	2220-b46accfa-5ac2-4a01-ac8b-dd5ba8ced6e4	1508181311324	1	b	2	2	2	2	logScores
+pilot1	2220-b46accfa-5ac2-4a01-ac8b-dd5ba8ced6e4	1508181703824	2	a	4	0	0	4	logScores
+pilot1	2220-b46accfa-5ac2-4a01-ac8b-dd5ba8ced6e4	1508181722355	2	b	4	0	0	4	logScores
+pilot1	2220-b46accfa-5ac2-4a01-ac8b-dd5ba8ced6e4	1508181981671	3	a	4	0	0	4	logScores
+pilot1	2220-b46accfa-5ac2-4a01-ac8b-dd5ba8ced6e4	1508181981694	3	b	4	0	0	4	logScores
+pilot1	2220-b46accfa-5ac2-4a01-ac8b-dd5ba8ced6e4	1508182229135	4	a	4	0	0	4	logScores
+pilot1	2220-b46accfa-5ac2-4a01-ac8b-dd5ba8ced6e4	1508182235028	4	b	4	0	0	4	logScores
+pilot1	2220-b46accfa-5ac2-4a01-ac8b-dd5ba8ced6e4	1508182381005	5	b	3	1	1	3	logScores
+pilot1	2220-b46accfa-5ac2-4a01-ac8b-dd5ba8ced6e4	1508182399644	5	a	4	0	0	4	logScores
+pilot1	2220-b46accfa-5ac2-4a01-ac8b-dd5ba8ced6e4	1508182558056	6	a	4	0	0	4	logScores
+pilot1	2220-b46accfa-5ac2-4a01-ac8b-dd5ba8ced6e4	1508182577060	6	b	4	0	0	4	logScores

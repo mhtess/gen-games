@@ -1,0 +1,13 @@
+iterationName	gameid	time	trialNum	role	hit	miss	falseAlarm	correctRejection	eventType
+pilot1	8012-585cc5de-101d-486f-a1ce-3160843f2cda	1508182948550	1	a	3	1	1	3	logScores
+pilot1	8012-585cc5de-101d-486f-a1ce-3160843f2cda	1508182988887	1	b	0	4	0	4	logScores
+pilot1	8012-585cc5de-101d-486f-a1ce-3160843f2cda	1508183085677	2	a	4	0	0	4	logScores
+pilot1	8012-585cc5de-101d-486f-a1ce-3160843f2cda	1508183119496	2	b	2	2	0	4	logScores
+pilot1	8012-585cc5de-101d-486f-a1ce-3160843f2cda	1508183305431	3	b	2	2	2	2	logScores
+pilot1	8012-585cc5de-101d-486f-a1ce-3160843f2cda	1508183366294	3	a	2	2	2	2	logScores
+pilot1	8012-585cc5de-101d-486f-a1ce-3160843f2cda	1508183759214	4	b	4	0	0	4	logScores
+pilot1	8012-585cc5de-101d-486f-a1ce-3160843f2cda	1508183782674	4	a	4	0	0	4	logScores
+pilot1	8012-585cc5de-101d-486f-a1ce-3160843f2cda	1508183978679	5	b	3	1	1	3	logScores
+pilot1	8012-585cc5de-101d-486f-a1ce-3160843f2cda	1508184013801	5	a	2	2	2	2	logScores
+pilot1	8012-585cc5de-101d-486f-a1ce-3160843f2cda	1508184233159	6	a	0	4	4	0	logScores
+pilot1	8012-585cc5de-101d-486f-a1ce-3160843f2cda	1508184234799	6	b	4	0	0	4	logScores

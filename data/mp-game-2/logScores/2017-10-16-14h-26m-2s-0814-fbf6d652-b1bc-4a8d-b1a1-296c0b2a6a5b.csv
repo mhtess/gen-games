@@ -1,0 +1,13 @@
+iterationName	gameid	time	trialNum	role	hit	miss	falseAlarm	correctRejection	eventType
+pilot1	0814-fbf6d652-b1bc-4a8d-b1a1-296c0b2a6a5b	1508189162210	1	b	4	0	0	4	logScores
+pilot1	0814-fbf6d652-b1bc-4a8d-b1a1-296c0b2a6a5b	1508189164770	1	a	4	0	0	4	logScores
+pilot1	0814-fbf6d652-b1bc-4a8d-b1a1-296c0b2a6a5b	1508189520056	2	b	4	0	0	4	logScores
+pilot1	0814-fbf6d652-b1bc-4a8d-b1a1-296c0b2a6a5b	1508189527551	2	a	4	0	0	4	logScores
+pilot1	0814-fbf6d652-b1bc-4a8d-b1a1-296c0b2a6a5b	1508189788437	3	b	4	0	0	4	logScores
+pilot1	0814-fbf6d652-b1bc-4a8d-b1a1-296c0b2a6a5b	1508189788938	3	a	4	0	0	4	logScores
+pilot1	0814-fbf6d652-b1bc-4a8d-b1a1-296c0b2a6a5b	1508190021133	4	b	4	0	0	4	logScores
+pilot1	0814-fbf6d652-b1bc-4a8d-b1a1-296c0b2a6a5b	1508190025482	4	a	4	0	0	4	logScores
+pilot1	0814-fbf6d652-b1bc-4a8d-b1a1-296c0b2a6a5b	1508190247518	5	b	4	0	0	4	logScores
+pilot1	0814-fbf6d652-b1bc-4a8d-b1a1-296c0b2a6a5b	1508190251135	5	a	4	0	0	4	logScores
+pilot1	0814-fbf6d652-b1bc-4a8d-b1a1-296c0b2a6a5b	1508190414535	6	b	4	0	0	4	logScores
+pilot1	0814-fbf6d652-b1bc-4a8d-b1a1-296c0b2a6a5b	1508190415567	6	a	4	0	0	4	logScores

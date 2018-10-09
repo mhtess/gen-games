@@ -1,0 +1,9 @@
+iterationName	gameid	time	trialNum	role	hits	misses	falseAlarms	correctRejections	eventType
+pilot1	7885-73f4a3d7-c242-46d0-96f2-a0c9fb4c2307	1502738560835	2	playerB	6	1	0	5	logScores
+pilot1	7885-73f4a3d7-c242-46d0-96f2-a0c9fb4c2307	1502738565133	2	playerA	4	1	2	5	logScores
+pilot1	7885-73f4a3d7-c242-46d0-96f2-a0c9fb4c2307	1502738706542	3	playerB	0	5	4	3	logScores
+pilot1	7885-73f4a3d7-c242-46d0-96f2-a0c9fb4c2307	1502738713150	3	playerA	4	0	0	8	logScores
+pilot1	7885-73f4a3d7-c242-46d0-96f2-a0c9fb4c2307	1502738801574	4	playerB	4	0	0	8	logScores
+pilot1	7885-73f4a3d7-c242-46d0-96f2-a0c9fb4c2307	1502738806236	4	playerA	6	1	0	5	logScores
+pilot1	7885-73f4a3d7-c242-46d0-96f2-a0c9fb4c2307	1502738964822	5	playerA	5	1	1	5	logScores
+pilot1	7885-73f4a3d7-c242-46d0-96f2-a0c9fb4c2307	1502738968384	5	playerB	3	3	3	3	logScores

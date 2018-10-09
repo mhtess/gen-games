@@ -1,0 +1,11 @@
+iterationName,game_id,time,trialNum,role,text,reactionTime,eventType,rule_idx,rule_type
+pilot1,0225-6ab2742c-0b64-4546-87c9-4f1c8401c827,1525130465051,1,explorer,There seem to be very few wudsys. The ones that I detected were orange in color.,44.872,chatMessage,5,CONJUNCTION
+pilot1,0225-6ab2742c-0b64-4546-87c9-4f1c8401c827,1525130512530,1,explorer,Not all orange colored animals are wudsy,22.24,chatMessage,5,CONJUNCTION
+pilot1,0225-6ab2742c-0b64-4546-87c9-4f1c8401c827,1525130607324,1,explorer,"Their main bodies are orange, not appendages.",33.514,chatMessage,5,CONJUNCTION
+pilot1,0225-6ab2742c-0b64-4546-87c9-4f1c8401c827,1525130617694,1,student,so not all orange animals are wudsy but all wudsy are orange right?,15.914,chatMessage,5,CONJUNCTION
+pilot1,0225-6ab2742c-0b64-4546-87c9-4f1c8401c827,1525130666604,1,explorer,Main bodies only. Also comprise only 8%,37.384,chatMessage,5,CONJUNCTION
+pilot1,0225-6ab2742c-0b64-4546-87c9-4f1c8401c827,1525130681789,1,student,"ok, what else do I need to know?",7.168,chatMessage,5,CONJUNCTION
+pilot1,0225-6ab2742c-0b64-4546-87c9-4f1c8401c827,1525130705838,1,explorer,All had feathered heads with glasses.,15.688,chatMessage,5,CONJUNCTION
+pilot1,0225-6ab2742c-0b64-4546-87c9-4f1c8401c827,1525130757614,1,student,"ok, tell me when you're done with the instructions and I will start",12.757,chatMessage,5,CONJUNCTION
+pilot1,0225-6ab2742c-0b64-4546-87c9-4f1c8401c827,1525130772757,1,explorer,go for it!,7.45,chatMessage,5,CONJUNCTION
+pilot1,0225-6ab2742c-0b64-4546-87c9-4f1c8401c827,1525130780043,1,student,thanks! Good luck,4.695,chatMessage,5,CONJUNCTION

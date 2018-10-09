@@ -1,0 +1,13 @@
+iterationName	gameid	time	trialNum	role	hit	miss	falseAlarm	correctRejection	eventType
+pilot1	3911-bbce2b44-a47b-41da-9845-ac176cfc5c1c	1508178316474	1	a	3	1	1	3	logScores
+pilot1	3911-bbce2b44-a47b-41da-9845-ac176cfc5c1c	1508178330279	1	b	3	1	1	3	logScores
+pilot1	3911-bbce2b44-a47b-41da-9845-ac176cfc5c1c	1508178497129	2	b	4	0	0	4	logScores
+pilot1	3911-bbce2b44-a47b-41da-9845-ac176cfc5c1c	1508178497151	2	a	2	2	2	2	logScores
+pilot1	3911-bbce2b44-a47b-41da-9845-ac176cfc5c1c	1508178602474	3	a	4	0	0	4	logScores
+pilot1	3911-bbce2b44-a47b-41da-9845-ac176cfc5c1c	1508178622488	3	b	4	0	0	4	logScores
+pilot1	3911-bbce2b44-a47b-41da-9845-ac176cfc5c1c	1508178726230	4	a	3	1	1	3	logScores
+pilot1	3911-bbce2b44-a47b-41da-9845-ac176cfc5c1c	1508178734501	4	b	4	0	0	4	logScores
+pilot1	3911-bbce2b44-a47b-41da-9845-ac176cfc5c1c	1508178808788	5	a	4	0	0	4	logScores
+pilot1	3911-bbce2b44-a47b-41da-9845-ac176cfc5c1c	1508178820933	5	b	2	2	0	4	logScores
+pilot1	3911-bbce2b44-a47b-41da-9845-ac176cfc5c1c	1508178902037	6	a	1	3	3	1	logScores
+pilot1	3911-bbce2b44-a47b-41da-9845-ac176cfc5c1c	1508178918225	6	b	2	2	2	2	logScores
