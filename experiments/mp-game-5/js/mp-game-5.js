@@ -45,6 +45,7 @@ function init() {
     "chatRoom",
     "testing_instructions",
     "testing_critters",
+    "score_report",
     "wait_room",
     "score_report",
     "subj_info",
@@ -133,7 +134,6 @@ function render_hidden_critters_table(critters, table_width) {
     // Add click handlers
     $("#cell-" + i).click(function(event) {
       var id = '#' + $(event.target).parents('.cell')[0].id;
-      console.log("Clicked: " + id);
       if (exp.selected_stim_idx != -1) {
         fade(exp.selected_stim_idx);
       }
@@ -145,7 +145,7 @@ function render_hidden_critters_table(critters, table_width) {
         if (exp.selected_training_stim.length == exp.training_critters.length) {
           // Show "Continue" button -- exploration complete
           $('#learning-critters-button').css('visibility', 'visible');
-          $('#learning-critters-button').prop('disabled', true);
+          $('#learning-critters-button').prop('disabled', false);
           alert("Exploration Complete! Please take a moment to review your findings before continuing to the chatroom.");
         }
       }
@@ -320,7 +320,7 @@ function make_slides(f) {
     name : "chat_instructions",
     start : function() {
       $('#chat_instructs').html("On the next page, you will enter into a chatroom with your partner. " +
-      " After 30 seconds, a continue button will appear for the student, which, when clicked, will advance the game for both players. " +
+      "Please discuss the properties of wudsy creatures. The \"student\" will be advance the game out of the chatroom, once they feel like they have a good understanding of wudsy creatures' properties." +
       "You are " +  roleDictionary[globalGame.my_role] + ".")
     },
     button : function() {
@@ -362,8 +362,7 @@ function make_slides(f) {
         var playerAInstructions = `<br><br>
         <h3>Instructions</h3>
         <br>
-        <p>
-        On each trial, you will determine whether a creature is wudsy, without the help of the detector. You will be awarded a bonus according to how well you and your partner perform on this task.
+        You will be presented a grid. Click on the creatures you believe are wudsy.
         <br> <br>
         Press Continue to start the game.</p>
         <br> <br>
@@ -373,8 +372,7 @@ function make_slides(f) {
         var playerBInstructions = `<br><br>
         <h3>Instructions</h3>
         <br>
-        In the chatroom, you and your partner should have talked about wudsy creatures.
-        On each trial, you will determine whether a creature is wudsy. You will be awarded a bonus according to how well you and your partner perform on this task.
+        You will be presented a grid. Click on the creatures you believe are wudsy.
         <br> <br>
         Press Continue to start the game. </p>
         <br> <br>

@@ -146,7 +146,7 @@ game_core.prototype.get_active_players = function() {
 
 game_core.prototype.newRound = function() {
     // Transition to the next slide (Learning Instructions for Player A, Waiting Room for Player B)
-    this.server_send_update()
+    this.server_send_update();
 };
 
 game_core.prototype.server_send_update = function(){
