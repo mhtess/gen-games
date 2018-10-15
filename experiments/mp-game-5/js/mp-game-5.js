@@ -3,15 +3,14 @@
 //  By Sahil Chopra
 //  Goal: The purpose of this game is to set up  a multiplayer concept
 //        learning paradigm. Player A learns about "wudsy" creatures
-//        over approximately 50 trials. Then Player A and Player B
-//        enter a chatroom together and forced to communicate for at
-//        least 30 seconds, in which Player A teaches Player B
+//        over approximately 50 trials presented in a single summary
+//        grid format. Then Player A and Player B
+//        enter a chatroom together and forced to communicate,
+//        in which Player A teaches Player B
 //        about "wudsy" creatures. Then, they both take a "post test"
 //        where A and B are asked to identify creatures as "wudsy"
 //        or not on a test set of ~30 previously unseen critters.
-// Note: For greater details as to stimuli generation, please check out
-//       welcome_critter.js. This is the same as mp-game-3 but now in a summary
-//       format.
+//        This entire process then repeats itself for n "species" concepts.
 // --------------------------------------------------------------------
 
 // -----------------
@@ -36,26 +35,8 @@ function init() {
 
   // Initialize experiment variables
   exp.block = 0;
-  exp.training_trial= {};
   exp.testing_data_trials = [];
-  exp.training_summary_stats = {
-    type: "training",
-    hits: 0,
-    misses: 0,
-    correct_rejections: 0,
-    false_alarms: 0,
-    score: 0,
-  };
-  exp.testing_summary_stats = {
-    type: "testing",
-    hits: 0,
-    misses: 0,
-    correct_rejections: 0,
-    false_alarms: 0,
-    score: 0,
-  };
-  exp.num_learning_trials = 0;
-  exp.num_testing_trials = 0;
+  exp.testing_summary_stats = [];
   exp.structure = [
     "wait_room",
     "learning_instructions",
@@ -85,9 +66,21 @@ function init() {
   exp.go();
 }
 
-// --------------------------
-// Slide Creation & Rendering
-// --------------------------
+function generate_test_summary_stats(){
+  return {
+    type: "testing",
+    hits: 0,
+    misses: 0,
+    correct_rejections: 0,
+    false_alarms: 0,
+    score: 0,
+  }
+}
+
+
+// -----------------
+// Critter Rendering
+// -----------------
 
 // Render the table of critters with all the 
 // labels hidden from the user
@@ -130,7 +123,7 @@ function render_hidden_critters_table(critters, table_width) {
 
     // Construct "wudsy" labels
     var label = "";
-    if (stim.belongs_to_concept) {
+    if (stim.belongs_to_concept) {  
       label = "<div class='wudsy-label' id='cell-" + i + "-label'> wudsy </div>";
     } else {
       label = "<div class='wudsy-label' id='cell-" + i + "-label'> </div>";
@@ -146,16 +139,17 @@ function render_hidden_critters_table(critters, table_width) {
       }
       exp.selected_stim_idx = id;
       mark(id);
-      showLabel(id);
+      showWudsyIndicators(id);
       if (!exp.selected_training_stim.includes(id)) {
         exp.selected_training_stim.push(id);
         if (exp.selected_training_stim.length == exp.training_critters.length) {
+          // Show "Continue" button -- exploration complete
           $('#learning-critters-button').css('visibility', 'visible');
-          $('#learning-critters-button').prop('disabled', false);
+          $('#learning-critters-button').prop('disabled', true);
+          alert("Exploration Complete! Please take a moment to review your findings before continuing to the chatroom.");
         }
       }
     });
-
   }
 }
 
@@ -209,15 +203,24 @@ function fade(id) {
   $(id).css({"opacity": 0.3});
 }
 
-function showLabel(id) {
+function showWudsyIndicators(id) {
   var labelID = id + '-label';
   $(labelID).css('visibility', 'visible');
+
+  if ($(id).text().indexOf("wudsy") >= 0) {
+    $(id).css({'background-color':'green'});
+    $(labelID).css({'background-color':'green'});
+  }
 }
 
 // Sleep for given number of milliseconds
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
+
+// ---------------
+// Slide Creation
+// ---------------
 
 // Make slides for the experiment
 function make_slides(f) {
@@ -238,11 +241,11 @@ function make_slides(f) {
       <h3>Instructions</h3>
       <br>
       <p>
-        You are on a new planet called Crittun, studying creatures with a wudsy detector.
+        You are studying creatures with a wudsy detector.
         <br> <br>
-        You will be presented with a panel of critters. Click on a critter to discover whether it is wudsy.
-        Pay close attention, as you will have to teach your partnery which critters are wudsy.
-        <br>
+        You will be shown a grid of creatures. Click on a creature to discover whether it is wudsy.
+        Pay close attention, as you will have to teach your partner which are wudsy.
+        <br> <br>
         Press Continue to start the game.
         <br><br>
       </p>
@@ -253,11 +256,11 @@ function make_slides(f) {
         <h3>Instructions</h3>
         <br>
         <p>
-          Your partner is currently exploring a new planet caleld Crittun, studying wudsy creatures. 
+          Your partner is currently studying creatures with a wudsy detector. It will take them approximately 1 - 2 minutes to finish exploring. 
           <br> <br>
-          It will take them approximately 1 - 15 minutes to finish exploring. After which, they will join you in a chatroom and you both will discuss what they learned about wudsy creatures.
+          Meanwhile you will be waiting in a chatroom. Once the explorer is done, they will enter the chatroom. You should discuss what properties of wudsy creatures they learned during exploration. Pay close attention and ask questions, as you will be tested on your understanding of wudsy creatures.
           <br> <br>
-          During your partner's 1 - 15 exploration period, you are free to do as you desire. Just stay at the computer and DO NOT CLOSE THIS TAB. Otherwise, you will be disconnected from the game and we won't be able to reward you for the hit.
+          During your partner's exploration period please stay at the computer and <b>DO NOT CLOSE THIS TAB</b>. Otherwise, you will be disconnected from the game and we won't be able to reward you for the hit.
           Please keep checking the chat window, as the status will update when the other player has also entered the room.
           <br> <br> 
           Press Continue to join the chatroom.
