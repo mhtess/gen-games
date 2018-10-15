@@ -25,11 +25,11 @@ var game_core = function(options){
   this.server = options.server;
 
   // Data storage parameters
-  this.dataStore = ['csv', 'mongo'];
+  this.dataStore = ['csv'];
   this.email = 'schopra8@stanford.edu';
   this.projectName = 'genGames';
   this.experimentName = 'mpGame5';
-  this.iterationName = 'pilot1';
+  this.iterationName = 'debug';
   this.anonymizeCSV = true;
   this.bonusAmt = 1; // 1 cent
 

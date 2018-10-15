@@ -35,9 +35,9 @@ function init() {
 
   // Initialize experiment variables
   exp.block = 0;
-  exp.training_records = [];
-  exp.testing_records = [];
-  exp.testing_summary_stats = [];
+  exp.train_records = [];
+  exp.test_records = [];
+  exp.test_summary_stats = [];
   exp.structure = [
     "wait_room",
     "training_instructions",
@@ -78,6 +78,7 @@ function generate_test_summary_stats(){
     correct_rejections: 0,
     false_alarms: 0,
     score: 0,
+    time_in_seconds: 0,
   }
 }
 
@@ -172,8 +173,8 @@ function createTrainingCritter(stim, i, scale){
     if (!exp.selected_training_stim.includes(exp.selected_stim_idx)) {
       exp.selected_training_stim.push(exp.selected_stim_idx);
 
-      if (exp.selected_training_stim.length == exp.training_critters.length) {
-      // if (exp.selected_training_stim.length == 2) { // Debugging
+      // if (exp.selected_training_stim.length == exp.training_critters.length) {
+      if (exp.selected_training_stim.length == 2) { // Debugging 
         // Show "Continue" button -- exploration complete
         $('#training-critters-button').css('visibility', 'visible');
         $('#training-critters-button').prop('disabled', false);
@@ -313,6 +314,7 @@ function make_slides(f) {
     start: function() {
       globalGame.socket.send("enterSlide.training_critters.");
       $("#training_critters_grid").empty();
+      exp.selected_training_stim = [];
 
       // Render slide
       render_hidden_critters_table(exp.training_critters, 6, true);      
@@ -322,19 +324,18 @@ function make_slides(f) {
     },
     button : function() {
       var end_time = Date.now();
-      this.time_spent = end_time - this.start_time;
-      this.log_responses(this.time_spent/1000);
+      this.time_spent = (end_time - this.start_time)/1000;
+      exp.train_records.push(this.log_responses(this.time_spent));
 
       // TODO: Redo this so that we only send the logTrain message, once all the training rounds are complete.
       _stream.apply(this); //make sure this is at the *end*, after you log your data
-      globalGame.socket.send("logTrain.trainingCritters." + _.pairs(encodeData(exp.training_records[0])).join('.'));
+      globalGame.socket.send("logTrain.trainingCritters." + _.pairs(encodeData(exp.train_records[0])).join('.'));
       exp.go();
     },
     log_responses : function(time_spent){
-      var record = {
+      return record = {
         "training_time" : time_spent,
       };
-      exp.training_records.push(record);
     },
   });
 
@@ -403,55 +404,67 @@ function make_slides(f) {
   present: exp.testing_critters,
   start: function() {
     globalGame.socket.send("enterSlide.testing_critters.");
+    exp.selected_test_stim = [];
 
     // hide + disable stuff
     $('#continueButton').prop('disabled', false);
     $("#testing_critters_grid").empty();
-
     render_hidden_critters_table(exp.testing_critters, 6, false);
 
     // Time Markers
     this.start_time = Date.now()
   },
   button : function() {
-    console.log("Need to write code for evaluating performance on this.");
     var end_time = Date.now();
-    this.time_spent = end_time - this.start_time;
+    this.time_spent = (end_time - this.start_time) / 1000;
 
+    // TODO: Add "sure you want to continue" alert
 
-    //   var stim = this.stim;
-    //   var turker_label = ($("input[type=radio]:checked").val() === "true");
-    //   var true_label = stim['belongs_to_concept'];
-    //   var is_correct = (turker_label === true_label);
+    // Evaluate performance on entire test set
+    var test_summary_stats = generate_test_summary_stats();
+    var test_record = [];
+    console.log(exp.selected_test_stim);
+    for (var i=0; i < exp.testing_critters.length; i++) {
+      // Get Turker response
+      var test_cell_id = "#testing_cell_" + i;
+      var turker_label = exp.selected_test_stim.includes(test_cell_id);
 
+      // Get stimulus information
+      var stim = exp.testing_critters[i];
+      var true_label = stim['belongs_to_concept'];
 
-    //   if (turker_label === false && true_label === false) {
-    //     exp.testing_summary_stats.correct_rejections += 1;
-    //   } else if (turker_label=== false && true_label === true){
-    //     exp.testing_summary_stats.misses += 1;
-    //   } else if (turker_label === true && true_label === false) {
-    //     exp.testing_summary_stats.false_alarms += 1;
-    //   } else {
-    //     exp.testing_summary_stats.hits += 1;
-    //   }
+      console.log(stim);
+      console.log(turker_label);
 
-    //   this.log_responses(cur_index, this.time_spent/1000, turker_label, true_label, is_correct);
-    //   _stream.apply(this); //make sure this is at the *end*, after you log your data
+      // Evaluate correctness of individual creatureß
+      var is_correct = (turker_label === true_label);
+      if (turker_label === false && true_label === false) {
+        test_summary_stats.correct_rejections += 1;
+      } else if (turker_label=== false && true_label === true){
+        test_summary_stats.misses += 1;
+      } else if (turker_label === true && true_label === false) {
+        test_summary_stats.false_alarms += 1;
+      } else {
+        test_summary_stats.hits += 1;
+      }
+      this.log_responses(test_record, i, turker_label, true_label, is_correct);
+    }
+
+    // Other summary stats
+    test_summary_stats.score = test_summary_stats.hits - test_summary_stats.false_alarms;
+    test_summary_stats.time_in_seconds = this.time_spent;
+
+    // TODO: Add code to wrap results and send it to the server for persistance.
+    exp.test_records.push(test_record);
+    _stream.apply(this); //make sure this is at the *end*, after you log your data
+    globalGame.socket.send("logScores.testCritters." + _.pairs(encodeData(test_summary_stats)).join('.'));
+    exp.go();
     //   globalGame.socket.send("logTest.testCritters." + _.pairs(encodeData(exp.testing_data_trials[cur_index])).join('.'));
-    // } else {
-    //   alert("Please make sure to label all the critters, before proceeding");
-    // }
-    
-    // if (this.testing_trial_idx == exp.num_testing_trials) {
-    //   exp.testing_summary_stats.score = exp.testing_summary_stats['hits'] - exp.testing_summary_stats['false_alarms']
-    //   globalGame.socket.send("logScores.testCritters." + _.pairs(encodeData(exp.testing_summary_stats)).join('.'));
-    //   exp.go();
-    // }
+
   },
-  log_responses : function(trial_num, time_in_seconds, turker_label, true_label, is_correct){
-    exp.testing_data_trials.push({
-      "trial_num" : trial_num,
-      "time_in_seconds" : time_in_seconds,
+  log_responses : function(test_record, stim_num, turker_label, true_label, is_correct){
+    test_record.push({
+      "stim_num" : stim_num,
       "turker_label": turker_label,
       "true_label": true_label,
       "is_correct": is_correct,
@@ -496,7 +509,7 @@ function make_slides(f) {
   slides.score_report = slide({
     name: "score_report",
     start: function() {
-      globalGame.socket.send("sendingTestScores." + _.pairs(encodeData(exp.testing_summary_stats)).join('.'));
+      globalGame.socket.send("sendingTestScores." + _.pairs(encodeData(exp.test_summary_stats)).join('.'));
     },
     button : function() {
       exp.go()
@@ -530,7 +543,7 @@ function make_slides(f) {
         globalGame.socket.send("logSubjInfo.subjInfo." + _.pairs(encodeData(exp.subj_data)).join('.'));
 
         exp.go();
-      } //use exp.go() if and only if there is no "present" data.
+      }
     });
 
   // Generic thanks page that collects some data
@@ -541,17 +554,16 @@ function make_slides(f) {
       exp.data= {
         "game_id": globalGame.data.id,
         "role": globalGame.my_role,
-        "training_data_fn": globalGame.training_data_fn,
+        "train_data_fn": globalGame.train_data_fn,
         "test_data_fn": globalGame.test_data_fn,
         "rule_idx": globalGame.rule_idx,
         "rule_type": globalGame.rule_type,
-        "training_trials": [exp.training_trial],
-        "testing_trials": exp.testing_data_trials,
+        "train_records": exp.train_records,
+        "test_records": exp.test_records,
         "system" : exp.system,
         "subject_information" : exp.subj_data,
         "time_in_minutes" : (Date.now() - exp.startT)/60000,
-        "training_summary_stats": exp.training_summary_stats,
-        "testing_summary_stats": exp.testing_summary_stats,
+        "test_summary_stats": exp.test_summary_stats,
       };
       setTimeout(function(){
         if(_.size(globalGame.urlParams) == 4) {
