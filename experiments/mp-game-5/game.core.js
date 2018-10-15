@@ -46,8 +46,8 @@ var game_core = function(options){
 
   // Scores
   this.testScores = {
-    "explorer": [],
-    "student": [],
+    "explorer": {},
+    "student": {},
   }
 
   if(this.server) {

@@ -117,7 +117,10 @@ var onMessage = function(client,message) {
         message_parts.slice(1), // get relevant part of message
         function(i){return i.split(',')}
       ));
-      gc.testScores[target.instance.role].push(scoreObj);
+
+      console.log(scoreObj);
+
+      gc.testScores[target.instance.role][0] = scoreObj;
       setTimeout(function() {
         _.map(all, function(p){
           p.player.instance.emit("sendingTestScores",

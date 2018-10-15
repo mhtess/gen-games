@@ -46,7 +46,6 @@ function init() {
     "chatRoom",
     "testing_instructions",
     "testing_critters",
-    "score_report",
     "wait_room",
     "score_report",
     "subj_info",
@@ -161,7 +160,6 @@ function createTrainingCritter(stim, i, scale){
 
   // Add click handlers
   $("#training_cell_" + i).click(function(event) {
-    console.log(i);
     var id = '#' + $(event.target).parents('.cell')[0].id;
     if (exp.selected_stim_idx != -1) {
       fade(exp.selected_stim_idx);
@@ -423,7 +421,6 @@ function make_slides(f) {
     // Evaluate performance on entire test set
     var test_summary_stats = generate_test_summary_stats();
     var test_record = [];
-    console.log(exp.selected_test_stim);
     for (var i=0; i < exp.testing_critters.length; i++) {
       // Get Turker response
       var test_cell_id = "#testing_cell_" + i;
@@ -432,9 +429,6 @@ function make_slides(f) {
       // Get stimulus information
       var stim = exp.testing_critters[i];
       var true_label = stim['belongs_to_concept'];
-
-      console.log(stim);
-      console.log(turker_label);
 
       // Evaluate correctness of individual creatureß
       var is_correct = (turker_label === true_label);
@@ -456,10 +450,11 @@ function make_slides(f) {
 
     // TODO: Add code to wrap results and send it to the server for persistance.
     exp.test_records.push(test_record);
+    exp.test_summary_stats = test_summary_stats;
     _stream.apply(this); //make sure this is at the *end*, after you log your data
+    globalGame.socket.send("logTest.testCritters." + _.pairs(encodeData(exp.test_records[0])).join('.'));
     globalGame.socket.send("logScores.testCritters." + _.pairs(encodeData(test_summary_stats)).join('.'));
     exp.go();
-    //   globalGame.socket.send("logTest.testCritters." + _.pairs(encodeData(exp.testing_data_trials[cur_index])).join('.'));
 
   },
   log_responses : function(test_record, stim_num, turker_label, true_label, is_correct){
