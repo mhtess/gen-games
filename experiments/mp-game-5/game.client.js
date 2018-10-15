@@ -85,12 +85,6 @@ var client_onserverupdate_received = function(data){
   // Add the training critters and test critters to the exp slides
   exp.training_critters = data.training_critters;
   exp.testing_critters = data.testing_critters;
-  if (Array.isArray(data.training_critters)) {
-    exp.num_learning_trials = data.training_critters.length;
-  }
-  if (Array.isArray(data.testing_critters)) {
-    exp.num_testing_trials = data.testing_critters.length;
-  }
 };
 
 // Procedure for parsing messages from server.
@@ -139,7 +133,7 @@ var customSetup = function(globalGame) {
     $('#roundnumber').empty();
   });
 
-  // update critters from server for the upcoming test critters and next learning critters
+  // update critters from server for the upcoming test critters and next training critters
   globalGame.socket.on('exitChatRoom', function(data){
     console.log("exitChatRoom")
     exp.goToSlide("testing_instructions");
@@ -148,7 +142,7 @@ var customSetup = function(globalGame) {
   globalGame.socket.on('enterWaitRoom', function(data){
     $('#chatbox').val('');
     if (exp.slideIndex === 0) {
-      exp.goToSlide("learning_instructions");
+      exp.goToSlide("training_instructions");
     } else {
       exp.goToSlide("score_report");
     }

@@ -45,9 +45,6 @@ var game_core = function(options){
   }
 
   // Scores
-  this.trainingScores = {
-    "explorer": [],
-  };
   this.testScores = {
     "explorer": [],
     "student": [],
@@ -145,7 +142,7 @@ game_core.prototype.get_active_players = function() {
 };
 
 game_core.prototype.newRound = function() {
-    // Transition to the next slide (Learning Instructions for Player A, Waiting Room for Player B)
+    // Transition to the next slide (Training Instructions for Player A, Waiting Room for Player B)
     this.server_send_update();
 };
 

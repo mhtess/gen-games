@@ -35,12 +35,13 @@ function init() {
 
   // Initialize experiment variables
   exp.block = 0;
-  exp.testing_data_trials = [];
+  exp.training_records = [];
+  exp.testing_records = [];
   exp.testing_summary_stats = [];
   exp.structure = [
     "wait_room",
-    "learning_instructions",
-    "learning_critters",
+    "training_instructions",
+    "training_critters",
     "chat_instructions",
     "chatRoom",
     "testing_instructions",
@@ -54,6 +55,8 @@ function init() {
   exp.slides = make_slides(exp);
   exp.selected_stim_idx = -1;
   exp.selected_training_stim = [];
+  exp.selected_test_stim = [];
+
 
   // Ensure that Turker has accepted the hit, or that the use is not on MTurk
   $("#start_button").click(function() {
@@ -85,7 +88,7 @@ function generate_test_summary_stats(){
 
 // Render the table of critters with all the 
 // labels hidden from the user
-function render_hidden_critters_table(critters, table_width) {
+function render_hidden_critters_table(critters, table_width, training) {
   var rows = Math.ceil(critters.length / table_width);
   var cols = table_width;
 
@@ -96,11 +99,20 @@ function render_hidden_critters_table(critters, table_width) {
     for(var j=0; j<cols; j++) {
       table += "<td>";
       if (ind >= critters.length) break;
-      table += "<table class ='cell' id='cell-" + ind + "'\">";
+      if (training === true){
+        table += "<table class ='cell' id='training_cell_" + ind + "'\">";
+      } else {
+        table += "<table class ='cell' id='testing_cell_" + ind + "'\">";
+      }
 
       table += "<td>";
-      table += "<svg id='critter_" + ind +
-        "' style='max-width:150px;max-height:150px\'></svg></td>";
+      if (training === true) {
+       table += "<svg id='training_critter_" + ind +
+        "' style='max-width:150px;max-height:150px\'></svg></td>";       
+      } else {
+       table += "<svg id='testing_critter_" + ind +
+        "' style='max-width:150px;max-height:150px\'></svg></td>";         
+      }
 
       table += "<tr>";
       table += "</table>";
@@ -110,85 +122,86 @@ function render_hidden_critters_table(critters, table_width) {
     table += "</tr>"
   }
   table += "</table>";
-  $("#training_critters").append(table);
+
+  if (training === true) {
+    $("#training_critters_grid").append(table);
+  } else {
+    $("#testing_critters_grid").append(table);
+  }
 
   for (var i = 0; i < critters.length; i++) {
     // Create critter svgs
     var scale = 0.5;
     var stim = critters[i];
-    var id = "critter_" + i;
-    Ecosystem.draw(
-      stim.critter, stim.props,
-      id, scale
-    );
-
-    // Construct "wudsy" labels
-    var label = "";
-    if (stim.belongs_to_concept) {  
-      label = "<div class='wudsy-label' id='cell-" + i + "-label'> wudsy </div>";
+    if (training) {
+      createTrainingCritter(stim, i, scale);
     } else {
-      label = "<div class='wudsy-label' id='cell-" + i + "-label'> </div>";
+      createTestingCritter(stim, i, scale);
     }
-    $(label).insertAfter("#critter_" + i);
-
-    // Add click handlers
-    $("#cell-" + i).click(function(event) {
-      var id = '#' + $(event.target).parents('.cell')[0].id;
-      if (exp.selected_stim_idx != -1) {
-        fade(exp.selected_stim_idx);
-      }
-      exp.selected_stim_idx = id;
-      mark(id);
-      showWudsyIndicators(id);
-      if (!exp.selected_training_stim.includes(id)) {
-        exp.selected_training_stim.push(id);
-        if (exp.selected_training_stim.length == exp.training_critters.length) {
-          // Show "Continue" button -- exploration complete
-          $('#learning-critters-button').css('visibility', 'visible');
-          $('#learning-critters-button').prop('disabled', false);
-          alert("Exploration Complete! Please take a moment to review your findings before continuing to the chatroom.");
-        }
-      }
-    });
   }
 }
 
-// Render the current critter
-function render_curr_critter(stim, training) {
-  console.log("Rendering a critter: " + stim);
-  var critter_id = "training_critter";
-  var rows = 1;
-  var cols = 1;
-  var table = "<table>";
-  table += "<tr>";
-  table += "<td>";
-  table += "<table class ='cell' id='cell'\">";
-  table += "<td>";  
-  if (training) {
-    table += "<svg id='training_critter' style='max-width:150px;max-height:150px\'></svg>";
-  } else {
-    table += "<svg id='testing_critter' style='max-width:150px;max-height:150px\'></svg>"; 
-    critter_id = "testing_critter";
-  }
-  table += "<br><br><form id='critter_form' class='critter_label_form'>";
-  table += "<input type='radio' name='belongs_to_concept' id='t' value=true> <label for='t'>Yes</label>";
-  table += "<input type='radio' name='belongs_to_concept' id='f' value=false> <label for='f'>No</label>";   
-  table += "</form></td>";
-  table += "<tr>";
-  table += "<div class='critname' id='cellcritname'></div></tr>";
-  table += "</table>";
-  table += "</td>";
-  table += "</tr>"
-  table += "</table>";
-  if (training) {
-    $("#curr_critter_training").append(table);
-  } else {
-    $("#curr_critter_testing").append(table);
-  }
+function createTrainingCritter(stim, i, scale){
+  // Draw Critter
+  var id = "training_critter_" + i;
   Ecosystem.draw(
     stim.critter, stim.props,
-    critter_id, 0.5
+    id, scale
   );
+
+  // Construct "wudsy" labels
+  var label = "";
+  if (stim.belongs_to_concept) {  
+    label = "<div class='wudsy-label' id='cell-" + i + "-label'> wudsy </div>";
+  } else {
+    label = "<div class='wudsy-label' id='cell-" + i + "-label'> </div>";
+  }
+  $(label).insertAfter("#critter_" + i);
+
+  // Add click handlers
+  $("#training_cell_" + i).click(function(event) {
+    console.log(i);
+    var id = '#' + $(event.target).parents('.cell')[0].id;
+    if (exp.selected_stim_idx != -1) {
+      fade(exp.selected_stim_idx);
+    }
+    exp.selected_stim_idx = id;
+    mark(id);
+    showWudsyIndicators(id);
+
+    if (!exp.selected_training_stim.includes(exp.selected_stim_idx)) {
+      exp.selected_training_stim.push(exp.selected_stim_idx);
+
+      if (exp.selected_training_stim.length == exp.training_critters.length) {
+      // if (exp.selected_training_stim.length == 2) { // Debugging
+        // Show "Continue" button -- exploration complete
+        $('#training-critters-button').css('visibility', 'visible');
+        $('#training-critters-button').prop('disabled', false);
+        alert("Exploration Complete! Please take a moment to review your findings before continuing to the chatroom.");
+      }
+    }
+  });
+}
+
+function createTestingCritter(stim, i, scale){
+  // Draw Critter
+  var id = "testing_critter_" + i;
+  Ecosystem.draw(
+    stim.critter, stim.props,
+    id, scale
+  );
+
+  // Add click handlers
+  $("#testing_cell_" + i).click(function(event) {
+    var id = '#' + $(event.target).parents('.cell')[0].id;
+    if (exp.selected_test_stim.includes(id)) {
+      unmarkAsWudsy(id);
+      exp.selected_test_stim.slice(exp.selected_test_stim.indexOf(id), 1);
+    } else {
+      markAsWudsy(id);
+      exp.selected_test_stim.push(id);
+    }
+  });
 }
 
 // Mark a given stimulus with a black border box
@@ -213,6 +226,16 @@ function showWudsyIndicators(id) {
   }
 }
 
+// Mark a given stimlus as wudsy (test)
+function markAsWudsy(id) {
+  $(id).css({'background-color':'yellow'});
+}
+
+// Unmark a given stimlus as wudsy (test)
+function unmarkAsWudsy(id) {
+  $(id).css({'background-color':'transparent'});
+}
+
 // Sleep for given number of milliseconds
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -226,15 +249,15 @@ function sleep(ms) {
 function make_slides(f) {
   var slides = {};
 
-  // Learning instructions slide -- information as how the learning trials
+  // Training instructions slide -- information as how the training trials
   // shall proceed for Player A.
-  slides.learning_instructions = slide({
-    name : "learning_instructions",
+  slides.training_instructions = slide({
+    name : "training_instructions",
     start : function() {
       // Notify the server:
-      // 1) Player has entered the learning instructions slide for book keeping.
-      // 2) Player needs the learning critters.
-      globalGame.socket.send("enterSlide.learning_instructions.");
+      // 1) Player has entered the training instructions slide for book keeping.
+      // 2) Player needs the training critters.
+      globalGame.socket.send("enterSlide.training_instructions.");
 
       var playerAInstructions = `
       <br><br>
@@ -269,30 +292,30 @@ function make_slides(f) {
         <button class="continuebutton" onclick="_s.button()">Continue</button>`;      
 
       if (globalGame.my_role == "explorer") {
-        $("#learning_instructions").html(playerAInstructions);
+        $("#training_instructions").html(playerAInstructions);
       } else {
-        $("#learning_instructions").html(playerBInstructions);
+        $("#training_instructions").html(playerBInstructions);
       }
 
     },
     button : function() {
       if (globalGame.my_role == "explorer") {
-        exp.goToSlide("learning_critters");
+        exp.goToSlide("training_critters");
       } else {
         exp.goToSlide("chatRoom")
       }
     }
   });
 
-  // Learning critter slide -- training trials
-  slides.learning_critters = slide({
-    name : "learning_critters",
+  // Training Trials Slide
+  slides.training_critters = slide({
+    name : "training_critters",
     start: function() {
-      globalGame.socket.send("enterSlide.learning_critters.");
-      $("#training_critters").empty();
+      globalGame.socket.send("enterSlide.training_critters.");
+      $("#training_critters_grid").empty();
 
       // Render slide
-      render_hidden_critters_table(exp.training_critters, 6);
+      render_hidden_critters_table(exp.training_critters, 6, true);      
 
       // Time Markers
       this.start_time = Date.now()
@@ -300,18 +323,18 @@ function make_slides(f) {
     button : function() {
       var end_time = Date.now();
       this.time_spent = end_time - this.start_time;
-      this.log_responses(this.time_spent);
-      _stream.apply(this); //make sure this is at the *end*, after you log your data
-      globalGame.socket.send("logTrain.learnCritters." + _.pairs(encodeData(exp.training_trial)).join('.'));
+      this.log_responses(this.time_spent/1000);
 
+      // TODO: Redo this so that we only send the logTrain message, once all the training rounds are complete.
+      _stream.apply(this); //make sure this is at the *end*, after you log your data
+      globalGame.socket.send("logTrain.trainingCritters." + _.pairs(encodeData(exp.training_records[0])).join('.'));
       exp.go();
     },
     log_responses : function(time_spent){
       var record = {
         "training_time" : time_spent,
       };
-      exp.training_trial = record;
-      console.log(record);
+      exp.training_records.push(record);
     },
   });
 
@@ -320,7 +343,7 @@ function make_slides(f) {
     name : "chat_instructions",
     start : function() {
       $('#chat_instructs').html("On the next page, you will enter into a chatroom with your partner. " +
-      "Please discuss the properties of wudsy creatures. The \"student\" will be advance the game out of the chatroom, once they feel like they have a good understanding of wudsy creatures' properties." +
+      "Please discuss the properties of wudsy creatures. The \"student\" will be advance the game out of the chatroom, once they feel like they have a good understanding of wudsy creatures' properties. " +
       "You are " +  roleDictionary[globalGame.my_role] + ".")
     },
     button : function() {
@@ -347,6 +370,8 @@ function make_slides(f) {
   slides.testing_instructions = slide({
     name : "testing_instructions",
     start : function() {
+      globalGame.socket.send("enterSlide.testing_instructions.");
+
       // Remove flash from chat room
       var cancelFlashTitle = function (timeout) {
         clearTimeout(timeout);
@@ -357,9 +382,7 @@ function make_slides(f) {
         cancelFlashTitle(timeoutIndex);
       }
 
-      globalGame.socket.send("enterSlide.testing_critters.");
-      if (globalGame.my_role == "explorer") {
-        var playerAInstructions = `<br><br>
+      var instructions = `<br><br>
         <h3>Instructions</h3>
         <br>
         You will be presented a grid. Click on the creatures you believe are wudsy.
@@ -367,18 +390,7 @@ function make_slides(f) {
         Press Continue to start the game.</p>
         <br> <br>
         <button class="continuebutton" onclick="_s.button()">Continue</button>`;
-        $("#testing_instructions").html(playerAInstructions);
-      } else {
-        var playerBInstructions = `<br><br>
-        <h3>Instructions</h3>
-        <br>
-        You will be presented a grid. Click on the creatures you believe are wudsy.
-        <br> <br>
-        Press Continue to start the game. </p>
-        <br> <br>
-        <button class="continuebutton" onclick="_s.button()">Continue</button>`;
-        $("#testing_instructions").html(playerBInstructions);
-      }
+      $("#testing_instructions").html(instructions);
     },
     button : function() {
       exp.go()
@@ -390,62 +402,51 @@ function make_slides(f) {
   name : "testing_critters",
   present: exp.testing_critters,
   start: function() {
-    this.testing_trial_idx = 0;
-  },
-  present_handle : function(stim) {
-    // hide + disable stuff
-    $("#curr_critter_testing").empty();
-    $('#continueButton').prop('disabled', false);
-    $("input[type=radio]").attr('checked', false);
+    globalGame.socket.send("enterSlide.testing_critters.");
 
-    // Render slide
-    $(".trial_number").text("Critter " + String(this.testing_trial_idx + 1) + " of " + String(exp.num_testing_trials));
-    render_curr_critter(stim, false);
-    this.stim = stim;
+    // hide + disable stuff
+    $('#continueButton').prop('disabled', false);
+    $("#testing_critters_grid").empty();
+
+    render_hidden_critters_table(exp.testing_critters, 6, false);
 
     // Time Markers
     this.start_time = Date.now()
   },
   button : function() {
-    $('.continueButton').prop('disabled', true); // Prevent Double CLicking
-    var all_forms_filled = true;
-    if ($("input[type=radio]:checked").length == 0) {
-      all_forms_filled = false;
-    }
-    if (all_forms_filled) {
-      var end_time = Date.now();
-      this.time_spent = end_time - this.start_time;
-
-      var cur_index = this.testing_trial_idx;
-      this.testing_trial_idx++;
-      var stim = this.stim;
-      var turker_label = ($("input[type=radio]:checked").val() === "true");
-      var true_label = stim['belongs_to_concept'];
-      var is_correct = (turker_label === true_label);
+    console.log("Need to write code for evaluating performance on this.");
+    var end_time = Date.now();
+    this.time_spent = end_time - this.start_time;
 
 
-      if (turker_label === false && true_label === false) {
-        exp.testing_summary_stats.correct_rejections += 1;
-      } else if (turker_label=== false && true_label === true){
-        exp.testing_summary_stats.misses += 1;
-      } else if (turker_label === true && true_label === false) {
-        exp.testing_summary_stats.false_alarms += 1;
-      } else {
-        exp.testing_summary_stats.hits += 1;
-      }
+    //   var stim = this.stim;
+    //   var turker_label = ($("input[type=radio]:checked").val() === "true");
+    //   var true_label = stim['belongs_to_concept'];
+    //   var is_correct = (turker_label === true_label);
 
-      this.log_responses(cur_index, this.time_spent/1000, turker_label, true_label, is_correct);
-      _stream.apply(this); //make sure this is at the *end*, after you log your data
-      globalGame.socket.send("logTest.testCritters." + _.pairs(encodeData(exp.testing_data_trials[cur_index])).join('.'));
-    } else {
-      alert("Please make sure to label all the critters, before proceeding");
-    }
+
+    //   if (turker_label === false && true_label === false) {
+    //     exp.testing_summary_stats.correct_rejections += 1;
+    //   } else if (turker_label=== false && true_label === true){
+    //     exp.testing_summary_stats.misses += 1;
+    //   } else if (turker_label === true && true_label === false) {
+    //     exp.testing_summary_stats.false_alarms += 1;
+    //   } else {
+    //     exp.testing_summary_stats.hits += 1;
+    //   }
+
+    //   this.log_responses(cur_index, this.time_spent/1000, turker_label, true_label, is_correct);
+    //   _stream.apply(this); //make sure this is at the *end*, after you log your data
+    //   globalGame.socket.send("logTest.testCritters." + _.pairs(encodeData(exp.testing_data_trials[cur_index])).join('.'));
+    // } else {
+    //   alert("Please make sure to label all the critters, before proceeding");
+    // }
     
-    if (this.testing_trial_idx == exp.num_testing_trials) {
-      exp.testing_summary_stats.score = exp.testing_summary_stats['hits'] - exp.testing_summary_stats['false_alarms']
-      globalGame.socket.send("logScores.testCritters." + _.pairs(encodeData(exp.testing_summary_stats)).join('.'));
-      exp.go();
-    }
+    // if (this.testing_trial_idx == exp.num_testing_trials) {
+    //   exp.testing_summary_stats.score = exp.testing_summary_stats['hits'] - exp.testing_summary_stats['false_alarms']
+    //   globalGame.socket.send("logScores.testCritters." + _.pairs(encodeData(exp.testing_summary_stats)).join('.'));
+    //   exp.go();
+    // }
   },
   log_responses : function(trial_num, time_in_seconds, turker_label, true_label, is_correct){
     exp.testing_data_trials.push({

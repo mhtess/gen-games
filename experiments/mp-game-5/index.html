@@ -60,7 +60,7 @@
   <noscript>This task requires JavaScript.</noscript>
 
   <!-- This is the slide in which users will learn how they will play the game. -->
-  <div class="slide" id="learning_instructions">
+  <div class="slide" id="training_instructions">
     <br><br>
     <h3>Instructions</h3>
     <br>
@@ -76,15 +76,17 @@
   </div>
 
   <!-- This is the learning slide in which users will uncover information about the critters -->
-  <div class="slide" id="learning_critters">
+  <div class="slide" id="training_critters">
     <p class="label_prompt"> Click on each one to discover whether or not it is <strong> wudsy </strong>.
       <br>
       Study them carefully. You and your partner will have to identify them later.
     </p>
     <br>
     <br>
-    <div id="training_critters"></div>
-    <button class="continuebutton" id="learning-critters-button" onclick="_s.button()" disabled>Continue</button>
+    <div id="training_critters_grid"></div>
+    <br>
+    <br>
+    <button class="continuebutton" id="training-critters-button" onclick="_s.button()" disabled>Continue</button>
   </div>
 
   <div class="slide" id="testing_instructions">
@@ -101,9 +103,15 @@
 
   <!-- Generates critters that the partner learned about and tests the user -->
   <div class="slide" id="testing_critters">
-    <h3 class="trial_number"></h3>
-    <p class="label_prompt">Do you belive this creature is <i>wudsy</i>?</p>
-    <div id="curr_critter_testing"></div>
+    <p class="label_prompt"> Click on the creatures that you believe are <strong> wudsy </strong>.
+      <br>
+      Creatures that you have selected as wudsy, will have a yellow background.
+      <br>
+      Once you are done selecting the wudsy ones, hit the Continue button.
+    </p>
+    <br>
+    <br>
+    <div id="testing_critters_grid"></div>
     <br>
     <br>
    <button class="continuebutton" id="test_button" onclick="_s.button()">Continue</button>
@@ -166,7 +174,7 @@
   <div id = "status"><p style="color:red;">Waiting for your partner to reach the chat...</p>  <br>Please do not refresh the page!</p></div>
   <div id='header'>
     <div id='textInfo'>
-     <p id='instructs'>Explorer -- teach the student about wudsy creatures</p>
+     <p id='instructs'>Explorer, please talk to the student about the properties of wudsy creatures</p>
     </div>
    <p style="color:green" id='score'> </p>
   </div>

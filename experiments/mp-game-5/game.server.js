@@ -177,7 +177,7 @@ var dataOutput = function() {
 
   // takes the data sent from client and packages it into logResponseOutput
   var logResponseOutput = function(client, message_data) {
-    // message_data contrains the flattened JSON object with learning/test trial info.
+    // message_data contrains the flattened JSON object with training/test trial info.
     return _.extend(
       commonOutput(client, message_data),
       decodeData(flattenedArrayToObj(message_data.slice(2)))
