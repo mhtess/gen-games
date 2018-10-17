@@ -23,7 +23,10 @@ var multipleTrialResponses = function(client, data) {
   // serialize in a single message in a format that won't
   // interfere with the existing messages API.
   // Thus, we have factored this out seperately.
-  return data
+  var info = {
+    'info': commonOutput(client)
+  };
+  return _.extend(data, info);
 }
     
 var onMessage = function(client,message) {
@@ -151,6 +154,18 @@ var onMessage = function(client,message) {
   }
 };
 
+var commonOutput = function (client) {
+  // Returns information shared across all different forms of logging
+  return {
+    iterationName: client.game.iterationName,
+    gameid: client.game.id,
+    time: Date.now(),
+    workerId: client.workerid,
+    assignmentId: client.assignmentid,
+    role: client.role
+  };
+}
+
 /*
   Associates events in onMessage with callback returning json to be saved
   {
@@ -159,17 +174,6 @@ var onMessage = function(client,message) {
   Note: If no function provided for an event, no data will be written
 */
 var dataOutput = function() {
-  function commonOutput (client, message_data) {
-    return {
-      iterationName: client.game.iterationName,
-      gameid: client.game.id,
-      time: Date.now(),
-      workerId: client.workerid,
-      assignmentId: client.assignmentid,
-      role: client.role
-    };
-  };
-
   function decodeData(dataObj){
     var result = _.mapValues(dataObj, function(val){
       if (val == undefined) {
@@ -191,7 +195,7 @@ var dataOutput = function() {
   var logResponseOutput = function(client, message_data) {
     // message_data contrains the flattened JSON object with training/test trial info.
     var result = _.extend(
-      commonOutput(client, message_data),
+      commonOutput(client),
       decodeData(flattenedArrayToObj(message_data.slice(2)))
     );
     console.log(result);
@@ -201,7 +205,7 @@ var dataOutput = function() {
   var chatMessageOutput = function(client, message_data) {
     console.log(client.role + " said " + message_data[1].replace(/~~~/g, '.'))
     return _.extend(
-      commonOutput(client, message_data), {
+      commonOutput(client), {
       	// intendedName,
       	text: message_data[1].replace(/~~~/g, '.'),
       	reactionTime: message_data[2]

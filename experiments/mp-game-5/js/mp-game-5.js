@@ -521,8 +521,6 @@ function make_slides(f) {
 
     // TODO: Add Support for multiple games.
     exp.test_records.push({
-      'game_id': globalGame.data.id,
-      'role': globalGame.my_role,
       'trials': test_record
     });
     exp.test_summary_stats = test_summary_stats;
