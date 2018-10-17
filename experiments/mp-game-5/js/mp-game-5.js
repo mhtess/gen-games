@@ -55,6 +55,42 @@ function init() {
   exp.selected_stim_idx = -1;
   exp.selected_training_stim = [];
   exp.selected_test_stim = [];
+  exp.times = {
+    'timestamps': {
+      'training': {
+        'start': {
+          'exploration': [],
+          'submission': [],
+        },
+        'end': {
+          'exploration': [],
+          'submission': [],
+        },
+      },
+    'testing': {
+      'start': {
+        'exploration': [],
+        'submission': [],
+      },
+      'end': {
+        'exploration': [],
+        'submission': [],
+      },
+    }
+    },
+    'durations': {
+      'training': {
+        'exploration': [],
+        'submission': [],
+        'total': [],
+      },      
+      'testing': {
+        'exploration': [],
+        'submission': [],
+        'total': [],
+      },     
+    }
+  };
 
 
   // Ensure that Turker has accepted the hit, or that the use is not on MTurk
@@ -77,7 +113,9 @@ function generate_test_summary_stats(){
     correct_rejections: 0,
     false_alarms: 0,
     score: 0,
-    time_in_seconds: 0,
+    exploration_time: 0,
+    submission_time: 0,
+    total_time: 0,
   }
 }
 
@@ -177,6 +215,9 @@ function createTrainingCritter(stim, i, scale){
         $('#training-critters-button').css('visibility', 'visible');
         $('#training-critters-button').prop('disabled', false);
         alert("Exploration Complete! Please take a moment to review your findings before continuing to the chatroom.");
+        var time = Date.now();
+        exp.times.timestamps.training.end.exploration.push(time);
+        exp.times.timestamps.training.start.submission.push(time);
       }
     }
   });
@@ -318,21 +359,32 @@ function make_slides(f) {
       render_hidden_critters_table(exp.training_critters, 6, true);      
 
       // Time Markers
-      this.start_time = Date.now()
+      exp.times.timestamps.training.start.exploration.push(Date.now());
     },
     button : function() {
-      var end_time = Date.now();
-      this.time_spent = (end_time - this.start_time)/1000;
-      exp.train_records.push(this.log_responses(this.time_spent));
+      exp.times.timestamps.training.end.submission.push(Date.now());
+      exp.times.durations.training.exploration.push(
+        exp.times.timestamps.training.end.exploration[exp.block] - exp.times.timestamps.training.start.exploration[exp.block]
+      );
+      exp.times.durations.training.submission.push(
+        exp.times.timestamps.training.end.submission[exp.block] - exp.times.timestamps.training.start.submission[exp.block]
+      );
+      exp.times.durations.training.total.push(
+        exp.times.durations.training.exploration[exp.block] + exp.times.durations.training.submission[exp.block]
+      );
+
+      exp.train_records.push(this.log_responses(exp.block, exp.times));
 
       // TODO: Redo this so that we only send the logTrain message, once all the training rounds are complete.
       _stream.apply(this); //make sure this is at the *end*, after you log your data
       globalGame.socket.send("logTrain.trainingCritters." + _.pairs(encodeData(exp.train_records[exp.block])).join('.'));
       exp.go();
     },
-    log_responses : function(time_spent){
+    log_responses : function(block, times){
       return record = {
-        "training_time" : time_spent,
+        "exploration_time" : times.durations.training.exploration[block]/1000,
+        "submission_time": times.durations.training.submission[block]/1000,
+        "total_time": times.durations.training.total[block]/1000,
       };
     },
   });
@@ -408,16 +460,32 @@ function make_slides(f) {
     render_hidden_critters_table(exp.testing_critters, 6, false);
 
     // Time Markers
-    this.start_time = Date.now()
+    exp.times.timestamps.testing.start.exploration.push(Date.now());
   },
   button : function() {
-    var end_time = Date.now();
-    this.time_spent = (end_time - this.start_time) / 1000;
+    var time = Date.now();
+    if (exp.times.timestamps.testing.start.submission.length < exp.block + 1) {
+      exp.times.timestamps.testing.start.submission.push(time);
+    } else {
+      exp.times.timestamps.testing.start.submission[exp.block] = time;
+    }
 
     var proceed = confirm("Have you selected all the creatures that believe are wudsy?\n\n If yes, click \"OK\".\n If no, click \"CANCEL\".");
     if (proceed === false) {
       return;
     }
+    var time = Date.now();
+    exp.times.timestamps.testing.end.exploration.push(time);
+    exp.times.timestamps.testing.end.submission.push(time);
+    exp.times.durations.testing.exploration.push(
+      exp.times.timestamps.testing.end.exploration[exp.block] - exp.times.timestamps.testing.start.exploration[exp.block]
+    );
+    exp.times.durations.testing.submission.push(
+      exp.times.timestamps.testing.end.submission[exp.block] - exp.times.timestamps.testing.start.submission[exp.block]
+    );
+    exp.times.durations.testing.total.push(
+      exp.times.durations.testing.exploration[exp.block] + exp.times.durations.testing.submission[exp.block]
+    );
 
     // Evaluate performance on entire test set
     var test_summary_stats = generate_test_summary_stats();
@@ -447,7 +515,9 @@ function make_slides(f) {
 
     // Other summary stats
     test_summary_stats.score = test_summary_stats.hits - test_summary_stats.false_alarms;
-    test_summary_stats.time_in_seconds = this.time_spent;
+    test_summary_stats.exploration_time = exp.times.durations.testing.exploration[exp.block]/1000;
+    test_summary_stats.submission_time = exp.times.durations.testing.submission[exp.block]/1000;
+    test_summary_stats.total_time = exp.times.durations.testing.total[exp.block]/1000;
 
     // TODO: Add Support for multiple games.
     exp.test_records.push(test_record);
