@@ -54,6 +54,14 @@ class ReferenceGameServer {
     }
   }
 
+  multipleTrialResponses(client, data) {
+    if (this.customServer.multipleTrialResponses !== undefined) {
+      // Wrapping in condtional to prevent crashing in older
+      // games that did not implement this interface.
+      this.customServer.multipleTrialResponses(client, data);
+    }
+  }
+
   findGame (player) {
     this.log('looking for a game. We have : ' + this.game_count);
     var joined_a_game = false;

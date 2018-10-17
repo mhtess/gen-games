@@ -19,10 +19,10 @@ var original = document.title;
 // ACTION HANDLERS
 // ---------------
 function buttonClickListener(evt) {
-  var proceed = confirm("Are you done learning about wudsy creatures?\n\n If yes, click \"OK\". \n If no, click \"CANCEL\".");
-  if (proceed === false) {
-    return;
-  }
+  // var proceed = confirm("Are you done learning about wudsy creatures?\n\n If yes, click \"OK\". \n If no, click \"CANCEL\".");
+  // if (proceed === false) {
+  //   return;
+  // }
   globalGame.socket.send("clickedObj.");
 };
 

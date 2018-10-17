@@ -216,7 +216,6 @@ function fade(id) {
 }
 
 function showWudsyIndicators(id) {
-  console.log(id);
   var labelID = id + '_label';
   $(labelID).css('visibility', 'visible');
 
@@ -312,8 +311,8 @@ function make_slides(f) {
     name : "training_critters",
     start: function() {
       globalGame.socket.send("enterSlide.training_critters.");
-      $("#training_critters_grid").empty();
-      exp.selected_training_stim = [];
+      $("#training_critters_grid").empty(); // Reset
+      exp.selected_training_stim = []; // Reset
 
       // Render slide
       render_hidden_critters_table(exp.training_critters, 6, true);      
@@ -403,11 +402,9 @@ function make_slides(f) {
   present: exp.testing_critters,
   start: function() {
     globalGame.socket.send("enterSlide.testing_critters.");
-    exp.selected_test_stim = [];
-
-    // hide + disable stuff
-    $('#continueButton').prop('disabled', false);
-    $("#testing_critters_grid").empty();
+    $('#continueButton').prop('disabled', false); // Reset
+    $("#testing_critters_grid").empty(); // Reset
+    exp.selected_test_stim = []; // Reset
     render_hidden_critters_table(exp.testing_critters, 6, false);
 
     // Time Markers
@@ -462,12 +459,9 @@ function make_slides(f) {
     for (var i=0; i<exp.test_records[0].length; i++) {
       encoded_trials.push(_.pairs(encodeData(exp.test_records[0][i])).join('.'));
     }
-
-
-    globalGame.socket.emit('logTest.testCritters.', JSON.stringify(exp.test_records[0]), callback)
+    globalGame.socket.emit("multipleTrialResponses", exp.test_records[0]);
     globalGame.socket.send("logScores.testCritters." + _.pairs(encodeData(test_summary_stats)).join('.'));
     exp.go();
-
   },
   log_responses : function(test_record, stim_num, turker_label, true_label, is_correct){
     test_record.push({

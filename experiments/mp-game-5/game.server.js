@@ -12,6 +12,20 @@ var
   fs    = require('fs'),
   utils = require(__base + 'sharedUtils/sharedUtils.js');
 var startTime;
+
+var multipleTrialResponses = function(client, data) {
+  // This is the funciton where the server parses and acts on
+  // a list of trial data sent from 'clients', i.e. browsers of 
+  // people playing the game.
+  // 
+  // Note: We seperate this out from onMessage, as we might
+  // want to emit list of JSON objects. These are hard to
+  // serialize in a single message in a format that won't
+  // interfere with the existing messages API.
+  // Thus, we have factored this out seperately.
+
+  console.log(JSON.stringify(data));
+}
     
 var onMessage = function(client,message) {
 // This is the function where the server parses and acts on messages
@@ -210,4 +224,4 @@ var setCustomEvents = function(socket) {
   //empty
 };
 
-module.exports = {dataOutput, setCustomEvents, onMessage}
+module.exports = {dataOutput, setCustomEvents, onMessage, multipleTrialResponses}

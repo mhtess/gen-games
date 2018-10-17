@@ -120,9 +120,9 @@ var initialize = function(query, client, id) {
     gameServer.onMessage(client, m);
   });
 
-  // If we want to parse additional data
-  client.on('jsonData', function(m) {
-    gameServer.onJsonData(client, m)
+  // Parsing responses from a list of trials
+  client.on('multipleTrialResponses', function(data) {
+    gameServer.multipleTrialResponses(client, data);
   });
 
   // When this client disconnects, we want to tell the game server
