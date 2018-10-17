@@ -321,7 +321,7 @@ function make_slides(f) {
         <p>
           Your partner is currently studying creatures with a wudsy detector. It will take them approximately 1 - 2 minutes to finish exploring. 
           <br> <br>
-          Meanwhile you will be waiting in a chatroom. Once the explorer is done, they will enter the chatroom. You should discuss what properties of wudsy creatures they learned during exploration. Pay close attention and ask questions, as you will be tested on your understanding of wudsy creatures.
+          Meanwhile you will be waiting in a chatroom. Once your partner is done, they will enter the chatroom. You should discuss what properties of wudsy creatures they learned during exploration. Pay close attention and ask questions, as you will be tested on your understanding of wudsy creatures.
           <br> <br>
           During your partner's exploration period please stay at the computer and <b>DO NOT CLOSE THIS TAB</b>. Otherwise, you will be disconnected from the game and we won't be able to reward you for the hit.
           Please keep checking the chat window, as the status will update when the other player has also entered the room.
