@@ -23,8 +23,7 @@ var multipleTrialResponses = function(client, data) {
   // serialize in a single message in a format that won't
   // interfere with the existing messages API.
   // Thus, we have factored this out seperately.
-
-  console.log(JSON.stringify(data));
+  return data
 }
     
 var onMessage = function(client,message) {

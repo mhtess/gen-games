@@ -520,7 +520,11 @@ function make_slides(f) {
     test_summary_stats.total_time = exp.times.durations.testing.total[exp.block]/1000;
 
     // TODO: Add Support for multiple games.
-    exp.test_records.push(test_record);
+    exp.test_records.push({
+      'game_id': globalGame.data.id,
+      'role': globalGame.my_role,
+      'trials': test_record
+    });
     exp.test_summary_stats = test_summary_stats;
     _stream.apply(this); //make sure this is at the *end*, after you log your data
 

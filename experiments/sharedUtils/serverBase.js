@@ -58,7 +58,21 @@ class ReferenceGameServer {
     if (this.customServer.multipleTrialResponses !== undefined) {
       // Wrapping in condtional to prevent crashing in older
       // games that did not implement this interface.
-      this.customServer.multipleTrialResponses(client, data);
+      var output = this.customServer.multipleTrialResponses(client, data);
+      var game_id = output['game_id'];
+      var role = output['role'];
+      var trials = output['trials'];
+      var game = client.game;
+
+      if(!_.isEmpty(client.game.dataStore)) {
+        trials.forEach(function(trial) {
+          var dataPoint = _.extend(trial, {'eventType': 'logTest', 'game_id': game_id, 'role': role});
+          if(_.includes(game.dataStore, 'csv'))
+            utils.writeDataToCSV(game, dataPoint);
+          if(_.includes(game.dataStore, 'mongo'))
+            utils.writeDataToMongo(game, dataPoint);
+        });
+      }
     }
   }
 
