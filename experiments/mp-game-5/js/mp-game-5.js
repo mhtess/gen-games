@@ -195,7 +195,7 @@ function createTestingCritter(stim, i, scale){
     var id = '#' + $(event.target).parents('.cell')[0].id;
     if (exp.selected_test_stim.includes(id)) {
       unmarkAsWudsy(id);
-      exp.selected_test_stim.slice(exp.selected_test_stim.indexOf(id), 1);
+      exp.selected_test_stim = exp.selected_test_stim.slice(exp.selected_test_stim.indexOf(id), 1);
     } else {
       markAsWudsy(id);
       exp.selected_test_stim.push(id);
@@ -327,7 +327,7 @@ function make_slides(f) {
 
       // TODO: Redo this so that we only send the logTrain message, once all the training rounds are complete.
       _stream.apply(this); //make sure this is at the *end*, after you log your data
-      globalGame.socket.send("logTrain.trainingCritters." + _.pairs(encodeData(exp.train_records[0])).join('.'));
+      globalGame.socket.send("logTrain.trainingCritters." + _.pairs(encodeData(exp.train_records[exp.block])).join('.'));
       exp.go();
     },
     log_responses : function(time_spent){
@@ -456,10 +456,10 @@ function make_slides(f) {
 
 
     encoded_trials = [];
-    for (var i=0; i<exp.test_records[0].length; i++) {
-      encoded_trials.push(_.pairs(encodeData(exp.test_records[0][i])).join('.'));
+    for (var i=0; i<exp.test_records[exp.block].length; i++) {
+      encoded_trials.push(_.pairs(encodeData(exp.test_records[exp.block][i])).join('.'));
     }
-    globalGame.socket.emit("multipleTrialResponses", exp.test_records[0]);
+    globalGame.socket.emit("multipleTrialResponses", exp.test_records[exp.block]);
     globalGame.socket.send("logScores.testCritters." + _.pairs(encodeData(test_summary_stats)).join('.'));
     exp.go();
   },

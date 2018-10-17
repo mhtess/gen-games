@@ -132,8 +132,6 @@ var onMessage = function(client,message) {
         function(i){return i.split(',')}
       ));
 
-      console.log(scoreObj);
-
       gc.testScores[target.instance.role][0] = scoreObj;
       setTimeout(function() {
         _.map(all, function(p){
@@ -193,11 +191,12 @@ var dataOutput = function() {
   // takes the data sent from client and packages it into logResponseOutput
   var logResponseOutput = function(client, message_data) {
     // message_data contrains the flattened JSON object with training/test trial info.
-    console.log(message_data);
-    return _.extend(
+    var result = _.extend(
       commonOutput(client, message_data),
       decodeData(flattenedArrayToObj(message_data.slice(2)))
     );
+    console.log(result);
+    return result;
   };
 
   var chatMessageOutput = function(client, message_data) {

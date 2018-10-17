@@ -19,10 +19,10 @@ var original = document.title;
 // ACTION HANDLERS
 // ---------------
 function buttonClickListener(evt) {
-  // var proceed = confirm("Are you done learning about wudsy creatures?\n\n If yes, click \"OK\". \n If no, click \"CANCEL\".");
-  // if (proceed === false) {
-  //   return;
-  // }
+  var proceed = confirm("Are you done learning about wudsy creatures?\n\n If yes, click \"OK\". \n If no, click \"CANCEL\".");
+  if (proceed === false) {
+    return;
+  }
   globalGame.socket.send("clickedObj.");
 };
 
@@ -214,7 +214,6 @@ var customSetup = function(globalGame) {
           role_index=partner_role;
         }
 
-        console.log(data);
         var player_score = Number(data[role_index][0].hits) - Number(data[role_index][0].false_alarms);
         var positive_score = player_score > 0 ? player_score : 0
         $('#'+score_role+'_score').html(positive_score);
