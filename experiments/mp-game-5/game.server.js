@@ -153,7 +153,6 @@ var dataOutput = function() {
       iterationName: client.game.iterationName,
       gameid: client.game.id,
       time: Date.now(),
-      trialNum : client.game.state.roundNum,
       workerId: client.workerid,
       assignmentId: client.assignmentid,
       role: client.role
@@ -170,7 +169,6 @@ var dataOutput = function() {
         return val.replace("&", ".")
       }
     });
-    console.log(result);
     return result;
   }
 
@@ -181,6 +179,7 @@ var dataOutput = function() {
   // takes the data sent from client and packages it into logResponseOutput
   var logResponseOutput = function(client, message_data) {
     // message_data contrains the flattened JSON object with training/test trial info.
+    console.log(message_data);
     return _.extend(
       commonOutput(client, message_data),
       decodeData(flattenedArrayToObj(message_data.slice(2)))

@@ -152,11 +152,11 @@ function createTrainingCritter(stim, i, scale){
   // Construct "wudsy" labels
   var label = "";
   if (stim.belongs_to_concept) {  
-    label = "<div class='wudsy-label' id='cell-" + i + "-label'> wudsy </div>";
+    label = "<div class='wudsy-label' id='training_cell_" + i + "_label'> wudsy </div>";
   } else {
-    label = "<div class='wudsy-label' id='cell-" + i + "-label'> </div>";
+    label = "<div class='wudsy-label' id='training_cell_" + i + "_label'> </div>";
   }
-  $(label).insertAfter("#critter_" + i);
+  $(label).insertAfter("#training_critter_" + i);
 
   // Add click handlers
   $("#training_cell_" + i).click(function(event) {
@@ -216,7 +216,8 @@ function fade(id) {
 }
 
 function showWudsyIndicators(id) {
-  var labelID = id + '-label';
+  console.log(id);
+  var labelID = id + '_label';
   $(labelID).css('visibility', 'visible');
 
   if ($(id).text().indexOf("wudsy") >= 0) {
@@ -448,11 +449,19 @@ function make_slides(f) {
     test_summary_stats.score = test_summary_stats.hits - test_summary_stats.false_alarms;
     test_summary_stats.time_in_seconds = this.time_spent;
 
-    // TODO: Add code to wrap results and send it to the server for persistance.
+    // TODO: Add Support for multiple games.
     exp.test_records.push(test_record);
     exp.test_summary_stats = test_summary_stats;
     _stream.apply(this); //make sure this is at the *end*, after you log your data
-    globalGame.socket.send("logTest.testCritters." + _.pairs(encodeData(exp.test_records[0])).join('.'));
+
+
+    encoded_trials = [];
+    for (var i=0; i<exp.test_records[0].length; i++) {
+      encoded_trials.push(_.pairs(encodeData(exp.test_records[0][i])).join('.'));
+    }
+
+
+    globalGame.socket.emit('logTest.testCritters.', JSON.stringify(exp.test_records[0]), callback)
     globalGame.socket.send("logScores.testCritters." + _.pairs(encodeData(test_summary_stats)).join('.'));
     exp.go();
 
