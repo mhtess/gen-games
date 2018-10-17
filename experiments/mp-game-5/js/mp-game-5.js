@@ -417,7 +417,10 @@ function make_slides(f) {
     var end_time = Date.now();
     this.time_spent = (end_time - this.start_time) / 1000;
 
-    // TODO: Add "sure you want to continue" alert
+    var proceed = confirm("Have you selected all the creatures that believe are wudsy?\n\n If yes, click \"OK\".\n If no, click \"CANCEL\".");
+    if (proceed === false) {
+      return;
+    }
 
     // Evaluate performance on entire test set
     var test_summary_stats = generate_test_summary_stats();
