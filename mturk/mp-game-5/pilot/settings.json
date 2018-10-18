@@ -1,0 +1,14 @@
+{
+    "title":               "Language experiment (MP-5 -- Pilot)",
+    "description":         "Explore a world of creatures and answer short questions with a partner (~ 15 minutes)",
+    "keywords":            "language research stanford fun cognitive science university teaching",
+    "url":                 "https://rxdhawkins.me:8080/mp-game-5/forms/consent.html",
+    "frame_height":         650,
+    "assignment_duration":  "2 hour",
+    "auto_approval_delay":  "5 minutes",
+    "reward":               1.20,
+    "qualifications": {
+        "location": "US",
+        "approval_percentage": 95
+    }
+}

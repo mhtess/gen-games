@@ -29,7 +29,7 @@ var game_core = function(options){
   this.email = 'schopra8@stanford.edu';
   this.projectName = 'genGames';
   this.experimentName = 'mpGame5';
-  this.iterationName = 'debug';
+  this.iterationName = 'pilot';
   this.anonymizeCSV = true;
   this.bonusAmt = 1; // 1 cent
 
