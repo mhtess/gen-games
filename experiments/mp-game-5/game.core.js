@@ -160,13 +160,13 @@ game_core.prototype.newRound = function() {
     // If you've reached the planned number of rounds, end the game
     _.forEach(players, p => p.player.instance.disconnect());
   } else {
+    this.roundNum += 1;
     this.genStim();
+    this.numPlayersCompletedRound = 0;
+    this.isNewRound = true;
 
     // Tell players that new round is starting
     _.forEach(players, p => p.player.instance.emit('newRoundUpdate'));
-    this.roundNum += 1;
-    this.numPlayersCompletedRound = 0;
-    this.isNewRound = true;
     this.server_send_update();
   }
 };

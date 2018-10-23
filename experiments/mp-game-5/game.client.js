@@ -144,7 +144,8 @@ var customSetup = function(globalGame) {
 
   globalGame.socket.on('enterWaitRoom', function(data){
     $('#chatbox').val('');
-    if (globalGame.isNewRound == true) {
+    console.log(globalGame);
+    if (globalGame.isNewRound === true) {
       exp.goToSlide("training_instructions");
     } else {
       exp.goToSlide("score_report");

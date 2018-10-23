@@ -58,6 +58,7 @@ var onMessage = function(client,message) {
       gc.currentSlide[target.instance.role] = message_parts[1]
       if (gc.currentSlide["explorer"] == "training_instructions" || gc.currentSlide["student"] == "training_instructions") {
         gc.isNewRound = false;
+        gc.server_send_update();
       }
       console.log("Explorer is in: ==== " + gc.currentSlide["explorer"] + " ====")
       console.log("Student is in: ==== " + gc.currentSlide["student"] + " ====")
@@ -116,7 +117,7 @@ var onMessage = function(client,message) {
       if ((gc.currentSlide["explorer"] == gc.currentSlide["student"]))  {
         setTimeout(function() {
           _.map(all, function(p){
-            p.player.instance.emit("enterWaitRoom", {'newRound': gc.newRound})
+            p.player.instance.emit("enterWaitRoom", {'isNewRound': gc.isNewRound})
           });
         }, 300);
       }
