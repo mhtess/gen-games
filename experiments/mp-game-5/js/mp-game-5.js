@@ -2,13 +2,13 @@
 //  Multiplayer Game 5: Multiplayer Concept Learning
 //  By Sahil Chopra
 //  Goal: The purpose of this game is to set up  a multiplayer concept
-//        learning paradigm. Player A learns about "wudsy" creatures
+//        learning paradigm. Player A learns about "species" creatures
 //        over approximately 50 trials presented in a single summary
 //        grid format. Then Player A and Player B
 //        enter a chatroom together and forced to communicate,
 //        in which Player A teaches Player B
-//        about "wudsy" creatures. Then, they both take a "post test"
-//        where A and B are asked to identify creatures as "wudsy"
+//        about "species" creatures. Then, they both take a "post test"
+//        where A and B are asked to identify creatures as "species"
 //        or not on a test set of ~30 previously unseen critters.
 //        This entire process then repeats itself for n "species" concepts.
 // --------------------------------------------------------------------
@@ -228,12 +228,12 @@ function createTrainingCritter(stim, i, scale){
     id, scale
   );
 
-  // Construct "wudsy" labels
+  // Construct "species" labels
   var label = "";
   if (stim.belongs_to_concept) {  
-    label = "<div class='wudsy-label' id='training_cell_" + i + "_label'> wudsy </div>";
+    label = "<div class='species-label' id='training_cell_" + i + "_label'>" + globalGame.speciesName + "</div>";
   } else {
-    label = "<div class='wudsy-label' id='training_cell_" + i + "_label'> </div>";
+    label = "<div class='species-label' id='training_cell_" + i + "_label'> </div>";
   }
   $(label).insertAfter("#training_critter_" + i);
 
@@ -245,7 +245,7 @@ function createTrainingCritter(stim, i, scale){
     }
     exp.selected_stim_idx = id;
     mark(id);
-    showWudsyIndicators(id);
+    showSpeciesIndicators(id);
 
     if (!exp.selected_training_stim.includes(exp.selected_stim_idx)) {
       exp.selected_training_stim.push(exp.selected_stim_idx);
@@ -276,10 +276,10 @@ function createTestingCritter(stim, i, scale){
   $("#testing_cell_" + i).click(function(event) {
     var id = '#' + $(event.target).parents('.cell')[0].id;
     if (exp.selected_test_stim.includes(id)) {
-      unmarkAsWudsy(id);
+      unmarkAsSpecies(id);
       exp.selected_test_stim = exp.selected_test_stim.slice(exp.selected_test_stim.indexOf(id), 1);
     } else {
-      markAsWudsy(id);
+      markAsSpecies(id);
       exp.selected_test_stim.push(id);
     }
   });
@@ -287,33 +287,40 @@ function createTestingCritter(stim, i, scale){
 
 // Mark a given stimulus with a black border box
 function mark(id) {
-  $(id).css({"border":'2px solid black'});
+  if ($(id).text().indexOf(globalGame.speciesName) >= 0) {
+    $(id).css({"border":'2px dashed black'});
+  } else {
+    $(id).css({"border":'2px solid black'});
+  }
   $(id).css({"opacity": 1});
 }
 
 // Fade a given stimulus
 function fade(id) {
-  $(id).css({"border": 'none'});
+  if ($(id).text().indexOf(globalGame.speciesName) >= 0) {
+    $(id).css({"border":'2px dashed black'});
+  } else {
+    $(id).css({"border":'none'});
+  }  
   $(id).css({"opacity": 0.3});
 }
 
-function showWudsyIndicators(id) {
+function showSpeciesIndicators(id) {
   var labelID = id + '_label';
   $(labelID).css('visibility', 'visible');
 
-  if ($(id).text().indexOf("wudsy") >= 0) {
-    $(id).css({'background-color':'green'});
-    $(labelID).css({'background-color':'green'});
+  if ($(id).text().indexOf(globalGame.speciesName) >= 0) {
+    $(id).css({"border":'2px dashed black'});
   }
 }
 
-// Mark a given stimlus as wudsy (test)
-function markAsWudsy(id) {
+// Mark a given stimlus as species (test)
+function markAsSpecies(id) {
   $(id).css({'background-color':'yellow'});
 }
 
-// Unmark a given stimlus as wudsy (test)
-function unmarkAsWudsy(id) {
+// Unmark a given stimlus as species (test)
+function unmarkAsSpecies(id) {
   $(id).css({'background-color':'transparent'});
 }
 
@@ -345,10 +352,10 @@ function make_slides(f) {
       <h3>Instructions</h3>
       <br>
       <p>
-        You are studying creatures with a wudsy detector.
+        You are the "Explorer", studying creatures with a ` + globalGame.speciesName + ` detector.
         <br> <br>
-        You will be shown a grid of creatures. Click on a creature to discover whether it is wudsy.
-        Pay close attention, as you will have to teach your partner which are wudsy.
+        You will be shown a grid of creatures. Click on a creature to discover whether it is a` + globalGame.speciesName + `.
+        Pay close attention, as you will have to teach your partner which are ` + globalGame.pluralSpeciesName + `. 
         <br> <br>
         Press Continue to start the game.
         <br><br>
@@ -360,9 +367,9 @@ function make_slides(f) {
         <h3>Instructions</h3>
         <br>
         <p>
-          Your partner is currently studying creatures with a wudsy detector. It will take them approximately 1 - 2 minutes to finish exploring. 
+          You are the "Student". Your partner is currently studying creatures with a ` + globalGame.speciesName + ` detector. It will take them approximately 1 - 2 minutes to finish exploring. 
           <br> <br>
-          Meanwhile you will be waiting in a chatroom. Once your partner is done, they will enter the chatroom. You should discuss what properties of wudsy creatures they learned during exploration. Pay close attention and ask questions, as you will be tested on your understanding of wudsy creatures.
+          Meanwhile you will be waiting in a chatroom. Once your partner is done, they will enter the chatroom. You should discuss what properties of ` + globalGame.pluralSpeciesName + ` they learned during exploration. Pay close attention and ask questions, as you will be tested on your understanding of ` + globalGame.pluralSpeciesName + `.
           <br> <br>
           During your partner's exploration period please stay at the computer and <b>DO NOT CLOSE THIS TAB</b>. Otherwise, you will be disconnected from the game and we won't be able to reward you for the hit.
           Please keep checking the chat window, as the status will update when the other player has also entered the room.
@@ -392,6 +399,18 @@ function make_slides(f) {
   slides.training_critters = slide({
     name : "training_critters",
     start: function() {
+      var instructions = `<p class="label_prompt"> Click on each one to discover whether or not it is a <strong>` + globalGame.speciesName +`</strong>.
+        <br>
+        Study them carefully.
+        </p>
+        <br>
+        <br>
+        <div id="training_critters_grid"></div>
+        <br>
+        <br>
+        <button class="continuebutton" id="training-critters-button" onclick="_s.button()" disabled>Continue</button>`
+      $("#training_critters").html(instructions);
+
       globalGame.socket.send("enterSlide.training_critters.");
       $("#training_critters_grid").empty(); // Reset
       exp.selected_training_stim = []; // Reset
@@ -413,10 +432,8 @@ function make_slides(f) {
       exp.times.durations.training.total.push(
         exp.times.durations.training.exploration[globalGame.roundNum] + exp.times.durations.training.submission[globalGame.roundNum]
       );
-
       exp.train_records.push(this.log_responses(globalGame.roundNum, exp.times));
 
-      // TODO: Redo this so that we only send the logTrain message, once all the training rounds are complete.
       _stream.apply(this); //make sure this is at the *end*, after you log your data
       globalGame.socket.send("logTrain.trainingCritters." + _.pairs(encodeData(exp.train_records[globalGame.roundNum])).join('.'));
       exp.go();
@@ -434,9 +451,17 @@ function make_slides(f) {
   slides.chat_instructions = slide({
     name : "chat_instructions",
     start : function() {
-      $('#chat_instructs').html("On the next page, you will enter into a chatroom with your partner. " +
-      "Please discuss the properties of wudsy creatures. The \"student\" will be advance the game out of the chatroom, once they feel like they have a good understanding of wudsy creatures' properties. " +
-      "You are " +  roleDictionary[globalGame.my_role] + ".")
+      var instructions = `On the next page, you will enter into a chatroom with your partner.
+      <br>
+      <br>
+      Please discuss the properties of ` + globalGame.pluralSpeciesName + `. The "student" will be advance the game out of the chatroom, once they feel like they have a good understanding of ` + globalGame.pluralSpeciesName + `' properties.
+      <br>
+      <br>
+      After the chatroom, you both will be provided a set of unseen creatures that you must classify as ` + globalGame.speciesName + ` or not. You're bonus will be the sum of your score and your partner's score on this task.
+      <br>
+      <br>
+      You are the ` +  roleDictionary[globalGame.my_role] + `.`;
+      $('#chat_instructs').html(instructions);
     },
     button : function() {
       exp.go()
@@ -475,9 +500,9 @@ function make_slides(f) {
       }
 
       var instructions = `<br><br>
-        <h3>Instructions</h3>
+        <h3>Quiz Instructions</h3>
         <br>
-        You will be presented a grid. Click on the creatures you believe are wudsy.
+        You will be presented a grid. Click on the creatures you believe are ` + globalGame.pluralSpeciesName + `.
         <br> <br>
         Press Continue to start the game.</p>
         <br> <br>
@@ -494,6 +519,24 @@ function make_slides(f) {
   name : "testing_critters",
   present: exp.testing_critters,
   start: function() {
+    var instructions = `
+      <p class="label_prompt"> Click on the creatures that you believe are members of the <strong>` + globalGame.speciesName + `</strong> species.
+        <br>
+        Creatures that you have selected as ` + globalGame.pluralSpeciesName + ` will have a yellow background.
+        <br>      
+        You can click on a selected creature a second time to un-select it.
+        <br>
+        Once you are done selecting the ` + globalGame.pluralSpeciesName + `, hit the Continue button.
+      </p>
+      <br>
+      <br>
+      <div id="testing_critters_grid"></div>
+      <br>
+      <br>
+     <button class="continuebutton" id="test_button" onclick="_s.button()">Continue</button>`
+     $("#testing_critters").html(instructions);
+
+
     globalGame.socket.send("enterSlide.testing_critters.");
     $('#continueButton').prop('disabled', false); // Reset
     $("#testing_critters_grid").empty(); // Reset
@@ -511,7 +554,7 @@ function make_slides(f) {
       exp.times.timestamps.testing.start.submission[globalGame.roundNum] = time;
     }
 
-    var proceed = confirm("Have you selected all the creatures that believe are wudsy?\n\n If yes, click \"OK\".\n If no, click \"CANCEL\".");
+    var proceed = confirm("Have you selected all the creatures that believe are " + globalGame.pluralSpeciesName + "?\n\n If yes, click \"OK\".\n If no, click \"CANCEL\".");
     if (proceed === false) {
       return;
     }

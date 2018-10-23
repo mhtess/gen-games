@@ -80,6 +80,8 @@ var client_onserverupdate_received = function(data){
   globalGame.rule_idx = data.ruleIdx;
   globalGame.rule_type = data.ruleType;
   globalGame.isNewRound = data.isNewRound;
+  globalGame.speciesName = data.speciesName;
+  globalGame.pluralSpeciesName = data.pluralSpeciesName;
 
   // update data object on first round, don't overwrite (FIXME)
   if(!_.has(globalGame, 'data')) {
@@ -144,7 +146,6 @@ var customSetup = function(globalGame) {
 
   globalGame.socket.on('enterWaitRoom', function(data){
     $('#chatbox').val('');
-    console.log(globalGame);
     if (globalGame.isNewRound === true) {
       exp.goToSlide("training_instructions");
     } else {

@@ -210,11 +210,8 @@ ALOT...don't understand how to adjust that.*/
     -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
 }
 
-input[type="radio"]{
-	margin: 0 10px 0 10px;
-}
 
-.wudsy-label {
+.species-label {
 	visibility: hidden;
 }
 

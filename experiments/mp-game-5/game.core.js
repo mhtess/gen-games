@@ -61,6 +61,8 @@ var game_core = function(options){
     this.rule_by_round = options.rule_by_round;
     this.numPlayersCompletedRound = 0;
     this.isNewRound = true;
+    this.possibleSpecies = options.possibleSpecies;
+    this.possibleSpeciesPlural = options.possibleSpeciesPlural;
 
     this.data = {
       id: this.id,
@@ -205,6 +207,8 @@ game_core.prototype.server_send_update = function(){
       ruleIdx: local_game.ruleIdx,
       ruleType: local_game.ruleType,
       isNewRound: local_game.isNewRound,
+      speciesName: local_game.possibleSpecies[local_game.roundNum],
+      pluralSpeciesName: local_game.possibleSpeciesPlural[local_game.roundNum],
     });
     p.player.instance.emit('onserverupdate', playerState);
   });

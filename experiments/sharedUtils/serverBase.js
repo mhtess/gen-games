@@ -53,7 +53,6 @@ class ReferenceGameServer {
       var game = client.game;
 
       console.log(output);
-
       if(!_.isEmpty(client.game.dataStore)) {
         trials.forEach(function(trial) {
           var dataPoint = _.extend(trial, {'eventType': 'logTest'}, sharedInfo);
@@ -130,7 +129,8 @@ class ReferenceGameServer {
 
     if (this.expName === 'mp-game-5') {
       options.rule_by_round = this.rule_by_round;
-      options.name_by_round = ['wudsy', 'cubly', 'nurty', 'poffy', 'sufty'];
+      options.possibleSpecies = ['wudsy', 'morseth', 'kwep', 'zorb', 'luzak'];
+      options.possibleSpeciesPlural = ['wudsies', 'morseths', 'kweps', 'zorbs', 'luzaks'];
     }
 
     var game = new this.core(options);

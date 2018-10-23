@@ -61,32 +61,10 @@
 
   <!-- This is the slide in which users will learn how they will play the game. -->
   <div class="slide" id="training_instructions">
-    <br><br>
-    <h3>Instructions</h3>
-    <br>
-    <p>
-      You are on a new planet called Crittun, studying creatures with a wudsy detector.
-      The wudsy detector will tell you whether or not a creature is <it>wudsy</it>.
-      <br> <br>
-      You will first interact with a panel of critters, clicking each critter to determine whether or not it us wudsy.
-      <br> <br>
-      Press Continue to start the game.
-    </p>
-    <button class="continuebutton" onclick="_s.button()">Continue</button>
   </div>
 
   <!-- This is the learning slide in which users will uncover information about the critters -->
   <div class="slide" id="training_critters">
-    <p class="label_prompt"> Click on each one to discover whether or not it is <strong> wudsy </strong>.
-      <br>
-      Study them carefully. You and your partner will have to identify them later.
-    </p>
-    <br>
-    <br>
-    <div id="training_critters_grid"></div>
-    <br>
-    <br>
-    <button class="continuebutton" id="training-critters-button" onclick="_s.button()" disabled>Continue</button>
   </div>
 
   <div class="slide" id="testing_instructions">
@@ -103,18 +81,6 @@
 
   <!-- Generates critters that the partner learned about and tests the user -->
   <div class="slide" id="testing_critters">
-    <p class="label_prompt"> Click on the creatures that you believe are <strong> wudsy </strong>.
-      <br>
-      Creatures that you have selected as wudsy, will have a yellow background.
-      <br>
-      Once you are done selecting the wudsy ones, hit the Continue button.
-    </p>
-    <br>
-    <br>
-    <div id="testing_critters_grid"></div>
-    <br>
-    <br>
-   <button class="continuebutton" id="test_button" onclick="_s.button()">Continue</button>
  </div>
 
   <!-- This slide will be seen by one of the players while until the other player reaches the same screen -->
@@ -207,7 +173,7 @@
   <div id = "status"><p style="color:red;">Waiting for your partner to reach the chat...</p>  <br>Please do not refresh the page!</p></div>
   <div id='header'>
     <div id='textInfo'>
-     <p id='instructs'>Explorer, please talk to the student about the properties of wudsy creatures</p>
+     <p id='instructs'>Explorer, please talk to the student about the properties of the species.</p>
     </div>
    <p style="color:green" id='score'> </p>
   </div>
