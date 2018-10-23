@@ -156,13 +156,18 @@ var onMessage = function(client,message) {
 
 var commonOutput = function (client) {
   // Returns information shared across all different forms of logging
+  console.log(client.game);
   return {
     iterationName: client.game.iterationName,
     gameid: client.game.id,
     time: Date.now(),
     workerId: client.workerid,
     assignmentId: client.assignmentid,
-    role: client.role
+    role: client.role,
+    rule_idx: client.game.ruleIdx,
+    rule_type: client.game.ruleType,
+    train_data_fn: client.game.trainingDataFn,
+    test_data_fn: client.game.testDataFn,
   };
 }
 
