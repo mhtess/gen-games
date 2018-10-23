@@ -46,8 +46,8 @@ var game_core = function(options){
 
   // Scores
   this.testScores = {
-    "explorer": {},
-    "student": {},
+    "explorer": [],
+    "student": [],
   }
 
   if(this.server) {
@@ -56,23 +56,9 @@ var game_core = function(options){
     this.id = options.id;
     this.expName = options.expName;
     this.player_count = options.player_count;
-    this.roundNum = 1;
-
-    var rule_info = rule_summary[options.rule_idx];
-
-    this.rule_type = rule_info.type;
-    this.training_data_fn = "./js/training_data_" + rule_info.name + ".json";
-    this.test_data_fn = "./js/test_data_" + rule_info.name + ".json";
-    this.rule_idx = options.rule_idx;
-    console.log("Creating a Game with Rule: " + this.training_data_fn)
-
-    this.trainingStimuli = {
-      explorer: require(this.training_data_fn),
-    };
-    this.testStimuli = {
-      explorer: require(this.test_data_fn),
-      student: require(this.test_data_fn),
-    }
+    this.roundNum = 0;
+    this.numRounds = options.rule_by_round.length;
+    this.rule_by_round = options.rule_by_round;
 
     this.data = {
       id: this.id,
@@ -81,6 +67,8 @@ var game_core = function(options){
         gameID: this.id,
       }
     };
+
+    this.genStim();
 
     // Player creation is entirely handled by the server.
     // The client simply mantains a dummy / empty player object
@@ -141,9 +129,42 @@ game_core.prototype.get_active_players = function() {
   return _.without(noEmptiesList, null);
 };
 
+game_core.prototype.genStim = function() {
+    // Else, load train/test stimuli for the next round of the game
+    var ruleIdx = this.rule_by_round[this.roundNum];
+    var ruleInfo = rule_summary[ruleIdx];
+
+    // Set rule information for the round
+    this.ruleType = ruleInfo.type;
+    this.trainingDataFn = "./js/training_data_" + ruleInfo.name + ".json";
+    this.testDataFn = "./js/test_data_" + ruleInfo.name + ".json";
+    this.ruleIdx = ruleIdx;
+    console.log("Creating Round " + (this.roundNum + 1) + " with Rule: " + this.trainingDataFn);
+
+    // Load training and test stimuli
+    this.trainingStimuli = {explorer: require(this.trainingDataFn)};
+    this.testStimuli = {
+      explorer: require(this.testDataFn),
+      student: require(this.testDataFn),
+    }
+}
+
 game_core.prototype.newRound = function() {
-    // Transition to the next slide (Training Instructions for Player A, Waiting Room for Player B)
+  // Get contextual information
+  var localThis = this;
+  var players = this.get_active_players();
+
+  if(this.roundNum == this.numRounds - 1) {
+    // If you've reached the planned number of rounds, end the game
+    _.forEach(players, p => p.player.instance.disconnect());
+  } else {
+    this.genStim();
+
+    // Tell players that new round is starting
+    _.forEach(players, p => p.player.instance.emit( 'newRoundUpdate'));
+    this.roundNum += 1;
     this.server_send_update();
+  }
 };
 
 game_core.prototype.server_send_update = function(){
@@ -160,7 +181,7 @@ game_core.prototype.server_send_update = function(){
     pt : this.players_threshold,
     pc : this.player_count,
     dataObj  : this.data,
-    roundNum : this.roundNum
+    roundNum : this.roundNum,
   };
   _.extend(state, {players: player_packet});
   _.extend(state, {instructions: this.instructions});
@@ -175,10 +196,10 @@ game_core.prototype.server_send_update = function(){
     playerState = _.extend(playerState, {testing_critters: local_game.testStimuli[p.instance.role]});
     playerState = _.extend(playerState, {
       testing_critters: local_game.testStimuli[p.instance.role],
-      training_data_fn: local_game.training_data_fn,
-      test_data_fn: local_game.test_data_fn,
-      rule_idx: local_game.rule_idx,
-      rule_type: local_game.rule_type,
+      trainingDataFn: local_game.trainingDataFn,
+      testDataFn: local_game.testDataFn,
+      ruleIdx: local_game.ruleIdx,
+      ruleType: local_game.ruleType,
     });
     p.player.instance.emit('onserverupdate', playerState);
   });

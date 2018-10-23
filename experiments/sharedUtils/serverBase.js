@@ -13,24 +13,13 @@ class ReferenceGameServer {
     this.games = {};
     this.game_count = 0;
 
-    if (this.expName === 'mp-game-5') {
-      this.numGamesPerRule = {
-        "0": 2,
-        "1": 2,
-        "2": 2,
-        "3": 2,
-        "4": 2,
-        "5": 2,
-        "6": 2,
-        "7": 2,
-        "8": 2,
-        "9": 2,
-      }
-    }
+    // Rules that we want to apply
+    this.rule_by_round = [0, 2, 4, 6, 8];
+
   }
 
   startGame (game) {
-      game.newRound();
+      game.server_send_update();
   }
 
   writeData (client, eventType, message_parts) {
@@ -55,6 +44,7 @@ class ReferenceGameServer {
   }
 
   multipleTrialResponses(client, data) {
+    console.log('Inside multipleTrialResponses function');
     if (this.customServer.multipleTrialResponses !== undefined) {
       // Wrapping in condtional to prevent crashing in older
       // games that did not implement this interface.
@@ -62,6 +52,8 @@ class ReferenceGameServer {
       var sharedInfo = output['info'];
       var trials = output['trials'];
       var game = client.game;
+
+      console.log(output);
 
       if(!_.isEmpty(client.game.dataStore)) {
         trials.forEach(function(trial) {
@@ -123,10 +115,11 @@ class ReferenceGameServer {
       server: true,
       id : utils.UUID(),
       player_instances: [{id: player.userid, player: player}],
-      player_count: 1
+      player_count: 1,
+
     };
 
-    if (this.expName === 'mp-game-3' || this.expName === 'mp-game-5') {
+    if (this.expName === 'mp-game-3') {
       for (const rule_idx of Object.keys(this.numGamesPerRule)) {
         if (this.numGamesPerRule[rule_idx] !== 0) {
           options.rule_idx = parseInt(rule_idx);
@@ -134,6 +127,10 @@ class ReferenceGameServer {
           break;
         }
       }
+    }
+
+    if (this.expName === 'mp-game-5') {
+      options.rule_by_round = this.rule_by_round;
     }
 
     var game = new this.core(options);

@@ -34,7 +34,6 @@ function init() {
   };
 
   // Initialize experiment variables
-  exp.block = 0;
   exp.train_records = [];
   exp.test_records = [];
   exp.test_summary_stats = [];
@@ -105,7 +104,7 @@ function init() {
   exp.go();
 }
 
-function generate_test_summary_stats(){
+function generate_round_test_summary_stats(){
   return {
     type: "testing",
     hits: 0,
@@ -364,20 +363,20 @@ function make_slides(f) {
     button : function() {
       exp.times.timestamps.training.end.submission.push(Date.now());
       exp.times.durations.training.exploration.push(
-        exp.times.timestamps.training.end.exploration[exp.block] - exp.times.timestamps.training.start.exploration[exp.block]
+        exp.times.timestamps.training.end.exploration[globalGame.roundNum] - exp.times.timestamps.training.start.exploration[globalGame.roundNum]
       );
       exp.times.durations.training.submission.push(
-        exp.times.timestamps.training.end.submission[exp.block] - exp.times.timestamps.training.start.submission[exp.block]
+        exp.times.timestamps.training.end.submission[globalGame.roundNum] - exp.times.timestamps.training.start.submission[globalGame.roundNum]
       );
       exp.times.durations.training.total.push(
-        exp.times.durations.training.exploration[exp.block] + exp.times.durations.training.submission[exp.block]
+        exp.times.durations.training.exploration[globalGame.roundNum] + exp.times.durations.training.submission[globalGame.roundNum]
       );
 
-      exp.train_records.push(this.log_responses(exp.block, exp.times));
+      exp.train_records.push(this.log_responses(globalGame.roundNum, exp.times));
 
       // TODO: Redo this so that we only send the logTrain message, once all the training rounds are complete.
       _stream.apply(this); //make sure this is at the *end*, after you log your data
-      globalGame.socket.send("logTrain.trainingCritters." + _.pairs(encodeData(exp.train_records[exp.block])).join('.'));
+      globalGame.socket.send("logTrain.trainingCritters." + _.pairs(encodeData(exp.train_records[globalGame.roundNum])).join('.'));
       exp.go();
     },
     log_responses : function(block, times){
@@ -444,7 +443,7 @@ function make_slides(f) {
       $("#testing_instructions").html(instructions);
     },
     button : function() {
-      exp.go()
+      exp.go();
     }
   });
 
@@ -464,10 +463,10 @@ function make_slides(f) {
   },
   button : function() {
     var time = Date.now();
-    if (exp.times.timestamps.testing.start.submission.length < exp.block + 1) {
+    if (exp.times.timestamps.testing.start.submission.length < globalGame.roundNum + 1) {
       exp.times.timestamps.testing.start.submission.push(time);
     } else {
-      exp.times.timestamps.testing.start.submission[exp.block] = time;
+      exp.times.timestamps.testing.start.submission[globalGame.roundNum] = time;
     }
 
     var proceed = confirm("Have you selected all the creatures that believe are wudsy?\n\n If yes, click \"OK\".\n If no, click \"CANCEL\".");
@@ -478,17 +477,17 @@ function make_slides(f) {
     exp.times.timestamps.testing.end.exploration.push(time);
     exp.times.timestamps.testing.end.submission.push(time);
     exp.times.durations.testing.exploration.push(
-      exp.times.timestamps.testing.end.exploration[exp.block] - exp.times.timestamps.testing.start.exploration[exp.block]
+      exp.times.timestamps.testing.end.exploration[globalGame.roundNum] - exp.times.timestamps.testing.start.exploration[globalGame.roundNum]
     );
     exp.times.durations.testing.submission.push(
-      exp.times.timestamps.testing.end.submission[exp.block] - exp.times.timestamps.testing.start.submission[exp.block]
+      exp.times.timestamps.testing.end.submission[globalGame.roundNum] - exp.times.timestamps.testing.start.submission[globalGame.roundNum]
     );
     exp.times.durations.testing.total.push(
-      exp.times.durations.testing.exploration[exp.block] + exp.times.durations.testing.submission[exp.block]
+      exp.times.durations.testing.exploration[globalGame.roundNum] + exp.times.durations.testing.submission[globalGame.roundNum]
     );
 
     // Evaluate performance on entire test set
-    var test_summary_stats = generate_test_summary_stats();
+    var round_test_summary_stats = generate_round_test_summary_stats();
     var test_record = [];
     for (var i=0; i < exp.testing_critters.length; i++) {
       // Get Turker response
@@ -502,37 +501,31 @@ function make_slides(f) {
       // Evaluate correctness of individual creatureß
       var is_correct = (turker_label === true_label);
       if (turker_label === false && true_label === false) {
-        test_summary_stats.correct_rejections += 1;
+        round_test_summary_stats.correct_rejections += 1;
       } else if (turker_label=== false && true_label === true){
-        test_summary_stats.misses += 1;
+        round_test_summary_stats.misses += 1;
       } else if (turker_label === true && true_label === false) {
-        test_summary_stats.false_alarms += 1;
+        round_test_summary_stats.false_alarms += 1;
       } else {
-        test_summary_stats.hits += 1;
+        round_test_summary_stats.hits += 1;
       }
       this.log_responses(test_record, i, turker_label, true_label, is_correct);
     }
 
     // Other summary stats
-    test_summary_stats.score = test_summary_stats.hits - test_summary_stats.false_alarms;
-    test_summary_stats.exploration_time = exp.times.durations.testing.exploration[exp.block]/1000;
-    test_summary_stats.submission_time = exp.times.durations.testing.submission[exp.block]/1000;
-    test_summary_stats.total_time = exp.times.durations.testing.total[exp.block]/1000;
+    round_test_summary_stats.score = round_test_summary_stats.hits - round_test_summary_stats.false_alarms;
+    round_test_summary_stats.exploration_time = exp.times.durations.testing.exploration[globalGame.roundNum]/1000;
+    round_test_summary_stats.submission_time = exp.times.durations.testing.submission[globalGame.roundNum]/1000;
+    round_test_summary_stats.total_time = exp.times.durations.testing.total[globalGame.roundNum]/1000;
 
-    // TODO: Add Support for multiple games.
     exp.test_records.push({
       'trials': test_record
     });
-    exp.test_summary_stats = test_summary_stats;
+    exp.test_summary_stats.push(round_test_summary_stats);
     _stream.apply(this); //make sure this is at the *end*, after you log your data
 
-
-    encoded_trials = [];
-    for (var i=0; i<exp.test_records[exp.block].length; i++) {
-      encoded_trials.push(_.pairs(encodeData(exp.test_records[exp.block][i])).join('.'));
-    }
-    globalGame.socket.emit("multipleTrialResponses", exp.test_records[exp.block]);
-    globalGame.socket.send("logScores.testCritters." + _.pairs(encodeData(test_summary_stats)).join('.'));
+    globalGame.socket.emit('multipleTrialResponses', exp.test_records[globalGame.roundNum]);
+    globalGame.socket.send("logScores.testCritters." + _.pairs(encodeData(exp.test_summary_stats[globalGame.roundNum])).join('.'));
     exp.go();
   },
   log_responses : function(test_record, stim_num, turker_label, true_label, is_correct){
@@ -582,10 +575,10 @@ function make_slides(f) {
   slides.score_report = slide({
     name: "score_report",
     start: function() {
-      globalGame.socket.send("sendingTestScores." + _.pairs(encodeData(exp.test_summary_stats)).join('.'));
+      globalGame.socket.send("sendingTestScores." + _.pairs(encodeData(exp.test_summary_stats[globalGame.roundNum])).join('.'));
     },
     button : function() {
-      exp.go()
+      globalGame.socket.send("newRoundUpdate.");
     }
   });
 

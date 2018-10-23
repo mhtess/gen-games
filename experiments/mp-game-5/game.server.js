@@ -60,21 +60,14 @@ var onMessage = function(client,message) {
       console.log("Student is in: ==== " + gc.currentSlide["student"] + " ====")
       break;
 
-    case 'clickedObj' :
-    // continue button from chat room
-      setTimeout(function() {
-        _.map(all, function(p){
-            // tell client to advance to next slide
-            var playerRole = p.instance.role;
-            // here, decide what data to pass to each subject
-            p.player.instance.emit("exitChatRoom", {});
-            _.map(all,function(p){
-                p.player.instance.emit('newRoundUpdate', {user: client.userid});
-            });
-          });
-          // tell server to advance to next round (or if at end, disconnect)
-          gc.roundNum += 1;
-        }, 3);
+    case 'proceedToTestInstructions':
+       _.map(all, function(p) {
+        p.player.instance.emit('exitChatRoom');
+      });
+      break;
+
+    case 'newRoundUpdate' :
+      gc.newRound();
       break;
 
     case 'playerTyping' :
@@ -134,7 +127,7 @@ var onMessage = function(client,message) {
         function(i){return i.split(',')}
       ));
 
-      gc.testScores[target.instance.role][0] = scoreObj;
+      gc.testScores[target.instance.role][gc.roundNum] = scoreObj;
       setTimeout(function() {
         _.map(all, function(p){
           p.player.instance.emit("sendingTestScores",

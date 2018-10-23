@@ -14,7 +14,6 @@ var totalScore = 0;
 var timeOut = 1000 * 60 * 15; // 15 Minutes
 var timeoutIndex;
 var original = document.title;
-
 // ----------------
 // ACTION HANDLERS
 // ---------------
@@ -23,7 +22,7 @@ function buttonClickListener(evt) {
   if (proceed === false) {
     return;
   }
-  globalGame.socket.send("clickedObj.");
+  globalGame.socket.send("proceedToTestInstructions.");
 };
 
 // ----------------
@@ -135,13 +134,13 @@ var customSetup = function(globalGame) {
     $('#chatbox').focus();
     $('#messages').empty();
     $('#roundnumber').empty();
+    exp.goToSlide("training_instructions");
   });
 
-  // update critters from server for the upcoming test critters and next training critters
-  globalGame.socket.on('exitChatRoom', function(data){
-    console.log("exitChatRoom")
-    exp.goToSlide("testing_instructions");
+  globalGame.socket.on('exitChatRoom', function(data) {
+    exp.goToSlide('testing_instructions');
   });
+
 
   globalGame.socket.on('enterWaitRoom', function(data){
     $('#chatbox').val('');
@@ -215,6 +214,12 @@ var customSetup = function(globalGame) {
         }
 
         var player_score = Number(data[role_index][0].hits) - Number(data[role_index][0].false_alarms);
+        console.log(data);
+        console.log(role_index);
+        console.log(data[role_index]);
+        console.log(data[role_index].hits);
+        console.log(player_score);
+
         var positive_score = player_score > 0 ? player_score : 0
         $('#'+score_role+'_score').html(positive_score);
         totalScore += positive_score;

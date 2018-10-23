@@ -122,6 +122,7 @@ var initialize = function(query, client, id) {
 
   // Parsing responses from a list of trials
   client.on('multipleTrialResponses', function(data) {
+    console.log('Setting up multipleTrialResponses');
     gameServer.multipleTrialResponses(client, data);
   });
 
