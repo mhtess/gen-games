@@ -82,6 +82,7 @@ var client_onserverupdate_received = function(data){
   globalGame.isNewRound = data.isNewRound;
   globalGame.speciesName = data.speciesName;
   globalGame.pluralSpeciesName = data.pluralSpeciesName;
+  globalGame.numRounds = data.numRounds;
 
   // update data object on first round, don't overwrite (FIXME)
   if(!_.has(globalGame, 'data')) {

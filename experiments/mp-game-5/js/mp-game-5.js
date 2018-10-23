@@ -349,7 +349,7 @@ function make_slides(f) {
 
       var playerAInstructions = `
       <br><br>
-      <h3>Instructions</h3>
+      <h3>Instructions, Round ` + (globalGame.roundNum + 1) + ` of ` + globalGame.numRounds + `</h3>
       <br>
       <p>
         You are the "Explorer", studying creatures with a ` + globalGame.speciesName + ` detector.
@@ -364,7 +364,7 @@ function make_slides(f) {
 
       var playerBInstructions = `
         <br><br>
-        <h3>Instructions</h3>
+        <h3>Instructions, Round ` + (globalGame.roundNum + 1) + ` of ` + globalGame.numRounds + `</h3>
         <br>
         <p>
           You are the "Student". Your partner is currently studying creatures with a ` + globalGame.speciesName + ` detector. It will take them approximately 1 - 2 minutes to finish exploring. 
@@ -472,6 +472,9 @@ function make_slides(f) {
   slides.chatRoom = slide({
     name: "chatRoom",
     start: function() {
+      var instructions = `Explorer, please talk to the student about the properties of the ` + globalGame.pluralSpeciesName + `.`;
+      $("#instructs").html(instructions);
+
       $("#cur_instructs").empty();
       $("#chatCont").hide();
       $('#messages').empty();
@@ -500,7 +503,7 @@ function make_slides(f) {
       }
 
       var instructions = `<br><br>
-        <h3>Quiz Instructions</h3>
+        <h3>Quiz Instructions, Round ` + (globalGame.roundNum + 1) + ` of ` + globalGame.numRounds + `</h3>
         <br>
         You will be presented a grid. Click on the creatures you believe are ` + globalGame.pluralSpeciesName + `.
         <br> <br>
