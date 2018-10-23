@@ -60,7 +60,6 @@ var game_core = function(options){
     this.numRounds = options.rule_by_round.length;
     this.rule_by_round = options.rule_by_round;
     this.numPlayersCompletedRound = 0;
-    this.isNewRound = true;
     this.possibleSpecies = options.possibleSpecies;
     this.possibleSpeciesPlural = options.possibleSpeciesPlural;
 
@@ -158,14 +157,10 @@ game_core.prototype.newRound = function() {
   var localThis = this;
   var players = this.get_active_players();
 
-  if(this.roundNum == this.numRounds - 1) {
-    // If you've reached the planned number of rounds, end the game
-    _.forEach(players, p => p.player.instance.disconnect());
-  } else {
+  if(this.roundNum != this.numRounds - 1) {
     this.roundNum += 1;
     this.genStim();
     this.numPlayersCompletedRound = 0;
-    this.isNewRound = true;
 
     // Tell players that new round is starting
     _.forEach(players, p => p.player.instance.emit('newRoundUpdate'));
@@ -206,7 +201,6 @@ game_core.prototype.server_send_update = function(){
       testDataFn: local_game.testDataFn,
       ruleIdx: local_game.ruleIdx,
       ruleType: local_game.ruleType,
-      isNewRound: local_game.isNewRound,
       speciesName: local_game.possibleSpecies[local_game.roundNum],
       pluralSpeciesName: local_game.possibleSpeciesPlural[local_game.roundNum],
       numRounds: local_game.numRounds,

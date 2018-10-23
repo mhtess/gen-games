@@ -19,7 +19,7 @@ var original = document.title;
 // ACTION HANDLERS
 // ---------------
 function buttonClickListener(evt) {
-  var proceed = confirm("Are you done learning about wudsy creatures?\n\n If yes, click \"OK\". \n If no, click \"CANCEL\".");
+  var proceed = confirm("Are you done learning about " + globalGame.pluralSpeciesName +"?\n\n If yes, click \"OK\". \n If no, click \"CANCEL\".");
   if (proceed === false) {
     return;
   }
@@ -80,7 +80,6 @@ var client_onserverupdate_received = function(data){
   globalGame.test_data_fn = data.testDataFn;
   globalGame.rule_idx = data.ruleIdx;
   globalGame.rule_type = data.ruleType;
-  globalGame.isNewRound = data.isNewRound;
   globalGame.speciesName = data.speciesName;
   globalGame.pluralSpeciesName = data.pluralSpeciesName;
   globalGame.numRounds = data.numRounds;
@@ -148,11 +147,7 @@ var customSetup = function(globalGame) {
 
   globalGame.socket.on('enterWaitRoom', function(data){
     $('#chatbox').val('');
-    if (globalGame.isNewRound === true) {
-      exp.goToSlide("training_instructions");
-    } else {
-      exp.goToSlide("score_report");
-    }
+    exp.go();
   });
 
   // One player has not yet made it to the chatroom, so sending messages is impossible

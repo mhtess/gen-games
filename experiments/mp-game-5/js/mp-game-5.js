@@ -539,7 +539,6 @@ function make_slides(f) {
      <button class="continuebutton" id="test_button" onclick="_s.button()">Continue</button>`
      $("#testing_critters").html(instructions);
 
-
     globalGame.socket.send("enterSlide.testing_critters.");
     $('#continueButton').prop('disabled', false); // Reset
     $("#testing_critters_grid").empty(); // Reset
@@ -663,6 +662,7 @@ function make_slides(f) {
   slides.score_report = slide({
     name: "score_report",
     start: function() {
+      globalGame.socket.send("enterSlide.score_report.");
       globalGame.socket.send("sendingTestScores." + _.pairs(encodeData(exp.test_summary_stats[globalGame.roundNum])).join('.'));
     },
     button: function() {

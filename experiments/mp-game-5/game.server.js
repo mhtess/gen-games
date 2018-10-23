@@ -55,16 +55,12 @@ var onMessage = function(client,message) {
     case 'enterSlide' :
       // keeps track of which "experiment template" slide each particular user is on
       // will update (through use of globalGame.socket.send("enterSlide.slide_name.");) in game js file
-      gc.currentSlide[target.instance.role] = message_parts[1]
-      if (gc.currentSlide["explorer"] == "training_instructions" || gc.currentSlide["student"] == "training_instructions") {
-        gc.isNewRound = false;
-        gc.server_send_update();
-      }
+      gc.currentSlide[target.instance.role] = message_parts[1];
       console.log("Explorer is in: ==== " + gc.currentSlide["explorer"] + " ====")
       console.log("Student is in: ==== " + gc.currentSlide["student"] + " ====")
       break;
 
-    case 'proceedToTestInstructions':
+    case 'proceedToTestInstructions' :
        _.map(all, function(p) {
         p.player.instance.emit('exitChatRoom');
       });
@@ -114,10 +110,13 @@ var onMessage = function(client,message) {
       break;
 
     case 'enterWaitRoom' :
+      console.log(gc.currentSlide["explorer"]);
+      console.log(gc.currentSlide["student"]);
+
       if ((gc.currentSlide["explorer"] == gc.currentSlide["student"]))  {
         setTimeout(function() {
           _.map(all, function(p){
-            p.player.instance.emit("enterWaitRoom", {'isNewRound': gc.isNewRound})
+            p.player.instance.emit("enterWaitRoom", {});
           });
         }, 300);
       }
@@ -156,7 +155,6 @@ var onMessage = function(client,message) {
 
 var commonOutput = function (client) {
   // Returns information shared across all different forms of logging
-  console.log(client.game);
   return {
     iterationName: client.game.iterationName,
     gameid: client.game.id,
