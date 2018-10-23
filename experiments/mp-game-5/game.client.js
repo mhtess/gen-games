@@ -10,6 +10,7 @@
 // ----------------
 var globalGame = {};
 var enterScoreReport = 0;
+var totalScoreReport = 0;
 var totalScore = 0;
 var timeOut = 1000 * 60 * 15; // 15 Minutes
 var timeoutIndex;
@@ -216,13 +217,64 @@ var customSetup = function(globalGame) {
           role_index=partner_role;
         }
 
-        var player_score = Number(data[role_index][0].hits) - Number(data[role_index][0].false_alarms);
-        var positive_score = player_score > 0 ? player_score : 0
-        $('#'+score_role+'_score').html(positive_score);
+        var hits = Number(data[role_index][globalGame.roundNum].hits);
+        var misses = Number(data[role_index][globalGame.roundNum].misses);
+        var correctRejections = Number(data[role_index][globalGame.roundNum].correct_rejections);
+        var falseAlarms = Number(data[role_index][globalGame.roundNum].false_alarms);
+        var playerScore =  hits - falseAlarms;
+        var positiveScore = playerScore > 0 ? playerScore : 0;
+        $('#'+score_role+'_score').html(positiveScore);
+        totalScore += positiveScore;
+        $('#'+score_role+'_hits').html("Correctly selected: " + hits+ " out of " + (hits + misses));
+        $('#'+score_role+'_falseAlarms').html("Selected incorrectly: " + falseAlarms + " out of "+ (falseAlarms + correctRejections));
+        $('#'+score_role+'_score').html("Round score: " + positiveScore);
+      }
+    }
+  });
+
+
+  // Creates the score reports for the players
+  globalGame.socket.on('totalTestScores', function(){
+    totalScoreReport++;
+    // only works when both players have reached this, then it generates scores for both players
+    if(totalScoreReport % 2 == 0){ //hacky way to handle error thrown when only one player finishes the test
+      var ind = (totalScoreReport / 2) - 1;
+      var my_role = globalGame.my_role;
+      var partner_role = my_role === "explorer" ? "student" : "explorer"
+      for(var i=0; i<2; i++){
+        var score_role, role_index;
+        if(i==0){
+          score_role="your";
+          role_index=my_role;
+        }
+        else if(i==1){
+          score_role="other";
+          role_index=partner_role;
+        }
+
+        var playerScore = 0;
+        var playerHits = 0;
+        var playerMisses = 0;
+        var playerCorrectRejections = 0;
+        var playerFalseAlarms = 0;
+        for (var i = 0; i < globalGame.testScores.length; i++) {
+          var roundHits = Number(exp.test_summary_stats[i][role_index].hits);
+          var roundMisses = Number(exp.test_summary_stats[i][role_index].misses);
+          var roundCorrectRejections = Number(exp.test_summary_stats[i][role_index].correct_rejections);
+          var roundFalseAlarms = Number(exp.test_summary_stats[i][role_index].false_alarms);
+          var roundScore = roundHits - roundFalseAlarms;
+          var positiveRoundScore = roundScore > 0 ? roundScore : 0;
+          playerHits += roundHits;
+          playerMisses += roundMisses;
+          playerCorrectRejections += roundCorrectRejections;
+          playerFalseAlarms += roundFalseAlarms;
+          playerScore += roundScore;
+        }
+        $('#'+score_role+'_score').html(playerScore);
         totalScore += positive_score;
-        $('#'+score_role+'_hits').html("Correctly selected: " + data[role_index][0].hits + " out of " + (Number(data[role_index][0].hits) + Number(data[role_index][0].misses)));
-        $('#'+score_role+'_falseAlarms').html("Selected incorrectly: " + data[role_index][0].false_alarms + " out of "+ (Number(data[role_index][0].false_alarms) + Number(data[role_index][0].correct_rejections)));
-        $('#'+score_role+'_score').html("Round score: " + positive_score);
+        $('#'+score_role+'_hits').html("Correctly selected: " + playerHits + " out of " + (playerHits + playerMisses));
+        $('#'+score_role+'_falseAlarms').html("Selected incorrectly: " + playerFalseAlarms + " out of "+ (playerFalseAlarms + playerCorrectRejections));
+        $('#'+score_role+'_score').html("Sum of previous scores: " + playerScore);
       }
     }
   });
