@@ -56,6 +56,9 @@ var onMessage = function(client,message) {
       // keeps track of which "experiment template" slide each particular user is on
       // will update (through use of globalGame.socket.send("enterSlide.slide_name.");) in game js file
       gc.currentSlide[target.instance.role] = message_parts[1]
+      if (gc.currentSlide["explorer"] == "training_instructions" || gc.currentSlide["student"] == "training_instructions") {
+        gc.isNewRound = false;
+      }
       console.log("Explorer is in: ==== " + gc.currentSlide["explorer"] + " ====")
       console.log("Student is in: ==== " + gc.currentSlide["student"] + " ====")
       break;
@@ -67,7 +70,10 @@ var onMessage = function(client,message) {
       break;
 
     case 'newRoundUpdate' :
-      gc.newRound();
+      gc.numPlayersCompletedRound++;
+      if (gc.numPlayersCompletedRound == 2) {
+        gc.newRound();
+      }
       break;
 
     case 'playerTyping' :
@@ -110,7 +116,7 @@ var onMessage = function(client,message) {
       if ((gc.currentSlide["explorer"] == gc.currentSlide["student"]))  {
         setTimeout(function() {
           _.map(all, function(p){
-            p.player.instance.emit("enterWaitRoom", {})
+            p.player.instance.emit("enterWaitRoom", {'newRound': gc.newRound})
           });
         }, 300);
       }

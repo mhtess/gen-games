@@ -47,6 +47,48 @@ function init() {
     "testing_critters",
     "wait_room",
     "score_report",
+
+    "wait_room",
+    "training_instructions",
+    "training_critters",
+    "chat_instructions",
+    "chatRoom",
+    "testing_instructions",
+    "testing_critters",
+    "wait_room",
+    "score_report",
+
+    "wait_room",
+    "training_instructions",
+    "training_critters",
+    "chat_instructions",
+    "chatRoom",
+    "testing_instructions",
+    "testing_critters",
+    "wait_room",
+    "score_report",
+
+    "wait_room",
+    "training_instructions",
+    "training_critters",
+    "chat_instructions",
+    "chatRoom",
+    "testing_instructions",
+    "testing_critters",
+    "wait_room",
+    "score_report",
+
+    "wait_room",
+    "training_instructions",
+    "training_critters",
+    "chat_instructions",
+    "chatRoom",
+    "testing_instructions",
+    "testing_critters",
+    "wait_room",
+    "score_report",    
+
+    "total_score_report",
     "subj_info",
     "thanks",
   ];
@@ -577,10 +619,21 @@ function make_slides(f) {
     start: function() {
       globalGame.socket.send("sendingTestScores." + _.pairs(encodeData(exp.test_summary_stats[globalGame.roundNum])).join('.'));
     },
-    button : function() {
+    button: function() {
       globalGame.socket.send("newRoundUpdate.");
+      exp.go();
     }
   });
+
+  slides.total_score_report = slide({
+    name: "total_score_report",
+    start: function() {
+
+    },
+    button: function() {
+      exp.go();
+    }
+  })
 
   // Collects demographic information from users
   slides.subj_info =  slide({

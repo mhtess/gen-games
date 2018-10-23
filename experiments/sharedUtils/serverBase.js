@@ -44,7 +44,6 @@ class ReferenceGameServer {
   }
 
   multipleTrialResponses(client, data) {
-    console.log('Inside multipleTrialResponses function');
     if (this.customServer.multipleTrialResponses !== undefined) {
       // Wrapping in condtional to prevent crashing in older
       // games that did not implement this interface.
@@ -131,6 +130,7 @@ class ReferenceGameServer {
 
     if (this.expName === 'mp-game-5') {
       options.rule_by_round = this.rule_by_round;
+      options.name_by_round = ['wudsy', 'cubly', 'nurty', 'poffy', 'sufty'];
     }
 
     var game = new this.core(options);

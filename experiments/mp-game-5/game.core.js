@@ -59,6 +59,8 @@ var game_core = function(options){
     this.roundNum = 0;
     this.numRounds = options.rule_by_round.length;
     this.rule_by_round = options.rule_by_round;
+    this.numPlayersCompletedRound = 0;
+    this.isNewRound = true;
 
     this.data = {
       id: this.id,
@@ -161,8 +163,10 @@ game_core.prototype.newRound = function() {
     this.genStim();
 
     // Tell players that new round is starting
-    _.forEach(players, p => p.player.instance.emit( 'newRoundUpdate'));
+    _.forEach(players, p => p.player.instance.emit('newRoundUpdate'));
     this.roundNum += 1;
+    this.numPlayersCompletedRound = 0;
+    this.isNewRound = true;
     this.server_send_update();
   }
 };
@@ -200,6 +204,7 @@ game_core.prototype.server_send_update = function(){
       testDataFn: local_game.testDataFn,
       ruleIdx: local_game.ruleIdx,
       ruleType: local_game.ruleType,
+      isNewRound: local_game.isNewRound,
     });
     p.player.instance.emit('onserverupdate', playerState);
   });

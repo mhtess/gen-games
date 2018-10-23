@@ -75,10 +75,11 @@ var client_onserverupdate_received = function(data){
   globalGame.player_count = data.pc;
   globalGame.roundNum = data.roundNum;
   globalGame.testScores = data.testScores;
-  globalGame.training_data_fn = data.training_data_fn;
-  globalGame.test_data_fn = data.test_data_fn;
-  globalGame.rule_idx = data.rule_idx;
-  globalGame.rule_type = data.rule_type;
+  globalGame.training_data_fn = data.trainingDataFn;
+  globalGame.test_data_fn = data.testDataFn;
+  globalGame.rule_idx = data.ruleIdx;
+  globalGame.rule_type = data.ruleType;
+  globalGame.isNewRound = data.isNewRound;
 
   // update data object on first round, don't overwrite (FIXME)
   if(!_.has(globalGame, 'data')) {
@@ -134,7 +135,6 @@ var customSetup = function(globalGame) {
     $('#chatbox').focus();
     $('#messages').empty();
     $('#roundnumber').empty();
-    exp.goToSlide("training_instructions");
   });
 
   globalGame.socket.on('exitChatRoom', function(data) {
@@ -144,7 +144,7 @@ var customSetup = function(globalGame) {
 
   globalGame.socket.on('enterWaitRoom', function(data){
     $('#chatbox').val('');
-    if (exp.slideIndex === 0) {
+    if (globalGame.isNewRound == true) {
       exp.goToSlide("training_instructions");
     } else {
       exp.goToSlide("score_report");
@@ -214,12 +214,6 @@ var customSetup = function(globalGame) {
         }
 
         var player_score = Number(data[role_index][0].hits) - Number(data[role_index][0].false_alarms);
-        console.log(data);
-        console.log(role_index);
-        console.log(data[role_index]);
-        console.log(data[role_index].hits);
-        console.log(player_score);
-
         var positive_score = player_score > 0 ? player_score : 0
         $('#'+score_role+'_score').html(positive_score);
         totalScore += positive_score;
