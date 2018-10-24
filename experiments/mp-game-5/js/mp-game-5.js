@@ -34,9 +34,11 @@ function init() {
   };
 
   // Initialize experiment variables
+  exp.combined_score = 0;
   exp.train_records = [];
   exp.test_records = [];
   exp.test_summary_stats = [];
+  exp.test_summary_stats_combined = [];
   exp.structure = [
     "wait_room",
     "training_instructions",
@@ -674,10 +676,49 @@ function make_slides(f) {
   slides.total_score_report = slide({
     name: "total_score_report",
     start: function() {
+      var my_role = globalGame.my_role;
+      var partner_role = my_role === "explorer" ? "student" : "explorer"
+      for(var i=0; i<2; i++){
+        var score_role, role_index;
+        if(i==0){
+          score_role="your";
+          role_index=my_role;
+        }
+        else if(i==1){
+          score_role="other";
+          role_index=partner_role;
+        }
 
+        var playerScore = 0;
+        var playerHits = 0;
+        var playerMisses = 0;
+        var playerCorrectRejections = 0;
+        var playerFalseAlarms = 0;
+        for (var j = 0; j < exp.test_summary_stats_combined.length; j++) {
+          var roundHits = Number(exp.test_summary_stats_combined[j][role_index].hits);
+          var roundMisses = Number(exp.test_summary_stats_combined[j][role_index].misses);
+          var roundCorrectRejections = Number(exp.test_summary_stats_combined[j][role_index].correct_rejections);
+          var roundFalseAlarms = Number(exp.test_summary_stats_combined[j][role_index].false_alarms);
+          var roundScore = roundHits - roundFalseAlarms;
+          var positiveRoundScore = roundScore > 0 ? roundScore : 0;
+          playerHits += roundHits;
+          playerMisses += roundMisses;
+          playerCorrectRejections += roundCorrectRejections;
+          playerFalseAlarms += roundFalseAlarms;
+          playerScore += positiveRoundScore;
+        }
+
+        exp.combined_score += playerScore;
+
+        // $('#'+score_role+'_total_score').html(playerScore);
+        // $('#'+score_role+'_total_hits').html("Correctly selected: " + playerHits + " out of " + (playerHits + playerMisses));
+        // $('#'+score_role+'_total_falseAlarms').html("Selected incorrectly: " + playerFalseAlarms + " out of "+ (playerFalseAlarms + playerCorrectRejections));
+        $('#'+score_role+'_total_score').html("Total: " + playerScore);
+      }
     },
     button: function() {
       exp.go();
+      console.log("Combined Score: " + exp.combined_score);
     }
   })
 
@@ -706,7 +747,6 @@ function make_slides(f) {
         };
 
         globalGame.socket.send("logSubjInfo.subjInfo." + _.pairs(encodeData(exp.subj_data)).join('.'));
-
         exp.go();
       }
     });
@@ -719,16 +759,13 @@ function make_slides(f) {
       exp.data= {
         "game_id": globalGame.data.id,
         "role": globalGame.my_role,
-        "train_data_fn": globalGame.train_data_fn,
-        "test_data_fn": globalGame.test_data_fn,
-        "rule_idx": globalGame.rule_idx,
-        "rule_type": globalGame.rule_type,
         "train_records": exp.train_records,
         "test_records": exp.test_records,
         "system" : exp.system,
         "subject_information" : exp.subj_data,
         "time_in_minutes" : (Date.now() - exp.startT)/60000,
         "test_summary_stats": exp.test_summary_stats,
+        "bonus": exp.combined_score * globalGame.bonusAmt,
       };
       setTimeout(function(){
         if(_.size(globalGame.urlParams) == 4) {

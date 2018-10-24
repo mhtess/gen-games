@@ -141,15 +141,6 @@ var onMessage = function(client,message) {
         });
       }, 300);
       break;
-
-    case 'calculatingReward' :
-      setTimeout(function() {
-          _.map(all, function(p){
-            p.player.instance.emit("calculatingReward",
-              {})
-          });
-        }, 300);
-      break;
   }
 };
 

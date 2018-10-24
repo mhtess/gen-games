@@ -10,8 +10,6 @@
 // ----------------
 var globalGame = {};
 var enterScoreReport = 0;
-var totalScoreReport = 0;
-var totalScore = 0;
 var timeOut = 1000 * 60 * 15; // 15 Minutes
 var timeoutIndex;
 var original = document.title;
@@ -75,7 +73,6 @@ var client_onserverupdate_received = function(data){
   globalGame.players_threshold = data.pt;
   globalGame.player_count = data.pc;
   globalGame.roundNum = data.roundNum;
-  globalGame.testScores = data.testScores;
   globalGame.training_data_fn = data.trainingDataFn;
   globalGame.test_data_fn = data.testDataFn;
   globalGame.rule_idx = data.ruleIdx;
@@ -83,6 +80,7 @@ var client_onserverupdate_received = function(data){
   globalGame.speciesName = data.speciesName;
   globalGame.pluralSpeciesName = data.pluralSpeciesName;
   globalGame.numRounds = data.numRounds;
+  globalGame.bonusAmt = data.bonusAmt;
 
   // update data object on first round, don't overwrite (FIXME)
   if(!_.has(globalGame, 'data')) {
@@ -219,65 +217,13 @@ var customSetup = function(globalGame) {
         var playerScore =  hits - falseAlarms;
         var positiveScore = playerScore > 0 ? playerScore : 0;
         $('#'+score_role+'_score').html(positiveScore);
-        totalScore += positiveScore;
         $('#'+score_role+'_hits').html("Correctly selected: " + hits+ " out of " + (hits + misses));
         $('#'+score_role+'_falseAlarms').html("Selected incorrectly: " + falseAlarms + " out of "+ (falseAlarms + correctRejections));
         $('#'+score_role+'_score').html("Round score: " + positiveScore);
       }
+
+      exp.test_summary_stats_combined.push({"explorer": data["explorer"][globalGame.roundNum], "student": data["student"][globalGame.roundNum]});
     }
-  });
-
-
-  // Creates the score reports for the players
-  globalGame.socket.on('totalTestScores', function(){
-    totalScoreReport++;
-    // only works when both players have reached this, then it generates scores for both players
-    if(totalScoreReport % 2 == 0){ //hacky way to handle error thrown when only one player finishes the test
-      var ind = (totalScoreReport / 2) - 1;
-      var my_role = globalGame.my_role;
-      var partner_role = my_role === "explorer" ? "student" : "explorer"
-      for(var i=0; i<2; i++){
-        var score_role, role_index;
-        if(i==0){
-          score_role="your";
-          role_index=my_role;
-        }
-        else if(i==1){
-          score_role="other";
-          role_index=partner_role;
-        }
-
-        var playerScore = 0;
-        var playerHits = 0;
-        var playerMisses = 0;
-        var playerCorrectRejections = 0;
-        var playerFalseAlarms = 0;
-        for (var i = 0; i < globalGame.testScores.length; i++) {
-          var roundHits = Number(exp.test_summary_stats[i][role_index].hits);
-          var roundMisses = Number(exp.test_summary_stats[i][role_index].misses);
-          var roundCorrectRejections = Number(exp.test_summary_stats[i][role_index].correct_rejections);
-          var roundFalseAlarms = Number(exp.test_summary_stats[i][role_index].false_alarms);
-          var roundScore = roundHits - roundFalseAlarms;
-          var positiveRoundScore = roundScore > 0 ? roundScore : 0;
-          playerHits += roundHits;
-          playerMisses += roundMisses;
-          playerCorrectRejections += roundCorrectRejections;
-          playerFalseAlarms += roundFalseAlarms;
-          playerScore += roundScore;
-        }
-        $('#'+score_role+'_score').html(playerScore);
-        totalScore += positive_score;
-        $('#'+score_role+'_hits').html("Correctly selected: " + playerHits + " out of " + (playerHits + playerMisses));
-        $('#'+score_role+'_falseAlarms').html("Selected incorrectly: " + playerFalseAlarms + " out of "+ (playerFalseAlarms + playerCorrectRejections));
-        $('#'+score_role+'_score').html("Sum of previous scores: " + playerScore);
-      }
-    }
-  });
-
-  globalGame.socket.on('calculatingReward', function(data){
-    console.log("calculatingReward");
-    var reward = totalScore * globalGame.bonusAmt * 0.01;
-    console.log("reward: $" + reward);
   });
 
   // initialize experiment_template

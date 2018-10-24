@@ -204,6 +204,8 @@ game_core.prototype.server_send_update = function(){
       speciesName: local_game.possibleSpecies[local_game.roundNum],
       pluralSpeciesName: local_game.possibleSpeciesPlural[local_game.roundNum],
       numRounds: local_game.numRounds,
+      testScores: local_game.testScores,
+      bonusAmt: local_game.bonusAmt,
     });
     p.player.instance.emit('onserverupdate', playerState);
   });
