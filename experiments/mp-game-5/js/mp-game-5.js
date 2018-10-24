@@ -252,8 +252,7 @@ function createTrainingCritter(stim, i, scale){
     if (!exp.selected_training_stim.includes(exp.selected_stim_idx)) {
       exp.selected_training_stim.push(exp.selected_stim_idx);
 
-      // if (exp.selected_training_stim.length == exp.training_critters.length) {
-      if (exp.selected_training_stim.length == 2) { // Debugging 
+      if (exp.selected_training_stim.length == exp.training_critters.length) {
         // Show "Continue" button -- exploration complete
         $('#training-critters-button').css('visibility', 'visible');
         $('#training-critters-button').prop('disabled', false);
@@ -387,6 +386,8 @@ function make_slides(f) {
         $("#training_instructions").html(playerBInstructions);
       }
 
+      $("#training_critters_grid").empty(); // Reset
+      exp.selected_training_stim = []; // Reset
     },
     button : function() {
       if (globalGame.my_role == "explorer") {
@@ -412,10 +413,7 @@ function make_slides(f) {
         <br>
         <button class="continuebutton" id="training-critters-button" onclick="_s.button()" disabled>Continue</button>`
       $("#training_critters").html(instructions);
-
       globalGame.socket.send("enterSlide.training_critters.");
-      $("#training_critters_grid").empty(); // Reset
-      exp.selected_training_stim = []; // Reset
 
       // Render slide
       render_hidden_critters_table(exp.training_critters, 6, true);      
@@ -513,6 +511,10 @@ function make_slides(f) {
         <br> <br>
         <button class="continuebutton" onclick="_s.button()">Continue</button>`;
       $("#testing_instructions").html(instructions);
+
+      $('#continueButton').prop('disabled', false); // Reset
+      $("#testing_critters_grid").empty(); // Reset
+      exp.selected_test_stim = []; // Reset
     },
     button : function() {
       exp.go();
@@ -542,9 +544,6 @@ function make_slides(f) {
      $("#testing_critters").html(instructions);
 
     globalGame.socket.send("enterSlide.testing_critters.");
-    $('#continueButton').prop('disabled', false); // Reset
-    $("#testing_critters_grid").empty(); // Reset
-    exp.selected_test_stim = []; // Reset
     render_hidden_critters_table(exp.testing_critters, 6, false);
 
     // Time Markers
@@ -709,10 +708,6 @@ function make_slides(f) {
         }
 
         exp.combined_score += playerScore;
-
-        // $('#'+score_role+'_total_score').html(playerScore);
-        // $('#'+score_role+'_total_hits').html("Correctly selected: " + playerHits + " out of " + (playerHits + playerMisses));
-        // $('#'+score_role+'_total_falseAlarms').html("Selected incorrectly: " + playerFalseAlarms + " out of "+ (playerFalseAlarms + playerCorrectRejections));
         $('#'+score_role+'_total_score').html("Total: " + playerScore);
       }
     },
