@@ -1,0 +1,226 @@
+---
+title: "MP-Game-5: Multiplayer Boolean Concept Learning (Summurization Format)"
+output: beamer_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# Data Processing
+```{r}
+
+library(reshape2)
+library(purrr)
+library(jsonlite)
+library(tidyr) 
+library(dplyr)
+library(ggplot2)
+library(scales)
+library(rwebppl)
+```
+
+```{r}
+#-----------------------
+# Reading Mp-Game-3 Data
+#-----------------------
+# Load Training Trial Responses
+temp <- list.files(
+  "../../../data/mp-game-3/experiment/train_trials",
+  pattern="*.csv",
+  full.names=TRUE
+)
+train_trials_rbr <- do.call(rbind, lapply(temp, read.csv))
+
+# Load Test Trial Responses
+temp <- list.files(
+  "../../../data/mp-game-3/experiment/test_trials",
+  pattern="*.csv",
+  full.names=TRUE
+)
+test_trials_rbr <- do.call(rbind, lapply(temp, read.csv))
+
+# Load Training Summary Stats
+temp <- list.files(
+  "../../../data/mp-game-3/experiment/train_summary_stats",
+  pattern="*.csv",
+  full.names=TRUE
+)
+train_stats_rbr <- do.call(rbind, lapply(temp, read.csv))
+
+# Load Test Summary Stats
+temp <- list.files(
+  "../../../data/mp-game-3/experiment/test_summary_stats",
+  pattern="*.csv",
+  full.names=TRUE
+)
+test_stats_rbr <- do.call(rbind, lapply(temp, read.csv))
+```
+
+```{r}
+#-----------------------
+# Reading Mp-Game-5 Data
+#-----------------------
+# Load Training Trial Responses
+temp <- list.files(
+  "../../../data/mp-game-5/logTrain",
+  pattern="*.csv",
+  full.names=TRUE
+)
+train_trials_s <- do.call(rbind, lapply(temp, read.csv, sep=""))
+
+# Load Test Trial Responses
+temp <- list.files(
+  "../../../data/mp-game-5/logTest",
+  pattern="*.csv",
+  full.names=TRUE
+)
+test_trials_s <- do.call(rbind, lapply(temp, read.csv, sep=""))
+
+# Load Test Summary Stats
+temp <- list.files(
+    "../../../data/mp-game-5/logScores",
+  pattern="*.csv",
+  full.names=TRUE
+)
+test_stats_s <- do.call(rbind, lapply(temp, read.csv, sep=""))
+```
+
+
+```{r}
+rule_indices <- c(0, 2, 4, 6, 8)
+
+#--------------------------------------
+# Accuracy Calculations Round-By-Round
+# -------------------------------------
+test_acc_teacher_rbr <- test_stats_rbr %>%
+  filter(role == "explorer") %>%
+  mutate(correct = hits + correct_rejections) %>%
+  mutate(incorrect = misses + false_alarms) %>%
+  select(rule_idx, correct, incorrect) %>%
+  filter(rule_idx %in% rule_indices) %>%
+  group_by(rule_idx) %>% 
+  summarise_all(sum) %>%
+  mutate(acc = correct/(correct + incorrect)) %>%
+  mutate(game = "round")
+test_acc_teacher_rbr$rule_idx <- as.factor(test_acc_teacher_rbr$rule_idx)
+test_acc_teacher_rbr$game <- as.factor(test_acc_teacher_rbr$game)
+
+test_acc_listener_rbr <- test_stats_rbr %>%
+  filter(role == "student") %>%
+  mutate(correct = hits + correct_rejections) %>%
+  mutate(incorrect = misses + false_alarms) %>%
+  select(rule_idx, incorrect, correct) %>%
+  filter(rule_idx %in% rule_indices) %>%
+  group_by(rule_idx) %>% 
+  summarise_all(sum) %>%
+  mutate(acc = correct/(correct + incorrect)) %>%
+  mutate(game = "round")
+test_acc_listener_rbr$rule_idx <- as.factor(test_acc_listener_rbr$rule_idx)
+test_acc_listener_rbr$game <- as.factor(test_acc_listener_rbr$game)
+
+#--------------------------------------
+# Accuracy Calculations Summurization
+# -------------------------------------
+test_acc_teacher_s <- test_stats_s %>%
+  filter(role == "explorer") %>%
+  mutate(correct = hits + correct_rejections) %>%
+  mutate(incorrect = misses + false_alarms) %>%
+  select(rule_idx, correct, incorrect) %>%
+  filter(rule_idx %in% rule_indices) %>%
+  group_by(rule_idx) %>% 
+  summarise_all(sum) %>%
+  mutate(acc = correct/(correct + incorrect)) %>%
+  mutate(game = "summurization")
+test_acc_teacher_s$game <- as.factor(test_acc_teacher_s$game)
+
+test_acc_listener_s <- test_stats_s %>%
+  filter(role == "student") %>%
+  mutate(correct = hits + correct_rejections) %>%
+  mutate(incorrect = misses + false_alarms) %>%
+  select(rule_idx, incorrect, correct) %>%
+  filter(rule_idx %in% rule_indices) %>%
+  group_by(rule_idx) %>% 
+  summarise_all(sum)%>%
+  mutate(acc = correct/(correct + incorrect)) %>%
+  mutate(game = "summurization")
+test_acc_listener_s$game <- as.factor(test_acc_listener_s$game)
+
+#----------------------------
+# Accuracy Calculations Joint
+# ---------------------------
+test_acc_teacher_combined = bind_cols(
+  test_acc_teacher_rbr %>%
+    select(rule_idx, acc) %>%
+    rename(round_by_round_acc = acc),
+  test_acc_teacher_s %>%
+    select(rule_idx, acc) %>%
+    rename(summurization_acc = acc)
+  ) %>%
+  select(rule_idx, round_by_round_acc, summurization_acc)
+
+test_acc_listener_combined = bind_cols(
+  test_acc_listener_rbr %>%
+    select(rule_idx, acc) %>%
+    rename(round_by_round_acc = acc),
+  test_acc_listener_s %>%
+    select(rule_idx, acc) %>%
+    rename(summurization_acc = acc)
+  ) %>%
+  select(rule_idx, round_by_round_acc, summurization_acc)
+```
+
+## Intro
+* Goal: Collect cheaper data for cultural ratchet experiment.
+* In spring, we ran a pilot experiment, with a "round-by-round" format, where players only learned a single concept.
+* In fall, we ran a pilot experiment with a "summurization" format, where palyers played multiple concepts.
+* For spring pilot (round-by-round), we had 5 concepts, each with two different lists of stimuli.
+* For fall pilot (summurization), we had the same 5 concepts and selected one of two lists of stimuli, from spring.
+
+
+## Cost Comparison
+Spring Pilot Cost Per Round (Round-By-Round-Format):
+
+  $122.40 / 36 = $3.40 / round
+  
+Fall Pilot Cost Per Round (Summurization-Format):
+
+  ($(1.25 * 20 + .50 * 20) + $11.60)) / 40 = $1.165 / round
+
+If we were maximally efficient, the Fall Pilot would be $.892 / round. We had two games crash midway because of players disconnecting; so our cost for the pilot was slightly higher than expected according to the data we collected.
+
+## Experiment Details (Critters)
+* 81 total possible critters: ~50 training, ~31 test
+* 4 axes of variability:
+    + Critter Type (Bug, Fish, Bird)
+    + Primary Color (Blue, Green, Orange)
+    + Secondary Color (Red, Yellow, Purple)
+    + Size (Small, Medium, Large)
+
+
+## Experiment Details (Concepts)
+* Primary Color == Orange ("Orange things")
+* Critter Type == Fish && Primary Color == Blue ("Blue fish")
+* Primary Color == Orange && Secondary Color == Purple ("Purple and orange things")
+* Critter Type == Bug || Secondary Color == Yellow ("Bugs, or yellow things")
+* Critter Type == Bird || Primary Color == Green ("Birds, or green things")
+
+
+## Explorer Performance (Round vs. Summurization Acc.)
+```{r}
+ggplot(test_acc_teacher_combined, aes(x=round_by_round_acc, y=summurization_acc), fill=rule_idx) +
+  geom_point() +
+  xlim(0, 1) +
+  ylim(0, 1)
+```
+
+
+## Student Performance (Round vs. Summurization Acc.)
+
+
+## Explorer Performance ()
+
+
+## Next Steps
+* Language Analysis
+  

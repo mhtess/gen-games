@@ -64,7 +64,7 @@ library(rwebppl)
 
 # Load Training Trial Responses
 temp <- list.files(
-  "../../../mturk/mp-game-3/experiment/results-cleaned/train_trials",
+  "../../../data/mp-game-3/experiment/train_trials",
   pattern="*.csv",
   full.names=TRUE
 )
@@ -72,7 +72,7 @@ train_trials <- do.call(rbind, lapply(temp, read.csv))
 
 # Load Test Trial Responses
 temp <- list.files(
-  "../../../mturk/mp-game-3/experiment/results-cleaned/test_trials",
+  "../../../mturk/mp-game-3/experiment/test_trials",
   pattern="*.csv",
   full.names=TRUE
 )
@@ -80,7 +80,7 @@ test_trials <- do.call(rbind, lapply(temp, read.csv))
 
 # Load Training Summary Stats
 temp <- list.files(
-  "../../../mturk/mp-game-3/experiment/results-cleaned/train_summary_stats",
+  "../../../mturk/mp-game-3/experiment/train_summary_stats",
   pattern="*.csv",
   full.names=TRUE
 )
@@ -88,7 +88,7 @@ train_stats <- do.call(rbind, lapply(temp, read.csv))
 
 # Load Test Summary Stats
 temp <- list.files(
-  "../../../mturk/mp-game-3/experiment/results-cleaned/test_summary_stats",
+  "../../../mturk/mp-game-3/experiment/test_summary_stats",
   pattern="*.csv",
   full.names=TRUE
 )
@@ -96,7 +96,7 @@ test_stats <- do.call(rbind, lapply(temp, read.csv))
 
 # Load Chat Logs
 temp <- list.files(
-  "../../../mturk/mp-game-3/experiment/results-cleaned/chat_messages",
+  "../../../mturk/mp-game-3/experiment/chat_messages",
   pattern="*.csv",
   full.names=TRUE
 )
