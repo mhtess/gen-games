@@ -1,0 +1,6 @@
+iterationName	gameid	time	role	rule_idx	rule_type	train_data_fn	test_data_fn	exploration_time	submission_time	total_time	eventType
+pilot	1958-60a25e4c-ebfe-404f-ba97-eccf2f185024	1540396908727	explorer	0	SINGLE_FEAT	./js/training_data_body_color_orange_1.json	./js/test_data_body_color_orange_1.json	96.054	45.832	141.886	logTrain
+pilot	1958-60a25e4c-ebfe-404f-ba97-eccf2f185024	1540397118573	explorer	2	CONJUNCTION	./js/training_data_critter_fish_body_color_blue_1.json	./js/test_data_critter_fish_body_color_blue_1.json	58.708	20.504	79.212	logTrain
+pilot	1958-60a25e4c-ebfe-404f-ba97-eccf2f185024	1540397240948	explorer	4	CONJUNCTION	./js/training_data_body_color_orange_secondary_color_purple_1.json	./js/test_data_body_color_orange_secondary_color_purple_1.json	37.257	23.304	60.561	logTrain
+pilot	1958-60a25e4c-ebfe-404f-ba97-eccf2f185024	1540397611833	explorer	6	DISJUNCTION	./js/training_data_critter_bug_or_secondary_color_yellow_1.json	./js/test_data_critter_bug_or_secondary_color_yellow_1.json	43.609	260.286	303.895	logTrain
+pilot	1958-60a25e4c-ebfe-404f-ba97-eccf2f185024	1540397955695	explorer	8	DISJUNCTION	./js/training_data_critter_bird_or_body_color_green_1.json	./js/test_data_critter_bird_or_body_color_green_1.json	33.572	81.48	115.052	logTrain

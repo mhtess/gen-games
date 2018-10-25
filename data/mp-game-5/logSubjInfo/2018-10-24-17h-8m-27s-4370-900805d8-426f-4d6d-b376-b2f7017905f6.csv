@@ -1,0 +1,2 @@
+iterationName	gameid	time	role	rule_idx	rule_type	train_data_fn	test_data_fn	nativeEnglish	enjoyment	assess	age	gender	education	comments	problems	fairprice	strategy	humanPartner	likePartner	eventType
+pilot	4370-900805d8-426f-4d6d-b376-b2f7017905f6	1540426107447	explorer	0	SINGLE_FEAT	./js/training_data_body_color_orange_1.json	./js/test_data_body_color_orange_1.json	yes	1	yes	36	Male	2		none	sure	look for similar traits and then narrowed down my findings	yes	okay	logSubjInfo

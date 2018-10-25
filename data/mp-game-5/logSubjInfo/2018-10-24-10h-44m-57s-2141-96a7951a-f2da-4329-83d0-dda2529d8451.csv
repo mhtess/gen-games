@@ -1,0 +1,2 @@
+iterationName	gameid	time	role	rule_idx	rule_type	train_data_fn	test_data_fn	nativeEnglish	enjoyment	assess	age	gender	education	comments	problems	fairprice	strategy	humanPartner	likePartner	eventType
+pilot	2141-96a7951a-f2da-4329-83d0-dda2529d8451	1540403097482	explorer	0	SINGLE_FEAT	./js/training_data_body_color_orange_1.json	./js/test_data_body_color_orange_1.json	yes	1	yes	35	Male	2			1.00	I was never connected with another player	yes	okay	logSubjInfo

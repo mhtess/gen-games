@@ -1,0 +1,3 @@
+iterationName	gameid	time	role	rule_idx	rule_type	train_data_fn	test_data_fn	type	hits	misses	correct_rejections	false_alarms	score	exploration_time	submission_time	total_time	eventType
+pilot	2066-a859baab-62dd-4c05-8268-72332fe6ca05	1540397496767	explorer	0	SINGLE_FEAT	./js/training_data_body_color_orange_1.json	./js/test_data_body_color_orange_1.json	testing	0	11	19	0	0	24.394	1.504	25.898	logScores
+pilot	2066-a859baab-62dd-4c05-8268-72332fe6ca05	1540397513122	student	0	SINGLE_FEAT	./js/training_data_body_color_orange_1.json	./js/test_data_body_color_orange_1.json	testing	6	5	11	8	-2	39.484	1.823	41.307	logScores
