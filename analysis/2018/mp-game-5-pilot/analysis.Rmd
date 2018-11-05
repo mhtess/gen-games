@@ -13,6 +13,8 @@ library(dplyr)
 library(ggplot2)
 library(scales)
 library(rwebppl)
+library(stringr)
+library(digest)
 ```
 
 ```{r}
@@ -42,6 +44,14 @@ temp <- list.files(
   full.names=TRUE
 )
 train_stats_rbr <- do.call(rbind, lapply(temp, read.csv))
+
+# Load Test Summary Stats
+temp <- list.files(
+  "../../../data/mp-game-3/experiment/test_summary_stats",
+  pattern="*.csv",
+  full.names=TRUE
+)
+test_stats_rbr <- do.call(rbind, lapply(temp, read.csv))
 
 # Load Test Summary Stats
 temp <- list.files(
@@ -101,7 +111,7 @@ test_acc_teacher_rbr <- test_stats_rbr %>%
 test_acc_teacher_rbr$rule_idx <- as.factor(test_acc_teacher_rbr$rule_idx)
 test_acc_teacher_rbr$game <- as.factor(test_acc_teacher_rbr$game)
 
-test_acc_listener_rbr <- test_stats_rbr %>%
+test_acc_student_rbr <- test_stats_rbr %>%
   filter(role == "student") %>%
   mutate(correct = hits + correct_rejections) %>%
   mutate(incorrect = misses + false_alarms) %>%
@@ -111,8 +121,8 @@ test_acc_listener_rbr <- test_stats_rbr %>%
   summarise_all(sum) %>%
   mutate(acc = correct/(correct + incorrect)) %>%
   mutate(game = "round")
-test_acc_listener_rbr$rule_idx <- as.factor(test_acc_listener_rbr$rule_idx)
-test_acc_listener_rbr$game <- as.factor(test_acc_listener_rbr$game)
+test_acc_student_rbr$rule_idx <- as.factor(test_acc_student_rbr$rule_idx)
+test_acc_student_rbr$game <- as.factor(test_acc_student_rbr$game)
 
 #--------------------------------------
 # Accuracy Calculations Summurization
@@ -130,7 +140,7 @@ test_acc_teacher_s <- test_stats_s %>%
 test_acc_teacher_s$game <- as.factor(test_acc_teacher_s$game)
 test_acc_teacher_s$rule_idx <- as.factor(test_acc_teacher_s$rule_idx)
 
-test_acc_listener_s <- test_stats_s %>%
+test_acc_student_s <- test_stats_s %>%
   filter(role == "student") %>%
   mutate(correct = hits + correct_rejections) %>%
   mutate(incorrect = misses + false_alarms) %>%
@@ -140,8 +150,8 @@ test_acc_listener_s <- test_stats_s %>%
   summarise_all(sum)%>%
   mutate(acc = correct/(correct + incorrect)) %>%
   mutate(game = "summurization")
-test_acc_listener_s$game <- as.factor(test_acc_listener_s$game)
-test_acc_listener_s$rule_idx <- as.factor(test_acc_listener_s$rule_idx)
+test_acc_student_s$game <- as.factor(test_acc_student_s$game)
+test_acc_student_s$rule_idx <- as.factor(test_acc_student_s$rule_idx)
 
 
 #----------------------------
@@ -157,11 +167,11 @@ test_acc_teacher_combined = bind_cols(
   ) %>%
   select(rule_idx, round_by_round_acc, summurization_acc)
 
-test_acc_listener_combined = bind_cols(
-  test_acc_listener_rbr %>%
+test_acc_student_combined = bind_cols(
+  test_acc_student_rbr %>%
     select(rule_idx, acc) %>%
     rename(round_by_round_acc = acc),
-  test_acc_listener_s %>%
+  test_acc_student_s %>%
     select(rule_idx, acc) %>%
     rename(summurization_acc = acc)
   ) %>%
@@ -200,7 +210,7 @@ If we were maximally efficient, the Fall Pilot would be $.892 / round. We had tw
 * Rule Idx 8: Critter Type == Bird || Primary Color == Green ("Birds, or green things")
 
 
-## Explorer Performance (Round vs. Summurization Acc.)
+## Teacher Performance (Round vs. Summurization Acc.)
 ```{r}
 ggplot(test_acc_teacher_combined, aes(x=round_by_round_acc, y=summurization_acc, color=rule_idx)) +
   geom_point() +
@@ -211,7 +221,7 @@ ggplot(test_acc_teacher_combined, aes(x=round_by_round_acc, y=summurization_acc,
 
 ## Student Performance (Round vs. Summurization Acc.)
 ```{r}
-ggplot(test_acc_listener_combined, aes(x=round_by_round_acc, y=summurization_acc, color=rule_idx)) +
+ggplot(test_acc_student_combined, aes(x=round_by_round_acc, y=summurization_acc, color=rule_idx)) +
   geom_point() +
   xlim(0, 1) +
   ylim(0, 1)
@@ -236,14 +246,14 @@ test_stats_teacher_rbr_normalized <- test_stats_teacher_rbr %>%
   mutate(correct_rejections = correct_rejections / summed) %>%
   mutate(false_alarms = false_alarms / summed)
 
-test_stats_listener_rbr <- test_stats_rbr %>%
+test_stats_student_rbr <- test_stats_rbr %>%
   filter(role == "student") %>%
   select(rule_idx, hits, misses, correct_rejections, false_alarms) %>%
   filter(rule_idx %in% rule_indices) %>%
   group_by(rule_idx) %>% 
   summarise_all(sum)
-summed <- rowSums(test_stats_listener_rbr[, c("hits", "misses", "correct_rejections", "false_alarms")])
-test_stats_listener_rbr_normalized <- test_stats_listener_rbr %>%
+summed <- rowSums(test_stats_student_rbr[, c("hits", "misses", "correct_rejections", "false_alarms")])
+test_stats_student_rbr_normalized <- test_stats_student_rbr %>%
   mutate(hits = hits / summed) %>%
   mutate(misses = misses / summed) %>%
   mutate(correct_rejections = correct_rejections / summed) %>%
@@ -265,14 +275,14 @@ test_stats_teacher_s_normalized <- test_stats_teacher_s %>%
   mutate(correct_rejections = correct_rejections / summed) %>%
   mutate(false_alarms = false_alarms / summed)
 
-test_stats_listener_s <- test_stats_s %>%
+test_stats_student_s <- test_stats_s %>%
   filter(role == "student") %>%
   select(rule_idx, hits, misses, correct_rejections, false_alarms) %>%
   filter(rule_idx %in% rule_indices) %>%
   group_by(rule_idx) %>% 
   summarise_all(sum)
-summed <- rowSums(test_stats_listener_s[, c("hits", "misses", "correct_rejections", "false_alarms")])
-test_stats_listener_s_normalized <- test_stats_listener_s %>%
+summed <- rowSums(test_stats_student_s[, c("hits", "misses", "correct_rejections", "false_alarms")])
+test_stats_student_s_normalized <- test_stats_student_s %>%
   mutate(hits = hits / summed) %>%
   mutate(misses = misses / summed) %>%
   mutate(correct_rejections = correct_rejections / summed) %>%
@@ -296,36 +306,91 @@ test_stats_teacher_combined_normalized = bind_rows(
 test_stats_teacher_combined_normalized$game <- as.factor(test_stats_teacher_combined_normalized$game)
 test_stats_teacher_combined_normalized$rule_idx <- as.factor(test_stats_teacher_combined_normalized$rule_idx)
 
-test_stats_listener_combined_normalized = bind_rows(
-  test_stats_listener_s_normalized %>%
+test_stats_student_combined_normalized = bind_rows(
+  test_stats_student_s_normalized %>%
     gather(key = "stat", value = "val", -rule_idx) %>%
     arrange(rule_idx) %>%
     select(rule_idx, val, stat) %>%
     mutate(game="s"),
-  test_stats_listener_rbr_normalized %>%
+  test_stats_student_rbr_normalized %>%
     gather(key = "stat", value = "val", -rule_idx) %>%
     arrange(rule_idx) %>%
     select(rule_idx, val, stat) %>%
     mutate(game="r")
   )
-test_stats_listener_combined_normalized$game <- as.factor(test_stats_listener_combined_normalized$game)
-test_stats_listener_combined_normalized$rule_idx <- as.factor(test_stats_listener_combined_normalized$rule_idx)
+test_stats_student_combined_normalized$game <- as.factor(test_stats_student_combined_normalized$game)
+test_stats_student_combined_normalized$rule_idx <- as.factor(test_stats_student_combined_normalized$rule_idx)
 ```
 
 
-## Explorer Performance
+## Teacher Performance (Round vs. Summurization)
 ```{r}
 ggplot(test_stats_teacher_combined_normalized, aes(x = game, y = val, fill = stat)) + 
   geom_bar(stat = 'identity', position = 'stack') + facet_grid(~ rule_idx)
 ```
 
 
-## Student Performance
+## Student Performance (Round vs. Summurization)
 ```{r}
-ggplot(test_stats_listener_combined_normalized, aes(x = game, y = val, fill = stat)) + 
+ggplot(test_stats_student_combined_normalized, aes(x = game, y = val, fill = stat)) + 
   geom_bar(stat = 'identity', position = 'stack') + facet_grid(~ rule_idx)
 ```
 
-## Next Steps
-* Language Analysis
-  
+## Student versus Teacher Performance -- Pairs (Summurization)
+```{r}
+test_stats_s_unique = test_stats_s %>%
+  mutate(role = as.character(role)) %>%
+  mutate(role = replace(role, role == "explorer", "T")) %>%
+  mutate(role = replace(role, role == "student", "S")) %>%
+  mutate(id = strtoi(str_sub(test_stats_s$gameid, 0, 4)) + rule_idx) %>%
+  select(id, role, hits, misses, correct_rejections, false_alarms) %>%
+  gather(key = "stat", value = "val", 3:6) %>%
+  arrange(id) %>%
+  select(id, role, val, stat)
+```
+
+```{r}
+ggplot(test_stats_s_unique, aes(x = reorder(role, desc(role)), y = val, fill = stat)) + 
+  geom_bar(stat = 'identity', position = 'stack') + facet_grid(~ id)
+```
+
+## Student versus Teacher Performance -- Concepts (Summurization)
+```{r}
+ 
+```
+
+## Student versus Teacher Performance -- Concept Types (Summurization)
+```{r}
+
+```
+
+
+## Time Comparisons (Summarization)
+```{r}
+train_times <- train_trials_s %>%
+    select(rule_idx, total_time) %>%
+    filter(rule_idx %in% rule_indices) %>%
+    group_by(rule_idx) %>% 
+    summarise_all(mean) %>%
+    mutate(role = "explorer") %>%
+    mutate(game = "s")  
+
+test_times <- bind_rows(
+  test_stats_s %>%
+    filter(role == "explorer") %>%
+    select(rule_idx, total_time) %>%
+    filter(rule_idx %in% rule_indices) %>%
+    group_by(rule_idx) %>% 
+    summarise_all(mean) %>%
+    mutate(role = "teacher") %>%
+    mutate(game = "s"),
+  test_stats_s %>%
+    filter(role == "student") %>%
+    select(rule_idx, total_time) %>%
+    filter(rule_idx %in% rule_indices) %>%
+    group_by(rule_idx) %>% 
+    summarise_all(mean) %>%
+    mutate(role = "student") %>%
+    mutate(game = "s")  
+)
+```
