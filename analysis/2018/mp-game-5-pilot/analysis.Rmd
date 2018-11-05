@@ -1,15 +1,10 @@
 ---
 title: "MP-Game-5: Multiplayer Boolean Concept Learning (Summurization Format)"
-output: beamer_presentation
+output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
-```
-
-# Data Processing
-```{r}
-
 library(reshape2)
 library(purrr)
 library(jsonlite)
@@ -133,6 +128,7 @@ test_acc_teacher_s <- test_stats_s %>%
   mutate(acc = correct/(correct + incorrect)) %>%
   mutate(game = "summurization")
 test_acc_teacher_s$game <- as.factor(test_acc_teacher_s$game)
+test_acc_teacher_s$rule_idx <- as.factor(test_acc_teacher_s$rule_idx)
 
 test_acc_listener_s <- test_stats_s %>%
   filter(role == "student") %>%
@@ -145,6 +141,8 @@ test_acc_listener_s <- test_stats_s %>%
   mutate(acc = correct/(correct + incorrect)) %>%
   mutate(game = "summurization")
 test_acc_listener_s$game <- as.factor(test_acc_listener_s$game)
+test_acc_listener_s$rule_idx <- as.factor(test_acc_listener_s$rule_idx)
+
 
 #----------------------------
 # Accuracy Calculations Joint
@@ -171,11 +169,7 @@ test_acc_listener_combined = bind_cols(
 ```
 
 ## Intro
-* Goal: Collect cheaper data for cultural ratchet experiment.
-* In spring, we ran a pilot experiment, with a "round-by-round" format, where players only learned a single concept.
-* In fall, we ran a pilot experiment with a "summurization" format, where palyers played multiple concepts.
-* For spring pilot (round-by-round), we had 5 concepts, each with two different lists of stimuli.
-* For fall pilot (summurization), we had the same 5 concepts and selected one of two lists of stimuli, from spring.
+Our goal is to ollect cheaper data for cultural ratchet experiment. In the spring, we ran a pilot experiment, with a "round-by-round" format, where players only learned a single concept. In fall, we ran a pilot experiment with a "summurization" format, where palyers played multiple concepts. For spring pilot (round-by-round), we had 5 concepts, each with two different lists of stimuli. For fall pilot (summurization), we had the same 5 concepts and selected one of two lists of stimuli, from spring.
 
 
 ## Cost Comparison
@@ -199,16 +193,16 @@ If we were maximally efficient, the Fall Pilot would be $.892 / round. We had tw
 
 
 ## Experiment Details (Concepts)
-* Primary Color == Orange ("Orange things")
-* Critter Type == Fish && Primary Color == Blue ("Blue fish")
-* Primary Color == Orange && Secondary Color == Purple ("Purple and orange things")
-* Critter Type == Bug || Secondary Color == Yellow ("Bugs, or yellow things")
-* Critter Type == Bird || Primary Color == Green ("Birds, or green things")
+* Rule Idx 0: Primary Color == Orange ("Orange things")
+* Rule Idx 2: Critter Type == Fish && Primary Color == Blue ("Blue fish")
+* Rule Idx 4: Primary Color == Orange && Secondary Color == Purple ("Purple and orange things")
+* Rule Idx 6: Critter Type == Bug || Secondary Color == Yellow ("Bugs, or yellow things")
+* Rule Idx 8: Critter Type == Bird || Primary Color == Green ("Birds, or green things")
 
 
 ## Explorer Performance (Round vs. Summurization Acc.)
 ```{r}
-ggplot(test_acc_teacher_combined, aes(x=round_by_round_acc, y=summurization_acc), fill=rule_idx) +
+ggplot(test_acc_teacher_combined, aes(x=round_by_round_acc, y=summurization_acc, color=rule_idx)) +
   geom_point() +
   xlim(0, 1) +
   ylim(0, 1)
@@ -216,10 +210,121 @@ ggplot(test_acc_teacher_combined, aes(x=round_by_round_acc, y=summurization_acc)
 
 
 ## Student Performance (Round vs. Summurization Acc.)
+```{r}
+ggplot(test_acc_listener_combined, aes(x=round_by_round_acc, y=summurization_acc, color=rule_idx)) +
+  geom_point() +
+  xlim(0, 1) +
+  ylim(0, 1)
+```
+
+```{r}
+rule_indices <- c(0, 2, 4, 6, 8)
+
+#-----------------------------------------------------------------
+# Hits, Misses, False Alarms, Correct Rejections -- Round By Round
+# ----------------------------------------------------------------
+test_stats_teacher_rbr <- test_stats_rbr %>%
+  filter(role == "explorer") %>%
+  select(rule_idx, hits, misses, correct_rejections, false_alarms) %>%
+  filter(rule_idx %in% rule_indices) %>%
+  group_by(rule_idx) %>% 
+  summarise_all(sum)
+summed <- rowSums(test_stats_teacher_rbr[, c("hits", "misses", "correct_rejections", "false_alarms")])
+test_stats_teacher_rbr_normalized <- test_stats_teacher_rbr %>%
+  mutate(hits = hits / summed) %>%
+  mutate(misses = misses / summed) %>%
+  mutate(correct_rejections = correct_rejections / summed) %>%
+  mutate(false_alarms = false_alarms / summed)
+
+test_stats_listener_rbr <- test_stats_rbr %>%
+  filter(role == "student") %>%
+  select(rule_idx, hits, misses, correct_rejections, false_alarms) %>%
+  filter(rule_idx %in% rule_indices) %>%
+  group_by(rule_idx) %>% 
+  summarise_all(sum)
+summed <- rowSums(test_stats_listener_rbr[, c("hits", "misses", "correct_rejections", "false_alarms")])
+test_stats_listener_rbr_normalized <- test_stats_listener_rbr %>%
+  mutate(hits = hits / summed) %>%
+  mutate(misses = misses / summed) %>%
+  mutate(correct_rejections = correct_rejections / summed) %>%
+  mutate(false_alarms = false_alarms / summed)
+
+#-----------------------------------------------------------------
+# Hits, Misses, False Alarms, Correct Rejections -- Summurization
+# ----------------------------------------------------------------
+test_stats_teacher_s <- test_stats_s %>%
+  filter(role == "explorer") %>%
+  select(rule_idx, hits, misses, correct_rejections, false_alarms) %>%
+  filter(rule_idx %in% rule_indices) %>%
+  group_by(rule_idx) %>% 
+  summarise_all(sum)
+summed <- rowSums(test_stats_teacher_s[, c("hits", "misses", "correct_rejections", "false_alarms")])
+test_stats_teacher_s_normalized <- test_stats_teacher_s %>%
+  mutate(hits = hits / summed) %>%
+  mutate(misses = misses / summed) %>%
+  mutate(correct_rejections = correct_rejections / summed) %>%
+  mutate(false_alarms = false_alarms / summed)
+
+test_stats_listener_s <- test_stats_s %>%
+  filter(role == "student") %>%
+  select(rule_idx, hits, misses, correct_rejections, false_alarms) %>%
+  filter(rule_idx %in% rule_indices) %>%
+  group_by(rule_idx) %>% 
+  summarise_all(sum)
+summed <- rowSums(test_stats_listener_s[, c("hits", "misses", "correct_rejections", "false_alarms")])
+test_stats_listener_s_normalized <- test_stats_listener_s %>%
+  mutate(hits = hits / summed) %>%
+  mutate(misses = misses / summed) %>%
+  mutate(correct_rejections = correct_rejections / summed) %>%
+  mutate(false_alarms = false_alarms / summed)
+
+#--------------------------------------------------------
+# Hits, Misses, False Alarms, Correct Rejections -- Joint
+# -------------------------------------------------------
+test_stats_teacher_combined_normalized = bind_rows(
+  test_stats_teacher_s_normalized %>%
+    gather(key = "stat", value = "val", -rule_idx) %>%
+    arrange(rule_idx) %>%
+    select(rule_idx, val, stat) %>%
+    mutate(game="s"),
+  test_stats_teacher_rbr_normalized %>%
+    gather(key = "stat", value = "val", -rule_idx) %>%
+    arrange(rule_idx) %>%
+    select(rule_idx, val, stat) %>%
+    mutate(game="r")
+  )
+test_stats_teacher_combined_normalized$game <- as.factor(test_stats_teacher_combined_normalized$game)
+test_stats_teacher_combined_normalized$rule_idx <- as.factor(test_stats_teacher_combined_normalized$rule_idx)
+
+test_stats_listener_combined_normalized = bind_rows(
+  test_stats_listener_s_normalized %>%
+    gather(key = "stat", value = "val", -rule_idx) %>%
+    arrange(rule_idx) %>%
+    select(rule_idx, val, stat) %>%
+    mutate(game="s"),
+  test_stats_listener_rbr_normalized %>%
+    gather(key = "stat", value = "val", -rule_idx) %>%
+    arrange(rule_idx) %>%
+    select(rule_idx, val, stat) %>%
+    mutate(game="r")
+  )
+test_stats_listener_combined_normalized$game <- as.factor(test_stats_listener_combined_normalized$game)
+test_stats_listener_combined_normalized$rule_idx <- as.factor(test_stats_listener_combined_normalized$rule_idx)
+```
 
 
-## Explorer Performance ()
+## Explorer Performance
+```{r}
+ggplot(test_stats_teacher_combined_normalized, aes(x = game, y = val, fill = stat)) + 
+  geom_bar(stat = 'identity', position = 'stack') + facet_grid(~ rule_idx)
+```
 
+
+## Student Performance
+```{r}
+ggplot(test_stats_listener_combined_normalized, aes(x = game, y = val, fill = stat)) + 
+  geom_bar(stat = 'identity', position = 'stack') + facet_grid(~ rule_idx)
+```
 
 ## Next Steps
 * Language Analysis
