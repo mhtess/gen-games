@@ -96,7 +96,7 @@ temp <- list.files(
   pattern="*.csv",
   full.names=TRUE
 )
-chat_messages <- do.call(rbind, lapply(temp, read.csv, sep="\s{4}"))
+chat_messages <- do.call(rbind, lapply(temp, readr::read_tsv))
 ```
 
 
@@ -409,8 +409,8 @@ train_times <- train_trials_s %>%
     filter(rule_idx %in% rule_indices) %>%
     group_by(rule_idx) %>% 
     summarise_all(mean) %>%
-    mutate(role = "explorer") %>%
-    mutate(game = "s")  
+    mutate(role = "T") %>%
+    rename(train_time = total_time)
 
 test_times <- bind_rows(
   test_stats_s %>%
@@ -419,15 +419,37 @@ test_times <- bind_rows(
     filter(rule_idx %in% rule_indices) %>%
     group_by(rule_idx) %>% 
     summarise_all(mean) %>%
-    mutate(role = "teacher") %>%
-    mutate(game = "s"),
+    mutate(role = "T"),
+  
   test_stats_s %>%
     filter(role == "student") %>%
     select(rule_idx, total_time) %>%
     filter(rule_idx %in% rule_indices) %>%
     group_by(rule_idx) %>% 
     summarise_all(mean) %>%
-    mutate(role = "student") %>%
-    mutate(game = "s")  
-)
+    mutate(role = "S")
+) %>%
+  rename(test_time = total_time)
+
+chat_times <- chat_messages %>%
+    filter(rule_idx %in% rule_indices) %>%
+    select(rule_idx, gameid, reactionTime) %>%
+    group_by(rule_idx, gameid) %>%
+    summarize(reactionTime = sum(reactionTime)) %>%
+    group_by(rule_idx) %>%
+    summarize(reactionTime = mean(reactionTime) / 1000) %>%
+    rename(chat_time = reactionTime)
+
+train_chat_times <- bind_cols(train_times, chat_times) %>%
+  select(rule_idx, train_time, chat_time, role) %>%
+  gather(key = "stat", value = "val", 2:3) %>%
+  select(rule_idx, role, val, stat)
 ```
+
+
+```{r}
+ggplot(train_chat_times, aes(x = reorder(stat, desc(stat)), y = val)) + 
+  geom_bar(stat = 'identity') + facet_grid(~ rule_idx)
+```
+
+For Simple Rules 0, 2, 4 (Single Feature & Conjunction) we see that there isn't a wide variance in terms of train time and chat time; but this rift becomes noticeable when we have Harder Rules 6, 8 (Disjunction).
