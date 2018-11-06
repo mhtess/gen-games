@@ -1,3 +1,0 @@
-iterationName	gameid	time	role	rule_idx	rule_type	train_data_fn	test_data_fn	exploration_time	submission_time	total_time	eventType
-pilot	4051-927083a2-d3f7-4785-93b9-50b467a2f396	1540409785583	explorer	0	SINGLE_FEAT	./js/training_data_body_color_orange_1.json	./js/test_data_body_color_orange_1.json	67.423	1.212	68.635	logTrain
-pilot	4051-927083a2-d3f7-4785-93b9-50b467a2f396	1540410049833	explorer	2	CONJUNCTION	./js/training_data_critter_fish_body_color_blue_1.json	./js/test_data_critter_fish_body_color_blue_1.json	92.661	1.668	94.329	logTrain

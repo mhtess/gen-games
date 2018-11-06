@@ -1,5 +1,0 @@
-iterationName	gameid	time	role	rule_idx	rule_type	train_data_fn	test_data_fn	type	hits	misses	correct_rejections	false_alarms	score	exploration_time	submission_time	total_time	eventType
-pilot	3609-2b82940d-015f-43e5-b274-f9bec90e3fa7	1540401599975	student	0	SINGLE_FEAT	./js/training_data_body_color_orange_1.json	./js/test_data_body_color_orange_1.json	testing	2	9	17	2	0	41.861	1.609	43.47	logScores
-pilot	3609-2b82940d-015f-43e5-b274-f9bec90e3fa7	1540401670407	explorer	0	SINGLE_FEAT	./js/training_data_body_color_orange_1.json	./js/test_data_body_color_orange_1.json	testing	1	10	18	1	0	109.597	4.759	114.356	logScores
-pilot	3609-2b82940d-015f-43e5-b274-f9bec90e3fa7	1540402415090	student	2	CONJUNCTION	./js/training_data_critter_fish_body_color_blue_1.json	./js/test_data_critter_fish_body_color_blue_1.json	testing	3	1	24	0	3	65.227	1.11	66.337	logScores
-pilot	3609-2b82940d-015f-43e5-b274-f9bec90e3fa7	1540402464641	explorer	2	CONJUNCTION	./js/training_data_critter_fish_body_color_blue_1.json	./js/test_data_critter_fish_body_color_blue_1.json	testing	4	0	24	0	4	94.851	1.717	96.568	logScores
