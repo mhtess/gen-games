@@ -89,6 +89,14 @@ temp <- list.files(
   full.names=TRUE
 )
 test_stats_s <- do.call(rbind, lapply(temp, read.csv, sep=""))
+
+# Load Chat Messages
+temp <- list.files(
+    "../../../data/mp-game-5/chatMessage",
+  pattern="*.csv",
+  full.names=TRUE
+)
+chat_messages <- do.call(rbind, lapply(temp, read.csv, sep="\s{4}"))
 ```
 
 
