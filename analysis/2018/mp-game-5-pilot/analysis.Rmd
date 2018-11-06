@@ -210,6 +210,8 @@ If we were maximally efficient, the Fall Pilot would be $.892 / round. We had tw
 * Rule Idx 8: Critter Type == Bird || Primary Color == Green ("Birds, or green things")
 
 
+# Round vs. Summurization
+
 ## Teacher Performance (Round vs. Summurization Acc.)
 ```{r}
 ggplot(test_acc_teacher_combined, aes(x=round_by_round_acc, y=summurization_acc, color=rule_idx)) +
@@ -336,34 +338,61 @@ ggplot(test_stats_student_combined_normalized, aes(x = game, y = val, fill = sta
   geom_bar(stat = 'identity', position = 'stack') + facet_grid(~ rule_idx)
 ```
 
-## Student versus Teacher Performance -- Pairs (Summurization)
 ```{r}
 test_stats_s_unique = test_stats_s %>%
   mutate(role = as.character(role)) %>%
   mutate(role = replace(role, role == "explorer", "T")) %>%
   mutate(role = replace(role, role == "student", "S")) %>%
   mutate(id = strtoi(str_sub(test_stats_s$gameid, 0, 4)) + rule_idx) %>%
-  select(id, role, hits, misses, correct_rejections, false_alarms) %>%
-  gather(key = "stat", value = "val", 3:6) %>%
+  select(id, role, rule_idx, hits, misses, correct_rejections, false_alarms) %>%
+  gather(key = "stat", value = "val", 4:7) %>%
   arrange(id) %>%
   select(id, role, val, stat)
 ```
 
+# Summurization Game Analysis
+
+## Student versus Teacher Performance -- Pairs (Summurization)
 ```{r}
 ggplot(test_stats_s_unique, aes(x = reorder(role, desc(role)), y = val, fill = stat)) + 
   geom_bar(stat = 'identity', position = 'stack') + facet_grid(~ id)
 ```
 
+```{r}
+test_stats_s_concept = test_stats_s %>%
+  mutate(role = as.character(role)) %>%
+  mutate(role = replace(role, role == "explorer", "T")) %>%
+  mutate(role = replace(role, role == "student", "S")) %>%
+  select(role, rule_idx, hits, misses, correct_rejections, false_alarms) %>%
+  group_by(rule_idx, role) %>%
+  summarize(hits = sum(hits), misses = sum(misses), correct_rejections=sum(correct_rejections), false_alarms=sum(false_alarms)) %>%
+  gather(key = "stat", value = "val", 3:6) %>%
+  arrange(rule_idx) %>%
+  select(rule_idx, role, val, stat)
+```
 ## Student versus Teacher Performance -- Concepts (Summurization)
 ```{r}
- 
+ggplot(test_stats_s_concept, aes(x = reorder(role, desc(role)), y = val, fill = stat)) + 
+  geom_bar(stat = 'identity', position = 'stack') + facet_grid(~ rule_idx) 
+```
+
+```{r}
+test_stats_s_rule_type = test_stats_s %>%
+  mutate(role = as.character(role)) %>%
+  mutate(role = replace(role, role == "explorer", "T")) %>%
+  mutate(role = replace(role, role == "student", "S")) %>%
+  select(role, rule_type, hits, misses, correct_rejections, false_alarms) %>%
+  group_by(rule_type, role) %>%
+  summarize(hits = sum(hits), misses = sum(misses), correct_rejections=sum(correct_rejections), false_alarms=sum(false_alarms)) %>%
+  gather(key = "stat", value = "val", 3:6) %>%
+  select(rule_type, role, val, stat)
 ```
 
 ## Student versus Teacher Performance -- Concept Types (Summurization)
 ```{r}
-
+ggplot(test_stats_s_rule_type, aes(x = reorder(role, desc(role)), y = val, fill = stat)) + 
+  geom_bar(stat = 'identity', position = 'stack') + facet_grid(~ rule_type) 
 ```
-
 
 ## Time Comparisons (Summarization)
 ```{r}
