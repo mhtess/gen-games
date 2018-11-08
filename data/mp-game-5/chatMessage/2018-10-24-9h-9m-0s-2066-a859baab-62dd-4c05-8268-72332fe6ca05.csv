@@ -1,6 +1,0 @@
-iterationName	gameid	time	role	rule_idx	rule_type	train_data_fn	test_data_fn	text	reactionTime	eventType	messageType
-pilot	2066-a859baab-62dd-4c05-8268-72332fe6ca05	1540397340538	explorer	0	SINGLE_FEAT	./js/training_data_body_color_orange_1.json	./js/test_data_body_color_orange_1.json	Every yellow color is a wushd	6010	chatMessage	Informative
-pilot	2066-a859baab-62dd-4c05-8268-72332fe6ca05	1540397381203	explorer	0	SINGLE_FEAT	./js/training_data_body_color_orange_1.json	./js/test_data_body_color_orange_1.json	also, with yellow color wings are wushd, but insect with blue body and yellow wings are not.	39514	chatMessage	Informative
-pilot	2066-a859baab-62dd-4c05-8268-72332fe6ca05	1540397441829	student	0	SINGLE_FEAT	./js/training_data_body_color_orange_1.json	./js/test_data_body_color_orange_1.json	Okay, is it easy to tell what is an insect or not	48428	chatMessage	Follow-Up
-pilot	2066-a859baab-62dd-4c05-8268-72332fe6ca05	1540397453602	explorer	0	SINGLE_FEAT	./js/training_data_body_color_orange_1.json	./js/test_data_body_color_orange_1.json	yes	1279	chatMessage	Follow-Up
-pilot	2066-a859baab-62dd-4c05-8268-72332fe6ca05	1540397462490	student	0	SINGLE_FEAT	./js/training_data_body_color_orange_1.json	./js/test_data_body_color_orange_1.json	Alright, I'll give it a shot	5701	chatMessage	Confirmation
