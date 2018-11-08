@@ -93,7 +93,7 @@ test_stats_s <- do.call(rbind, lapply(temp, read.csv, sep=""))
 # Load Chat Messages
 temp <- list.files(
     "../../../data/mp-game-5/chatMessage",
-  pattern="*.csv",
+  pattern="*.tsv",
   full.names=TRUE
 )
 chat_messages <- do.call(rbind, lapply(temp, readr::read_tsv))
@@ -453,3 +453,84 @@ ggplot(train_chat_times, aes(x = reorder(stat, desc(stat)), y = val)) +
 ```
 
 For Simple Rules 0, 2, 4 (Single Feature & Conjunction) we see that there isn't a wide variance in terms of train time and chat time; but this rift becomes noticeable when we have Harder Rules 6, 8 (Disjunction).
+
+# Corpus Analysis
+
+## Breakdown of Dialogue Statements (Categories)
+```{r}
+chat_messages_count = chat_messages %>%
+  mutate(role = as.character(role)) %>%
+  mutate(role = replace(role, role == "explorer", "T")) %>%
+  mutate(role = replace(role, role == "student", "S")) %>%
+  select(role, messageType) %>%
+  group_by(role) %>%
+  summarize(
+    informative = sum(messageType == 'Informative'),
+    follow_up = sum(messageType == 'Follow-Up'),
+    social = sum(messageType == 'Social'),
+    misc = sum(messageType == 'Misc'),
+    confirmation = sum(messageType == 'Confirmation'),
+  ) %>%
+  select(role, informative, follow_up, social, misc, confirmation) %>%
+  gather(key = "stat", value = "val", 2:5) %>%
+  select(role, val, stat) %>%
+  group_by(role) %>%
+  mutate(val_percentage_of_role = val/sum(val))
+
+```
+```{r}
+ggplot(chat_messages_count, aes(x = reorder(role, desc(role)), y = val_percentage_of_role, fill = stat)) + 
+  geom_bar(stat = 'identity', position = 'stack') + ggtitle("% of dialogue messages produced by each player") + xlab('Role') + ylab('% of player\'s messages')
+```
+
+```{r}
+ggplot(chat_messages_count, aes(x = reorder(role, desc(role)), y = val, fill = stat)) + 
+  geom_bar(stat = 'identity', position = 'stack') + ggtitle("# of messages produced by each player") +
+  xlab('Role') + ylab('# of player\'s messages')
+```
+
+
+
+```{r}
+ggplot(
+    chat_messages_count %>%
+      select(val, stat) %>%
+      group_by(stat) %>%
+      summarize(val = sum(val)),
+    aes(x = stat, y = val)
+  ) + geom_bar(stat = 'identity') + ggtitle("# of Messages, Across Type") +
+    xlab('Message Type') + ylab('# of Messages Produced')
+```
+
+
+
+```{r}
+chat_messages_word_count = chat_messages %>%
+  mutate(role = as.character(role)) %>%
+  mutate(role = replace(role, role == "explorer", "T")) %>%
+  mutate(role = replace(role, role == "student", "S")) %>%
+  select(role, messageType, text) %>%
+  group_by(role, messageType) %>%
+  summarise(
+    messageWordLength = sum(sapply(strsplit(text, " "), length)),
+    messageCharLength = sum(nchar(text)),
+  )
+```
+
+```{r}
+  ggplot(chat_messages_word_count, aes(x = reorder(role, desc(role)), y = messageWordLength, fill = messageType)) + 
+  geom_bar(stat = 'identity', position = 'stack') + 
+  ggtitle("# of words produced by each player, according to utterance category") + 
+  xlab('Role') + ylab('# of player\'s words')
+```
+
+
+```{r}
+  ggplot(chat_messages_word_count, aes(x = reorder(role, desc(role)), y = messageCharLength, fill = messageType)) + 
+  geom_bar(stat = 'identity', position = 'stack') + 
+  ggtitle("# of characters produced by each player, according to utterance category") + 
+  xlab('Role') + ylab('# of player\'s characters')
+```
+
+
+
