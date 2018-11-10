@@ -1,0 +1,268 @@
+{
+    "AcceptTime": "2018-05-02T22:17:43Z", 
+    "Assignment": "", 
+    "HITId": "3VZYA8PITOBJ6UJQ1EJOLFMGUMY506", 
+    "AutoApprovalTime": "2018-05-02T23:00:52Z", 
+    "AssignmentId": "37QW5D2ZRHZ5H5JYYHEDVOYAJHR8S0", 
+    "WorkerId": "89e3f9b7", 
+    "SubmitTime": "2018-05-02T22:55:52Z", 
+    "AssignmentStatus": "Submitted", 
+    "answers": {
+        "testing_summary_stats": {
+            "hits": 12, 
+            "misses": 6, 
+            "score": 10, 
+            "false_alarms": 2, 
+            "type": "testing", 
+            "correct_rejections": 10
+        }, 
+        "training_trials": [], 
+        "game_id": "9334-3f2cd488-cbfc-4387-a7a0-b8cfce65be04", 
+        "rule_idx": 7, 
+        "rule_type": "DISJUNCTION", 
+        "test_data_fn": "./js/test_data_critter_bug_or_secondary_color_yellow_2.json", 
+        "training_summary_stats": {
+            "hits": 0, 
+            "misses": 0, 
+            "score": 0, 
+            "false_alarms": 0, 
+            "type": "training", 
+            "correct_rejections": 0
+        }, 
+        "testing_trials": [
+            {
+                "is_correct": true, 
+                "trial_num": 0, 
+                "time_in_seconds": 9.353, 
+                "turker_label": true, 
+                "true_label": true
+            }, 
+            {
+                "is_correct": true, 
+                "trial_num": 1, 
+                "time_in_seconds": 6.654, 
+                "turker_label": false, 
+                "true_label": false
+            }, 
+            {
+                "is_correct": false, 
+                "trial_num": 2, 
+                "time_in_seconds": 4.967, 
+                "turker_label": true, 
+                "true_label": false
+            }, 
+            {
+                "is_correct": true, 
+                "trial_num": 3, 
+                "time_in_seconds": 9.129, 
+                "turker_label": true, 
+                "true_label": true
+            }, 
+            {
+                "is_correct": false, 
+                "trial_num": 4, 
+                "time_in_seconds": 9.746, 
+                "turker_label": false, 
+                "true_label": true
+            }, 
+            {
+                "is_correct": true, 
+                "trial_num": 5, 
+                "time_in_seconds": 5.552, 
+                "turker_label": true, 
+                "true_label": true
+            }, 
+            {
+                "is_correct": true, 
+                "trial_num": 6, 
+                "time_in_seconds": 5.857, 
+                "turker_label": false, 
+                "true_label": false
+            }, 
+            {
+                "is_correct": true, 
+                "trial_num": 7, 
+                "time_in_seconds": 2.329, 
+                "turker_label": true, 
+                "true_label": true
+            }, 
+            {
+                "is_correct": true, 
+                "trial_num": 8, 
+                "time_in_seconds": 3.012, 
+                "turker_label": false, 
+                "true_label": false
+            }, 
+            {
+                "is_correct": true, 
+                "trial_num": 9, 
+                "time_in_seconds": 3.415, 
+                "turker_label": true, 
+                "true_label": true
+            }, 
+            {
+                "is_correct": false, 
+                "trial_num": 10, 
+                "time_in_seconds": 4.373, 
+                "turker_label": false, 
+                "true_label": true
+            }, 
+            {
+                "is_correct": true, 
+                "trial_num": 11, 
+                "time_in_seconds": 3.612, 
+                "turker_label": true, 
+                "true_label": true
+            }, 
+            {
+                "is_correct": false, 
+                "trial_num": 12, 
+                "time_in_seconds": 4.274, 
+                "turker_label": false, 
+                "true_label": true
+            }, 
+            {
+                "is_correct": true, 
+                "trial_num": 13, 
+                "time_in_seconds": 2.684, 
+                "turker_label": false, 
+                "true_label": false
+            }, 
+            {
+                "is_correct": true, 
+                "trial_num": 14, 
+                "time_in_seconds": 6.163, 
+                "turker_label": false, 
+                "true_label": false
+            }, 
+            {
+                "is_correct": false, 
+                "trial_num": 15, 
+                "time_in_seconds": 5.122, 
+                "turker_label": false, 
+                "true_label": true
+            }, 
+            {
+                "is_correct": true, 
+                "trial_num": 16, 
+                "time_in_seconds": 4.173, 
+                "turker_label": true, 
+                "true_label": true
+            }, 
+            {
+                "is_correct": true, 
+                "trial_num": 17, 
+                "time_in_seconds": 4.93, 
+                "turker_label": false, 
+                "true_label": false
+            }, 
+            {
+                "is_correct": false, 
+                "trial_num": 18, 
+                "time_in_seconds": 3.799, 
+                "turker_label": false, 
+                "true_label": true
+            }, 
+            {
+                "is_correct": true, 
+                "trial_num": 19, 
+                "time_in_seconds": 3.208, 
+                "turker_label": false, 
+                "true_label": false
+            }, 
+            {
+                "is_correct": false, 
+                "trial_num": 20, 
+                "time_in_seconds": 3.038, 
+                "turker_label": true, 
+                "true_label": false
+            }, 
+            {
+                "is_correct": true, 
+                "trial_num": 21, 
+                "time_in_seconds": 2.827, 
+                "turker_label": true, 
+                "true_label": true
+            }, 
+            {
+                "is_correct": true, 
+                "trial_num": 22, 
+                "time_in_seconds": 3.821, 
+                "turker_label": false, 
+                "true_label": false
+            }, 
+            {
+                "is_correct": false, 
+                "trial_num": 23, 
+                "time_in_seconds": 2.582, 
+                "turker_label": false, 
+                "true_label": true
+            }, 
+            {
+                "is_correct": true, 
+                "trial_num": 24, 
+                "time_in_seconds": 5.036, 
+                "turker_label": true, 
+                "true_label": true
+            }, 
+            {
+                "is_correct": true, 
+                "trial_num": 25, 
+                "time_in_seconds": 2.612, 
+                "turker_label": true, 
+                "true_label": true
+            }, 
+            {
+                "is_correct": true, 
+                "trial_num": 26, 
+                "time_in_seconds": 2.328, 
+                "turker_label": true, 
+                "true_label": true
+            }, 
+            {
+                "is_correct": true, 
+                "trial_num": 27, 
+                "time_in_seconds": 3.5, 
+                "turker_label": true, 
+                "true_label": true
+            }, 
+            {
+                "is_correct": true, 
+                "trial_num": 28, 
+                "time_in_seconds": 2.628, 
+                "turker_label": false, 
+                "true_label": false
+            }, 
+            {
+                "is_correct": true, 
+                "trial_num": 29, 
+                "time_in_seconds": 5.717, 
+                "turker_label": false, 
+                "true_label": false
+            }
+        ], 
+        "system": {
+            "OS": "Windows", 
+            "screenH": 1024, 
+            "screenW": 1280, 
+            "Browser": "Chrome"
+        }, 
+        "training_data_fn": "./js/training_data_critter_bug_or_secondary_color_yellow_2.json", 
+        "role": "student", 
+        "subject_information": {
+            "enjoyment": "1", 
+            "gender": "Male", 
+            "age": "52", 
+            "problems": "Don't understand the score system.  If I \"Correctly selected: 12 out of 18\" then I should have incorrectly selected 6 out of 18, but it said 2 out of 12", 
+            "nativeEnglish": "yes", 
+            "strategy": "Used info gathered by other guy to try to identify the creatures", 
+            "assess": "yes", 
+            "humanPartner": "yes", 
+            "fairprice": "4.00", 
+            "comments": "", 
+            "likePartner": "okay", 
+            "education": "3"
+        }, 
+        "time_in_minutes": null
+    }
+}

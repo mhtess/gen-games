@@ -1,0 +1,3 @@
+iterationName	gameid	time	trialNum	role	hit	miss	falseAlarm	correctRejection	eventType
+pilot1	9578-c1dea46b-fb3a-4647-b8c1-7b27efd8b2c9	1518646970096	1	b	2	2	2	2	logScores
+pilot1	9578-c1dea46b-fb3a-4647-b8c1-7b27efd8b2c9	1518646976923	1	a	2	2	2	2	logScores

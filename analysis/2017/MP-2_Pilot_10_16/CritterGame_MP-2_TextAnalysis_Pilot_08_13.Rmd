@@ -1,0 +1,936 @@
+---
+title: "CritterGame_MP-1_TextAnalysis_Pilot_1"
+author: "Lauren Oey, MH Tessler"
+date: "8/13/2017 (updated 10/6/2017)" 
+output: github_document
+---
+
+```{r preamble}
+library(dplyr)
+library(tidyr)
+library(knitr)
+library(ggplot2)
+library(data.table)
+library(tidytext)
+#library(coreNLP)
+#library(cleanNLP)
+#library(reticulate)
+library(xtable)
+library(gridExtra)
+library(forcats)
+theme_set(theme_few())
+```
+
+
+Load message data
+
+```{r}
+df.chat <- rbindlist(
+  lapply(list.files(path="../../data/mp-game-2/chatMessage/", 
+                    pattern="*.csv", full.names=TRUE), fread), 
+  fill=TRUE, idcol="dyad_id") %>%
+  mutate(
+    dyad_id = as.factor(ifelse(dyad_id < 10,
+                            paste0("dyad_0", dyad_id),
+                            paste0("dyad_", dyad_id))),
+    gameid = as.factor(gameid),
+    role = as.factor(role),
+    trialNum = trialNum
+  )
+
+df.chat %>%
+  select(dyad_id, trialNum, role, text) %>%
+  kable()
+```
+
+Load training data
+
+```{r}
+df.train <- rbindlist(
+  lapply(list.files(path="../../data/mp-game-2/logTrain/", 
+                    pattern="*.csv", full.names=TRUE), fread), 
+  fill=TRUE, idcol="dyad_id") %>%
+  mutate(
+    dyad_id = as.factor(ifelse(dyad_id < 10,
+                            paste0("dyad_0", dyad_id),
+                            paste0("dyad_", dyad_id))),
+    gameid = as.factor(gameid),
+    role = as.factor(role),
+    trialNum = trialNum
+  )
+
+df.train.trials <- df.train %>%
+  select(gameid,trialNum,  role,
+         genus, conceptNumber, categoryPluralLabel, featureOrder, time_in_ms) %>%
+  distinct()
+```
+
+
+Load and preprocess test data
+
+```{r}
+df.test <- rbindlist(lapply(list.files(path="../../data/mp-game-2/logTest/", pattern="*.csv", full.names=TRUE), fread), fill=TRUE, idcol="dyad_id") %>%
+  mutate(
+    dyad_id = as.factor(ifelse(dyad_id < 10,
+                            paste0("dyad_0", dyad_id),
+                            paste0("dyad_", dyad_id))),
+    gameid = as.factor(gameid),
+    role = as.factor(role),
+    trialNum = trialNum - 1,
+    correct = ifelse(categorizedResponse=="hit" |
+                       categorizedResponse=="correctRejection", 1, 0),
+    hit =  ifelse(categorizedResponse=="hit", 1, 0),
+    falseAlarm = ifelse(categorizedResponse=="falseAlarm", 1, 0),
+    correctRejection =  ifelse(categorizedResponse=="correctRejection", 1, 0),
+    conceptNumber = factor(conceptNumber),
+    featureOrder = factor(featureOrder),
+    genus = factor(genus)
+  )
+
+df.test.trials <- df.test %>%
+  group_by(gameid, trialNum, genus, categoryPluralLabel, conceptNumber, featureOrder, role,
+           tested_on) %>%
+  summarize(n_correct = sum(correct),
+            prop_correct = sum(correct) / n(),
+            n_hit = sum(hit),
+            n_correctRejection = sum(correctRejection))
+```
+
+
+
+```{r}
+df.chat.test <- left_join(
+  left_join(
+    df.chat %>% select(gameid, trialNum, role, text), 
+    df.test.trials %>% ungroup() %>% select(-featureOrder) %>%#, -n_correct, -prop_correct) %>%
+      rename(categoryTested = categoryPluralLabel,
+             genusTested = genus,
+             conceptTested = conceptNumber)
+    ),
+  df.train.trials %>%
+    select(gameid, trialNum, role, 
+           genus, conceptNumber, categoryPluralLabel) %>%
+    rename(categoryTrained = categoryPluralLabel,
+             genusTrained = genus,
+             conceptTrained = conceptNumber)
+) %>%
+  mutate(dyad_id = factor(gameid, labels = paste('dyad_', 
+                                                seq(0, length(unique(gameid))- 1),
+                                                sep="")))
+```
+
+
+```{r}
+df.trials <- df.chat.test %>%
+  select(-text) %>%
+  distinct()
+
+
+  summarize(n_correct = sum(correct),
+            prop_correct = sum(correct) / n(),
+            n_hit = sum(hit),
+            n_correctRejection = sum(correctRejection))
+```
+
+
+
+```{r}
+
+df.chat.test.display <- df.chat.test %>% 
+  select(dyad_id, trialNum,
+         genusTrained, categoryTrained, conceptTrained, 
+         role,
+         text
+         )
+
+#df.chat.test.display[with(df.chat.test.display, order(conceptTrained)),] %>%
+  df.chat.test.display %>%
+  select(dyad_id, trialNum, role, conceptTrained, text) %>%
+  kable()
+```
+
+```{r}
+df.chat.test.input <- left_join(
+  left_join(
+    df.test.trials %>% 
+      ungroup() %>% select(-featureOrder, 
+                           -n_correct,
+                           -prop_correct) %>%
+      rename(categoryTested = categoryPluralLabel,
+             genusTested = genus,
+             conceptTested = conceptNumber),
+    df.train.trials %>%
+      select(dyad_id, trialNum, role, 
+             genus, conceptNumber, categoryPluralLabel) %>%
+      rename(categoryTrained = categoryPluralLabel,
+               genusTrained = genus,
+               conceptTrained = conceptNumber)
+  ) %>% 
+  mutate(language_input = 
+           ifelse(tested_on == "self", 
+                  ifelse(role == "a", "a", "b"),
+                  ifelse(role == "a", "b", "a")
+                  )
+  ),
+  df.chat %>% select(dyad_id, trialNum, role, text) %>%
+    rename(language_input = role)
+)
+```
+
+# Quantitative text analysis
+
+Words by concept learned
+
+```{r}
+df.chat.test %>%
+  unnest_tokens(word, text) %>%
+  group_by(conceptTrained) %>%
+  summarize(n_words = n()) %>%
+  ggplot(., aes(x = conceptTrained, y = n_words))+
+  geom_col()
+
+ggsave(paste(fig.path, "words_concepts.pdf", sep= ""), height = 4, width = 9)
+```
+
+Words by dyad
+
+```{r}
+df.chat.test %>%
+  filter(dyad_id %in% complete.participants$dyad_id) %>%
+  unnest_tokens(word, text) %>%
+  group_by(dyad_id) %>%
+  summarize(n_words = n()) %>%
+  ggplot(., aes(x = dyad_id, y = n_words))+
+  geom_col()
+
+ggsave(paste(fig.path, "words_dyads.pdf", sep= ""), height = 4, width = 9)
+```
+
+Removing stop words
+
+```{r}
+df.chat.test %>%
+  unnest_tokens(word, text) %>%
+  anti_join(stop_words) %>%
+  group_by(conceptTrained) %>%
+  summarize(n_words = n()) %>%
+  ggplot(., aes(x = conceptTrained, y = n_words))+
+  geom_col()
+```
+
+
+```{r echo=FALSE, results='hide', message=FALSE, warning=FALSE, tidy=TRUE}
+# Tokenize Sentences
+
+wordTypeDictionary <- list(
+  quantifier = c("all","each","most","many","half","some","few","none"),
+  numerics = c("1st","2nd","3rd","4th",
+               "0","1","2","3","4",
+               "first","second","third","fourth",
+               "two","three","four",
+               "50%","1/4","2/4","3/4","50/50","50","100"),
+  probability = c("always","usually","often","likely","sometimes","rarely","never",
+                  "chance","time","times"),
+  conditionals = c("if","when","while"),
+  #category_types = c("pepsin","tail","head","species","color","size")
+  species = c("morseths","morseth",
+              "ollers","oller",
+              "kweps","kwep",
+              "blins","blin",
+              "reesles","reesle",
+              "dorbs","dorb",
+              "zorbs","zorb",
+              "taifels","taifel",
+              "trufts","truft",
+              "daiths","daith",
+              "mooks","mook",
+              "frams","fram",
+              "moxes","mox",
+              "luzaks","luzak",
+              "javs","jav",
+              "pangolins","pangolin",
+              "ackles","ackle",
+              "wugs","wug",
+              "cheebas","cheeba",
+              "elleps","ellep",
+              "kazzes","kaz",
+              "lorches","lorch",
+              "plovs","plov",
+              "grinks","grink",
+              "glippets","glippet",
+              "sapers","saper",
+              "stups","stup",
+              "krivels","krivel",
+              "zoovs","zoov",
+              "thups","thup",
+              "crullets","crullet",
+              "feps","fep"),
+  color = c("red","orange","yellow","green","blue","purple"),
+  internal_prop = c("eggs","poisonous","crocodiles","leaves",
+                    "egg","crocodile","leaf","crocs","clovers","clover",
+                    "alligators","alligator","spiders","spider","poison",
+                    "lay","lays","grow","grows","live","lives"),
+  creatures = c("birds","bird","bugs","bug","trees","tree","fish",
+                "animals","animal","plants","plant",
+                "creatures","creature","critters","critter","types","type"),
+  features = c("properties","property","attributes","attribute",
+               "colors","color"),
+  hedge=c("guess","think","sense"),
+  conversation=c("ok","okay","kk","k","sure","u bet",
+                 "ready","rdy","sorry","gg","hi",
+                 "good luck","luck","here we go","cya","continue",
+                 "thanx","thanks","ty",
+                 "yup","got it","gotcha","cool","yep","yeah","yes","good",
+                 "sounds like a plan","plan",
+                 "lmk","make sense","tricky","tough","whenever","oh","wow","agree"),
+  boolean_properties = c("whiskers", "tail","wings","spikes",
+                        "legs","eyes","feathers", "head","tails",
+                        "thorns"),
+category_genera = c("bug","bird", "fish", "flower"),
+adjectives = c("short", "wide","tall","fat","skinny")
+)
+
+wordTypeDict <- utils::stack(wordTypeDictionary)
+f <- function(x) as.character(wordTypeDict[match(tolower(x), wordTypeDict[[1]]), 2])
+
+genericDict <- list(
+  quantifier = c("all","each","most","many","half","some","few","none"),
+  numerics = c("50%","1/4","2/4","3/4","50/50",
+               "1st","2nd","3rd","4th",
+               "1","2","3","4",
+               "first","second","third","fourth","last",
+               "one","two","three","four"),
+  probability = c("always","usually","often","likely","sometimes","never"),
+  demonstrative = c("these", "this", "those") #excluding that because of complications
+  )
+g <- function(x) ifelse(token_coreNLP$lemma %in% genericDict[[1]], FALSE,
+       ifelse(grepl("wug", token_coreNLP$lemma), FALSE, TRUE))
+
+#Tokenize text responses
+# tokenized_wCond <- df.chat %>%
+#   unnest_tokens(word, text)
+
+
+# tokenized_ungrouped <- text_df %>%
+#   unnest_tokens(word, text) %>%
+#   count(word, sort=TRUE)
+
+#this seems to be broken :/
+# tokenized_coreNLP <- token_coreNLP %>%
+#   filter(upos != "PUNCT") %>%
+#   right_join(tokenized_wCond, by="word") %>%
+#   distinct(word, lemma, tid, upos, roundNum, sender)
+  
+  
+# tokenized <- token_coreNLP %>%
+#   count(lemma, sort=TRUE) %>%
+#   rowwise() %>%
+#   mutate(wordType = f(lemma))
+# 
+# tokenized_word <- token_coreNLP %>%
+#   count(word, sort=TRUE) %>%
+#   rowwise() %>%
+#   mutate(wordType = f(word))
+# 
+# 
+# tokenized_generic <- token_coreNLP %>%
+#   mutate(genericType = ifelse(upos=="NUM", FALSE, g(lemma)),
+#          sentence_id = gsub(" ", "", paste(as.character(id), "_", as.character(sid))))
+#View(tokenized_generic)
+
+
+
+my_stop_words <- stop_words %>%
+  filter(!(
+    (word %in% c(wordTypeDictionary$probability,
+                 wordTypeDictionary$quantifier,
+                 wordTypeDictionary$conditionals)
+    )))
+
+context_by_words_type <-  df.chat.test %>%
+  unnest_tokens(word, text) %>%
+  anti_join(my_stop_words) %>% #remove function words
+  #group_by(conceptTrained) %>%
+  count(word, sort=TRUE) %>%
+  rowwise() %>%
+  mutate(wordType = f(word),
+         wordType = factor(wordType))
+context_by_words_type
+
+```
+```{r}
+df.chat.test %>%
+  unnest_tokens(word, text) %>%
+  filter(word %in% 
+           c(wordTypeDictionary$quantifier,
+             wordTypeDictionary$probability)) %>% 
+  #group_by(conceptTrained) %>%
+  count(word, sort=TRUE) 
+```
+
+# Tables
+
+## Messages by Distribution & Game
+
+```{r echo=FALSE, warning=FALSE}
+
+text_byPartnerScore <- score_byText %>%
+  select(distribution, gameid_num, trialNum, role, messages, partnerPercentCorrect, partnerPercentCorrectlyHit, partnerPercentCorrectlyRejected) %>%
+  mutate(distribution = factor(
+    distribution, levels = c("[0, 1, 0]","[0, 1, 0.75]","[0, 1, 0.25]","[0.5, 0.5, 0.5]"))) %>%
+  arrange(distribution, gameid_num, trialNum, role, desc(partnerPercentCorrect)) %>%
+  rename(dyad = gameid_num, trial = trialNum, player = role, totalCorrect = partnerPercentCorrect, hit = partnerPercentCorrectlyHit, CR = partnerPercentCorrectlyRejected) 
+kable(text_byPartnerScore, format.args = list(digits=2))
+```
+
+## Messages by Distribution & Partner Accuracy
+
+```{r echo=FALSE, warning=FALSE}
+# Binning by Accuracy on Test & Count Words in Text
+split_byDistr_byAccuracy <- score_byText %>%
+  group_by(distribution) %>%
+  mutate(accuracyBin = ifelse(partnerPercentCorrect >= median(partnerPercentCorrect), "upper_bin", "lower_bin")) %>%
+  ungroup()
+
+wordCount_byDistr_byAccuracy <- split_byDistr_byAccuracy %>%
+  group_by(distribution, accuracyBin) %>%
+  unnest_tokens(word, messages) %>%
+  count(word, sort=TRUE) %>%
+  summarise(totalWords = sum(n))
+#wordCount_byDistr_byAccuracy
+
+
+table_byAccuracyBin <- split_byDistr_byAccuracy %>%
+  select(distribution, accuracyBin, gameid_num, trialNum, role, messages, partnerPercentCorrect, partnerPercentCorrectlyHit, partnerPercentCorrectlyRejected) %>%
+  mutate(distribution = factor(
+    distribution, levels = c("[0, 1, 0]","[0, 1, 0.75]","[0, 1, 0.25]","[0.5, 0.5, 0.5]"))) %>%
+  arrange(distribution, desc(partnerPercentCorrect), gameid_num, trialNum, role) %>%
+  rename(dyad = gameid_num, trial = trialNum, player = role, totalCorrect = partnerPercentCorrect, hit = partnerPercentCorrectlyHit, CR = partnerPercentCorrectlyRejected) 
+kable(table_byAccuracyBin, format.args = list(digits=2))
+```
+
+# Word Count by Distribution & Partner Test Accuracy
+
+```{r echo=FALSE, results='hide', message=FALSE, warning=FALSE, tidy=TRUE}
+wordCount_byInput <- split_byDistr_byAccuracy %>%
+  group_by(gameid_num, trialNum, role, distribution, accuracyBin) %>%
+  unnest_tokens(word, messages) %>%
+  count(word, sort=TRUE) %>%
+  mutate(words_in_message = sum(n))
+#wordCount_byInput
+
+wordCount_byDistr_byAccuracy <- wordCount_byInput %>%
+  group_by(distribution, accuracyBin) %>%
+  filter(!is.na(distribution)) %>%
+  summarise(avgWords = mean(words_in_message))
+#wordCount_byDistr_byAccuracy
+
+plot_wordCount <- ggplot(wordCount_byDistr_byAccuracy, aes(x=accuracyBin, y=avgWords)) +
+  geom_bar(stat="identity", fill="black") +
+  scale_x_discrete("Partner Test Accuracy", labels=c("< Median",">= Median")) +
+  scale_y_continuous("Avg Words Per Round", expand=c(0,0)) +
+  facet_wrap(~distribution) +
+  ggtitle("Word Count in Round by Distribution & Accuracy") +
+  #coord_flip() +
+  theme_classic() + 
+  theme(plot.title = element_text(hjust=0.5, size=18, face="bold"),
+        axis.title = element_text(size=24),
+        axis.text.x = element_text(size=14, face="bold"),
+        axis.text.y = element_text(size=20),
+        strip.text.x = element_text(size = 16))
+plot_wordCount
+#ggsave("~/Desktop/Research/Summer2017/CSLI/FinalPresentation/Graphics/avgWordCount.png", plot_wordCount, height=8, width=12)
+```
+
+
+# All Words Counted by Word Type (Not Excluding Function Words)
+
+```{r echo=FALSE, warning=FALSE}
+all_words_byType <- tokenized %>%
+  group_by(wordType) %>%
+  summarize(n = sum(n)) %>%
+  ungroup() %>%
+  mutate(wordType = ifelse(is.na(wordType), "other", wordType),
+         wordType  = factor(wordType, levels = wordType[order(n)]) ) %>%
+  ggplot(., aes( x = wordType, y = n))+
+  geom_col(fill="black")+
+  ggtitle("All Words by Type")+
+  theme_minimal()+
+  theme(axis.text.x = element_text(angle = 90),
+        plot.title = element_text(hjust=0.5))
+all_words_byType
+
+# Word Count by Condition by Type
+# tokenized %>%
+#   group_by(condition, wordType) %>%
+#   summarize(n = sum(n)) %>%
+#   ungroup() %>%
+#   mutate(wordType = ifelse(is.na(wordType), "other", wordType),
+#          wordType  = factor(wordType, levels = wordType[order(n)]) ) %>%
+#   ggplot(., aes( x = wordType, y = n ))+
+#   geom_col()+
+#   facet_wrap(~condition, scales = 'free')+
+#   theme(axis.text.x = element_text(angle = 0))+
+#   coord_flip()
+
+```
+
+```{r echo=FALSE, results='hide', message=FALSE, warning=FALSE, tidy=TRUE}
+count_all_words_byDistr <-  text_df %>%
+  unnest_tokens(word, text) %>%
+  group_by(distribution) %>%
+  count(word, sort=TRUE) %>%
+  rowwise() %>%
+  filter(n > 6) %>%
+  mutate(wordType = f(word),
+         word = factor(word, levels= word[order(-n)]))
+
+all_mostFreq_byDistr <- ggplot(count_all_words_byDistr, aes(x=reorder(word, n), y=n)) +
+  geom_bar(stat="identity", fill="black") +
+  scale_x_discrete("Word Used in Response") +
+  scale_y_continuous("Counts", expand=c(0,0)) +
+  facet_wrap(~distribution) +
+  ggtitle("Common Words by Distribution") +
+  coord_flip() + 
+  theme_classic() + 
+  theme(plot.title = element_text(hjust=0.5, size=28, face="bold"),
+        axis.title = element_text(size=24),
+        axis.text.x = element_text(size=16, face="bold"),
+        axis.text.y = element_text(size=12),
+        strip.text.x = element_text(size = 16))
+all_mostFreq_byDistr
+```
+
+# Context Words Only
+
+```{r echo=FALSE, results='hide', message=FALSE, warning=FALSE, tidy=TRUE}
+count_context_words <-  text_df %>%
+  unnest_tokens(word, text) %>%
+  anti_join(stop_words) %>% #remove function words
+  count(word, sort=TRUE) %>%
+  rowwise() %>%
+  filter(n > 4) %>%
+  mutate(wordType = f(word),
+         word = factor(word, levels= word[order(-n)]))
+
+mostFreq <- ggplot(count_context_words, aes(x=reorder(word, n), y=n)) +
+  geom_bar(stat="identity", fill="black") +
+  scale_x_discrete("Word Used in Response") +
+  scale_y_continuous("Counts", expand=c(0,0)) +
+  ggtitle("Most Common Context Words") +
+  coord_flip() + 
+  theme_classic() + 
+  theme(plot.title = element_text(hjust=0.5, size=20, face="bold"),
+        axis.title = element_text(size=24),
+        axis.text.x = element_text(size=20, face="bold"),
+        axis.text.y = element_text(size=20))
+mostFreq
+
+#ggsave("~/Desktop/Research/Summer2017/CSLI/FinalPresentation/Graphics/mostFrequent_context.png", mostFreq, height=8, width=12)
+```
+
+
+```{r echo=FALSE, results='hide', message=FALSE, warning=FALSE, tidy=TRUE}
+count_context_words_byDistr <-  text_df %>%
+  unnest_tokens(word, text) %>%
+  anti_join(stop_words) %>% #remove function words
+  group_by(distribution) %>%
+  count(word, sort=TRUE) %>%
+  rowwise() %>%
+  filter(n > 3) %>%
+  mutate(wordType = f(word),
+         word = factor(word, levels= word[order(-n)]))
+
+context_mostFreq_byDistr <- ggplot(count_context_words_byDistr, aes(x=reorder(word, n), y=n)) +
+  geom_bar(stat="identity", fill="black") +
+  scale_x_discrete("Word Used in Response") +
+  scale_y_continuous("Counts", expand=c(0,0), limits=c(0,12)) +
+  facet_wrap(~distribution) +
+  ggtitle("Common Context Words by Distribution") +
+  coord_flip() + 
+  theme_classic() + 
+  theme(plot.title = element_text(hjust=0.5, size=14, face="bold"),
+        axis.title = element_text(size=24),
+        axis.text.x = element_text(size=12),
+        axis.text.y = element_text(size=16),
+        strip.text.x = element_text(size = 16))
+context_mostFreq_byDistr
+```
+
+```{r echo=FALSE, results='hide', message=FALSE, warning=FALSE, tidy=TRUE}
+count_context_words_type <-  text_df %>%
+  unnest_tokens(word, text) %>%
+  anti_join(stop_words) %>% #remove function words
+  count(word, sort=TRUE) %>%
+  rowwise() %>%
+  mutate(wordType = f(word),
+         wordType = factor(wordType)) %>%
+  ungroup() %>%
+  group_by(wordType) %>%
+  summarize(total = sum(n)) %>%
+  ungroup() %>%
+  mutate(wordType = factor(wordType, levels= wordType[order(-total)]))
+
+wordTypeKey <- c(
+  quantifier = "quantifier",
+  numerics = "numerics",
+  probability = "probability",
+  conditionals = "conditionals",
+  species = "species",
+  color = "color",
+  internal_prop = "internal property",
+  creatures = "creature (general)",
+  features = "feature (general)",
+  hedge="hedge",
+  conversation="conversation")
+
+context_byWordtype <- ggplot(count_context_words_type, aes(x=wordType, y=total)) +
+  geom_bar(stat="identity", fill="black") +
+  scale_x_discrete("Word Types", labels=wordTypeKey) +
+  scale_y_continuous("Counts", expand=c(0,0)) +
+  ggtitle("Context Word Types") +
+  theme_classic() + 
+  theme(plot.title = element_text(hjust=0.5, size=36, face="bold"),
+        axis.title = element_text(size=24),
+        axis.text.x = element_text(size=18, angle=90),
+        axis.text.y = element_text(size=20))
+context_byWordtype
+#ggsave("~/Desktop/Research/Summer2017/CSLI/FinalPresentation/Graphics/wordType_context.png", context_byWordtype, height=8, width=12)
+
+```
+
+```{r echo=FALSE, results='hide', message=FALSE, warning=FALSE, tidy=TRUE}
+count_context_words_type_byDistr <-  text_df %>%
+  unnest_tokens(word, text) %>%
+  anti_join(stop_words) %>% #remove function words
+  group_by(distribution) %>%
+  count(word, sort=TRUE) %>%
+  rowwise() %>%
+  mutate(wordType = f(word),
+         wordType = factor(wordType)) %>%
+  ungroup() %>%
+  group_by(wordType, distribution) %>%
+  summarize(total = sum(n)) %>%
+  ungroup() %>%
+  mutate(wordType = factor(wordType, levels= wordType[order(-total)]))
+
+context_byWordtype_byDistr <- ggplot(count_context_words_type_byDistr, aes(x=wordType, y=total)) +
+  geom_bar(stat="identity", fill="black") +
+  scale_x_discrete("Word Types") +
+  scale_y_continuous("Counts", expand=c(0,0)) +
+  facet_wrap(~distribution) +
+  ggtitle("Context Word Types by Distribution") +
+  theme_classic() + 
+  theme(plot.title = element_text(hjust=0.5, size=36, face="bold"),
+        axis.title = element_text(size=24),
+        axis.text.x = element_text(size=18, angle=90),
+        axis.text.y = element_text(size=20),
+        strip.text.x = element_text(size = 16))
+context_byWordtype_byDistr
+```
+
+# Quantifiers Word Count
+
+## Distribution Conditions Combined
+
+```{r echo=FALSE, results='hide', message=FALSE, warning=FALSE, tidy=TRUE}
+quantifier_words = c("all","each","most","many","half","some","few","none")
+
+quantifiers <- tokenized %>%
+  filter(lemma %in% quantifier_words) %>%
+  group_by(lemma) %>%
+  summarize(n = sum(n))
+
+quantifier_count <- ggplot(quantifiers, aes(x=lemma, y=n)) +
+  geom_bar(stat="identity", fill="black") +
+  scale_x_discrete("Word Used in Response", limits=c(quantifier_words)) +
+  scale_y_continuous("Frequency", limits=c(0,20)) + 
+  ggtitle("Quantifiers") +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust=0.5))
+
+quantifier_count
+```
+
+## By Distribution
+
+```{r echo=FALSE, results='hide', message=FALSE, warning=FALSE, tidy=TRUE}
+count_quantifiers_byDistr <-  text_df %>%
+  unnest_tokens(word, text) %>%
+  group_by(distribution) %>%
+  count(word, sort=TRUE) %>%
+  filter(word %in% quantifier_words) %>%
+  group_by(distribution, word) %>%
+  summarize(n = sum(n))
+
+quantifiers_byDistr <- ggplot(count_quantifiers_byDistr, aes(x=word, y=n)) +
+  geom_bar(stat="identity", fill="black") +
+  scale_x_discrete("Word") +
+  scale_y_continuous("Counts", expand=c(0,0)) +
+  facet_wrap(~distribution) +
+  ggtitle("Quantifiers by Distribution") +
+  theme_classic() + 
+  theme(plot.title = element_text(hjust=0.5, size=36, face="bold"),
+        axis.title = element_text(size=24),
+        axis.text.x = element_text(size=18, angle=90),
+        axis.text.y = element_text(size=20),
+        strip.text.x = element_text(size = 16))
+quantifiers_byDistr
+```
+
+# Probabilistic Word Count
+
+## Distribution Conditions Combined
+
+```{r echo=FALSE, results='hide', message=FALSE, warning=FALSE, tidy=TRUE}
+probability_words = c("always","usually","often","likely","sometimes","rarely","never")
+
+probabilities <- tokenized %>%
+  filter(lemma %in% probability_words) %>%
+  group_by(lemma) %>%
+  summarize(n = sum(n))
+
+probability_count <- ggplot(probabilities, aes(x=lemma, y=n)) +
+  geom_bar(stat="identity", fill="black") +
+  scale_x_discrete("Word Used in Response", limits=c(probability_words)) +
+  scale_y_continuous("Frequency") + 
+  ggtitle("Probability Words") +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust=0.5))
+
+probability_count
+```
+
+# Conditionals Word Count
+
+## Both Conditions Combined
+
+```{r eecho=FALSE, results='hide', message=FALSE, warning=FALSE, tidy=TRUE}
+conditional_words = c("if","when","while")
+
+conditionals <- tokenized %>%
+  filter(lemma %in% conditional_words) %>%
+  group_by(lemma) %>%
+  summarize(n = sum(n))
+
+conditional_count <- ggplot(conditionals, aes(x=lemma, y=n)) +
+  geom_bar(stat="identity", fill="black") +
+  scale_x_discrete("Word Used in Response", limits=c(conditional_words)) +
+  scale_y_continuous("Frequency", limits=c(0,2)) + 
+  ggtitle("Conditionals") +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust=0.5))
+
+conditional_count
+
+```
+
+# Numeric Word Count
+
+#### Collapsed distributions into synonymous distributions (e.g. 1/2 = 50/50 = 50%)
+
+```{r echo=FALSE, results='hide', message=FALSE, warning=FALSE, tidy=TRUE}
+numeric_words = c("50%","1/4","2/4","3/4","50/50",
+             "1st","2nd","3rd","4th",
+             "1","2","3","4",
+             "first","second","third","fourth",
+             "two","three","four")
+numeric_word_order = c("1","2","3","4",
+                       "1st","2nd","3rd","4th",
+                       "1/4","1/2","3/4")
+
+numerics <- tokenized %>%
+  filter(lemma %in% numeric_words)
+#numerics$lemma <- gsub("one", "1", numerics$lemma)
+numerics$lemma <- gsub("two", "2", numerics$lemma)
+numerics$lemma <- gsub("three", "3", numerics$lemma)
+numerics$lemma <- gsub("four", "4", numerics$lemma)
+numerics$lemma <- gsub("first", "1st", numerics$lemma)
+numerics$lemma <- gsub("second", "2nd", numerics$lemma)
+numerics$lemma <- gsub("third", "3rd", numerics$lemma)
+numerics$lemma <- gsub("fourth", "4th", numerics$lemma)
+numerics$lemma <- gsub("50/50", "1/2", numerics$lemma)
+numerics$lemma <- gsub("50%", "1/2", numerics$lemma)
+numerics$lemma <- gsub("2/4", "1/2", numerics$lemma)
+numerics <- numerics %>%
+  group_by(lemma) %>%
+  summarize(n = sum(n))
+
+numeric_count <- ggplot(numerics, aes(x=lemma, y=n)) +
+  geom_bar(stat="identity", fill="black") +
+  scale_x_discrete("Word Used in Response", limits=numeric_word_order) +
+  scale_y_continuous("Frequency") + 
+  ggtitle("Number Word Counts") +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust=0.5))
+
+numeric_count
+
+```
+
+
+# Types Within Categories
+
+## Species Categories
+
+```{r echo=FALSE, results='hide', message=FALSE, warning=FALSE, tidy=TRUE}
+species_types = c("morseth","oller","kewp","blin","reesle","dorb","zorb",
+              "taifel","truft","daith","mook","fram","mox","luzak","jav",
+              "pangolin","ackle","wug","cheeba","ellep","kaz","lorch",
+              "plov","grink","glippet","saper","stup","krivel","zoov",
+              "thup","crullet","fep")
+
+species_categories <- tokenized %>%
+  filter(lemma %in% species_types) %>%
+  group_by(lemma) %>%
+  summarize(n = sum(n))
+
+species_count <- ggplot(species_categories, aes(x=lemma, y=n)) +
+  geom_bar(stat="identity", fill="black") +
+  scale_x_discrete("Word Used in Response", limits=c(species_types)) +
+  scale_y_continuous("Frequency") + 
+  ggtitle("Species Names") +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust=0.5),
+        axis.text.x = element_text(angle = 90))
+
+species_count
+```
+
+## Colors Categories
+
+```{r echo=FALSE, results='hide', message=FALSE, warning=FALSE, tidy=TRUE}
+color_types = c("red", "orange","yellow","green","blue","purple")
+
+color_assignment = c("red" = "red", "orange" = "sienna1", "yellow" = "gold", "green" = "forestgreen", "blue" = "blue", "purple" = "purple")
+#color_categories <- tokenized[c(tokenized$word %in% color_types),]
+
+color_categories <- tokenized %>%
+  filter(lemma %in% color_types) %>%
+  group_by(lemma) %>%
+  summarize(n = sum(n))
+
+color_count <- ggplot(color_categories, aes(x=lemma, y=n, fill=lemma)) +
+  geom_bar(stat="identity", colour="black") +
+  scale_x_discrete("Word Used in Response", limits=c(color_types)) +
+  scale_y_continuous("Frequency") + 
+  scale_fill_manual(values=color_assignment) +
+  ggtitle("Color Descriptors") +
+  guides(fill=FALSE) +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust=0.5))
+
+color_count
+```
+
+## Internal Property Categories
+
+```{r echo=FALSE, results='hide', message=FALSE, warning=FALSE, tidy=TRUE}
+
+internalProp_types = c("egg","poisonous","crocodile","leaf","crocs","clover","alligator","poison")
+internalProp_types2 = c("egg","poisonous","crocodile","leaf")
+internalProp_categories <- tokenized %>%
+  filter(lemma %in% internalProp_types)
+
+internalProp_categories$lemma <- gsub("crocs", "crocodile", internalProp_categories$lemma)
+internalProp_categories$lemma <- gsub("alligator", "crocodile", internalProp_categories$lemma)
+internalProp_categories$lemma <- gsub("clover", "leaf", internalProp_categories$lemma)
+internalProp_categories$lemma <- gsub("poisonous", "poison", internalProp_categories$lemma)
+internalProp_categories$lemma <- gsub("poison", "poisonous", internalProp_categories$lemma)
+
+internalProp_categories <- internalProp_categories %>%
+  ungroup() %>%
+  group_by(lemma) %>%
+  summarize(n = sum(n))
+
+internalProp_count <- ggplot(internalProp_categories, aes(x=lemma, y=n, fill=lemma)) +
+  geom_bar(stat="identity", colour="black") +
+  scale_x_discrete("Word Used in Response") +
+  scale_y_continuous("Frequency") + 
+  ggtitle("Internal Property Descriptors") +
+  guides(fill=FALSE) +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust=0.5))
+
+internalProp_count
+```
+
+
+# Total Word Count by Speaker
+```{r echo=FALSE, results='hide', message=FALSE, warning=FALSE, tidy=TRUE}
+# by Speaker in a given game
+all_words_byRole <- tokenized_wCond %>%
+  count(role, gameid_num, sort=TRUE)
+
+byRole_count <- ggplot(all_words_byRole, aes(x=role, y=n)) +
+  geom_bar(stat="identity", fill="black") +
+  scale_x_discrete("Role") +
+  scale_y_continuous("Frequency") + 
+  facet_wrap(~gameid_num) +
+  ggtitle("Player Word Count") +
+  guides(fill=FALSE) +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust=0.5),
+        strip.text.x = element_text(size = 16))
+
+byRole_count
+```
+
+# Total Word Count by Trial
+```{r echo=FALSE, results='hide', message=FALSE, warning=FALSE, tidy=TRUE}
+# by Round in a given game
+all_words_byTrial <- tokenized_wCond %>%
+  count(trialNum, sort=TRUE)
+
+byTrial_count <- ggplot(all_words_byTrial, aes(x=trialNum, y=n)) +
+  geom_bar(stat="identity", fill="black") +
+  scale_x_discrete("Trial Number", limits=c(1:4)) +
+  scale_y_continuous("Frequency") + 
+  ggtitle("Word Count by Trial Number") +
+  guides(fill=FALSE) +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust=0.5))
+
+byTrial_count
+
+```
+
+# Total Word Count by POS
+```{r echo=FALSE, results='hide', message=FALSE, warning=FALSE, tidy=TRUE}
+# by POS
+all_words_byPOS <- token_coreNLP %>%
+  count(upos, sort=TRUE)
+
+byPOS_count <- ggplot(all_words_byPOS, aes(x=reorder(upos, -n), y=n)) +
+  geom_bar(stat="identity", fill="black") +
+  scale_x_discrete("POS") +
+  scale_y_continuous("Frequency") + 
+  ggtitle("Word Count by POS") +
+  guides(fill=FALSE) +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust=0.5),
+        axis.text.x = element_text(angle = 45))
+
+byPOS_count
+
+```
+
+# Total Word Count by Dependencies
+```{r echo=FALSE, results='hide', message=FALSE, warning=FALSE, tidy=TRUE}
+# by Dependencies
+all_words_byDep <- dependency_coreNLP %>%
+  count(relation, sort=TRUE)
+
+byDep_count <- ggplot(all_words_byDep, aes(x=reorder(relation, -n), y=n)) +
+  geom_bar(stat="identity", fill="black") +
+  scale_x_discrete("Dependency") +
+  scale_y_continuous("Frequency") + 
+  ggtitle("Word Count by Dependency") +
+  guides(fill=FALSE) +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust=0.5),
+        axis.text.x = element_text(angle = 90))
+
+byDep_count
+
+```

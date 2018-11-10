@@ -4,9 +4,13 @@ experiments/node_modules/
 *.success
 *.properties
 *.input
-*.csv
-*.png
 *.md
 .Rproj.user
 .Rhistory
 *.Rproj
+credentials*
+auth.json
+*.DS_Store
+
+**/production-results
+**/raw-server-data

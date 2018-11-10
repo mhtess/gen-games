@@ -1,0 +1,254 @@
+{
+    "AcceptTime": "2018-04-30T21:13:55Z", 
+    "Assignment": "", 
+    "HITId": "3VZYA8PITOBJ6UJQ1EJOLFMGUMY506", 
+    "AutoApprovalTime": "2018-04-30T22:22:41Z", 
+    "AssignmentId": "317HQ483I851QY36Z79I9JIIY1FIN6", 
+    "WorkerId": "62e6ff77", 
+    "SubmitTime": "2018-04-30T22:17:41Z", 
+    "AssignmentStatus": "Submitted", 
+    "answers": {
+        "testing_summary_stats": {
+            "hits": 4, 
+            "misses": 0, 
+            "score": 4, 
+            "false_alarms": 0, 
+            "type": "testing", 
+            "correct_rejections": 24
+        }, 
+        "training_trials": [], 
+        "game_id": "3254-d7bab9f2-ba68-4cf0-b523-3b986897cc97", 
+        "rule_idx": 2, 
+        "rule_type": "CONJUNCTION", 
+        "test_data_fn": "./js/test_data_critter_fish_body_color_blue_1.json", 
+        "training_summary_stats": {
+            "hits": 0, 
+            "misses": 0, 
+            "score": 0, 
+            "false_alarms": 0, 
+            "type": "training", 
+            "correct_rejections": 0
+        }, 
+        "testing_trials": [
+            {
+                "is_correct": true, 
+                "trial_num": 0, 
+                "time_in_seconds": 10.629, 
+                "turker_label": false, 
+                "true_label": false
+            }, 
+            {
+                "is_correct": true, 
+                "trial_num": 1, 
+                "time_in_seconds": 4.127, 
+                "turker_label": false, 
+                "true_label": false
+            }, 
+            {
+                "is_correct": true, 
+                "trial_num": 2, 
+                "time_in_seconds": 5.505, 
+                "turker_label": false, 
+                "true_label": false
+            }, 
+            {
+                "is_correct": true, 
+                "trial_num": 3, 
+                "time_in_seconds": 7.431, 
+                "turker_label": false, 
+                "true_label": false
+            }, 
+            {
+                "is_correct": true, 
+                "trial_num": 4, 
+                "time_in_seconds": 6.257, 
+                "turker_label": false, 
+                "true_label": false
+            }, 
+            {
+                "is_correct": true, 
+                "trial_num": 5, 
+                "time_in_seconds": 3.3890000000000002, 
+                "turker_label": false, 
+                "true_label": false
+            }, 
+            {
+                "is_correct": true, 
+                "trial_num": 6, 
+                "time_in_seconds": 4.436, 
+                "turker_label": false, 
+                "true_label": false
+            }, 
+            {
+                "is_correct": true, 
+                "trial_num": 7, 
+                "time_in_seconds": 2.719, 
+                "turker_label": false, 
+                "true_label": false
+            }, 
+            {
+                "is_correct": true, 
+                "trial_num": 8, 
+                "time_in_seconds": 28.737, 
+                "turker_label": false, 
+                "true_label": false
+            }, 
+            {
+                "is_correct": true, 
+                "trial_num": 9, 
+                "time_in_seconds": 2.376, 
+                "turker_label": false, 
+                "true_label": false
+            }, 
+            {
+                "is_correct": true, 
+                "trial_num": 10, 
+                "time_in_seconds": 2.213, 
+                "turker_label": false, 
+                "true_label": false
+            }, 
+            {
+                "is_correct": true, 
+                "trial_num": 11, 
+                "time_in_seconds": 2.5220000000000002, 
+                "turker_label": false, 
+                "true_label": false
+            }, 
+            {
+                "is_correct": true, 
+                "trial_num": 12, 
+                "time_in_seconds": 2.335, 
+                "turker_label": false, 
+                "true_label": false
+            }, 
+            {
+                "is_correct": true, 
+                "trial_num": 13, 
+                "time_in_seconds": 2.191, 
+                "turker_label": false, 
+                "true_label": false
+            }, 
+            {
+                "is_correct": true, 
+                "trial_num": 14, 
+                "time_in_seconds": 2.252, 
+                "turker_label": false, 
+                "true_label": false
+            }, 
+            {
+                "is_correct": true, 
+                "trial_num": 15, 
+                "time_in_seconds": 4.361, 
+                "turker_label": true, 
+                "true_label": true
+            }, 
+            {
+                "is_correct": true, 
+                "trial_num": 16, 
+                "time_in_seconds": 2.402, 
+                "turker_label": false, 
+                "true_label": false
+            }, 
+            {
+                "is_correct": true, 
+                "trial_num": 17, 
+                "time_in_seconds": 2.2640000000000002, 
+                "turker_label": false, 
+                "true_label": false
+            }, 
+            {
+                "is_correct": true, 
+                "trial_num": 18, 
+                "time_in_seconds": 2.257, 
+                "turker_label": false, 
+                "true_label": false
+            }, 
+            {
+                "is_correct": true, 
+                "trial_num": 19, 
+                "time_in_seconds": 2.091, 
+                "turker_label": false, 
+                "true_label": false
+            }, 
+            {
+                "is_correct": true, 
+                "trial_num": 20, 
+                "time_in_seconds": 2.817, 
+                "turker_label": true, 
+                "true_label": true
+            }, 
+            {
+                "is_correct": true, 
+                "trial_num": 21, 
+                "time_in_seconds": 3.878, 
+                "turker_label": true, 
+                "true_label": true
+            }, 
+            {
+                "is_correct": true, 
+                "trial_num": 22, 
+                "time_in_seconds": 2.872, 
+                "turker_label": false, 
+                "true_label": false
+            }, 
+            {
+                "is_correct": true, 
+                "trial_num": 23, 
+                "time_in_seconds": 6.173, 
+                "turker_label": false, 
+                "true_label": false
+            }, 
+            {
+                "is_correct": true, 
+                "trial_num": 24, 
+                "time_in_seconds": 6.027, 
+                "turker_label": true, 
+                "true_label": true
+            }, 
+            {
+                "is_correct": true, 
+                "trial_num": 25, 
+                "time_in_seconds": 2.602, 
+                "turker_label": false, 
+                "true_label": false
+            }, 
+            {
+                "is_correct": true, 
+                "trial_num": 26, 
+                "time_in_seconds": 2.583, 
+                "turker_label": false, 
+                "true_label": false
+            }, 
+            {
+                "is_correct": true, 
+                "trial_num": 27, 
+                "time_in_seconds": 2.404, 
+                "turker_label": false, 
+                "true_label": false
+            }
+        ], 
+        "system": {
+            "OS": "Windows", 
+            "screenH": 1024, 
+            "screenW": 1280, 
+            "Browser": "Firefox"
+        }, 
+        "training_data_fn": "./js/training_data_critter_fish_body_color_blue_1.json", 
+        "role": "student", 
+        "subject_information": {
+            "enjoyment": "2", 
+            "gender": "Male", 
+            "age": "45", 
+            "problems": "I thought we were supposed to be able to chat as long as we wanted, but I was taken out of there before I was ready.  I was still typing and hadn't gotten a response to my inquiry.", 
+            "nativeEnglish": "yes", 
+            "strategy": "I tried to be friendly first and when they told me something about what they learned, I tried to ask some clarification, but to no avail.", 
+            "assess": "yes", 
+            "humanPartner": "no", 
+            "fairprice": "I guess 128 since I guess that is what we were promised, and I actually didn't do much.   Alot of time was spent for that amount of pay, but most of it was spent just waiting.", 
+            "comments": "I would have liked more interaction in the chatroom - at least the semblance of it if it wasn't a real person.", 
+            "likePartner": "liked", 
+            "education": "3"
+        }, 
+        "time_in_minutes": null
+    }
+}

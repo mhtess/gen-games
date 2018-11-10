@@ -1,0 +1,2 @@
+iterationName	gameid	time	role	rule_idx	rule_type	train_data_fn	test_data_fn	nativeEnglish	enjoyment	assess	age	gender	education	comments	problems	fairprice	strategy	humanPartner	likePartner	eventType
+pilot	3609-2b82940d-015f-43e5-b274-f9bec90e3fa7	1540403296569	explorer	4	CONJUNCTION	./js/training_data_body_color_orange_secondary_color_purple_1.json	./js/test_data_body_color_orange_secondary_color_purple_1.json	yes	2	yes	55	Female	2	none right now	no	6.00	I wrote some of it down and tried to remember the rest	yes	loved	logSubjInfo

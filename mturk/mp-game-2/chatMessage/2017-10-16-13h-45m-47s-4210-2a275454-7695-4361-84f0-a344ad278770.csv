@@ -1,0 +1,21 @@
+iterationName	gameid	time	trialNum	role	text	reactionTime	eventType
+pilot1	4210-2a275454-7695-4361-84f0-a344ad278770	1508186747841	0	b	I learned Ackles are generally longer/thinner birds with tails (most were purple). What about you?	29191	chatMessage
+pilot1	4210-2a275454-7695-4361-84f0-a344ad278770	1508186780002	0	a	An ellep is a green or yellow bug. All but one had a small head, some have wings. One had a large head with no wings. No single feature seemed to identify alone.	76750	chatMessage
+pilot1	4210-2a275454-7695-4361-84f0-a344ad278770	1508186833711	0	b	Sounds good. Any questions for me before we proceed? 	10048	chatMessage
+pilot1	4210-2a275454-7695-4361-84f0-a344ad278770	1508186841072	0	a	Nope, thanks.	1464	chatMessage
+pilot1	4210-2a275454-7695-4361-84f0-a344ad278770	1508186983581	1	b	Large blue fish (with or without whiskers) or small purple with whiskers 	24600	chatMessage
+pilot1	4210-2a275454-7695-4361-84f0-a344ad278770	1508186984449	1	a	Lorches are green and red bugs. The green ones must have small heads to be a lorch, red ones must have big heads to be a lorch. Either can have wings or not.	35688	chatMessage
+pilot1	4210-2a275454-7695-4361-84f0-a344ad278770	1508187007939	1	a	Ok, thanks.	2615	chatMessage
+pilot1	4210-2a275454-7695-4361-84f0-a344ad278770	1508187081169	2	a	mook are yellow or orange fish WITH whiskers	9563	chatMessage
+pilot1	4210-2a275454-7695-4361-84f0-a344ad278770	1508187102547	2	b	This one was either too easy or misleading. Only red creatures were crulets. None were blue.	29079	chatMessage
+pilot1	4210-2a275454-7695-4361-84f0-a344ad278770	1508187113283	2	a	ok, cool	2126	chatMessage
+pilot1	4210-2a275454-7695-4361-84f0-a344ad278770	1508187224891	3	a	ollers are green bugs with a small head, and blue bugs with no wings	13523	chatMessage
+pilot1	4210-2a275454-7695-4361-84f0-a344ad278770	1508187233358	3	b	Both colors, small legs with tail or long legs no tail	21336	chatMessage
+pilot1	4210-2a275454-7695-4361-84f0-a344ad278770	1508187243689	3	b	Ok	976	chatMessage
+pilot1	4210-2a275454-7695-4361-84f0-a344ad278770	1508187253366	3	a	ok	2279	chatMessage
+pilot1	4210-2a275454-7695-4361-84f0-a344ad278770	1508187385773	4	b	Large green with spikes, small green without. . Orange were opposite, small with spikes, large without	29362	chatMessage
+pilot1	4210-2a275454-7695-4361-84f0-a344ad278770	1508187399924	4	a	thups different by color: yellows have no tail with long legs, or tail with short legs. Purples have no tail with short legs or a tail with long legs	49015	chatMessage
+pilot1	4210-2a275454-7695-4361-84f0-a344ad278770	1508187548938	5	b	Large blue with whiskers, small blue no whiskers. Any small orange (with or without whiskers)	138115	chatMessage
+pilot1	4210-2a275454-7695-4361-84f0-a344ad278770	1508187575057	5	a	Yellows all have tails. Greens have no tail with long legs, or a tail with short legs	41518	chatMessage
+pilot1	4210-2a275454-7695-4361-84f0-a344ad278770	1508187583108	5	b	Ok	994	chatMessage
+pilot1	4210-2a275454-7695-4361-84f0-a344ad278770	1508187584996	5	a	ok	284	chatMessage

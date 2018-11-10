@@ -1,0 +1,143 @@
+// ------------------------------------------------------
+//                  Rational Rules Model
+// Here we apply the rational rules model proposed
+// by Goodman et al. (2008) to the colllected concept
+// learning pilot data. We first load in the data,
+// passed in from R (var data). We then find the formulae
+// that explain the data the most. Then, we compare the
+// model predictions to those of humans.
+//
+// Note: This isn't the a perfect application of the 
+// rational rules model in that we do not have a held out
+// test set on which we evaluate the humans and can 
+// evaluate the performance of the rational rules model.
+// -------------------------------------------------------
+
+// Mapping from trait names -> trait values -> discrete value
+var cat_mapping = {
+  "critter": {
+    "bug": 0,
+    "bird": 1,
+    "fish": 2,
+  },
+  "col2": {
+    "#228b22": 0, // Green
+    "#5da5db": 1, // Blue
+    "#ff8c00": 2, // Orange
+  },
+  "prop1": {
+    "0": 0, // Small
+    "0.693147180559945": 1, // Medium
+    "1.16315080980568": 2, // Large
+  }
+};
+
+// Given an object from the stimuli dataset, produce an equivalent object
+// where the defining values of the discriminative traits have been
+// properly mapped to discrete values.
+var makeObj = function(o) {
+  // TODO: Fix this hackiness, but right now o is encapsulated in a list
+  var true_o = o[0];
+  return {
+    "critter": cat_mapping["critter"][true_o["critter"][0]], 
+    "color": cat_mapping["col2"][true_o["props"]["col2"]],
+    "size": cat_mapping["prop1"][true_o["props"]["prop1"].toString()],
+    "belongs_to_concept": true_o["belongs_to_concept"][0],
+  }
+}
+
+// Create critters dataset from stimuli data.
+// Then split critters into 2 groups A (belongs to concept) and B (outside of concept).
+var critters = _.uniqWith(map(makeObj, data), _.isEqual);
+var ACritters = filter(function(x) { return x["belongs_to_concept"] == true;}, critters);
+var BCritters = filter(function(x) { return x["belongs_to_concept"] == false;}, critters);
+
+// Define prior and sampling strategy for selecting both a trait
+// and a value to be assigned to the trait, for a proposal formula.
+var traitPrior = Categorical({vs: ['critter', 'color', 'size'],
+                              ps: [1, 1, 1]});
+var samplePred = function() {
+  var trait = sample(traitPrior);
+  var value = uniformDraw([0,1,2])
+  return function(x) {return x[trait] == value};
+}
+
+// Drift kernel for tau, the probability of continuing a proposed formula.
+// With the drift kernel, we bias tau samples towards smaller values,
+// without changing the underlying uniform distribution utilized by 
+// MCMC to compute importance sample weights.
+var TauKernel = function(prevVal) {
+  return Beta({a: 2, b: 4});
+};
+
+// Implementation of rational rules model.
+// TODO: Change tau to a r.v. sampled from uniform distribution with drift kernel.
+var rationalRules = function() {
+  var tau = sample(Beta({a:1, b:1}), {driftKernel: TauKernel});
+  // var tau = 0.3; // prob of continuing formula
+  var noiseParam = Math.exp(-1.5); // prior that a given sample is an outlier
+
+  // Recursive definition of producing terminal predicate
+  // or continuing a formula with "AND".
+  var sampleConj = function() {
+    if(flip(tau)) {
+      var c = sampleConj();
+      var p = samplePred();
+      return function(x) {return c(x) && p(x)};
+    } else {
+      return samplePred();
+    }
+  }
+  
+  // Recursive definition of producing a terminal conjunction or
+  // continuing a formula with "OR".
+  var getFormula = function() {
+    if(flip(tau)) {
+      var c = sampleConj();
+      var f = getFormula();
+      return function(x) {return c(x) || f(x)};
+    } else {
+      return sampleConj();
+    }
+  }
+
+  // Sample a proposed formula
+  var rule = getFormula();
+
+  // Conditioning on ACritters following the rule & BCritters violating the rule
+  var obsFnA = function(datum){observe(Bernoulli({p: rule(datum) ? 0.999999999 : noiseParam}), true)};
+  var obsFnB = function(datum){observe(Bernoulli({p: !rule(datum) ? 0.999999999 : noiseParam}), true)};
+  mapData({data:ACritters}, obsFnA);
+  mapData({data:BCritters}, obsFnB);
+
+  // Return [{'Parameter': critter_color_size, value: T/F} ]
+  var allObjs = _.uniqWith(ACritters.concat(BCritters), _.isEqual);
+  return  _.fromPairs(map(function(obj){ return [_.values(obj).join('_'), rule(obj)] }, allObjs)); 
+}
+
+// Run MCMC Inference
+var rulePosterior = Infer({method: 'MCMC', samples: 2000}, rationalRules);
+var critterLabels = map(function(obj){ return _.values(obj).join('_'); }, critters);
+
+//build predictive distribution for each item
+var predictives = map(
+  function(item)
+  {
+    return expectation(
+      rulePosterior,
+      function(x) {
+        var id = _.values(item).join('_');
+        x[id];
+      }
+    )
+  }, critters
+)
+
+_.zip(critterLabels, predictives)
+
+// //here are the human results from Nosofsky et al, for comparison:
+// var humanA = [.77, .78, .83, .64, .61]
+// var humanB = [.39, .41, .21, .15]
+// var humanT = [.56, .41, .82, .40, .32, .53, .20]
+// var humanData = humanT.concat(humanA).concat(humanB)
+// viz.scatter(predictives, humanData)

@@ -19,6 +19,7 @@ var
     Server        = require('./sharedUtils/serverBase.js');
 
 var gameport;
+var requiredFiles;
 
 if(argv.gameport) {
   gameport = argv.gameport;
@@ -49,7 +50,6 @@ try {
 }
 
 var utils = require('./sharedUtils/sharedUtils.js');
-
 var global_player_set = {};
 
 // Log something so we know that server-side setup succeeded
@@ -118,6 +118,11 @@ var initialize = function(query, client, id) {
   // We'll just pass messages off to the server_onMessage function for now.
   client.on('message', function(m) {
     gameServer.onMessage(client, m);
+  });
+
+  // Parsing responses from a list of trials
+  client.on('multipleTrialResponses', function(data) {
+    gameServer.multipleTrialResponses(client, data);
   });
 
   // When this client disconnects, we want to tell the game server

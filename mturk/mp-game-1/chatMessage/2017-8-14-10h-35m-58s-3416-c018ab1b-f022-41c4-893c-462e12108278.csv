@@ -1,0 +1,24 @@
+iterationName	gameid	time	trialNum	role	text	reactionTime	eventType
+pilot1	3416-c018ab1b-f022-41c4-893c-462e12108278	1502732158529	1	playerA	morseth has crocodiles; none others	8559	chatMessage
+pilot1	3416-c018ab1b-f022-41c4-893c-462e12108278	1502732169310	1	playerB	I learned that "kaz" plants grow leaves and the others do not.  "Kaz" plants are purple.	13286	chatMessage
+pilot1	3416-c018ab1b-f022-41c4-893c-462e12108278	1502732180169	1	playerB	What color was Morseth?	3951	chatMessage
+pilot1	3416-c018ab1b-f022-41c4-893c-462e12108278	1502732197025	1	playerA	I think it came in a few colors; all had crocs nearby	11447	chatMessage
+pilot1	3416-c018ab1b-f022-41c4-893c-462e12108278	1502732206851	1	playerB	ok	295	chatMessage
+pilot1	3416-c018ab1b-f022-41c4-893c-462e12108278	1502732213390	1	playerB	you ready to continue to the thing?	6104	chatMessage
+pilot1	3416-c018ab1b-f022-41c4-893c-462e12108278	1502732217287	1	playerA	sure!	984	chatMessage
+pilot1	3416-c018ab1b-f022-41c4-893c-462e12108278	1502732229740	1	playerB	ok, let's make some money	4632	chatMessage
+pilot1	3416-c018ab1b-f022-41c4-893c-462e12108278	1502732325521	2	playerB	This time I was shown birds.  for every one shown they have a 50% chance to lay an egg.	17416	chatMessage
+pilot1	3416-c018ab1b-f022-41c4-893c-462e12108278	1502732325712	2	playerA	orange crullet is poisonous; yellow mox is likely to be, but not every time	14463	chatMessage
+pilot1	3416-c018ab1b-f022-41c4-893c-462e12108278	1502732342833	2	playerA	each bird is equally likely you mean?	7984	chatMessage
+pilot1	3416-c018ab1b-f022-41c4-893c-462e12108278	1502732355312	2	playerB	no, each bird lays an egg 50% of the time	8255	chatMessage
+pilot1	3416-c018ab1b-f022-41c4-893c-462e12108278	1502732369188	2	playerB	there is a 50% chance that the bird will lay an eeg regardless of name or color	11103	chatMessage
+pilot1	3416-c018ab1b-f022-41c4-893c-462e12108278	1502732373703	2	playerA	k gotcha	1583	chatMessage
+pilot1	3416-c018ab1b-f022-41c4-893c-462e12108278	1502732377752	2	playerB	ok, ready?	1712	chatMessage
+pilot1	3416-c018ab1b-f022-41c4-893c-462e12108278	1502732380372	2	playerA	yep!	1176	chatMessage
+pilot1	3416-c018ab1b-f022-41c4-893c-462e12108278	1502732484181	3	playerB	zorb is near crocs, zaper is very very rarely near crocs (1/4 near crocs), and jav is never near crocs	894	chatMessage
+pilot1	3416-c018ab1b-f022-41c4-893c-462e12108278	1502732507738	3	playerA	red luzak and orange stup have leaves; those were the only ones I saw	21418	chatMessage
+pilot1	3416-c018ab1b-f022-41c4-893c-462e12108278	1502732523368	3	playerA	OK, zorb always, zaper rarely, jav never, got it	8520	chatMessage
+pilot1	3416-c018ab1b-f022-41c4-893c-462e12108278	1502732623697	4	playerB	thup poisonous 100%, fram 3/4 of the time, wug never poisonous	95118	chatMessage
+pilot1	3416-c018ab1b-f022-41c4-893c-462e12108278	1502732664934	4	playerA	OK. red grink yellow zoov and purple truft lay eggs 50% of the time. 2/4 in all cases	30727	chatMessage
+pilot1	3416-c018ab1b-f022-41c4-893c-462e12108278	1502732680107	4	playerB	ok, rdy?	1567	chatMessage
+pilot1	3416-c018ab1b-f022-41c4-893c-462e12108278	1502732683058	4	playerA	u bet	761	chatMessage

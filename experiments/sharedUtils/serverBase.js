@@ -1,8 +1,4 @@
 var utils = require(__base + 'sharedUtils/sharedUtils.js');
-
-
-var utils = require(__base + 'sharedUtils/sharedUtils.js');
-
 global.window = global.document = global;
 
 class ReferenceGameServer {
@@ -16,24 +12,26 @@ class ReferenceGameServer {
     // Track ongoing games
     this.games = {};
     this.game_count = 0;
+
+    // Rules that we want to apply
+    this.rule_by_round = [10, 11, 12, 13, 14];
+
   }
 
   startGame (game) {
-    game.newRound();
+      game.server_send_update();
   }
 
-  /*
-    Writes data specified by experiment instance to csv and/or mongodb
-  */
   writeData (client, eventType, message_parts) {
+    // Writes data specified by experiment instance to csv and/or mongodb
     var output = this.customServer.dataOutput;
     var game = client.game;
     if(_.has(output, eventType)) {
       var dataPoint = _.extend(output[eventType](client, message_parts), {eventType});
       if(_.includes(game.dataStore, 'csv'))
-	utils.writeDataToCSV(game, dataPoint);
+	      utils.writeDataToCSV(game, dataPoint);
       if(_.includes(game.dataStore, 'mongo'))
-	utils.writeDataToMongo(game, dataPoint);
+	      utils.writeDataToMongo(game, dataPoint);
     }
   }
 
@@ -45,35 +43,57 @@ class ReferenceGameServer {
     }
   }
 
+  multipleTrialResponses(client, data) {
+    if (this.customServer.multipleTrialResponses !== undefined) {
+      // Wrapping in condtional to prevent crashing in older
+      // games that did not implement this interface.
+      var output = this.customServer.multipleTrialResponses(client, data);
+      var sharedInfo = output['info'];
+      var trials = output['trials'];
+      var game = client.game;
+
+      console.log(output);
+      if(!_.isEmpty(client.game.dataStore)) {
+        trials.forEach(function(trial) {
+          var dataPoint = _.extend(trial, {'eventType': 'logTest'}, sharedInfo);
+          if(_.includes(game.dataStore, 'csv'))
+            utils.writeDataToCSV(game, dataPoint);
+          if(_.includes(game.dataStore, 'mongo'))
+            utils.writeDataToMongo(game, dataPoint);
+        });
+      }
+    }
+  }
+
   findGame (player) {
     this.log('looking for a game. We have : ' + this.game_count);
     var joined_a_game = false;
     for (var gameid in this.games) {
       var game = this.games[gameid];
       if(game.player_count < game.players_threshold) {
-	// End search
-	joined_a_game = true;
+      	// End search
+        joined_a_game = true;
 
-	// Add player to game
-	game.player_count++;
-	game.players.push({
-	  id: player.userid,
-	  instance: player,
-	  player: new this.player(game, player)
-	});
+        // Add player to game
+        game.player_count++;
+        game.players.push({
+          id: player.userid,
+          instance: player,
+          player: new this.player(game, player)
+        });
 
-	// Add game to player
-	player.game = game;
-	player.role = game.playerRoleNames.role2;
-	player.send('s.join.' + game.players.length + '.' + player.role);
+        // Add game to player
+        player.game = game;
+        player.role = game.playerRoleNames.role2;
+        player.send('s.join.' + game.players.length + '.' + player.role);
 
-	// notify existing players that someone new is joining
-	_.map(game.get_others(player.userid), function(p){
-	  p.player.instance.send( 's.add_player.' + player.userid);
-	});
+        // notify existing players that someone new is joining
+        _.map(game.get_others(player.userid), function(p){
+          p.player.instance.send( 's.add_player.' + player.userid);
+        });
 
-	// Start game
-	this.startGame(game);
+        // Start game
+        this.startGame(game);
       }
     }
 
@@ -85,27 +105,52 @@ class ReferenceGameServer {
 
   // Will run when first player connects
   createGame (player) {
-    //Create a new game instance
+    // Create a new game instance
+    console.log("Creating a Game!!!")
+
     var options = {
       expName: this.expName,
       server: true,
       id : utils.UUID(),
       player_instances: [{id: player.userid, player: player}],
-      player_count: 1
+      player_count: 1,
+
     };
+
+    if (this.expName === 'mp-game-3') {
+      for (const rule_idx of Object.keys(this.numGamesPerRule)) {
+        if (this.numGamesPerRule[rule_idx] !== 0) {
+          options.rule_idx = parseInt(rule_idx);
+          this.numGamesPerRule[rule_idx] -= 1;
+          break;
+        }
+      }
+    }
+
+    if (this.expName === 'mp-game-5') {
+      options.rule_by_round = this.rule_by_round;
+
+      // Pilot 1:
+      // options.possibleSpecies = ['wudsy', 'morseth', 'kwep', 'zorb', 'luzak'];
+      // options.possibleSpeciesPlural = ['wudsies', 'morseths', 'kweps', 'zorbs', 'luzaks'];
+
+      // Pilot 2:
+      options.possibleSpecies = ['dorbsy', 'javsy', 'lorchy', 'grinky', 'thupsy'];
+      options.possibleSpeciesPlural = ['dorbsies', 'javsies', 'lorchies', 'grinkies', 'thupsies'];
+
+    }
 
     var game = new this.core(options);
 
-    // assign role
+    // Assign a role to the player
     player.game = game;
     player.role = game.playerRoleNames.role1;
     player.send('s.join.' + game.players.length + '.' + player.role);
     this.log('player ' + player.userid + ' created a game with id ' + player.game.id);
 
-    // add to game collection
+    // Add game to collection
     this.games[game.id] = game;
     this.game_count++;
-
     game.server_send_update();
     return game;
   };
@@ -114,13 +159,29 @@ class ReferenceGameServer {
   // This gets called if someone disconnects
   endGame (gameid, userid) {
     var thegame = this.games[gameid];
+
     if(thegame) {
-      _.map(thegame.get_others(userid),function(p) {
-	p.player.instance.send('s.end');
-      });
-      delete this.games[gameid];
-      this.game_count--;
-      this.log('game removed. there are now ' + this.game_count + ' games' );
+      // TODO: Figure out how to refactor this as a method override
+      // so that this not break gameplay in other games, as this is shared code.
+
+      // Continue game, if one player disconnected by finishing the game
+      if ((thegame.currentSlide.explorer == 'thanks' && thegame.currentSlide.student != 'thanks') ||
+          (thegame.currentSlide.explorer != 'thanks' && thegame.currentSlide.student == 'thanks')
+        ){
+        this.log("One player disconnected, after finishing the game.");
+      } else { // Kill the game if one player disconnected without completing the game
+        _.map(thegame.get_others(userid),function(p) {
+          p.player.instance.send('s.end');
+        });
+        delete this.games[gameid];
+        this.game_count--;
+        this.log('game removed. there are now ' + this.game_count + ' games' );
+        if (this.expName === 'mp-game-3' && (thegame.currentSlide.explorer !== 'thanks' || thegame.currentSlide.student !== 'thanks')) {
+          this.numGamesPerRule[thegame.rule_idx] += 1;
+          this.log('failed to complete a game with rule ' + thegame.rule_idx + " ; incrementing the count for this game type");
+          this.log(this.numGamesPerRule);
+        }
+      }
     } else {
       this.log('that game was not found!');
     }

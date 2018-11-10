@@ -1,0 +1,3 @@
+iterationName	gameid	time	role	rule_idx	rule_type	train_data_fn	test_data_fn	nativeEnglish	enjoyment	assess	age	gender	education	comments	problems	fairprice	strategy	humanPartner	likePartner	eventType
+pilot	0644-0820957f-0884-4c75-9cd3-a4cee37ab431	1540429775314	explorer	8	DISJUNCTION	./js/training_data_critter_bird_or_body_color_green_1.json	./js/test_data_critter_bird_or_body_color_green_1.json	yes	2	yes	27	Male	2		none	3	well i try to find similarities 	yes	liked	logSubjInfo
+pilot	0644-0820957f-0884-4c75-9cd3-a4cee37ab431	1540429811029	student	8	DISJUNCTION	./js/training_data_critter_bird_or_body_color_green_1.json	./js/test_data_critter_bird_or_body_color_green_1.json	yes	1	yes	23	Male	1	Meh		Not really	3	Following his instructions	yes	okay	logSubjInfo

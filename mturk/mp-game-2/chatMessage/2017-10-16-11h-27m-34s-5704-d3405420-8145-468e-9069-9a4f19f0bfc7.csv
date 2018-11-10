@@ -1,0 +1,40 @@
+iterationName	gameid	time	trialNum	role	text	reactionTime	eventType
+pilot1	5704-d3405420-8145-468e-9069-9a4f19f0bfc7	1508178454129	0	b	I studied bugs. If a bug DOES NOT have wings, it is a kaz	10165	chatMessage
+pilot1	5704-d3405420-8145-468e-9069-9a4f19f0bfc7	1508178492694	0	a	the mox is a fish, mainly yellow with whiskers, there is a green one, the bigger size with whiskers as well, the small yellow without whiskers in not a mox, all the other yellow are	57764	chatMessage
+pilot1	5704-d3405420-8145-468e-9069-9a4f19f0bfc7	1508178533974	0	b	got it, you ready?	3254	chatMessage
+pilot1	5704-d3405420-8145-468e-9069-9a4f19f0bfc7	1508178540450	0	a	go ahead	2239	chatMessage
+pilot1	5704-d3405420-8145-468e-9069-9a4f19f0bfc7	1508178624008	1	b	small, green, whiskers: truft	6838	chatMessage
+pilot1	5704-d3405420-8145-468e-9069-9a4f19f0bfc7	1508178634174	1	b	wait, hold on that's wrong	6190	chatMessage
+pilot1	5704-d3405420-8145-468e-9069-9a4f19f0bfc7	1508178645832	1	b	small, green, no whiskers: truft	10735	chatMessage
+pilot1	5704-d3405420-8145-468e-9069-9a4f19f0bfc7	1508178653644	1	b	small, blue, whiskers: truft	5819	chatMessage
+pilot1	5704-d3405420-8145-468e-9069-9a4f19f0bfc7	1508178666374	1	b	big, green, whiskers: truft	11303	chatMessage
+pilot1	5704-d3405420-8145-468e-9069-9a4f19f0bfc7	1508178672463	1	b	big, blue, no whiskers: truft	5071	chatMessage
+pilot1	5704-d3405420-8145-468e-9069-9a4f19f0bfc7	1508178699728	1	a	there is a red with spikes with a large size, there is a yellow large without spikes, the small flower with spikes and yellow stem, the orange stem without spikes with a small size as well	80138	chatMessage
+pilot1	5704-d3405420-8145-468e-9069-9a4f19f0bfc7	1508178759392	1	b	what are they called?	3099	chatMessage
+pilot1	5704-d3405420-8145-468e-9069-9a4f19f0bfc7	1508178775548	1	a	I don't remember	5918	chatMessage
+pilot1	5704-d3405420-8145-468e-9069-9a4f19f0bfc7	1508178796106	1	b	okay, let's proceed	6243	chatMessage
+pilot1	5704-d3405420-8145-468e-9069-9a4f19f0bfc7	1508178801499	1	a	ok	449	chatMessage
+pilot1	5704-d3405420-8145-468e-9069-9a4f19f0bfc7	1508178951860	2	b	small with whiskers: saper	9198	chatMessage
+pilot1	5704-d3405420-8145-468e-9069-9a4f19f0bfc7	1508178957192	2	b	big, no whiskers: saper	4351	chatMessage
+pilot1	5704-d3405420-8145-468e-9069-9a4f19f0bfc7	1508178961630	2	b	please write this down	2735	chatMessage
+pilot1	5704-d3405420-8145-468e-9069-9a4f19f0bfc7	1508178985710	2	a	kwep, small yellow and blue, no tail feathers, also large yellow and blue with tail feathers	44493	chatMessage
+pilot1	5704-d3405420-8145-468e-9069-9a4f19f0bfc7	1508179037258	2	b	good?	1134	chatMessage
+pilot1	5704-d3405420-8145-468e-9069-9a4f19f0bfc7	1508179042767	2	a	yea	2581	chatMessage
+pilot1	5704-d3405420-8145-468e-9069-9a4f19f0bfc7	1508179135766	3	a	lorch is all small green and red, both with and without spikes	15149	chatMessage
+pilot1	5704-d3405420-8145-468e-9069-9a4f19f0bfc7	1508179149153	3	b	Big and orange, with or without feathers: zoov	26823	chatMessage
+pilot1	5704-d3405420-8145-468e-9069-9a4f19f0bfc7	1508179158752	3	b	small, blue, with feathers: zoov	7110	chatMessage
+pilot1	5704-d3405420-8145-468e-9069-9a4f19f0bfc7	1508179166840	3	b	big blue, without feathers: zoov	6638	chatMessage
+pilot1	5704-d3405420-8145-468e-9069-9a4f19f0bfc7	1508179193908	3	b	ready when you are	4335	chatMessage
+pilot1	5704-d3405420-8145-468e-9069-9a4f19f0bfc7	1508179206352	3	a	ok	9479	chatMessage
+pilot1	5704-d3405420-8145-468e-9069-9a4f19f0bfc7	1508179291148	4	b	big yellow with or without spikes: luzak	11023	chatMessage
+pilot1	5704-d3405420-8145-468e-9069-9a4f19f0bfc7	1508179299052	4	b	small yellow with spikes: luzak	5799	chatMessage
+pilot1	5704-d3405420-8145-468e-9069-9a4f19f0bfc7	1508179305940	4	b	big red with spikes: luzak	4414	chatMessage
+pilot1	5704-d3405420-8145-468e-9069-9a4f19f0bfc7	1508179333416	4	a	small green and blue, green has whiskers and without, large blue without whiskers, this the mook	43405	chatMessage
+pilot1	5704-d3405420-8145-468e-9069-9a4f19f0bfc7	1508179406000	4	b	can you rephrase that?	3854	chatMessage
+pilot1	5704-d3405420-8145-468e-9069-9a4f19f0bfc7	1508179455918	4	a	mook is small green with and without spikes, also small blue without spikes, and large blue without spikes	51017	chatMessage
+pilot1	5704-d3405420-8145-468e-9069-9a4f19f0bfc7	1508179468966	4	b	thanks	566	chatMessage
+pilot1	5704-d3405420-8145-468e-9069-9a4f19f0bfc7	1508179545170	5	b	big head, orange: glippet	5433	chatMessage
+pilot1	5704-d3405420-8145-468e-9069-9a4f19f0bfc7	1508179551236	5	b	small, no wings: glippet	3943	chatMessage
+pilot1	5704-d3405420-8145-468e-9069-9a4f19f0bfc7	1508179598380	5	a	fep is large green with whiskers, large yellow with whiskers, small green with whiskers, and small yellow no whiskers	54844	chatMessage
+pilot1	5704-d3405420-8145-468e-9069-9a4f19f0bfc7	1508179631034	5	b	ready?	1486	chatMessage
+pilot1	5704-d3405420-8145-468e-9069-9a4f19f0bfc7	1508179641540	5	a	yep	8427	chatMessage
