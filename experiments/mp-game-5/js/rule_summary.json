@@ -52,11 +52,11 @@
         "type":"CONJUNCTION,DISJUNCTION"
     },
     "13":{
-        "name":"(critter_bug_or_medium)_and_second_color_red_1",
+        "name":"(critter_bug_or_small)_and_second_color_red_1",
         "type":"DISJUNCTION,CONJUNCTION"
     },
     "14":{
-        "name":"(medium_or_body_color_green)_and_second_color_red_1",
+        "name":"(large_or_body_color_green)_and_second_color_red_1",
         "type":"DISJUNCTION,CONJUNCTION"
     }
 }

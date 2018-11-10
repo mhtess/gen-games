@@ -356,7 +356,7 @@ function make_slides(f) {
         You are the "Explorer", studying creatures with a ` + globalGame.speciesName + ` detector.
         <br> <br>
         You will be shown a grid of creatures. Click on a creature to discover whether it is a` + globalGame.speciesName + `.
-        Pay close attention, as you will have to teach your partner which are ` + globalGame.pluralSpeciesName + `. 
+        Pay close attention, as you will have to teach your partner which are ` + globalGame.speciesName + `. 
         <br> <br>
         Press Continue to start the game.
         <br><br>
@@ -370,7 +370,7 @@ function make_slides(f) {
         <p>
           You are the "Student". Your partner is currently studying creatures with a ` + globalGame.speciesName + ` detector. It will take them approximately 1 - 2 minutes to finish exploring. 
           <br> <br>
-          Meanwhile you will be waiting in a chatroom. Once your partner is done, they will enter the chatroom. You should discuss what properties of ` + globalGame.pluralSpeciesName + ` they learned during exploration. Pay close attention and ask questions, as you will be tested on your understanding of ` + globalGame.pluralSpeciesName + `.
+          Meanwhile you will be waiting in a chatroom. Once your partner is done, they will enter the chatroom. You should discuss what properties of ` + globalGame.speciesName + ` creatures they learned during exploration. Pay close attention and ask questions, as you will be tested on your understanding of ` + globalGame.speciesName + `.
           <br> <br>
           During your partner's exploration period please stay at the computer and <b>DO NOT CLOSE THIS TAB</b>. Otherwise, you will be disconnected from the game and we won't be able to reward you for the hit.
           Please keep checking the chat window, as the status will update when the other player has also entered the room.
@@ -454,7 +454,7 @@ function make_slides(f) {
       var instructions = `On the next page, you will enter into a chatroom with your partner.
       <br>
       <br>
-      Please discuss the properties of ` + globalGame.pluralSpeciesName + `. The "student" will be advance the game out of the chatroom, once they feel like they have a good understanding of ` + globalGame.pluralSpeciesName + `' properties.
+      Please discuss the properties of the ` + globalGame.speciesName + ` creatures. The "student" will be advance the game out of the chatroom, once they feel like they have a good understanding of ` + globalGame.speciesName + ` properties.
       <br>
       <br>
       After the chatroom, you both will be provided a set of unseen creatures that you must classify as ` + globalGame.speciesName + ` or not. You're bonus will be the sum of your score and your partner's score on this task.
@@ -472,7 +472,7 @@ function make_slides(f) {
   slides.chatRoom = slide({
     name: "chatRoom",
     start: function() {
-      var instructions = `Explorer, please talk to the student about the properties of the ` + globalGame.pluralSpeciesName + `.`;
+      var instructions = `Explorer, please talk to the student about the properties of the ` + globalGame.speciesName + `.`;
       $("#instructs").html(instructions);
 
       $("#cur_instructs").empty();
@@ -505,7 +505,7 @@ function make_slides(f) {
       var instructions = `<br><br>
         <h3>Quiz Instructions, Round ` + (globalGame.roundNum + 1) + ` of ` + globalGame.numRounds + `</h3>
         <br>
-        You will be presented a grid. Click on the creatures you believe are ` + globalGame.pluralSpeciesName + `.
+        You will be presented a grid. Click on the creatures you believe are ` + globalGame.speciesName + `.
         <br> <br>
         Press Continue to start the game.</p>
         <br> <br>
@@ -529,11 +529,11 @@ function make_slides(f) {
     var instructions = `
       <p class="label_prompt"> Click on the creatures that you believe are members of the <strong>` + globalGame.speciesName + `</strong> species.
         <br>
-        Creatures that you have selected as ` + globalGame.pluralSpeciesName + ` will have a yellow background.
+        Creatures that you have selected as ` + globalGame.speciesName + ` will have a yellow background.
         <br>      
         You can click on a selected creature a second time to un-select it.
         <br>
-        Once you are done selecting the ` + globalGame.pluralSpeciesName + `, hit the Continue button.
+        Once you are done selecting the ` + globalGame.speciesName + ` creatures, hit the Continue button.
       </p>
       <br>
       <br>
@@ -557,7 +557,7 @@ function make_slides(f) {
       exp.times.timestamps.testing.start.submission[globalGame.roundNum] = time;
     }
 
-    var proceed = confirm("Have you selected all the creatures that believe are " + globalGame.pluralSpeciesName + "?\n\n If yes, click \"OK\".\n If no, click \"CANCEL\".");
+    var proceed = confirm("Have you selected all the creatures that believe are " + globalGame.speciesName + "?\n\n If yes, click \"OK\".\n If no, click \"CANCEL\".");
     if (proceed === false) {
       return;
     }

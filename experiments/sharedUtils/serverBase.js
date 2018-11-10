@@ -14,7 +14,7 @@ class ReferenceGameServer {
     this.game_count = 0;
 
     // Rules that we want to apply
-    this.rule_by_round = [0, 2, 4, 6, 8];
+    this.rule_by_round = [10, 11, 12, 13, 14];
 
   }
 
@@ -129,8 +129,15 @@ class ReferenceGameServer {
 
     if (this.expName === 'mp-game-5') {
       options.rule_by_round = this.rule_by_round;
-      options.possibleSpecies = ['wudsy', 'morseth', 'kwep', 'zorb', 'luzak'];
-      options.possibleSpeciesPlural = ['wudsies', 'morseths', 'kweps', 'zorbs', 'luzaks'];
+
+      // Pilot 1:
+      // options.possibleSpecies = ['wudsy', 'morseth', 'kwep', 'zorb', 'luzak'];
+      // options.possibleSpeciesPlural = ['wudsies', 'morseths', 'kweps', 'zorbs', 'luzaks'];
+
+      // Pilot 2:
+      options.possibleSpecies = ['dorbsy', 'javsy', 'lorchy', 'grinky', 'thupsy'];
+      options.possibleSpeciesPlural = ['dorbsies', 'javsies', 'lorchies', 'grinkies', 'thupsies'];
+
     }
 
     var game = new this.core(options);

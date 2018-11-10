@@ -152,11 +152,10 @@ function genRules() {
 		name: "(critter_bird_and_body_color_orange)_or_small_1",
 		func: function(critter, color_dict, prop1_dict, critter_to_color_props) {
 			var critterBodyColorProp = critter_to_color_props[critter["critter"]]["body_color"][0];
-			var critterSecondaryColorProp = critter_to_color_props[critter["critter"]]["secondary_color"][0];
 			return (
 				(
-					critter["props"][critterBodyColorProp] === color_dict["green"] &&
-					critter["props"][critterSecondaryColorProp] === color_dict["purple"]
+					critter["critter"] === "bird" &&
+					critter["props"][critterBodyColorProp] === color_dict["orange"]
 				) ||
 				critter["props"]["prop1"] === prop1_dict["small"]
 			);
@@ -183,13 +182,13 @@ function genRules() {
 
 	// (Critter Type Or Size) And Secondary Color — High Diff
 	rules.push({
-		name: "(critter_bug_or_medium)_and_second_color_red_1",
+		name: "(critter_bug_or_small)_and_second_color_red_1",
 		func: function(critter, color_dict, prop1_dict, critter_to_color_props) {
 			var critterSecondaryColorProp = critter_to_color_props[critter["critter"]]["secondary_color"][0];
 			return (
 				(
 					critter["critter"] === "bug" ||
-					critter["props"]["prop1"] === prop1_dict["large"]
+					critter["props"]["prop1"] === prop1_dict["small"]
 				) &&
 				critter["props"][critterSecondaryColorProp] === color_dict["red"]
 			);
@@ -200,13 +199,13 @@ function genRules() {
 
 	// (Size Or Primary Color) And Secondary Color  — High Diff.
 	rules.push({
-		name: "(medium_or_body_color_green)_and_second_color_red_1",
+		name: "(large_or_body_color_green)_and_second_color_red_1",
 		func: function(critter, color_dict, prop1_dict, critter_to_color_props) {
 			var critterBodyColorProp = critter_to_color_props[critter["critter"]]["body_color"][0];
 			var critterSecondaryColorProp = critter_to_color_props[critter["critter"]]["secondary_color"][0];
 			return (
 				(
-					critter["props"]["prop1"] === prop1_dict["medium"] ||
+					critter["props"]["prop1"] === prop1_dict["large"] ||
 					critter["props"][critterBodyColorProp] === color_dict["green"]
 				) &&
 				critter["props"][critterSecondaryColorProp] === color_dict["red"]
