@@ -15,6 +15,7 @@ library(ggplot2)
 library(scales)
 library(stringr)
 library(digest)
+library(viridis)
 ```
 
 ```{r}
@@ -99,7 +100,7 @@ temp <- list.files(
 chat_messages <- do.call(rbind, lapply(temp, readr::read_tsv)) %>%
   group_by(gameid) %>%
   mutate(num_dialogues = n()) %>%
-  filter(num_dialogues >= 10)
+  filter(num_dialogues > 10)
 ```
 
 
@@ -610,7 +611,7 @@ ggplot(
       group_by(stat) %>%
       summarize(val = sum(val)),
     aes(x = stat, y = val)
-  ) + geom_bar(stat = 'identity') + ggtitle("# of Messages, Across Utterance Type") +
+  ) + geom_bar(stat = 'identity') + ggtitle("# of Follow-Up Messages, Across Utterance Type") +
     xlab('Message Type') + ylab('# of Messages Produced')
 ```
 
@@ -687,7 +688,7 @@ game_informative_msgs = chat_messages %>%
 ggplot(
     game_informative_msgs,
     aes(x='', y=val, fill=stat)
-  ) + geom_bar(stat = 'identity', position ='stack') + ggtitle("Distribution of Utterance Types (Informative + Follow-Up) Across Player Pairs ") +
+  ) + geom_bar(stat = 'identity', position ='stack') + ggtitle("Distribution of Utterance Types (Informative) Across Teachers") +
     xlab('Teacher') + ylab('# of Messages of Utterance Type') + facet_grid(~gameid)
 ```
 
@@ -721,7 +722,7 @@ ggplot(
     pair_messages,
     aes(x=role, y=val, fill=stat)
   ) + geom_bar(stat = 'identity', position ='stack') + ggtitle("Distribution of Utterance Types (Informative + Follow-Up) Across Player Pairs ") +
-    xlab('Role') + ylab('# of Messages of Utterance Type') + facet_grid(~gameid)
+    xlab('Role') + ylab('# of Messages of Utterance Type') + facet_grid(~gameid) + scale_color_viridis(discrete=TRUE)
 ```
 
 ## Analysis of Language Across Concepts
