@@ -1,0 +1,2 @@
+iterationName	gameid	time	role	rule_idx	rule_type	train_data_fn	test_data_fn	exploration_time	submission_time	total_time	eventType
+pilot	2698-0222c8bc-efec-46bf-ba83-34f6e8d8299e	1542043270837	explorer	10	DISUNCTION,DISJUNCTION	./js/training_data_body_color_green_or_secondary_color_purple_or_critter_bug_1.json	./js/test_data_body_color_green_or_secondary_color_purple_or_critter_bug_1.json	70.142	183.878	254.02	logTrain

@@ -1,0 +1,2 @@
+iterationName	gameid	time	role	rule_idx	rule_type	train_data_fn	test_data_fn	nativeEnglish	enjoyment	assess	age	gender	education	comments	problems	fairprice	strategy	 	humanPartner	likePartner	eventType
+pilot	4423-81c97500-b49d-4b08-99ff-dbdf53ccef65	1542066408341	explorer	11	CONJUNCTION,DISJUNCTION	./js/training_data_(critter_bird_and_body_color_orange)_or_small_1.json	./js/test_data_(critter_bird_and_body_color_orange)_or_small_1.json	no	0	yes	27	Female	4			meh	I wrote down the characteristics of the species		yes	not much	logSubjInfo
