@@ -241,6 +241,17 @@ ggplot(test_acc_student_combined, aes(x=round_by_round_acc, y=summurization_acc,
   ylim(0, 1)
 ```
 
+## Student Performance Vs. Teacher Performance
+```{r}
+test_acc_combined = 
+test_acc_teacher_s
+
+ggplot(test_acc_student_combined, aes(x=round_by_round_acc, y=summurization_acc, color=rule_idx)) +
+  geom_point() +
+  xlim(0, 1) +
+  ylim(0, 1)
+```
+
 ```{r}
 rule_indices <- c(0, 2, 4, 6, 8)
 
