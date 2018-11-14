@@ -15,7 +15,6 @@ library(ggplot2)
 library(scales)
 library(stringr)
 library(digest)
-library(viridis)
 ```
 
 ```{r}
@@ -241,17 +240,6 @@ ggplot(test_acc_student_combined, aes(x=round_by_round_acc, y=summurization_acc,
   ylim(0, 1)
 ```
 
-## Student Performance Vs. Teacher Performance
-```{r}
-test_acc_combined = 
-test_acc_teacher_s
-
-ggplot(test_acc_student_combined, aes(x=round_by_round_acc, y=summurization_acc, color=rule_idx)) +
-  geom_point() +
-  xlim(0, 1) +
-  ylim(0, 1)
-```
-
 ```{r}
 rule_indices <- c(0, 2, 4, 6, 8)
 
@@ -374,6 +362,62 @@ test_stats_s_unique = test_stats_s %>%
 ```
 
 # Summurization Game Analysis
+
+## Student Performance Vs. Teacher Performance
+```{r}
+rule_indices <- c(0, 2, 4, 6, 8, 10, 11, 12, 13, 14)
+
+#--------------------------------------
+# Accuracy Calculations Summurization
+# -------------------------------------
+test_teacher <- test_stats_s %>%
+  filter(role == "explorer") %>%
+  mutate(correct = hits + correct_rejections) %>%
+  mutate(incorrect = misses + false_alarms) %>%
+  select(gameid, rule_idx, correct, incorrect) %>%
+  filter(rule_idx %in% rule_indices) %>%
+  mutate(teacher_acc = correct / (correct + incorrect))
+
+test_teacher_summary <- test_teacher %>%
+  group_by(rule_idx) %>%
+  summarize(
+    avg_teacher_acc = mean(teacher_acc),
+    std_teacher_acc = sd(teacher_acc),
+  ) %>%
+  select(rule_idx, avg_teacher_acc, std_teacher_acc)
+
+test_student <- test_stats_s %>%
+  filter(role == "student") %>%
+  mutate(correct = hits + correct_rejections) %>%
+  mutate(incorrect = misses + false_alarms) %>%
+  select(gameid, rule_idx, incorrect, correct) %>%
+  mutate(student_acc = correct / (correct + incorrect))
+
+test_student_summary <- test_student %>%
+  group_by(rule_idx) %>%
+  summarize(
+    avg_student_acc = mean(student_acc),
+    std_student_acc = sd(student_acc),
+  ) %>%
+  select(rule_idx, avg_student_acc, std_student_acc)
+
+test_summary <- bind_cols(test_teacher_summary, test_student_summary) %>%
+  select(rule_idx, avg_student_acc, avg_teacher_acc, std_student_acc, std_teacher_acc)
+test_summary$rule_idx <- as.factor(test_summary$rule_idx)
+
+ggplot(test_summary, aes(x=avg_student_acc, y=avg_teacher_acc, color=rule_idx, label=rule_idx)) +
+  geom_point() +
+  xlim(0, 1.1) +
+  ylim(0, 1.1) +
+  geom_text(hjust = 0.01, nudge_x = 0.03, show.legend = FALSE) +
+  geom_errorbar(test_summary, mapping=aes(x=avg_student_acc, ymin=avg_teacher_acc - std_teacher_acc, ymax=avg_teacher_acc + std_teacher_acc)) +
+  geom_errorbarh(test_summary, mapping=aes(y=avg_teacher_acc, xmin=avg_student_acc - std_student_acc, xmax=avg_student_acc + std_student_acc)) +
+  ggtitle("Avg. Student Acc vs. Avg. Teacher Acc.") +
+  xlab('Avg. Student Acc.') +
+  ylab('Avg. Teacher Acc.')
+```
+
+
 
 ## Student versus Teacher Performance -- Pairs (Summurization)
 ```{r}
