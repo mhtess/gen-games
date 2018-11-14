@@ -367,9 +367,7 @@ test_stats_s_unique = test_stats_s %>%
 ```{r}
 rule_indices <- c(0, 2, 4, 6, 8, 10, 11, 12, 13, 14)
 
-#--------------------------------------
-# Accuracy Calculations Summurization
-# -------------------------------------
+# Accuracies
 test_teacher <- test_stats_s %>%
   filter(role == "explorer") %>%
   mutate(correct = hits + correct_rejections) %>%
@@ -393,6 +391,11 @@ test_student <- test_stats_s %>%
   select(gameid, rule_idx, incorrect, correct) %>%
   mutate(student_acc = correct / (correct + incorrect))
 
+test <- bind_cols(test_teacher, test_student) %>%
+    select(rule_idx, student_acc, teacher_acc)
+test$rule_idx <- as.factor(test$rule_idx)
+
+# Summary
 test_student_summary <- test_student %>%
   group_by(rule_idx) %>%
   summarize(
@@ -417,7 +420,22 @@ ggplot(test_summary, aes(x=avg_student_acc, y=avg_teacher_acc, color=rule_idx, l
   ylab('Avg. Teacher Acc.')
 ```
 
-
+```{r}
+ggplot(test, aes(x=student_acc, y=teacher_acc, color=rule_idx, label=rule_idx)) +
+  geom_point(alpha = .4) +
+  geom_point(data = test_summary %>%
+               rename(student_acc = avg_student_acc) %>%
+               rename(teacher_acc = avg_teacher_acc),
+             size = 4) +
+  theme_bw() +
+  guides(color = guide_legend("rule_idx")) +
+  geom_text(hjust = 0.01, nudge_x = 0.03, show.legend = FALSE) +
+  labs(
+    title = "Student Acc vs. Teacher Acc",
+    x = "Student Acc.",
+    y = "Teacher Acc."
+  )
+```
 
 ## Student versus Teacher Performance -- Pairs (Summurization)
 ```{r}
@@ -456,7 +474,7 @@ test_stats_s_rule_type = test_stats_s %>%
 ```
 
 ## Student versus Teacher Performance -- Concept Types (Summurization)
-```{r}
+```{r fig.width=7, fig.height=4, echo=FALSE}
 ggplot(test_stats_s_rule_type, aes(x = reorder(role, desc(role)), y = val, fill = stat)) + 
   geom_bar(stat = 'identity', position = 'stack') + facet_grid(~ rule_type) 
 ```
@@ -506,7 +524,7 @@ train_chat_times <- bind_cols(train_times, chat_times) %>%
 ```
 
 
-```{r}
+```{r fig.width=7, fig.height=4, echo=FALSE}
 ggplot(train_chat_times, aes(x = reorder(stat, desc(stat)), y = val)) + 
   geom_bar(stat = 'identity') + facet_grid(~ rule_idx)
 ```
@@ -535,7 +553,6 @@ chat_messages_count = chat_messages %>%
   select(role, val, stat) %>%
   group_by(role) %>%
   mutate(val_percentage_of_role = val/sum(val))
-
 ```
 ```{r}
 ggplot(chat_messages_count, aes(x = reorder(role, desc(role)), y = val_percentage_of_role, fill = stat)) + 
