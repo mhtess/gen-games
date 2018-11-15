@@ -421,11 +421,12 @@ ggplot(test_summary, aes(x=avg_student_acc, y=avg_teacher_acc, color=rule_idx, l
 ```
 
 ```{r}
-ggplot(test, aes(x=student_acc, y=teacher_acc, color=rule_idx, label=rule_idx)) +
+ggplot(test_summary %>%
+        rename(student_acc = avg_student_acc) %>%
+        rename(teacher_acc = avg_teacher_acc)
+       , aes(x=student_acc, y=teacher_acc, color=rule_idx, label=rule_idx)) +
   geom_point(alpha = .4) +
-  geom_point(data = test_summary %>%
-               rename(student_acc = avg_student_acc) %>%
-               rename(teacher_acc = avg_teacher_acc),
+  geom_point(data = ,
              size = 4) +
   theme_bw() +
   guides(color = guide_legend("rule_idx")) +
@@ -794,7 +795,7 @@ ggplot(
     pair_messages,
     aes(x=role, y=val, fill=stat)
   ) + geom_bar(stat = 'identity', position ='stack') + ggtitle("Distribution of Utterance Types (Informative + Follow-Up) Across Player Pairs ") +
-    xlab('Role') + ylab('# of Messages of Utterance Type') + facet_grid(~gameid) + scale_color_viridis(discrete=TRUE)
+    xlab('Role') + ylab('# of Messages of Utterance Type') + facet_grid(~gameid)
 ```
 
 ## Analysis of Language Across Concepts
