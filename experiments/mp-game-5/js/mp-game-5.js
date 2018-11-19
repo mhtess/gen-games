@@ -230,6 +230,9 @@ function createTrainingCritter(stim, i, scale){
     id, scale
   );
 
+  // Set opacity at 1
+  $("#training_cell_" + i).css({"opacity": 1.0});
+
   // Construct "species" labels
   var label = "";
   if (stim.belongs_to_concept) {  
@@ -241,7 +244,17 @@ function createTrainingCritter(stim, i, scale){
 
   // Add click handlers
   $("#training_cell_" + i).click(function(event) {
-    var id = '#' + $(event.target).parents('.cell')[0].id;
+    var event_id = event.target.id;
+    var critter_id_prefix = "training_critter_";
+    var cell_id_prefix = "training_cell_";
+    var id = "";
+
+    if (event_id.indexOf(critter_id_prefix) >= 0 ) {
+      id = "#training_cell_" + event_id.substring(critter_id_prefix.length);
+    } else {
+      id = '#' + $(event.target).parents('.cell')[0].id;
+    }
+
     if (exp.selected_stim_idx != -1) {
       fade(exp.selected_stim_idx);
     }
@@ -388,6 +401,8 @@ function make_slides(f) {
 
       $("#training_critters_grid").empty(); // Reset
       exp.selected_training_stim = []; // Reset
+      exp.selected_stim_idx = -1; // Reset
+
     },
     button : function() {
       if (globalGame.my_role == "explorer") {
@@ -451,6 +466,7 @@ function make_slides(f) {
   slides.chat_instructions = slide({
     name : "chat_instructions",
     start : function() {
+      // Reset
       var instructions = `On the next page, you will enter into a chatroom with your partner.
       <br>
       <br>
