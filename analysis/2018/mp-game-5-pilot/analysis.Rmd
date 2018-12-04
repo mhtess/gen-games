@@ -425,17 +425,16 @@ ggplot(test_summary %>%
         rename(student_acc = avg_student_acc) %>%
         rename(teacher_acc = avg_teacher_acc)
        , aes(x=student_acc, y=teacher_acc, color=rule_idx, label=rule_idx)) +
-  geom_point(alpha = .4) +
-  geom_point(data = ,
-             size = 4) +
+  geom_point(size = 4) +
   theme_bw() +
   guides(color = guide_legend("rule_idx")) +
   geom_text(hjust = 0.01, nudge_x = 0.03, show.legend = FALSE) +
+  geom_point(data = test, size = 1) +
   labs(
     title = "Student Acc vs. Teacher Acc",
     x = "Student Acc.",
     y = "Teacher Acc."
-  )
+  ) + geom_segment(aes(x=1, y=1, xend=0.2, yend=0.2), linetype=2, color="black",arrow = arrow(length = unit(0.2, "inches")))
 ```
 
 ## Student versus Teacher Performance -- Pairs (Summurization)
@@ -459,7 +458,12 @@ test_stats_s_concept = test_stats_s %>%
 ## Student versus Teacher Performance -- Concepts (Summurization)
 ```{r}
 ggplot(test_stats_s_concept, aes(x = reorder(role, desc(role)), y = val, fill = stat)) + 
-  geom_bar(stat = 'identity', position = 'stack') + facet_grid(~ rule_idx) 
+  geom_bar(stat = 'identity', position = 'stack') + facet_grid(~ rule_idx)  +
+  labs(
+    title = "Teacher & Student Performance Across Rules (Aggregated)",
+    x = "Student & Teachers",
+    y = "Counts"
+  )
 ```
 
 ```{r}
@@ -477,7 +481,12 @@ test_stats_s_rule_type = test_stats_s %>%
 ## Student versus Teacher Performance -- Concept Types (Summurization)
 ```{r fig.width=7, fig.height=4, echo=FALSE}
 ggplot(test_stats_s_rule_type, aes(x = reorder(role, desc(role)), y = val, fill = stat)) + 
-  geom_bar(stat = 'identity', position = 'stack') + facet_grid(~ rule_type) 
+  geom_bar(stat = 'identity', position = 'stack') + facet_grid(~ rule_type) +
+    labs(
+    title = "Teacher & Student Performance Across Concept Types (Aggregated)",
+    x = "Student & Teachers",
+    y = "Counts"
+  )
 ```
 
 ## Time Comparisons (Summarization)
@@ -521,13 +530,18 @@ chat_times <- chat_messages %>%
 train_chat_times <- bind_cols(train_times, chat_times) %>%
   select(rule_idx, train_time, chat_time, role) %>%
   gather(key = "stat", value = "val", 2:3) %>%
-  select(rule_idx, role, val, stat)
+  select(rule_idx, role, val, stat) %>%
 ```
 
 
 ```{r fig.width=7, fig.height=4, echo=FALSE}
 ggplot(train_chat_times, aes(x = reorder(stat, desc(stat)), y = val)) + 
-  geom_bar(stat = 'identity') + facet_grid(~ rule_idx)
+  geom_bar(stat = 'identity') + facet_grid(~ rule_idx) +
+    labs(
+    title = "Train & Chat Time Comparisons",
+    x = "Student & Teachers",
+    y = "Time (Seconds)"
+  )
 ```
 
 For Simple Rules 0, 2, 4 (Single Feature & Conjunction) we see that there isn't a wide variance in terms of train time and chat time; but this rift becomes noticeable when we have Harder Rules 6, 8 (Disjunction).
@@ -796,6 +810,13 @@ ggplot(
     aes(x=role, y=val, fill=stat)
   ) + geom_bar(stat = 'identity', position ='stack') + ggtitle("Distribution of Utterance Types (Informative + Follow-Up) Across Player Pairs ") +
     xlab('Role') + ylab('# of Messages of Utterance Type') + facet_grid(~gameid)
+```
+
+```{r}
+ggplot(y,
+    aes(x = rule_idx, y = n)
+) + geom_bar(stat = 'identity') + ggtitle("# of Games By Rule Index") +
+    xlab('Rule Index') + ylab('# Games Played')
 ```
 
 ## Analysis of Language Across Concepts
