@@ -231,7 +231,7 @@ function createTrainingCritter(stim, i, scale){
   );
 
   // Set opacity at 1
-  $("#training_cell_" + i).css({"opacity": 1.0});
+  $("#training_cell_" + i).css({"opacity": 0.3});
 
   // Construct "species" labels
   var label = "";
@@ -255,12 +255,9 @@ function createTrainingCritter(stim, i, scale){
       id = '#' + $(event.target).parents('.cell')[0].id;
     }
 
-    if (exp.selected_stim_idx != -1) {
-      fade(exp.selected_stim_idx);
-    }
     exp.selected_stim_idx = id;
-    mark(id);
-    showSpeciesIndicators(id);
+    darken(exp.selected_stim_idx);
+    showSpeciesIndicators(exp.selected_stim_idx);
 
     if (!exp.selected_training_stim.includes(exp.selected_stim_idx)) {
       exp.selected_training_stim.push(exp.selected_stim_idx);
@@ -299,24 +296,9 @@ function createTestingCritter(stim, i, scale){
   });
 }
 
-// Mark a given stimulus with a black border box
-function mark(id) {
-  if ($(id).text().indexOf(globalGame.speciesName) >= 0) {
-    $(id).css({"border":'2px dashed black'});
-  } else {
-    $(id).css({"border":'2px solid black'});
-  }
-  $(id).css({"opacity": 1});
-}
-
-// Fade a given stimulus
-function fade(id) {
-  if ($(id).text().indexOf(globalGame.speciesName) >= 0) {
-    $(id).css({"border":'2px dashed black'});
-  } else {
-    $(id).css({"border":'none'});
-  }  
-  $(id).css({"opacity": 0.3});
+// Darken a given stimulus
+function darken(id) {
+  $(id).css({"opacity": 1.0});
 }
 
 function showSpeciesIndicators(id) {
