@@ -135,8 +135,8 @@ class ReferenceGameServer {
       // options.possibleSpeciesPlural = ['wudsies', 'morseths', 'kweps', 'zorbs', 'luzaks'];
 
       // Pilot 2:
-      options.possibleSpecies = ['dorbsy', 'javsy', 'lorchy', 'grinky', 'thupsy'];
-      options.possibleSpeciesPlural = ['dorbsies', 'javsies', 'lorchies', 'grinkies', 'thupsies'];
+      options.possibleSpecies = ['dorb', 'jav', 'lorch', 'grink', 'thup'];
+      options.possibleSpeciesPlural = ['dorbs', 'javs', 'lorchs', 'grinks', 'thups'];
 
     }
 
