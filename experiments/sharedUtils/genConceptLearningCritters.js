@@ -100,8 +100,14 @@ var constants = {
 	false: "false",
 
 	// Misc
+	creature: "creature",
 	name: "name",
 	type: "type",
+	logical_form: "logical_form",
+	description: "description",
+
+	// Rule Types
+	conjunction: "CONJUNCTION",
 }
 
 
@@ -320,6 +326,49 @@ function createRuleFunc(concept_description) {
 	// False indicates that the critter does not fit the described concept.
 }
 
+function isValidDescription(concept_description) {
+	// Check whether concept description is valid.
+	// Returns True/False appropriately.
+	var d = concept_description[constants.description];
+
+	// Ensure that there are no "undefined" values
+	// in object description.
+	for (var property in d) {
+		if (d.hasOwnProperty(property)) {
+			if (typeof property === "undefined") return false;
+			if (typeof d[property] === "undefined") return false;
+		}
+	}	
+
+	// Flower
+	if (d[constants.creature] === constants.flower && constants.spots_color in d) {
+		return constants.spots_present in d && d[constants.spots_present] === constants.true;
+	}
+
+	// Bug
+	if (d[constants.creature] === constants.bug && constants.antennae_color in d) {
+		return constants.antennae_present in d && d[constants.antennae_present] === constants.true;
+	}	
+	if (d[constants.creature] === constants.bug && constants.bug_wings_color in d) {
+		return constants.wings_present in d && d[constants.wings_present] === constants.true;
+	}	
+
+	// Bird
+	if (d[constants.creature] === constants.bird && constants.crest_tail_color in d) {
+		return (constants.crest_present in d || constants.tail_present in d)  && (d[constants.crest_present] === constants.true || d[constants.tail_present] === constants.true);
+	}	
+
+	// Tree
+	if (d[constants.creature] === constants.tree && constants.berries_color in d) {
+		return constants.berries_present in d && d[constants.berries_present] === constants.true;
+	}	
+	if (d[constants.creature] === constants.tree && constants.leaves_color in d) {
+		return constants.leaves_present in d && d[constants.leaves_present] === constants.true;
+	}	
+
+	return true;
+}
+
 
 // ------------------
 // Data File Creation
@@ -370,28 +419,35 @@ function genDatasets(rules, NUM_TRAIN) {
 var testStimuliGeneration = function() {
 	var test_rules = [
 		{
-			'name': 'Flowers with thorns and green spots',
-			'logical_form': 'flowers AND thorns AND spots AND green spots',
-			'type': 'CONJUNCTION',
-			'description': {
-				'creature': 'flower',
-				'thorns_present': true,
-				'spots_present': true,
-				'spots': 'green',
+			[constants.name]: 'Flowers with thorns and green spots',
+			[constants.logical_form]: 'flowers AND thorns AND spots AND green spots',
+			[constants.type]: constants.conjunction,
+			[constants.description]: {
+				[constants.creature]: constants.flower,
+				[constants.thorns_present]: constants.true,
+				[constants.spots_present]: constants.true,
+				[constants.spots_color]: constants.green,
 			},
 		},
 		{
-			'name': 'Fat Blue Birds',
-			'logical_form': 'birds AND fat AND blue body',
-			'type': 'CONJUNCTION',
-			'description': {
-				'creature': 'bird',
-				'fatness': 'large',
-				'body': 'blue',
+			[constants.name]: 'Fat Blue Birds',
+			[constants.logical_form]: 'birds AND fat AND blue body',
+			[constants.type]: constants.conjunction,
+			[constants.description]: {
+				[constants.creature]: constants.bird,
+				[constants.fatness]: constants.large,
+				[constants.body_color]: constants.blue,
 			},
 		}
 	];
+
+	for (var i = 0; i < test_rules.length; i++) {
+		console.log(isValidDescription(test_rules[i]));
+	}
+
 }
+
+testStimuliGeneration();
 
 
 module.exports = {
