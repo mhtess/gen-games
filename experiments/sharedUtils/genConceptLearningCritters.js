@@ -30,6 +30,7 @@ var constants = {
 	fish: "fish",
 	body_color: "body_color",
 	fins_color: "fins_color",
+	body_size: "body_size",
 	tail_size: "tail_size",
 	fangs_present: "fangs_present",
 	whiskers_present: "whiskers_present",
@@ -97,6 +98,10 @@ var constants = {
 	// Boolean
 	true: "true",
 	false: "false",
+
+	// Misc
+	name: "name",
+	type: "type",
 }
 
 
@@ -387,6 +392,7 @@ var testStimuliGeneration = function() {
 		}
 	];
 }
+
 
 module.exports = {
 	constants: constants,
