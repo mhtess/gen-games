@@ -292,7 +292,7 @@ var property_type_to_dict = {
 // ------------------
 // Dataset Generation
 // ------------------
-var createDatset = function(rule, training_set_size) {
+function createDatset(rule, training_set_size) {
 	// Define dataset of some number of sets of critters.
 	// ---------
 	// rule: function that evaluatse to T/F
@@ -302,13 +302,13 @@ var createDatset = function(rule, training_set_size) {
 	return [training_stimuli, test_stimuli];
 }
 
-var createCritter = function(critter_properties, rule) {
+function createCritter(critter_properties, rule) {
 	// Construct a critter based on the provided properties.
 	// Determine whether the critter belongs to the concept 
 	// by applying the rule function to constructed critter.
 }
 
-var createRuleFunc = function(concept_description) {
+function createRuleFunc(concept_description) {
 	// Create a function that returns True / False
 	// given a dictionary of critter features. 
 	// True indicates that the critter fits the described concept.
@@ -319,11 +319,7 @@ var createRuleFunc = function(concept_description) {
 // ------------------
 // Data File Creation
 // ------------------
-var loadDatasetConfigs = function(config) {
-
-}
-
-var saveDatasetToFile = function(dataset, filepath) {
+function saveDatasetToFile(dataset, filepath) {
 	jsonfile.writeFile(filepath, dataset, function(err) {
 		console.log(err);
 	})
@@ -390,12 +386,10 @@ var testStimuliGeneration = function() {
 			},
 		}
 	];
-		
-	
-
 }
 
 module.exports = {
+	constants: constants,
     createDatset: createDatset,
 	saveDatasetToFile: saveDatasetToFile,
 	genDatasets: genDatasets,
