@@ -9,7 +9,9 @@
 // IMPORTS
 // -------
 var _ = require('lodash');
+var fs = require('fs');
 var jsonfile = require('jsonfile');
+var path = require('path');
 
 // ----------
 // CONSTANTS
@@ -105,6 +107,9 @@ var constants = {
 	type: "type",
 	logical_form: "logical_form",
 	description: "description",
+	phrase: "phrase",
+	props: "props",
+	belongs_to_concept: "belongs_to_concept",
 
 	// Rule Types
 	conjunction: "CONJUNCTION",
@@ -300,36 +305,36 @@ var property_type_to_dict = {
 	[constants.bool]: bool_dict,
 };
 
-// ------------------
-// Dataset Generation
-// ------------------
-function createDatset(rule, training_set_size) {
-	// Define dataset of some number of sets of critters.
-	// ---------
-	// rule: function that evaluatse to T/F
-	//		 according to whether the critter belongs to a specific concept
-	// training_set_size: Training set size. 
+// -------------------------
+// Concepts & Rule Functions
+// -------------------------
 
-	return [training_stimuli, test_stimuli];
-}
-
-function createCritter(critter_properties, rule) {
-	// Construct a critter based on the provided properties.
-	// Determine whether the critter belongs to the concept 
-	// by applying the rule function to constructed critter.
-}
-
-function createRuleFunc(concept_description) {
+function addRule(concept) {
 	// Create a function that returns True / False
 	// given a dictionary of critter features. 
 	// True indicates that the critter fits the described concept.
 	// False indicates that the critter does not fit the described concept.
+	_.extend({
+		rule: function(creature, creature_description) {
+			// Incorrect creature kind
+			if (concept[constants.creature] !== creature) return false;
+
+			// Examine properties
+			for (var property in concept) {
+				if (concept.hasOwnProperty(property)) {
+					if (creature_description[property] !== concept[property]) return false;
+				}
+			}
+			return true;
+		}
+	}, concept);
+	return concept;
 }
 
-function isValidDescription(concept_description) {
+function isValidConcept(concept) {
 	// Check whether concept description is valid.
 	// Returns True/False appropriately.
-	var d = concept_description[constants.description];
+	var d = concept[constants.description];
 
 	// Ensure that there are no "undefined" values
 	// in object description.
@@ -369,6 +374,107 @@ function isValidDescription(concept_description) {
 	return true;
 }
 
+// ------------------
+// Dataset Generation
+// ------------------
+
+function genDatasets(concepts, train_percentage, dir) {
+	var concept_summary = {};
+	var index = 0;
+
+	// Create dataset directories
+	train_dir = path.join(dir, 'train');
+	test_dir = path.join(dir, 'test');
+	if (!fs.existsSync(train_dir)){
+		fs.mkdirSync(train_dir);
+	}
+	if (!fs.existsSync(test_dir)){
+		fs.mkdirSync(test_dir);
+	}
+
+	// Add rule functions to each of the concepts
+	for (var i = 0; i < concepts.length; i++) {
+		var concept = concepts[i];
+		concepts[i] = addRule(concept);
+	}
+
+	// Create dataset for each concept
+	for (let c of concepts) {
+		var datasets = createDatset(c, train_percentage);
+		var train = train_dir + '/' + c.name + '.json';
+		var test = test_dir + '/' + c.name + '.json';
+		saveDatasetToFile(datasets[0], train);
+		saveDatasetToFile(datasets[1], test);
+
+		concept_summary[index] = {
+			name: c.name,
+			logical_form: c.logical_form,
+			phrase: c.phrase,
+			type: c.type,
+		};
+		index++;
+	}
+	
+	// Write concept_summary
+	jsonfile.writeFile(path.join(dir, './concept_summary.json'), concept_summary, function(err) {
+		console.log(err);
+	});
+}
+
+function createDataset(rule, train_percentage) {
+	// Define dataset of some number of sets of critters.
+	// ---------
+	// rule: function that evaluatse to T/F
+	//		 according to whether the critter belongs to a specific concept
+	// train_percentage: Training set size (%) 
+
+	return [training_stimuli, test_stimuli];
+}
+
+function enumerateCreatureDescriptions(creature) {
+
+}
+
+function createCreature(creature, creature_description, belongs_to_concept) {
+	// Construct a critter based on the provided properties.
+	// Determine whether the critter belongs to the concept 
+	// by applying the rule function to constructed critter.
+
+	if (creature !== constants.flower &&
+		creature !== constants.fish &&
+		creature !== constants.bug &&
+		creature !== constants.bird &&
+		creature !== constants.tree
+	) {
+		throw "Invalid creature type!";
+	}
+
+	var creatureJSON =  {
+		[constants.creature]: creature,
+		[constants.props]: {},
+		[constants.description]: creature_description,
+		[constants.belongs_to_concept]: belongs_to_concept,
+	};
+
+	// Convert english langauge properties
+	// to descriptors for the stimuli pacakge
+	for (var property in creature_description) {
+		if (creature_description.hasOwnProperty(property)) {
+			var property_text_val = creature_description[property];
+			var property_descriptor = creature_dict[creature][property];
+
+			console.log(property);
+			console.log(property_text_val);
+			console.log(property_descriptor);
+
+			var property_name = property_descriptor[constants.name];
+			var property_type = property_descriptor[constants.type];
+			creatureJSON[constants.props][property_name] = property_type_to_dict[property_type][property_text_val];
+		}
+	}	
+
+	return creatureJSON;
+}
 
 // ------------------
 // Data File Creation
@@ -379,47 +485,16 @@ function saveDatasetToFile(dataset, filepath) {
 	})
 }
 
-// ------------------
-// Data File Creation
-// ------------------
-function genDatasets(rules, NUM_TRAIN) {
-	// Rules is a list of rule objects. Example included below.
-	// rule = {
-	// 		name: "body_color_orange",
-	// 		func: function(critter, color_dict, prop1_dict) {
-	// 			return critter["props"]["col1"] === color_dict["orange"];
-	// 		},
-	// 		type: SINGLE_FEAT,
-	// }
-
-	var rule_summary = {};
-	var index = 0;
-	for (let r of rules) {
-		var r_data = createDatset(r.func, NUM_TRAIN);
-		var training_data_fn = './training_data_' + r.name + '.json';
-		var test_data_fn = './test_data_' + r.name + '.json';
-		saveDatasetToFile(r_data[0], training_data_fn);
-		saveDatasetToFile(r_data[1], test_data_fn);
-
-		rule_summary[index] = {
-			name: r.name,
-			type: r.type,
-		}
-		index++;
-	}
-	jsonfile.writeFile("./rule_summary.json", rule_summary, function(err) {
-		console.log(err);
-	});
-}
 
 // ----
 // TEST
 // ----
 
 var testStimuliGeneration = function() {
-	var test_rules = [
+	var test_concepts = [
 		{
-			[constants.name]: 'Flowers with thorns and green spots',
+			[constants.name]: 'flowers_thorns_green_spots',
+			[constants.phrase]: 'Flowers with thorns and green spots',
 			[constants.logical_form]: 'flowers AND thorns AND spots AND green spots',
 			[constants.type]: constants.conjunction,
 			[constants.description]: {
@@ -430,7 +505,8 @@ var testStimuliGeneration = function() {
 			},
 		},
 		{
-			[constants.name]: 'Fat Blue Birds',
+			[constants.name]: 'fat_blue_birds',
+			[constants.phrase]: 'Fat Blue Birds',
 			[constants.logical_form]: 'birds AND fat AND blue body',
 			[constants.type]: constants.conjunction,
 			[constants.description]: {
@@ -441,18 +517,33 @@ var testStimuliGeneration = function() {
 		}
 	];
 
-	for (var i = 0; i < test_rules.length; i++) {
-		console.log(isValidDescription(test_rules[i]));
+	for (var i = 0; i < test_concepts.length; i++) {
+		console.log(isValidConcept(test_concepts[i]));
 	}
 
 }
 
-testStimuliGeneration();
+// testStimuliGeneration();
+// console.log(
+// 	createCreature(
+// 		"bug", {
+// 		[constants.legs_color]: constants.pink,
+// 		[constants.head_color]: constants.black,
+// 		[constants.body_color]: constants.green,
+// 		[constants.antennae_color]: constants.red,
+// 		[constants.bug_wings_color]: constants.yellow,
+// 		[constants.head_size]: constants.small,
+// 		[constants.body_size]: constants.small,
+// 		[constants.antennae_present]: constants.true,
+// 		[constants.wings_present]: constants.false,
+// 	}, 
+// 	true)
+// );
 
 
 module.exports = {
 	constants: constants,
-    createDatset: createDatset,
+    createDatset: createDataset,
 	saveDatasetToFile: saveDatasetToFile,
 	genDatasets: genDatasets,
 }
