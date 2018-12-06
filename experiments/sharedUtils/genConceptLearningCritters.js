@@ -281,12 +281,12 @@ var color_dict = {
 	[constants.red]: "#f42935",
 	[constants.yellow]: "#eec900",
 	[constants.green]: "#228b22",
-	[constants.orange]: "#ff8c00",
-	[constants.purple]: "#dda0dd",
-	[constants.pink]: "#FF69B4",
-	[constants.white]: "#FFFFFF",
-	[constants.black]: "#000000",
-	[constants.brown]: "#A52A2A",
+	// [constants.orange]: "#ff8c00",
+	// [constants.purple]: "#dda0dd",
+	// [constants.pink]: "#FF69B4",
+	// [constants.white]: "#FFFFFF",
+	// [constants.black]: "#000000",
+	// [constants.brown]: "#A52A2A",
 };
 
 var size_dict = {
@@ -303,6 +303,46 @@ var property_type_to_dict = {
 	[constants.color]: color_dict,
 	[constants.size]: size_dict,
 	[constants.bool]: bool_dict,
+};
+
+var boolean_color_constraints = {
+	[constants.flower]: [
+		{
+			[constants.bool]: constants.spots_present,
+			[constants.color]: constants.spots_color,
+		}
+	],
+	[constants.fish]: [],
+	[constants.bug]: [
+		{
+			[constants.bool]: constants.antennae_present,
+			[constants.color]: constants.antennae_color,
+		},
+		{
+			[constants.bool]: constants.wings_present,
+			[constants.color]: constants.bug_wings_color,
+		}
+	],
+	[constants.bird]: [
+		{
+			[constants.bool]: constants.crest_present,
+			[constants.color]: constants.crest_tail_color,
+		},
+		{
+			[constants.bool]: constants.tail_present,
+			[constants.color]: constants.crest_tail_color,
+		}
+	],
+	[constants.tree]: [
+		{
+			[constants.bool]: constants.berries_present,
+			[constants.color]: constants.berries_color,
+		},
+		{
+			[constants.bool]: constants.leaves_present,
+			[constants.color]: constants.leaves_color,
+		},
+	],
 };
 
 // -------------------------
@@ -331,6 +371,21 @@ function addRule(concept) {
 	return concept;
 }
 
+function resolveColorConstraints(creature,  d) {
+	// Determine if description (d) for a given creature type is valid
+	// according to boolean feature / color feature constraints.
+	// If the description is valid, return the given description.
+	// If it is invalid, edit the description so that it is now valid.
+	var constraints = boolean_color_constraints[creature];
+	for (var i = 0; i < constraints.length; i++) {
+		var constraint = constraints[i];
+		if (d[constraint[constants.bool]] === constants.false) {
+			delete d[constraint[constants.color]];
+		}
+	}
+	return d;
+}
+
 function isValidConcept(concept) {
 	// Check whether concept description is valid.
 	// Returns True/False appropriately.
@@ -345,33 +400,15 @@ function isValidConcept(concept) {
 		}
 	}	
 
-	// Flower
-	if (d[constants.creature] === constants.flower && constants.spots_color in d) {
-		return constants.spots_present in d && d[constants.spots_present] === constants.true;
+	var is_valid = true;
+	var constraints = boolean_color_constraints[d[constants.creature]];
+	for (var i = 0; i < constraints.length; i++) {
+		var constraint = constraints[i];
+		if (constraint[constants.color] in d) {
+			is_valid = is_valid && (constraint[constants.bool] in d && d[constraint[constants.bool]] === constants.true);
+		}
 	}
-
-	// Bug
-	if (d[constants.creature] === constants.bug && constants.antennae_color in d) {
-		return constants.antennae_present in d && d[constants.antennae_present] === constants.true;
-	}	
-	if (d[constants.creature] === constants.bug && constants.bug_wings_color in d) {
-		return constants.wings_present in d && d[constants.wings_present] === constants.true;
-	}	
-
-	// Bird
-	if (d[constants.creature] === constants.bird && constants.crest_tail_color in d) {
-		return (constants.crest_present in d || constants.tail_present in d)  && (d[constants.crest_present] === constants.true || d[constants.tail_present] === constants.true);
-	}	
-
-	// Tree
-	if (d[constants.creature] === constants.tree && constants.berries_color in d) {
-		return constants.berries_present in d && d[constants.berries_present] === constants.true;
-	}	
-	if (d[constants.creature] === constants.tree && constants.leaves_color in d) {
-		return constants.leaves_present in d && d[constants.leaves_present] === constants.true;
-	}	
-
-	return true;
+	return is_valid;
 }
 
 // ------------------
@@ -432,7 +469,58 @@ function createDataset(rule, train_percentage) {
 }
 
 function enumerateCreatureDescriptions(creature) {
+	var creature_descriptor = creature_dict[creature];
+	var unfinished_creature_descriptions = [{}];
+	var completed_creature_descriptions = [];
 
+	function isCompleteDescription(creature_description) {
+		for (var property in creature_descriptor) {
+			if (creature_descriptor.hasOwnProperty(property)) {
+				if (!(property in creature_description)) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
+	while(unfinished_creature_descriptions.length > 0) {
+		var cur_creature_description = unfinished_creature_descriptions.shift();
+		var new_property = "";
+		
+		// Identify property to enumerate for exemplar
+		for (var property in creature_descriptor) {
+			if (creature_descriptor.hasOwnProperty(property)) {
+				if (!(property in cur_creature_description)) {
+					new_property = property;
+					break;
+				}
+			}
+		}
+
+		// Enqueue variants of object
+		var new_property_descriptor = creature_dict[creature][new_property];
+		var new_property_type = new_property_descriptor[constants.type];
+		var possible_vals = Object.keys(property_type_to_dict[new_property_type]);
+		for (var i = 0; i < possible_vals.length; i++) {
+			var modified_cur_creature_description = Object.assign({}, cur_creature_description);
+			modified_cur_creature_description[new_property] = possible_vals[i];
+
+			if (isCompleteDescription(modified_cur_creature_description)) {
+				completed_creature_descriptions.push(modified_cur_creature_description);
+			} else {
+				unfinished_creature_descriptions.push(modified_cur_creature_description);
+			}
+		}
+	}
+
+	function clean_description(description) {
+		return resolveColorConstraints(creature, description);
+	}
+
+	var cleaned_creature_descriptions = _.filter(completed_creature_descriptions, clean_description);
+	var final_creature_descriptions = _.uniqWith(cleaned_creature_descriptions, _.isEqual);
+	return final_creature_descriptions;
 }
 
 function createCreature(creature, creature_description, belongs_to_concept) {
@@ -462,11 +550,6 @@ function createCreature(creature, creature_description, belongs_to_concept) {
 		if (creature_description.hasOwnProperty(property)) {
 			var property_text_val = creature_description[property];
 			var property_descriptor = creature_dict[creature][property];
-
-			console.log(property);
-			console.log(property_text_val);
-			console.log(property_descriptor);
-
 			var property_name = property_descriptor[constants.name];
 			var property_type = property_descriptor[constants.type];
 			creatureJSON[constants.props][property_name] = property_type_to_dict[property_type][property_text_val];
@@ -539,6 +622,20 @@ var testStimuliGeneration = function() {
 // 	}, 
 // 	true)
 // );
+// console.log(
+// 	resolveColorConstraints("bug", {
+// 		[constants.legs_color]: constants.pink,
+// 		[constants.head_color]: constants.black,
+// 		[constants.body_color]: constants.green,
+// 		[constants.antennae_color]: constants.red,
+// 		[constants.bug_wings_color]: constants.yellow,
+// 		[constants.head_size]: constants.small,
+// 		[constants.body_size]: constants.small,
+// 		[constants.antennae_present]: constants.true,
+// 		[constants.wings_present]: constants.false,
+// 	})
+// );
+// console.log(enumerateCreatureDescriptions(constants.flower).length);
 
 
 module.exports = {
