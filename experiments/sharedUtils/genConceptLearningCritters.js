@@ -278,14 +278,14 @@ var creature_dict = {
 
 var color_dict = {
 	[constants.blue]: "#5da5db",
-	[constants.red]: "#f42935",
-	[constants.yellow]: "#eec900",
-	[constants.green]: "#228b22",
-	// [constants.orange]: "#ff8c00",
+	// [constants.red]: "#f42935",
+	// [constants.yellow]: "#eec900",
+	// [constants.green]: "#228b22",
+	[constants.orange]: "#ff8c00",
 	// [constants.purple]: "#dda0dd",
 	// [constants.pink]: "#FF69B4",
 	// [constants.white]: "#FFFFFF",
-	// [constants.black]: "#000000",
+	[constants.black]: "#000000",
 	// [constants.brown]: "#A52A2A",
 };
 
@@ -415,11 +415,14 @@ function isValidConcept(concept) {
 // Dataset Generation
 // ------------------
 
-function genDatasets(concepts, train_percentage, dir) {
+function genDatasets(concepts, train_proportion, dir) {
 	var concept_summary = {};
 	var index = 0;
 
 	// Create dataset directories
+	if (!fs.existsSync(dir)){
+		fs.mkdirSync(dir);
+	}
 	train_dir = path.join(dir, 'train');
 	test_dir = path.join(dir, 'test');
 	if (!fs.existsSync(train_dir)){
@@ -437,11 +440,11 @@ function genDatasets(concepts, train_percentage, dir) {
 
 	// Create dataset for each concept
 	for (let c of concepts) {
-		var datasets = createDatset(c, train_percentage);
+		var datasets = createDataset(c, train_proportion);
 		var train = train_dir + '/' + c.name + '.json';
 		var test = test_dir + '/' + c.name + '.json';
-		saveDatasetToFile(datasets[0], train);
-		saveDatasetToFile(datasets[1], test);
+		jsonfile.writeFile(train, datasets[0]);
+		jsonfile.writeFile(test, datasets[1]);
 
 		concept_summary[index] = {
 			name: c.name,
@@ -453,19 +456,24 @@ function genDatasets(concepts, train_percentage, dir) {
 	}
 	
 	// Write concept_summary
-	jsonfile.writeFile(path.join(dir, './concept_summary.json'), concept_summary, function(err) {
-		console.log(err);
-	});
+	jsonfile.writeFile(path.join(dir, 'concept_summary.json'), concept_summary);
 }
 
-function createDataset(rule, train_percentage) {
+function createDataset(concept, train_proportion) {
 	// Define dataset of some number of sets of critters.
 	// ---------
-	// rule: function that evaluatse to T/F
-	//		 according to whether the critter belongs to a specific concept
-	// train_percentage: Training set size (%) 
-
-	return [training_stimuli, test_stimuli];
+	var creature = concept[constants.description][constants.creature];
+	var creature_descriptions = enumerateCreatureDescriptions(creature);
+	var creature_belongs_to_concept = _.map(creature_descriptions, concept.rule);
+	var stimuli = [];
+	for (var i = 0; i < creature_descriptions.length; i++) {
+		stimuli.push(createCreature(creature, creature_descriptions[i], creature_belongs_to_concept[i]));
+	}
+	stimuli = _.shuffle(stimuli);
+	var test_idx = _.round(train_proportion * stimuli.length);
+	var train_stimuli = _.slice(stimuli, 0, test_idx);
+	var test_stimuli = _.slice(stimuli, test_idx);
+	return [train_stimuli, test_stimuli];
 }
 
 function enumerateCreatureDescriptions(creature) {
@@ -559,15 +567,6 @@ function createCreature(creature, creature_description, belongs_to_concept) {
 	return creatureJSON;
 }
 
-// ------------------
-// Data File Creation
-// ------------------
-function saveDatasetToFile(dataset, filepath) {
-	jsonfile.writeFile(filepath, dataset, function(err) {
-		console.log(err);
-	})
-}
-
 
 // ----
 // TEST
@@ -597,16 +596,14 @@ var testStimuliGeneration = function() {
 				[constants.fatness]: constants.large,
 				[constants.body_color]: constants.blue,
 			},
-		}
+		},
 	];
 
-	for (var i = 0; i < test_concepts.length; i++) {
-		console.log(isValidConcept(test_concepts[i]));
-	}
+	genDatasets(test_concepts, 0.80, './test_dataset');
 
 }
 
-// testStimuliGeneration();
+testStimuliGeneration();
 // console.log(
 // 	createCreature(
 // 		"bug", {
@@ -641,6 +638,5 @@ var testStimuliGeneration = function() {
 module.exports = {
 	constants: constants,
     createDatset: createDataset,
-	saveDatasetToFile: saveDatasetToFile,
 	genDatasets: genDatasets,
 }
