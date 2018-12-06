@@ -354,7 +354,7 @@ function addRule(concept) {
 	// given a dictionary of critter features. 
 	// True indicates that the critter fits the described concept.
 	// False indicates that the critter does not fit the described concept.
-	_.extend({
+	concept = _.extend({
 		rule: function(creature, creature_description) {
 			// Incorrect creature kind
 			if (concept[constants.creature] !== creature) return false;
@@ -377,12 +377,29 @@ function resolveColorConstraints(creature,  d) {
 	// If the description is valid, return the given description.
 	// If it is invalid, edit the description so that it is now valid.
 	var constraints = boolean_color_constraints[creature];
-	for (var i = 0; i < constraints.length; i++) {
-		var constraint = constraints[i];
-		if (d[constraint[constants.bool]] === constants.false) {
-			delete d[constraint[constants.color]];
+
+	if (creature !== constants.bird) {
+		for (var i = 0; i < constraints.length; i++) {
+			var constraint = constraints[i];
+			if (d[constraint[constants.bool]] === constants.false) {
+				delete d[constraint[constants.color]];
+			}			
 		}
+	} else {
+		var valid = true;
+		for (var i = 0; i < constraints.length; i++) {
+			var constraint = constraints[i];
+			if (d[constraint[constants.bool]] === constants.false) {
+				valid = valid & false;
+			}
+		}
+		if (valid === false) {
+			var constraint = constraints[0];
+			delete d[constraint[constants.color]];			
+		}	
 	}
+
+
 	return d;
 }
 
