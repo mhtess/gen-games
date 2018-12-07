@@ -280,18 +280,18 @@ var color_dict = {
 	[constants.blue]: "#5da5db",
 	// [constants.red]: "#f42935",
 	// [constants.yellow]: "#eec900",
-	// [constants.green]: "#228b22",
+	[constants.green]: "#228b22",
 	[constants.orange]: "#ff8c00",
 	// [constants.purple]: "#dda0dd",
 	// [constants.pink]: "#FF69B4",
 	// [constants.white]: "#FFFFFF",
-	[constants.black]: "#000000",
-	// [constants.brown]: "#A52A2A",
+	// [constants.black]: "#000000",
+	[constants.brown]: "#A52A2A",
 };
 
 var size_dict = {
 	[constants.small]: Math.log(1.0),
-	[constants.large]: Math.log(4.0),
+	[constants.large]: Math.log(2.0),
 };
 
 var bool_dict = {
@@ -357,12 +357,14 @@ function addRule(concept) {
 	concept = _.extend({
 		rule: function(creature, creature_description) {
 			// Incorrect creature kind
-			if (concept[constants.creature] !== creature) return false;
+			var concept_description = concept[constants.description];
+			if (concept_description[constants.creature] !== creature) return false;
 
 			// Examine properties
-			for (var property in concept) {
-				if (concept.hasOwnProperty(property)) {
-					if (creature_description[property] !== concept[property]) return false;
+			for (var property in concept_description) {
+				if (concept_description.hasOwnProperty(property)) {
+					if (property === constants.creature) continue;
+					if (creature_description[property] !== concept_description[property]) return false;
 				}
 			}
 			return true;
@@ -468,6 +470,10 @@ function genDatasets(concepts, train_proportion, dir) {
 			logical_form: c.logical_form,
 			phrase: c.phrase,
 			type: c.type,
+			num_train: datasets[0].length,
+			p_train_belongs_to_concept: (_.filter(datasets[0], function(x) {return x.belongs_to_concept}).length * 1.0) / datasets[0].length,
+			num_test: datasets[1].length,
+			p_test_belongs_to_concept: (_.filter(datasets[1], function(x) {return x.belongs_to_concept}).length * 1.0)/ datasets[1].length,
 		};
 		index++;
 	}
@@ -481,7 +487,10 @@ function createDataset(concept, train_proportion) {
 	// ---------
 	var creature = concept[constants.description][constants.creature];
 	var creature_descriptions = enumerateCreatureDescriptions(creature);
-	var creature_belongs_to_concept = _.map(creature_descriptions, concept.rule);
+	var rule_func = function(creature_description) {
+		return concept.rule(creature, creature_description);
+	}
+	var creature_belongs_to_concept = _.map(creature_descriptions, rule_func);
 	var stimuli = [];
 	for (var i = 0; i < creature_descriptions.length; i++) {
 		stimuli.push(createCreature(creature, creature_descriptions[i], creature_belongs_to_concept[i]));
