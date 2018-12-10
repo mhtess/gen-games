@@ -623,6 +623,17 @@ var testStimuliGeneration = function() {
 				[constants.body_color]: constants.blue,
 			},
 		},
+		{
+			[constants.name]: 'trees_blue_berries',
+			[constants.phrase]: 'Trees with blue berries',
+			[constants.logical_form]: 'trees AND blue berries',
+			[constants.type]: constants.conjunction,
+			[constants.description]: {
+				[constants.creature]: constants.tree,
+				[constants.berries_present]: constants.true,
+				[constants.berries_color]: constants.blue,
+			},
+		},
 	];
 
 	genDatasets(test_concepts, 0.80, './test_dataset');
