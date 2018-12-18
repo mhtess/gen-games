@@ -11,10 +11,9 @@
     
     <title>Experiment</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="../../lib/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap theme -->
-    <link href="../../lib/css/bootstrap-theme.min.css" rel="stylesheet">
+    <!-- Bootstrap core CSS & theme -->
+    <link href="/../../_shared/lib/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/../../_shared/lib/css/bootstrap-theme.min.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -24,25 +23,16 @@
   </head>
 
   <body role="document">
-
     <div class="container theme-showcase" role="main">
-
-      </br>
-
       <p>
-        <center><button id="agree" type="button" class="btn btn-sm btn-primary">START</button></center>
-	<noscript><strong>JavaScript must be enabled to start.</strong></noscript>
+        <center>
+          <button id="agree" type="button" class="btn btn-sm btn-primary">START</button>
+        </center>
+	      <noscript>
+          <strong>JavaScript must be enabled to start.</strong>
+        </noscript>
       </p>
-
     </div> <!-- /container -->
-
-    
-    <script type="text/javascript">
-      document.getElementById("agree").onclick = function () {
-        var id = Math.floor(Math.random() * 1e12);
-        location.replace("http://nospoon.mit.edu:8888/index.html?id=" + id);
-      };
-    </script>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
