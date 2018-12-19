@@ -11,11 +11,20 @@
     <title>Learning Experiment</title>
 
     <!-- Bootstrap core CSS & theme -->
-    <link href="/../../_shared/lib/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/../../_shared/lib/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="../../_shared/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../_shared/css/bootstrap-theme.min.css" rel="stylesheet">
 
   </head>
   <body role="document">
+    <div class="container theme-showcase" role="main">
+      <br>
+      <div class="progress">
+        <div class="progress-bar" role="progressbar" aria-valuenow="5"
+        aria-valuemin="0" aria-valuemax="100" style="width: 5%;">
+          <span class="sr-only">5% Complete</span>
+        </div>
+      </div>  
+      
       <div class="page-header">
         <h1>Instructions</h1>
       </div>
@@ -26,34 +35,37 @@
           Your goal is to learn how to identify creatures that belong to a specific species.
           In the game, you will be assigned the role of "explorer" or "student". 
           <br> <br>
-          <b>Explorer:</b> If you are the explorer, you will receive a creature detector and a grid of creatures to inspect.
-          You can use the creature detector by clicking on any creature in the grid. 
-          If a clicked creature belongs to the species, the detector will present it with a dashed box.
-          Once you have clicked on all the critters in the grid, take a moment to think about the properties of the creatures that belong to the species.
-          When you are ready to proceed, you will continue to a chatroom where you communicate your findings about the species to your student partner.
-          Once the student feels confident in their understanding of the species, they will progress the game forward.
-          You will then be given a new grid of creatures. This time you will not have your creature detector.
-          You will click on the creatures that you believe belong to the species.
+          <b>Explorer:</b> If you are the explorer, you will receive a creature detector and a
+          grid of creatures to inspect. You can use the creature detector by clicking on any
+          creature in the grid. If a clicked creature belongs to the species, the detector
+          will present it with a dashed box. Once you have clicked on all the critters in the grid
+          take a moment to think about the properties of the creatures that belong to the species.
+          When you are ready to proceed, you will continue to a chatroom where you communicate your
+          findings about the species to your student partner. Once the student feels confident in
+          their understanding of the species, they will progress the game forward.
+          You will then be given a new grid of test creatures. This time you will not have your creature
+          detector. You will click on the creatures that you believe belong to the species.
           The creatures you select will be highlighted with yellow boxes.
           Once, you are confident that you have identified all the creatures that belong to the species,
-          you will continue, repeating this process (grid exploration, chatroom communication, grid identification)
-          for a total of 5 different species of creatures.
+          you will continue, repeating this process (grid exploration, chatroom communication,
+          grid identification) for a total of 5 different species of creatures.
           <br> <br>
-          <b>Student:</b> If you are the student, you will first wait for 1-2 minutes until the explorer has examined
-          the grid of examples with the assistance of their creature detector. Then you both will enter
-          a chatroom, where you can discuss the properties of the species with the explorer as long as
-          you need. Once you feel you have a good understanding of the species properties you will
-          continue from the chatroom. Finaly, you will be a given a grid of critters. You will click
-          on the creatures that you believe belong to the species. The creatures you select will be
-          highlighted with yellow boxes. Once, you are confident that you have identified all the creatures
-          of the given species, you will repeat this process (waiting for explorer, chatroom communication,
-          grid identification) for a total of 5 different species of species.
+          <b>Student:</b> If you are the student, you will first wait for 1-2 minutes until the explorer
+          has examined the grid of examples with the assistance of their creature detector.
+          Then you both will enter a chatroom, where you can discuss the properties of the species
+          with the explorer as long as you need. Once you feel you have a good understanding of the
+          species properties you will continue from the chatroom. Finally, you will be a given a test grid
+          of critters. You will click on the creatures that you believe belong to the species.
+          The creatures you select will be highlighted with yellow boxes. Once, you are confident
+          that you have identified all the creatures of the given species, you will repeat this process
+          (waiting for explorer, chatroom communication, grid identification) for a total of 5
+          different species of species.
           <br> <br>
-          <b>Bonuses:</b> At the end of each identification grid, you (explorer or student) will receive a
+          <b>Bonus:</b> At the end of each test grid, you will receive a
           score:
           (# creatures correctly labeled as species members - # creatures incorrectly labeled species members)
-          At the very end we will add your scores across the different species and with
-          <b>your partner's scores</b>. This will be the total score for both players.
+          At the very end, we will sum together your scores across the rounds with
+          <b>your partner's scores</b> across the rounds. This will be the total score for both players.
           You will each get <b> a bonus of $0.01 per point</b>, so pay attention and communicate effectively
           with your partner during the chatroom! Negative scores will be rounded up to 0,
           so you cannot lose any money.
@@ -61,7 +73,7 @@
 
         <p> A few final notes: you may see this screen before the game begins:
           <p>
-            <center><img src="images/Waitroom.png" alt="initial wait screen" style="width:700px;height:150px">
+            <center><img src="../../_shared/images/waitroom.png" alt="initial wait screen" style="width:700px;height:150px">
             </center>
           </p>
           Just hold tight. Another player should join the game within
@@ -95,33 +107,33 @@
         <br>
         You are guaranteed to be paired with another player.
         <br>
-        <input type="radio" name="matched" value="no"> False
-        <br>
         <input type="radio" name="matched" value="yes"> True
+        <br>
+        <input type="radio" name="matched" value="no"> False
         <br>
               
         <br>
         Players will have unlimited time in the chatroom to discuss what they learned with their partner.
         <br>
-        <input type="radio" name="mgoal" value="no"> False
-        <br>
         <input type="radio" name="mgoal" value="yes"> True
+        <br>
+        <input type="radio" name="mgoal" value="no"> False
         <br>
 
         <br>
         After each chatroom, the explorer and student will be asked to identify creatures within the species from a grid of creatures that the explorer did not see during that round's exploration.
         <br>
-        <input type="radio" name="message" value="no"> False
-        <br>
         <input type="radio" name="message" value="yes"> True
+        <br>
+        <input type="radio" name="message" value="no"> False
         <br>
 
         <br>
         The amount of money in your bonus, depends solely on your performance.
         <br>
-        <input type="radio" name="comp" value="yes"> False
-        <br>
         <input type="radio" name="comp" value="no"> True
+        <br>
+        <input type="radio" name="comp" value="yes"> False
         <br>
 
         <br>
@@ -140,6 +152,12 @@
         </div>
       </div> <!-- /container -->
     </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="../../_shared/js/bootstrap.min.js"></script>
 
     <script type="text/javascript">
       $('html,body').scrollTop(0);
@@ -178,12 +196,6 @@
         };
     </script>
     <script src="./validate-form.js"></script>
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="/../../_shared/lib/js/bootstrap.min.js"></script>
 
   </body>
 </html>
