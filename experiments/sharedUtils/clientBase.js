@@ -1,266 +1,289 @@
-var visible;
-var isConnected = false;
-
-var getURLParams = function() {
-  var match,
-      pl     = /\+/g,  // Regex for replacing addition symbol with a space
-      search = /([^&=]+)=?([^&]*)/g,
-      decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
-      query  = location.search.substring(1);
-
-      var urlParams = {};
-      while ((match = search.exec(query))) {
-        urlParams[decode(match[1])] = decode(match[2]);
-      }
-      return urlParams;
-    };
-
-  var ondisconnect = function(data) {
-    if(isConnected) {
-      // Redirect to exit survey
-      console.log("Other user has exite the game.");
-      var email = globalGame.email ? globalGame.email : '';
-
-      var failMsg = [
-        '<h3>Oops! It looks like your partner lost their connection!</h3>',
-        '<p> Completing this survey will submit your HIT so you will still receive full ',
-        'compensation.</p> <p>If you experience any problems, please email us (',
-        email, ')</p>'
-      ].join('');
-
-      if(globalGame.roundNum != globalGame.numRounds) {
-        $('#subj_info').prepend(failMsg);
-        $('#thanks').hide();
-      }
-
-      $('#message_panel').hide();
-      $('#submitbutton').hide();
-      $('#roleLabel').hide();
-      $('#score').hide();
-      $('#sketchpad').hide(); // this is from sketchpad experiment (jefan 4/23/17)
-      $('#loading').hide(); // this is from sketchpad experiment (jefan 4/23/17)
-      $('.slide').hide();
-      //$('#subj_info').show();
-      $('.progress').hide();
-      exp.goToSlide("subj_info");
-    }
-
+//--------
+// Globals
+// -------
+var visible,
     isConnected = false;
-  };
 
-  var onconnect = function(data) {
-    console.log('on connect')
+//----------------------
+// Connection to Server
+// ---------------------
+var onConnect = function(data) {
+    console.log("on connect")
     isConnected = true;
     //The server responded that we are now in a game. Remember who we are
     this.my_id = data.id;
     this.players[0].id = this.my_id;
-    this.urlParams = getURLParams();
+    this.urlParams = function() {
+        var match,
+        pl     = /\+/g,  // Regex for replacing addition symbol with a space
+        search = /([^&=]+)=?([^&]*)/g,
+        decode = function (s) {
+            return decodeURIComponent(s.replace(pl, " "));
+        },
+        query  = location.search.substring(1);
+    
+        var urlParams = {};
+        while ((match = search.exec(query))) {
+            urlParams[decode(match[1])] = decode(match[2]);
+        }
+        return urlParams;
+    };
 };
 
-// Associates callback functions corresponding to different socket messages
+
+var onDisconnect = function(data) {
+    if(isConnected) {
+        // Redirect to exit survey
+        console.log("Other user has exited the game.");
+        var email = globalGame.email ? globalGame.email : "";
+
+        var failMsg = [
+            "<h3>Oops! It looks like your partner lost their connection!</h3>",
+            "<p> Completing this survey will submit your HIT so you will still receive full ",
+            "compensation.</p> <p>If you experience any problems, please email us (",
+            email, ")</p>"].join("");
+
+        if(globalGame.roundNum != globalGame.numRounds) {
+            $("#subj_info").prepend(failMsg);
+            $("#thanks").hide();
+        }
+
+        $("#message_panel").hide();
+        $("#submitbutton").hide();
+        $("#roleLabel").hide();
+        $("#score").hide();
+        $(".progress").hide();
+
+        // exp.goToSlide("subj_info"); 
+    }
+    isConnected = false;
+};
+
+
 var sharedSetup = function(game) {
-  //Store a local reference to our connection to the server
-  game.socket = io.connect({reconnection: false});
+    // Associates callback functions corresponding to different socket messages
+    game.socket = io.connect({reconnection: false});
 
-  // Tell other player if someone is typing...
-  $('#chatbox').on('input', function() {
-    console.log("inputting...");
-    if($('#chatbox').val() != "" && !globalGame.sentTyping) {
-      game.socket.send('playerTyping.true');
-      globalGame.typingStartTime = Date.now();
-      globalGame.sentTyping = true;
-    } else if($("#chatbox").val() == "") {
-      game.socket.send('playerTyping.false');
-      globalGame.sentTyping = false;
-    }
-  });
+    $("#chatbox").on("input", function() {
+        // Tell server when client is typing...
+        console.log("typing...");
+        if($("#chatbox").val() != "" && !globalGame.sentTyping) {
+            game.socket.send("playerTyping.true");
+            globalGame.typingStartTime = Date.now();
+            globalGame.sentTyping = true;
+        } else if($("#chatbox").val() == "") {
+            game.socket.send("playerTyping.false");
+            globalGame.sentTyping = false;
+        }
+    });
 
-  // Tell server when client types something in the chatbox
-  $('form').submit(function(){
-    var origMsg = $('#chatbox').val();
-    var timeElapsed = Date.now() - globalGame.typingStartTime;
-    var msg = ['chatMessage', origMsg.replace(/\./g, '~~~'), timeElapsed].join('.');
-    if($('#chatbox').val() != '') {
-      game.socket.send(msg);
-      globalGame.sentTyping = false;
-      $('#chatbox').val('');
-    }
-    return false;
-  });
+    $("form").submit(function(){
+        // Tell server when client submits a message from the chatbox
+        var rawMsg = $("#chatbox").val();
+        var timeElapsed = Date.now() - globalGame.typingStartTime;
+        var msg = ["chatMessage", rawMsg.replace(/\./g, "~~~"), timeElapsed].join(".");
+        if($("#chatbox").val() != "") {
+            game.socket.send(msg);
+            globalGame.sentTyping = false;
+            $("#chatbox").val("");
+        }
+        return false;
+    });
 
-  game.socket.on('playerTyping', function(data){
-    if(data.typing == "true") {
-      $('#messages')
-      .append('<span class="typing-msg">Other player is typing...</span>')
-      .stop(true,true)
-      .animate({
-       scrollTop: $("#messages").prop("scrollHeight")
-     }, 800);
-    } else {
-      $('.typing-msg').remove();
-    }
-  });
+    game.socket.on("playerTyping", function(data){
+        // Received message indicating that the other player is typing
+        // so add a "player typing" message to this client's
+        // chatbox
+        if(data.typing == "true") {
+            $("#messages")
+                .append("<span class=\"typing-msg\">Other player is typing...</span>")
+                .stop(true,true)
+                .animate({
+                    scrollTop: $("#messages").prop("scrollHeight")
+                }, 800);
+        } else {
+            $(".typing-msg").remove();
+        }
+    });
 
-   // Update messages log when other players send chat
-   game.socket.on('chatMessage', function(data){
-     var otherRole = (globalGame.my_role === game.playerRoleNames.role1 ?
- 		     game.playerRoleNames.role2 : game.playerRoleNames.role1);
-     var source = data.user === globalGame.my_id ? "You" : "player " +otherRole;
-     // To bar responses until speaker has uttered at least one message
-     if(source !== "You"){
-       globalGame.messageSent = true;
-     }
-     var col = source === "You" ? "#f47777" : "#c66f6f";
-     $('.typing-msg').remove();
-     $('#messages')
-       .append($('<li style="padding: 5px 10px; background: ' + col + '">')
-     	  .text(source + ": " + data.msg))
-       .stop(true,true)
-       .animate({
-          scrollTop: $("#messages").prop("scrollHeight")
-        }, 800);
-  });
+    game.socket.on("chatMessage", function(data){
+        // Received a message from the other player
+        var otherRole = (
+            globalGame.my_role === game.playerRoleNames.role1 ?
+            game.playerRoleNames.role2 : game.playerRoleNames.role1
+        );
+        var source = data.user === globalGame.my_id ? "You" : "player " + otherRole;
+        if (source !== "You"){
+            // To bar responses until speaker has uttered at least one message
+            globalGame.messageSent = true;
+        }
 
-  //so that we can measure the duration of the game
-  game.startTime = Date.now();
+        // Visualize new message (color, text, etc.)
+        var col = source === "You" ? "#f47777" : "#c66f6f";
+        $(".typing-msg").remove();
+        $("#messages")
+            .append($("<li style=\"padding: 5px 10px; background: " + col + "\">")
+            .text(source + ": " + data.msg))
+            .stop(true,true)
+            .animate({
+                scrollTop: $("#messages").prop("scrollHeight")
+            }, 800);
+    });
 
-  //When we connect, we are not 'connected' until we have an id
-  //and are placed in a game by the server. The server sends us a message for that.
-  game.socket.on('connect', function(){}.bind(game));
-  //Sent when we are disconnected (network, server down, etc)
-  game.socket.on('disconnect', ondisconnect.bind(game));
-  //Sent each tick of the server simulation. This is our authoritive update
-  game.socket.on('onserverupdate', client_onserverupdate_received.bind(game));
-  //Handle when we connect to the server, showing state and storing id's.
-  game.socket.on('onconnected', onconnect.bind(game));
-  //On message from the server, we parse the commands and send it to the handlers
-  game.socket.on('message', client_onMessage.bind(game));
+
+    // Initializing Game Properties
+    game.startTime = Date.now();
+
+    // When we connect, we are not "connected" until we have an id
+    // and are placed in a game by the server. The server sends us a message for that.
+    game.socket.on("connect", function(){}.bind(game));
+
+    // Sent when we are disconnected (network, server down, etc)
+    game.socket.on("disconnect", onDisconnect.bind(game));
+
+    // Sent each tick of the server simulation. This is our authoritative update
+    game.socket.on("onserverupdate", client_onserverupdate_received.bind(game));
+
+    // Handle when we connect to the server, showing state and storing id's.
+    game.socket.on("onconnected", onConnect.bind(game));
+
+    // On message from the server, we parse the commands and send it to the handlers
+    game.socket.on("message", client_onMessage.bind(game));
 
 };
 
-// When loading the page, we store references to our
-// drawing canvases, and initiate a game instance.
+
 window.onload = function(){
-  //Create our game client instance.
-  globalGame = new game_core({server: false});
-
-  //Connect to the socket.io server!
-  console.log('window on load')
-  sharedSetup(globalGame);
-  customSetup(globalGame);
-  globalGame.submitted = false;
-  document.getElementById('chatbox').focus();
-
+    // When loading the page, we store references to our
+    // drawing canvases, and initiate a game instance.
+    console.log("window on load entered ...")
+    globalGame = new game_core({server: false});
+    sharedSetup(globalGame);
+    customSetup(globalGame);
+    globalGame.submitted = false;
+    document.getElementById("chatbox").focus();
 };
 
-// This gets called when someone selects something in the menu during the exit survey...
-// collects data from drop-down menus and submits using mmturkey
+
 function dropdownTip(data){
-  var commands = data.split('::');
-  switch(commands[0]) {
-  case 'human' :
-    $('#humanResult').show();
-    globalGame.data.subject_information = _.extend(globalGame.data.subject_information,
-					     {'thinksHuman' : commands[1]}); break;
-  case 'language' :
-    globalGame.data.subject_information = _.extend(globalGame.data.subject_information,
-					     {'nativeEnglish' : commands[1]}); break;
-  case 'partner' :
-    globalGame.data.subject_information = _.extend(globalGame.data.subject_information,
-						   {'ratePartner' : commands[1]}); break;
-  case 'confused' :
-    globalGame.data.subject_information = _.extend(globalGame.data.subject_information,
-						   {'confused' : commands[1]}); break;
-  case 'submit' :
-    globalGame.data.subject_information = _.extend(globalGame.data.subject_information,
-						   {'comments' : $('#comments').val(),
-						    'strategy' : $('#strategy').val(),
-				    'role' : globalGame.my_role,
-				    'totalLength' : Date.now() - globalGame.startTime});
-    globalGame.submitted = true;
-    console.log("data is...");
-    console.log(globalGame.data);
-    if(_.size(globalGame.urlParams) == 4) {
-      window.opener.turk.submit(globalGame.data, true);
-      window.close();
-    } else {
-      console.log("would have submitted the following :")
-      console.log(globalGame.data);
+    // This gets called when someone selects something in the menu during the exit survey...
+    // collects data from drop-down menus and submits using mmturkey
+    var commands = data.split("::");
+
+    switch(commands[0]) {
+        case "human" :
+            $("#humanResult").show();
+            globalGame.data.subject_information = _.extend(globalGame.data.subject_information,
+                                    {"thinksHuman" : commands[1]}); break;
+    case "language" :
+        globalGame.data.subject_information = _.extend(globalGame.data.subject_information,
+                                {"nativeEnglish" : commands[1]}); break;
+    case "partner" :
+        globalGame.data.subject_information = _.extend(globalGame.data.subject_information,
+                                {"ratePartner" : commands[1]}); break;
+    case "confused" :
+        globalGame.data.subject_information = _.extend(globalGame.data.subject_information,
+                                {"confused" : commands[1]}); break;
+    case "submit" :
+        globalGame.data.subject_information = _.extend(
+            globalGame.data.subject_information,
+            {
+                "comments" : $("#comments").val(),
+                "strategy" : $("#strategy").val(),
+                "role" : globalGame.my_role,
+                "totalLength" : Date.now() - globalGame.startTime
+            });
+            globalGame.submitted = true;
+            console.log("data is...");
+            console.log(globalGame.data);
+            if(_.size(globalGame.urlParams) == 4) {
+                window.opener.turk.submit(globalGame.data, true);
+                window.close();
+            } else {
+                console.log("would have submitted the following :")
+                console.log(globalGame.data);
+            }
+            break;
     }
-    break;
-  }
 }
 
 window.onbeforeunload = function(e) {
-  e = e || window.event;
-  var msg = ("If you leave before completing the task, "
+    e = e || window.event;
+    var msg = ("If you leave before completing the task, "
     + "you will not be able to submit the HIT.");
-  if (!globalGame.submitted) {
-    // For IE & Firefox
-    if (e) {
-      e.returnValue = msg;
+    if (!globalGame.submitted) {
+        if (e) {
+            // For IE & Firefox
+            e.returnValue = msg;
+        }
+        return msg; // For Safari
     }
-    // For Safari
-    return msg;
-  }
-};
+}
 
-// // Automatically registers whether user has switched tabs...
-(function() {
-  document.hidden = hidden = "hidden";
+// Automatically registers whether user has switched tabs...
+(
+    function() {
+        document.hidden = hidden = "hidden";
 
-  // Standards:
-  if (hidden in document)
-    document.addEventListener("visibilitychange", onchange);
-  else if ((hidden = "mozHidden") in document)
-    document.addEventListener("mozvisibilitychange", onchange);
-  else if ((hidden = "webkitHidden") in document)
-    document.addEventListener("webkitvisibilitychange", onchange);
-  else if ((hidden = "msHidden") in document)
-    document.addEventListener("msvisibilitychange", onchange);
-  // IE 9 and lower:
-  else if ('onfocusin' in document)
-    document.onfocusin = document.onfocusout = onchange;
-  // All others:
-  else
-    window.onpageshow = window.onpagehide = window.onfocus
-    = window.onblur = onchange;
-})();
+        // Standards:
+        if (hidden in document)
+            document.addEventListener("visibilitychange", onchange);
+        else if ((hidden = "mozHidden") in document)
+            document.addEventListener("mozvisibilitychange", onchange);
+        else if ((hidden = "webkitHidden") in document)
+            document.addEventListener("webkitvisibilitychange", onchange);
+        else if ((hidden = "msHidden") in document)
+            document.addEventListener("msvisibilitychange", onchange);
+        else if ("onfocusin" in document)
+            // IE 9 and lower:
+            document.onfocusin = document.onfocusout = onchange;
+        else
+            window.onpageshow = window.onpagehide = window.onfocus = window.onblur = onchange;
+    }
+)();
 
 function onchange (evt) {
-  var v = 'visible', h = 'hidden',
-      evtMap = {
-        focus:v, focusin:v, pageshow:v, blur:h, focusout:h, pagehide:h
-      };
-  evt = evt || window.event;
-  if (evt.type in evtMap) {
-    document.body.className = evtMap[evt.type];
-  } else {
-    document.body.className = evt.target.hidden ? "hidden" : "visible";
-  }
-  visible = document.body.className;
-  globalGame.socket.send("h." + document.body.className);
-};
+    var v = "visible",
+        h = "hidden",
+        evtMap = {
+            focus: v,
+            focusin: v,
+            pageshow: v,
+            blur: h,
+            focusout: h,
+            pagehide:h
+        };
 
-(function () {
-  var original = document.title;
-  var timeout;
+    evt = evt || window.event;
+    if (evt.type in evtMap)
+        document.body.className = evtMap[evt.type];
+    else
+        document.body.className = evt.target.hidden ? "hidden" : "visible";
 
-  window.flashTitle = function (newMsg, howManyTimes) {
-    function step() {
-      document.title = (document.title == original) ? newMsg : original;
-      if (visible === "hidden") {
-        timeout = setTimeout(step, 500);
-      } else {
-        document.title = original;
-      }
-    };
-    cancelFlashTitle(timeout);
-    step();
-  };
+    visible = document.body.className;
+    globalGame.socket.send("h." + document.body.className);
+}
 
-  window.cancelFlashTitle = function (timeout) {
-    clearTimeout(timeout);
-    document.title = original;
-  };
-}());
+(
+    function () {
+        var original = document.title;
+        var timeout;
+
+        window.flashTitle = function (newMsg, howManyTimes) {
+            function step() {
+                document.title = (document.title == original) ? newMsg : original;
+                if (visible === "hidden")
+                    timeout = setTimeout(step, 500);
+                else
+                    document.title = original;
+            }
+            cancelFlashTitle(timeout);
+            step();
+        }
+
+        window.cancelFlashTitle = function (timeout) {
+            clearTimeout(timeout);
+            document.title = original;
+        }
+    }
+());
