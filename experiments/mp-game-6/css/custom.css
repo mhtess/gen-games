@@ -11,3 +11,12 @@ body {
 #messages li { 
     padding: 5px 10px; 
 }
+
+.creature_svg {
+    max-width: 150px;
+    max-height: 150px;
+}
+
+.train_creature_cell {
+    opacity: 0.3;
+}
