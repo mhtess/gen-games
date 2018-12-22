@@ -1,107 +1,298 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Learning about Critters</title>
+    <head>
+        <title>Learning about Critters</title>
 
-    <!-- Load style sheet -->
-    <link href="/../../_shared/css/shared.css" media="screen" rel="stylesheet" type="text/css">
-    <link href="/css/custom.css" media="screen" rel="stylesheet" type="text/css">
+        <!-- Load style sheet -->
+        <link href="../_shared/css/shared.css" media="screen" rel="stylesheet" type="text/css">
+        <link href="../_shared/css/cocolab-style.css" media="screen" rel="stylesheet" type="text/css">
+        <link href="css/custom.css" media="screen" rel="stylesheet" type="text/css">
 
-    <!-- Notice the URL, this is handled by socket.io on the server automatically, via express -->
-    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+        <!-- Notice the URL, this is handled by socket.io on the server automatically, via express -->
+        <script type="text/javascript" src="/socket.io/socket.io.js"></script>
 
-    <!-- Include some extra functional programming tools -->
-    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.11/lodash.min.js"></script>
+        <!-- Include some extra functional programming tools -->
+        <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.11/lodash.min.js"></script>
 
-    <!-- Load jQuery, which lets us handle mouse events -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    
-    <!-- Load the common game code. -->
-    <script type="text/javascript" src="game.core.js"></script>   
+        <!-- Load jQuery, which lets us handle mouse events -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        
+        <!-- Load the common game code. -->
+        <script type="text/javascript" src="game.core.js"></script>   
 
-    <!-- Finally, Load the game client code. -->
-    <script type="text/javascript" src="/../sharedUtils/clientBase.js"></script>    
-    <script type="text/javascript" src="game.client.js"></script>
-    <script type="text/javascript" src="draw.creatures.js"></script>
-
+        <!-- Finally, Load the game client code. -->
+        <script type="type/javascript" src="../_shared/js/raphael-min.js"></script> 
+        <script type="type/javascript" src="../_shared/js/ecosystem.js"></script>     
+        <script type="text/javascript" src="../sharedUtils/clientBase.js"></script>    
+        <script type="text/javascript" src="game.client.js"></script>
+        <script type="text/javascript" src="draw.creatures.js"></script>
     </head>
 
-  <body>
-    <div id='header'>
-      <div id='textInfo'>
-        <h1 id='roleLabel'></h1> 
-        <p id='instructs'> </p>
-      </div>
-      <p style="color:white" id='feedback'> </p>
-      <p style="color:red" id='roundnumber'>Waiting room</p>
-      <p style="color:green" id='score'> </p>
-    </div>
-    
-    <div id='main'>
-      <span>
-        <div id='message_panel'>
-	  <ul id="messages"></ul>
-          <hr>
-          <div id="chatarea">
-            <form action="">
-              <input id="chatbox" autocomplete="off" />
-              <button id="chatbutton">Send</button>
-            </form>
+
+    <body>
+        <noscript>This task requires JavaScript.</noscript>
+
+        <!-- This slide will be seen by one of the players while until the other player reaches the same screen -->
+        <div class="slide" id="wait_room_slide">
+            <div id="wait_rooom_header"></div>
+            <br>
+            <p>Please do not refresh the page!</p>
+            <br><br><hr>
+            <button class="continuebutton" id='wait_room_slide_contine_button'>Continue</button>
+        </div>
+
+        <!-- This is the slide in which users will be told which round there on. -->
+        <div class="slide" id="round_slide">
+            <div class="progress" id="progress_bar">
+                <span>Progress:</span>
+                <div class="bar-wrapper">
+                    <div class="bar" width="0%"></div>
+                </div>
+            </div>
+            <div id="round_slide_header"></div>
+            <br>
+            <button class="continuebutton" id="round_slide_continue_button">Continue</button>           
+        </div>
+
+        <!-- This is the slide in which users will learn how they will play the game. -->
+        <div class="slide" id="train_instructions_slide">
+            <div id="train_instructions_slide_header"></div>
+            <br>
+            <button class="continuebutton" id="train_instructions_slide_continue_button">Continue</button>
+        </div>
+      
+        <!-- This is the learning slide in which users will uncover information about the critters. -->
+        <div class="slide" id="train_slide">
+            <div id="train_slide_header"></div>
+            <br>
+            <div id="train_slide_grid"></div>
+            <br>
+            <button class="hidden continuebutton" id="train_slide_continue_button">Continue</button>            
+        </div>
+
+        <!-- This is the slide in which users will learn about the chatroom. -->
+        <div class="slide" id="chat_instructions_slide">
+            <div id="chat_instructions_slide_header"></div>
+            <br>
+            <button class="continuebutton">Continue</button>
+        </div>
+
+       <!-- Connected players can discuss what they have learned here using a chatbox. -->
+       <div class="slide" id="chat_room_slide">
+            <div id="chat_room_slide_status">
+                <p style="color:red;">
+                    Waiting for your partner to reach the chat...
+                </p>
+                <br>
+                <p>
+                    Please do not refresh the page!
+                </p>
+            </div>
+            <div id="chat_room_slide_header">
+                <p id="chat_room_slide_instructions">
+                    Explorer, please talk to the student about the properties of the species.
+                </p>
+            </div>
+            <div id="main">
+                <br>
+                <div id="message_panel">
+                    <ul id="messages"></ul>
+                    <hr>
+                    <div id="chatarea">
+                        <form action="">
+                            <input id="chatbox" autocomplete="off" />
+                            <button id="chatbutton">Send</button>
+                        </form>
+                    </div>
+                    <br><br>
+                    </div>
+                <div id="chatCont">
+                    <br>
+                    <button class="continuebutton">Continue</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- This is the slide in which users will learn how they will perform the test set. -->        
+        <div class="slide" id="test_instructions_slide">
+                <div id="test_instructions_slide_header"></div>
+                <br>
+                <button class="continuebutton">Continue</button>
+            </div>
+
+        <!-- Generates critters that the partner learned about and tests the user -->
+        <div class="slide" id="test_creatures_slide">
+            <div id="test_creatures_slide_header"></div>
+            <br>
+            <button class="continuebutton">Continue</button>
+        </div>
+      
+       <!-- Shows score report before allowing player to move on to next block -->
+        <div class="slide" id="round_score_report_slide">
+            <div id="round_score_report_slide_header">
+                <h3>Score Report</h3>
+                <p>
+                    <br>Here are the scores from this past round:
+                </p>
+            </div>
+            <br>
+            <div>
+                <table>
+                    <td>
+                        <div class="score_table" id="your_report">
+                            <h4 class="score_player">Your Score</h4><br><br>
+                            <div class="report">
+                                <p class="subscore_value" id="your_hits"></p><br>
+                                <p class="subscore_value"  id="your_falseAlarms"></p><br>
+                                <p class="score_value" id="your_score"></p><br><br>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div style="width:80px"></div>
+                    </td>
+                    <td>
+                        <div class="score_table" id="partner_report">
+                            <h4 class="score_player">Your Partner's Score</h4><br><br>
+                            <div class="report">
+                                <p class="subscore_value"  id="other_hits"></p><br>
+                                <p class="subscore_value"  id="other_falseAlarms"></p><br>
+                                <p class="score_value" id="other_score"></p><br><br>
+                            </div>
+                        </div>
+                    </td>
+                </table><br><br><br>
+            </div>
+            <button class="continuebutton" id="round_score_report_continue_button">Continue</button>
+       </div>
+      
+       <!-- Shows total score report, at the end of the entire game -->
+       <div class="slide" id="total_score_report_slide">
+            <div id="total_score_report_slide_header">
+                <h3 id="totalScoreTitle">Total Score Report</h3>
+                <p id="totalScoreInfo"><br>Here are the scores across all the rounds:</p>
+                <br>
+            </div>
+            <div>
+                <table>
+                <td>
+                <div class="score_table" id="your_total_report">
+                    <h4 class="score_player">Your Score</h4><br><br>
+                    <div class="report">
+                        <p class="subscore_value" id="your_total_hits"></p><br>
+                        <p class="subscore_value"  id="your_total_falseAlarms"></p><br>
+                        <p class="score_value" id="your_total_score"></p><br><br>
+                    </div>
+                </div>
+                </td>
+                <td>
+                        <div style="width:80px"></div>
+                    </td>
+                    <td>
+                        <div class="score_table" id="partner_report">
+                            <h4 class="score_player">Your Partner's Score</h4><br><br>
+                            <div class="report">
+                                <p class="subscore_value"  id="other_hits"></p><br>
+                                <p class="subscore_value"  id="other_falseAlarms"></p><br>
+                                <p class="score_value" id="other_score"></p><br><br>
+                            </div>
+                        </div>
+                    </td>
+                </table><br><br><br>
+            </div>
+            <button class="continuebutton" id="round_score_report_continue_button">Continue</button>
+       </div>
+              
+        <!-- Collects demographic information from users -->
+        <div class="slide"  id="subj_info">
+          <div class="long_form">
+           <div id="thanks_instructions"> <h3>Thanks for participating in our experiment!</h3>
+            <p>Before you submit your HIT, we'd like to ask you a few questions.</p></div>
+            <p>Did you read the instructions and do you think you did the
+          HIT correctly? </p>
+            <select id="assess">
+              <option value = ""></option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+              <option value="confused">I was confused</option>
+            </select>
+      
+            <br><br>
+            <p> How would you describe the strategy you used in this experiment? </p>
+            <textarea id='strategy' rows="4" cols="50"></textarea>
+      
+      
+      
+            <p> Did you believe you were playing against another human player? </p>
+            <select id="human">
+          <option value=""></option>
+          <option value="yes">Yes, I thought they were a human</option>
+          <option value="no">No, I thought it was a computer program</option>
+            </select>
+            <p id='humanResult' style="display:none;color:red"> Thank you for your response -- in fact, all players were paired with other human turkers! <p>
+              <p> Are you a native English speaker? </p>
+              <select id="nativeEnglish">
+            <option value = ""></option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+              </select>
+      
+              <p> How much did you like working with your partner? </p>
+              <select id="likePartner">
+                <option value = ""></option>
+                <option value="not much">Not that much</option>
+                <option value="okay">My partner was fine</option>
+                <option value="liked">I liked working with my partner</option>
+                <option value="loved">I really enjoyed working with my partner</option>
+              </select>
+              <br><br>
+      
+            <p>Were there any problems or bugs in the experiment?</p>
+            <textarea id="problems" rows="2" cols="50" spellcheck=false></textarea>
+      
+            <p>What do you think is a fair price for the work you did?</p>
+            <textarea id="fairprice" rows="1" cols="10" spellcheck=false></textarea>
+      
+            <p>Gender:
+              <select id="gender">
+                <label><option value=""/></label>
+                <label><option value="Male"/>Male</label>
+                <label><option value="Female"/>Female</label>
+                <label><option value="Other"/>Other</label>
+              </select>
+            </p>
+      
+            <p>Age: <input type="text" id="age"/></p>
+      
+            <p>Level Of Education:
+              <select id="education">
+                <label><option value="-1"/></label>
+                <label><option value="0"/>Some High School</label>
+                <label><option value="1"/>Graduated High School</label>
+                <label><option value="2"/>Some College</label>
+                <label><option value="3"/>Graduated College</label>
+                <label><option value="4"/>Hold a higher degree</label>
+              </select>
+            </p>
+      
+            <p>Did you enjoy the hit?</p>
+            <select id="enjoyment">
+              <label><option value="-1"></option></label>
+              <label><option value="0">Worse than the Average HIT</option></label>
+              <label><option value="1" >An Average HIT</option></label>
+              <label><option value="2">Better than average HIT</option></label>
+            </select>
+      
+            <p>We would be interested in any comments you have about this experiment. Please type them here:</p>
+            <textarea id="comments" rows="3" cols="50" spellcheck=false></textarea>
+            <br/>
+            <button class="continuebutton" onclick="_s.submit()">Submit</button>
           </div>
         </div>
-        <canvas id="viewport"> </canvas>
-    </div>
-
-    <div id="dimScreen" style="display:none"></div>
-
-    <div id="exit_survey" style="display:none">
-      <br><br><br><br><br>
-      <p> How would you describe the strategy you used in this experiment? </p>
-      <textarea id='strategy' rows="4" cols="50"></textarea>
-      <p> Did you believe you were playing against another human player? </p>
-      <select onChange="dropdownTip('human::' + this.value)">
-	<option value=""></option>
-	<option value="yes">Yes, I thought they were a human</option>
-	<option value="no">No, I thought it was a computer program</option>
-      </select>
-      <p id='humanResult' style="display:none;color:red"> Thank you for your response -- in fact, all players were paired with other human turkers! <p>
-
-	<br> <br>
-      <p> Are you a native English speaker? </p>
-      <select onChange="dropdownTip('language::' + this.value)">
-	<option value = ""></option>
-	<option value="yes">Yes</option>
-	<option value="no">No</option>
-      </select>
-      <br><br>
-      <p> How much did you like working with your partner? </p>
-      <select onChange="dropdownTip('partner::' + this.value)">
-        <option value = ""></option>
-        <option value="not much">Not that much</option>
-        <option value="okay">My partner was fine</option>
-        <option value="liked">I liked working with my partner</option>
-        <option value="loved">I really enjoyed working with my partner</option>
-      </select>
-      <br><br>
-      <p> Did you read the instructions and do you think you did the 
-	HIT correctly? </p>
-      <select onChange="dropdownTip('confused::' + this.value)">
-	<option value = ""></option>
-	<option value="yes">Yes</option>
-	<option value="no">No</option>
-	<option value="confused">I was confused</option>
-      </select>
-
-      <br><br>
-
-      <p> Do you have any comments on the experiment? </p>
-      <textarea id='comments' rows="4" cols="50"></textarea>
-      <br>
-      <p> Clicking this button should automatically submit the HIT and close this tab. <p>
-	<div><button id="surveySubmit" onclick="dropdownTip('submit')" type="button">Submit HIT</button></div>
-
-      <p> If you click this button and nothing happens, please enter the code <strong>E2iZwi8d</strong> into the box that appeared on the mturk tab.</p>
-      <p> If you also run into problems with the code box, please contact rxdh@stanford.edu for compensation. </p>
-
-    </div>
-  </body>
+      
+        <!-- Generic thanks page that collects some data -->
+        <div class="slide js" id="thanks" >
+            <p  class="big">Thanks for your Time!</p>
+        </div>
+        
+    </body>
