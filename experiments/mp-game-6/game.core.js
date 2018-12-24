@@ -55,6 +55,10 @@ var game_core = function(options){
 
     // Other info
     this.start_time = null;
+    this.numPlayersCompletedRound = 0;
+    this.currentSlide = {}
+    this.currentSlide[this.playerRoleNames.role1] = '';
+    this.currentSlide[this.playerRoleNames.role2] = '';
 
     if(this.server) {
         this.id = options.id;
@@ -138,6 +142,7 @@ game_core.prototype.newRound = function(delay) {
             // Tell players
             _.forEach(players, p => p.player.instance.emit('newRoundUpdate', localThis.roundNum + 1));
             localThis.roundNum += 1;
+            localThis.numPlayersCompletedRound = 0;
             localThis.server_send_update();
         }
     }, delay);

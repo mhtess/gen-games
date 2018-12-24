@@ -49,93 +49,80 @@ var onMessage = function(client, message) {
 
     switch(message_type) {
         case 'enterSlide' :
-        // keeps track of which "experiment template" slide each particular user is on
-        // will update (through use of globalGame.socket.send("enterSlide.slide_name.");) in game js file
-        gc.currentSlide[target.instance.role] = message_parts[1];
-        console.log("Explorer is in: ==== " + gc.currentSlide["explorer"] + " ====")
-        console.log("Student is in: ==== " + gc.currentSlide["student"] + " ====")
-        break;
+            // keeps track of which "experiment template" slide each particular user is on
+            // will update (through use of globalGame.socket.send("enterSlide.slide_name.");) in game js file
+            gc.currentSlide[target.instance.role] = message_parts[1];
+            console.log("Explorer is in: ==== " + gc.currentSlide["explorer"] + " ====")
+            console.log("Student is in: ==== " + gc.currentSlide["student"] + " ====")
+            break;
 
         case 'proceedToTestInstructions' :
-        _.map(all, function(p) {
-            p.player.instance.emit('exitChatRoom');
-        });
-        break;
+            _.map(all, function(p) {
+                p.player.instance.emit('exitChatRoom');
+            });
+            break;
 
         case 'newRoundUpdate' :
-        gc.numPlayersCompletedRound++;
-        if (gc.numPlayersCompletedRound == 2) {
-            gc.newRound();
-        }
-        break;
+            gc.numPlayersCompletedRound++;
+            if (gc.numPlayersCompletedRound == 2) {
+                gc.newRound();
+            }
+            break;
 
         case 'playerTyping' :
-        // will result in "other player is typing" on others' chatboxes
-        _.map(others, function(p) {
-            p.player.instance.emit( 'playerTyping',
-            {typing: message_parts[1]});
-        });
+            // will result in "other player is typing" on others' chatboxes
+            _.map(others, function(p) {
+                p.player.instance.emit( 'playerTyping',
+                {typing: message_parts[1]});
+            });
         break;
 
         case 'chatMessage' :
-        // Only allows a message to be sent when both players are present in the chatroom
-        // If this is true, the message will be relayed
-        if(gc.currentSlide["explorer"] == gc.currentSlide["student"]) {
-            // Update others
-            var msg = message_parts[1].replace(/~~~/g,'.');
-            _.map(all, function(p){
-                p.player.instance.emit( 'chatMessage', {user: client.userid, msg: msg});
-            });
-        }
-        break;
+            // Only allows a message to be sent when both players are present in the chatroom
+            // If this is true, the message will be relayed
+            if(gc.currentSlide["explorer"] == gc.currentSlide["student"]) {
+                // Update others
+                var msg = message_parts[1].replace(/~~~/g,'.');
+                _.map(all, function(p){
+                    p.player.instance.emit( 'chatMessage', {user: client.userid, msg: msg});
+                });
+            }
+            break;
 
         case 'enterChatRoom' :
-        // Will show a wait message if only one player is in the chatroom
-        // Will allow them to enter the chatroom
-        if (gc.currentSlide["explorer"] != gc.currentSlide["student"]) {
-            console.log("Waiting for another player.....");
-            target.instance.emit("chatWait", {})
-        } else {
-            setTimeout(function() {
-            _.map(all, function(p){
-                p.player.instance.emit("enterChatRoom", {})
-            });
-            }, 300);
-        }
-        break;
-
-        case 'enterWaitRoom' :
-        console.log(gc.currentSlide["explorer"]);
-        console.log(gc.currentSlide["student"]);
-
-        if ((gc.currentSlide["explorer"] == gc.currentSlide["student"]))  {
-            setTimeout(function() {
-            _.map(all, function(p){
-                p.player.instance.emit("enterWaitRoom", {});
-            });
-            }, 300);
-        }
-        break;
+            // Will show a wait message if only one player is in the chatroom
+            // Will allow them to enter the chatroom
+            if (gc.currentSlide["explorer"] != gc.currentSlide["student"]) {
+                console.log("Waiting for another player.....");
+                target.instance.emit("chatWait", {})
+            } else {
+                setTimeout(function() {
+                _.map(all, function(p){
+                    p.player.instance.emit("enterChatRoom", {})
+                });
+                }, 300);
+            }
+            break;
 
         // Receive message when browser focus shifts
         case 'h' :
-        target.visible = message_parts[1];
-        break;
+            target.visible = message_parts[1];
+            break;
 
         case 'sendingTestScores' :
-        var scoreObj = _.fromPairs(_.map(
-            message_parts.slice(1), // get relevant part of message
-            function(i){return i.split(',')}
-        ));
+            var scoreObj = _.fromPairs(_.map(
+                message_parts.slice(1), // get relevant part of message
+                function(i){return i.split(',')}
+            ));
 
-        gc.testScores[target.instance.role][gc.roundNum] = scoreObj;
-        setTimeout(function() {
-            _.map(all, function(p){
-            p.player.instance.emit("sendingTestScores",
-                gc.testScores)
-            });
-        }, 300);
-        break;
+            gc.testScores[target.instance.role][gc.roundNum] = scoreObj;
+            setTimeout(function() {
+                _.map(all, function(p){
+                p.player.instance.emit("sendingTestScores",
+                    gc.testScores)
+                });
+            }, 300);
+            break;
     }
 };
 

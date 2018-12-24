@@ -115,6 +115,7 @@ var customSetup = function(globalGame) {
 
     // Initial setup -- draw the waiting room.
     drawWaitingRoom("Waiting for another player to join the game ...");
+    globalGame.socket.send("enterSlide.wait_room_slide.")
 
     // --------------
     // Click Handlers
@@ -122,26 +123,32 @@ var customSetup = function(globalGame) {
 
     $("#round_slide_continue_button").click(function(){
         clearRoundNumber();
+        globalGame.socket.send("enterSlide.train_instructions_slide.")
         drawTrainInstructions(globalGame, "wud", "wuds");
     });
 
     $("#train_instructions_slide_continue_button").click(function() {
         clearTrainInstructions();
         if (globalGame.my_role === "explorer") {
+            globalGame.socket.send("enterSlide.train_creatures_slide.")
             drawTrainCreatures(globalGame, "wud");        
         } else {
+            globalGame.socket.send("enterSlide.chat_room_slide.")   
+            globalGame.socket.send("enterChatRoom.");
             drawChatRoom(globalGame);
         }
     });
 
     $("#train_creatures_slide_continue_button").click(function(){
-        console.log("Pressed Continue");
         clearTrainCreatures();
+        globalGame.socket.send("enterSlide.chat_instructions_slide.")           
         drawExplorerChatInstructions(globalGame, "wud");
     });
 
     $("#chat_instructions_slide_continue_button").click(function(){
         clearExplorerChatInstructions();
+        globalGame.socket.send("enterSlide.chat_room_slide.")   
+        globalGame.socket.send("enterChatRoom.");
         drawChatRoom(globalGame);
     });   
 
@@ -151,7 +158,10 @@ var customSetup = function(globalGame) {
 
     globalGame.socket.on('newRoundUpdate', function(data){
         clearWaitingRoom();
+        globalGame.socket.send("enterSlide.round_slide.") 
         drawRoundNumber(data, globalGame);
+
+        // local
         globalGame.roundProps = {
             selected_train_stim: [],
             selected_test_stim: [],
@@ -162,21 +172,17 @@ var customSetup = function(globalGame) {
         // exp.goToSlide('testing_instructions');
     });
 
-    globalGame.socket.on('enterWaitRoom', function(data){
-        $('#chatbox').val('');
-        // exp.go();
-    });
 
   // One player has not yet made it to the chatroom, so sending messages is impossible
   globalGame.socket.on('chatWait', function(data){
     $('#chatbox').attr("disabled", "disabled");
-    console.log("in chatWait");
+
     // Pretty Animation (Fade In / Out)
     globalGame.blinking_wait = setInterval(function() {
-      $("#status").fadeOut(1000);
-      $("#status").fadeIn(1000);
+        $("#chat_room_slide_status").fadeOut(1000);
+        $("#chat_room_slide_status").fadeIn(1000);
     });
-    $("#status").show();
+    $("#chat_room_slide_status").show();
   });
 
   // Both players are now in the chatroom, so they may send messages
