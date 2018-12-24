@@ -26,59 +26,61 @@
         <script type="text/javascript" src="../sharedUtils/clientBase.js"></script>    
         <script type="text/javascript" src="game.client.js"></script>
         <script type="text/javascript" src="draw.creatures.js"></script>
+        <script type="text/javascript" src="draw.screen.js"></script>
     </head>
-
 
     <body>
         <noscript>This task requires JavaScript.</noscript>
 
+        <div class="progress hidden" id="progress_component">
+                <span>Progress:</span>
+                <div class="bar-wrapper">
+                    <div class="bar" id="progress_bar"></div>
+                </div>
+        </div>
+
         <!-- This slide will be seen by one of the players while until the other player reaches the same screen -->
         <div class="slide" id="wait_room_slide">
-            <div id="wait_rooom_header"></div>
+            <div id="wait_room_header"></div>
             <br>
             <p>Please do not refresh the page!</p>
             <br><br><hr>
-            <button class="continuebutton" id='wait_room_slide_contine_button'>Continue</button>
+            <br><br>
         </div>
 
         <!-- This is the slide in which users will be told which round there on. -->
-        <div class="slide" id="round_slide">
-            <div class="progress" id="progress_bar">
-                <span>Progress:</span>
-                <div class="bar-wrapper">
-                    <div class="bar" width="0%"></div>
-                </div>
-            </div>
+        <div class="slide hidden" id="round_slide">
             <div id="round_slide_header"></div>
             <br>
-            <button class="continuebutton" id="round_slide_continue_button">Continue</button>           
+            <button class="continuebutton" id="round_slide_continue_button" disabled>Continue</button>           
         </div>
 
         <!-- This is the slide in which users will learn how they will play the game. -->
-        <div class="slide" id="train_instructions_slide">
+        <div class="slide hidden" id="train_instructions_slide">
             <div id="train_instructions_slide_header"></div>
             <br>
-            <button class="continuebutton" id="train_instructions_slide_continue_button">Continue</button>
+            <button class="continuebutton" id="train_instructions_slide_continue_button" disabled>Continue</button>
         </div>
       
         <!-- This is the learning slide in which users will uncover information about the critters. -->
-        <div class="slide" id="train_slide">
-            <div id="train_slide_header"></div>
+        <div class="slide hidden" id="train_creatures_slide">
+            <div id="train_creatures_slide_header"></div>
             <br>
-            <div id="train_slide_grid"></div>
             <br>
-            <button class="hidden continuebutton" id="train_slide_continue_button">Continue</button>            
+            <div id="train_creatures_slide_grid"></div>
+            <br>
+            <button class="hidden continuebutton" id="train_creature_slide_continue_button" disabled>Continue</button>            
         </div>
 
         <!-- This is the slide in which users will learn about the chatroom. -->
-        <div class="slide" id="chat_instructions_slide">
+        <div class="slide hidden" id="chat_instructions_slide">
             <div id="chat_instructions_slide_header"></div>
             <br>
-            <button class="continuebutton">Continue</button>
+            <button class="continuebutton" disabled>Continue</button>
         </div>
 
        <!-- Connected players can discuss what they have learned here using a chatbox. -->
-       <div class="slide" id="chat_room_slide">
+       <div class="slide hidden" id="chat_room_slide">
             <div id="chat_room_slide_status">
                 <p style="color:red;">
                     Waiting for your partner to reach the chat...
@@ -108,27 +110,27 @@
                     </div>
                 <div id="chatCont">
                     <br>
-                    <button class="continuebutton">Continue</button>
+                    <button class="continuebutton hidden disabled">Continue</button>
                 </div>
             </div>
         </div>
 
         <!-- This is the slide in which users will learn how they will perform the test set. -->        
-        <div class="slide" id="test_instructions_slide">
+        <div class="slide hidden" id="test_instructions_slide">
                 <div id="test_instructions_slide_header"></div>
                 <br>
-                <button class="continuebutton">Continue</button>
+                <button class="continuebutton disabled">Continue</button>
             </div>
 
         <!-- Generates critters that the partner learned about and tests the user -->
-        <div class="slide" id="test_creatures_slide">
+        <div class="slide hidden" id="test_creatures_slide">
             <div id="test_creatures_slide_header"></div>
             <br>
-            <button class="continuebutton">Continue</button>
+            <button class="continuebutton disabled">Continue</button>
         </div>
       
        <!-- Shows score report before allowing player to move on to next block -->
-        <div class="slide" id="round_score_report_slide">
+        <div class="slide hidden" id="round_score_report_slide">
             <div id="round_score_report_slide_header">
                 <h3>Score Report</h3>
                 <p>
@@ -163,11 +165,11 @@
                     </td>
                 </table><br><br><br>
             </div>
-            <button class="continuebutton" id="round_score_report_continue_button">Continue</button>
+            <button class="continuebutton disabled" id="round_score_report_continue_button">Continue</button>
        </div>
       
        <!-- Shows total score report, at the end of the entire game -->
-       <div class="slide" id="total_score_report_slide">
+       <div class="slide hidden" id="total_score_report_slide">
             <div id="total_score_report_slide_header">
                 <h3 id="totalScoreTitle">Total Score Report</h3>
                 <p id="totalScoreInfo"><br>Here are the scores across all the rounds:</p>
@@ -200,11 +202,11 @@
                     </td>
                 </table><br><br><br>
             </div>
-            <button class="continuebutton" id="round_score_report_continue_button">Continue</button>
+            <button class="continuebutton disabled" id="round_score_report_continue_button">Continue</button>
        </div>
               
         <!-- Collects demographic information from users -->
-        <div class="slide"  id="subj_info">
+        <div class="slide hidden"  id="subj_info">
           <div class="long_form">
            <div id="thanks_instructions"> <h3>Thanks for participating in our experiment!</h3>
             <p>Before you submit your HIT, we'd like to ask you a few questions.</p></div>
@@ -291,7 +293,7 @@
         </div>
       
         <!-- Generic thanks page that collects some data -->
-        <div class="slide js" id="thanks" >
+        <div class="slide js hidden" id="thanks" >
             <p  class="big">Thanks for your Time!</p>
         </div>
         

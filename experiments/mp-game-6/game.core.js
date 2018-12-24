@@ -33,7 +33,7 @@ var game_core = function(options){
     // Some config settings
     this.email = "schopra8@stanford.edu";
     this.projectName = "cultural_ratchet";
-    this.experimentName = "mp_game_6";
+    this.experimentName = "mp-game-6";
     this.iterationName = "pilot";
     this.anonymizeCSV = true;
     this.bonusAmt = 1; // in cents
@@ -42,6 +42,7 @@ var game_core = function(options){
     this.dataStore = ["csv", "mongo"];
 
     // Player parameters
+    this.player_count = 0;
     this.players_threshold = 2;
     this.playerRoleNames = {
         role1 : "explorer",
@@ -51,6 +52,9 @@ var game_core = function(options){
     // Round Info
     this.roundNum = -1;
     this.numRounds = 5;
+
+    // Other info
+    this.start_time = null;
 
     if(this.server) {
         this.id = options.id;
@@ -75,9 +79,9 @@ var game_core = function(options){
         // and the game object. We'll be copying real values into these items
         // on a server update.
         this.players = [{
-        id: null,
-        instance: null,
-        player: new game_player(this)
+            id: null,
+            instance: null,
+            player: new game_player(this)
         }];
     }
 };
@@ -122,6 +126,8 @@ game_core.prototype.get_active_players = function() {
 };
 
 game_core.prototype.newRound = function(delay) {
+    console.log("Triggering a new round");
+
     var players = this.get_active_players();
     var localThis = this;
     setTimeout(function() {
@@ -130,17 +136,8 @@ game_core.prototype.newRound = function(delay) {
             _.forEach(players, p => p.player.instance.disconnect());
         } else {
             // Tell players
-            _.forEach(players, p => p.player.instance.emit( 'newRoundUpdate'));
-  
-            // Otherwise, get the preset list of tangrams for the new round
+            _.forEach(players, p => p.player.instance.emit('newRoundUpdate', localThis.roundNum + 1));
             localThis.roundNum += 1;
-  
-            localThis.trialInfo = {
-                currStim: localThis.trialList[localThis.roundNum],
-                currContextType: localThis.contextTypeList[localThis.roundNum],
-                roles: _.zipObject(_.map(localThis.players, p =>p.id),
-                            _.values(localThis.trialInfo.roles))
-            };
             localThis.server_send_update();
         }
     }, delay);
@@ -148,26 +145,26 @@ game_core.prototype.newRound = function(delay) {
 
 game_core.prototype.server_send_update = function(){
     // Make a snapshot of the current state, for updating the clients
-    var local_game = this;
 
     // Add info about all players
-    var player_packet = _.map(local_game.players, function(p){
+    var player_packet = _.map(this.players, function(p){
         return {id: p.id, player: null};
     });
 
     var state = {
-        gs : this.game_started,
+        gs : this.start_time,
         pt : this.players_threshold,
         pc : this.player_count,
         dataObj  : this.data,
         roundNum : this.roundNum,
+        numRounds : this.numRounds,
         trialInfo: this.trialList[this.roundNum],
     };
     _.extend(state, {players: player_packet});
 
     // Send the snapshot to the players
     this.state = state;
-    _.map(local_game.get_active_players(), function(p){
+    _.map(this.get_active_players(), function(p){
         p.player.instance.emit( 'onserverupdate', state);
     });
 };

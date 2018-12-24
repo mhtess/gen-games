@@ -49,6 +49,8 @@ class ReferenceGameServer {
                     player: new this.player(game, player)
                 });
 
+                game.startTime = new Date();
+
                 // Add game to player
                 player.game = game;
                 player.role = game.playerRoleNames.role2;
@@ -61,6 +63,9 @@ class ReferenceGameServer {
 
                 // Start game
                 game.server_send_update();
+                if (game.experimentName === 'mp-game-6') {
+                    game.newRound();
+                }
             }
         }
 
@@ -82,7 +87,7 @@ class ReferenceGameServer {
         if (this.expName === 'mp-game-5') {
             options.rule_by_round = this.rule_by_round;
             options.possibleSpecies = this.possibleSpecies;
-            options.possibleSpeciesPlural = this.possibleSpeciesPlural'
+            options.possibleSpeciesPlural = this.possibleSpeciesPlural;
         }
         var game = new this.core(options);
 

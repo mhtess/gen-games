@@ -8,21 +8,11 @@
 // ----------------
 // GLOBAL VARIABLES
 // ----------------
-var globalGame = {};
-var enterScoreReport = 0;
-var timeOut = 1000 * 60 * 15; // 15 Minutes
-var timeoutIndex;
-var original = document.title;
-// ----------------
-// ACTION HANDLERS
-// ---------------
-function buttonClickListener(evt) {
-  var proceed = confirm("Are you done learning about " + globalGame.pluralSpeciesName +"?\n\n If yes, click \"OK\". \n If no, click \"CANCEL\".");
-  if (proceed === false) {
-    return;
-  }
-  globalGame.socket.send("proceedToTestInstructions.");
-};
+var globalGame = {},
+    enterScoreReport = 0,
+    timeout = 1000 * 60 * 15 // 15 minutes,
+    timeoutIndex = 0,
+    originalTitle = document.title;
 
 // ----------------
 // EVENT HANDLERS
@@ -40,9 +30,6 @@ var client_onjoingame = function(num_players, role) {
     globalGame.players.unshift({id: null, player: new game_player(globalGame)});
   });
 
-  // Update w/ role (can only move stuff if agent)
-  $('#roleLabel').append(role + '.');
-
   // Set 15 minute timeout only for first player...
   if(num_players == 1) {
     this.timeoutID = setTimeout(function() {
@@ -54,42 +41,34 @@ var client_onjoingame = function(num_players, role) {
        console.log("would have submitted the following :");
        console.log(this.data);
      }
-   }, timeOut);
+   }, timeout);
   }
 };
 
 // Procedure for handling updates from server.
 // Note: data holds the server's copy of variables.
 var client_onserverupdate_received = function(data){
-  // Copy players to local globalGame
-  if(data.players) {
-    _.map(_.zip(data.players, globalGame.players),function(z){
-      z[1].id = z[0].id;
-    });
-  }
+    if(data.players) {
+        _.map(_.zip(data.players, globalGame.players),function(z){
+            z[1].id = z[0].id;
+        });
+    }
 
-  // Copy game parameters to local globalGame
-  globalGame.game_started = data.gs;
-  globalGame.players_threshold = data.pt;
-  globalGame.player_count = data.pc;
-  globalGame.roundNum = data.roundNum;
-  globalGame.training_data_fn = data.trainingDataFn;
-  globalGame.test_data_fn = data.testDataFn;
-  globalGame.rule_idx = data.ruleIdx;
-  globalGame.rule_type = data.ruleType;
-  globalGame.speciesName = data.speciesName;
-  globalGame.pluralSpeciesName = data.pluralSpeciesName;
-  globalGame.numRounds = data.numRounds;
-  globalGame.bonusAmt = data.bonusAmt;
+    // Copy game parameters to local globalGame
+    globalGame.start_time = data.st;
+    globalGame.players_threshold = data.pt;
+    globalGame.player_count = data.pc;
+    globalGame.roundNum = data.roundNum;
+    globalGame.numRounds = data.numRounds;
 
-  // update data object on first round, don't overwrite (FIXME)
-  if(!_.has(globalGame, 'data')) {
-    globalGame.data = data.dataObj;
-  }
+    // update data object on first round, don't overwrite (FIXME)
+    if(!_.has(globalGame, 'data')) {
+        globalGame.data = data.dataObj;
+    }
 
   // Add the training critters and test critters to the exp slides
-  exp.training_critters = data.training_critters;
-  exp.testing_critters = data.testing_critters;
+//   exp.training_critters = data.training_critters;
+//   exp.testing_critters = data.testing_critters;
 };
 
 // Procedure for parsing messages from server.
@@ -128,25 +107,27 @@ var client_onMessage = function(data) {
   }
 };
 
-// Set up new round on client's browsers after submit round button is pressed.
-// This means clear the chatboxes, update round number
+
 var customSetup = function(globalGame) {
-  globalGame.socket.on('newRoundUpdate', function(data){
-    $('#chatbox').removeAttr("disabled");
-    $('#chatbox').focus();
-    $('#messages').empty();
-    $('#roundnumber').empty();
-  });
+    // customSetup is automatically triggered by window.on_load()
+    // in the shared clientBase.js code
 
-  globalGame.socket.on('exitChatRoom', function(data) {
-    exp.goToSlide('testing_instructions');
-  });
+    // First, draw the waiting room properly
+    drawWaitingRoom("Waiting for another player to join the game ...");
 
+    globalGame.socket.on('newRoundUpdate', function(data){
+        clearWaitingRoom();
+        drawRoundNumber(data, globalGame);
+    });
 
-  globalGame.socket.on('enterWaitRoom', function(data){
-    $('#chatbox').val('');
-    exp.go();
-  });
+    globalGame.socket.on('exitChatRoom', function(data) {
+        // exp.goToSlide('testing_instructions');
+    });
+
+    globalGame.socket.on('enterWaitRoom', function(data){
+        $('#chatbox').val('');
+        // exp.go();
+    });
 
   // One player has not yet made it to the chatroom, so sending messages is impossible
   globalGame.socket.on('chatWait', function(data){
@@ -222,10 +203,8 @@ var customSetup = function(globalGame) {
         $('#'+score_role+'_score').html("Round score: " + positiveScore);
       }
 
-      exp.test_summary_stats_combined.push({"explorer": data["explorer"][globalGame.roundNum], "student": data["student"][globalGame.roundNum]});
+    //   exp.test_summary_stats_combined.push({"explorer": data["explorer"][globalGame.roundNum], "student": data["student"][globalGame.roundNum]});
     }
   });
 
-  // initialize experiment_template
-  init();
 };

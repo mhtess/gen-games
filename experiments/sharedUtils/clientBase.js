@@ -161,7 +161,6 @@ window.onload = function(){
     sharedSetup(globalGame);
     customSetup(globalGame);
     globalGame.submitted = false;
-    document.getElementById("chatbox").focus();
 };
 
 
@@ -204,19 +203,6 @@ function dropdownTip(data){
                 console.log(globalGame.data);
             }
             break;
-    }
-}
-
-window.onbeforeunload = function(e) {
-    e = e || window.event;
-    var msg = ("If you leave before completing the task, "
-    + "you will not be able to submit the HIT.");
-    if (!globalGame.submitted) {
-        if (e) {
-            // For IE & Firefox
-            e.returnValue = msg;
-        }
-        return msg; // For Safari
     }
 }
 

@@ -49,9 +49,9 @@ function drawCreaturesTable(creatures, numCols, train, roundProps) {
 
     // Append table to appropriate table
     if (train === true) {
-        $("#train_creatures_grid").append(table);
+        $("#train_creatures_slide_grid").append(table);
     } else {
-        $("#test_creatures_grid").append(table);
+        $("#test_creatures_slide_grid").append(table);
     }
 
   }
@@ -92,8 +92,8 @@ function drawCreaturesTable(creatures, numCols, train, roundProps) {
     
             if (roundProps.selected_train_stim.length == roundProps.train_creatures.length) {
                 // Show "Continue" button -- exploration complete
-                $("#train_creatures_button").css("visibility", "visible");
-                $("#train_creatures_button").prop("disabled", false);
+                $("#train_creature_slide_continue_button").css("visibility", "visible");
+                $("#train_creature_slide_continue_button").prop("disabled", false);
 
                 alert("Exploration Complete! Please take a moment to review your findings \
                         before continuing to the chatroom.");

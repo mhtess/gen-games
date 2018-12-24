@@ -644,7 +644,7 @@ function make_slides(f) {
       var blinking_wait = setInterval(function() {
         $("#waitText").fadeOut(1000);
         $("#waitText").fadeIn(1000);
-        if($("#welcome").is(':visible')){ //if it goes to next slide
+        if($("#welcome").is(':visible')) { //if it goes to next slide
           clearInterval(blinking_wait);
         }
       }, 2000);
