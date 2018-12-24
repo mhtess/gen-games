@@ -243,6 +243,6 @@ ALOT...don't understand how to adjust that.*/
    visibility: hidden;
 }
 
-#train_creatures_slide_grid {
-    text-align: center;
+.creatures_table {
+    table-layout: fixed;
 }

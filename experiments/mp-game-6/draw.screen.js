@@ -86,6 +86,11 @@ var drawTrainInstructions = function(game, speciesName, pluralSpeciesName) {
 };
 
 var drawTrainCreatures = function(game, speciesName) {
+    // Clear previous
+    $("#train_creatures_slide_header").empty();
+    $("#train_creatures_slide_grid").empty();
+
+    // Draw creatures
     $("#train_creatures_slide_header").html(
         `
             <p class="label_prompt">
@@ -95,28 +100,39 @@ var drawTrainCreatures = function(game, speciesName) {
             </p>
         `
     );
-
-    // Draw creatures
     drawCreaturesTable(game.trialInfo.train, "wud", 5, true, game.roundProps);
 
     // Make visible
     $("#train_creatures_slide_continue_button").hide();
-    $("#train_instructions_slide_continue_button").prop("disabled", true);
+    $("#train_creatures_slide_continue_button").prop("disabled", true);
     $("#train_creatures_slide").removeClass("hidden");
 };
 
-var drawChatInstructions = function(game) {
-    var instructions = `<p class="label_prompt">
-        Click on each one to discover whether or not it is a <strong>` + speciesName +`</strong>.
-        <br>
-        Study them carefully.
-        </p>
+var drawExplorerChatInstructions = function(game, speciesName) {
+    // Set instructions
+    var instructions = 
     `
-  $("#training_critters").html(instructions);
+        <br>
+        <br>
+        On the next page, you will enter into a chatroom with your partner, the "student".
+        <br>
+        <br>
+        Please discuss the properties of the ` + speciesName + ` creatures. The "student" will be advance the game out of the chatroom, once they feel like they have a good understanding of the properties of the  ` + speciesName + ` species.
+        <br>
+        <br>
+        After the chatroom, you both will be provided a set of unseen creatures that you must classify as belonging to the  ` + speciesName + ` species or not. Your bonus will be the sum of your score and your partner's score on this task.
+        <br>
+        <br>
+    `;
+    $("#chat_instructions_slide_header").html(instructions);
+
+    // Make visible
+    $("#chat_instructions_slide_continue_button").prop("disabled", false);
+    $("#chat_instructions_slide").removeClass("hidden");
 }
 
 var drawChatRoom = function(game) {
-
+    $("#chat_room_slide").removeClass("hidden");
 };
 
 var drawTestInstructions = function(game) {
@@ -161,11 +177,13 @@ var clearTrainInstructions = function() {
 };
 
 var clearTrainCreatures = function() {
-
+    $("#train_creatures_slide").addClass("hidden");
+    $("#train_creatures_slide_continue_button").prop("disabled", true);
 };
 
-var clearChatInstructions = function() {
-
+var clearExplorerChatInstructions = function() {
+    $("#chat_instructions_slide").addClass("hidden");    
+    $("#chat_instructions_slide_continue_button").prop("disabled", true);
 };
 
 var clearChatRoom = function() {

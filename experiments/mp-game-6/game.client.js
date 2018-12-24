@@ -123,7 +123,6 @@ var customSetup = function(globalGame) {
     $("#round_slide_continue_button").click(function(){
         clearRoundNumber();
         drawTrainInstructions(globalGame, "wud", "wuds");
-
     });
 
     $("#train_instructions_slide_continue_button").click(function() {
@@ -131,8 +130,20 @@ var customSetup = function(globalGame) {
         if (globalGame.my_role === "explorer") {
             drawTrainCreatures(globalGame, "wud");        
         } else {
+            drawChatRoom(globalGame);
         }
     });
+
+    $("#train_creatures_slide_continue_button").click(function(){
+        console.log("Pressed Continue");
+        clearTrainCreatures();
+        drawExplorerChatInstructions(globalGame, "wud");
+    });
+
+    $("#chat_instructions_slide_continue_button").click(function(){
+        clearExplorerChatInstructions();
+        drawChatRoom(globalGame);
+    });   
 
     // ---------------
     // Socket Handlers

@@ -9,20 +9,18 @@
 function drawCreaturesTable(creatures, speciesName, numCols, train, roundProps) {
     // Draw a table of creatures in a grid of numCols columns
     var numRows = Math.ceil(creatures.length / numCols);
-    var table = "<table>";
+    var table = "<table class='creatures_table'>";
     var creatureInd = 0;
 
     for(var i = 0; i < numRows; i++) {
         table += "<tr>";
         for(var j = 0; j < numCols; j++) {
-            table += "<td>";
             if (creatureInd >= creatures.length) break;
             if (train === true){
-                table += "<table class='train_creature_cell' id='train_cell_" + creatureInd + "'\">";
+                table += "<td class='train_creature_cell' id='train_cell_" + creatureInd + "'\">";
             } else {
-                table += "<table class='test_creature_cell' id='test_cell_" + creatureInd + "'\">";
+                table += "<td class='test_creature_cell' id='test_cell_" + creatureInd + "'\">";
             }
-            table += "<td>";
             if (train === true) {
                 table += "<svg class='creature_svg' id='train_creature_" + creatureInd + "'>" +
                     "</svg></td>";       
@@ -30,12 +28,9 @@ function drawCreaturesTable(creatures, speciesName, numCols, train, roundProps) 
                 table += "<svg class='creature_svg' id='test_creature_" + creatureInd + "'>" +
                 "</svg></td>";         
             }
-            table += "<tr>";
-            table += "</table>";
-            table += "</td>";
             creatureInd += 1;
         }
-      table += "</tr>";
+        table += "</tr>";
     }
     table += "</table>";
   
@@ -48,7 +43,7 @@ function drawCreaturesTable(creatures, speciesName, numCols, train, roundProps) 
 
     // Draw the creatures
     for (var i = 0; i < creatures.length; i++) {
-        var scale = 0.5;
+        var scale = 0.75;
         var c = creatures[i];
         if (train === true) {
             var cell_id = "#train_cell_" + i;
@@ -57,7 +52,6 @@ function drawCreaturesTable(creatures, speciesName, numCols, train, roundProps) 
         if (train) drawTrainCreature(c, speciesName, i, creatures.length, scale, roundProps);
         else drawTestCreature(c, i, scale, roundProps);
     }
-
   }
   
   function drawTrainCreature(stim, speciesName, creatureInd, num_creatures, scale, roundProps){
@@ -90,11 +84,11 @@ function drawCreaturesTable(creatures, speciesName, numCols, train, roundProps) 
             roundProps.selected_train_stim.push(id);
             if (roundProps.selected_train_stim.length === num_creatures) {
                 // Show "Continue" button -- exploration complete
-                $("#train_creatures_slide_continue_button").show();
                 $("#train_creatures_slide_continue_button").prop("disabled", false);
+                $("#train_creatures_slide_continue_button").show();
 
                 alert(
-                    "Exploration Complete!" +
+                    "Exploration Complete! " +
                      "Please take a moment to review your findings before continuing to the chatroom."
                 );
             }

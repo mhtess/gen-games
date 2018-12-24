@@ -63,7 +63,15 @@
             <br>
             <button class="continuebutton" id="train_instructions_slide_continue_button" disabled>Continue</button>
         </div>
-      
+ 
+        <!-- <div class="slide hidden" id="load_slide"> 
+            <p align="center" style="font-size: large;">
+                <img src="../_shared/images/spinner.gif">
+                <br>
+                <b>Loading ... Please wait!</b>
+            </p>
+        </div> -->
+
         <!-- This is the learning slide in which users will uncover information about the critters. -->
         <div class="slide hidden" id="train_creatures_slide">
             <div id="train_creatures_slide_header"></div>
@@ -71,14 +79,14 @@
             <br>
             <div id="train_creatures_slide_grid"></div>
             <br>
-            <button class="continuebutton" id="train_creatures_slide_continue_button" disabled>Continue</button>            
+            <button class="continuebutton" id="train_creatures_slide_continue_button">Continue</button>            
         </div>
 
         <!-- This is the slide in which users will learn about the chatroom. -->
         <div class="slide hidden" id="chat_instructions_slide">
             <div id="chat_instructions_slide_header"></div>
             <br>
-            <button class="continuebutton" disabled>Continue</button>
+            <button class="continuebutton" id="chat_instructions_slide_continue_button" disabled>Continue</button>
         </div>
 
        <!-- Connected players can discuss what they have learned here using a chatbox. -->
