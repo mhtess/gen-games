@@ -21,8 +21,8 @@ if (typeof _ === "undefined" ) {
     else throw "mymodule requires lodash, see https://lodash.com/";
 }
 if (has_require) {
-  utils  = require(__base + "sharedUtils/sharedUtils.js");
-  assert = require("assert");
+    utils = require(__base + "sharedUtils/sharedUtils.js");
+    assert = require("assert");
 }
 
 // Functional form, for game creation 
@@ -51,7 +51,7 @@ var game_core = function(options){
 
     // Round Info
     this.roundNum = -1;
-    this.numRounds = 5;
+    this.numRounds = 1;
 
     // Other info
     this.start_time = null;
@@ -165,12 +165,19 @@ game_core.prototype.server_send_update = function(){
     // Send the snapshot to the players
     this.state = state;
     _.map(this.get_active_players(), function(p){
-        p.player.instance.emit( 'onserverupdate', state);
+        p.player.instance.emit('onserverupdate', state);
     });
 };
 
 game_core.prototype.makeTrialList = function () {
-    // TOOD: Implement Function
-    var trialList = [];
-    return trialList;
+    // TODO: Remove this, once we have MongoDB Code working properly
+    var rule_num = 2;
+    var concept_summary = require("../sharedUtils/stimuli/test_dataset/concept_summary.json")[rule_num];
+    var train_stimuli = require("../sharedUtils/stimuli/test_dataset/train/" + concept_summary.name + ".json");
+    var test_stimuli = require("../sharedUtils/stimuli/test_dataset/test/" + concept_summary.name + ".json");
+
+    return [{
+        "train": train_stimuli,
+        "test": test_stimuli,
+    }];
 };

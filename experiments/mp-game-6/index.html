@@ -16,13 +16,15 @@
 
         <!-- Load jQuery, which lets us handle mouse events -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        
+
+        <!-- Load drawing code. -->
+        <script src="../_shared/js/raphael-min.js"></script> 
+        <script src="../_shared/js/ecosystem.js"></script>   
+
         <!-- Load the common game code. -->
         <script type="text/javascript" src="game.core.js"></script>   
 
-        <!-- Finally, Load the game client code. -->
-        <script type="type/javascript" src="../_shared/js/raphael-min.js"></script> 
-        <script type="type/javascript" src="../_shared/js/ecosystem.js"></script>     
+        <!-- Finally, Load the game client code. -->  
         <script type="text/javascript" src="../sharedUtils/clientBase.js"></script>    
         <script type="text/javascript" src="game.client.js"></script>
         <script type="text/javascript" src="draw.creatures.js"></script>
@@ -69,7 +71,7 @@
             <br>
             <div id="train_creatures_slide_grid"></div>
             <br>
-            <button class="hidden continuebutton" id="train_creature_slide_continue_button" disabled>Continue</button>            
+            <button class="continuebutton" id="train_creatures_slide_continue_button" disabled>Continue</button>            
         </div>
 
         <!-- This is the slide in which users will learn about the chatroom. -->

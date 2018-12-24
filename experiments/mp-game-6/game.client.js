@@ -60,6 +60,7 @@ var client_onserverupdate_received = function(data){
     globalGame.player_count = data.pc;
     globalGame.roundNum = data.roundNum;
     globalGame.numRounds = data.numRounds;
+    globalGame.trialInfo = data.trialInfo;
 
     // update data object on first round, don't overwrite (FIXME)
     if(!_.has(globalGame, 'data')) {
@@ -85,7 +86,7 @@ var client_onMessage = function(data) {
       case 'end' : // Redirect to exit survey only if it is not the last round
         if(globalGame.roundNum < globalGame.numRounds || globalGame.numRounds == null) {
           $('#thanks').hide();
-          ondisconnect();
+          onDisconnect();
           console.log("received end message...");
         }
         break;
@@ -112,12 +113,38 @@ var customSetup = function(globalGame) {
     // customSetup is automatically triggered by window.on_load()
     // in the shared clientBase.js code
 
-    // First, draw the waiting room properly
+    // Initial setup -- draw the waiting room.
     drawWaitingRoom("Waiting for another player to join the game ...");
+
+    // --------------
+    // Click Handlers
+    // --------------
+
+    $("#round_slide_continue_button").click(function(){
+        clearRoundNumber();
+        drawTrainInstructions(globalGame, "wud", "wuds");
+
+    });
+
+    $("#train_instructions_slide_continue_button").click(function() {
+        clearTrainInstructions();
+        if (globalGame.my_role === "explorer") {
+            drawTrainCreatures(globalGame, "wud");        
+        } else {
+        }
+    });
+
+    // ---------------
+    // Socket Handlers
+    // ---------------
 
     globalGame.socket.on('newRoundUpdate', function(data){
         clearWaitingRoom();
         drawRoundNumber(data, globalGame);
+        globalGame.roundProps = {
+            selected_train_stim: [],
+            selected_test_stim: [],
+        };
     });
 
     globalGame.socket.on('exitChatRoom', function(data) {

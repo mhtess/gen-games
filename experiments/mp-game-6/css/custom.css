@@ -224,8 +224,6 @@ ALOT...don't understand how to adjust that.*/
    text-align: center;
 }
 
-
-
 ::-webkit-scrollbar {
    -webkit-appearance: none;
    width: 7px;
@@ -237,11 +235,14 @@ ALOT...don't understand how to adjust that.*/
    -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
 }
 
-
 .species-label {
    visibility: hidden;
 }
 
 #training-critters-button {
    visibility: hidden;
+}
+
+#train_creatures_slide_grid {
+    text-align: center;
 }
