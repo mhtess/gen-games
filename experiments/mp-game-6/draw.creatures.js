@@ -98,17 +98,17 @@ function drawCreaturesTable(creatures, speciesName, numCols, train, roundProps) 
   
 function drawTestCreature(stim, creatureInd, scale, roundProps){
     // Draw Creature
-    var id = "test_creature" + creatureInd;
+    var id = "test_creature_" + creatureInd;
     Ecosystem.draw(stim.creature, stim.props, id, scale);
   
     // Add Click Handlers to Creature's Table Cell
     $("#test_cell_" + creatureInd).click(function(event) {
-        var id = "#" + $(event.target).parents(".cell")[0].id;
+        var id = "#test_cell_" + creatureInd;
         if (roundProps.selected_test_stim.includes(id)) {
             // Remove Previously Marked Creature
             unmarkAsSpecies(id);
             roundProps.selected_test_stim = roundProps.selected_test_stim.slice(
-                roundProps.selected_test_stim.creatureindexOf(id),
+                roundProps.selected_test_stim.indexOf(id),
                 1
             );
         } else {

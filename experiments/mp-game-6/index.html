@@ -117,10 +117,10 @@
                         </form>
                     </div>
                     <br><br>
-                    </div>
+                </div>
                 <div id="chatCont">
                     <br>
-                    <button class="continuebutton hidden disabled">Continue</button>
+                    <button class="continuebutton" id="chat_room_side_continue_button" disabled>Continue</button>
                 </div>
             </div>
         </div>
@@ -129,14 +129,17 @@
         <div class="slide hidden" id="test_instructions_slide">
                 <div id="test_instructions_slide_header"></div>
                 <br>
-                <button class="continuebutton disabled">Continue</button>
+                <button class="continuebutton disabled" id="test_instructions_slide_continue_button">Continue</button>
             </div>
 
         <!-- Generates critters that the partner learned about and tests the user -->
         <div class="slide hidden" id="test_creatures_slide">
             <div id="test_creatures_slide_header"></div>
             <br>
-            <button class="continuebutton disabled">Continue</button>
+            <br>
+            <div id="test_creatures_slide_grid"></div>
+            <br>
+            <button class="continuebutton disabled" id="test_creatures_slide_continue_button">Continue</button>
         </div>
       
        <!-- Shows score report before allowing player to move on to next block -->

@@ -94,7 +94,7 @@ var drawTrainCreatures = function(game, speciesName) {
     $("#train_creatures_slide_header").html(
         `
             <p class="label_prompt">
-                Click on each one to discover whether or not it is a <strong>` + speciesName +`</strong>.
+                Click on each creature to discover whether or not it is a <strong>` + speciesName +`</strong>.
                 <br>
                 Study them carefully.
             </p>
@@ -132,15 +132,49 @@ var drawExplorerChatInstructions = function(game, speciesName) {
 }
 
 var drawChatRoom = function(game) {
+    // Default disabled
+    $("#chat_room_side_continue_button").prop("disabled", true);
+
+    // Make button visible only if user is the student
+    if (game.my_role === "student") {
+        $("#chatCont").show();
+    } else {
+        $("#chatCont").hide();       
+    }
     $("#chat_room_slide").removeClass("hidden");
 };
 
-var drawTestInstructions = function(game) {
-
+var drawTestInstructions = function(game, speciesName) {
+    var instructions = `
+        <br><br>
+        <h3>Quiz</h3>
+        <br>
+        You will be presented a grid. Click on the creatures you believe belong to the  ` + speciesName + ` species.  Press Continue to start the quiz.
+        <br> <br>
+    `;
+    $("#test_instructions_slide_header").html(instructions);
+    $("#test_instructions_slide_continue_button").prop("disabled", false);
+    $("#test_instructions_slide").removeClass("hidden");
 };
 
-var drawTestCreatures = function(game) {
+var drawTestCreatures = function(game, speciesName, pluralSpeciesName) {
+    var instructions = `
+        <p class="label_prompt"> Click on the creatures that you believe are members of the <strong>` + speciesName + `</strong> species.
+        <br>
+        Creatures that you have selected as ` + pluralSpeciesName + ` will have a yellow background.
+        <br>      
+        You can click on a selected creature a second time to un-select it.
+        <br>
+        Once you are done selecting the ` + pluralSpeciesName + `, hit the Continue button.
+        </p>
+    `
+   $("#test_creatures_slide_header").html(instructions);
 
+   drawCreaturesTable(game.trialInfo.test, "wud", 5, false, game.roundProps);
+   
+    // Make visible
+    $("#test_creatures_slide_continue_button").prop("disabled", false);
+    $("#test_creatures_slide").removeClass("hidden");
 };
 
 var drawRoundScoreReport = function(game) {
@@ -187,11 +221,13 @@ var clearExplorerChatInstructions = function() {
 };
 
 var clearChatRoom = function() {
-
+    $("#chat_room_slide").addClass("hidden");
+    $("#chat_room_slide_continue_button").prop("disabled", true);
 };
 
 var clearTestInstructions = function() {
-
+    $("#test_instructions_slide").addClass("hidden");
+    $("#test_instructions_slide_continue_button").prop("disabled", true);
 };
 
 var clearTestCreatures = function() {

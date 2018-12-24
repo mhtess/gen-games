@@ -150,7 +150,16 @@ var customSetup = function(globalGame) {
         globalGame.socket.send("enterSlide.chat_room_slide.")   
         globalGame.socket.send("enterChatRoom.");
         drawChatRoom(globalGame);
-    });   
+    });
+
+    $("#chat_room_side_continue_button").click(function(){
+        globalGame.socket.send("proceedToTestInstructions.");
+    });
+
+    $("#test_instructions_slide_continue_button").click(function(){
+        clearTestInstructions();
+        drawTestCreatures(globalGame, "wud", "wuds");
+    });
 
     // ---------------
     // Socket Handlers
@@ -168,53 +177,49 @@ var customSetup = function(globalGame) {
         };
     });
 
-    globalGame.socket.on('exitChatRoom', function(data) {
-        // exp.goToSlide('testing_instructions');
+    // One player has not yet made it to the chatroom, so sending messages is impossible
+    globalGame.socket.on('chatWait', function(data){
+        $('#chatbox').attr("disabled", "disabled");
+
+        // Pretty Animation (Fade In / Out)
+        globalGame.blinking_wait = setInterval(function() {
+            $("#chat_room_slide_status").fadeOut(1000);
+            $("#chat_room_slide_status").fadeIn(1000);
+        });
+        $("#chat_room_slide_status").show();
     });
 
-
-  // One player has not yet made it to the chatroom, so sending messages is impossible
-  globalGame.socket.on('chatWait', function(data){
-    $('#chatbox').attr("disabled", "disabled");
-
-    // Pretty Animation (Fade In / Out)
-    globalGame.blinking_wait = setInterval(function() {
-        $("#chat_room_slide_status").fadeOut(1000);
-        $("#chat_room_slide_status").fadeIn(1000);
-    });
-    $("#chat_room_slide_status").show();
-  });
-
-  // Both players are now in the chatroom, so they may send messages
-  // the waiting message is therefore now hidden
-  globalGame.socket.on('enterChatRoom', function(data){
-    console.log("enterChatRoom")
-    $('#chatbox').removeAttr("disabled");
-    $('#status').show();
-    $('#status').html('<div id = "status"><p style="color:green;">Chatroom has connected with your partner!  <br>You may begin messaging!</p></div>');
-    var visible = 'hidden';
-    if(hidden === 'hidden') {
-      newMsg = "Connected!"
-      function step() {
-        document.title = (document.title == original) ? newMsg : original;
-        if (visible === "hidden") {
-          timeoutIndex = setTimeout(step, 500);
-        } else {
-          document.title = original;
+    // Both players are now in the chatroom, so they may send messages
+    // the waiting message is therefore now hidden
+    globalGame.socket.on('enterChatRoom', function(data){
+        console.log("enterChatRoom")
+        $('#chatbox').removeAttr("disabled");
+            $('#chat_room_slide_status').show();
+            $('#chat_room_slide_status').html('<div id = "chat_room_slide_status"><p style="color:green;">Chatroom has connected with your partner!  <br>You may begin messaging!</p></div>');
+        var visible = 'hidden';
+        if(hidden === 'hidden') {
+            newMsg = "Connected!"
+            function step() {
+                document.title = (document.title == originalTitle) ? newMsg : originalTitle;
+                if (visible === "hidden") {
+                    timeoutIndex = setTimeout(step, 500);
+                } else {
+                    document.title = originalTitle;
+                }
+            };
+            step();
         }
-      };
-      step();
-    }
+        if(globalGame.my_role === "student") {
+            $("#chat_room_side_continue_button").prop("disabled", false);
+        }
+    });
 
-    // set mouse-tracking event handler
-    if (globalGame.my_role === globalGame.playerRoleNames.role2) {
-      // only role2 gets to see Continue button and press Continue
-      var continueButton = document.getElementById("chatCont");
-      var nSecondsTimeOut = 1;
-      setTimeout(function() { $("#chatCont").show() }, nSecondsTimeOut*1000);
-      continueButton.addEventListener("click", buttonClickListener, false);
-    }
-  });
+    globalGame.socket.on('exitChatRoom', function(data) {
+        clearChatRoom();
+        globalGame.socket.send("enterSlide.test_instructions_slide.")  
+        drawTestInstructions(globalGame);
+    });
+
 
   // Creates the score reports for the players
   globalGame.socket.on('sendingTestScores', function(data){
