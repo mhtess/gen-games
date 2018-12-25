@@ -12,7 +12,8 @@ var globalGame = {},
     enterScoreReport = 0,
     timeout = 1000 * 60 * 15 // 15 minutes,
     timeoutIndex = 0,
-    originalTitle = document.title;
+    originalTitle = document.title,
+    flashConnected = false;
 
 // ----------------
 // EVENT HANDLERS
@@ -193,28 +194,30 @@ var customSetup = function(globalGame) {
     // the waiting message is therefore now hidden
     globalGame.socket.on('enterChatRoom', function(data){
         console.log("enterChatRoom")
+        flashConnected = true;
+
         $('#chatbox').removeAttr("disabled");
-            $('#chat_room_slide_status').show();
-            $('#chat_room_slide_status').html('<div id = "chat_room_slide_status"><p style="color:green;">Chatroom has connected with your partner!  <br>You may begin messaging!</p></div>');
-        var visible = 'hidden';
-        if(hidden === 'hidden') {
-            newMsg = "Connected!"
-            function step() {
-                document.title = (document.title == originalTitle) ? newMsg : originalTitle;
-                if (visible === "hidden") {
-                    timeoutIndex = setTimeout(step, 500);
-                } else {
-                    document.title = originalTitle;
-                }
-            };
-            step();
-        }
+        $('#chat_room_slide_status').show();
+        $('#chat_room_slide_status').html('<div id = "chat_room_slide_status"><p style="color:green;">Chatroom has connected with your partner!  <br>You may begin messaging!</p></div>');
+    
+        newMsg = "Connected!"
+        function step() {
+            document.title = (document.title == originalTitle) ? newMsg : originalTitle;
+            if (flashConnected === true) {
+                timeoutIndex = setTimeout(step, 500);
+            } else {
+                document.title = originalTitle;
+            }
+        };
+        step();
+
         if(globalGame.my_role === "student") {
             $("#chat_room_side_continue_button").prop("disabled", false);
         }
     });
 
     globalGame.socket.on('exitChatRoom', function(data) {
+        flashConnected = false;
         clearChatRoom();
         globalGame.socket.send("enterSlide.test_instructions_slide.")  
         drawTestInstructions(globalGame);
