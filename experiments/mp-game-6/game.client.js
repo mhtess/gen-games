@@ -56,7 +56,7 @@ var client_onserverupdate_received = function(data){
     }
 
     // Copy game parameters to local globalGame
-    globalGame.startTime = data.st;
+    globalGame.start_time = data.gs;
     globalGame.players_threshold = data.pt;
     globalGame.player_count = data.pc;
     globalGame.roundNum = data.roundNum;
@@ -82,7 +82,7 @@ var client_onMessage = function(data) {
     switch(subcommand) {
       
       case 'end' : // Redirect to exit survey only if it is not the last round
-        if(globalGame.roundNum < globalGame.numRounds || globalGame.numRounds == null) {
+        if(globalGame.roundNum < globalGlobalGame.numRounds || globalGlobalGame.numRounds == null) {
             $("#" + globalGame.currentSlide[globalGame.my_role]).addClass("hidden");
             $('#thanks').hide();
             onDisconnect();
@@ -122,6 +122,7 @@ var customSetup = function(globalGame) {
 
     $("#round_slide_continue_button").click(function(){
         clearRoundNumber();
+        drawProgressBar(globalGame.roundNum, globalGame.numRounds, 2, 8);
         globalGame.socket.send("enterSlide.train_instructions_slide.");
         drawTrainInstructions(globalGame, "wud", "wuds");
     });
@@ -129,10 +130,12 @@ var customSetup = function(globalGame) {
     $("#train_instructions_slide_continue_button").click(function() {
         clearTrainInstructions();
         if (globalGame.my_role === "explorer") {
+            drawProgressBar(globalGame.roundNum, globalGame.numRounds, 3, 8);
             globalGame.socket.send("enterSlide.train_creatures_slide.");
             drawTrainCreatures(globalGame, "wud");        
         } else {
-            globalGame.socket.send("enterSlide.chat_room_slide.");  
+            globalGame.socket.send("enterSlide.chat_room_slide."); 
+            drawProgressBar(globalGame.roundNum, globalGame.numRounds, 5, 8); 
             globalGame.socket.send("enterChatRoom.");
             drawChatRoom(globalGame);
         }
@@ -140,23 +143,27 @@ var customSetup = function(globalGame) {
 
     $("#train_creatures_slide_continue_button").click(function(){
         clearTrainCreatures();
+        drawProgressBar(globalGame.roundNum, globalGame.numRounds, 4, 8);
         globalGame.socket.send("enterSlide.chat_instructions_slide.");           
         drawExplorerChatInstructions(globalGame, "wud");
     });
 
     $("#chat_instructions_slide_continue_button").click(function(){
         clearExplorerChatInstructions();
+        drawProgressBar(globalGame.roundNum, globalGame.numRounds, 5, 8);
         globalGame.socket.send("enterSlide.chat_room_slide.");
         globalGame.socket.send("enterChatRoom.");
         drawChatRoom(globalGame);
     });
 
     $("#chat_room_slide_continue_button").click(function(){
+        drawProgressBar(globalGame.roundNum, globalGame.numRounds, 6, 8);
         globalGame.socket.send("proceedToTestInstructions.");
     });
 
     $("#test_instructions_slide_continue_button").click(function(){
         clearTestInstructions();
+        drawProgressBar(globalGame.roundNum, globalGame.numRounds, 7, 8);
         globalGame.socket.send("enterSlide.test_creatures_slide.");
         drawTestCreatures(globalGame, "wud", "wuds");
     });
@@ -219,6 +226,7 @@ var customSetup = function(globalGame) {
         // Enter wait room until other user has completed quiz/test
         clearTestCreatures();
         globalGame.socket.send("enterSlide.wait_room_slide.")
+        drawProgressBar(globalGame.roundNum, globalGame.numRounds, 8, 8);
         drawWaitingRoom("Waiting for the your partner to catch up ...", globalGame);
     });
 
@@ -264,7 +272,7 @@ var customSetup = function(globalGame) {
             "role": globalGame.my_role,
             "round_selections": globalGame.roundSelections,
             "subject_information" : subjData,
-            "time_in_minutes" : (Date.now() - globalGame.start_time)/60000,
+            "time_in_minutes" : (Date.now() - globalGame.startTime)/60000,
             "round_summaries": globalGame.roundSummaries,
             "bonus": globalGame.totalScore * globalGame.bonusAmt,
         }

@@ -1,9 +1,9 @@
 // -------
 // DRAWING
 // -------
-var drawProgressBar = function(roundNum, numRounds) {
+var drawProgressBar = function(roundNum, numRounds, slideNum, numSlides) {
     // Change Progress Value
-    $("#progress_bar").css( "width", (roundNum * 1.0 / numRounds) * 100 + "%");
+    $("#progress_bar").css( "width", ((roundNum * 1.0 * numSlides + slideNum) / (numRounds * numSlides)) * 100 + "%");
     
     // Make Visible
     $("#progress_component").removeClass("hidden");
@@ -25,7 +25,7 @@ var drawWaitingRoom = function(message, game) {
 
 var drawRoundNumber = function(roundNum, game) {
     // Draw progress bar
-    drawProgressBar(roundNum, game.numRounds);
+    drawProgressBar(roundNum, game.numRounds, 1, 8);
     
     // Set text & enable button
     $("#round_slide_header").empty();
@@ -165,6 +165,10 @@ var drawTestInstructions = function(game, speciesName) {
 };
 
 var drawTestCreatures = function(game, speciesName, pluralSpeciesName) {
+    // Clear previous
+    $("#test_creatures_slide_header").empty();
+    $("#test_creatures_slide_grid").empty();
+
     var instructions = `
         <p class="label_prompt"> Click on the creatures that you believe are members of the <strong>` + speciesName + `</strong> species.
         <br>
