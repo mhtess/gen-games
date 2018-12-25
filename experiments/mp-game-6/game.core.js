@@ -73,7 +73,7 @@ var game_core = function(options){
             player: new game_player(this, options.player_instances[0].player)
         }];
 
-        this.start_time = null;
+        this.startTime = null;
         this.numPlayersCompletedRound = 0;
 
         this.streams = {};
@@ -137,15 +137,16 @@ game_core.prototype.newRound = function(delay) {
     setTimeout(function() {
         // If you've reached the planned number of rounds, end the game
         if (localThis.roundNum == localThis.numRounds - 1) {
+            console.log(localThis.testScores);
             var totalScore = 0;
             for (var i = 0; i < localThis.numRounds; i++){
-                totalScore += localThis.testScores.student.score;
-                totalScore += localThis.testScores.explorer.score;
+                totalScore += parseInt(localThis.testScores['student'][i]['score']);
+                totalScore += parseInt(localThis.testScores['explorer'][i]['score']);
             }
-            p.player.instance.emit(
-                'totalScoreUpdate',
-                totalScore
-            );
+            _.forEach(
+                players,
+                p => p.player.instance.emit('totalScoreUpdate', totalScore));
+
         } else {
             // Tell players
             _.forEach(players, p => p.player.instance.emit('newRoundUpdate', localThis.roundNum + 1));
@@ -165,6 +166,7 @@ game_core.prototype.server_send_update = function(){
     });
 
     var state = {
+        id : this.id,
         gs : this.start_time,
         pt : this.players_threshold,
         pc : this.player_count,

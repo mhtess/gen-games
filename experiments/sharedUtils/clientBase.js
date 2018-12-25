@@ -32,7 +32,7 @@ var onConnect = function(data) {
 
 
 var onDisconnect = function(data) {
-    if(isConnected) {
+    if (isConnected) {
         // Redirect to exit survey
         console.log("Other user has exited the game.");
         var email = globalGame.email ? globalGame.email : "";
@@ -43,14 +43,17 @@ var onDisconnect = function(data) {
             "compensation.</p> <p>If you experience any problems, please email us (",
             email, ")</p>"].join("");
 
-        if(globalGame.roundNum != globalGame.numRounds) {
-            $("#subj_info").prepend(failMsg);
-            if (globalGame.experimentName === 'mp-game-6') {
+        if (globalGame.experimentName === 'mp-game-6') {
+            if (globalGame.roundNum != globalGame.numRounds - 1) {
+                $("#subj_info").prepend(failMsg);
                 $("#subj_info").removeClass("hidden");
-            } else {
-                $("#thanks").hide();            
             }
-        } 
+        } else {
+            if(globalGame.roundNum != globalGame.numRounds) {
+                $("#subj_info").prepend(failMsg);
+                $("#thanks").hide();            
+            } 
+        }
     }
     isConnected = false;
 };

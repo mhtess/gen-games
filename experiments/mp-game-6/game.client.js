@@ -56,12 +56,13 @@ var client_onserverupdate_received = function(data){
     }
 
     // Copy game parameters to local globalGame
-    globalGame.start_time = data.st;
+    globalGame.startTime = data.st;
     globalGame.players_threshold = data.pt;
     globalGame.player_count = data.pc;
     globalGame.roundNum = data.roundNum;
     globalGame.numRounds = data.numRounds;
     globalGame.trialInfo = data.trialInfo;
+    globalGame.id = data.id;
 
     // update data object on first round, don't overwrite (FIXME)
     if(!_.has(globalGame, 'data')) {
@@ -250,13 +251,13 @@ var customSetup = function(globalGame) {
             humanPartner: $("#human").val(),
             likePartner: $("#likePartner").val()
         };
-        globalGame.socket.send("logSubjInfo.subjInfo." + _.pairs(encodeData(subjData)).join('.'));
+        globalGame.socket.send("logSubjInfo.subjInfo." + _.toPairs(encodeData(subjData)).join('.'));
 
         // Move to thanks slide
-        clearSubjInfo();
-        globalGame.socket.send("enterSlide.thanks");
-        drawThanks();
         onDisconnect();
+        globalGame.socket.send("enterSlide.thanks");
+        clearSubjInfo();
+        drawThanks(globalGame);
 
         var finalData = {
             "game_id": globalGame.id,
@@ -265,7 +266,7 @@ var customSetup = function(globalGame) {
             "subject_information" : subjData,
             "time_in_minutes" : (Date.now() - globalGame.start_time)/60000,
             "round_summaries": globalGame.roundSummaries,
-            "bonus": global.totalScore * globalGame.bonusAmt,
+            "bonus": globalGame.totalScore * globalGame.bonusAmt,
         }
 
         if(_.size(globalGame.urlParams) == 4) {
@@ -273,7 +274,7 @@ var customSetup = function(globalGame) {
             window.close();
         } else {
             console.log("would have submitted the following :")
-            console.log(exp.data);
+            console.log(finalData);
         }
         
     });
@@ -370,7 +371,7 @@ var customSetup = function(globalGame) {
             }
 
             clearWaitingRoom();
-            drawRoundScoreReport();
+            drawRoundScoreReport(globalGame);
         }
     });
 
@@ -379,7 +380,7 @@ var customSetup = function(globalGame) {
         globalGame.totalScore = data;
         globalGame.socket.send("enterSlide.total_score_report_slide.");
         $("#total_score").html(data);
-        drawTotalScoreReport();
+        drawTotalScoreReport(globalGame);
     });
 };
 
