@@ -55,10 +55,11 @@ var game_core = function(options){
     this.testScores = {};
     this.testScores[this.playerRoleNames.role1] = _.times(this.numRounds, _.constant({}));
     this.testScores[this.playerRoleNames.role2] = _.times(this.numRounds, _.constant({}));
+    this.roundSummaries = [];
+    this.roundSelections = [];
+
 
     // Other info
-    this.start_time = null;
-    this.numPlayersCompletedRound = 0;
     this.currentSlide = {}
     this.currentSlide[this.playerRoleNames.role1] = '';
     this.currentSlide[this.playerRoleNames.role2] = '';
@@ -66,18 +67,14 @@ var game_core = function(options){
     if(this.server) {
         this.id = options.id;
         this.trialList = this.makeTrialList();
-        this.data = {
-            id: this.id,
-            subject_information: {
-                score: 0,
-                gameID: this.id,
-            }
-        };
         this.players = [{
             id: options.player_instances[0].id,
             instance: options.player_instances[0].player,
             player: new game_player(this, options.player_instances[0].player)
         }];
+
+        this.start_time = null;
+        this.numPlayersCompletedRound = 0;
 
         this.streams = {};
         this.server_send_update();
@@ -139,8 +136,16 @@ game_core.prototype.newRound = function(delay) {
     var localThis = this;
     setTimeout(function() {
         // If you've reached the planned number of rounds, end the game
-        if(localThis.roundNum == localThis.numRounds - 1) {
-            _.forEach(players, p => p.player.instance.disconnect());
+        if (localThis.roundNum == localThis.numRounds - 1) {
+            var totalScore = 0;
+            for (var i = 0; i < localThis.numRounds; i++){
+                totalScore += localThis.testScores.student.score;
+                totalScore += localThis.testScores.explorer.score;
+            }
+            p.player.instance.emit(
+                'totalScoreUpdate',
+                totalScore
+            );
         } else {
             // Tell players
             _.forEach(players, p => p.player.instance.emit('newRoundUpdate', localThis.roundNum + 1));
@@ -163,10 +168,9 @@ game_core.prototype.server_send_update = function(){
         gs : this.start_time,
         pt : this.players_threshold,
         pc : this.player_count,
-        dataObj  : this.data,
         roundNum : this.roundNum,
         numRounds : this.numRounds,
-        trialInfo: this.trialList[this.roundNum],
+        trialInfo: this.trialList[this.roundNum]
     };
     _.extend(state, {players: player_packet});
 

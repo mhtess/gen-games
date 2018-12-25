@@ -109,7 +109,7 @@ var onMessage = function(client, message) {
             target.visible = message_parts[1];
             break;
 
-        case 'sendingTestScores' :
+        case 'sendingTestScores':
             var scoreObj = _.fromPairs(_.map(
                 message_parts.slice(1), // get relevant part of message
                 function(i){return i.split(',')}

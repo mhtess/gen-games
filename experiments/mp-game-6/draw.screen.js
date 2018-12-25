@@ -9,10 +9,11 @@ var drawProgressBar = function(roundNum, numRounds) {
     $("#progress_component").removeClass("hidden");
 }
 
-var drawWaitingRoom = function(message) {
+var drawWaitingRoom = function(message, game) {
     // First clear all values and make visible
     $("#wait_room_header").empty();
     $("#wait_room_slide").removeClass("hidden");
+    game.currentSlide[game.my_role] = "wait_room_slide";
 
     // Set blinking message
     $("#wait_room_header").append(message);  
@@ -37,6 +38,7 @@ var drawRoundNumber = function(roundNum, game) {
     $("#round_slide_continue_button").prop("disabled", false);
 
     // Make visible
+    game.currentSlide[game.my_role] = "round_slide";    
     $("#round_slide").removeClass("hidden");
 };
 
@@ -81,6 +83,7 @@ var drawTrainInstructions = function(game, speciesName, pluralSpeciesName) {
     }
 
     // Make visible
+    game.currentSlide[game.my_role] = "train_instructions_slide";
     $("#train_instructions_slide_continue_button").prop("disabled", false);
     $("#train_instructions_slide").removeClass("hidden");
 };
@@ -103,6 +106,7 @@ var drawTrainCreatures = function(game, speciesName) {
     drawCreaturesTable(game.trialInfo.train, "wud", 5, true, game.roundProps);
 
     // Make visible
+    game.currentSlide[game.my_role] = "train_creatures_slide";    
     $("#train_creatures_slide_continue_button").hide();
     $("#train_creatures_slide_continue_button").prop("disabled", true);
     $("#train_creatures_slide").removeClass("hidden");
@@ -127,6 +131,7 @@ var drawExplorerChatInstructions = function(game, speciesName) {
     $("#chat_instructions_slide_header").html(instructions);
 
     // Make visible
+    game.currentSlide[game.my_role] = "chat_instructions_slide";        
     $("#chat_instructions_slide_continue_button").prop("disabled", false);
     $("#chat_instructions_slide").removeClass("hidden");
 }
@@ -142,6 +147,7 @@ var drawChatRoom = function(game) {
         $("#chatCont").hide();       
     }
     $("#chat_room_slide").removeClass("hidden");
+    game.currentSlide[game.my_role] = "chat_room_slide";            
 };
 
 var drawTestInstructions = function(game, speciesName) {
@@ -155,6 +161,7 @@ var drawTestInstructions = function(game, speciesName) {
     $("#test_instructions_slide_header").html(instructions);
     $("#test_instructions_slide_continue_button").prop("disabled", false);
     $("#test_instructions_slide").removeClass("hidden");
+    game.currentSlide[game.my_role] = "test_instructions_slide";                
 };
 
 var drawTestCreatures = function(game, speciesName, pluralSpeciesName) {
@@ -175,20 +182,29 @@ var drawTestCreatures = function(game, speciesName, pluralSpeciesName) {
     // Make visible
     $("#test_creatures_slide_continue_button").prop("disabled", false);
     $("#test_creatures_slide").removeClass("hidden");
+    game.currentSlide[game.my_role] = "test_creatures_slide";    
 };
 
 var drawRoundScoreReport = function(game) {
     $("#round_score_report_continue_button").prop("disabled", false);
     $("#round_score_report_slide").removeClass("hidden");
+    game.currentSlide[game.my_role] = "round_score_report_slide";        
 };
 
 var drawTotalScoreReport = function(game) {
-
+    $("#total_score_report_continue_button").prop("disabled", false);
+    $("#total_score_report_slide").removeClass("hidden");
+    game.currentSlide[game.my_role] = "total_score_report_slide";            
 };
 
 var drawSubjInfo = function(game) {
-
+    $("#subj_info").removeClass("hidden");
 };
+
+var drawThanks = function(game) {
+    $("#thanks").removeClass("hidden");
+    game.currentSlide[game.my_role] = "thanks";    
+}
 
 // -------
 // CLEAR
@@ -237,13 +253,15 @@ var clearTestCreatures = function() {
 };
 
 var clearRoundScoreReport = function() {
-
+    $("#round_score_report_slide").addClass("hidden");
+    $("#round_score_report_continue_button").prop("disabled", true);
 };
 
 var clearTotalScoreReport = function() {
-
+    $("#total_score_report_slide").addClass("hidden");
+    $("#total_score_report_continue_button").prop("disabled", true);
 };
 
 var clearSubjInfo = function() {
-
+    $("#subj_info").addClass("hidden");
 };

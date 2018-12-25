@@ -45,16 +45,12 @@ var onDisconnect = function(data) {
 
         if(globalGame.roundNum != globalGame.numRounds) {
             $("#subj_info").prepend(failMsg);
-            $("#thanks").hide();
-        }
-
-        $("#message_panel").hide();
-        $("#submitbutton").hide();
-        $("#roleLabel").hide();
-        $("#score").hide();
-        $(".progress").hide();
-
-        // exp.goToSlide("subj_info"); 
+            if (globalGame.experimentName === 'mp-game-6') {
+                $("#subj_info").removeClass("hidden");
+            } else {
+                $("#thanks").hide();            
+            }
+        } 
     }
     isConnected = false;
 };

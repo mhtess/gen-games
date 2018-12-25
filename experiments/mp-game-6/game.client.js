@@ -67,10 +67,6 @@ var client_onserverupdate_received = function(data){
     if(!_.has(globalGame, 'data')) {
         globalGame.data = data.dataObj;
     }
-
-  // Add the training critters and test critters to the exp slides
-//   exp.training_critters = data.training_critters;
-//   exp.testing_critters = data.testing_critters;
 };
 
 // Procedure for parsing messages from server.
@@ -86,9 +82,10 @@ var client_onMessage = function(data) {
       
       case 'end' : // Redirect to exit survey only if it is not the last round
         if(globalGame.roundNum < globalGame.numRounds || globalGame.numRounds == null) {
-          $('#thanks').hide();
-          onDisconnect();
-          console.log("received end message...");
+            $("#" + globalGame.currentSlide[globalGame.my_role]).addClass("hidden");
+            $('#thanks').hide();
+            onDisconnect();
+            console.log("received end message...");
         }
         break;
 
@@ -115,7 +112,7 @@ var customSetup = function(globalGame) {
     // in the shared clientBase.js code
 
     // Initial setup -- draw the waiting room.
-    drawWaitingRoom("Waiting for another player to join the game ...");
+    drawWaitingRoom("Waiting for another player to join the game ...", globalGame);
     globalGame.socket.send("enterSlide.wait_room_slide.")
 
     // --------------
@@ -185,11 +182,8 @@ var customSetup = function(globalGame) {
         for (var i = 0; i < globalGame.trialInfo.test.length; i++) {
             var stim = globalGame.trialInfo.test[i];
             var true_label = stim.belongs_to_concept;
-            var turker_label = globalGame.roundProps.selected_test_stim.includes("#testing_cell_" + i);
+            var turker_label = globalGame.roundProps.selected_test_stim.includes("#test_cell_" + i);
             var is_correct = (turker_label === true_label);
-
-            console.log(true_label);
-            console.log(turker_label);
 
             // Track turker's choice
             roundSelections.push({
@@ -202,7 +196,7 @@ var customSetup = function(globalGame) {
             // Update round summary
             if (turker_label === false && true_label === false) {
                 roundSummary.correct_rejections++;
-            } else if (turker_label=== false && true_label === true){
+            } else if (turker_label === false && true_label === true){
                 roundSummary.misses++;
             } else if (turker_label === true && true_label === false) {
                 roundSummary.false_alarms++;
@@ -211,15 +205,77 @@ var customSetup = function(globalGame) {
             }
         }
 
+        // local copy of scores
+        globalGame.roundSelections.push(roundSelections);
+        globalGame.roundSummaries.push(roundSummary);
+
         // Transmit performance info to server
-        globalGame.socket.emit('multipleTrialResponses', roundSelections);
-        globalGame.socket.send("logScores.testCritters." + _.toPairs(encodeData(roundSummary)).join('.'));
+        globalGame.socket.emit("multipleTrialResponses", roundSelections);
+        var roundSelectionsJSON = _.toPairs(encodeData(roundSummary)).join('.');
+        globalGame.socket.send("logScores.testCritters." + roundSelectionsJSON);
+        globalGame.socket.send("sendingTestScores." + roundSelectionsJSON);
 
         // Enter wait room until other user has completed quiz/test
         clearTestCreatures();
         globalGame.socket.send("enterSlide.wait_room_slide.")
-        globalGame.socket.send("sendingTestScores.");
-        drawWaitingRoom("Waiting for the your partner to catch up ...");
+        drawWaitingRoom("Waiting for the your partner to catch up ...", globalGame);
+    });
+
+    $("#round_score_report_continue_button").click(function(){
+        clearRoundScoreReport();
+        globalGame.socket.send("enterSlide.wait_room_slide.");
+        globalGame.socket.send("newRoundUpdate.");
+        drawWaitingRoom("Waiting for your partner to catch up", globalGame);
+    });
+
+    $("#total_score_report_continue_button").click(function(){
+        clearTotalScoreReport();
+        globalGame.socket.send("enterSlide.subj_info");
+        drawSubjInfo();
+    });
+
+    $("#subj_info_button").click(function(){
+        // Submit info
+        var subjData = {
+            nativeEnglish : $("#nativeEnglish").val(),
+            enjoyment : $("#enjoyment").val(),
+            assess : $('#assess').val(),
+            age : $("#age").val(),
+            gender : $("#gender").val(),
+            education : $("#education").val(),
+            comments : $("#comments").val(),
+            problems: $("#problems").val(),
+            fairprice: $("#fairprice").val(),
+            strategy: $("#strategy").val(),
+            humanPartner: $("#human").val(),
+            likePartner: $("#likePartner").val()
+        };
+        globalGame.socket.send("logSubjInfo.subjInfo." + _.pairs(encodeData(subjData)).join('.'));
+
+        // Move to thanks slide
+        clearSubjInfo();
+        globalGame.socket.send("enterSlide.thanks");
+        drawThanks();
+        onDisconnect();
+
+        var finalData = {
+            "game_id": globalGame.id,
+            "role": globalGame.my_role,
+            "round_selections": globalGame.roundSelections,
+            "subject_information" : subjData,
+            "time_in_minutes" : (Date.now() - globalGame.start_time)/60000,
+            "round_summaries": globalGame.roundSummaries,
+            "bonus": global.totalScore * globalGame.bonusAmt,
+        }
+
+        if(_.size(globalGame.urlParams) == 4) {
+            window.opener.turk.submit(finalData, true);
+            window.close();
+        } else {
+            console.log("would have submitted the following :")
+            console.log(exp.data);
+        }
+        
     });
 
     // ---------------
@@ -252,13 +308,13 @@ var customSetup = function(globalGame) {
 
     // Both players are now in the chatroom, so they may send messages
     // the waiting message is therefore now hidden
-    globalGame.socket.on('enterChatRoom', function(data){
+    globalGame.socket.on("enterChatRoom", function(data){
         console.log("enterChatRoom")
         flashConnected = true;
 
-        $('#chatbox').removeAttr("disabled");
-        $('#chat_room_slide_status').show();
-        $('#chat_room_slide_status').html('<div id = "chat_room_slide_status"><p style="color:green;">Chatroom has connected with your partner!  <br>You may begin messaging!</p></div>');
+        $("#chatbox").removeAttr("disabled");
+        $("#chat_room_slide_status").show();
+        $("#chat_room_slide_status").html("<div id='chat_room_slide_status'><p style='color:green;'>Chatroom has connected with your partner!  <br>You may begin messaging!</p></div>");
     
         newMsg = "Connected!"
         function step() {
@@ -283,43 +339,48 @@ var customSetup = function(globalGame) {
         drawTestInstructions(globalGame);
     });
 
+    // Creates the score reports for the players
+    globalGame.socket.on('sendingTestScores', function(data){
+        enterScoreReport++;
+        // only works when both players have reached this, then it generates scores for both players
+        if(enterScoreReport % 2 == 0){ //hacky way to handle error thrown when only one player finishes the test
+            globalGame.socket.send("enterSlide.round_score_report_slide.");
+            var my_role = globalGame.my_role;
+            var partner_role = my_role === "explorer" ? "student" : "explorer"
+            for(var i=0; i<2; i++){
+                var score_role, role_index;
+                if(i==0){
+                    score_role="your";
+                    role_index=my_role;
+                } else if(i==1){
+                    score_role="other";
+                    role_index=partner_role;
+                }
 
-  // Creates the score reports for the players
-  globalGame.socket.on('sendingTestScores', function(data){
-    enterScoreReport++;
-    // only works when both players have reached this, then it generates scores for both players
-    if(enterScoreReport % 2 == 0){ //hacky way to handle error thrown when only one player finishes the test
-        var ind = (enterScoreReport / 2) - 1;
-        var my_role = globalGame.my_role;
-        var partner_role = my_role === "explorer" ? "student" : "explorer"
-        for(var i=0; i<2; i++){
-            var score_role, role_index;
-            if(i==0){
-                score_role="your";
-                role_index=my_role;
-            } else if(i==1){
-                score_role="other";
-                role_index=partner_role;
+                var hits = Number(data[role_index][globalGame.roundNum].hits);
+                var misses = Number(data[role_index][globalGame.roundNum].misses);
+                var correctRejections = Number(data[role_index][globalGame.roundNum].correct_rejections);
+                var falseAlarms = Number(data[role_index][globalGame.roundNum].false_alarms);
+                var playerScore =  hits - falseAlarms;
+                var positiveScore = playerScore > 0 ? playerScore : 0;
+                $('#'+score_role+'_score').html(positiveScore);
+                $('#'+score_role+'_hits').html("Correctly selected: " + hits+ " out of " + (hits + misses));
+                $('#'+score_role+'_falseAlarms').html("Selected incorrectly: " + falseAlarms + " out of "+ (falseAlarms + correctRejections));
+                $('#'+score_role+'_score').html("Round score: " + positiveScore);
             }
 
-            console.log(data);
-
-            var hits = Number(data[role_index][globalGame.roundNum].hits);
-            var misses = Number(data[role_index][globalGame.roundNum].misses);
-            var correctRejections = Number(data[role_index][globalGame.roundNum].correct_rejections);
-            var falseAlarms = Number(data[role_index][globalGame.roundNum].false_alarms);
-            var playerScore =  hits - falseAlarms;
-            var positiveScore = playerScore > 0 ? playerScore : 0;
-            $('#'+score_role+'_score').html(positiveScore);
-            $('#'+score_role+'_hits').html("Correctly selected: " + hits+ " out of " + (hits + misses));
-            $('#'+score_role+'_falseAlarms').html("Selected incorrectly: " + falseAlarms + " out of "+ (falseAlarms + correctRejections));
-            $('#'+score_role+'_score').html("Round score: " + positiveScore);
+            clearWaitingRoom();
+            drawRoundScoreReport();
         }
+    });
 
+    globalGame.socket.on('totalScoreUpdate', function(data){
         clearWaitingRoom();
-        drawRoundScoreReport();
-    }
-  });
+        globalGame.totalScore = data;
+        globalGame.socket.send("enterSlide.total_score_report_slide.");
+        $("#total_score").html(data);
+        drawTotalScoreReport();
+    });
 };
 
 function encodeData(dataObj){
@@ -329,12 +390,14 @@ function encodeData(dataObj){
 
     // Encode real numbers  
     return _.mapValues(dataObj, function(val, key) {
-      if (isNumeric(val)) {
-        if (Number.isInteger(val)) {
-          return val.toString()
+        if (isNumeric(val)) {
+            if (Number.isInteger(val)) {
+                return val.toString();
+            } else {
+                return val.toString().replace(".", "&");
+            }
         } else {
-        return val.toString().replace(".", "&")
+            return val;
         }
-      } else { return val }
     });
   }

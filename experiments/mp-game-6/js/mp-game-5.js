@@ -528,17 +528,17 @@ function make_slides(f) {
         var playerCorrectRejections = 0;
         var playerFalseAlarms = 0;
         for (var j = 0; j < exp.test_summary_stats_combined.length; j++) {
-          var roundHits = Number(exp.test_summary_stats_combined[j][role_index].hits);
-          var roundMisses = Number(exp.test_summary_stats_combined[j][role_index].misses);
-          var roundCorrectRejections = Number(exp.test_summary_stats_combined[j][role_index].correct_rejections);
-          var roundFalseAlarms = Number(exp.test_summary_stats_combined[j][role_index].false_alarms);
-          var roundScore = roundHits - roundFalseAlarms;
-          var positiveRoundScore = roundScore > 0 ? roundScore : 0;
-          playerHits += roundHits;
-          playerMisses += roundMisses;
-          playerCorrectRejections += roundCorrectRejections;
-          playerFalseAlarms += roundFalseAlarms;
-          playerScore += positiveRoundScore;
+            var roundHits = Number(exp.test_summary_stats_combined[j][role_index].hits);
+            var roundMisses = Number(exp.test_summary_stats_combined[j][role_index].misses);
+            var roundCorrectRejections = Number(exp.test_summary_stats_combined[j][role_index].correct_rejections);
+            var roundFalseAlarms = Number(exp.test_summary_stats_combined[j][role_index].false_alarms);
+            var roundScore = roundHits - roundFalseAlarms;
+            var positiveRoundScore = roundScore > 0 ? roundScore : 0;
+            playerHits += roundHits;
+            playerMisses += roundMisses;
+            playerCorrectRejections += roundCorrectRejections;
+            playerFalseAlarms += roundFalseAlarms;
+            playerScore += positiveRoundScore;
         }
 
         exp.combined_score += playerScore;
@@ -588,11 +588,9 @@ function make_slides(f) {
       exp.data= {
         "game_id": globalGame.data.id,
         "role": globalGame.my_role,
-        "train_records": exp.train_records,
-        "test_records": exp.test_records,
-        "system" : exp.system,
-        "subject_information" : exp.subj_data,
-        "time_in_minutes" : (Date.now() - exp.startT)/60000,
+        "round_selections": ,
+        "subject_information" : subj_data,
+        "time_in_minutes" : (Date.now() - globalGame.startT)/60000,
         "test_summary_stats": exp.test_summary_stats,
         "bonus": exp.combined_score * globalGame.bonusAmt,
       };
