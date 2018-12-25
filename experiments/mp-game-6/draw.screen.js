@@ -178,7 +178,8 @@ var drawTestCreatures = function(game, speciesName, pluralSpeciesName) {
 };
 
 var drawRoundScoreReport = function(game) {
-
+    $("#round_score_report_continue_button").prop("disabled", false);
+    $("#round_score_report_slide").removeClass("hidden");
 };
 
 var drawTotalScoreReport = function(game) {
@@ -231,7 +232,8 @@ var clearTestInstructions = function() {
 };
 
 var clearTestCreatures = function() {
-
+    $("#test_creatures_slide").addClass("hidden");
+    $("#test_creatures_slide_continue_button").prop("disabled", true);
 };
 
 var clearRoundScoreReport = function() {

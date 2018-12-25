@@ -52,6 +52,9 @@ var game_core = function(options){
     // Round Info
     this.roundNum = -1;
     this.numRounds = 1;
+    this.testScores = {};
+    this.testScores[this.playerRoleNames.role1] = _.times(this.numRounds, _.constant({}));
+    this.testScores[this.playerRoleNames.role2] = _.times(this.numRounds, _.constant({}));
 
     // Other info
     this.start_time = null;

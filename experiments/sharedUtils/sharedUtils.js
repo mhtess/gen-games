@@ -99,19 +99,6 @@ var writeDataToMongo = function(game, line) {
   );
 };
 
-function encodeData(dataObj){
-    // Encode real numbers  
-    return _.mapObject(dataObj, function(val, key) {
-      if (isNumeric(val)) {
-        if (Number.isInteger(val)) {
-          return val.toString()
-        } else {
-        return val.toString().replace(".", "&")
-        }
-      } else { return val }
-    });
-  }
-
 var UUID = function() {
   var baseName = (Math.floor(Math.random() * 10) + '' +
         Math.floor(Math.random() * 10) + '' +
@@ -440,5 +427,4 @@ module.exports = {
     flip,
     generateAttentionQuestion,
     isNumeric,
-    encodeData,
 };

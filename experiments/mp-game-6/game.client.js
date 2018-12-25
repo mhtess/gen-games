@@ -124,17 +124,17 @@ var customSetup = function(globalGame) {
 
     $("#round_slide_continue_button").click(function(){
         clearRoundNumber();
-        globalGame.socket.send("enterSlide.train_instructions_slide.")
+        globalGame.socket.send("enterSlide.train_instructions_slide.");
         drawTrainInstructions(globalGame, "wud", "wuds");
     });
 
     $("#train_instructions_slide_continue_button").click(function() {
         clearTrainInstructions();
         if (globalGame.my_role === "explorer") {
-            globalGame.socket.send("enterSlide.train_creatures_slide.")
+            globalGame.socket.send("enterSlide.train_creatures_slide.");
             drawTrainCreatures(globalGame, "wud");        
         } else {
-            globalGame.socket.send("enterSlide.chat_room_slide.")   
+            globalGame.socket.send("enterSlide.chat_room_slide.");  
             globalGame.socket.send("enterChatRoom.");
             drawChatRoom(globalGame);
         }
@@ -142,24 +142,84 @@ var customSetup = function(globalGame) {
 
     $("#train_creatures_slide_continue_button").click(function(){
         clearTrainCreatures();
-        globalGame.socket.send("enterSlide.chat_instructions_slide.")           
+        globalGame.socket.send("enterSlide.chat_instructions_slide.");           
         drawExplorerChatInstructions(globalGame, "wud");
     });
 
     $("#chat_instructions_slide_continue_button").click(function(){
         clearExplorerChatInstructions();
-        globalGame.socket.send("enterSlide.chat_room_slide.")   
+        globalGame.socket.send("enterSlide.chat_room_slide.");
         globalGame.socket.send("enterChatRoom.");
         drawChatRoom(globalGame);
     });
 
-    $("#chat_room_side_continue_button").click(function(){
+    $("#chat_room_slide_continue_button").click(function(){
         globalGame.socket.send("proceedToTestInstructions.");
     });
 
     $("#test_instructions_slide_continue_button").click(function(){
         clearTestInstructions();
+        globalGame.socket.send("enterSlide.test_creatures_slide.");
         drawTestCreatures(globalGame, "wud", "wuds");
+    });
+
+    $("#test_creatures_slide_continue_button").click(function() {
+        // Prompt turker whether they are ready to proceed
+        var proceed = confirm(
+            "Have you selected all the creatures that believe that belong to the species?\n\n" +
+            "If yes, click \"OK\".\n If no, click \"CANCEL\"."
+        );
+        if (proceed === false) {
+          return;
+        }
+
+        // Measure performance & log selections 
+        var roundSelections = [];
+        var roundSummary = {
+            hits: 0,
+            misses: 0,
+            correct_rejections: 0,
+            false_alarms: 0,
+            score: 0,
+        }
+        for (var i = 0; i < globalGame.trialInfo.test.length; i++) {
+            var stim = globalGame.trialInfo.test[i];
+            var true_label = stim.belongs_to_concept;
+            var turker_label = globalGame.roundProps.selected_test_stim.includes("#testing_cell_" + i);
+            var is_correct = (turker_label === true_label);
+
+            console.log(true_label);
+            console.log(turker_label);
+
+            // Track turker's choice
+            roundSelections.push({
+                "stim_num" : i,
+                "turker_label": turker_label,
+                "true_label": true_label,
+                "is_correct": is_correct,
+            });
+
+            // Update round summary
+            if (turker_label === false && true_label === false) {
+                roundSummary.correct_rejections++;
+            } else if (turker_label=== false && true_label === true){
+                roundSummary.misses++;
+            } else if (turker_label === true && true_label === false) {
+                roundSummary.false_alarms++;
+            } else {
+                roundSummary.hits++;
+            }
+        }
+
+        // Transmit performance info to server
+        globalGame.socket.emit('multipleTrialResponses', roundSelections);
+        globalGame.socket.send("logScores.testCritters." + _.toPairs(encodeData(roundSummary)).join('.'));
+
+        // Enter wait room until other user has completed quiz/test
+        clearTestCreatures();
+        globalGame.socket.send("enterSlide.wait_room_slide.")
+        globalGame.socket.send("sendingTestScores.");
+        drawWaitingRoom("Waiting for the your partner to catch up ...");
     });
 
     // ---------------
@@ -212,7 +272,7 @@ var customSetup = function(globalGame) {
         step();
 
         if(globalGame.my_role === "student") {
-            $("#chat_room_side_continue_button").prop("disabled", false);
+            $("#chat_room_slide_continue_button").prop("disabled", false);
         }
     });
 
@@ -229,34 +289,52 @@ var customSetup = function(globalGame) {
     enterScoreReport++;
     // only works when both players have reached this, then it generates scores for both players
     if(enterScoreReport % 2 == 0){ //hacky way to handle error thrown when only one player finishes the test
-      var ind = (enterScoreReport / 2) - 1;
-      var my_role = globalGame.my_role;
-      var partner_role = my_role === "explorer" ? "student" : "explorer"
-      for(var i=0; i<2; i++){
-        var score_role, role_index;
-        if(i==0){
-          score_role="your";
-          role_index=my_role;
-        }
-        else if(i==1){
-          score_role="other";
-          role_index=partner_role;
+        var ind = (enterScoreReport / 2) - 1;
+        var my_role = globalGame.my_role;
+        var partner_role = my_role === "explorer" ? "student" : "explorer"
+        for(var i=0; i<2; i++){
+            var score_role, role_index;
+            if(i==0){
+                score_role="your";
+                role_index=my_role;
+            } else if(i==1){
+                score_role="other";
+                role_index=partner_role;
+            }
+
+            console.log(data);
+
+            var hits = Number(data[role_index][globalGame.roundNum].hits);
+            var misses = Number(data[role_index][globalGame.roundNum].misses);
+            var correctRejections = Number(data[role_index][globalGame.roundNum].correct_rejections);
+            var falseAlarms = Number(data[role_index][globalGame.roundNum].false_alarms);
+            var playerScore =  hits - falseAlarms;
+            var positiveScore = playerScore > 0 ? playerScore : 0;
+            $('#'+score_role+'_score').html(positiveScore);
+            $('#'+score_role+'_hits').html("Correctly selected: " + hits+ " out of " + (hits + misses));
+            $('#'+score_role+'_falseAlarms').html("Selected incorrectly: " + falseAlarms + " out of "+ (falseAlarms + correctRejections));
+            $('#'+score_role+'_score').html("Round score: " + positiveScore);
         }
 
-        var hits = Number(data[role_index][globalGame.roundNum].hits);
-        var misses = Number(data[role_index][globalGame.roundNum].misses);
-        var correctRejections = Number(data[role_index][globalGame.roundNum].correct_rejections);
-        var falseAlarms = Number(data[role_index][globalGame.roundNum].false_alarms);
-        var playerScore =  hits - falseAlarms;
-        var positiveScore = playerScore > 0 ? playerScore : 0;
-        $('#'+score_role+'_score').html(positiveScore);
-        $('#'+score_role+'_hits').html("Correctly selected: " + hits+ " out of " + (hits + misses));
-        $('#'+score_role+'_falseAlarms').html("Selected incorrectly: " + falseAlarms + " out of "+ (falseAlarms + correctRejections));
-        $('#'+score_role+'_score').html("Round score: " + positiveScore);
-      }
-
-    //   exp.test_summary_stats_combined.push({"explorer": data["explorer"][globalGame.roundNum], "student": data["student"][globalGame.roundNum]});
+        clearWaitingRoom();
+        drawRoundScoreReport();
     }
   });
-
 };
+
+function encodeData(dataObj){
+    var isNumeric = function(n) {
+        return !isNaN(parseFloat(n)) && isFinite(n);
+    }
+
+    // Encode real numbers  
+    return _.mapValues(dataObj, function(val, key) {
+      if (isNumeric(val)) {
+        if (Number.isInteger(val)) {
+          return val.toString()
+        } else {
+        return val.toString().replace(".", "&")
+        }
+      } else { return val }
+    });
+  }
