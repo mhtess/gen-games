@@ -114,9 +114,14 @@ var constants = {
 	props: "props",
 	belongs_to_concept: "belongs_to_concept",
 
-	// Rule Types
+    // Rule Types
+    single_feature: "SINGLE_FEATURE",
     conjunction: "CONJUNCTION",
     disjunction: "DISJUNCTION",
+    conjunction_conjunction: "CONJUNCTION_CONJUNCTION",
+    disjunction_disjunction: "DISJUNCTION_DISJUNCTION",
+    conjunction_disjunction: "CONJUNCTION_DISJUNCTION",
+    disjunction_conjunction: "DISJUNCTION_CONJUNCTION",
 }
 
 
@@ -289,21 +294,22 @@ var creature_dict = {
 };
 
 var color_dict = {
-	[constants.blue]: "#5da5db",
-	[constants.red]: "#f42935",
+	// [constants.blue]: "#5da5db",
+	// [constants.red]: "#f42935",
 	// [constants.yellow]: "#eec900",
-	[constants.green]: "#228b22",
+	// [constants.green]: "#228b22",
 	[constants.orange]: "#ff8c00",
-	// [constants.purple]: "#dda0dd",
+	[constants.purple]: "#dda0dd",
 	// [constants.pink]: "#FF69B4",
-	// [constants.white]: "#FFFFFF",
+	[constants.white]: "#FFFFFF",
 	// [constants.black]: "#000000",
 	// [constants.brown]: "#A52A2A",
 };
 
 var size_dict = {
-	[constants.small]: Math.log(1.0),
-	[constants.large]: Math.log(2.0),
+    [constants.standard]: Math.log(1.0),
+	// [constants.small]: Math.log(1.0),
+	// [constants.large]: Math.log(2.0),
 };
 
 var bool_dict = {
@@ -444,7 +450,8 @@ function genDatasets(concepts, train_proportion, dir) {
         console.log("Creating dataset for concept: " + c[constants.phrase]);
 		var datasets = createDataset(c, train_proportion);
 		var train = train_dir + '/' + c.name + '.json';
-		var test = test_dir + '/' + c.name + '.json';
+        var test = test_dir + '/' + c.name + '.json';
+        
 		jsonfile.writeFile(train, datasets[0]);
 		jsonfile.writeFile(test, datasets[1]);
 
@@ -482,7 +489,8 @@ function createDataset(concept, train_proportion) {
 	stimuli = _.shuffle(stimuli);
 	var test_idx = _.round(train_proportion * stimuli.length);
 	var train_stimuli = _.slice(stimuli, 0, test_idx);
-	var test_stimuli = _.slice(stimuli, test_idx);
+    var test_stimuli = _.slice(stimuli, test_idx);
+    
 	return [train_stimuli, test_stimuli];
 }
 
@@ -584,6 +592,254 @@ function createCreature(creature, creature_description, belongs_to_concept) {
 
 var testStimuliGeneration = function() {
 	var test_concepts = [
+		{
+			[constants.name]: 'flowers_orange_stems',
+			[constants.phrase]: 'Flowers with orange stems',
+			[constants.logical_form]: 'flowers and orange stems',
+			[constants.type]: constants.single_feature,
+			[constants.description]: {
+				[constants.creature]: constants.flower,
+				[constants.stem_color]: constants.orange,
+            },
+            [constants.rule]: function(creature_type, creature_description, concept_description) {
+                if (concept_description[constants.creature] !== creature_type) return false;
+                return (
+                    creature_description[constants.stem_color] === concept_description[constants.stem_color]
+                )
+            },
+        },
+		{
+			[constants.name]: 'flowers_with_thorns',
+			[constants.phrase]: 'Flowers with thorns',
+			[constants.logical_form]: 'flowers and thorns',
+			[constants.type]: constants.single_feature,
+			[constants.description]: {
+				[constants.creature]: constants.flower,
+				[constants.thorns_present]: constants.true,
+            },
+            [constants.rule]: function(creature_type, creature_description, concept_description) {
+                if (concept_description[constants.creature] !== creature_type) return false;
+                return (
+                    creature_description[constants.thorns_present] === concept_description[constants.thorns_present]
+                )
+            },
+        },
+		{
+			[constants.name]: 'flowers_with_purple_spots',
+			[constants.phrase]: 'Flowers with purple spots',
+			[constants.logical_form]: 'flowers and purple spots',
+			[constants.type]: constants.single_feature,
+			[constants.description]: {
+				[constants.creature]: constants.flower,
+                [constants.spots_present]: constants.true,
+                [constants.spots_color]: constants.purple,
+            },
+            [constants.rule]: function(creature_type, creature_description, concept_description) {
+                if (concept_description[constants.creature] !== creature_type) return false;
+                return (
+                    creature_description[constants.spots_present] === concept_description[constants.spots_present] &&
+                    creature_description[constants.spots_color] === concept_description[constants.spots_color]
+                )
+            },
+        },
+		{
+			[constants.name]: 'flowers_with_white_centers',
+			[constants.phrase]: 'Flowers with white centers',
+			[constants.logical_form]: 'flowers and white centers',
+			[constants.type]: constants.single_feature,
+			[constants.description]: {
+				[constants.creature]: constants.flower,
+                [constants.center_color]: constants.white,
+            },
+            [constants.rule]: function(creature_type, creature_description, concept_description) {
+                if (concept_description[constants.creature] !== creature_type) return false;
+                return (
+                    creature_description[constants.center_color] === concept_description[constants.center_color]
+                )
+            },
+        },
+		{
+			[constants.name]: 'fish_with_white_fins',
+			[constants.phrase]: 'Fish white fins',
+			[constants.logical_form]: 'fish and white fins',
+			[constants.type]: constants.single_feature,
+			[constants.description]: {
+				[constants.creature]: constants.fish,
+                [constants.fins_color]: constants.white,
+            },
+            [constants.rule]: function(creature_type, creature_description, concept_description) {
+                if (concept_description[constants.creature] !== creature_type) return false;
+                return (
+                    creature_description[constants.fins_color] === concept_description[constants.fins_color]
+                )
+            },
+        },
+		{
+			[constants.name]: 'fish_with_fangs',
+			[constants.phrase]: 'Fish with white fangs',
+			[constants.logical_form]: 'fish and fangs',
+			[constants.type]: constants.single_feature,
+			[constants.description]: {
+				[constants.creature]: constants.fish,
+                [constants.fangs_present]: constants.true,
+            },
+            [constants.rule]: function(creature_type, creature_description, concept_description) {
+                if (concept_description[constants.creature] !== creature_type) return false;
+                return (
+                    creature_description[constants.fangs_present] === concept_description[constants.fangs_present]
+                )
+            },
+        },
+		{
+			[constants.name]: 'fish_with_whiskers',
+			[constants.phrase]: 'Fish with whiskers',
+			[constants.logical_form]: 'fish and whiskers',
+			[constants.type]: constants.single_feature,
+			[constants.description]: {
+				[constants.creature]: constants.fish,
+                [constants.whiskers_present]: constants.true,
+            },
+            [constants.rule]: function(creature_type, creature_description, concept_description) {
+                if (concept_description[constants.creature] !== creature_type) return false;
+                return (
+                    creature_description[constants.whiskers_present] === concept_description[constants.whiskers_present]
+                )
+            },
+        },
+		{
+			[constants.name]: 'fish_with_purple_fins',
+			[constants.phrase]: 'Fish with purple fins',
+			[constants.logical_form]: 'fish and purple fins',
+			[constants.type]: constants.single_feature,
+			[constants.description]: {
+				[constants.creature]: constants.fish,
+                [constants.fins_color]: constants.purple,
+            },
+            [constants.rule]: function(creature_type, creature_description, concept_description) {
+                if (concept_description[constants.creature] !== creature_type) return false;
+                return (
+                    creature_description[constants.fins_color] === concept_description[constants.fins_color]
+                )
+            },
+        }, 
+		{
+			[constants.name]: 'bugs_with_white_legs',
+			[constants.phrase]: 'bugs with white legs',
+			[constants.logical_form]: 'bugs and white legs',
+			[constants.type]: constants.single_feature,
+			[constants.description]: {
+				[constants.creature]: constants.bug,
+                [constants.legs_color]: constants.white,
+            },
+            [constants.rule]: function(creature_type, creature_description, concept_description) {
+                if (concept_description[constants.creature] !== creature_type) return false;
+                return (
+                    creature_description[constants.legs_color] === concept_description[constants.legs_color]
+                )
+            },
+        },
+		{
+			[constants.name]: 'bugs_with_orange_head',
+			[constants.phrase]: 'bugs with white orange head',
+			[constants.logical_form]: 'bugs and orange head',
+			[constants.type]: constants.single_feature,
+			[constants.description]: {
+				[constants.creature]: constants.bug,
+                [constants.head_color]: constants.orange,
+            },
+            [constants.rule]: function(creature_type, creature_description, concept_description) {
+                if (concept_description[constants.creature] !== creature_type) return false;
+                return (
+                    creature_description[constants.head_color] === concept_description[constants.head_color]
+                )
+            },
+        },
+		{
+			[constants.name]: 'bugs_with_wings',
+			[constants.phrase]: 'bugs with wings',
+			[constants.logical_form]: 'bugs and wings',
+			[constants.type]: constants.single_feature,
+			[constants.description]: {
+				[constants.creature]: constants.bug,
+                [constants.wings_present]: constants.true,
+            },
+            [constants.rule]: function(creature_type, creature_description, concept_description) {
+                if (concept_description[constants.creature] !== creature_type) return false;
+                return (
+                    creature_description[constants.wings_present] === concept_description[constants.wings_present]
+                )
+            },
+        },
+		{
+			[constants.name]: 'bugs_with_purple_antennae',
+			[constants.phrase]: 'bugs with purple antennae',
+			[constants.logical_form]: 'bugs and purple antennae',
+			[constants.type]: constants.single_feature,
+			[constants.description]: {
+				[constants.creature]: constants.bug,
+                [constants.antennae_present]: constants.true,
+                [constants.antennae_color]: constants.purple,
+            },
+            [constants.rule]: function(creature_type, creature_description, concept_description) {
+                if (concept_description[constants.creature] !== creature_type) return false;
+                return (
+                    creature_description[constants.antennae_present] === concept_description[constants.antennae_present] &&
+                    creature_description[constants.antennae_color] === concept_description[constants.antennae_color]                    
+                )
+            },
+        },
+		{
+			[constants.name]: 'birds_with_tails',
+			[constants.phrase]: 'birds with tails',
+			[constants.logical_form]: 'birds and tails',
+			[constants.type]: constants.single_feature,
+			[constants.description]: {
+				[constants.creature]: constants.bird,
+                [constants.tail_present]: constants.true,
+            },
+            [constants.rule]: function(creature_type, creature_description, concept_description) {
+                if (concept_description[constants.creature] !== creature_type) return false;
+                return (
+                    creature_description[constants.tail_present] === concept_description[constants.tail_present]
+                )
+            },
+        }, 
+		{
+			[constants.name]: 'birds_with_purple_tails',
+			[constants.phrase]: 'birds with purple tails',
+			[constants.logical_form]: 'birds and purple tails',
+			[constants.type]: constants.single_feature,
+			[constants.description]: {
+				[constants.creature]: constants.bird,
+                [constants.tail_present]: constants.true,
+                [constants.crest_tail_color]: constants.purple
+            },
+            [constants.rule]: function(creature_type, creature_description, concept_description) {
+                if (concept_description[constants.creature] !== creature_type) return false;
+                return (
+                    creature_description[constants.tail_present] === concept_description[constants.tail_present] &&
+                    creature_description[constants.crest_tail_color] === concept_description[constants.crest_tail_color]
+                )
+            },
+        }, 
+		{
+			[constants.name]: 'birds_with_white_wings',
+			[constants.phrase]: 'birds with white wings',
+			[constants.logical_form]: 'birds and white wings',
+			[constants.type]: constants.single_feature,
+			[constants.description]: {
+				[constants.creature]: constants.bird,
+                [constants.wings_present]: constants.true,
+                [constants.crest_tail_color]: constants.white,
+            },
+            [constants.rule]: function(creature_type, creature_description, concept_description) {
+                if (concept_description[constants.creature] !== creature_type) return false;
+                return (
+                    creature_description[constants.wings_present] === concept_description[constants.wings_present] &&
+                    creature_description[constants.crest_tail_color] === concept_description[constants.crest_tail_color]
+                )
+            },
+        }, 
 		// {
 		// 	[constants.name]: 'flowers_thorns_green_spots',
 		// 	[constants.phrase]: 'Flowers with thorns and green spots',
@@ -640,33 +896,33 @@ var testStimuliGeneration = function() {
         //         );
         //     }
         // },
-		{
-			[constants.name]: 'trees_blue_berries_or_red_leaves',
-			[constants.phrase]: 'Trees with blue berries or red leaves',
-			[constants.logical_form]: 'trees AND (blue berries or red leaves)',
-			[constants.type]: constants.disjunction,
-			[constants.description]: {
-				[constants.creature]: constants.tree,
-				[constants.berries_present]: constants.true,
-                [constants.berries_color]: constants.blue,
-                [constants.leaves_present]: constants.true,
-                [constants.leaves_color]: constants.red,
-            },
-            [constants.rule]: function(creature_type, creature_description, concept_description) {
-                if (concept_description[constants.creature] !== creature_type) return false;
-                var result =  (
-                    (
-                        creature_description[constants.berries_present] === concept_description[constants.berries_present] &&
-                        creature_description[constants.berries_color] === concept_description[constants.berries_color]
-                    ) ||
-                    (
-                        creature_description[constants.leaves_present] === concept_description[constants.leaves_present] &&
-                        creature_description[constants.leaves_color] === concept_description[constants.leaves_color]
-                    )
-                );
-                return result;
-            }
-		},
+		// {
+		// 	[constants.name]: 'trees_blue_berries_or_red_leaves',
+		// 	[constants.phrase]: 'Trees with blue berries or red leaves',
+		// 	[constants.logical_form]: 'trees AND (blue berries or red leaves)',
+		// 	[constants.type]: constants.disjunction,
+		// 	[constants.description]: {
+		// 		[constants.creature]: constants.tree,
+		// 		[constants.berries_present]: constants.true,
+        //         [constants.berries_color]: constants.blue,
+        //         [constants.leaves_present]: constants.true,
+        //         [constants.leaves_color]: constants.red,
+        //     },
+        //     [constants.rule]: function(creature_type, creature_description, concept_description) {
+        //         if (concept_description[constants.creature] !== creature_type) return false;
+        //         var result =  (
+        //             (
+        //                 creature_description[constants.berries_present] === concept_description[constants.berries_present] &&
+        //                 creature_description[constants.berries_color] === concept_description[constants.berries_color]
+        //             ) ||
+        //             (
+        //                 creature_description[constants.leaves_present] === concept_description[constants.leaves_present] &&
+        //                 creature_description[constants.leaves_color] === concept_description[constants.leaves_color]
+        //             )
+        //         );
+        //         return result;
+        //     }
+		// },
 	];
 
 	genDatasets(test_concepts, 0.80, './test_dataset');
