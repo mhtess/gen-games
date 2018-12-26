@@ -35,7 +35,9 @@ var constants = {
 	body_size: "body_size",
 	tail_size: "tail_size",
 	fangs_present: "fangs_present",
-	whiskers_present: "whiskers_present",
+    whiskers_present: "whiskers_present",
+    stripes_present: "stripes_present",
+    stripes_color: "stripes_color",
 
 	// Bug
 	bug: "bug",
@@ -76,7 +78,8 @@ var constants = {
 	prop1: "prop1",
 	prop2: "prop2",
 	tar1: "tar1",
-	tar2: "tar2",
+    tar2: "tar2",
+    tar3: "tar3",
 
 	// Property Types
 	color: "color",
@@ -97,7 +100,8 @@ var constants = {
 	
 	// Sizes
 	small: "small",
-	large: "large",
+    large: "large",
+    standard: "standard",
 
 	// Boolean
 	true: "true",
@@ -188,6 +192,14 @@ var creature_dict = {
 		[constants.whiskers_present]: {
 			[constants.name]: constants.tar2,
 			[constants.type]: constants.bool,			
+        },
+		[constants.stripes_present]: {
+			[constants.name]: constants.tar3,
+			[constants.type]: constants.bool,			
+        },
+		[constants.stripes_color]: {
+			[constants.name]: constants.col3,
+			[constants.type]: constants.color,			
 		},
 	},
 
@@ -829,14 +841,12 @@ var testStimuliGeneration = function() {
 			[constants.type]: constants.single_feature,
 			[constants.description]: {
 				[constants.creature]: constants.bird,
-                [constants.wings_present]: constants.true,
-                [constants.crest_tail_color]: constants.white,
+                [constants.bird_wing_color]: constants.white,
             },
             [constants.rule]: function(creature_type, creature_description, concept_description) {
                 if (concept_description[constants.creature] !== creature_type) return false;
                 return (
-                    creature_description[constants.wings_present] === concept_description[constants.wings_present] &&
-                    creature_description[constants.crest_tail_color] === concept_description[constants.crest_tail_color]
+                    creature_description[constants.bird_wing_color] === concept_description[constants.bird_wing_color]
                 )
             },
         }, 
