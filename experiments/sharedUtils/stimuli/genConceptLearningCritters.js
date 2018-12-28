@@ -1070,7 +1070,7 @@ var stimuliGeneration = function() {
                 [constants.trunk_color]: constants.purple,
             },
             [constants.rule]: createConjunctiveRule(),
-        },           
+        },         
     ];
 
     var disjunction_concepts = [
@@ -1078,7 +1078,89 @@ var stimuliGeneration = function() {
     ];
 
     var conjunction_conjunction_concepts = [
+        {
+			[constants.name]: 'flowers_with_purple_stems_white_spots_thorns',
+			[constants.phrase]: 'Flowers with purple stems and white spots and thorns',
+			[constants.logical_form]: 'flowers and purple stems and white spots and thorns',
+			[constants.type]: constants.conjunction_conjunction,
+			[constants.description]: {
+				[constants.creature]: constants.flower,
+                [constants.stem_color]: constants.purple,
+                [constants.spots_present]: constants.true,
+                [constants.spots_color]: constants.white,
+                [constants.thorns_present]: constants.true,
+            },
+            [constants.rule]: createConjunctiveRule(),
+        },
+        {
+			[constants.name]: 'flowers_with_thorns_spots_orange_stems',
+			[constants.phrase]: 'Flowers with thorns and spots and orange stems',
+			[constants.logical_form]: 'flowers and thorns and spots and orange stems',
+			[constants.type]: constants.conjunction_conjunction,
+			[constants.description]: {
+				[constants.creature]: constants.flower,
+                [constants.spots_present]: constants.true,
+                [constants.thorns_present]: constants.true,
+                [constants.stem_color]: constants.orange,                
+            },
+            [constants.rule]: createConjunctiveRule(),
+        },
+        {
+			[constants.name]: 'flowers_with_white_petals_purple_centers_orange_stems',
+			[constants.phrase]: 'Flowers with white petals and purple centers and orange stems',
+			[constants.logical_form]: 'flowers and white petals and purple centers and orange stems',
+			[constants.type]: constants.conjunction_conjunction,
+			[constants.description]: {
+				[constants.creature]: constants.flower,
+                [constants.petals_color]: constants.white,
+                [constants.center_color]: constants.purple,
+                [constants.stem_color]: constants.orange,                
+            },
+            [constants.rule]: createConjunctiveRule(),
+        },
+        {
+			[constants.name]: 'fish_orange_bodies_purple_stripes_whiskers',
+			[constants.phrase]: 'Fish with orange bodies and purple stripes and whiskers',
+			[constants.logical_form]: 'fish and orange bodies and purple stripes and whiskers',
+			[constants.type]: constants.conjunction_conjunction,
+			[constants.description]: {
+				[constants.creature]: constants.fish,
+                [constants.body_color]: constants.orange,
+                [constants.stripes_present]: constants.true,
+                [constants.stripes_color]: constants.purple,
+                [constants.whiskers_present]: constants.true,                
+            },
+            [constants.rule]: createConjunctiveRule(),
+        },
+        {
+			[constants.name]: 'fish_white_bodies_orange_stripes_fangs',
+			[constants.phrase]: 'Fish with white bodies and orange stripes and fangs',
+			[constants.logical_form]: 'fish and white bodies and orange stripes and fangs',
+			[constants.type]: constants.conjunction_conjunction,
+			[constants.description]: {
+				[constants.creature]: constants.fish,
+                [constants.body_color]: constants.white,
+                [constants.stripes_present]: constants.true,
+                [constants.stripes_color]: constants.orange,
+                [constants.fangs_present]: constants.true,                
+            },
+            [constants.rule]: createConjunctiveRule(),
+        },
+        {
+			[constants.name]: 'fish_fangs_whiskers_white_stripes',
+			[constants.phrase]: 'Fish with fangs and whiskers and white stripes',
+			[constants.logical_form]: 'fish and fangs and whiskers and white stripes',
+			[constants.type]: constants.conjunction_conjunction,
+			[constants.description]: {
+				[constants.creature]: constants.fish,
+                [constants.fangs_present]: constants.true,
+                [constants.whiskers_present]: constants.true,
+                [constants.stripes_present]: constants.true,
+                [constants.stripes_color]: constants.white,
 
+            },
+            [constants.rule]: createConjunctiveRule(),
+        },
     ];
 
     var disjunction_disjunction_concepts = [
