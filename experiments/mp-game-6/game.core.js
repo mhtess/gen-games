@@ -220,12 +220,14 @@ game_core.prototype.makeTrialList = function () {
             "test": test_stimuli,
             "ruleIdx": rule_num,
             "ruleName": concept_summary.phrase,
+            "ruleFileName": concept_summary.name,
         },
         {
             "train": train_stimuli,
             "test": test_stimuli,
             "ruleIdx": rule_num,
             "ruleName": concept_summary.phrase,
+            "ruleFileName": concept_summary.name,
         }
     ];
 };

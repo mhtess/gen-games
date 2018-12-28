@@ -35,6 +35,34 @@ var handleInvalidID = function(req, res) {
   return res.redirect('https://rxdhawkins.me:8888/sharedUtils/invalid.html');
 };
 
+function checkPreviousParticipant (workerId, callback) {
+    var p = {'workerId': workerId};
+    var postData = {
+      dbname: getDb(),
+      query: p,
+      projection: {'_id': 1}
+    };
+    sendPostRequest(
+      'http://localhost:2027/db/exists',
+      {json: postData},
+      (error, res, body) => {
+        try {
+          if (!error && res.statusCode === 200) {
+            console.log("success! Received data " + JSON.stringify(body));
+            callback(body);
+          } else {
+            throw `${error}`;
+          }
+        }
+        catch (err) {
+          console.log(err);
+          console.log('no database; allowing participant to continue');
+          return callback(false);
+        }
+      }
+    );
+  };
+
 //----------------
 // Data Processing
 //----------------
@@ -94,7 +122,7 @@ var getLongFormTime = function() {
 
 var establishStream = function(game, dataPoint) {
   var startTime = getLongFormTime();
-  var dirPath = ['..', 'data', game.expName, dataPoint.eventType].join('/');
+  var dirPath = ['..', 'data', game.experimentName, dataPoint.eventType].join('/');
   var fileName = startTime + "-" + game.id + ".csv";
   var filePath = [dirPath, fileName].join('/');
 

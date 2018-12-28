@@ -82,7 +82,7 @@ var client_onMessage = function(data) {
     switch(subcommand) {
       
       case 'end' : // Redirect to exit survey only if it is not the last round
-        if(globalGame.roundNum < globalGlobalGame.numRounds || globalGlobalGame.numRounds == null) {
+        if(globalGame.roundNum < globalGame.numRounds || globalGame.numRounds == null) {
             $("#" + globalGame.currentSlide[globalGame.my_role]).addClass("hidden");
             $('#thanks').hide();
             onDisconnect();
@@ -165,9 +165,19 @@ var customSetup = function(globalGame) {
         globalGame.socket.send("enterSlide.chat_room_slide.");
         globalGame.socket.send("enterChatRoom.");
         drawChatRoom(globalGame);
+
+        // Start Time
+        globalGame.roundProps[globalGame.my_role]['times']['chat']['start'] = new Date();
     });
 
     $("#chat_room_slide_continue_button").click(function(){
+        // End Time
+        globalGame.roundProps[globalGame.my_role]['times']['chat']['end'] = new Date();
+        globalGame.roundProps[globalGame.my_role]['duration']['chat'] = (
+            globalGame.roundProps[globalGame.my_role]['times']['chat']['end'] -
+            globalGame.roundProps[globalGame.my_role]['times']['chat']['start']
+        ) / 1000.0;
+
         drawProgressBar(globalGame.roundNum, globalGame.numRounds, 6, 8);
         globalGame.socket.send("proceedToTestInstructions.");
     });
@@ -244,18 +254,23 @@ var customSetup = function(globalGame) {
                 roundSummary.hits++;
             }
         }
-
-
+        var playerScore = roundSummary.hits - roundSummary.false_alarms;
+        roundSummary.score = playerScore > 0 ? playerScore : 0;
 
         // local copy of scores
         globalGame.roundSelections.push(roundSelections);
         globalGame.roundSummaries.push(roundSummary);
 
         // Transmit performance info to server
-        globalGame.socket.emit("logTimes.", roundTimes);
+        var roundTimesJSON = _.toPairs(encodeData(globalGame.roundTimes)).join('.');
+        globalGame.socket.emit("logTimes.", roundTimesJSON);
+        console.log(roundTimesJSON);        
+
         globalGame.socket.emit("multipleTrialResponses", roundSelections);
         var roundSelectionsJSON = _.toPairs(encodeData(roundSummary)).join('.');
-        globalGame.socket.send("logScores." + roundSelectionsJSON);
+        console.log(roundSelectionsJSON);
+
+        globalGame.socket.send("logScores.TestCreatures." + roundSelectionsJSON);
         globalGame.socket.send("sendingTestScores." + roundSelectionsJSON);
 
         // Enter wait room until other user has completed quiz/test
@@ -335,6 +350,22 @@ var customSetup = function(globalGame) {
         globalGame.roundProps = {
             selected_train_stim: [],
             selected_test_stim: [],
+            explorer: {
+                "duration": {},
+                "times": {
+                    "train": {},
+                    "test": {},
+                    "chat": {},
+                },
+            },
+            student: {
+                "duration": {},
+                "times": {
+                    "train": {},
+                    "test": {},
+                    "chat": {},
+                },
+            }
         };
     });
 

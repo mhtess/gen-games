@@ -127,14 +127,18 @@ var onMessage = function(client, message) {
 };
 
 var commonOutput = function (client) {
+    var roundNum = client.game.roundNum;
+    var trialInfo = client.game.trialList[roundNum];
+
     return {
         experimentName: client.game.experimentName,
         iterationName: client.game.iterationName,
         gameid: client.game.id,
         time: Date.now(),
         role: client.role,
-        rule_idx: client.game.trialInfo.ruleIdx,
-        rule_name: client.game.trialInfo.ruleName,
+        rule_idx: trialInfo.ruleIdx,
+        rule_name: '"' + trialInfo.ruleName + '"',
+        rule_file_name: trialInfo.ruleFileName,
     };
 }
 
@@ -180,8 +184,8 @@ var dataOutput = function() {
     return _.extend(
       commonOutput(client), {
       	// intendedName,
-      	text: message_data[1].replace(/~~~/g, '.'),
-      	reactionTime: message_data[2]
+      	text: '"' + message_data[1].replace(/~~~/g, '.') + '"',
+      	reactionTime: message_data[2]/1000.0,
       }
     );
   };

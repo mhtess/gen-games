@@ -52,7 +52,7 @@ if(argv.production) {
     var prod = argv.test.replace(/\/$/, "");
     isProd = (prod === 'true');
 } else {
-    throw new Error("missing arguments. Use --expname flag (e.g. 'node app.js --expname spatial')");
+    isProd = false;
 }
 
 // Add Encryption Protocols
@@ -114,34 +114,6 @@ app.get( '/*' , function( req, res ) {
       });
     }
 });
-
-function checkPreviousParticipant (workerId, callback) {
-    var p = {'workerId': workerId};
-    var postData = {
-      dbname: getDb(),
-      query: p,
-      projection: {'_id': 1}
-    };
-    sendPostRequest(
-      'http://localhost:2027/db/exists',
-      {json: postData},
-      (error, res, body) => {
-        try {
-          if (!error && res.statusCode === 200) {
-            console.log("success! Received data " + JSON.stringify(body));
-            callback(body);
-          } else {
-            throw `${error}`;
-          }
-        }
-        catch (err) {
-          console.log(err);
-          console.log('no database; allowing participant to continue');
-          return callback(false);
-        }
-      }
-    );
-  };
 
 // ----------------
 // Helper Functions
