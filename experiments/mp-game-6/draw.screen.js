@@ -137,6 +137,9 @@ var drawExplorerChatInstructions = function(game, speciesName) {
 }
 
 var drawChatRoom = function(game) {
+    // Clear
+    $("#messages").empty();
+
     // Default disabled
     $("#chat_room_side_continue_button").prop("disabled", true);
 

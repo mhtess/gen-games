@@ -129,6 +129,8 @@ class ReferenceGameServer {
     };
 
     writeData (client, eventType, messageParts) {
+        console.log(eventType);
+
         // Writes data specified by experiment instance to csv and/or mongodb
         var output = this.customServer.dataOutput;
         var game = client.game;

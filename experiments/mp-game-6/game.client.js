@@ -171,13 +171,6 @@ var customSetup = function(globalGame) {
     });
 
     $("#chat_room_slide_continue_button").click(function(){
-        // End Time
-        globalGame.roundProps[globalGame.my_role]['times']['chat']['end'] = new Date();
-        globalGame.roundProps[globalGame.my_role]['duration']['chat'] = (
-            globalGame.roundProps[globalGame.my_role]['times']['chat']['end'] -
-            globalGame.roundProps[globalGame.my_role]['times']['chat']['start']
-        ) / 1000.0;
-
         drawProgressBar(globalGame.roundNum, globalGame.numRounds, 6, 8);
         globalGame.socket.send("proceedToTestInstructions.");
     });
@@ -262,8 +255,8 @@ var customSetup = function(globalGame) {
         globalGame.roundSummaries.push(roundSummary);
 
         // Transmit performance info to server
-        var roundTimesJSON = _.toPairs(encodeData(globalGame.roundTimes)).join('.');
-        globalGame.socket.emit("logTimes.", roundTimesJSON);
+        var roundTimesJSON = _.toPairs(encodeData(roundTimes)).join('.');
+        globalGame.socket.emit("logTimes.Complete.", roundTimesJSON);
         console.log(roundTimesJSON);        
 
         globalGame.socket.emit("multipleTrialResponses", roundSelections);
@@ -408,6 +401,13 @@ var customSetup = function(globalGame) {
     });
 
     globalGame.socket.on('exitChatRoom', function(data) {
+        // End Time
+        globalGame.roundProps[globalGame.my_role]['times']['chat']['end'] = new Date();
+        globalGame.roundProps[globalGame.my_role]['duration']['chat'] = (
+            globalGame.roundProps[globalGame.my_role]['times']['chat']['end'] -
+            globalGame.roundProps[globalGame.my_role]['times']['chat']['start']
+        ) / 1000.0;
+
         flashConnected = false;
         clearChatRoom();
         globalGame.socket.send("enterSlide.test_instructions_slide.")  
