@@ -133,6 +133,8 @@ var commonOutput = function (client) {
         gameid: client.game.id,
         time: Date.now(),
         role: client.role,
+        rule_idx: client.game.trialInfo.ruleIdx,
+        rule_name: client.game.trialInfo.ruleName,
     };
 }
 

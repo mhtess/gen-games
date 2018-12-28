@@ -194,10 +194,14 @@ game_core.prototype.makeTrialList = function () {
         {
             "train": train_stimuli,
             "test": test_stimuli,
+            "ruleIdx": rule_num,
+            "ruleName": concept_summary.phrase,
         },
         {
             "train": train_stimuli,
             "test": test_stimuli,
+            "ruleIdx": rule_num,
+            "ruleName": concept_summary.phrase,
         }
     ];
 };
