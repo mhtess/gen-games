@@ -165,7 +165,7 @@ var dataOutput = function() {
 
   // takes the data sent from client and packages it into logResponseOutput
   var logResponseOutput = function(client, message_data) {
-    // message_data contrains the flattened JSON object with training/test trial info.
+    // message_data constrains the flattened JSON object with training/test trial info.
     var result = _.extend(
       commonOutput(client),
       decodeData(flattenedArrayToObj(message_data.slice(2)))
@@ -173,6 +173,7 @@ var dataOutput = function() {
     console.log(result);
     return result;
   };
+
 
   var chatMessageOutput = function(client, message_data) {
     console.log(client.role + " said " + message_data[1].replace(/~~~/g, '.'))
@@ -190,7 +191,8 @@ var dataOutput = function() {
     'logTest' : logResponseOutput,
     'logTrain': logResponseOutput,
     'logScores': logResponseOutput,
-    'logSubjInfo': logResponseOutput
+    'logSubjInfo': logResponseOutput,
+    'logTimes': logResponseOutput,
   };
 }();
 

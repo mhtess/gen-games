@@ -132,7 +132,11 @@ var customSetup = function(globalGame) {
         if (globalGame.my_role === "explorer") {
             drawProgressBar(globalGame.roundNum, globalGame.numRounds, 3, 8);
             globalGame.socket.send("enterSlide.train_creatures_slide.");
-            drawTrainCreatures(globalGame, "wud");        
+            drawTrainCreatures(globalGame, "wud");    
+
+            // Start Time
+            globalGame.roundProps[globalGame.my_role]['times']['train']['start'] = new Date();
+
         } else {
             globalGame.socket.send("enterSlide.chat_room_slide."); 
             drawProgressBar(globalGame.roundNum, globalGame.numRounds, 5, 8); 
@@ -142,6 +146,13 @@ var customSetup = function(globalGame) {
     });
 
     $("#train_creatures_slide_continue_button").click(function(){
+        // End Time
+        globalGame.roundProps[globalGame.my_role]['times']['train']['end'] = new Date();
+        globalGame.roundProps[globalGame.my_role]['duration']['train'] = (
+            globalGame.roundProps[globalGame.my_role]['times']['train']['end'] -
+            globalGame.roundProps[globalGame.my_role]['times']['train']['start']
+        ) / 1000.0;
+
         clearTrainCreatures();
         drawProgressBar(globalGame.roundNum, globalGame.numRounds, 4, 8);
         globalGame.socket.send("enterSlide.chat_instructions_slide.");           
@@ -166,6 +177,9 @@ var customSetup = function(globalGame) {
         drawProgressBar(globalGame.roundNum, globalGame.numRounds, 7, 8);
         globalGame.socket.send("enterSlide.test_creatures_slide.");
         drawTestCreatures(globalGame, "wud", "wuds");
+
+        // Start Time
+        globalGame.roundProps[globalGame.my_role]['times']['test']['start'] = new Date(); 
     });
 
     $("#test_creatures_slide_continue_button").click(function() {
@@ -176,6 +190,24 @@ var customSetup = function(globalGame) {
         );
         if (proceed === false) {
           return;
+        }
+
+        // End Time
+        globalGame.roundProps[globalGame.my_role]['times']['test']['end'] = new Date();
+        globalGame.roundProps[globalGame.my_role]['duration']['test'] = (
+            globalGame.roundProps[globalGame.my_role]['times']['test']['end'] -
+            globalGame.roundProps[globalGame.my_role]['times']['test']['start']
+        ) / 1000.0;
+
+        // Summary of of times
+        roundTimes = {
+            'train': -1,
+            'test': globalGame.roundProps[globalGame.my_role]['duration']['test'],
+            'chat': globalGame.roundProps[globalGame.my_role]['duration']['chat'],
+        };
+
+        if (globalGame.my_role === "explorer") {
+            roundTimes.train = globalGame.roundProps[globalGame.my_role]['duration']['train'];
         }
 
         // Measure performance & log selections 
@@ -213,14 +245,17 @@ var customSetup = function(globalGame) {
             }
         }
 
+
+
         // local copy of scores
         globalGame.roundSelections.push(roundSelections);
         globalGame.roundSummaries.push(roundSummary);
 
         // Transmit performance info to server
+        globalGame.socket.emit("logTimes.", roundTimes);
         globalGame.socket.emit("multipleTrialResponses", roundSelections);
         var roundSelectionsJSON = _.toPairs(encodeData(roundSummary)).join('.');
-        globalGame.socket.send("logScores.testCritters." + roundSelectionsJSON);
+        globalGame.socket.send("logScores." + roundSelectionsJSON);
         globalGame.socket.send("sendingTestScores." + roundSelectionsJSON);
 
         // Enter wait room until other user has completed quiz/test
