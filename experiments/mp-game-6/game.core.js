@@ -184,6 +184,30 @@ game_core.prototype.server_send_update = function(){
 };
 
 game_core.prototype.makeTrialList = function () {
+    // var colname = getStimuliDb();
+    // sendPostRequest('http://localhost:6003/db/getstims', {
+    //     json: {
+    //     dbname: 'stimuli',
+    //     colname: colname,
+    //     numTrials: 5,
+    //     gameid: gameid
+    //     }
+    // }, (error, res, body) => {
+    //     if (!error && res.statusCode === 200) {
+    //     // send trial list (and id) to client
+    //     var packet = {
+    //         gameid: gameid,
+    //         version: recogVersion,	
+    //         recogID: body.recogID,
+    //         trials: body.meta
+    //     };      
+    //     socket.emit('onConnected', packet);
+    //     } else {
+    //     console.log(`error getting stims: ${error} ${body}`);
+    //     }
+    // });
+
+
     // TODO: Remove this, once we have MongoDB Code working properly
     var rule_num = 2;
     var concept_summary = require("../sharedUtils/stimuli/test_dataset/concept_summary.json")[rule_num];

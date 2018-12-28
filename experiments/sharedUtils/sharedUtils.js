@@ -35,33 +35,6 @@ var handleInvalidID = function(req, res) {
   return res.redirect('https://rxdhawkins.me:8888/sharedUtils/invalid.html');
 };
 
-var checkPreviousParticipant = function(workerId, callback) {
-  var p = {'workerId': workerId};
-  var postData = {
-    dbname: '3dObjects',
-    query: p,
-    projection: {'_id': 1}
-  };
-  sendPostRequest(
-    'http://localhost:4000/db/exists',
-    {json: postData},
-    (error, res, body) => {
-      try {
-	if (!error && res.statusCode === 200) {
-	  console.log("success! Received data " + JSON.stringify(body));
-	  callback(body);
-	} else {
-	  throw `${error}`;
-	}
-      } catch (err) {
-	console.log(err);
-	console.log('no database; allowing participant to continue');
-	return callback(false);
-      }
-    }
-  );
-};
-
 //----------------
 // Data Processing
 //----------------
@@ -87,7 +60,7 @@ var writeDataToMongo = function(game, line) {
     colname: game.experimentName
   }, line);
   sendPostRequest(
-    'http://localhost:4000/db/insert',
+    'http://localhost:2707/db/insert',
     { json: postData },
     (error, res, body) => {
       if (!error && res.statusCode === 200) {

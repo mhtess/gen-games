@@ -7,6 +7,15 @@
 // ---------------
 // Initialize Game
 // ---------------
+var test_db_mp_game_6 = 'cultural_ratchet_test';
+var db_mp_game_6 = 'cultural_ratchet';
+var isProd = false;
+var getDb = function() {
+    if (isProd)
+        return db_mp_game_6;
+    else
+        return test_db_mp_game_6;
+} 
 
 global.__base = __dirname + '/';
 var
@@ -34,6 +43,14 @@ if(argv.gameport) {
 if(argv.expname) {
     var exp = argv.expname.replace(/\/$/, "");
     var gameServer = new Server(exp);
+} else {
+    throw new Error("missing arguments. Use --expname flag (e.g. 'node app.js --expname spatial')");
+}
+
+// Instantiate Server
+if(argv.production) {
+    var prod = argv.test.replace(/\/$/, "");
+    isProd = (prod === 'true');
 } else {
     throw new Error("missing arguments. Use --expname flag (e.g. 'node app.js --expname spatial')");
 }
@@ -92,11 +109,39 @@ app.get( '/*' , function( req, res ) {
       return utils.handleInvalidID(req, res);
     } else {
       // If the database shows they've already participated, block them
-      utils.checkPreviousParticipant(id, (exists) => {
+      checkPreviousParticipant(id, (exists) => {
         return exists ? utils.handleDuplicate(req, res) : utils.serveFile(req, res);
       });
     }
 });
+
+function checkPreviousParticipant (workerId, callback) {
+    var p = {'workerId': workerId};
+    var postData = {
+      dbname: getDb(),
+      query: p,
+      projection: {'_id': 1}
+    };
+    sendPostRequest(
+      'http://localhost:2027/db/exists',
+      {json: postData},
+      (error, res, body) => {
+        try {
+          if (!error && res.statusCode === 200) {
+            console.log("success! Received data " + JSON.stringify(body));
+            callback(body);
+          } else {
+            throw `${error}`;
+          }
+        }
+        catch (err) {
+          console.log(err);
+          console.log('no database; allowing participant to continue');
+          return callback(false);
+        }
+      }
+    );
+  };
 
 // ----------------
 // Helper Functions
