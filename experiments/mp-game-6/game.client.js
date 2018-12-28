@@ -256,7 +256,7 @@ var customSetup = function(globalGame) {
 
         // Transmit performance info to server
         var roundTimesJSON = _.toPairs(encodeData(roundTimes)).join('.');
-        globalGame.socket.emit("logTimes.Complete.", roundTimesJSON);
+        globalGame.socket.send("logTimes.Complete." + roundTimesJSON);
         console.log(roundTimesJSON);        
 
         globalGame.socket.emit("multipleTrialResponses", roundSelections);
@@ -397,6 +397,8 @@ var customSetup = function(globalGame) {
 
         if(globalGame.my_role === "student") {
             $("#chat_room_slide_continue_button").prop("disabled", false);
+            // Start Time
+            globalGame.roundProps[globalGame.my_role]['times']['chat']['start'] = new Date();
         }
     });
 

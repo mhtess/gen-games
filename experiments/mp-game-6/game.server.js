@@ -139,6 +139,7 @@ var commonOutput = function (client) {
         rule_idx: trialInfo.ruleIdx,
         rule_name: '"' + trialInfo.ruleName + '"',
         rule_file_name: trialInfo.ruleFileName,
+        round_num: roundNum,
     };
 }
 
