@@ -100,27 +100,6 @@ function serve() {
         });
     });
 
-
-    app.post('/db/getstims', (request, response) => {
-        if (!request.body) {
-            return utils.failure(response, '/db/getstims needs post request body');
-        }
-        console.log(`got request to get stims from ${request.body.dbname}/${request.body.colname}`);
-
-        const databaseName = request.body.dbname;
-        const collectionName = request.body.colname;
-        if (!collectionName) {
-            return utils.failure(response, '/db/getstims needs collection');
-        }
-        if (!databaseName) {
-            return utils.failure(response, '/db/getstims needs database');
-        }
-
-        utils.getStims(connection, databaseName, collectionName, function(result){
-            response.send(result);
-        });
-    });
-
     app.listen(port, () => {
         utils.log(`running at http://localhost:${port}`);
     });

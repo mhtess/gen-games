@@ -71,7 +71,7 @@ var game_core = function(options){
             this.concept_rule_summary = require('./stimuli/fifty_rules/concept_summary.json');
         else
             this.concept_rule_summary = require('./stimuli/dev/concept_summary.json');
-        this.trialList = undefined;
+        this.trialList = [];
         this.numTrialsDefined = 0;
 
         this.id = options.id;
@@ -87,10 +87,11 @@ var game_core = function(options){
         this.streams = {};
 
         var localThis = this;
-        this.makeTrialList(options.connection, function(trialList){
-            localThis.trialList = trialList;
+        this.makeTrialList(options.connection, function(trial){
+            localThis.trialList.push(trial);
             localThis.numTrialsDefined += 1;
             if (localThis.numTrialsDefined === localThis.numRounds) {
+                localThis.trialList = _.shuffle(localThis.trialList);
                 localThis.server_send_update();
             }
         });
@@ -205,28 +206,38 @@ game_core.prototype.server_send_update = function(){
 };
 
 game_core.prototype.makeTrialList = function (connection, callback) {
-    var col_prefix = 'dev_';
+    var col_prefix = "dev_";
     if (this.isProd === false) {
-        col_prefix = 'fifty_rules_';
+        col_prefix = "fifty_rules_";
     }
     var gameId = this.id;
+    var ruleTypes = [
+        "SINGLE_FEATURE",
+        "CONJUNCTION",
+        // "DISJUNCTION",
+        // "CONJUNCTION_DISJUNCTION",
+        // "DISJUNCTION_CONJUNCTION"
+    ];
 
-    utils.getStims(
-        connection,
-        "genGames",
-        col_prefix + "SINGLE_FEATURE",
-        gameId,
-        function(result) {
-            var packet = {
-                gameid: gameId,
-                ruleIdx: result.rule_idx,
-                fileName: result.file_name,
-                name: result.name,
-            };
-            console.log(packet);
-
-            var trialList = [packet];
-            callback(trialList);
+    _.forEach(ruleTypes,
+        ruleType => {
+            utils.getStims(
+                connection,
+                "genGames",
+                col_prefix + ruleType,
+                gameId,
+                function(result) {
+                    var trial = {
+                        gameid: gameId,
+                        ruleIdx: result.rule_idx,
+                        fileName: result.file_name,
+                        name: result.name,
+                        ruleType: ruleType,
+                    };
+                    console.log(trial);
+                    callback(trial);
+                }
+            );
         }
     );
 
