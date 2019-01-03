@@ -7,15 +7,8 @@
 // ---------------
 // Initialize Game
 // ---------------
-var test_db_mp_game_6 = 'cultural_ratchet_test';
-var db_mp_game_6 = 'cultural_ratchet';
 var isProd = false;
-var getDb = function() {
-    if (isProd)
-        return db_mp_game_6;
-    else
-        return test_db_mp_game_6;
-} 
+
 
 global.__base = __dirname + '/';
 var

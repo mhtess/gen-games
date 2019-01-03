@@ -32,7 +32,7 @@ class ReferenceGameServer {
         console.log.apply(this,arguments);
     };
 
-    findGame(player) {
+    findGame(player, isProd) {
         this.log('looking for a game. We have : ' + this.game_count);
         var joined_a_game = false;
         for (var gameid in this.games) {
@@ -71,11 +71,11 @@ class ReferenceGameServer {
 
         if(!joined_a_game) {
             // If you couldn't find a game to join, create a new one
-            this.createGame(player);
+            this.createGame(player, isProd);
         }
     };
 
-    createGame (player) {
+    createGame (player, isProd) {
         // Instantiate the game
         var options = {
             expName: this.expName,
@@ -88,7 +88,10 @@ class ReferenceGameServer {
             options.rule_by_round = this.rule_by_round;
             options.possibleSpecies = this.possibleSpecies;
             options.possibleSpeciesPlural = this.possibleSpeciesPlural;
+        } else if (this.expName === 'mp-game-6') {
+            options.isProd = isProd;
         }
+
         var game = new this.core(options);
 
         // Assign a role to the player
