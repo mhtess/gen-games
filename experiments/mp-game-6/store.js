@@ -12,9 +12,11 @@ const colors = require('colors/safe');
 const app = express();
 const ObjectID = mongodb.ObjectID;
 const MongoClient = mongodb.MongoClient;
-const port = 6003;
-const mongoCreds = require('./auth.json');
-const mongoURL = `mongodb://${mongoCreds.user}:${mongoCreds.password}@localhost:27017/`;
+const port = 27017;
+// const mongoCreds = require('./auth.json');
+// const mongoURL = `mongodb://${mongoCreds.user}:${mongoCreds.password}@localhost:27017/`;
+const mongoURL = `mongodb://localhost:27017/`;
+
 const handlers = {};
 
 function makeMessage(text) {

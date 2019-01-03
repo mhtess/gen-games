@@ -184,50 +184,47 @@ game_core.prototype.server_send_update = function(){
 };
 
 game_core.prototype.makeTrialList = function () {
-    // var colname = getStimuliDb();
-    // sendPostRequest('http://localhost:6003/db/getstims', {
-    //     json: {
-    //     dbname: 'stimuli',
-    //     colname: colname,
-    //     numTrials: 5,
-    //     gameid: gameid
-    //     }
-    // }, (error, res, body) => {
-    //     if (!error && res.statusCode === 200) {
-    //     // send trial list (and id) to client
-    //     var packet = {
-    //         gameid: gameid,
-    //         version: recogVersion,	
-    //         recogID: body.recogID,
-    //         trials: body.meta
-    //     };      
-    //     socket.emit('onConnected', packet);
-    //     } else {
-    //     console.log(`error getting stims: ${error} ${body}`);
-    //     }
-    // });
+    sendPostRequest('http://localhost:27017/db/getstims', {
+        json: {
+            dbname: 'stimuli',
+            colname: 'mp-game-6',
+            numTrials: 5,
+            gameid: gameid
+        }
+    }, (error, res, body) => {
+        if (!error && res.statusCode === 200) {
+            var packet = {
+                gameid: gameid,
+                
+            };
+            
+            socket.emit('onConnected', packet);
+        } else {
+        console.log(`error getting stims: ${error} ${body}`);
+        }
+    });
 
 
     // TODO: Remove this, once we have MongoDB Code working properly
-    var rule_num = 2;
-    var concept_summary = require("../sharedUtils/stimuli/test_dataset/concept_summary.json")[rule_num];
-    var train_stimuli = require("../sharedUtils/stimuli/test_dataset/train/" + concept_summary.name + ".json");
-    var test_stimuli = require("../sharedUtils/stimuli/test_dataset/test/" + concept_summary.name + ".json");
+    // var rule_num = 2;
+    // var concept_summary = require("../sharedUtils/stimuli/test_dataset/concept_summary.json")[rule_num];
+    // var train_stimuli = require("../sharedUtils/stimuli/test_dataset/train/" + concept_summary.name + ".json");
+    // var test_stimuli = require("../sharedUtils/stimuli/test_dataset/test/" + concept_summary.name + ".json");
 
-    return [
-        {
-            "train": train_stimuli,
-            "test": test_stimuli,
-            "ruleIdx": rule_num,
-            "ruleName": concept_summary.phrase,
-            "ruleFileName": concept_summary.name,
-        },
-        {
-            "train": train_stimuli,
-            "test": test_stimuli,
-            "ruleIdx": rule_num,
-            "ruleName": concept_summary.phrase,
-            "ruleFileName": concept_summary.name,
-        }
-    ];
+    // return [
+    //     {
+    //         "train": train_stimuli,
+    //         "test": test_stimuli,
+    //         "ruleIdx": rule_num,
+    //         "ruleName": concept_summary.phrase,
+    //         "ruleFileName": concept_summary.name,
+    //     },
+    //     {
+    //         "train": train_stimuli,
+    //         "test": test_stimuli,
+    //         "ruleIdx": rule_num,
+    //         "ruleName": concept_summary.phrase,
+    //         "ruleFileName": concept_summary.name,
+    //     }
+    // ];
 };

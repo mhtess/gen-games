@@ -558,12 +558,10 @@ var stimuliGeneration = function() {
         single_feature_concepts,
         conjunction_concepts,
         disjunction_concepts,
-        conjunction_conjunction_concepts,
-        disjunction_disjunction_concepts,
         conjunction_disjunction_concepts,
         disjunction_conjunction_concepts
     ); 
-	stimuliGen.genDatasets(concepts, 50, 50, '.');
+	stimuliGen.genDatasets(concepts, 50, 50, './pilot');
 
 }
 
