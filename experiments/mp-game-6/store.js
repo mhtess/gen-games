@@ -9,10 +9,9 @@ const utils = require('../sharedUtils/sharedUtils.js');
 
 const app = express();
 const port = 27017;
-// const mongoCreds = require('./auth.json');
-// const mongoURL = `mongodb://${mongoCreds.user}:${mongoCreds.password}@localhost:27017/`;
-const mongoURL = `mongodb://localhost:27017/`;
-
+const mongoCreds = require('./auth.json');
+const mongoURL = `mongodb://${mongoCreds.user}:${mongoCreds.password}@localhost:27017/`;
+// const mongoURL = `mongodb://localhost:27017/`;
 
 function serve() {
     utils.mongoConnectWithRetry(mongoURL, 2000, (connection) => {

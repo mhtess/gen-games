@@ -53,7 +53,7 @@ var game_core = function(options){
 
     // Round Info
     this.roundNum = -1;
-    this.numRounds = 1;
+    this.numRounds = 2;
     this.testScores = {};
     this.testScores[this.playerRoleNames.role1] = _.times(this.numRounds, _.constant({}));
     this.testScores[this.playerRoleNames.role2] = _.times(this.numRounds, _.constant({}));
@@ -67,10 +67,6 @@ var game_core = function(options){
     this.currentSlide[this.playerRoleNames.role2] = '';
 
     if(this.server) {
-        if (this.isProd === true)
-            this.concept_rule_summary = require('./stimuli/fifty_rules/concept_summary.json');
-        else
-            this.concept_rule_summary = require('./stimuli/dev/concept_summary.json');
         this.trialList = [];
         this.numTrialsDefined = 0;
 
@@ -92,11 +88,23 @@ var game_core = function(options){
             localThis.numTrialsDefined += 1;
             if (localThis.numTrialsDefined === localThis.numRounds) {
                 localThis.trialList = _.shuffle(localThis.trialList);
+                localThis.trialStimuli = [];
+                _.forEach(
+                    localThis.trialList,
+                    trialInfo => {
+                        localThis.trialStimuli.push({
+                            train: options.train_stimuli[trialInfo.fileName] ,
+                            test:  options.test_stimuli[trialInfo.fileName],
+                            ruleIdx: trialInfo.ruleIdx,
+                            ruleName: trialInfo.name,
+                            ruleFileName: trialInfo.fileName,
+                        });
+                    }
+                )
+                console.log(localThis.trialList);
                 localThis.server_send_update();
             }
         });
-
-        
     } else {
         // If we're initializing a player's local game copy, create the player object
         // and the game object. We'll be copying real values into these items
@@ -193,7 +201,8 @@ game_core.prototype.server_send_update = function(){
         numRounds : this.numRounds,
     };
     if (this.numTrialsDefined === this.numRounds) {
-        state.trialInfo = this.trialList[this.roundNum];
+        state.trialList = this.trialList;
+        state.trialInfo = this.trialStimuli[this.roundNum];
     }
 
     _.extend(state, {players: player_packet});
@@ -207,7 +216,7 @@ game_core.prototype.server_send_update = function(){
 
 game_core.prototype.makeTrialList = function (connection, callback) {
     var col_prefix = "dev_";
-    if (this.isProd === false) {
+    if (this.isProd === true) {
         col_prefix = "fifty_rules_";
     }
     var gameId = this.id;
@@ -234,7 +243,6 @@ game_core.prototype.makeTrialList = function (connection, callback) {
                         name: result.name,
                         ruleType: ruleType,
                     };
-                    console.log(trial);
                     callback(trial);
                 }
             );
@@ -248,13 +256,7 @@ game_core.prototype.makeTrialList = function (connection, callback) {
     // var test_stimuli = require("../sharedUtils/stimuli/test_dataset/test/" + concept_summary.name + ".json");
 
     // return [
-    //     {
-    //         "train": train_stimuli,
-    //         "test": test_stimuli,
-    //         "ruleIdx": rule_num,
-    //         "ruleName": concept_summary.phrase,
-    //         "ruleFileName": concept_summary.name,
-    //     },
+ 
     //     {
     //         "train": train_stimuli,
     //         "test": test_stimuli,
