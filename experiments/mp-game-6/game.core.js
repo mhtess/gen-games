@@ -98,6 +98,8 @@ var game_core = function(options){
                             ruleIdx: trialInfo.ruleIdx,
                             ruleName: trialInfo.name,
                             ruleFileName: trialInfo.fileName,
+                            speciesName: trialInfo.speciesName,
+                            pluralSpeciesName: trialInfo.pluralSpeciesName,
                         });
                     }
                 )
@@ -242,6 +244,8 @@ game_core.prototype.makeTrialList = function (connection, callback) {
                         fileName: result.file_name,
                         name: result.name,
                         ruleType: ruleType,
+                        speciesName: result.speciesName,
+                        pluralSpeciesName: result.speciesNamePlural,
                     };
                     callback(trial);
                 }

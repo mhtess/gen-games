@@ -124,7 +124,7 @@ var customSetup = function(globalGame) {
         clearRoundNumber();
         drawProgressBar(globalGame.roundNum, globalGame.numRounds, 2, 8);
         globalGame.socket.send("enterSlide.train_instructions_slide.");
-        drawTrainInstructions(globalGame, "wud", "wuds");
+        drawTrainInstructions(globalGame, globalGame.trialInfo.speciesName, globalGame.trialInfo.pluralSpeciesName);
     });
 
     $("#train_instructions_slide_continue_button").click(function() {
@@ -132,7 +132,7 @@ var customSetup = function(globalGame) {
         if (globalGame.my_role === "explorer") {
             drawProgressBar(globalGame.roundNum, globalGame.numRounds, 3, 8);
             globalGame.socket.send("enterSlide.train_creatures_slide.");
-            drawTrainCreatures(globalGame, "wud");    
+            drawTrainCreatures(globalGame, globalGame.trialInfo.speciesName);    
 
             // Start Time
             globalGame.roundProps[globalGame.my_role]['times']['train']['start'] = new Date();
@@ -156,7 +156,7 @@ var customSetup = function(globalGame) {
         clearTrainCreatures();
         drawProgressBar(globalGame.roundNum, globalGame.numRounds, 4, 8);
         globalGame.socket.send("enterSlide.chat_instructions_slide.");           
-        drawExplorerChatInstructions(globalGame, "wud");
+        drawExplorerChatInstructions(globalGame, globalGame.trialInfo.speciesName);
     });
 
     $("#chat_instructions_slide_continue_button").click(function(){
@@ -179,7 +179,7 @@ var customSetup = function(globalGame) {
         clearTestInstructions();
         drawProgressBar(globalGame.roundNum, globalGame.numRounds, 7, 8);
         globalGame.socket.send("enterSlide.test_creatures_slide.");
-        drawTestCreatures(globalGame, "wud", "wuds");
+        drawTestCreatures(globalGame, globalGame.trialInfo.speciesName, globalGame.trialInfo.pluralSpeciesName);
 
         // Start Time
         globalGame.roundProps[globalGame.my_role]['times']['test']['start'] = new Date(); 

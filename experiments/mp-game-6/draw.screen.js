@@ -103,7 +103,7 @@ var drawTrainCreatures = function(game, speciesName) {
             </p>
         `
     );
-    drawCreaturesTable(game.trialInfo.train, "wud", 5, true, game.roundProps);
+    drawCreaturesTable(game.trialInfo.train, speciesName, 5, true, game.roundProps);
 
     // Make visible
     game.currentSlide[game.my_role] = "train_creatures_slide";    
@@ -184,7 +184,7 @@ var drawTestCreatures = function(game, speciesName, pluralSpeciesName) {
     `
    $("#test_creatures_slide_header").html(instructions);
 
-   drawCreaturesTable(game.trialInfo.test, "wud", 5, false, game.roundProps);
+   drawCreaturesTable(game.trialInfo.test, speciesName, 5, false, game.roundProps);
    
     // Make visible
     $("#test_creatures_slide_continue_button").prop("disabled", false);
