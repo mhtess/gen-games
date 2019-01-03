@@ -2,12 +2,18 @@
 //--------
 // Imports
 //--------
-var _ = require('underscore');
-var fs = require('fs');
-var converter = require("color-convert");
-var DeltaE = require('../node_modules/delta-e');
-var mkdirp = require('mkdirp');
-var sendPostRequest = require('request').post;
+const _ = require('underscore');
+const fs = require('fs');
+const converter = require("color-convert");
+const DeltaE = require('../node_modules/delta-e');
+const mkdirp = require('mkdirp');
+const sendPostRequest = require('request').post;
+
+
+const mongodb = require('mongodb');
+const MongoClient = mongodb.MongoClient;
+const ObjectID = mongodb.ObjectID;
+const colors = require('colors/safe');
 
 // ----------------
 // Server Functions
@@ -43,7 +49,7 @@ function checkPreviousParticipant (workerId, callback) {
       projection: {'_id': 1}
     };
     sendPostRequest(
-      'http://localhost:2027/db/exists',
+      'http://localhost:27017/db/exists',
       {json: postData},
       (error, res, body) => {
         try {
@@ -88,7 +94,7 @@ var writeDataToMongo = function(game, line) {
     colname: game.experimentName
   }, line);
   sendPostRequest(
-    'http://localhost:2707/db/insert',
+    'http://localhost:27017/db/insert',
     { json: postData },
     (error, res, body) => {
       if (!error && res.statusCode === 200) {
@@ -99,6 +105,82 @@ var writeDataToMongo = function(game, line) {
     }
   );
 };
+
+
+//----------------
+// Local MongoDB
+//----------------
+
+function makeMessage(text) {
+    return `${colors.blue('[store]')} ${text}`;
+}
+
+function log(text) {
+    console.log(makeMessage(text));
+}
+
+function error(text) {
+    console.error(makeMessage(text));
+}
+
+function failure(response, text) {
+    const message = makeMessage(text);
+    console.error(message);
+    return response.status(500).send(message);
+}
+
+function success(response, text) {
+    const message = makeMessage(text);
+    console.log(message);
+    return response.send(message);
+}
+
+function mongoConnectWithRetry(mongoURL, delayInMilliseconds, callback) {
+    MongoClient.connect(mongoURL, (err, connection) => {
+    if (err) {
+        console.error(`Error connecting to MongoDB: ${err}`);
+        setTimeout(() => mongoConnectWithRetry(delayInMilliseconds, callback), delayInMilliseconds);
+    } else {
+        log('connected succesfully to mongodb');
+        callback(connection);
+    }
+    });
+}
+
+var getStims = function(connection, databaseName, collectionName, gameId, callback){
+    const database = connection.db(databaseName);
+    const collection = database.collection(collectionName);
+
+    // sort by number of times previously served up and take the first
+    collection.aggregate([
+        { $addFields : { numGames: { $size: '$games'} } },
+        { $sort : {numGames : 1} },
+        { $limit : 1}
+        ]).toArray( (err, results) => {
+            if(err) {
+                console.log(err);
+            } else {
+                // Immediately mark as annotated so others won't get it too
+                markAnnotation(collection, gameId, results[0]['_id']);
+                callback(results[0]);
+        }
+    });
+}
+
+var markAnnotation = function(collection, gameid, ruleId) {
+    collection.update({_id: ObjectID(ruleId)}, {
+        $push : {games : gameid},
+        $inc  : {numGames : 1}
+    }, function(err, items) {
+    if (err) {
+        console.log(`error marking annotation data: ${err}`);
+    } else {
+        console.log(`successfully marked annotation. result: ${JSON.stringify(items)}`);
+    }
+    });
+};
+
+
 
 var UUID = function() {
   var baseName = (Math.floor(Math.random() * 10) + '' +
@@ -428,4 +510,10 @@ module.exports = {
     flip,
     generateAttentionQuestion,
     isNumeric,
+    getStims,
+    mongoConnectWithRetry,
+    log,
+    error,
+    failure,
+    success
 };

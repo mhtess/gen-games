@@ -23,12 +23,14 @@ if (typeof _ === "undefined" ) {
 if (has_require) {
     utils = require(__base + "sharedUtils/sharedUtils.js");
     assert = require("assert");
+    sendPostRequest = require('request').post;
 }
 
 // Functional form, for game creation 
 var game_core = function(options){
     // Store a flag if we are the server instance
     this.server = options.server;
+    this.isProd = options.isProd;
 
     // Some config settings
     this.email = "schopra8@stanford.edu";
@@ -51,7 +53,7 @@ var game_core = function(options){
 
     // Round Info
     this.roundNum = -1;
-    this.numRounds = 2;
+    this.numRounds = 1;
     this.testScores = {};
     this.testScores[this.playerRoleNames.role1] = _.times(this.numRounds, _.constant({}));
     this.testScores[this.playerRoleNames.role2] = _.times(this.numRounds, _.constant({}));
@@ -65,8 +67,14 @@ var game_core = function(options){
     this.currentSlide[this.playerRoleNames.role2] = '';
 
     if(this.server) {
+        if (this.isProd === true)
+            this.concept_rule_summary = require('./stimuli/fifty_rules/concept_summary.json');
+        else
+            this.concept_rule_summary = require('./stimuli/dev/concept_summary.json');
+        this.trialList = undefined;
+        this.numTrialsDefined = 0;
+
         this.id = options.id;
-        this.trialList = this.makeTrialList();
         this.players = [{
             id: options.player_instances[0].id,
             instance: options.player_instances[0].player,
@@ -77,7 +85,17 @@ var game_core = function(options){
         this.numPlayersCompletedRound = 0;
 
         this.streams = {};
-        this.server_send_update();
+
+        var localThis = this;
+        this.makeTrialList(options.connection, function(trialList){
+            localThis.trialList = trialList;
+            localThis.numTrialsDefined += 1;
+            if (localThis.numTrialsDefined === localThis.numRounds) {
+                localThis.server_send_update();
+            }
+        });
+
+        
     } else {
         // If we're initializing a player's local game copy, create the player object
         // and the game object. We'll be copying real values into these items
@@ -172,8 +190,11 @@ game_core.prototype.server_send_update = function(){
         pc : this.player_count,
         roundNum : this.roundNum,
         numRounds : this.numRounds,
-        trialInfo: this.trialList[this.roundNum]
     };
+    if (this.numTrialsDefined === this.numRounds) {
+        state.trialInfo = this.trialList[this.roundNum];
+    }
+
     _.extend(state, {players: player_packet});
 
     // Send the snapshot to the players
@@ -183,27 +204,31 @@ game_core.prototype.server_send_update = function(){
     });
 };
 
-game_core.prototype.makeTrialList = function () {
-    sendPostRequest('http://localhost:27017/db/getstims', {
-        json: {
-            dbname: 'stimuli',
-            colname: 'mp-game-6',
-            numTrials: 5,
-            gameid: gameid
-        }
-    }, (error, res, body) => {
-        if (!error && res.statusCode === 200) {
-            var packet = {
-                gameid: gameid,
-                
-            };
-            
-            socket.emit('onConnected', packet);
-        } else {
-        console.log(`error getting stims: ${error} ${body}`);
-        }
-    });
+game_core.prototype.makeTrialList = function (connection, callback) {
+    var col_prefix = 'dev_';
+    if (this.isProd === false) {
+        col_prefix = 'fifty_rules_';
+    }
+    var gameId = this.id;
 
+    utils.getStims(
+        connection,
+        "genGames",
+        col_prefix + "SINGLE_FEATURE",
+        gameId,
+        function(result) {
+            var packet = {
+                gameid: gameId,
+                ruleIdx: result.rule_idx,
+                fileName: result.file_name,
+                name: result.name,
+            };
+            console.log(packet);
+
+            var trialList = [packet];
+            callback(trialList);
+        }
+    );
 
     // TODO: Remove this, once we have MongoDB Code working properly
     // var rule_num = 2;

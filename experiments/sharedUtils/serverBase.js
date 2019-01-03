@@ -24,6 +24,13 @@ class ReferenceGameServer {
             //   Pilot 2:
             this.possibleSpecies = ['dorb', 'jav', 'lorch', 'grink', 'thup'];
             this.possibleSpeciesPlural = ['dorbs', 'javs', 'lorchs', 'grinks', 'thups'];
+        } else if (expName == 'mp-game-6') {
+            // const mongoCreds = require('./auth.json');
+            // const mongoURL = `mongodb://${mongoCreds.user}:${mongoCreds.password}@localhost:27017/`;
+            const mongoURL = `mongodb://localhost:27017/`;
+            utils.mongoConnectWithRetry(mongoURL, 2000, (connection) => {
+                this.connection = connection;
+            });
         }
     };
 
@@ -90,6 +97,7 @@ class ReferenceGameServer {
             options.possibleSpeciesPlural = this.possibleSpeciesPlural;
         } else if (this.expName === 'mp-game-6') {
             options.isProd = isProd;
+            options.connection = this.connection;
         }
 
         var game = new this.core(options);
