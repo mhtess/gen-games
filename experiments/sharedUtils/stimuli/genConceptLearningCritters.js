@@ -26,7 +26,9 @@ var constants = {
 	center_size: "center_size",
 	petal_length: "petal_length",
 	thorns_present: "thorns_present",
-	spots_present: "spots_present",
+    spots_present: "spots_present",
+    frill_present: "frill_present",
+    frill_color: "frill_color",
 
 	// Fish
 	fish: "fish",
@@ -74,9 +76,10 @@ var constants = {
 	col2: "col2",
 	col3: "col3",
 	col4: "col4",
-	col5: "col5",
+    col5: "col5",
+    col6: "col6",
 	prop1: "prop1",
-	prop2: "prop2",
+    prop2: "prop2",
 	tar1: "tar1",
     tar2: "tar2",
     tar3: "tar3",
@@ -149,6 +152,10 @@ var creature_dict = {
 		[constants.center_color]: {
 			[constants.name]: constants.col4,
 			[constants.type]: constants.color,
+        },
+		[constants.frill_color]: {
+			[constants.name]: constants.col5,
+			[constants.type]: constants.color,
 		},
 		[constants.center_size]: {
 			[constants.name]: constants.prop1,
@@ -164,6 +171,10 @@ var creature_dict = {
 		},
 		[constants.spots_present]: {
 			[constants.name]: constants.tar2,
+			[constants.type]: constants.bool,			
+        },
+		[constants.frill_present]: {
+			[constants.name]: constants.tar3,
 			[constants.type]: constants.bool,			
 		},
 	},
@@ -306,16 +317,16 @@ var creature_dict = {
 };
 
 var color_dict = {
-	// [constants.blue]: "#5da5db",
-	// [constants.red]: "#f42935",
-	// [constants.yellow]: "#eec900",
+	[constants.blue]: "#5da5db",
+	[constants.red]: "#f42935",
+	[constants.yellow]: "#eec900",
 	[constants.green]: "#228b22",
 	[constants.orange]: "#ff8c00",
 	[constants.purple]: "#dda0dd",
-	// [constants.pink]: "#FF69B4",
+	[constants.pink]: "#FF69B4",
 	[constants.white]: "#FFFFFF",
-	// [constants.black]: "#000000",
-	// [constants.brown]: "#A52A2A",
+	[constants.black]: "#000000",
+	[constants.brown]: "#A52A2A",
 };
 
 var creature_to_colors_dict = {
@@ -348,6 +359,10 @@ var boolean_color_constraints = {
 		{
 			[constants.bool]: constants.spots_present,
 			[constants.color]: constants.spots_color,
+        },
+		{
+			[constants.bool]: constants.frill_present,
+			[constants.color]: constants.frill_color,
 		}
 	],
 	[constants.fish]: [
