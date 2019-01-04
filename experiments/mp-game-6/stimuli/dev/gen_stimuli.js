@@ -1,7 +1,7 @@
 // -------
 // Imports
 // -------
-var stimuliGen = require('../../sharedUtils/stimuli/genConceptLearningCritters.js')
+var stimuliGen = require('../../../sharedUtils/stimuli/genConceptLearningCritters.js')
 var constants = stimuliGen.constants;
 var _ = require('lodash');
 

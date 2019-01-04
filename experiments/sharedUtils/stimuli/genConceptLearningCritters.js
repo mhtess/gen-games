@@ -309,13 +309,21 @@ var color_dict = {
 	// [constants.blue]: "#5da5db",
 	// [constants.red]: "#f42935",
 	// [constants.yellow]: "#eec900",
-	// [constants.green]: "#228b22",
+	[constants.green]: "#228b22",
 	[constants.orange]: "#ff8c00",
 	[constants.purple]: "#dda0dd",
 	// [constants.pink]: "#FF69B4",
 	[constants.white]: "#FFFFFF",
 	// [constants.black]: "#000000",
 	// [constants.brown]: "#A52A2A",
+};
+
+var creature_to_colors_dict = {
+    [constants.flower]: [constants.orange, constants.purple, constants.white],
+    [constants.bug]: [constants.orange, constants.purple, constants.white],
+    [constants.bird]: [constants.orange, constants.purple, constants.white],
+    [constants.fish]: [constants.orange, constants.purple, constants.white],
+    [constants.tree]: [constants.orange, constants.purple, constants.white, constants.green],
 };
 
 var size_dict = {
@@ -542,8 +550,16 @@ function enumerateCreatureDescriptions(creature) {
 
 		// Enqueue variants of object
 		var new_property_descriptor = creature_dict[creature][new_property];
-		var new_property_type = new_property_descriptor[constants.type];
-		var possible_vals = Object.keys(property_type_to_dict[new_property_type]);
+        var new_property_type = new_property_descriptor[constants.type];
+        
+        // Possible values are different for different creatures
+        var possible_vals = undefined;
+        if (new_property_type === constants.color) {
+            possible_vals = creature_to_colors_dict[creature];
+        } else {
+            possible_vals = Object.keys(property_type_to_dict[new_property_type]);
+        }
+
 		for (var i = 0; i < possible_vals.length; i++) {
 			var modified_cur_creature_description = Object.assign({}, cur_creature_description);
 			modified_cur_creature_description[new_property] = possible_vals[i];
