@@ -485,9 +485,10 @@ function genDatasets(concepts, num_train, num_test, dir) {
 		fs.mkdirSync(test_dir);
 	}
 
-	// Create dataset for each concept
+    // Create dataset for each concept
+    console.log("Creating dataset for the following concepts: ");
 	for (let c of concepts) {
-        console.log("Creating dataset for concept: " + c[constants.phrase]);
+        console.log(c[constants.phrase]);
 		var datasets = createDataset(c, num_train, num_test);
 		var train = train_dir + '/' + c.name + '.json';
         var test = test_dir + '/' + c.name + '.json';

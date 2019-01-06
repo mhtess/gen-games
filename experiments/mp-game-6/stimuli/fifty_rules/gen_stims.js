@@ -9,7 +9,7 @@ var stimuliGeneration = function() {
 	var single_feature_concepts = [
 		{
 			[constants.name]: 'flowers_orange_stems',
-			[constants.phrase]: 'Flowers with orange stems',
+			[constants.phrase]: 'flowers with orange stems',
 			[constants.type]: constants.single_feature,
 			[constants.description]: {
 				[constants.creature]: constants.flower,
@@ -24,7 +24,7 @@ var stimuliGeneration = function() {
         },
 		{
 			[constants.name]: 'flowers_thorns',
-			[constants.phrase]: 'Flowers with thorns',
+			[constants.phrase]: 'flowers with thorns',
 			[constants.type]: constants.single_feature,
 			[constants.description]: {
 				[constants.creature]: constants.flower,
@@ -39,7 +39,7 @@ var stimuliGeneration = function() {
         },
 		{
 			[constants.name]: 'fish_fangs',
-			[constants.phrase]: 'Fish with white fangs',
+			[constants.phrase]: 'fish with white fangs',
 			[constants.type]: constants.single_feature,
 			[constants.description]: {
 				[constants.creature]: constants.fish,
@@ -54,7 +54,7 @@ var stimuliGeneration = function() {
         },
 		{
 			[constants.name]: 'fish_whiskers',
-			[constants.phrase]: 'Fish with whiskers',
+			[constants.phrase]: 'fish with whiskers',
 			[constants.type]: constants.single_feature,
 			[constants.description]: {
 				[constants.creature]: constants.fish,
@@ -141,10 +141,6 @@ var stimuliGeneration = function() {
                 [constants.berries_color]: constants.purple,
             },
             [constants.rule]: function(creature_type, creature_description, concept_description) {
-                console.log(creature_type);
-                console.log(creature_description);
-                console.log(concept_description);
-
                 if (concept_description[constants.creature] !== creature_type) return false;
                 return (
                     creature_description[constants.berries_present] === concept_description[constants.berries_present] &&
@@ -172,7 +168,7 @@ var stimuliGeneration = function() {
     var conjunction_concepts = [
         {
 			[constants.name]: 'flowers_purple_stems_thorns',
-			[constants.phrase]: 'Flowers with purple stem and thorns',
+			[constants.phrase]: 'flowers with purple stem and thorns',
 			[constants.type]: constants.conjunction,
 			[constants.description]: {
 				[constants.creature]: constants.flower,
@@ -183,7 +179,7 @@ var stimuliGeneration = function() {
         },
         {
             [constants.name]: 'flowers_orange_petals_purple_centers',
-            [constants.phrase]: 'Flowers with orange petals and purple centers',
+            [constants.phrase]: 'flowers with orange petals and purple centers',
             [constants.type]: constants.conjunction,
             [constants.description]: {
                 [constants.creature]: constants.flower,
@@ -194,7 +190,7 @@ var stimuliGeneration = function() {
         },
         {
 			[constants.name]: 'fish_orange_bodies_purple_stripes',
-			[constants.phrase]: 'Fish with orange bodies and purple stripes',
+			[constants.phrase]: 'fish with orange bodies and purple stripes',
 			[constants.type]: constants.conjunction,
 			[constants.description]: {
 				[constants.creature]: constants.fish,
@@ -206,7 +202,7 @@ var stimuliGeneration = function() {
         },
         {
 			[constants.name]: 'fish_white_stripes_whiskers',
-			[constants.phrase]: 'Fish with white stripes and whiskers',
+			[constants.phrase]: 'fish with white stripes and whiskers',
 			[constants.type]: constants.conjunction,
 			[constants.description]: {
 				[constants.creature]: constants.fish,
@@ -219,7 +215,7 @@ var stimuliGeneration = function() {
     
         {
 			[constants.name]: 'bugs_purple_legs_white_heads',
-			[constants.phrase]: 'Bugs with purple legs and white heads',
+			[constants.phrase]: 'bugs with purple legs and white heads',
 			[constants.type]: constants.conjunction,
 			[constants.description]: {
 				[constants.creature]: constants.bug,
@@ -230,7 +226,7 @@ var stimuliGeneration = function() {
         },
         {
 			[constants.name]: 'bugs_wings_antennae',
-			[constants.phrase]: 'Bugs with wings and antennae',
+			[constants.phrase]: 'bugs with wings and antennae',
 			[constants.type]: constants.conjunction,
 			[constants.description]: {
 				[constants.creature]: constants.bug,
@@ -241,7 +237,7 @@ var stimuliGeneration = function() {
         },
         {
 			[constants.name]: 'birds_purple_wings_white_crests',
-			[constants.phrase]: 'Birds with purple wings and white crests',
+			[constants.phrase]: 'birds with purple wings and white crests',
 			[constants.type]: constants.conjunction,
 			[constants.description]: {
 				[constants.creature]: constants.bird,
@@ -253,7 +249,7 @@ var stimuliGeneration = function() {
         },
         {
 			[constants.name]: 'birds_orange_wings_purple_tails',
-			[constants.phrase]: 'Birds with orange wings and purple tails',
+			[constants.phrase]: 'birds with orange wings and purple tails',
 			[constants.type]: constants.conjunction,
 			[constants.description]: {
 				[constants.creature]: constants.bird,
@@ -291,7 +287,7 @@ var stimuliGeneration = function() {
     var disjunction_concepts = [
         {
             [constants.name]: 'flowers_purple_petals_or_thorns',
-            [constants.phrase]: 'Flowers with purple petals or thorns',
+            [constants.phrase]: 'flowers with purple petals or thorns',
             [constants.type]: constants.disjunction,
             [constants.description]: {
                 [constants.creature]: constants.flower,
@@ -310,7 +306,7 @@ var stimuliGeneration = function() {
 
         {
             [constants.name]: 'flowers_orange_stems_or_pink_frills',
-            [constants.phrase]: 'Flowers with orange stems or pink frills',
+            [constants.phrase]: 'flowers with orange stems or pink frills',
             [constants.type]: constants.disjunction,
             [constants.description]: {
                 [constants.creature]: constants.flower,
@@ -332,7 +328,7 @@ var stimuliGeneration = function() {
 
         {
             [constants.name]: 'fish_orange_bodies_purple_or_fangs',
-            [constants.phrase]: 'Fish with orange bodies or fangs',
+            [constants.phrase]: 'fish with orange bodies or fangs',
             [constants.type]: constants.disjunction,
             [constants.description]: {
                 [constants.creature]: constants.fish,
@@ -350,7 +346,7 @@ var stimuliGeneration = function() {
 
         {
             [constants.name]: 'fish_white_stripes_or_whiskers',
-            [constants.phrase]: 'Fish with white stripes or whiskers',
+            [constants.phrase]: 'fish with white stripes or whiskers',
             [constants.type]: constants.disjunction,
             [constants.description]: {
                 [constants.creature]: constants.fish,
@@ -370,7 +366,7 @@ var stimuliGeneration = function() {
 
         {
             [constants.name]: 'bugs_antennae_or_wings',
-            [constants.phrase]: 'Bugs with antennae or wings',
+            [constants.phrase]: 'bugs with antennae or wings',
             [constants.type]: constants.disjunction,
             [constants.description]: {
                 [constants.creature]: constants.bug,
@@ -388,7 +384,7 @@ var stimuliGeneration = function() {
 
         {
             [constants.name]: 'bugs_purple_wings_or_white_legs',
-            [constants.phrase]: 'Bugs with purple wings or white legs',
+            [constants.phrase]: 'bugs with purple wings or white legs',
             [constants.type]: constants.disjunction,
             [constants.description]: {
                 [constants.creature]: constants.bug,
@@ -408,7 +404,7 @@ var stimuliGeneration = function() {
 
         {
             [constants.name]: 'birds_orange_tails_or_white_wings',
-            [constants.phrase]: 'Birds with orange tails or white wings',
+            [constants.phrase]: 'birds with orange tails or white wings',
             [constants.type]: constants.disjunction,
             [constants.description]: {
                 [constants.creature]: constants.bird,
@@ -427,7 +423,7 @@ var stimuliGeneration = function() {
         },
         {
             [constants.name]: 'birds_orange_crests_or_purple_wings',
-            [constants.phrase]: 'Birds with orange crests or purple wings',
+            [constants.phrase]: 'birds with orange crests or purple wings',
             [constants.type]: constants.disjunction,
             [constants.description]: {
                 [constants.creature]: constants.bird,
@@ -447,7 +443,7 @@ var stimuliGeneration = function() {
 
         {
             [constants.name]: 'trees_purple_berries_or_white_trunks',
-            [constants.phrase]: 'Trees with purple berries or white trunks',
+            [constants.phrase]: 'trees with purple berries or white trunks',
             [constants.type]: constants.disjunction,
             [constants.description]: {
                 [constants.creature]: constants.tree,
@@ -467,7 +463,7 @@ var stimuliGeneration = function() {
 
         {
             [constants.name]: 'trees_leaves_or_berries',
-            [constants.phrase]: 'Trees with leaves or berries',
+            [constants.phrase]: 'trees with leaves or berries',
             [constants.type]: constants.disjunction,
             [constants.description]: {
                 [constants.creature]: constants.tree,
@@ -488,7 +484,7 @@ var stimuliGeneration = function() {
     var conjunction_disjunction_concepts = [
         {
             [constants.name]: 'flowers_purple_stems_white_petals_or_thorns',
-            [constants.phrase]: 'Flowers with (purple stems and white petals) or thorns',
+            [constants.phrase]: 'flowers with (purple stems and white petals) or thorns',
             [constants.type]: constants.conjunction_disjunction,
             [constants.description]: {
                 [constants.creature]: constants.flower,
@@ -508,7 +504,7 @@ var stimuliGeneration = function() {
         },
         {
             [constants.name]: 'flowers_thorns_green_petals_or_orange_stems',
-            [constants.phrase]: 'Flowers with (thorns and green petals) or orange stems',
+            [constants.phrase]: 'flowers with (thorns and green petals) or orange stems',
             [constants.type]: constants.conjunction_disjunction,
             [constants.description]: {
                 [constants.creature]: constants.flower,
@@ -528,7 +524,7 @@ var stimuliGeneration = function() {
         },
         {
             [constants.name]: 'fish_orange_bodies_purple_stripes_or_whiskers',
-            [constants.phrase]: 'Fish with (orange bodies and purple stripes) or whiskers',
+            [constants.phrase]: 'fish with (orange bodies and purple stripes) or whiskers',
             [constants.type]: constants.conjunction_disjunction,
             [constants.description]: {
                 [constants.creature]: constants.fish,
@@ -549,7 +545,7 @@ var stimuliGeneration = function() {
         },
         {
             [constants.name]: 'fish_white_bodies_orange_stripes_or_fangs',
-            [constants.phrase]: 'Fish with (white bodies and orange stripes) or fangs',
+            [constants.phrase]: 'fish with (white bodies and orange stripes) or fangs',
             [constants.type]: constants.conjunction_disjunction,
             [constants.description]: {
                 [constants.creature]: constants.fish,
@@ -571,7 +567,7 @@ var stimuliGeneration = function() {
 
         {
             [constants.name]: 'bugs_purple_legs_white_heads_or_orange_wings',
-            [constants.phrase]: 'Bugs with (purple legs and white heads) or orange wings',
+            [constants.phrase]: 'bugs with (purple legs and white heads) or orange wings',
             [constants.type]: constants.conjunction_disjunction,
             [constants.description]: {
                 [constants.creature]: constants.bug,
@@ -592,7 +588,7 @@ var stimuliGeneration = function() {
         },
         {
             [constants.name]: 'bugs_white_legs_purple_wings_or_orange_antennae',
-            [constants.phrase]: 'Bugs with (white legs and purple wings) or orange antennae',
+            [constants.phrase]: 'bugs with (white legs and purple wings) or orange antennae',
             [constants.type]: constants.conjunction_disjunction,
             [constants.description]: {
                 [constants.creature]: constants.bug,
@@ -615,7 +611,7 @@ var stimuliGeneration = function() {
         },
         {
             [constants.name]: 'birds_purple_wings_white_crests_or_white_tails',
-            [constants.phrase]: 'Birds with (purple wings and white crests) or white tails',
+            [constants.phrase]: 'birds with (purple wings and white crests) or white tails',
             [constants.type]: constants.conjunction_disjunction,
             [constants.description]: {
                 [constants.creature]: constants.bird,
@@ -637,7 +633,7 @@ var stimuliGeneration = function() {
         },
         {
             [constants.name]: 'birds_crests_tails_or_orange_wings',
-            [constants.phrase]: 'Birds with (crests and tails) or orange wings',
+            [constants.phrase]: 'birds with (crests and tails) or orange wings',
             [constants.type]: constants.conjunction_disjunction,
             [constants.description]: {
                 [constants.creature]: constants.bird,
@@ -679,7 +675,7 @@ var stimuliGeneration = function() {
         },
         {
             [constants.name]: 'trees_leaves_berries_or_orange_trunks',
-            [constants.phrase]: 'Trees with (leaves and berries) or orange trunks',
+            [constants.phrase]: 'trees with (leaves and berries) or orange trunks',
             [constants.type]: constants.conjunction_disjunction,
             [constants.description]: {
                 [constants.creature]: constants.tree,
@@ -702,7 +698,7 @@ var stimuliGeneration = function() {
     var disjunction_conjunction_concepts = [
         {
             [constants.name]: 'flowers_purple_centers_or_thorns_orange_stems',
-            [constants.phrase]: 'Flowers with (purple centers or thorns) and orange stems',
+            [constants.phrase]: 'flowers with (purple centers or thorns) and orange stems',
             [constants.type]: constants.disjunction_conjunction,
             [constants.description]: {
                 [constants.creature]: constants.flower,
@@ -722,7 +718,7 @@ var stimuliGeneration = function() {
         },
         {
             [constants.name]: 'flowers_purple_stems_or_thorns_white_centers',
-            [constants.phrase]: 'Flowers with (purple stems or thorns) and white centers',
+            [constants.phrase]: 'flowers with (purple stems or thorns) and white centers',
             [constants.type]: constants.disjunction_conjunction,
             [constants.description]: {
                 [constants.creature]: constants.flower,
@@ -742,7 +738,7 @@ var stimuliGeneration = function() {
         },
         {
             [constants.name]: 'fish_orange_bodies_or_fangs_whiskers',
-            [constants.phrase]: 'Fish with (orange bodies or fangs) and whiskers',
+            [constants.phrase]: 'fish with (orange bodies or fangs) and whiskers',
             [constants.type]: constants.disjunction_conjunction,
             [constants.description]: {
                 [constants.creature]: constants.fish,
@@ -761,7 +757,7 @@ var stimuliGeneration = function() {
         },
         {
             [constants.name]: 'fish_white_stripes_or_purple_bodies_whiskers',
-            [constants.phrase]: 'Fish with (white stripes or purple bodies) and whiskers',
+            [constants.phrase]: 'fish with (white stripes or purple bodies) and whiskers',
             [constants.type]: constants.disjunction_conjunction,
             [constants.description]: {
                 [constants.creature]: constants.fish,
@@ -782,7 +778,7 @@ var stimuliGeneration = function() {
         },
         {
             [constants.name]: 'bugs_antennae_or_wings_purple_bodies',
-            [constants.phrase]: 'Bugs with (antennae or wings) and purple bodies',
+            [constants.phrase]: 'bugs with (antennae or wings) and purple bodies',
             [constants.type]: constants.disjunction_conjunction,
             [constants.description]: {
                 [constants.creature]: constants.bug,
@@ -801,7 +797,7 @@ var stimuliGeneration = function() {
         },
         {
             [constants.name]: 'bugs_white_heads_or_orange_antennae_purple_legs',
-            [constants.phrase]: 'Bugs with (white heads or orange antennae) and purple legs',
+            [constants.phrase]: 'bugs with (white heads or orange antennae) and purple legs',
             [constants.type]: constants.disjunction_conjunction,
             [constants.description]: {
                 [constants.creature]: constants.bug,
@@ -822,7 +818,7 @@ var stimuliGeneration = function() {
         },
         {
             [constants.name]: 'birds_orange_tails_or_white_wings_orange_crests',
-            [constants.phrase]: 'Birds with (orange tails or white wings) and orange crests',
+            [constants.phrase]: 'birds with (orange tails or white wings) and orange crests',
             [constants.type]: constants.disjunction_conjunction,
             [constants.description]: {
                 [constants.creature]: constants.bird,
@@ -843,7 +839,7 @@ var stimuliGeneration = function() {
         },
         {
             [constants.name]: 'birds_white_crests_or_orange_wings_tails',
-            [constants.phrase]: 'Birds with (white crests or orange wings) and tails',
+            [constants.phrase]: 'birds with (white crests or orange wings) and tails',
             [constants.type]: constants.disjunction_conjunction,
             [constants.description]: {
                 [constants.creature]: constants.bird,
@@ -864,7 +860,7 @@ var stimuliGeneration = function() {
         },
         {
             [constants.name]: 'trees_purple_trunks_or_white_leaves_orange_berries',
-            [constants.phrase]: 'Trees with (purple trunks or white leaves) and orange berries',
+            [constants.phrase]: 'trees with (purple trunks or white leaves) and orange berries',
             [constants.type]: constants.disjunction_conjunction,
             [constants.description]: {
                 [constants.creature]: constants.tree,
@@ -887,7 +883,7 @@ var stimuliGeneration = function() {
         },
         {
             [constants.name]: 'trees_orange_trunks_or_berries_white_leaves',
-            [constants.phrase]: 'Trees with (orange trunks or berries) and white leaves',
+            [constants.phrase]: 'trees with (orange trunks or berries) and white leaves',
             [constants.type]: constants.disjunction_conjunction,
             [constants.description]: {
                 [constants.creature]: constants.tree,
@@ -926,7 +922,7 @@ var stimuliGeneration = function() {
     var other_single_feature_concepts = [
         {
          [constants.name]: 'flowers_purple_spots',
-         [constants.phrase]: 'Flowers with purple spots',
+         [constants.phrase]: 'flowers with purple spots',
          [constants.type]: constants.single_feature,
          [constants.description]: {
              [constants.creature]: constants.flower,
@@ -943,7 +939,7 @@ var stimuliGeneration = function() {
         },
         {
          [constants.name]: 'flowers_purple_spots',
-         [constants.phrase]: 'Flowers with purple spots',
+         [constants.phrase]: 'flowers with purple spots',
          [constants.type]: constants.single_feature,
          [constants.description]: {
              [constants.creature]: constants.flower,
@@ -960,7 +956,7 @@ var stimuliGeneration = function() {
         },
         {
          [constants.name]: 'fish_purple_stripes',
-         [constants.phrase]: 'Fish with purple stripes',
+         [constants.phrase]: 'fish with purple stripes',
          [constants.type]: constants.single_feature,
          [constants.description]: {
                 [constants.creature]: constants.fish,
@@ -1028,7 +1024,7 @@ var stimuliGeneration = function() {
     var conjunction_conjunction_concepts = [
         {
 			[constants.name]: 'flowers_purple_stems_white_spots_thorns',
-			[constants.phrase]: 'Flowers with purple stems and white spots and thorns',
+			[constants.phrase]: 'flowers with purple stems and white spots and thorns',
 			[constants.logical_form]: 'flowers and purple stems and white spots and thorns',
 			[constants.type]: constants.conjunction_conjunction,
 			[constants.description]: {
@@ -1042,7 +1038,7 @@ var stimuliGeneration = function() {
         },
         {
 			[constants.name]: 'flowers_thorns_spots_orange_stems',
-			[constants.phrase]: 'Flowers with thorns and spots and orange stems',
+			[constants.phrase]: 'flowers with thorns and spots and orange stems',
 			[constants.logical_form]: 'flowers and thorns and spots and orange stems',
 			[constants.type]: constants.conjunction_conjunction,
 			[constants.description]: {
@@ -1055,7 +1051,7 @@ var stimuliGeneration = function() {
         },
         {
 			[constants.name]: 'fish_orange_bodies_purple_stripes_whiskers',
-			[constants.phrase]: 'Fish with orange bodies and purple stripes and whiskers',
+			[constants.phrase]: 'fish with orange bodies and purple stripes and whiskers',
 			[constants.logical_form]: 'fish and orange bodies and purple stripes and whiskers',
 			[constants.type]: constants.conjunction_conjunction,
 			[constants.description]: {
@@ -1069,7 +1065,7 @@ var stimuliGeneration = function() {
         },
         {
 			[constants.name]: 'fish_white_bodies_orange_stripes_fangs',
-			[constants.phrase]: 'Fish with white bodies and orange stripes and fangs',
+			[constants.phrase]: 'fish with white bodies and orange stripes and fangs',
 			[constants.logical_form]: 'fish and white bodies and orange stripes and fangs',
 			[constants.type]: constants.conjunction_conjunction,
 			[constants.description]: {
@@ -1083,7 +1079,7 @@ var stimuliGeneration = function() {
         },
         {
             [constants.name]: 'bugs_purple_legs_white_heads_orange_wings',
-            [constants.phrase]: 'Bugs with purple legs and white heads and orange wings',
+            [constants.phrase]: 'bugs with purple legs and white heads and orange wings',
             [constants.type]: constants.conjunction_conjunction,
             [constants.description]: {
                 [constants.creature]: constants.bug,
@@ -1096,7 +1092,7 @@ var stimuliGeneration = function() {
         },
         {
             [constants.name]: 'bugs_white_legs_purple_wings_orange_antennae',
-            [constants.phrase]: 'Bugs with white legs and purple wings and orange antennae',
+            [constants.phrase]: 'bugs with white legs and purple wings and orange antennae',
             [constants.type]: constants.conjunction_conjunction,
             [constants.description]: {
                 [constants.creature]: constants.bug,
@@ -1110,7 +1106,7 @@ var stimuliGeneration = function() {
         },
         {
             [constants.name]: 'birds_purple_wings_white_crests_white_tails',
-            [constants.phrase]: 'Birds with purple wings and white crests and white tails',
+            [constants.phrase]: 'birds with purple wings and white crests and white tails',
             [constants.type]: constants.conjunction_conjunction,
             [constants.description]: {
                 [constants.creature]: constants.bird,
@@ -1124,7 +1120,7 @@ var stimuliGeneration = function() {
 
         {
             [constants.name]: 'birds_crests_tails_orange_wings',
-            [constants.phrase]: 'Birds with crests and tails and orange wings',
+            [constants.phrase]: 'birds with crests and tails and orange wings',
             [constants.type]: constants.conjunction_conjunction,
             [constants.description]: {
                 [constants.creature]: constants.bird,
@@ -1150,7 +1146,7 @@ var stimuliGeneration = function() {
         },
         {
             [constants.name]: 'trees_leaves_berries_orange_trunks',
-            [constants.phrase]: 'Trees with leaves and berries and orange trunks',
+            [constants.phrase]: 'trees with leaves and berries and orange trunks',
             [constants.type]: constants.conjunction_conjunction,
             [constants.description]: {
                 [constants.creature]: constants.tree,
@@ -1168,7 +1164,7 @@ var stimuliGeneration = function() {
     var other_conjunction_concepts = [
         {
          [constants.name]: 'fish_fangs_without_whiskers',
-         [constants.phrase]: 'Fish with fangs and without whiskers',
+         [constants.phrase]: 'fish with fangs and without whiskers',
          [constants.type]: constants.conjunction,
          [constants.description]: {
              [constants.creature]: constants.fish,
@@ -1179,7 +1175,7 @@ var stimuliGeneration = function() {
         },
         {
          [constants.name]: 'bugs_orange_antennae_orange_wings',
-         [constants.phrase]: 'Bugs with orange antennae and orange wings',
+         [constants.phrase]: 'bugs with orange antennae and orange wings',
          [constants.type]: constants.conjunction,
          [constants.description]: {
              [constants.creature]: constants.bug,
@@ -1192,7 +1188,7 @@ var stimuliGeneration = function() {
         },
         {
          [constants.name]: 'birds_white_crests_white_tails',
-         [constants.phrase]: 'Birds with white crests and white tails',
+         [constants.phrase]: 'birds with white crests and white tails',
          [constants.type]: constants.conjunction,
          [constants.description]: {
              [constants.creature]: constants.bird,
@@ -1222,7 +1218,7 @@ var stimuliGeneration = function() {
     var other_conjunction_conjunction_concepts = [
         {
          [constants.name]: 'flowers_white_petals_purple_centers_orange_stems',
-         [constants.phrase]: 'Flowers with white petals and purple centers and orange stems',
+         [constants.phrase]: 'flowers with white petals and purple centers and orange stems',
          [constants.logical_form]: 'flowers and white petals and purple centers and orange stems',
          [constants.type]: constants.conjunction_conjunction,
          [constants.description]: {
@@ -1235,7 +1231,7 @@ var stimuliGeneration = function() {
         },
         {
          [constants.name]: 'fish_fangs_whiskers_white_stripes',
-         [constants.phrase]: 'Fish with fangs and whiskers and white stripes',
+         [constants.phrase]: 'fish with fangs and whiskers and white stripes',
          [constants.logical_form]: 'fish and fangs and whiskers and white stripes',
          [constants.type]: constants.conjunction_conjunction,
          [constants.description]: {
