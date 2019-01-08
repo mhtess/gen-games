@@ -2,8 +2,9 @@ var utils = require(__base + 'sharedUtils/sharedUtils.js');
 global.window = global.document = global;
 
 class ReferenceGameServer {
-    constructor(expName) {
+    constructor(expName, isProd) {
         this.expName = expName;
+        this.isProd = isProd;
         this.core = require([__base, expName, 'game.core.js'].join('/')).game_core;
         this.player = require([__base, expName, 'game.core.js'].join('/')).game_player;
         this.customServer = require([__base, expName, 'game.server.js'].join('/'));
@@ -25,12 +26,33 @@ class ReferenceGameServer {
             this.possibleSpecies = ['dorb', 'jav', 'lorch', 'grink', 'thup'];
             this.possibleSpeciesPlural = ['dorbs', 'javs', 'lorchs', 'grinks', 'thups'];
         } else if (expName == 'mp-game-6') {
+            // Connect to Mongo
             // const mongoCreds = require('./auth.json');
             // const mongoURL = `mongodb://${mongoCreds.user}:${mongoCreds.password}@localhost:27017/`;
             const mongoURL = `mongodb://localhost:27017/`;
             utils.mongoConnectWithRetry(mongoURL, 2000, (connection) => {
                 this.connection = connection;
             });
+
+            // Load all files
+            var file_path = ''
+            if (this.isProd === true) {
+                file_path = __base + 'mp-game-6/stimuli/fifty_rules/';
+            } else {
+                file_path = __base + './mp-game-6/stimuli/dev/';
+            }
+
+            this.train_stimuli = {};
+            this.test_stimuli = {};
+            var concept_rule_summary = require(file_path + 'concept_summary.json');
+            for (var key in concept_rule_summary) {
+                if (concept_rule_summary.hasOwnProperty(key)) {
+                    var name = concept_rule_summary[key]['name'];
+                    this.train_stimuli[name] = require(file_path + 'train/' + name + '.json');
+                    this.test_stimuli[name] = require(file_path + 'test/' + name + '.json');
+                }
+            }
+
         }
     };
 
@@ -39,7 +61,7 @@ class ReferenceGameServer {
         console.log.apply(this,arguments);
     };
 
-    findGame(player, isProd) {
+    findGame(player) {
         this.log('looking for a game. We have : ' + this.game_count);
         var joined_a_game = false;
         for (var gameid in this.games) {
@@ -78,11 +100,11 @@ class ReferenceGameServer {
 
         if(!joined_a_game) {
             // If you couldn't find a game to join, create a new one
-            this.createGame(player, isProd);
+            this.createGame(player, this.isProd);
         }
     };
 
-    createGame (player, isProd) {
+    createGame (player) {
         // Instantiate the game
         var options = {
             expName: this.expName,
@@ -96,7 +118,8 @@ class ReferenceGameServer {
             options.possibleSpecies = this.possibleSpecies;
             options.possibleSpeciesPlural = this.possibleSpeciesPlural;
         } else if (this.expName === 'mp-game-6') {
-            options.isProd = isProd;
+            options.train_stimuli = this.train_stimuli;
+            options.test_stimuli = this.test_stimuli;
             options.connection = this.connection;
         }
 

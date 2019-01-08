@@ -26,7 +26,9 @@ var constants = {
 	center_size: "center_size",
 	petal_length: "petal_length",
 	thorns_present: "thorns_present",
-	spots_present: "spots_present",
+    spots_present: "spots_present",
+    frill_present: "frill_present",
+    frill_color: "frill_color",
 
 	// Fish
 	fish: "fish",
@@ -74,9 +76,10 @@ var constants = {
 	col2: "col2",
 	col3: "col3",
 	col4: "col4",
-	col5: "col5",
+    col5: "col5",
+    col6: "col6",
 	prop1: "prop1",
-	prop2: "prop2",
+    prop2: "prop2",
 	tar1: "tar1",
     tar2: "tar2",
     tar3: "tar3",
@@ -149,6 +152,10 @@ var creature_dict = {
 		[constants.center_color]: {
 			[constants.name]: constants.col4,
 			[constants.type]: constants.color,
+        },
+		[constants.frill_color]: {
+			[constants.name]: constants.col5,
+			[constants.type]: constants.color,
 		},
 		[constants.center_size]: {
 			[constants.name]: constants.prop1,
@@ -164,6 +171,10 @@ var creature_dict = {
 		},
 		[constants.spots_present]: {
 			[constants.name]: constants.tar2,
+			[constants.type]: constants.bool,			
+        },
+		[constants.frill_present]: {
+			[constants.name]: constants.tar3,
 			[constants.type]: constants.bool,			
 		},
 	},
@@ -306,16 +317,24 @@ var creature_dict = {
 };
 
 var color_dict = {
-	// [constants.blue]: "#5da5db",
-	// [constants.red]: "#f42935",
-	// [constants.yellow]: "#eec900",
-	// [constants.green]: "#228b22",
+	[constants.blue]: "#5da5db",
+	[constants.red]: "#f42935",
+	[constants.yellow]: "#eec900",
+	[constants.green]: "#228b22",
 	[constants.orange]: "#ff8c00",
 	[constants.purple]: "#dda0dd",
-	// [constants.pink]: "#FF69B4",
+	[constants.pink]: "#FF69B4",
 	[constants.white]: "#FFFFFF",
-	// [constants.black]: "#000000",
-	// [constants.brown]: "#A52A2A",
+	[constants.black]: "#000000",
+	[constants.brown]: "#A52A2A",
+};
+
+var creature_to_colors_dict = {
+    [constants.flower]: [constants.orange, constants.purple, constants.white],
+    [constants.bug]: [constants.orange, constants.purple, constants.white],
+    [constants.bird]: [constants.orange, constants.purple, constants.white],
+    [constants.fish]: [constants.orange, constants.purple, constants.white],
+    [constants.tree]: [constants.orange, constants.purple, constants.white, constants.green],
 };
 
 var size_dict = {
@@ -340,6 +359,10 @@ var boolean_color_constraints = {
 		{
 			[constants.bool]: constants.spots_present,
 			[constants.color]: constants.spots_color,
+        },
+		{
+			[constants.bool]: constants.frill_present,
+			[constants.color]: constants.frill_color,
 		}
 	],
 	[constants.fish]: [
@@ -462,9 +485,10 @@ function genDatasets(concepts, num_train, num_test, dir) {
 		fs.mkdirSync(test_dir);
 	}
 
-	// Create dataset for each concept
+    // Create dataset for each concept
+    console.log("Creating dataset for the following concepts: ");
 	for (let c of concepts) {
-        console.log("Creating dataset for concept: " + c[constants.phrase]);
+        console.log(c[constants.phrase]);
 		var datasets = createDataset(c, num_train, num_test);
 		var train = train_dir + '/' + c.name + '.json';
         var test = test_dir + '/' + c.name + '.json';
@@ -542,8 +566,16 @@ function enumerateCreatureDescriptions(creature) {
 
 		// Enqueue variants of object
 		var new_property_descriptor = creature_dict[creature][new_property];
-		var new_property_type = new_property_descriptor[constants.type];
-		var possible_vals = Object.keys(property_type_to_dict[new_property_type]);
+        var new_property_type = new_property_descriptor[constants.type];
+        
+        // Possible values are different for different creatures
+        var possible_vals = undefined;
+        if (new_property_type === constants.color) {
+            possible_vals = creature_to_colors_dict[creature];
+        } else {
+            possible_vals = Object.keys(property_type_to_dict[new_property_type]);
+        }
+
 		for (var i = 0; i < possible_vals.length; i++) {
 			var modified_cur_creature_description = Object.assign({}, cur_creature_description);
 			modified_cur_creature_description[new_property] = possible_vals[i];

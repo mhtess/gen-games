@@ -9,10 +9,9 @@ const utils = require('../sharedUtils/sharedUtils.js');
 
 const app = express();
 const port = 27017;
-// const mongoCreds = require('./auth.json');
-// const mongoURL = `mongodb://${mongoCreds.user}:${mongoCreds.password}@localhost:27017/`;
-const mongoURL = `mongodb://localhost:27017/`;
-
+const mongoCreds = require('./auth.json');
+const mongoURL = `mongodb://${mongoCreds.user}:${mongoCreds.password}@localhost:27017/`;
+// const mongoURL = `mongodb://localhost:27017/`;
 
 function serve() {
     utils.mongoConnectWithRetry(mongoURL, 2000, (connection) => {
@@ -97,27 +96,6 @@ function serve() {
             } else {
             return utils.success(response, `successfully inserted data. result: ${JSON.stringify(result)}`);
             }
-        });
-    });
-
-
-    app.post('/db/getstims', (request, response) => {
-        if (!request.body) {
-            return utils.failure(response, '/db/getstims needs post request body');
-        }
-        console.log(`got request to get stims from ${request.body.dbname}/${request.body.colname}`);
-
-        const databaseName = request.body.dbname;
-        const collectionName = request.body.colname;
-        if (!collectionName) {
-            return utils.failure(response, '/db/getstims needs collection');
-        }
-        if (!databaseName) {
-            return utils.failure(response, '/db/getstims needs database');
-        }
-
-        utils.getStims(connection, databaseName, collectionName, function(result){
-            response.send(result);
         });
     });
 

@@ -53,7 +53,7 @@ var game_core = function(options){
 
     // Round Info
     this.roundNum = -1;
-    this.numRounds = 1;
+    this.numRounds = 2;
     this.testScores = {};
     this.testScores[this.playerRoleNames.role1] = _.times(this.numRounds, _.constant({}));
     this.testScores[this.playerRoleNames.role2] = _.times(this.numRounds, _.constant({}));
@@ -67,11 +67,7 @@ var game_core = function(options){
     this.currentSlide[this.playerRoleNames.role2] = '';
 
     if(this.server) {
-        if (this.isProd === true)
-            this.concept_rule_summary = require('./stimuli/fifty_rules/concept_summary.json');
-        else
-            this.concept_rule_summary = require('./stimuli/dev/concept_summary.json');
-        this.trialList = undefined;
+        this.trialList = [];
         this.numTrialsDefined = 0;
 
         this.id = options.id;
@@ -87,15 +83,30 @@ var game_core = function(options){
         this.streams = {};
 
         var localThis = this;
-        this.makeTrialList(options.connection, function(trialList){
-            localThis.trialList = trialList;
+        this.makeTrialList(options.connection, function(trial){
+            localThis.trialList.push(trial);
             localThis.numTrialsDefined += 1;
             if (localThis.numTrialsDefined === localThis.numRounds) {
+                localThis.trialList = _.shuffle(localThis.trialList);
+                localThis.trialStimuli = [];
+                _.forEach(
+                    localThis.trialList,
+                    trialInfo => {
+                        localThis.trialStimuli.push({
+                            train: options.train_stimuli[trialInfo.fileName] ,
+                            test:  options.test_stimuli[trialInfo.fileName],
+                            ruleIdx: trialInfo.ruleIdx,
+                            ruleName: trialInfo.name,
+                            ruleFileName: trialInfo.fileName,
+                            speciesName: trialInfo.speciesName,
+                            pluralSpeciesName: trialInfo.pluralSpeciesName,
+                        });
+                    }
+                )
+                console.log(localThis.trialList);
                 localThis.server_send_update();
             }
         });
-
-        
     } else {
         // If we're initializing a player's local game copy, create the player object
         // and the game object. We'll be copying real values into these items
@@ -192,7 +203,8 @@ game_core.prototype.server_send_update = function(){
         numRounds : this.numRounds,
     };
     if (this.numTrialsDefined === this.numRounds) {
-        state.trialInfo = this.trialList[this.roundNum];
+        state.trialList = this.trialList;
+        state.trialInfo = this.trialStimuli[this.roundNum];
     }
 
     _.extend(state, {players: player_packet});
@@ -205,28 +217,39 @@ game_core.prototype.server_send_update = function(){
 };
 
 game_core.prototype.makeTrialList = function (connection, callback) {
-    var col_prefix = 'dev_';
-    if (this.isProd === false) {
-        col_prefix = 'fifty_rules_';
+    var col_prefix = "dev_";
+    if (this.isProd === true) {
+        col_prefix = "fifty_rules_";
     }
     var gameId = this.id;
+    var ruleTypes = [
+        "SINGLE_FEATURE",
+        "CONJUNCTION",
+        // "DISJUNCTION",
+        // "CONJUNCTION_DISJUNCTION",
+        // "DISJUNCTION_CONJUNCTION"
+    ];
 
-    utils.getStims(
-        connection,
-        "genGames",
-        col_prefix + "SINGLE_FEATURE",
-        gameId,
-        function(result) {
-            var packet = {
-                gameid: gameId,
-                ruleIdx: result.rule_idx,
-                fileName: result.file_name,
-                name: result.name,
-            };
-            console.log(packet);
-
-            var trialList = [packet];
-            callback(trialList);
+    _.forEach(ruleTypes,
+        ruleType => {
+            utils.getStims(
+                connection,
+                "genGames",
+                col_prefix + ruleType,
+                gameId,
+                function(result) {
+                    var trial = {
+                        gameid: gameId,
+                        ruleIdx: result.rule_idx,
+                        fileName: result.file_name,
+                        name: result.name,
+                        ruleType: ruleType,
+                        speciesName: result.speciesName,
+                        pluralSpeciesName: result.speciesNamePlural,
+                    };
+                    callback(trial);
+                }
+            );
         }
     );
 
@@ -237,13 +260,7 @@ game_core.prototype.makeTrialList = function (connection, callback) {
     // var test_stimuli = require("../sharedUtils/stimuli/test_dataset/test/" + concept_summary.name + ".json");
 
     // return [
-    //     {
-    //         "train": train_stimuli,
-    //         "test": test_stimuli,
-    //         "ruleIdx": rule_num,
-    //         "ruleName": concept_summary.phrase,
-    //         "ruleFileName": concept_summary.name,
-    //     },
+ 
     //     {
     //         "train": train_stimuli,
     //         "test": test_stimuli,

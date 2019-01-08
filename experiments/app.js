@@ -32,21 +32,22 @@ if(argv.gameport) {
     console.log('no gameport specified: using 8888\nUse the --gameport flag to change');
 }
 
-// Instantiate Server
-if(argv.expname) {
-    var exp = argv.expname.replace(/\/$/, "");
-    var gameServer = new Server(exp);
-} else {
-    throw new Error("missing arguments. Use --expname flag (e.g. 'node app.js --expname spatial')");
-}
-
-// Instantiate Server
+// Determine Dev or Production
 if(argv.production) {
     var prod = argv.test.replace(/\/$/, "");
     isProd = (prod === 'true');
 } else {
     isProd = false;
 }
+
+// Instantiate Server
+if(argv.expname) {
+    var exp = argv.expname.replace(/\/$/, "");
+    var gameServer = new Server(exp, isProd);
+} else {
+    throw new Error("missing arguments. Use --expname flag (e.g. 'node app.js --expname spatial')");
+}
+
 
 // Add Encryption Protocols
 try {

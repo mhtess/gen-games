@@ -137,8 +137,8 @@ var commonOutput = function (client) {
         time: Date.now(),
         role: client.role,
         rule_idx: trialInfo.ruleIdx,
-        rule_name: '"' + trialInfo.ruleName + '"',
-        rule_file_name: trialInfo.ruleFileName,
+        rule_name: '"' + trialInfo.name + '"',
+        rule_file_name: trialInfo.fileName,
         round_num: roundNum,
     };
 }
