@@ -41,7 +41,7 @@ var handleInvalidID = function(req, res) {
   return res.redirect('https://rxdhawkins.me:8888/sharedUtils/invalid.html');
 };
 
-function checkPreviousParticipant (workerId, callback) {
+function checkPreviousParticipant (workerId, callback, getDb) {
     var p = {'workerId': workerId};
     var postData = {
       dbname: getDb(),

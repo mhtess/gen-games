@@ -105,6 +105,9 @@ app.get( '/*' , function( req, res ) {
       // If the database shows they've already participated, block them
       utils.checkPreviousParticipant(id, (exists) => {
         return exists ? utils.handleDuplicate(req, res) : utils.serveFile(req, res);
+      },
+      () => {
+          return  __base + 'mp-game-6/stimuli/fifty_rules/';
       });
     }
 });
