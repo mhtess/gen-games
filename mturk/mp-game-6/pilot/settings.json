@@ -1,0 +1,13 @@
+{
+ "_cosubSpecVersion": 2,
+ "Url": "https://rxdhawkins.me:8884/mp-game-6/forms/consent.html",
+ "Title": "Test",
+ "Description": "Test",
+ "Keywords": "Test",
+ "Batch": true,
+ "FrameHeight": 650,
+ "AssignmentDuration": "2 hours",
+ "AutoApprovalDelay": "1 hour",
+ "Reward": "1.15",
+ "QualificationRequirements": []
+}
