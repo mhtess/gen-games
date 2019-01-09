@@ -27,9 +27,9 @@ class ReferenceGameServer {
             this.possibleSpeciesPlural = ['dorbs', 'javs', 'lorchs', 'grinks', 'thups'];
         } else if (expName == 'mp-game-6') {
             // Connect to Mongo
-            // const mongoCreds = require('./auth.json');
-            // const mongoURL = `mongodb://${mongoCreds.user}:${mongoCreds.password}@localhost:27017/`;
-            const mongoURL = `mongodb://localhost:27017/`;
+            const mongoCreds = require('./auth.json');
+            const mongoURL = `mongodb://${mongoCreds.user}:${mongoCreds.password}@localhost:27017/`;
+            // const mongoURL = `mongodb://localhost:27017/`;
             utils.mongoConnectWithRetry(mongoURL, 2000, (connection) => {
                 this.connection = connection;
             });
