@@ -55,6 +55,8 @@ var client_onserverupdate_received = function(data){
         });
     }
 
+    console.log(data);
+
     // Copy game parameters to local globalGame
     globalGame.start_time = data.gs;
     globalGame.players_threshold = data.pt;
