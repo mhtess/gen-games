@@ -103,7 +103,7 @@ app.get( '/*' , function( req, res ) {
       return utils.handleInvalidID(req, res);
     } else {
       // If the database shows they've already participated, block them
-      checkPreviousParticipant(id, (exists) => {
+      utils.checkPreviousParticipant(id, (exists) => {
         return exists ? utils.handleDuplicate(req, res) : utils.serveFile(req, res);
       });
     }
