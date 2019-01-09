@@ -64,6 +64,7 @@ var client_onserverupdate_received = function(data){
     globalGame.roundNum = data.roundNum;
     globalGame.numRounds = data.numRounds;
     globalGame.trialInfo = data.trialInfo;
+    globalGame.isProd = data.isProd;
     globalGame.id = data.id;
 
     // update data object on first round, don't overwrite (FIXME)
