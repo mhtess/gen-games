@@ -1274,6 +1274,7 @@ var stimuliGeneration = function() {
         conjunction_disjunction_concepts,
         disjunction_conjunction_concepts
     ); 
+    concepts = _.shuffle(concepts);
     console.log("Number of Concepts: " + concepts.length);
 	stimuliGen.genDatasets(concepts, 50, 50, '.');
 
