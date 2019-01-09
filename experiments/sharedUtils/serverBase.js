@@ -39,7 +39,7 @@ class ReferenceGameServer {
             if (this.isProd === true) {
                 file_path = __base + 'mp-game-6/stimuli/fifty_rules/';
             } else {
-                file_path = __base + './mp-game-6/stimuli/dev/';
+                file_path = __base + 'mp-game-6/stimuli/fifty_rules/';
             }
 
             this.train_stimuli = {};
