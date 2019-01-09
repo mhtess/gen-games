@@ -2,10 +2,10 @@
  "sandbox": [
   {
    "HIT": {
-    "HITId": "3ZQA3IO31B45LTAQ2CFDE8LJYG9O1V",
+    "HITId": "39O0SQZVJNKMTSH8JKDQ9DH1CPTR74",
     "HITTypeId": "3LC6UUY7PQPSZI7WMOQ9PW3KBVPDDN",
     "HITGroupId": "3USZNBD0HC3KIJ2KG3TOGL7EKYM15N",
-    "CreationTime": "2019-01-09T04:57:28.000Z",
+    "CreationTime": "2019-01-09T05:03:32.000Z",
     "Title": "Test",
     "Description": "Test",
     "Question": "<ExternalQuestion xmlns=\"http://mechanicalturk.amazonaws.com/AWSMechanicalTurkDataSchemas/2006-07-14/ExternalQuestion.xsd\">\n  <ExternalURL>https://rxdhawkins.me:8884/mp-game-6/forms/consent.html</ExternalURL>\n  <FrameHeight>650</FrameHeight>\n</ExternalQuestion>",
@@ -14,7 +14,7 @@
     "MaxAssignments": 3,
     "Reward": "1.15",
     "AutoApprovalDelayInSeconds": 3600,
-    "Expiration": "2019-01-09T06:57:28.000Z",
+    "Expiration": "2019-01-09T07:03:32.000Z",
     "AssignmentDurationInSeconds": 7200,
     "QualificationRequirements": [],
     "HITReviewStatus": "NotReviewed",
