@@ -53,7 +53,7 @@ var game_core = function(options){
 
     // Round Info
     this.roundNum = -1;
-    this.numRounds = 2;
+    this.numRounds = 5;
     this.testScores = {};
     this.testScores[this.playerRoleNames.role1] = _.times(this.numRounds, _.constant({}));
     this.testScores[this.playerRoleNames.role2] = _.times(this.numRounds, _.constant({}));
@@ -220,14 +220,16 @@ game_core.prototype.makeTrialList = function (connection, callback) {
     var col_prefix = "dev_";
     if (this.isProd === true) {
         col_prefix = "fifty_rules_";
+    } else {
+        col_prefix = "pilot_fifty_rules_";
     }
     var gameId = this.id;
     var ruleTypes = [
         "SINGLE_FEATURE",
         "CONJUNCTION",
-        // "DISJUNCTION",
-        // "CONJUNCTION_DISJUNCTION",
-        // "DISJUNCTION_CONJUNCTION"
+        "DISJUNCTION",
+        "CONJUNCTION_DISJUNCTION",
+        "DISJUNCTION_CONJUNCTION"
     ];
 
     _.forEach(ruleTypes,
