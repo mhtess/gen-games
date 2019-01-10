@@ -513,7 +513,7 @@ function genDatasets(concepts, num_train, num_test, dir) {
 	}
 	
 	// Write concept_summary
-	// jsonfile.writeFile(path.join(dir, 'concept_summary.json'), concept_summary);
+	jsonfile.writeFile(path.join(dir, 'concept_summary.json'), concept_summary);
 }
 
 function createDataset(concept, num_train, num_test) {
