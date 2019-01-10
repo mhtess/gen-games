@@ -334,7 +334,7 @@ var creature_to_colors_dict = {
     [constants.bug]: [constants.orange, constants.purple, constants.white],
     [constants.bird]: [constants.orange, constants.purple, constants.white],
     [constants.fish]: [constants.orange, constants.purple, constants.white],
-    [constants.tree]: [constants.orange, constants.purple, constants.white, constants.green],
+    [constants.tree]: [constants.orange, constants.purple, constants.white, constants.green, constants.blue, constants.red],
 };
 
 var size_dict = {
@@ -493,6 +493,9 @@ function genDatasets(concepts, num_train, num_test, dir) {
 		var train = train_dir + '/' + c.name + '.json';
         var test = test_dir + '/' + c.name + '.json';
         
+        var positive_creatures = _.countBy(datasets[2], function(x) {return x.belongs_to_concept});
+        console.log("Number of Total Creatures: " + datasets[2].length + ", # of Positive Creatures: " + positive_creatures.true);
+
 		jsonfile.writeFile(train, datasets[0]);
 		jsonfile.writeFile(test, datasets[1]);
 
@@ -510,7 +513,7 @@ function genDatasets(concepts, num_train, num_test, dir) {
 	}
 	
 	// Write concept_summary
-	jsonfile.writeFile(path.join(dir, 'concept_summary.json'), concept_summary);
+	// jsonfile.writeFile(path.join(dir, 'concept_summary.json'), concept_summary);
 }
 
 function createDataset(concept, num_train, num_test) {
@@ -531,7 +534,7 @@ function createDataset(concept, num_train, num_test) {
 	var train_stimuli = _.slice(stimuli, 0, num_train);
     var test_stimuli = _.slice(stimuli, num_train, num_train + num_test);
     
-	return [train_stimuli, test_stimuli];
+	return [train_stimuli, test_stimuli, stimuli];
 }
 
 function enumerateCreatureDescriptions(creature) {
