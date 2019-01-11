@@ -229,6 +229,7 @@ var customSetup = function(globalGame) {
             var stim = globalGame.trialInfo.test[i];
             var true_label = stim.belongs_to_concept;
             var turker_label = globalGame.roundProps.selected_test_stim.includes("#test_cell_" + i);
+            console.log(turker_label);
             var is_correct = (turker_label === true_label);
 
             // Track turker's choice
