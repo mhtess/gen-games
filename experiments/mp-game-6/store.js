@@ -8,12 +8,13 @@ const path = require('path');
 const utils = require('../sharedUtils/sharedUtils.js');
 
 const app = express();
-const port = 27017;
+const port = 27018;
 const mongoCreds = require('../auth.json');
-const mongoURL = `mongodb://${mongoCreds.user}:${mongoCreds.password}@localhost:27018/`;
+const mongoURL = `mongodb://${mongoCreds.user}:${mongoCreds.password}@localhost:27017/`
 // const mongoURL = `mongodb://localhost:27017/`;
 
 function serve() {
+    console.log(mongoURL);
     utils.mongoConnectWithRetry(mongoURL, 2000, (connection) => {
 
     app.use(bodyParser.json());
@@ -62,10 +63,11 @@ function serve() {
             var filteredCollectionList = _.filter(
                 collectionList,
                 function(x) {
-                    return (x !== "mpGame3" && x !== "mpGame4");
+                    console.log(x)
+                    return (x.name !== "mpGame3" && x.name !== "mpGame4");
             });
 
-            checkEach(collectionList, checkCollectionForHits, query, projection, evaluateTally);
+            checkEach(filteredCollectionList, checkCollectionForHits, query, projection, evaluateTally);
         });
     });
 

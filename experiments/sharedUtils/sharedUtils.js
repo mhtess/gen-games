@@ -49,7 +49,7 @@ function checkPreviousParticipant (workerId, callback, getDb) {
       projection: {'_id': 1}
     };
     sendPostRequest(
-      'http://localhost:27017/db/exists',
+      'http://localhost:27018/db/exists',
       {json: postData},
       (error, res, body) => {
         try {
@@ -94,7 +94,7 @@ var writeDataToMongo = function(game, line) {
     colname: game.experimentName
   }, line);
   sendPostRequest(
-    'http://localhost:27017/db/insert',
+    'http://localhost:27018/db/insert',
     { json: postData },
     (error, res, body) => {
       if (!error && res.statusCode === 200) {
