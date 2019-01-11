@@ -143,6 +143,11 @@ var initialize = function(query, client, id) {
       gameServer.onMessage(client, m);
     });
   
+    // Parsing responses from a list of trials
+    client.on('multipleTrialResponses', function(data) {
+        gameServer.multipleTrialResponses(client, data);
+    });
+
     // When this client disconnects, we want to tell the game server
     // about that as well, so it can remove them from the game they are
     // in, and make sure the other player knows that they left and so on.
