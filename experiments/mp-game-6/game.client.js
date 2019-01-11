@@ -263,10 +263,9 @@ var customSetup = function(globalGame) {
         console.log(roundTimesJSON);        
 
         var roundSelectionsObj= {
-            trials: roundSelections,
+            "trials": roundSelections,
         }
-        var roundSelectionsObjJSON = _.toPairs(encodeData(roundSelectionsObj)).join('.');
-        globalGame.socket.emit("multipleTrialResponses", roundSelectionsObjJSON);
+        globalGame.socket.emit("multipleTrialResponses", roundSelectionsObj);
         
         var roundSummaryJSON = _.toPairs(encodeData(roundSummary)).join('.');
         globalGame.socket.send("logScores.TestCreatures." + roundSummaryJSON);
