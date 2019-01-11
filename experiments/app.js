@@ -34,11 +34,12 @@ if(argv.gameport) {
 
 // Determine Dev or Production
 if(argv.production) {
-    var prod = argv.test.replace(/\/$/, "");
+    var prod = argv.production.replace(/\/$/, "");
     isProd = (prod === 'true');
 } else {
     isProd = false;
 }
+console.log("Is Production: " + isProd);
 
 // Instantiate Server
 if(argv.expname) {
