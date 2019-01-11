@@ -468,7 +468,7 @@ function isValidConcept(concept) {
 // Dataset Generation
 // ------------------
 
-function genDatasets(concepts, num_train, num_test, dir) {
+function genDatasets(concepts, num_train, num_test, dir, min_num_pos) {
 	var concept_summary = {};
 	var index = 0;
 
@@ -489,12 +489,13 @@ function genDatasets(concepts, num_train, num_test, dir) {
     console.log("Creating dataset for the following concepts: ");
 	for (let c of concepts) {
         console.log(c[constants.phrase]);
-		var datasets = createDataset(c, num_train, num_test);
+		var datasets = createDataset(c, num_train, num_test, min_num_pos);
 		var train = train_dir + '/' + c.name + '.json';
         var test = test_dir + '/' + c.name + '.json';
         
-        var positive_creatures = _.countBy(datasets[2], function(x) {return x.belongs_to_concept});
-        console.log("Number of Total Creatures: " + datasets[2].length + ", # of Positive Creatures: " + positive_creatures.true);
+        var num_positive_train_creatures = _.filter(datasets[0], function(x) {return x.belongs_to_concept}).length;
+        var num_positive_test_creatures = _.filter(datasets[1], function(x) {return x.belongs_to_concept}).length;
+        console.log("# Positive Train Creatures:  " + num_positive_train_creatures + " # of Positive Test Creatures: " + num_positive_test_creatures);
 
 		jsonfile.writeFile(train, datasets[0]);
 		jsonfile.writeFile(test, datasets[1]);
@@ -504,10 +505,12 @@ function genDatasets(concepts, num_train, num_test, dir) {
 			logical_form: c.logical_form,
 			phrase: c.phrase,
 			type: c.type,
-			num_train: datasets[0].length,
-			p_train_belongs_to_concept: (_.filter(datasets[0], function(x) {return x.belongs_to_concept}).length * 1.0) / datasets[0].length,
+            num_train: datasets[0].length,
 			num_test: datasets[1].length,
-			p_test_belongs_to_concept: (_.filter(datasets[1], function(x) {return x.belongs_to_concept}).length * 1.0)/ datasets[1].length,
+            p_train_belongs_to_concept: (_.filter(datasets[0], function(x) {return x.belongs_to_concept}).length * 1.0) / datasets[0].length,
+			p_test_belongs_to_concept: (_.filter(datasets[1], function(x) {return x.belongs_to_concept}).length * 1.0)/ datasets[1].length,            
+            num_train_belongs_to_concept: num_positive_train_creatures,
+            num_test_belongs_to_concept: num_positive_test_creatures,
 		};
 		index++;
 	}
@@ -516,7 +519,7 @@ function genDatasets(concepts, num_train, num_test, dir) {
 	jsonfile.writeFile(path.join(dir, 'concept_summary.json'), concept_summary);
 }
 
-function createDataset(concept, num_train, num_test) {
+function createDataset(concept, num_train, num_test, min_num_pos) {
 	// Define dataset of some number of sets of critters.
 	// ---------
 	var creature = concept[constants.description][constants.creature];
@@ -529,11 +532,37 @@ function createDataset(concept, num_train, num_test) {
 	var stimuli = [];
 	for (var i = 0; i < creature_descriptions.length; i++) {
 		stimuli.push(createCreature(creature, creature_descriptions[i], creatures_belongs_to_concept[i]));
-	}
-	stimuli = _.shuffle(stimuli);
-	var train_stimuli = _.slice(stimuli, 0, num_train);
-    var test_stimuli = _.slice(stimuli, num_train, num_train + num_test);
+    }
     
+    stimuli = _.sortBy(stimuli, [function(x) {return !x.belongs_to_concept}]);
+    var train_stimuli = _.slice(stimuli, 0, min_num_pos);
+    var test_stimuli = _.slice(stimuli, min_num_pos, min_num_pos * 2);
+
+    // Ensure that we have min number of "positive" stimuli
+    for (var i = 0; i < train_stimuli.length; i++) {
+        if (train_stimuli[i].belongs_to_concept === false) {
+            console.log(train_stimuli[i]);
+            throw ("Not enough training stimuli that belong to desired class");
+        }
+    }
+    for (var i = 0; i < test_stimuli.length; i++) {
+        if (test_stimuli[i].belongs_to_concept === false) {
+            console.log(test_stimuli[i]);
+            throw ("Not enough test stimuli that belong to desired class");
+        }
+    }
+
+    var remaining_stimuli = _.shuffle(_.slice(stimuli, min_num_pos * 2));
+    var remaining_num_train = num_train - min_num_pos;
+    var remaining_num_test = num_test - min_num_pos;
+    var train_stimuli = _.shuffle(_.concat(
+        train_stimuli,
+        _.slice(remaining_stimuli, 0, remaining_num_train)
+    ));
+    var test_stimuli = _.shuffle(_.concat(
+        test_stimuli,
+        _.slice(remaining_stimuli, remaining_num_train, remaining_num_train + remaining_num_test)
+    ));
 	return [train_stimuli, test_stimuli, stimuli];
 }
 

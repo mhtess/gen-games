@@ -258,13 +258,12 @@ var stimuliGeneration = function() {
             [constants.rule]: stimuliGen.createConjunctiveRule(),
         },
 		{
-			[constants.name]: 'trees_purple_berries_orange_trunks',
-			[constants.phrase]: 'trees with purple berries and orange trunks',
+			[constants.name]: 'trees_orange_trunks_berries',
+			[constants.phrase]: 'trees with orange trunks and berries',
 			[constants.type]: constants.conjunction,
 			[constants.description]: {
 				[constants.creature]: constants.tree,
                 [constants.berries_present]: constants.true,
-                [constants.berries_color]: constants.purple,
                 [constants.trunk_color]: constants.orange,
             },
             [constants.rule]: stimuliGen.createConjunctiveRule(),
@@ -1282,7 +1281,7 @@ var stimuliGeneration = function() {
     ); 
     // concepts = _.shuffle(concepts);
     console.log("Number of Concepts: " + concepts.length);
-	stimuliGen.genDatasets(concepts, 50, 50, '.');
+	stimuliGen.genDatasets(concepts, 50, 50, '.', 6);
 
 }
 
