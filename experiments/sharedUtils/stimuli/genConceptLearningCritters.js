@@ -570,6 +570,10 @@ function createDataset(concept, num_train, num_test, min_num_pos) {
         test_stimuli,
         _.slice(remaining_stimuli, remaining_num_train, remaining_num_train + remaining_num_test)
     );
+
+    // Shuffle Stimuli
+    train_stimuli = _.shuffle(train_stimuli);
+    test_stimuli = _.shuffle(test_stimuli);
 	return [train_stimuli, test_stimuli, stimuli];
 }
 
