@@ -461,19 +461,21 @@ var stimuliGeneration = function() {
         },
 
         {
-            [constants.name]: 'trees_leaves_or_orange_berries',
-            [constants.phrase]: 'trees with leaves or orange berries',
+            [constants.name]: 'trees_white_leaves_or_orange_berries',
+            [constants.phrase]: 'trees with white leaves or orange berries',
             [constants.type]: constants.disjunction,
             [constants.description]: {
                 [constants.creature]: constants.tree,
                 [constants.berries_present]: constants.true,
                 [constants.leaves_present]: constants.true,
+                [constants.leaves_color]: constants.white,
                 [constants.berries_color]: constants.orange,
             },
             [constants.rule]: function(creature_type, creature_description, concept_description) {
                 if (concept_description[constants.creature] !== creature_type) return false;
                 return(
-                    creature_description[constants.leaves_present] == concept_description[constants.leaves_present] ||
+                    (creature_description[constants.leaves_present] == concept_description[constants.leaves_present] &&
+                    creature_description[constants.leaves_color] == concept_description[constants.leaves_color]) ||
                     (creature_description[constants.berries_present] == concept_description[constants.berries_present] &&
                     creature_description[constants.berries_color] == concept_description[constants.berries_color]
                     )
