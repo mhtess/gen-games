@@ -495,12 +495,13 @@ function genDatasets(concepts, num_train, num_test, dir, min_num_pos) {
         
         var num_positive_train_creatures = _.filter(datasets[0], function(x) {return x.belongs_to_concept}).length;
         var num_positive_test_creatures = _.filter(datasets[1], function(x) {return x.belongs_to_concept}).length;
-        console.log("# Positive Train Creatures:  " + num_positive_train_creatures + " # of Positive Test Creatures: " + num_positive_test_creatures);
+        // console.log("# Positive Train Creatures:  " + num_positive_train_creatures + " # of Positive Test Creatures: " + num_positive_test_creatures);
 
 		jsonfile.writeFile(train, datasets[0]);
 		jsonfile.writeFile(test, datasets[1]);
 
 		concept_summary[index] = {
+            kind: c.description.creature,
 			name: c.name,
 			logical_form: c.logical_form,
 			phrase: c.phrase,

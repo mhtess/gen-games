@@ -167,28 +167,6 @@ var stimuliGeneration = function() {
 
     var conjunction_concepts = [
         {
-			[constants.name]: 'flowers_purple_stems_thorns',
-			[constants.phrase]: 'flowers with purple stem and thorns',
-			[constants.type]: constants.conjunction,
-			[constants.description]: {
-				[constants.creature]: constants.flower,
-                [constants.stem_color]: constants.purple,
-                [constants.thorns_present]: constants.true,
-            },
-            [constants.rule]: stimuliGen.createConjunctiveRule(),
-        },
-        {
-            [constants.name]: 'flowers_orange_petals_purple_centers',
-            [constants.phrase]: 'flowers with orange petals and purple centers',
-            [constants.type]: constants.conjunction,
-            [constants.description]: {
-                [constants.creature]: constants.flower,
-                [constants.petals_color]: constants.orange,
-                [constants.center_color]: constants.purple,
-            },
-            [constants.rule]: stimuliGen.createConjunctiveRule(),
-        },
-        {
 			[constants.name]: 'fish_orange_bodies_purple_stripes',
 			[constants.phrase]: 'fish with orange bodies and purple stripes',
 			[constants.type]: constants.conjunction,
@@ -279,86 +257,32 @@ var stimuliGeneration = function() {
                 [constants.leaves_color]: constants.purple,
             },
             [constants.rule]: stimuliGen.createConjunctiveRule(),
-        },        
+        },
+        {
+			[constants.name]: 'flowers_purple_stems_thorns',
+			[constants.phrase]: 'flowers with purple stem and thorns',
+			[constants.type]: constants.conjunction,
+			[constants.description]: {
+				[constants.creature]: constants.flower,
+                [constants.stem_color]: constants.purple,
+                [constants.thorns_present]: constants.true,
+            },
+            [constants.rule]: stimuliGen.createConjunctiveRule(),
+        },
+        {
+            [constants.name]: 'flowers_orange_petals_purple_centers',
+            [constants.phrase]: 'flowers with orange petals and purple centers',
+            [constants.type]: constants.conjunction,
+            [constants.description]: {
+                [constants.creature]: constants.flower,
+                [constants.petals_color]: constants.orange,
+                [constants.center_color]: constants.purple,
+            },
+            [constants.rule]: stimuliGen.createConjunctiveRule(),
+        },      
     ];
 
     var disjunction_concepts = [
-        {
-            [constants.name]: 'flowers_purple_petals_or_thorns',
-            [constants.phrase]: 'flowers with purple petals or thorns',
-            [constants.type]: constants.disjunction,
-            [constants.description]: {
-                [constants.creature]: constants.flower,
-                [constants.petals_color]: constants.purple,
-                [constants.thorns_present]: constants.true,
-            },
-            [constants.rule]: function(creature_type, creature_description, concept_description) {
-                if (concept_description[constants.creature] !== creature_type) return false;
-                return(
-                    creature_description[constants.petals_color] == concept_description[constants.petals_color] ||
-                    creature_description[constants.thorns_present] == concept_description[constants.thorns_present]
-                )
-            }
-            
-        },
-
-        {
-            [constants.name]: 'flowers_orange_stems_or_thorns',
-            [constants.phrase]: 'flowers with orange stems or thorns',
-            [constants.type]: constants.disjunction,
-            [constants.description]: {
-                [constants.creature]: constants.flower,
-                [constants.stem_color]: constants.orange,
-                [constants.thorns_present]: constants.true,
-            },
-            [constants.rule]: function(creature_type, creature_description, concept_description) {
-                if (concept_description[constants.creature] !== creature_type) return false;
-                return(
-                    creature_description[constants.stem_color] == concept_description[constants.stem_color] ||
-                    creature_description[constants.thorns_present] == concept_description[constants.thorns_present]
-                )
-            }
-            
-        },
-
-        {
-            [constants.name]: 'fish_orange_bodies_or_fangs',
-            [constants.phrase]: 'fish with orange bodies or fangs',
-            [constants.type]: constants.disjunction,
-            [constants.description]: {
-                [constants.creature]: constants.fish,
-                [constants.body_color]: constants.orange,
-                [constants.fangs_present]: constants.true,
-            },
-            [constants.rule]: function(creature_type, creature_description, concept_description) {
-                if (concept_description[constants.creature] !== creature_type) return false;
-                return(
-                    creature_description[constants.body_color] == concept_description[constants.body_color] ||
-                    creature_description[constants.fangs_present] == concept_description[constants.fangs_present]
-                )
-            }
-        },
-
-        {
-            [constants.name]: 'fish_white_stripes_or_whiskers',
-            [constants.phrase]: 'fish with white stripes or whiskers',
-            [constants.type]: constants.disjunction,
-            [constants.description]: {
-                [constants.creature]: constants.fish,
-                [constants.stripes_present]: constants.true,
-                [constants.stripes_color]: constants.white,
-                [constants.whiskers_present]: constants.true
-            },
-            [constants.rule]: function(creature_type, creature_description, concept_description) {
-                if (concept_description[constants.creature] !== creature_type) return false;
-                return(
-                    (creature_description[constants.stripes_color] == concept_description[constants.stripes_color] &&
-                    creature_description[constants.stripes_present] == concept_description[constants.stripes_present]) ||
-                    creature_description[constants.whiskers_present] == concept_description[constants.whiskers_present]
-                )
-            }
-        },
-
         {
             [constants.name]: 'bugs_orange_antennae_or_wings',
             [constants.phrase]: 'bugs with orange antennae or wings',
@@ -482,92 +406,82 @@ var stimuliGeneration = function() {
                 )
             }
         },
-
+        {
+            [constants.name]: 'flowers_purple_petals_or_thorns',
+            [constants.phrase]: 'flowers with purple petals or thorns',
+            [constants.type]: constants.disjunction,
+            [constants.description]: {
+                [constants.creature]: constants.flower,
+                [constants.petals_color]: constants.purple,
+                [constants.thorns_present]: constants.true,
+            },
+            [constants.rule]: function(creature_type, creature_description, concept_description) {
+                if (concept_description[constants.creature] !== creature_type) return false;
+                return(
+                    creature_description[constants.petals_color] == concept_description[constants.petals_color] ||
+                    creature_description[constants.thorns_present] == concept_description[constants.thorns_present]
+                )
+            }
+            
+        },
+        {
+            [constants.name]: 'flowers_orange_stems_or_thorns',
+            [constants.phrase]: 'flowers with orange stems or thorns',
+            [constants.type]: constants.disjunction,
+            [constants.description]: {
+                [constants.creature]: constants.flower,
+                [constants.stem_color]: constants.orange,
+                [constants.thorns_present]: constants.true,
+            },
+            [constants.rule]: function(creature_type, creature_description, concept_description) {
+                if (concept_description[constants.creature] !== creature_type) return false;
+                return(
+                    creature_description[constants.stem_color] == concept_description[constants.stem_color] ||
+                    creature_description[constants.thorns_present] == concept_description[constants.thorns_present]
+                )
+            }
+            
+        },
+        {
+            [constants.name]: 'fish_orange_bodies_or_fangs',
+            [constants.phrase]: 'fish with orange bodies or fangs',
+            [constants.type]: constants.disjunction,
+            [constants.description]: {
+                [constants.creature]: constants.fish,
+                [constants.body_color]: constants.orange,
+                [constants.fangs_present]: constants.true,
+            },
+            [constants.rule]: function(creature_type, creature_description, concept_description) {
+                if (concept_description[constants.creature] !== creature_type) return false;
+                return(
+                    creature_description[constants.body_color] == concept_description[constants.body_color] ||
+                    creature_description[constants.fangs_present] == concept_description[constants.fangs_present]
+                )
+            }
+        },
+        {
+            [constants.name]: 'fish_white_stripes_or_whiskers',
+            [constants.phrase]: 'fish with white stripes or whiskers',
+            [constants.type]: constants.disjunction,
+            [constants.description]: {
+                [constants.creature]: constants.fish,
+                [constants.stripes_present]: constants.true,
+                [constants.stripes_color]: constants.white,
+                [constants.whiskers_present]: constants.true
+            },
+            [constants.rule]: function(creature_type, creature_description, concept_description) {
+                if (concept_description[constants.creature] !== creature_type) return false;
+                return(
+                    (creature_description[constants.stripes_color] == concept_description[constants.stripes_color] &&
+                    creature_description[constants.stripes_present] == concept_description[constants.stripes_present]) ||
+                    creature_description[constants.whiskers_present] == concept_description[constants.whiskers_present]
+                )
+            }
+        },
     ];
 
     var conjunction_conjunction_concepts = [
-        {
-			[constants.name]: 'flowers_purple_stems_white_spots_thorns',
-			[constants.phrase]: 'flowers with purple stems and white spots and thorns',
-			[constants.logical_form]: 'flowers and purple stems and white spots and thorns',
-			[constants.type]: constants.conjunction_conjunction,
-			[constants.description]: {
-				[constants.creature]: constants.flower,
-                [constants.stem_color]: constants.purple,
-                [constants.spots_present]: constants.true,
-                [constants.spots_color]: constants.white,
-                [constants.thorns_present]: constants.true,
-            },
-            [constants.rule]: stimuliGen.createConjunctiveRule(),
-        },
-        {
-			[constants.name]: 'flowers_thorns_spots_orange_stems',
-			[constants.phrase]: 'flowers with thorns and spots and orange stems',
-			[constants.logical_form]: 'flowers and thorns and spots and orange stems',
-			[constants.type]: constants.conjunction_conjunction,
-			[constants.description]: {
-				[constants.creature]: constants.flower,
-                [constants.spots_present]: constants.true,
-                [constants.thorns_present]: constants.true,
-                [constants.stem_color]: constants.orange,                
-            },
-            [constants.rule]: stimuliGen.createConjunctiveRule(),
-        },
-        {
-			[constants.name]: 'fish_orange_bodies_purple_stripes_whiskers',
-			[constants.phrase]: 'fish with orange bodies and purple stripes and whiskers',
-			[constants.logical_form]: 'fish and orange bodies and purple stripes and whiskers',
-			[constants.type]: constants.conjunction_conjunction,
-			[constants.description]: {
-				[constants.creature]: constants.fish,
-                [constants.body_color]: constants.orange,
-                [constants.stripes_present]: constants.true,
-                [constants.stripes_color]: constants.purple,
-                [constants.whiskers_present]: constants.true,                
-            },
-            [constants.rule]: stimuliGen.createConjunctiveRule(),
-        },
-        {
-			[constants.name]: 'fish_white_bodies_orange_stripes_fangs',
-			[constants.phrase]: 'fish with white bodies and orange stripes and fangs',
-			[constants.logical_form]: 'fish and white bodies and orange stripes and fangs',
-			[constants.type]: constants.conjunction_conjunction,
-			[constants.description]: {
-				[constants.creature]: constants.fish,
-                [constants.body_color]: constants.white,
-                [constants.stripes_present]: constants.true,
-                [constants.stripes_color]: constants.orange,
-                [constants.fangs_present]: constants.true,                
-            },
-            [constants.rule]: stimuliGen.createConjunctiveRule(),
-        },
-        {
-            [constants.name]: 'bugs_purple_legs_white_heads_orange_wings',
-            [constants.phrase]: 'bugs with purple legs and white heads and orange wings',
-            [constants.type]: constants.conjunction_conjunction,
-            [constants.description]: {
-                [constants.creature]: constants.bug,
-                [constants.legs_color]: constants.purple,
-                [constants.head_color]: constants.white,
-                [constants.bug_wings_color]: constants.orange,
-                [constants.wings_present]: constants.true,
-            },
-            [constants.rule]: stimuliGen.createConjunctiveRule(),
-        },
-        {
-            [constants.name]: 'bugs_white_legs_purple_wings_orange_antennae',
-            [constants.phrase]: 'bugs with white legs and purple wings and orange antennae',
-            [constants.type]: constants.conjunction_conjunction,
-            [constants.description]: {
-                [constants.creature]: constants.bug,
-                [constants.legs_color]: constants.white,
-                [constants.bug_wings_color]: constants.purple,
-                [constants.antennae_present]: constants.true,
-                [constants.antennae_color]: constants.orange,
-                [constants.wings_present]: constants.true,
-            },
-            [constants.rule]: stimuliGen.createConjunctiveRule(),
-        },
+
         {
             [constants.name]: 'birds_purple_wings_white_crests_white_tails',
             [constants.phrase]: 'birds with purple wings and white crests and white tails',
@@ -627,6 +541,93 @@ var stimuliGeneration = function() {
     ];
 
     var conjunction_disjunction_concepts = [
+        {
+            [constants.name]: 'birds_purple_wings_white_crests_or_white_tails',
+            [constants.phrase]: 'birds with (purple wings and white crests) or white tails',
+            [constants.type]: constants.conjunction_disjunction,
+            [constants.description]: {
+                [constants.creature]: constants.bird,
+                [constants.bird_wing_color]: constants.purple,
+                [constants.tail_present]: constants.true,
+                [constants.crest_tail_color]: constants.white,
+                [constants.crest_present]: constants.true,
+            },
+            [constants.rule]: function(creature_type, creature_description, concept_description) {
+                if (concept_description[constants.creature] !== creature_type) return false;
+                return(
+                    (creature_description[constants.bird_wing_color] == concept_description[constants.bird_wing_color] &&
+                    creature_description[constants.crest_tail_color] == concept_description[constants.crest_tail_color] &&
+                    creature_description[constants.crest_present] == concept_description[constants.crest_present]) ||
+                    (creature_description[constants.tail_present] == concept_description[constants.tail_present] &&
+                    creature_description[constants.crest_tail_color] == concept_description[constants.crest_tail_color])
+                )
+            }
+        },
+        {
+            [constants.name]: 'birds_purple_crests_purple_tails_or_orange_wings',
+            [constants.phrase]: 'birds with (purple crests and purple tails) or orange wings',
+            [constants.type]: constants.conjunction_disjunction,
+            [constants.description]: {
+                [constants.creature]: constants.bird,
+                [constants.bird_wing_color]: constants.orange,
+                [constants.tail_present]: constants.true,
+                [constants.crest_present]: constants.true,
+                [constants.crest_tail_color]: constants.purple,
+            },
+            [constants.rule]: function(creature_type, creature_description, concept_description) {
+                if (concept_description[constants.creature] !== creature_type) return false;
+                return (
+                    (
+                        creature_description[constants.tail_present] == concept_description[constants.tail_present] &&
+                        creature_description[constants.crest_present] == concept_description[constants.crest_present] &&
+                        creature_description[constants.crest_tail_color] == concept_description[constants.crest_tail_color]
+                    ) ||
+                    creature_description[constants.bird_wing_color] == concept_description[constants.bird_wing_color]
+                )
+            }
+        },
+        {
+            [constants.name]: 'trees_orange_berries_purple_trunks_or_white_leaves',
+            [constants.phrase]: 'Tree with (orange berries and purple trunks) or white leaves',
+            [constants.type]: constants.conjunction_disjunction,
+            [constants.description]: {
+                [constants.creature]: constants.tree,
+                [constants.berries_present]: constants.true,
+                [constants.berries_color]: constants.orange,
+                [constants.trunk_color]: constants.purple,
+                [constants.leaves_present]: constants.true,
+                [constants.leaves_color]: constants.white,
+            },
+            [constants.rule]: function(creature_type, creature_description, concept_description) {
+                if (concept_description[constants.creature] !== creature_type) return false;
+                return(
+                    (creature_description[constants.trunk_color] == concept_description[constants.trunk_color] &&
+                    creature_description[constants.berries_present] == concept_description[constants.berries_present] &&
+                    creature_description[constants.berries_color] == concept_description[constants.berries_color]) ||
+                    (creature_description[constants.leaves_present] == concept_description[constants.leaves_present] &&
+                    creature_description[constants.leaves_color] == concept_description[constants.leaves_color])
+                )
+            }
+        },
+        {
+            [constants.name]: 'trees_leaves_berries_or_orange_trunks',
+            [constants.phrase]: 'trees with (leaves and berries) or orange trunks',
+            [constants.type]: constants.conjunction_disjunction,
+            [constants.description]: {
+                [constants.creature]: constants.tree,
+                [constants.berries_present]: constants.true,
+                [constants.trunk_color]: constants.orange,
+                [constants.leaves_present]: constants.true,
+            },
+            [constants.rule]: function(creature_type, creature_description, concept_description) {
+                if (concept_description[constants.creature] !== creature_type) return false;
+                return(
+                    creature_description[constants.trunk_color] == concept_description[constants.trunk_color] ||
+                    (creature_description[constants.leaves_present] == concept_description[constants.leaves_present] &&
+                    creature_description[constants.berries_present] == concept_description[constants.berries_present])
+                )
+            }
+        },
         {
             [constants.name]: 'flowers_purple_stems_white_petals_or_orange_centers',
             [constants.phrase]: 'flowers with (purple stems and white petals) or orange centers',
@@ -754,55 +755,13 @@ var stimuliGeneration = function() {
                 )
             }
         },
+    ];
+
+    var disjunction_conjunction_concepts = [
         {
-            [constants.name]: 'birds_purple_wings_white_crests_or_white_tails',
-            [constants.phrase]: 'birds with (purple wings and white crests) or white tails',
-            [constants.type]: constants.conjunction_disjunction,
-            [constants.description]: {
-                [constants.creature]: constants.bird,
-                [constants.bird_wing_color]: constants.purple,
-                [constants.tail_present]: constants.true,
-                [constants.crest_tail_color]: constants.white,
-                [constants.crest_present]: constants.true,
-            },
-            [constants.rule]: function(creature_type, creature_description, concept_description) {
-                if (concept_description[constants.creature] !== creature_type) return false;
-                return(
-                    (creature_description[constants.bird_wing_color] == concept_description[constants.bird_wing_color] &&
-                    creature_description[constants.crest_tail_color] == concept_description[constants.crest_tail_color] &&
-                    creature_description[constants.crest_present] == concept_description[constants.crest_present]) ||
-                    (creature_description[constants.tail_present] == concept_description[constants.tail_present] &&
-                    creature_description[constants.crest_tail_color] == concept_description[constants.crest_tail_color])
-                )
-            }
-        },
-        {
-            [constants.name]: 'birds_purple_crests_purple_tails_or_orange_wings',
-            [constants.phrase]: 'birds with (purple crests and purple tails) or orange wings',
-            [constants.type]: constants.conjunction_disjunction,
-            [constants.description]: {
-                [constants.creature]: constants.bird,
-                [constants.bird_wing_color]: constants.orange,
-                [constants.tail_present]: constants.true,
-                [constants.crest_present]: constants.true,
-                [constants.crest_tail_color]: constants.purple,
-            },
-            [constants.rule]: function(creature_type, creature_description, concept_description) {
-                if (concept_description[constants.creature] !== creature_type) return false;
-                return (
-                    (
-                        creature_description[constants.tail_present] == concept_description[constants.tail_present] &&
-                        creature_description[constants.crest_present] == concept_description[constants.crest_present] &&
-                        creature_description[constants.crest_tail_color] == concept_description[constants.crest_tail_color]
-                    ) ||
-                    creature_description[constants.bird_wing_color] == concept_description[constants.bird_wing_color]
-                )
-            }
-        },
-        {
-            [constants.name]: 'trees_orange_berries_purple_trunks_or_white_leaves',
-            [constants.phrase]: 'Tree with (orange berries and purple trunks) or white leaves',
-            [constants.type]: constants.conjunction_disjunction,
+            [constants.name]: 'trees_purple_trunks_or_white_leaves_orange_berries',
+            [constants.phrase]: 'trees with (purple trunks or white leaves) and orange berries',
+            [constants.type]: constants.disjunction_conjunction,
             [constants.description]: {
                 [constants.creature]: constants.tree,
                 [constants.berries_present]: constants.true,
@@ -814,37 +773,35 @@ var stimuliGeneration = function() {
             [constants.rule]: function(creature_type, creature_description, concept_description) {
                 if (concept_description[constants.creature] !== creature_type) return false;
                 return(
-                    (creature_description[constants.trunk_color] == concept_description[constants.trunk_color] &&
-                    creature_description[constants.berries_present] == concept_description[constants.berries_present] &&
-                    creature_description[constants.berries_color] == concept_description[constants.berries_color]) ||
-                    (creature_description[constants.leaves_present] == concept_description[constants.leaves_present] &&
-                    creature_description[constants.leaves_color] == concept_description[constants.leaves_color])
+                    (creature_description[constants.trunk_color] == concept_description[constants.trunk_color] ||
+                        (creature_description[constants.leaves_present] == concept_description[constants.leaves_present] &&
+                        creature_description[constants.leaves_color] == concept_description[constants.leaves_color])) &&
+                    (creature_description[constants.berries_color] == concept_description[constants.berries_color] &&
+                    creature_description[constants.berries_present] == concept_description[constants.berries_present])
                 )
             }
         },
         {
-            [constants.name]: 'trees_leaves_berries_or_orange_trunks',
-            [constants.phrase]: 'trees with (leaves and berries) or orange trunks',
-            [constants.type]: constants.conjunction_disjunction,
+            [constants.name]: 'trees_orange_trunks_or_berries_white_leaves',
+            [constants.phrase]: 'trees with (orange trunks or berries) and white leaves',
+            [constants.type]: constants.disjunction_conjunction,
             [constants.description]: {
                 [constants.creature]: constants.tree,
                 [constants.berries_present]: constants.true,
                 [constants.trunk_color]: constants.orange,
                 [constants.leaves_present]: constants.true,
+                [constants.leaves_color]: constants.white,
             },
             [constants.rule]: function(creature_type, creature_description, concept_description) {
                 if (concept_description[constants.creature] !== creature_type) return false;
                 return(
-                    creature_description[constants.trunk_color] == concept_description[constants.trunk_color] ||
-                    (creature_description[constants.leaves_present] == concept_description[constants.leaves_present] &&
-                    creature_description[constants.berries_present] == concept_description[constants.berries_present])
+                    (creature_description[constants.trunk_color] == concept_description[constants.trunk_color] ||
+                    creature_description[constants.berries_present] == concept_description[constants.berries_present]) &&
+                    (creature_description[constants.leaves_color] == concept_description[constants.leaves_color] &&
+                    creature_description[constants.leaves_present] == concept_description[constants.leaves_present])
                 )
             }
         },
-
-    ];
-
-    var disjunction_conjunction_concepts = [
         {
             [constants.name]: 'flowers_purple_centers_or_orange_stems_with_thorns',
             [constants.phrase]: 'flowers with (purple centers or orange stems) and thorns',
@@ -1010,52 +967,6 @@ var stimuliGeneration = function() {
                 )
             }
         },
-        {
-            [constants.name]: 'trees_purple_trunks_or_white_leaves_orange_berries',
-            [constants.phrase]: 'trees with (purple trunks or white leaves) and orange berries',
-            [constants.type]: constants.disjunction_conjunction,
-            [constants.description]: {
-                [constants.creature]: constants.tree,
-                [constants.berries_present]: constants.true,
-                [constants.berries_color]: constants.orange,
-                [constants.trunk_color]: constants.purple,
-                [constants.leaves_present]: constants.true,
-                [constants.leaves_color]: constants.white,
-            },
-            [constants.rule]: function(creature_type, creature_description, concept_description) {
-                if (concept_description[constants.creature] !== creature_type) return false;
-                return(
-                    (creature_description[constants.trunk_color] == concept_description[constants.trunk_color] ||
-                        (creature_description[constants.leaves_present] == concept_description[constants.leaves_present] &&
-                        creature_description[constants.leaves_color] == concept_description[constants.leaves_color])) &&
-                    (creature_description[constants.berries_color] == concept_description[constants.berries_color] &&
-                    creature_description[constants.berries_present] == concept_description[constants.berries_present])
-                )
-            }
-        },
-        {
-            [constants.name]: 'trees_orange_trunks_or_berries_white_leaves',
-            [constants.phrase]: 'trees with (orange trunks or berries) and white leaves',
-            [constants.type]: constants.disjunction_conjunction,
-            [constants.description]: {
-                [constants.creature]: constants.tree,
-                [constants.berries_present]: constants.true,
-                [constants.trunk_color]: constants.orange,
-                [constants.leaves_present]: constants.true,
-                [constants.leaves_color]: constants.white,
-            },
-            [constants.rule]: function(creature_type, creature_description, concept_description) {
-                if (concept_description[constants.creature] !== creature_type) return false;
-                return(
-                    (creature_description[constants.trunk_color] == concept_description[constants.trunk_color] ||
-                    creature_description[constants.berries_present] == concept_description[constants.berries_present]) &&
-                    (creature_description[constants.leaves_color] == concept_description[constants.leaves_color] &&
-                    creature_description[constants.leaves_present] == concept_description[constants.leaves_present])
-                )
-            }
-        },
-
-
     ];
 
 
@@ -1281,7 +1192,6 @@ var stimuliGeneration = function() {
         conjunction_disjunction_concepts,
         disjunction_conjunction_concepts
     ); 
-    // concepts = _.shuffle(concepts);
     console.log("Number of Concepts: " + concepts.length);
 	stimuliGen.genDatasets(concepts, 50, 50, '.', 6);
 
