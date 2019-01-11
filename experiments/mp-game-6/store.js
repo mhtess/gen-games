@@ -58,6 +58,13 @@ function serve() {
                 console.log("hits: ", hits);
                 response.json(hits>0);
             }
+
+            var filteredCollectionList = _.filter(
+                collectionList,
+                function(x) {
+                    return (x !== "mpGame3" && x !== "mpGame4");
+            });
+
             checkEach(collectionList, checkCollectionForHits, query, projection, evaluateTally);
         });
     });
