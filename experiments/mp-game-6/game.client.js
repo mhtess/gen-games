@@ -262,12 +262,15 @@ var customSetup = function(globalGame) {
         globalGame.socket.send("logTimes.Complete." + roundTimesJSON);
         console.log(roundTimesJSON);        
 
-        globalGame.socket.emit("multipleTrialResponses", roundSelections);
-        var roundSelectionsJSON = _.toPairs(encodeData(roundSummary)).join('.');
-        console.log(roundSelectionsJSON);
-
-        globalGame.socket.send("logScores.TestCreatures." + roundSelectionsJSON);
-        globalGame.socket.send("sendingTestScores." + roundSelectionsJSON);
+        var roundSelectionsObj= {
+            trials: roundSelections,
+        }
+        var roundSelectionsObjJSON = _.toPairs(encodeData(roundSelectionsObj)).join('.');
+        globalGame.socket.emit("multipleTrialResponses", roundSelectionsObjJSON);
+        
+        var roundSummaryJSON = _.toPairs(encodeData(roundSummary)).join('.');
+        globalGame.socket.send("logScores.TestCreatures." + roundSummaryJSON);
+        globalGame.socket.send("sendingTestScores." + roundSummaryJSON);
 
         // Enter wait room until other user has completed quiz/test
         clearTestCreatures();

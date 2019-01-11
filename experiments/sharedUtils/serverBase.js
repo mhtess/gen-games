@@ -176,6 +176,7 @@ class ReferenceGameServer {
     };
 
     multipleTrialResponses(client, data) {
+        console.log("MultipleTrialResponses");
         var output = this.customServer.multipleTrialResponses(client, data);
         var sharedInfo = output['info'];
         var trials = output['trials'];
