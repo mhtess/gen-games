@@ -534,35 +534,41 @@ function createDataset(concept, num_train, num_test, min_num_pos) {
 		stimuli.push(createCreature(creature, creature_descriptions[i], creatures_belongs_to_concept[i]));
     }
     
+    var num_positive_stimuli = _.filter(stimuli, function(x) {return x.belongs_to_concept}).length;
     stimuli = _.sortBy(stimuli, [function(x) {return !x.belongs_to_concept}]);
-    var train_stimuli = _.slice(stimuli, 0, min_num_pos);
-    var test_stimuli = _.slice(stimuli, min_num_pos, min_num_pos * 2);
+
+    var positive_stimuli = _.shuffle(_.slice(stimuli, 0, num_positive_stimuli));
+    var negative_stimuli = _.slice(stimuli, num_positive_stimuli);
+    var train_stimuli = _.slice(positive_stimuli, 0, min_num_pos);
+    var test_stimuli = _.slice(positive_stimuli, min_num_pos, min_num_pos * 2);
 
     // Ensure that we have min number of "positive" stimuli
-    for (var i = 0; i < train_stimuli.length; i++) {
+    for (var i = 0; i < min_num_pos; i++) {
         if (train_stimuli[i].belongs_to_concept === false) {
-            console.log(train_stimuli[i]);
             throw ("Not enough training stimuli that belong to desired class");
         }
     }
-    for (var i = 0; i < test_stimuli.length; i++) {
+    for (var i = 0; i < min_num_pos; i++) {
         if (test_stimuli[i].belongs_to_concept === false) {
-            console.log(test_stimuli[i]);
             throw ("Not enough test stimuli that belong to desired class");
         }
     }
 
-    var remaining_stimuli = _.shuffle(_.slice(stimuli, min_num_pos * 2));
+    var remaining_stimuli = _.shuffle(_.concat(
+        _.slice(positive_stimuli, min_num_pos * 2),
+        negative_stimuli
+    ));
+
     var remaining_num_train = num_train - min_num_pos;
     var remaining_num_test = num_test - min_num_pos;
-    var train_stimuli = _.shuffle(_.concat(
+    var train_stimuli = _.concat(
         train_stimuli,
         _.slice(remaining_stimuli, 0, remaining_num_train)
-    ));
-    var test_stimuli = _.shuffle(_.concat(
+    );
+    var test_stimuli = _.concat(
         test_stimuli,
         _.slice(remaining_stimuli, remaining_num_train, remaining_num_train + remaining_num_test)
-    ));
+    );
 	return [train_stimuli, test_stimuli, stimuli];
 }
 
