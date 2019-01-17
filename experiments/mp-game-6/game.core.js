@@ -217,12 +217,8 @@ game_core.prototype.server_send_update = function(){
 };
 
 game_core.prototype.makeTrialList = function (connection, callback) {
-    var col_prefix = "dev_";
-    if (this.isProd === true) {
-        col_prefix = "fifty_rules_";
-    } else {
-        col_prefix = "pilot_fifty_rules_";
-    }
+    col_prefix = "fifty_rules_";
+    console.log("Loading from: " + col_prefix);
     var gameId = this.id;
     var ruleTypes = [
         "SINGLE_FEATURE",

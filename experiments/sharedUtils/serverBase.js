@@ -35,13 +35,7 @@ class ReferenceGameServer {
             });
 
             // Load all files
-            var file_path = ''
-            if (this.isProd === true) {
-                file_path = __base + 'mp-game-6/stimuli/fifty_rules/';
-            } else {
-                file_path = __base + 'mp-game-6/stimuli/fifty_rules/';
-            }
-
+            var file_path = __base + 'mp-game-6/stimuli/fifty_rules/';
             this.train_stimuli = {};
             this.test_stimuli = {};
             var concept_rule_summary = require(file_path + 'concept_summary.json');

@@ -1,0 +1,7 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	text	reactionTime	eventType
+mp-game-6	pilot	4996-07d6eef8-bd1e-44ca-b8ec-066a097d3520	1547673096171	explorer	17	"trees with purple leaves and berries"	trees_purple_leaves_berries	0	"Hi, it looks like the plants that have purple leaves and berries of any colors are ollers."	14.237	chatMessage
+mp-game-6	pilot	4996-07d6eef8-bd1e-44ca-b8ec-066a097d3520	1547673120844	student	17	"trees with purple leaves and berries"	trees_purple_leaves_berries	0	"Okay are they tall or short?"	8.933	chatMessage
+mp-game-6	pilot	4996-07d6eef8-bd1e-44ca-b8ec-066a097d3520	1547673132043	explorer	17	"trees with purple leaves and berries"	trees_purple_leaves_berries	0	"they all seemed to be the same size"	7.407	chatMessage
+mp-game-6	pilot	4996-07d6eef8-bd1e-44ca-b8ec-066a097d3520	1547673164076	student	17	"trees with purple leaves and berries"	trees_purple_leaves_berries	0	"got it. are they extremely wide or narrow"	14.583	chatMessage
+mp-game-6	pilot	4996-07d6eef8-bd1e-44ca-b8ec-066a097d3520	1547673189644	explorer	17	"trees with purple leaves and berries"	trees_purple_leaves_berries	0	"that didn't seem to matter either. just the color and whether it had berries"	15.31	chatMessage
+mp-game-6	pilot	4996-07d6eef8-bd1e-44ca-b8ec-066a097d3520	1547673202627	student	17	"trees with purple leaves and berries"	trees_purple_leaves_berries	0	"good deal i think i go it"	6.375	chatMessage
