@@ -58,6 +58,7 @@ class ReferenceGameServer {
     findGame(player) {
         this.log('looking for a game. We have : ' + this.game_count);
         var joined_a_game = false;
+        debugger;
         for (var gameid in this.games) {
             var game = this.games[gameid];
             if(game.player_count < game.players_threshold) {
