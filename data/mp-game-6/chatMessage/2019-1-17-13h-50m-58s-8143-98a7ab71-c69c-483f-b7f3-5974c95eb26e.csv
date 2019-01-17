@@ -1,0 +1,4 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	text	reactionTime	eventType
+mp-game-6	pilot	8143-98a7ab71-c69c-483f-b7f3-5974c95eb26e	1547761858484	student	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2	"discuss what properties of luzaks they learned during exploration"	282.432	chatMessage
+mp-game-6	pilot	8143-98a7ab71-c69c-483f-b7f3-5974c95eb26e	1547761970085	explorer	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2	"The kewps don't seem to have a common characteristic. Some are orange with stripes, some are purple with stripes and some are just plain white."	31.297	chatMessage
+mp-game-6	pilot	8143-98a7ab71-c69c-483f-b7f3-5974c95eb26e	1547762533016	explorer	8	"trees with purple berries"	trees_purple_berries	4	"I couldn't find anything common about the moseth's. Sorry. "	178.07	chatMessage

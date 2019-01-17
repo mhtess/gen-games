@@ -1,0 +1,18 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	text	reactionTime	eventType
+mp-game-6	pilot	1536-f228c16b-ed6d-45d3-a262-a6922de05270	1547740325207	explorer	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	0	"hi"	3.019	chatMessage
+mp-game-6	pilot	1536-f228c16b-ed6d-45d3-a262-a6922de05270	1547740330301	student	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	0	"hi"	2.119	chatMessage
+mp-game-6	pilot	1536-f228c16b-ed6d-45d3-a262-a6922de05270	1547740336810	student	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	0	"what are ollers?"	4.927	chatMessage
+mp-game-6	pilot	1536-f228c16b-ed6d-45d3-a262-a6922de05270	1547740360588	student	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	0	"how do they look like?"	9.689	chatMessage
+mp-game-6	pilot	1536-f228c16b-ed6d-45d3-a262-a6922de05270	1547740367280	explorer	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	0	"the ollers are fishes with teeth  white stripes"	39.882	chatMessage
+mp-game-6	pilot	1536-f228c16b-ed6d-45d3-a262-a6922de05270	1547740388917	explorer	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	0	"white stripes on the back"	11.82	chatMessage
+mp-game-6	pilot	1536-f228c16b-ed6d-45d3-a262-a6922de05270	1547740404379	explorer	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	0	"they can be any color"	5.565	chatMessage
+mp-game-6	pilot	1536-f228c16b-ed6d-45d3-a262-a6922de05270	1547740414721	explorer	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	0	"as long as they have the white stripes"	9.497	chatMessage
+mp-game-6	pilot	1536-f228c16b-ed6d-45d3-a262-a6922de05270	1547740425203	student	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	0	"OK.arethey difficult to find?"	26.159	chatMessage
+mp-game-6	pilot	1536-f228c16b-ed6d-45d3-a262-a6922de05270	1547740436618	explorer	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	0	"yes"	1.145	chatMessage
+mp-game-6	pilot	1536-f228c16b-ed6d-45d3-a262-a6922de05270	1547740455218	explorer	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	0	"they also have whiskers, like cats "	15.503	chatMessage
+mp-game-6	pilot	1536-f228c16b-ed6d-45d3-a262-a6922de05270	1547740480152	student	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	0	"is there more , I should know?"	11.855	chatMessage
+mp-game-6	pilot	1536-f228c16b-ed6d-45d3-a262-a6922de05270	1547740488523	explorer	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	0	"no"	0.742	chatMessage
+mp-game-6	pilot	1536-f228c16b-ed6d-45d3-a262-a6922de05270	1547740505179	student	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	0	"Thank you.I know enough for now."	12.695	chatMessage
+mp-game-6	pilot	1536-f228c16b-ed6d-45d3-a262-a6922de05270	1547740515812	explorer	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	0	"you've welcome"	5.946	chatMessage
+mp-game-6	pilot	1536-f228c16b-ed6d-45d3-a262-a6922de05270	1547740518381	student	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	0	"can we continue?"	9.613	chatMessage
+mp-game-6	pilot	1536-f228c16b-ed6d-45d3-a262-a6922de05270	1547740522724	explorer	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	0	"yes"	0.924	chatMessage

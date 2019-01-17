@@ -1,4 +1,0 @@
-experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	train	test	chat	eventType
-mp-game-6	pilot	3028-b4d64c09-4eef-4a10-a618-b01907a0fd06	1547479973432	explorer	10	"fish with orange bodies and purple stripes"	fish_orange_bodies_purple_stripes	1	204.555	45.27	NaN	logTimes
-mp-game-6	pilot	3028-b4d64c09-4eef-4a10-a618-b01907a0fd06	1547479975684	student	10	"fish with orange bodies and purple stripes"	fish_orange_bodies_purple_stripes	1	-1	28.091	NaN	logTimes
-mp-game-6	pilot	3028-b4d64c09-4eef-4a10-a618-b01907a0fd06	1547480135049	student	0	"flowers with orange stems"	flowers_orange_stems	2	-1	NaN		logTimes

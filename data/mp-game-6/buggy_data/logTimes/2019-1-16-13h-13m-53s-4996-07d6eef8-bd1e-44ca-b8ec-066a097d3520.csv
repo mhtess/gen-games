@@ -1,3 +1,0 @@
-experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	train	test	chat	eventType
-mp-game-6	pilot	4996-07d6eef8-bd1e-44ca-b8ec-066a097d3520	1547673233820	explorer	17	"trees with purple leaves and berries"	trees_purple_leaves_berries	0	36.561	19.811	133.349	logTimes
-mp-game-6	pilot	4996-07d6eef8-bd1e-44ca-b8ec-066a097d3520	1547673271391	student	17	"trees with purple leaves and berries"	trees_purple_leaves_berries	0	-1	53.652	132.982	logTimes

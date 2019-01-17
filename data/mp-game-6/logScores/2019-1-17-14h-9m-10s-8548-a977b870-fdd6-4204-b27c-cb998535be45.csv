@@ -1,0 +1,11 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	hits	misses	correct_rejections	false_alarms	score	eventType
+mp-game-6	pilot	8548-a977b870-fdd6-4204-b27c-cb998535be45	1547762950710	explorer	10	"fish with orange bodies and purple stripes"	fish_orange_bodies_purple_stripes	0	5	1	44	0	5	logScores
+mp-game-6	pilot	8548-a977b870-fdd6-4204-b27c-cb998535be45	1547763165522	student	10	"fish with orange bodies and purple stripes"	fish_orange_bodies_purple_stripes	0	1	5	44	0	1	logScores
+mp-game-6	pilot	8548-a977b870-fdd6-4204-b27c-cb998535be45	1547763679593	explorer	0	"flowers with orange stems"	flowers_orange_stems	1	11	11	28	0	11	logScores
+mp-game-6	pilot	8548-a977b870-fdd6-4204-b27c-cb998535be45	1547763839834	student	0	"flowers with orange stems"	flowers_orange_stems	1	22	0	28	0	22	logScores
+mp-game-6	pilot	8548-a977b870-fdd6-4204-b27c-cb998535be45	1547764332163	explorer	20	"bugs with orange antennae or wings"	bugs_orange_antennae_or_wings	2	46	1	3	0	46	logScores
+mp-game-6	pilot	8548-a977b870-fdd6-4204-b27c-cb998535be45	1547764572759	student	20	"bugs with orange antennae or wings"	bugs_orange_antennae_or_wings	2	24	23	3	0	24	logScores
+mp-game-6	pilot	8548-a977b870-fdd6-4204-b27c-cb998535be45	1547764875982	explorer	30	"birds with (purple wings and white crests) or white tails"	birds_purple_wings_white_crests_or_white_tails	3	8	2	40	0	8	logScores
+mp-game-6	pilot	8548-a977b870-fdd6-4204-b27c-cb998535be45	1547764941398	student	30	"birds with (purple wings and white crests) or white tails"	birds_purple_wings_white_crests_or_white_tails	3	8	2	40	0	8	logScores
+mp-game-6	pilot	8548-a977b870-fdd6-4204-b27c-cb998535be45	1547765401668	explorer	40	"trees with (purple trunks or white leaves) and orange berries"	trees_purple_trunks_or_white_leaves_orange_berries	4	5	1	39	5	0	logScores
+mp-game-6	pilot	8548-a977b870-fdd6-4204-b27c-cb998535be45	1547765515119	student	40	"trees with (purple trunks or white leaves) and orange berries"	trees_purple_trunks_or_white_leaves_orange_berries	4	6	0	41	3	3	logScores

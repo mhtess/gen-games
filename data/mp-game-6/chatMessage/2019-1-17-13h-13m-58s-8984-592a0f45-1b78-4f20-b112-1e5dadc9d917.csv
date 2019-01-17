@@ -1,0 +1,20 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	text	reactionTime	eventType
+mp-game-6	pilot	8984-592a0f45-1b78-4f20-b112-1e5dadc9d917	1547759638863	student	4	"bugs with white orange head"	bugs_orange_head	0	"Hello! "	2.917	chatMessage
+mp-game-6	pilot	8984-592a0f45-1b78-4f20-b112-1e5dadc9d917	1547759641403	explorer	4	"bugs with white orange head"	bugs_orange_head	0	"Yo"	0.391	chatMessage
+mp-game-6	pilot	8984-592a0f45-1b78-4f20-b112-1e5dadc9d917	1547759648974	student	4	"bugs with white orange head"	bugs_orange_head	0	"learn anything good about morseths?"	5.862	chatMessage
+mp-game-6	pilot	8984-592a0f45-1b78-4f20-b112-1e5dadc9d917	1547759654476	explorer	4	"bugs with white orange head"	bugs_orange_head	0	"Yep"	0.495	chatMessage
+mp-game-6	pilot	8984-592a0f45-1b78-4f20-b112-1e5dadc9d917	1547759661335	student	4	"bugs with white orange head"	bugs_orange_head	0	"got any hints for me?"	2.348	chatMessage
+mp-game-6	pilot	8984-592a0f45-1b78-4f20-b112-1e5dadc9d917	1547759682956	explorer	4	"bugs with white orange head"	bugs_orange_head	0	"legs, wings, eyes, purple, orange, white"	16.759	chatMessage
+mp-game-6	pilot	8984-592a0f45-1b78-4f20-b112-1e5dadc9d917	1547759709396	student	4	"bugs with white orange head"	bugs_orange_head	0	"so anything with legs, wings, eyes, and are purple, orange, and white? all features have to be included or at least 1 feature?"	17.836	chatMessage
+mp-game-6	pilot	8984-592a0f45-1b78-4f20-b112-1e5dadc9d917	1547759754845	explorer	4	"bugs with white orange head"	bugs_orange_head	0	"they don't all include every feature. they all include at least some of those features"	19.458	chatMessage
+mp-game-6	pilot	8984-592a0f45-1b78-4f20-b112-1e5dadc9d917	1547759766647	student	4	"bugs with white orange head"	bugs_orange_head	0	"aah ok"	3.134	chatMessage
+mp-game-6	pilot	8984-592a0f45-1b78-4f20-b112-1e5dadc9d917	1547759795446	student	4	"bugs with white orange head"	bugs_orange_head	0	"i'll give the next round a try! thanks."	6.161	chatMessage
+mp-game-6	pilot	8984-592a0f45-1b78-4f20-b112-1e5dadc9d917	1547759800834	explorer	4	"bugs with white orange head"	bugs_orange_head	0	"no problem!"	1.465	chatMessage
+mp-game-6	pilot	8984-592a0f45-1b78-4f20-b112-1e5dadc9d917	1547759974813	explorer	44	"fish with (orange bodies or fangs) and whiskers"	fish_orange_bodies_or_fangs_whiskers	1	"yo"	0.556	chatMessage
+mp-game-6	pilot	8984-592a0f45-1b78-4f20-b112-1e5dadc9d917	1547760050318	student	44	"fish with (orange bodies or fangs) and whiskers"	fish_orange_bodies_or_fangs_whiskers	1	"hi"	0.273	chatMessage
+mp-game-6	pilot	8984-592a0f45-1b78-4f20-b112-1e5dadc9d917	1547760054292	student	44	"fish with (orange bodies or fangs) and whiskers"	fish_orange_bodies_or_fangs_whiskers	1	"hints please"	1.573	chatMessage
+mp-game-6	pilot	8984-592a0f45-1b78-4f20-b112-1e5dadc9d917	1547760094172	explorer	44	"fish with (orange bodies or fangs) and whiskers"	fish_orange_bodies_or_fangs_whiskers	1	"three whiskers all the time. some purple, orange, white or a combination of two or more"	32.542	chatMessage
+mp-game-6	pilot	8984-592a0f45-1b78-4f20-b112-1e5dadc9d917	1547760105973	explorer	44	"fish with (orange bodies or fangs) and whiskers"	fish_orange_bodies_or_fangs_whiskers	1	"may or may not have long fang"	5.2	chatMessage
+mp-game-6	pilot	8984-592a0f45-1b78-4f20-b112-1e5dadc9d917	1547760117955	student	44	"fish with (orange bodies or fangs) and whiskers"	fish_orange_bodies_or_fangs_whiskers	1	"anything else?"	1.62	chatMessage
+mp-game-6	pilot	8984-592a0f45-1b78-4f20-b112-1e5dadc9d917	1547760131236	explorer	44	"fish with (orange bodies or fangs) and whiskers"	fish_orange_bodies_or_fangs_whiskers	1	"that's all I could tell from my observation"	6.599	chatMessage
+mp-game-6	pilot	8984-592a0f45-1b78-4f20-b112-1e5dadc9d917	1547760134628	student	44	"fish with (orange bodies or fangs) and whiskers"	fish_orange_bodies_or_fangs_whiskers	1	"ok thanks"	0.806	chatMessage

@@ -1,6 +1,0 @@
-experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	hits	misses	correct_rejections	false_alarms	score	eventType
-mp-game-6	pilot	3393-181daf08-3a23-448a-9eda-7ba256d11209	1547671789469	student	45	"fish with (white stripes or purple bodies) and whiskers"	fish_white_stripes_or_purple_bodies_whiskers	1	0	13	24	13	0	logScores
-mp-game-6	pilot	3393-181daf08-3a23-448a-9eda-7ba256d11209	1547671794255	explorer	45	"fish with (white stripes or purple bodies) and whiskers"	fish_white_stripes_or_purple_bodies_whiskers	1	13	0	28	9	4	logScores
-mp-game-6	pilot	3393-181daf08-3a23-448a-9eda-7ba256d11209	1547671861461	student	25	"trees with white leaves or orange berries"	trees_white_leaves_or_orange_berries	2	0	16	34	0	0	logScores
-mp-game-6	pilot	3393-181daf08-3a23-448a-9eda-7ba256d11209	1547672009482	student	25	"trees with white leaves or orange berries"	trees_white_leaves_or_orange_berries	2	16	0	5	29	0	logScores
-mp-game-6	pilot	3393-181daf08-3a23-448a-9eda-7ba256d11209	1547672027914	student	35	"flowers with (thorns and purple petals) or orange stems"	flowers_thorns_purple_petals_or_orange_stems	3	0	23	27	0	0	logScores
