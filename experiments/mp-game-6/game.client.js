@@ -88,6 +88,7 @@ var client_onMessage = function(data) {
         if(globalGame.roundNum < globalGame.numRounds || globalGame.numRounds == null) {
             $("#" + globalGame.currentSlide[globalGame.my_role]).addClass("hidden");
             $('#thanks').hide();
+            clearProgressBar();
             onDisconnect();
             console.log("received end message...");
         }
