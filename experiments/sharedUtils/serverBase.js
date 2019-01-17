@@ -106,7 +106,6 @@ class ReferenceGameServer {
             server: true,
             id : utils.UUID(),
             player_instances: [{id: player.userid, player: player}],
-            player_count: 1,
         };
         if (this.expName === 'mp-game-5') {
             options.rule_by_round = this.rule_by_round;

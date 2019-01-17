@@ -44,7 +44,7 @@ var game_core = function(options){
     this.dataStore = ["csv", "mongo"];
 
     // Player parameters
-    this.player_count = 0;
+    this.player_count = 1;
     this.players_threshold = 2;
     this.playerRoleNames = {
         role1 : "explorer",
