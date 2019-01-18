@@ -1,0 +1,11 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	train	test	chat	eventType
+mp-game-6	pilot	9946-7029d2e5-3b46-4eb7-b2d3-33656910b533	1547843752449	explorer	30	"birds with (purple wings and white crests) or white tails"	birds_purple_wings_white_crests_or_white_tails	0	104.045	12.533	266.923	logTimes
+mp-game-6	pilot	9946-7029d2e5-3b46-4eb7-b2d3-33656910b533	1547843789453	student	30	"birds with (purple wings and white crests) or white tails"	birds_purple_wings_white_crests_or_white_tails	0	-1	43.649	266.568	logTimes
+mp-game-6	pilot	9946-7029d2e5-3b46-4eb7-b2d3-33656910b533	1547844151592	explorer	20	"bugs with orange antennae or wings"	bugs_orange_antennae_or_wings	1	190.435	36.08	105.231	logTimes
+mp-game-6	pilot	9946-7029d2e5-3b46-4eb7-b2d3-33656910b533	1547844222771	student	20	"bugs with orange antennae or wings"	bugs_orange_antennae_or_wings	1	-1	112.677	104.87	logTimes
+mp-game-6	pilot	9946-7029d2e5-3b46-4eb7-b2d3-33656910b533	1547844348139	explorer	0	"flowers with orange stems"	flowers_orange_stems	2	36	18.933	38.841	logTimes
+mp-game-6	pilot	9946-7029d2e5-3b46-4eb7-b2d3-33656910b533	1547844370040	student	0	"flowers with orange stems"	flowers_orange_stems	2	-1	44.835	38.485	logTimes
+mp-game-6	pilot	9946-7029d2e5-3b46-4eb7-b2d3-33656910b533	1547844570844	explorer	40	"trees with (purple trunks or white leaves) and orange berries"	trees_purple_trunks_or_white_leaves_orange_berries	3	63.877	26.896	73.163	logTimes
+mp-game-6	pilot	9946-7029d2e5-3b46-4eb7-b2d3-33656910b533	1547844612335	student	40	"trees with (purple trunks or white leaves) and orange berries"	trees_purple_trunks_or_white_leaves_orange_berries	3	-1	80.214	72.789	logTimes
+mp-game-6	pilot	9946-7029d2e5-3b46-4eb7-b2d3-33656910b533	1547844745237	explorer	10	"fish with orange bodies and purple stripes"	fish_orange_bodies_purple_stripes	4	36.25	21.483	44.967	logTimes
+mp-game-6	pilot	9946-7029d2e5-3b46-4eb7-b2d3-33656910b533	1547844806725	student	10	"fish with orange bodies and purple stripes"	fish_orange_bodies_purple_stripes	4	-1	80.73	44.606	logTimes
