@@ -35,9 +35,10 @@ var client_onjoingame = function(num_players, role) {
   if(num_players == 1) {
     this.timeoutID = setTimeout(function() {
       if(_.size(this.urlParams) == 4) {
-       this.submitted = true;
-       window.opener.turk.submit(this.data, true);
-       window.close();
+        console.log(this.urlParams);
+        this.submitted = true;
+        window.opener.turk.submit(this.data, true);
+        window.close();
      } else {
        console.log("would have submitted the following :");
        console.log(this.data);
