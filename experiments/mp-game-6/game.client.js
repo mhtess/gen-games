@@ -34,8 +34,7 @@ var client_onjoingame = function(num_players, role) {
   // Set 15 minute timeout only for first player...
   if(num_players == 1) {
     this.timeoutID = setTimeout(function() {
-      if(_.size(this.urlParams) == 4) {
-        console.log(this.urlParams);
+      if(_.size(this.urlParams()) == 4) {
         this.submitted = true;
         window.opener.turk.submit(this.data, true);
         window.close();
@@ -326,7 +325,7 @@ var customSetup = function(globalGame) {
             "bonus": globalGame.totalScore * globalGame.bonusAmt,
         }
 
-        if(_.size(globalGame.urlParams) == 4) {
+        if(_.size(globalGame.urlParams()) == 4) {
             window.opener.turk.submit(finalData, true);
             window.close();
         } else {
