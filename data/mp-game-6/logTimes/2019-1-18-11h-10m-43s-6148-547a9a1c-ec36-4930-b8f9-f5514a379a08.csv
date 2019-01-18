@@ -1,0 +1,5 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	train	test	chat	eventType
+mp-game-6	pilot	6148-547a9a1c-ec36-4930-b8f9-f5514a379a08	1547838643653	explorer	13	"bugs with wings and antennae"	bugs_wings_antennae	0	175.136	59.248	106.955	logTimes
+mp-game-6	pilot	6148-547a9a1c-ec36-4930-b8f9-f5514a379a08	1547838666285	student	13	"bugs with wings and antennae"	bugs_wings_antennae	0	-1	82.345	106.61	logTimes
+mp-game-6	pilot	6148-547a9a1c-ec36-4930-b8f9-f5514a379a08	1547839076423	student	33	"trees with (leaves and berries) or orange trunks"	trees_leaves_berries_or_orange_trunks	1	-1	51.628	131.838	logTimes
+mp-game-6	pilot	6148-547a9a1c-ec36-4930-b8f9-f5514a379a08	1547839099886	explorer	33	"trees with (leaves and berries) or orange trunks"	trees_leaves_berries_or_orange_trunks	1	179.392	75.164	132.242	logTimes

@@ -1,0 +1,13 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	text	reactionTime	eventType
+mp-game-6	pilot	4063-8be7e2fe-fb21-4b46-93c3-95c1710e3ff2	1547839320065	explorer	7	"birds with purple tails"	birds_purple_tails	0	"Hi"	0.692	chatMessage
+mp-game-6	pilot	4063-8be7e2fe-fb21-4b46-93c3-95c1710e3ff2	1547839339236	explorer	7	"birds with purple tails"	birds_purple_tails	0	"Have you look that species"	8.086	chatMessage
+mp-game-6	pilot	4063-8be7e2fe-fb21-4b46-93c3-95c1710e3ff2	1547839345729	student	7	"birds with purple tails"	birds_purple_tails	0	"hi"	0.663	chatMessage
+mp-game-6	pilot	4063-8be7e2fe-fb21-4b46-93c3-95c1710e3ff2	1547839359947	student	7	"birds with purple tails"	birds_purple_tails	0	"I haven't seen them yet"	3.595	chatMessage
+mp-game-6	pilot	4063-8be7e2fe-fb21-4b46-93c3-95c1710e3ff2	1547839369450	explorer	7	"birds with purple tails"	birds_purple_tails	0	"that was looks awesome"	5.378	chatMessage
+mp-game-6	pilot	4063-8be7e2fe-fb21-4b46-93c3-95c1710e3ff2	1547839379434	explorer	7	"birds with purple tails"	birds_purple_tails	0	"like a bird owl"	8.276	chatMessage
+mp-game-6	pilot	4063-8be7e2fe-fb21-4b46-93c3-95c1710e3ff2	1547839387530	student	7	"birds with purple tails"	birds_purple_tails	0	"Ok, that's helpful."	4.13	chatMessage
+mp-game-6	pilot	4063-8be7e2fe-fb21-4b46-93c3-95c1710e3ff2	1547839417267	student	7	"birds with purple tails"	birds_purple_tails	0	"If that's all I will continue to go look at them."	9.193	chatMessage
+mp-game-6	pilot	4063-8be7e2fe-fb21-4b46-93c3-95c1710e3ff2	1547839432436	explorer	7	"birds with purple tails"	birds_purple_tails	0	"ohh thats nice"	3.517	chatMessage
+mp-game-6	pilot	4063-8be7e2fe-fb21-4b46-93c3-95c1710e3ff2	1547839449536	explorer	7	"birds with purple tails"	birds_purple_tails	0	"that was having tails like a bird"	13.061	chatMessage
+mp-game-6	pilot	4063-8be7e2fe-fb21-4b46-93c3-95c1710e3ff2	1547839453735	student	7	"birds with purple tails"	birds_purple_tails	0	"Got it"	0.84	chatMessage
+mp-game-6	pilot	4063-8be7e2fe-fb21-4b46-93c3-95c1710e3ff2	1547839458490	explorer	7	"birds with purple tails"	birds_purple_tails	0	"like a parrot"	5.47	chatMessage
