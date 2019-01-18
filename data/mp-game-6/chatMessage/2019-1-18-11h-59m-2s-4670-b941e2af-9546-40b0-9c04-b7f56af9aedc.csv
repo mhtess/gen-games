@@ -1,0 +1,8 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	text	reactionTime	eventType
+mp-game-6	pilot	4670-b941e2af-9546-40b0-9c04-b7f56af9aedc	1547841542417	explorer	24	"trees with purple berries or white trunks"	trees_purple_berries_or_white_trunks	0	"Hi, I know for a fact that kweps have white trunks. "	17.898	chatMessage
+mp-game-6	pilot	4670-b941e2af-9546-40b0-9c04-b7f56af9aedc	1547841551756	student	24	"trees with purple berries or white trunks"	trees_purple_berries_or_white_trunks	0	"Hi! Interesting"	3.796	chatMessage
+mp-game-6	pilot	4670-b941e2af-9546-40b0-9c04-b7f56af9aedc	1547841612136	explorer	24	"trees with purple berries or white trunks"	trees_purple_berries_or_white_trunks	0	"Also, for ones that don't have white trunks, they have pink berries, no matter what color the trunk is"	40.761	chatMessage
+mp-game-6	pilot	4670-b941e2af-9546-40b0-9c04-b7f56af9aedc	1547841630645	student	24	"trees with purple berries or white trunks"	trees_purple_berries_or_white_trunks	0	"Ooooh okay I see"	3.221	chatMessage
+mp-game-6	pilot	4670-b941e2af-9546-40b0-9c04-b7f56af9aedc	1547841654932	explorer	24	"trees with purple berries or white trunks"	trees_purple_berries_or_white_trunks	0	"So you understand? Either white trunk or pink berries are all kweps"	13.387	chatMessage
+mp-game-6	pilot	4670-b941e2af-9546-40b0-9c04-b7f56af9aedc	1547841667906	student	24	"trees with purple berries or white trunks"	trees_purple_berries_or_white_trunks	0	"Yup I understand"	1.67	chatMessage
+mp-game-6	pilot	4670-b941e2af-9546-40b0-9c04-b7f56af9aedc	1547841671825	explorer	24	"trees with purple berries or white trunks"	trees_purple_berries_or_white_trunks	0	"good"	1.088	chatMessage

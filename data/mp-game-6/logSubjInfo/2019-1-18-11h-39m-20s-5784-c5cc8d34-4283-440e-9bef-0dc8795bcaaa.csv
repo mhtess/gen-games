@@ -1,0 +1,3 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	nativeEnglish	enjoyment	assess	age	gender	education	comments	problems	fairprice	strategy		humanPartner	likePartner	eventType
+mp-game-6	pilot	5784-c5cc8d34-4283-440e-9bef-0dc8795bcaaa	1547840360861	explorer	26	"flowers with purple petals or thorns"	flowers_purple_petals_or_thorns	4	yes	2	yes	48	Female	3		no	$8/hour	Tried to pick the commonality		yes	liked	logSubjInfo
+mp-game-6	pilot	5784-c5cc8d34-4283-440e-9bef-0dc8795bcaaa	1547840379340	student	26	"flowers with purple petals or thorns"	flowers_purple_petals_or_thorns	4	yes	1	yes	33	Male	3	It took a long time to complete		Yes	6.00	I just took my partners suggestions		yes	liked	logSubjInfo

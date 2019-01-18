@@ -1,0 +1,7 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	text	reactionTime	eventType
+mp-game-6	pilot	0055-e4c60e19-05ef-485f-9863-e89504007210	1547840355511	explorer	2	"fish with white fangs"	fish_fangs	0	"Hi, the morseth is a fish that ALWAYS has what looks like a hanging tooth from the front of its mouth"	30.778	chatMessage
+mp-game-6	pilot	0055-e4c60e19-05ef-485f-9863-e89504007210	1547840382134	explorer	2	"fish with white fangs"	fish_fangs	0	"sometimes the morseth has whiskers similar to a catfish and stripes, or just whiskers"	24.041	chatMessage
+mp-game-6	pilot	0055-e4c60e19-05ef-485f-9863-e89504007210	1547840390779	explorer	2	"fish with white fangs"	fish_fangs	0	"but ALWAYS has the fang in the front"	8.402	chatMessage
+mp-game-6	pilot	0055-e4c60e19-05ef-485f-9863-e89504007210	1547840394742	student	2	"fish with white fangs"	fish_fangs	0	"ok"	0.161	chatMessage
+mp-game-6	pilot	0055-e4c60e19-05ef-485f-9863-e89504007210	1547840396610	explorer	2	"fish with white fangs"	fish_fangs	0	"that is how you know it's a morseth"	5.647	chatMessage
+mp-game-6	pilot	0055-e4c60e19-05ef-485f-9863-e89504007210	1547840400654	student	2	"fish with white fangs"	fish_fangs	0	"sounds good"	0.636	chatMessage

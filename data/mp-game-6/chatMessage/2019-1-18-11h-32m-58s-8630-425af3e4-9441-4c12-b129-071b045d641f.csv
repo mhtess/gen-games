@@ -1,0 +1,8 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	text	reactionTime	eventType
+mp-game-6	pilot	8630-425af3e4-9441-4c12-b129-071b045d641f	1547839978065	student	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	0	"HI"	0.514	chatMessage
+mp-game-6	pilot	8630-425af3e4-9441-4c12-b129-071b045d641f	1547839980457	explorer	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	0	"hi"	0.52	chatMessage
+mp-game-6	pilot	8630-425af3e4-9441-4c12-b129-071b045d641f	1547839991082	explorer	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	0	"every fish that had a long tooth was a kwep"	9.385	chatMessage
+mp-game-6	pilot	8630-425af3e4-9441-4c12-b129-071b045d641f	1547839997291	explorer	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	0	"but not every kwep had a tooth"	4.481	chatMessage
+mp-game-6	pilot	8630-425af3e4-9441-4c12-b129-071b045d641f	1547840002894	student	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	0	"WHAT ARE DOMING"	5.583	chatMessage
+mp-game-6	pilot	8630-425af3e4-9441-4c12-b129-071b045d641f	1547840004730	explorer	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	0	"lots of them had whiskers"	4.693	chatMessage
+mp-game-6	pilot	8630-425af3e4-9441-4c12-b129-071b045d641f	1547840030417	student	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	0	"HAVE I HELPED TO YOU?????"	9.839	chatMessage
