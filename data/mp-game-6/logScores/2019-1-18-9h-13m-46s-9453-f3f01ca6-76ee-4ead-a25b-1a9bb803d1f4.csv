@@ -1,0 +1,5 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	hits	misses	correct_rejections	false_alarms	score	eventType
+	0	9	0	40	1	8	logScores
+mp-game-6	pilot	9453-f3f01ca6-76ee-4ead-a25b-1a9bb803d1f4	1547831629320	student	17	"trees with purple leaves and berries"	trees_purple_leaves_berries	0	9	0	40	1	8	logScores
+mp-game-6	pilot	9453-f3f01ca6-76ee-4ead-a25b-1a9bb803d1f4	1547831824893	explorer	37	"fish with (white bodies and orange stripes) or fangs"	fish_white_bodies_orange_stripes_or_fangs	1	21	4	25	0	21	logScores
+mp-game-6	pilot	9453-f3f01ca6-76ee-4ead-a25b-1a9bb803d1f4	1547831864507	student	37	"fish with (white bodies and orange stripes) or fangs"	fish_white_bodies_orange_stripes_or_fangs	1	23	2	25	0	23	logScores
