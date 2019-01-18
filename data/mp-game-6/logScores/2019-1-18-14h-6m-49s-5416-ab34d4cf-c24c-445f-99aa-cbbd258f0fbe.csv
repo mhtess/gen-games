@@ -1,0 +1,5 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	hits	misses	correct_rejections	false_alarms	score	eventType
+mp-game-6	pilot	5416-ab34d4cf-c24c-445f-99aa-cbbd258f0fbe	1547849209652	student	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	0	0	25	25	0	0	logScores
+mp-game-6	pilot	5416-ab34d4cf-c24c-445f-99aa-cbbd258f0fbe	1547849215995	explorer	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	0	15	10	8	17	0	logScores
+mp-game-6	pilot	5416-ab34d4cf-c24c-445f-99aa-cbbd258f0fbe	1547849374487	explorer	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	1	8	0	41	1	7	logScores
+mp-game-6	pilot	5416-ab34d4cf-c24c-445f-99aa-cbbd258f0fbe	1547849380475	student	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	1	8	0	41	1	7	logScores
