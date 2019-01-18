@@ -1,0 +1,6 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	text	reactionTime	eventType
+mp-game-6	pilot	4272-1e909068-c8f5-4cfc-a8e7-4c25bb587b2f	1547843257513	explorer	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	0	"A oller has a purple stem with seven thistles on it."	28.137	chatMessage
+mp-game-6	pilot	4272-1e909068-c8f5-4cfc-a8e7-4c25bb587b2f	1547843267065	student	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	0	"ok, noted"	4.184	chatMessage
+mp-game-6	pilot	4272-1e909068-c8f5-4cfc-a8e7-4c25bb587b2f	1547843299161	explorer	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	0	"That's really the major difference to focus on."	24.408	chatMessage
+mp-game-6	pilot	4272-1e909068-c8f5-4cfc-a8e7-4c25bb587b2f	1547843309387	student	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	0	"anything else"	5.373	chatMessage
+mp-game-6	pilot	4272-1e909068-c8f5-4cfc-a8e7-4c25bb587b2f	1547843330625	explorer	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	0	"No, that's about it."	11.178	chatMessage
