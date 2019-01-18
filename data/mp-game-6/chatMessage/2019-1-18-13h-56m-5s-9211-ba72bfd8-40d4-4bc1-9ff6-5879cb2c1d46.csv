@@ -1,0 +1,5 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	text	reactionTime	eventType
+mp-game-6	pilot	9211-ba72bfd8-40d4-4bc1-9ff6-5879cb2c1d46	1547848565273	explorer	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	0	"Hello, the zorb either have orange wings or they have purple feet and NO wings"	21.171	chatMessage
+mp-game-6	pilot	9211-ba72bfd8-40d4-4bc1-9ff6-5879cb2c1d46	1547848609010	explorer	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	0	"You will be looking for the Zorb species."	18.329	chatMessage
+mp-game-6	pilot	9211-ba72bfd8-40d4-4bc1-9ff6-5879cb2c1d46	1547848631058	student	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	0	"Got it."	1.127	chatMessage
+mp-game-6	pilot	9211-ba72bfd8-40d4-4bc1-9ff6-5879cb2c1d46	1547848645041	student	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	0	"Anything else I should know?"	3.825	chatMessage

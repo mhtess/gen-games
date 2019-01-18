@@ -1,0 +1,4 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	train	test	chat	eventType
+mp-game-6	pilot	7253-4fae2998-1b73-4ad4-8633-44e06cf38a8f	1547848331018	explorer	45	"fish with (white stripes or purple bodies) and whiskers"	fish_white_stripes_or_purple_bodies_whiskers	0	144.795	47.449	90.142	logTimes
+mp-game-6	pilot	7253-4fae2998-1b73-4ad4-8633-44e06cf38a8f	1547848335553	student	45	"fish with (white stripes or purple bodies) and whiskers"	fish_white_stripes_or_purple_bodies_whiskers	0	-1	51.777	89.662	logTimes
+mp-game-6	pilot	7253-4fae2998-1b73-4ad4-8633-44e06cf38a8f	1547848671235	explorer	35	"flowers with (thorns and purple petals) or orange stems"	flowers_thorns_purple_petals_or_orange_stems	1	104.446	36.049	140.238	logTimes
