@@ -1,0 +1,7 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	text	reactionTime	eventType
+mp-game-6	pilot	2144-b256dace-14e6-4532-a330-1a1d6dd682c4	1547832789593	explorer	2	"fish with white fangs"	fish_fangs	0	"Hi, I looked at grid, they were fish creatures."	19.707	chatMessage
+mp-game-6	pilot	2144-b256dace-14e6-4532-a330-1a1d6dd682c4	1547832802289	student	2	"fish with white fangs"	fish_fangs	0	"any certain colors or types of fins"	9.288	chatMessage
+mp-game-6	pilot	2144-b256dace-14e6-4532-a330-1a1d6dd682c4	1547832810269	explorer	2	"fish with white fangs"	fish_fangs	0	"I had to determine which were called morseth "	20.291	chatMessage
+mp-game-6	pilot	2144-b256dace-14e6-4532-a330-1a1d6dd682c4	1547832831611	explorer	2	"fish with white fangs"	fish_fangs	0	"ALL of the creature that were NOT morseth lacked a 'tooth' on the mouth"	17.861	chatMessage
+mp-game-6	pilot	2144-b256dace-14e6-4532-a330-1a1d6dd682c4	1547832845936	explorer	2	"fish with white fangs"	fish_fangs	0	"it looked like a long tooth, pointy at the end of the mouth"	13.6	chatMessage
+mp-game-6	pilot	2144-b256dace-14e6-4532-a330-1a1d6dd682c4	1547832856210	student	2	"fish with white fangs"	fish_fangs	0	"ok should be easy"	3.112	chatMessage

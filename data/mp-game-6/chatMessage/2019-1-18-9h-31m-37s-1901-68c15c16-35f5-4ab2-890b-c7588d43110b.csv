@@ -1,0 +1,10 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	text	reactionTime	eventType
+mp-game-6	pilot	1901-68c15c16-35f5-4ab2-890b-c7588d43110b	1547832697188	explorer	3	"fish with whiskers"	fish_whiskers	0	"Morseth's have long whiskers coming out of their faces."	15.689	chatMessage
+mp-game-6	pilot	1901-68c15c16-35f5-4ab2-890b-c7588d43110b	1547832721559	student	3	"fish with whiskers"	fish_whiskers	0	"Do Morseth's have tails?"	5.075	chatMessage
+mp-game-6	pilot	1901-68c15c16-35f5-4ab2-890b-c7588d43110b	1547832748300	explorer	3	"fish with whiskers"	fish_whiskers	0	"yes, but focus more on the whiskers."	8.056	chatMessage
+mp-game-6	pilot	1901-68c15c16-35f5-4ab2-890b-c7588d43110b	1547832768991	student	3	"fish with whiskers"	fish_whiskers	0	"Ok "	7.699	chatMessage
+mp-game-6	pilot	1901-68c15c16-35f5-4ab2-890b-c7588d43110b	1547832786988	student	3	"fish with whiskers"	fish_whiskers	0	"Do they have a lot of whiskers or only a couple?"	12.253	chatMessage
+mp-game-6	pilot	1901-68c15c16-35f5-4ab2-890b-c7588d43110b	1547832813797	explorer	3	"fish with whiskers"	fish_whiskers	0	"They have about 3 or four coming down. They should be the only species with whiskers."	17.261	chatMessage
+mp-game-6	pilot	1901-68c15c16-35f5-4ab2-890b-c7588d43110b	1547832869940	student	3	"fish with whiskers"	fish_whiskers	0	"Are there any other significant traits known at this time?"	25.289	chatMessage
+mp-game-6	pilot	1901-68c15c16-35f5-4ab2-890b-c7588d43110b	1547832895384	explorer	3	"fish with whiskers"	fish_whiskers	0	"Not that I noticed. The color changes and the stripes change."	20.177	chatMessage
+mp-game-6	pilot	1901-68c15c16-35f5-4ab2-890b-c7588d43110b	1547832918040	student	3	"fish with whiskers"	fish_whiskers	0	"Ok great thank you."	6.034	chatMessage
