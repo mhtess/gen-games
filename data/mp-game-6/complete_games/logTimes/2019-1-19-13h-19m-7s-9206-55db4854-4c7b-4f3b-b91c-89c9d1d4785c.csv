@@ -1,0 +1,11 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	train	test	chat	eventType
+mp-game-6	pilot	9206-55db4854-4c7b-4f3b-b91c-89c9d1d4785c	1547932747039	student	5	"bugs without wings"	bugs_without_wings	0	-1	36.598	217.156	logTimes
+mp-game-6	pilot	9206-55db4854-4c7b-4f3b-b91c-89c9d1d4785c	1547932755987	explorer	5	"bugs without wings"	bugs_without_wings	0	109.062	29.03	217.577	logTimes
+mp-game-6	pilot	9206-55db4854-4c7b-4f3b-b91c-89c9d1d4785c	1547933060009	student	25	"trees with white leaves or orange berries"	trees_white_leaves_or_orange_berries	1	-1	42.974	63.364	logTimes
+mp-game-6	pilot	9206-55db4854-4c7b-4f3b-b91c-89c9d1d4785c	1547933067071	explorer	25	"trees with white leaves or orange berries"	trees_white_leaves_or_orange_berries	1	166.133	47.555	63.79	logTimes
+mp-game-6	pilot	9206-55db4854-4c7b-4f3b-b91c-89c9d1d4785c	1547933513130	explorer	45	"fish with (white stripes or purple bodies) and whiskers"	fish_white_stripes_or_purple_bodies_whiskers	2	266.56	43.987	104.376	logTimes
+mp-game-6	pilot	9206-55db4854-4c7b-4f3b-b91c-89c9d1d4785c	1547933538462	student	45	"fish with (white stripes or purple bodies) and whiskers"	fish_white_stripes_or_purple_bodies_whiskers	2	-1	70.7	103.851	logTimes
+mp-game-6	pilot	9206-55db4854-4c7b-4f3b-b91c-89c9d1d4785c	1547933762522	explorer	15	"birds with orange wings and tails"	birds_orange_wings_tails	3	57.384	30.891	112.491	logTimes
+mp-game-6	pilot	9206-55db4854-4c7b-4f3b-b91c-89c9d1d4785c	1547933842251	student	15	"birds with orange wings and tails"	birds_orange_wings_tails	3	-1	114.633	112.071	logTimes
+mp-game-6	pilot	9206-55db4854-4c7b-4f3b-b91c-89c9d1d4785c	1547934062591	explorer	35	"flowers with (thorns and purple petals) or orange stems"	flowers_thorns_purple_petals_or_orange_stems	4	63.407	25.454	112.51	logTimes
+mp-game-6	pilot	9206-55db4854-4c7b-4f3b-b91c-89c9d1d4785c	1547934083230	student	35	"flowers with (thorns and purple petals) or orange stems"	flowers_thorns_purple_petals_or_orange_stems	4	-1	47.325	112.091	logTimes

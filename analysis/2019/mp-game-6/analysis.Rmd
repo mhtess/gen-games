@@ -57,7 +57,7 @@ temp <- list.files(
   pattern="*.csv",
   full.names=TRUE
 )
-test_all_games <- do.call(rbind, lapply(temp, read.csv, sep=""))
+test_complete_games <- do.call(rbind, lapply(temp, read.csv, sep=""))
 
 # Load Test Summary Stats
 temp <- list.files(
@@ -65,7 +65,7 @@ temp <- list.files(
   pattern="*.csv",
   full.names=TRUE
 )
-scores_all_games <- do.call(rbind, lapply(temp, read.csv, sep=""))
+scores_complete_games <- do.call(rbind, lapply(temp, read.csv, sep=""))
 
 # Load Chat Messages
 temp <- list.files(
@@ -73,34 +73,46 @@ temp <- list.files(
   pattern="*.csv",
   full.names=TRUE
 )
-msgs_all_games <-do.call(rbind, lapply(temp, readr::read_tsv)) %>%
+msgs_complete_games <-do.call(rbind, lapply(temp, readr::read_tsv)) %>%
   group_by(gameid)
 ```
 
 # Distribution of Complete Data
 ```{r}
-num_games_played <- scores_complete_games %>%
+num_complete_games_played <- scores_complete_games %>%
   count(rule_idx) %>%
   mutate(n = n/2)
-ggplot(data=num_games_played, aes(x=rule_idx, y=n)) +
+num_complete_games_played$n <- as.factor(num_complete_games_played$n)
+ggplot(data=num_complete_games_played, aes(x=rule_idx, y=n)) +
   geom_bar(stat="identity") +
   labs(
     title = "Data Distribution of Complete Games",
     x = "Rule Index",
     y = "Number of Samples"
-  )
+  )  +
+  ylim(0, 10) +
+  scale_y_discrete()
 ```
 
 # Distribution of All Data
 ```{r}
-num_games_played <- scores_alle_games %>%
+num_all_games_played <- scores_all_games %>%
   count(rule_idx) %>%
-  mutate(n = n/2)
-ggplot(data=num_games_played, aes(x=rule_idx, y=n)) +
-  geom_bar(stat="identity")
+  mutate(n = ceiling(n/2))
+num_all_games_played$n <- as.factor(num_all_games_played$n)
+ggplot(data=num_all_games_played, aes(x=rule_idx, y=n), ) +
+  geom_bar(stat="identity") +
+  labs(
+    title = "Data Distribution of All Games",
+    x = "Rule Index",
+    y = "Number of Samples"
+  ) +
+  scale_y_discrete()
 ```
 
-# Student Performance Vs. Teacher Performance
+```
+
+# Student Performance Vs. Teacher Performance (Complete Game)
 ```{r}
 # Accuracies
 test_explorer <- scores_complete_games %>%
