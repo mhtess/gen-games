@@ -50,3 +50,10 @@ mp-game-6	pilot	6706-fb5fd993-075f-4b9e-bb25-4f1cc68fc8ac	1547854606767	explorer
 mp-game-6	pilot	6706-fb5fd993-075f-4b9e-bb25-4f1cc68fc8ac	1547854623253	student	6	"birds with tails"	birds_tails	3	"ok, is there anything that makes them not a morseth?"	13.206	chatMessage
 mp-game-6	pilot	6706-fb5fd993-075f-4b9e-bb25-4f1cc68fc8ac	1547854655715	explorer	6	"birds with tails"	birds_tails	3	"i think no"	7.225	chatMessage
 mp-game-6	pilot	6706-fb5fd993-075f-4b9e-bb25-4f1cc68fc8ac	1547854660327	student	6	"birds with tails"	birds_tails	3	"thank you"	2.095	chatMessage
+mp-game-6	pilot	6706-fb5fd993-075f-4b9e-bb25-4f1cc68fc8ac	1547854895372	explorer	46	"bugs with (antennae or wings) and purple bodies"	bugs_antennae_or_wings_purple_bodies	4	"there are insect"	5.411	chatMessage
+mp-game-6	pilot	6706-fb5fd993-075f-4b9e-bb25-4f1cc68fc8ac	1547854948428	student	46	"bugs with (antennae or wings) and purple bodies"	bugs_antennae_or_wings_purple_bodies	4	"ok"	0.577	chatMessage
+mp-game-6	pilot	6706-fb5fd993-075f-4b9e-bb25-4f1cc68fc8ac	1547854956542	explorer	46	"bugs with (antennae or wings) and purple bodies"	bugs_antennae_or_wings_purple_bodies	4	"insect have feet straight feet and wing "	57.592	chatMessage
+mp-game-6	pilot	6706-fb5fd993-075f-4b9e-bb25-4f1cc68fc8ac	1547854971069	explorer	46	"bugs with (antennae or wings) and purple bodies"	bugs_antennae_or_wings_purple_bodies	4	"or not straight feet and nor wing"	13.759	chatMessage
+mp-game-6	pilot	6706-fb5fd993-075f-4b9e-bb25-4f1cc68fc8ac	1547854999844	student	46	"bugs with (antennae or wings) and purple bodies"	bugs_antennae_or_wings_purple_bodies	4	"ok, so they either have both or none?"	11.136	chatMessage
+mp-game-6	pilot	6706-fb5fd993-075f-4b9e-bb25-4f1cc68fc8ac	1547855021886	explorer	46	"bugs with (antennae or wings) and purple bodies"	bugs_antennae_or_wings_purple_bodies	4	"yes"	1.948	chatMessage
+mp-game-6	pilot	6706-fb5fd993-075f-4b9e-bb25-4f1cc68fc8ac	1547855029165	student	46	"bugs with (antennae or wings) and purple bodies"	bugs_antennae_or_wings_purple_bodies	4	"thank you"	3.127	chatMessage

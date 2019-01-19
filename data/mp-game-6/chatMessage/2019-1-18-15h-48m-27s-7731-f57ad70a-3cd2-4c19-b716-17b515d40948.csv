@@ -1,0 +1,2 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	text	reactionTime	eventType
+mp-game-6	pilot	7731-f57ad70a-3cd2-4c19-b716-17b515d40948	1547855307961	student	29	"fish with white stripes or whiskers"	fish_white_stripes_or_whiskers	0	"What did you learn about the species?"	10.446	chatMessage
