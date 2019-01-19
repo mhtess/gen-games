@@ -1,0 +1,11 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	train	test	chat	eventType
+mp-game-6	pilot	8308-baa7f050-9990-456d-a630-d3b0f9077966	1547846146439	explorer	12	"bugs with purple legs and white heads"	bugs_purple_legs_white_heads	0	113.873	41.641	105.942	logTimes
+mp-game-6	pilot	8308-baa7f050-9990-456d-a630-d3b0f9077966	1547846213718	student	12	"bugs with purple legs and white heads"	bugs_purple_legs_white_heads	0	-1	111.127	105.228	logTimes
+mp-game-6	pilot	8308-baa7f050-9990-456d-a630-d3b0f9077966	1547846545550	explorer	32	"Tree with (orange berries and purple trunks) or white leaves"	trees_orange_berries_purple_trunks_or_white_leaves	1	128.457	45.567	113.607	logTimes
+mp-game-6	pilot	8308-baa7f050-9990-456d-a630-d3b0f9077966	1547846554123	student	32	"Tree with (orange berries and purple trunks) or white leaves"	trees_orange_berries_purple_trunks_or_white_leaves	1	-1	55.63	112.81	logTimes
+mp-game-6	pilot	8308-baa7f050-9990-456d-a630-d3b0f9077966	1547847252048	explorer	42	"flowers with (purple centers or orange stems) and thorns"	flowers_purple_centers_or_orange_stems_with_thorns	2	381.518	72.927	207.528	logTimes
+mp-game-6	pilot	8308-baa7f050-9990-456d-a630-d3b0f9077966	1547847340245	student	42	"flowers with (purple centers or orange stems) and thorns"	flowers_purple_centers_or_orange_stems_with_thorns	2	-1	161.412	207.09	logTimes
+mp-game-6	pilot	8308-baa7f050-9990-456d-a630-d3b0f9077966	1547847604009	explorer	2	"fish with white fangs"	fish_fangs	3	59.472	40.664	120.964	logTimes
+mp-game-6	pilot	8308-baa7f050-9990-456d-a630-d3b0f9077966	1547847639482	student	2	"fish with white fangs"	fish_fangs	3	-1	75.305	120.557	logTimes
+mp-game-6	pilot	8308-baa7f050-9990-456d-a630-d3b0f9077966	1547848033201	student	22	"birds with orange tails or white wings"	birds_orange_tails_or_white_wings	4	-1	89.087	135.12	logTimes
+mp-game-6	pilot	8308-baa7f050-9990-456d-a630-d3b0f9077966	1547848086167	explorer	22	"birds with orange tails or white wings"	birds_orange_tails_or_white_wings	4	142.855	34.474	135.859	logTimes

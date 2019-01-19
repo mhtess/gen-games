@@ -1,0 +1,11 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	hits	misses	correct_rejections	false_alarms	score	eventType
+mp-game-6	pilot	4614-ed69d903-0061-43b8-83d8-01d5bd9e72a5	1547831675178	explorer	29	"fish with white stripes or whiskers"	fish_white_stripes_or_whiskers	0	17	13	6	14	3	logScores
+mp-game-6	pilot	4614-ed69d903-0061-43b8-83d8-01d5bd9e72a5	1547831701551	student	29	"fish with white stripes or whiskers"	fish_white_stripes_or_whiskers	0	1	29	11	9	0	logScores
+mp-game-6	pilot	4614-ed69d903-0061-43b8-83d8-01d5bd9e72a5	1547831851786	explorer	9	"trees without leaves"	trees_without_leaves	1	9	0	41	0	9	logScores
+mp-game-6	pilot	4614-ed69d903-0061-43b8-83d8-01d5bd9e72a5	1547831862837	student	9	"trees without leaves"	trees_without_leaves	1	9	0	41	0	9	logScores
+mp-game-6	pilot	4614-ed69d903-0061-43b8-83d8-01d5bd9e72a5	1547832056345	explorer	19	"flowers with orange petals and purple centers"	flowers_orange_petals_purple_centers	2	10	0	40	0	10	logScores
+mp-game-6	pilot	4614-ed69d903-0061-43b8-83d8-01d5bd9e72a5	1547832059773	student	19	"flowers with orange petals and purple centers"	flowers_orange_petals_purple_centers	2	0	10	40	0	0	logScores
+mp-game-6	pilot	4614-ed69d903-0061-43b8-83d8-01d5bd9e72a5	1547832270548	explorer	49	"birds with (white crests or orange wings) and tails"	birds_white_crests_or_orange_wings_tails	3	3	9	32	6	0	logScores
+mp-game-6	pilot	4614-ed69d903-0061-43b8-83d8-01d5bd9e72a5	1547832282284	student	49	"birds with (white crests or orange wings) and tails"	birds_white_crests_or_orange_wings_tails	3	12	0	14	24	0	logScores
+mp-game-6	pilot	4614-ed69d903-0061-43b8-83d8-01d5bd9e72a5	1547832488425	student	39	"bugs with (white legs and purple wings) or orange antennae"	bugs_white_legs_purple_wings_or_orange_antennae	4	8	4	38	0	8	logScores
+mp-game-6	pilot	4614-ed69d903-0061-43b8-83d8-01d5bd9e72a5	1547832493804	explorer	39	"bugs with (white legs and purple wings) or orange antennae"	bugs_white_legs_purple_wings_or_orange_antennae	4	8	4	38	0	8	logScores

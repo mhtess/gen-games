@@ -1,0 +1,11 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	train	test	chat	eventType
+mp-game-6	pilot	7831-9cd89d2d-a78a-4bed-99fa-55dd1e1be4e0	1547849843827	student	32	"Tree with (orange berries and purple trunks) or white leaves"	trees_orange_berries_purple_trunks_or_white_leaves	0	-1	35.778	212.253	logTimes
+mp-game-6	pilot	7831-9cd89d2d-a78a-4bed-99fa-55dd1e1be4e0	1547849865632	explorer	32	"Tree with (orange berries and purple trunks) or white leaves"	trees_orange_berries_purple_trunks_or_white_leaves	0	238.406	71.326	212.639	logTimes
+mp-game-6	pilot	7831-9cd89d2d-a78a-4bed-99fa-55dd1e1be4e0	1547851421962	student	42	"flowers with (purple centers or orange stems) and thorns"	flowers_purple_centers_or_orange_stems_with_thorns	1	-1	43.475	116.968	logTimes
+mp-game-6	pilot	7831-9cd89d2d-a78a-4bed-99fa-55dd1e1be4e0	1547851520048	explorer	42	"flowers with (purple centers or orange stems) and thorns"	flowers_purple_centers_or_orange_stems_with_thorns	1	1363.114	63.252	117.335	logTimes
+mp-game-6	pilot	7831-9cd89d2d-a78a-4bed-99fa-55dd1e1be4e0	1547851924130	student	12	"bugs with purple legs and white heads"	bugs_purple_legs_white_heads	2	-1	28.264	170.759	logTimes
+mp-game-6	pilot	7831-9cd89d2d-a78a-4bed-99fa-55dd1e1be4e0	1547851956635	explorer	12	"bugs with purple legs and white heads"	bugs_purple_legs_white_heads	2	134.494	53.711	171.27	logTimes
+mp-game-6	pilot	7831-9cd89d2d-a78a-4bed-99fa-55dd1e1be4e0	1547852514379	student	22	"birds with orange tails or white wings"	birds_orange_tails_or_white_wings	3	-1	30.701	164.709	logTimes
+mp-game-6	pilot	7831-9cd89d2d-a78a-4bed-99fa-55dd1e1be4e0	1547852527724	explorer	22	"birds with orange tails or white wings"	birds_orange_tails_or_white_wings	3	282.039	40.231	165.067	logTimes
+mp-game-6	pilot	7831-9cd89d2d-a78a-4bed-99fa-55dd1e1be4e0	1547852816290	explorer	2	"fish with white fangs"	fish_fangs	4	120.115	34.802	108.113	logTimes
+mp-game-6	pilot	7831-9cd89d2d-a78a-4bed-99fa-55dd1e1be4e0	1547852827926	student	2	"fish with white fangs"	fish_fangs	4	-1	29.561	107.755	logTimes

@@ -1,0 +1,5 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	train	test	chat	eventType
+mp-game-6	pilot	8984-592a0f45-1b78-4f20-b112-1e5dadc9d917	1547759837240	explorer	4	"bugs with white orange head"	bugs_orange_head	0	79.005	25.294	175.874	logTimes
+mp-game-6	pilot	8984-592a0f45-1b78-4f20-b112-1e5dadc9d917	1547759860179	student	4	"bugs with white orange head"	bugs_orange_head	0	-1	49.847	175.509	logTimes
+mp-game-6	pilot	8984-592a0f45-1b78-4f20-b112-1e5dadc9d917	1547760163433	student	44	"fish with (orange bodies or fangs) and whiskers"	fish_orange_bodies_or_fangs_whiskers	1	-1	21.243	173.875	logTimes
+mp-game-6	pilot	8984-592a0f45-1b78-4f20-b112-1e5dadc9d917	1547760165428	explorer	44	"fish with (orange bodies or fangs) and whiskers"	fish_orange_bodies_or_fangs_whiskers	1	79.762	22.632	174.239	logTimes

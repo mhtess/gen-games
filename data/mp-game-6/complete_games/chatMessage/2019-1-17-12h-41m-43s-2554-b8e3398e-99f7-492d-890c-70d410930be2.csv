@@ -1,0 +1,23 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	text	reactionTime	eventType
+mp-game-6	pilot	2554-b8e3398e-99f7-492d-890c-70d410930be2	1547757703915	explorer	13	"bugs with wings and antennae"	bugs_wings_antennae	0	"The oller definitely has antennae"	6.225	chatMessage
+mp-game-6	pilot	2554-b8e3398e-99f7-492d-890c-70d410930be2	1547757746160	explorer	13	"bugs with wings and antennae"	bugs_wings_antennae	0	"The colors vary though and I didn't notice much of a pattern"	7.096	chatMessage
+mp-game-6	pilot	2554-b8e3398e-99f7-492d-890c-70d410930be2	1547757840704	student	13	"bugs with wings and antennae"	bugs_wings_antennae	0	"is there anything else?"	3.344	chatMessage
+mp-game-6	pilot	2554-b8e3398e-99f7-492d-890c-70d410930be2	1547757845679	explorer	13	"bugs with wings and antennae"	bugs_wings_antennae	0	"Nope"	0.882	chatMessage
+mp-game-6	pilot	2554-b8e3398e-99f7-492d-890c-70d410930be2	1547757858349	student	13	"bugs with wings and antennae"	bugs_wings_antennae	0	"k tx"	2.096	chatMessage
+mp-game-6	pilot	2554-b8e3398e-99f7-492d-890c-70d410930be2	1547758067438	explorer	3	"fish with whiskers"	fish_whiskers	1	"All morseth have long whiskers. Color and pattern doesnt' matter."	10.115	chatMessage
+mp-game-6	pilot	2554-b8e3398e-99f7-492d-890c-70d410930be2	1547758087141	student	3	"fish with whiskers"	fish_whiskers	1	"so just lon whiskers"	8.768	chatMessage
+mp-game-6	pilot	2554-b8e3398e-99f7-492d-890c-70d410930be2	1547758099880	student	3	"fish with whiskers"	fish_whiskers	1	"long"	1.217	chatMessage
+mp-game-6	pilot	2554-b8e3398e-99f7-492d-890c-70d410930be2	1547758105783	explorer	3	"fish with whiskers"	fish_whiskers	1	"yup!"	0.963	chatMessage
+mp-game-6	pilot	2554-b8e3398e-99f7-492d-890c-70d410930be2	1547758112774	student	3	"fish with whiskers"	fish_whiskers	1	"k"	0.722	chatMessage
+mp-game-6	pilot	2554-b8e3398e-99f7-492d-890c-70d410930be2	1547758355235	explorer	23	"birds with orange crests or purple wings"	birds_orange_crests_or_purple_wings	2	"Most of them have head feathers, but not all of them."	8.122	chatMessage
+mp-game-6	pilot	2554-b8e3398e-99f7-492d-890c-70d410930be2	1547758366300	explorer	23	"birds with orange crests or purple wings"	birds_orange_crests_or_purple_wings	2	"Some have tail feathers. Theyappear to be either orange or purple. "	10.673	chatMessage
+mp-game-6	pilot	2554-b8e3398e-99f7-492d-890c-70d410930be2	1547758373139	explorer	23	"birds with orange crests or purple wings"	birds_orange_crests_or_purple_wings	2	"It's hard to see a pattern with these features"	6.596	chatMessage
+mp-game-6	pilot	2554-b8e3398e-99f7-492d-890c-70d410930be2	1547758402439	student	23	"birds with orange crests or purple wings"	birds_orange_crests_or_purple_wings	2	"I'll try my best"	5.224	chatMessage
+mp-game-6	pilot	2554-b8e3398e-99f7-492d-890c-70d410930be2	1547758415367	explorer	23	"birds with orange crests or purple wings"	birds_orange_crests_or_purple_wings	2	"ok sorry!"	2.982	chatMessage
+mp-game-6	pilot	2554-b8e3398e-99f7-492d-890c-70d410930be2	1547758642575	explorer	43	"flowers with (purple stems or thorns) and white centers"	flowers_purple_stems_or_thorns_white_centers	3	"So a lot of these have the thorns at on the stem of the flower"	9.317	chatMessage
+mp-game-6	pilot	2554-b8e3398e-99f7-492d-890c-70d410930be2	1547758650258	explorer	43	"flowers with (purple stems or thorns) and white centers"	flowers_purple_stems_or_thorns_white_centers	3	"some however are just a simple stem and flower"	6.756	chatMessage
+mp-game-6	pilot	2554-b8e3398e-99f7-492d-890c-70d410930be2	1547758755453	student	43	"flowers with (purple stems or thorns) and white centers"	flowers_purple_stems_or_thorns_white_centers	3	"ok, so more with thorns and less than the others"	57.793	chatMessage
+mp-game-6	pilot	2554-b8e3398e-99f7-492d-890c-70d410930be2	1547758962969	explorer	33	"trees with (leaves and berries) or orange trunks"	trees_leaves_berries_or_orange_trunks	4	"zorbs have apples AND leaves"	5.415	chatMessage
+mp-game-6	pilot	2554-b8e3398e-99f7-492d-890c-70d410930be2	1547758975637	student	33	"trees with (leaves and berries) or orange trunks"	trees_leaves_berries_or_orange_trunks	4	"that's it?"	1.713	chatMessage
+mp-game-6	pilot	2554-b8e3398e-99f7-492d-890c-70d410930be2	1547758978403	explorer	33	"trees with (leaves and berries) or orange trunks"	trees_leaves_berries_or_orange_trunks	4	"yes"	1.242	chatMessage
+mp-game-6	pilot	2554-b8e3398e-99f7-492d-890c-70d410930be2	1547758984697	student	33	"trees with (leaves and berries) or orange trunks"	trees_leaves_berries_or_orange_trunks	4	"ok cool"	1.762	chatMessage

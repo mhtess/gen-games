@@ -1,0 +1,5 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	train	test	chat	eventType
+mp-game-6	pilot	8345-47d1a57b-fa21-47b7-9a51-ae29ea0a2928	1547762613399	student	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0	-1	41.254	106.58	logTimes
+mp-game-6	pilot	8345-47d1a57b-fa21-47b7-9a51-ae29ea0a2928	1547762627101	explorer	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0	130.624	55.524	106.979	logTimes
+mp-game-6	pilot	8345-47d1a57b-fa21-47b7-9a51-ae29ea0a2928	1547763142841	explorer	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	1	193.828	60.591	244.381	logTimes
+mp-game-6	pilot	8345-47d1a57b-fa21-47b7-9a51-ae29ea0a2928	1547763226043	student	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	1	-1	142.277	243.934	logTimes

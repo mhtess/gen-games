@@ -1,0 +1,11 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	train	test	chat	eventType
+mp-game-6	pilot	5416-ab34d4cf-c24c-445f-99aa-cbbd258f0fbe	1547849209605	student	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	0	-1	44.871	95.974	logTimes
+mp-game-6	pilot	5416-ab34d4cf-c24c-445f-99aa-cbbd258f0fbe	1547849215953	explorer	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	0	111.421	48.988	96.33	logTimes
+mp-game-6	pilot	5416-ab34d4cf-c24c-445f-99aa-cbbd258f0fbe	1547849374450	explorer	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	1	57.643	20.241	52.378	logTimes
+mp-game-6	pilot	5416-ab34d4cf-c24c-445f-99aa-cbbd258f0fbe	1547849380419	student	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	1	-1	26.835	52.023	logTimes
+mp-game-6	pilot	5416-ab34d4cf-c24c-445f-99aa-cbbd258f0fbe	1547849651622	explorer	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	2	75.368	16.178	119.417	logTimes
+mp-game-6	pilot	5416-ab34d4cf-c24c-445f-99aa-cbbd258f0fbe	1547849672989	student	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	2	-1	38.515	119.064	logTimes
+mp-game-6	pilot	5416-ab34d4cf-c24c-445f-99aa-cbbd258f0fbe	1547849891602	explorer	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	3	63.752	42.446	99.727	logTimes
+mp-game-6	pilot	5416-ab34d4cf-c24c-445f-99aa-cbbd258f0fbe	1547849930925	student	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	3	-1	81.902	99.374	logTimes
+mp-game-6	pilot	5416-ab34d4cf-c24c-445f-99aa-cbbd258f0fbe	1547850157031	explorer	1	"flowers with thorns"	flowers_thorns	4	80.662	24.861	103.926	logTimes
+mp-game-6	pilot	5416-ab34d4cf-c24c-445f-99aa-cbbd258f0fbe	1547850163124	student	1	"flowers with thorns"	flowers_thorns	4	-1	31.288	103.574	logTimes

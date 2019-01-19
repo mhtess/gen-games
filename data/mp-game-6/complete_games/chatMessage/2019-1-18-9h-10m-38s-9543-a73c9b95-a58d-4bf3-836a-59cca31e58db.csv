@@ -1,0 +1,27 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	text	reactionTime	eventType
+mp-game-6	pilot	9543-a73c9b95-a58d-4bf3-836a-59cca31e58db	1547831438462	explorer	20	"bugs with orange antennae or wings"	bugs_orange_antennae_or_wings	0	"HI"	2.386	chatMessage
+mp-game-6	pilot	9543-a73c9b95-a58d-4bf3-836a-59cca31e58db	1547831441784	student	20	"bugs with orange antennae or wings"	bugs_orange_antennae_or_wings	0	"Hi"	0.719	chatMessage
+mp-game-6	pilot	9543-a73c9b95-a58d-4bf3-836a-59cca31e58db	1547831473193	explorer	20	"bugs with orange antennae or wings"	bugs_orange_antennae_or_wings	0	"HOW ARE YOU"	11.783	chatMessage
+mp-game-6	pilot	9543-a73c9b95-a58d-4bf3-836a-59cca31e58db	1547831481159	student	20	"bugs with orange antennae or wings"	bugs_orange_antennae_or_wings	0	"Good and you?"	5.152	chatMessage
+mp-game-6	pilot	9543-a73c9b95-a58d-4bf3-836a-59cca31e58db	1547831498931	explorer	20	"bugs with orange antennae or wings"	bugs_orange_antennae_or_wings	0	"I'M GOOD "	11.928	chatMessage
+mp-game-6	pilot	9543-a73c9b95-a58d-4bf3-836a-59cca31e58db	1547831523293	explorer	20	"bugs with orange antennae or wings"	bugs_orange_antennae_or_wings	0	"GOOD PLAY"	10.542	chatMessage
+mp-game-6	pilot	9543-a73c9b95-a58d-4bf3-836a-59cca31e58db	1547831532534	student	20	"bugs with orange antennae or wings"	bugs_orange_antennae_or_wings	0	"ready "	3.901	chatMessage
+mp-game-6	pilot	9543-a73c9b95-a58d-4bf3-836a-59cca31e58db	1547831556430	explorer	20	"bugs with orange antennae or wings"	bugs_orange_antennae_or_wings	0	"I'M RAEDY"	16.48	chatMessage
+mp-game-6	pilot	9543-a73c9b95-a58d-4bf3-836a-59cca31e58db	1547831590782	student	20	"bugs with orange antennae or wings"	bugs_orange_antennae_or_wings	0	"tell me about the properties of the species"	11.856	chatMessage
+mp-game-6	pilot	9543-a73c9b95-a58d-4bf3-836a-59cca31e58db	1547831649033	explorer	20	"bugs with orange antennae or wings"	bugs_orange_antennae_or_wings	0	"GEDT SERT"	15.506	chatMessage
+mp-game-6	pilot	9543-a73c9b95-a58d-4bf3-836a-59cca31e58db	1547831783405	student	0	"flowers with orange stems"	flowers_orange_stems	1	"Hi"	2.607	chatMessage
+mp-game-6	pilot	9543-a73c9b95-a58d-4bf3-836a-59cca31e58db	1547831784982	explorer	0	"flowers with orange stems"	flowers_orange_stems	1	"hi"	2.435	chatMessage
+mp-game-6	pilot	9543-a73c9b95-a58d-4bf3-836a-59cca31e58db	1547831802796	student	0	"flowers with orange stems"	flowers_orange_stems	1	"What can you tell me?"	4.984	chatMessage
+mp-game-6	pilot	9543-a73c9b95-a58d-4bf3-836a-59cca31e58db	1547831823252	explorer	0	"flowers with orange stems"	flowers_orange_stems	1	"get sart"	7.925	chatMessage
+mp-game-6	pilot	9543-a73c9b95-a58d-4bf3-836a-59cca31e58db	1547831829896	student	0	"flowers with orange stems"	flowers_orange_stems	1	"?"	1.027	chatMessage
+mp-game-6	pilot	9543-a73c9b95-a58d-4bf3-836a-59cca31e58db	1547831844662	explorer	0	"flowers with orange stems"	flowers_orange_stems	1	"i'm ready"	8.144	chatMessage
+mp-game-6	pilot	9543-a73c9b95-a58d-4bf3-836a-59cca31e58db	1547832052942	explorer	10	"fish with orange bodies and purple stripes"	fish_orange_bodies_purple_stripes	2	"hi"	1.619	chatMessage
+mp-game-6	pilot	9543-a73c9b95-a58d-4bf3-836a-59cca31e58db	1547832064052	student	10	"fish with orange bodies and purple stripes"	fish_orange_bodies_purple_stripes	2	"hi can you tell me anything about the species?"	9.656	chatMessage
+mp-game-6	pilot	9543-a73c9b95-a58d-4bf3-836a-59cca31e58db	1547832085492	explorer	10	"fish with orange bodies and purple stripes"	fish_orange_bodies_purple_stripes	2	"yes."	11.321	chatMessage
+mp-game-6	pilot	9543-a73c9b95-a58d-4bf3-836a-59cca31e58db	1547832095283	student	10	"fish with orange bodies and purple stripes"	fish_orange_bodies_purple_stripes	2	"what can you tell me?"	4.264	chatMessage
+mp-game-6	pilot	9543-a73c9b95-a58d-4bf3-836a-59cca31e58db	1547832305254	student	40	"trees with (purple trunks or white leaves) and orange berries"	trees_purple_trunks_or_white_leaves_orange_berries	3	"hi"	0.793	chatMessage
+mp-game-6	pilot	9543-a73c9b95-a58d-4bf3-836a-59cca31e58db	1547832310175	explorer	40	"trees with (purple trunks or white leaves) and orange berries"	trees_purple_trunks_or_white_leaves_orange_berries	3	"hi"	1.752	chatMessage
+mp-game-6	pilot	9543-a73c9b95-a58d-4bf3-836a-59cca31e58db	1547832436103	explorer	30	"birds with (purple wings and white crests) or white tails"	birds_purple_wings_white_crests_or_white_tails	4	"hi"	2.209	chatMessage
+mp-game-6	pilot	9543-a73c9b95-a58d-4bf3-836a-59cca31e58db	1547832453521	student	30	"birds with (purple wings and white crests) or white tails"	birds_purple_wings_white_crests_or_white_tails	4	"Hi can you tell me anything??"	7.455	chatMessage
+mp-game-6	pilot	9543-a73c9b95-a58d-4bf3-836a-59cca31e58db	1547832471681	explorer	30	"birds with (purple wings and white crests) or white tails"	birds_purple_wings_white_crests_or_white_tails	4	"yes"	4.194	chatMessage
+mp-game-6	pilot	9543-a73c9b95-a58d-4bf3-836a-59cca31e58db	1547832495306	student	30	"birds with (purple wings and white crests) or white tails"	birds_purple_wings_white_crests_or_white_tails	4	"ok?  what am I supposed to look for?"	16.431	chatMessage
