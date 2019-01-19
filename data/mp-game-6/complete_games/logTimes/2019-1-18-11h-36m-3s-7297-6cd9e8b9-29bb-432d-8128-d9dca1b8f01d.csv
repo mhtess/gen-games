@@ -1,0 +1,11 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	train	test	chat	eventType
+mp-game-6	pilot	7297-6cd9e8b9-29bb-432d-8128-d9dca1b8f01d	1547840163649	student	49	"birds with (white crests or orange wings) and tails"	birds_white_crests_or_orange_wings_tails	0	-1	25.793	105.199	logTimes
+mp-game-6	pilot	7297-6cd9e8b9-29bb-432d-8128-d9dca1b8f01d	1547840197409	explorer	49	"birds with (white crests or orange wings) and tails"	birds_white_crests_or_orange_wings_tails	0	201.027	58.257	105.624	logTimes
+mp-game-6	pilot	7297-6cd9e8b9-29bb-432d-8128-d9dca1b8f01d	1547840594135	student	39	"bugs with (white legs and purple wings) or orange antennae"	bugs_white_legs_purple_wings_or_orange_antennae	1	-1	35.963	94.635	logTimes
+mp-game-6	pilot	7297-6cd9e8b9-29bb-432d-8128-d9dca1b8f01d	1547840635035	explorer	39	"bugs with (white legs and purple wings) or orange antennae"	bugs_white_legs_purple_wings_or_orange_antennae	1	157.24	75.741	95.004	logTimes
+mp-game-6	pilot	7297-6cd9e8b9-29bb-432d-8128-d9dca1b8f01d	1547840836462	explorer	19	"flowers with orange petals and purple centers"	flowers_orange_petals_purple_centers	2	96.031	43.126	45.902	logTimes
+mp-game-6	pilot	7297-6cd9e8b9-29bb-432d-8128-d9dca1b8f01d	1547840843082	student	19	"flowers with orange petals and purple centers"	flowers_orange_petals_purple_centers	2	-1	51.045	45.534	logTimes
+mp-game-6	pilot	7297-6cd9e8b9-29bb-432d-8128-d9dca1b8f01d	1547841114317	explorer	9	"trees without leaves"	trees_without_leaves	3	127.262	55.971	49.761	logTimes
+mp-game-6	pilot	7297-6cd9e8b9-29bb-432d-8128-d9dca1b8f01d	1547841160287	student	9	"trees without leaves"	trees_without_leaves	3	-1	118.682	49.379	logTimes
+mp-game-6	pilot	7297-6cd9e8b9-29bb-432d-8128-d9dca1b8f01d	1547841360681	explorer	29	"fish with white stripes or whiskers"	fish_white_stripes_or_whiskers	4	87.384	46.437	50.997	logTimes
+mp-game-6	pilot	7297-6cd9e8b9-29bb-432d-8128-d9dca1b8f01d	1547841371626	student	29	"fish with white stripes or whiskers"	fish_white_stripes_or_whiskers	4	-1	58.419	50.633	logTimes

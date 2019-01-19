@@ -1,0 +1,11 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	train	test	chat	eventType
+mp-game-6	pilot	2144-b256dace-14e6-4532-a330-1a1d6dd682c4	1547832925300	student	2	"fish with white fangs"	fish_fangs	0	-1	49.905	104.217	logTimes
+mp-game-6	pilot	2144-b256dace-14e6-4532-a330-1a1d6dd682c4	1547832952717	explorer	2	"fish with white fangs"	fish_fangs	0	405.002	75.262	105.546	logTimes
+mp-game-6	pilot	2144-b256dace-14e6-4532-a330-1a1d6dd682c4	1547833516621	student	22	"birds with orange tails or white wings"	birds_orange_tails_or_white_wings	1	-1	39.03	69.86	logTimes
+mp-game-6	pilot	2144-b256dace-14e6-4532-a330-1a1d6dd682c4	1547833563471	explorer	22	"birds with orange tails or white wings"	birds_orange_tails_or_white_wings	1	402.919	82.878	70.216	logTimes
+mp-game-6	pilot	2144-b256dace-14e6-4532-a330-1a1d6dd682c4	1547834043125	student	42	"flowers with (purple centers or orange stems) and thorns"	flowers_purple_centers_or_orange_stems_with_thorns	2	-1	62.735	83.647	logTimes
+mp-game-6	pilot	2144-b256dace-14e6-4532-a330-1a1d6dd682c4	1547834165458	explorer	42	"flowers with (purple centers or orange stems) and thorns"	flowers_purple_centers_or_orange_stems_with_thorns	2	272.453	182.792	84	logTimes
+mp-game-6	pilot	2144-b256dace-14e6-4532-a330-1a1d6dd682c4	1547834534897	student	32	"Tree with (orange berries and purple trunks) or white leaves"	trees_orange_berries_purple_trunks_or_white_leaves	3	-1	44.43	65.666	logTimes
+mp-game-6	pilot	2144-b256dace-14e6-4532-a330-1a1d6dd682c4	1547834587927	explorer	32	"Tree with (orange berries and purple trunks) or white leaves"	trees_orange_berries_purple_trunks_or_white_leaves	3	223.687	94.888	66.023	logTimes
+mp-game-6	pilot	2144-b256dace-14e6-4532-a330-1a1d6dd682c4	1547834983411	student	12	"bugs with purple legs and white heads"	bugs_purple_legs_white_heads	4	-1	17.371	42.819	logTimes
+mp-game-6	pilot	2144-b256dace-14e6-4532-a330-1a1d6dd682c4	1547834989213	explorer	12	"bugs with purple legs and white heads"	bugs_purple_legs_white_heads	4	296.693	19.674	43.19	logTimes

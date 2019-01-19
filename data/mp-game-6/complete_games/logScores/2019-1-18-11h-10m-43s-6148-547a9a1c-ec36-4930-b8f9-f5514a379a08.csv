@@ -1,0 +1,11 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	hits	misses	correct_rejections	false_alarms	score	eventType
+mp-game-6	pilot	6148-547a9a1c-ec36-4930-b8f9-f5514a379a08	1547838643697	explorer	13	"bugs with wings and antennae"	bugs_wings_antennae	0	0	34	15	1	0	logScores
+mp-game-6	pilot	6148-547a9a1c-ec36-4930-b8f9-f5514a379a08	1547838666337	student	13	"bugs with wings and antennae"	bugs_wings_antennae	0	4	30	16	0	4	logScores
+mp-game-6	pilot	6148-547a9a1c-ec36-4930-b8f9-f5514a379a08	1547839076470	student	33	"trees with (leaves and berries) or orange trunks"	trees_leaves_berries_or_orange_trunks	1	11	27	12	0	11	logScores
+mp-game-6	pilot	6148-547a9a1c-ec36-4930-b8f9-f5514a379a08	1547839099932	explorer	33	"trees with (leaves and berries) or orange trunks"	trees_leaves_berries_or_orange_trunks	1	38	0	12	0	38	logScores
+mp-game-6	pilot	6148-547a9a1c-ec36-4930-b8f9-f5514a379a08	1547840025200	explorer	43	"flowers with (purple stems or thorns) and white centers"	flowers_purple_stems_or_thorns_white_centers	2	0	12	35	3	0	logScores
+mp-game-6	pilot	6148-547a9a1c-ec36-4930-b8f9-f5514a379a08	1547840089539	student	43	"flowers with (purple stems or thorns) and white centers"	flowers_purple_stems_or_thorns_white_centers	2	1	11	35	3	0	logScores
+mp-game-6	pilot	6148-547a9a1c-ec36-4930-b8f9-f5514a379a08	1547840217670	explorer	3	"fish with whiskers"	fish_whiskers	3	27	0	23	0	27	logScores
+mp-game-6	pilot	6148-547a9a1c-ec36-4930-b8f9-f5514a379a08	1547840219295	student	3	"fish with whiskers"	fish_whiskers	3	27	0	23	0	27	logScores
+mp-game-6	pilot	6148-547a9a1c-ec36-4930-b8f9-f5514a379a08	1547840462692	student	23	"birds with orange crests or purple wings"	birds_orange_crests_or_purple_wings	4	3	24	23	0	3	logScores
+mp-game-6	pilot	6148-547a9a1c-ec36-4930-b8f9-f5514a379a08	1547840496410	explorer	23	"birds with orange crests or purple wings"	birds_orange_crests_or_purple_wings	4	18	9	23	0	18	logScores

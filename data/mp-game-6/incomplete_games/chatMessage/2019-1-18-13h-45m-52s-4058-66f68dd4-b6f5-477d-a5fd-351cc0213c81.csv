@@ -1,0 +1,2 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	text	reactionTime	eventType
+mp-game-6	pilot	4058-66f68dd4-b6f5-477d-a5fd-351cc0213c81	1547847952888	student	34	"flowers with (purple stems and white petals) or orange centers"	flowers_purple_stems_white_petals_or_orange_centers	0	"Hi, what all should I know about the properties that will help me?"	16.65	chatMessage

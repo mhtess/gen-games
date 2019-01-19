@@ -1,0 +1,5 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	train	test	chat	eventType
+mp-game-6	pilot	2389-e2cdf843-2d9b-42f5-956c-0d604f2fb739	1547846719852	explorer	34	"flowers with (purple stems and white petals) or orange centers"	flowers_purple_stems_white_petals_or_orange_centers	0	209.073	47.009	108.579	logTimes
+mp-game-6	pilot	2389-e2cdf843-2d9b-42f5-956c-0d604f2fb739	1547846795202	student	34	"flowers with (purple stems and white petals) or orange centers"	flowers_purple_stems_white_petals_or_orange_centers	0	-1	120.815	108.077	logTimes
+mp-game-6	pilot	2389-e2cdf843-2d9b-42f5-956c-0d604f2fb739	1547847116239	explorer	44	"fish with (orange bodies or fangs) and whiskers"	fish_orange_bodies_or_fangs_whiskers	1	122.895	32.864	113.121	logTimes
+mp-game-6	pilot	2389-e2cdf843-2d9b-42f5-956c-0d604f2fb739	1547847187661	student	44	"fish with (orange bodies or fangs) and whiskers"	fish_orange_bodies_or_fangs_whiskers	1	-1	108.214	112.728	logTimes

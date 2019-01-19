@@ -1,0 +1,4 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	train	test	chat	eventType
+mp-game-6	pilot	0365-20c149d8-76f8-4515-98eb-c74ffb719db5	1547787686833	explorer	32	"Tree with (orange berries and purple trunks) or white leaves"	trees_orange_berries_purple_trunks_or_white_leaves	0	218.138	45.171	202.121	logTimes
+mp-game-6	pilot	0365-20c149d8-76f8-4515-98eb-c74ffb719db5	1547787710289	student	32	"Tree with (orange berries and purple trunks) or white leaves"	trees_orange_berries_purple_trunks_or_white_leaves	0	-1	69.217	201.265	logTimes
+mp-game-6	pilot	0365-20c149d8-76f8-4515-98eb-c74ffb719db5	1547788185639	student	22	"birds with orange tails or white wings"	birds_orange_tails_or_white_wings	1	-1	53.717	210.225	logTimes

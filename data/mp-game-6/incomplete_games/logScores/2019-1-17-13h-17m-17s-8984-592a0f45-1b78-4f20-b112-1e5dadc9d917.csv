@@ -1,0 +1,5 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	hits	misses	correct_rejections	false_alarms	score	eventType
+mp-game-6	pilot	8984-592a0f45-1b78-4f20-b112-1e5dadc9d917	1547759837280	explorer	4	"bugs with white orange head"	bugs_orange_head	0	2	21	27	0	2	logScores
+mp-game-6	pilot	8984-592a0f45-1b78-4f20-b112-1e5dadc9d917	1547759860231	student	4	"bugs with white orange head"	bugs_orange_head	0	23	0	0	27	0	logScores
+mp-game-6	pilot	8984-592a0f45-1b78-4f20-b112-1e5dadc9d917	1547760163504	student	44	"fish with (orange bodies or fangs) and whiskers"	fish_orange_bodies_or_fangs_whiskers	1	16	0	24	10	6	logScores
+mp-game-6	pilot	8984-592a0f45-1b78-4f20-b112-1e5dadc9d917	1547760165488	explorer	44	"fish with (orange bodies or fangs) and whiskers"	fish_orange_bodies_or_fangs_whiskers	1	16	0	23	11	5	logScores

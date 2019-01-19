@@ -1,0 +1,8 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	text	reactionTime	eventType
+mp-game-6	pilot	4148-1dd690cb-2919-4a89-bd2f-5c8baa992a73	1547834530929	explorer	46	"bugs with (antennae or wings) and purple bodies"	bugs_antennae_or_wings_purple_bodies	0	"Any alien that is made up of only 2 colors is not a luzak"	10.656	chatMessage
+mp-game-6	pilot	4148-1dd690cb-2919-4a89-bd2f-5c8baa992a73	1547834564321	student	46	"bugs with (antennae or wings) and purple bodies"	bugs_antennae_or_wings_purple_bodies	0	"Is there anything about shape I need to know?"	9.697	chatMessage
+mp-game-6	pilot	4148-1dd690cb-2919-4a89-bd2f-5c8baa992a73	1547834578522	explorer	46	"bugs with (antennae or wings) and purple bodies"	bugs_antennae_or_wings_purple_bodies	0	"aliens without antenna tend to not be luzaks"	6.144	chatMessage
+mp-game-6	pilot	4148-1dd690cb-2919-4a89-bd2f-5c8baa992a73	1547834583057	explorer	46	"bugs with (antennae or wings) and purple bodies"	bugs_antennae_or_wings_purple_bodies	0	"they are all shaped the same "	4.055	chatMessage
+mp-game-6	pilot	4148-1dd690cb-2919-4a89-bd2f-5c8baa992a73	1547834639259	student	46	"bugs with (antennae or wings) and purple bodies"	bugs_antennae_or_wings_purple_bodies	0	"Is there anything else I should know?"	6.617	chatMessage
+mp-game-6	pilot	4148-1dd690cb-2919-4a89-bd2f-5c8baa992a73	1547834643731	explorer	46	"bugs with (antennae or wings) and purple bodies"	bugs_antennae_or_wings_purple_bodies	0	"nope"	2.407	chatMessage
+mp-game-6	pilot	4148-1dd690cb-2919-4a89-bd2f-5c8baa992a73	1547834652000	student	46	"bugs with (antennae or wings) and purple bodies"	bugs_antennae_or_wings_purple_bodies	0	"OK, thanks!"	3.578	chatMessage

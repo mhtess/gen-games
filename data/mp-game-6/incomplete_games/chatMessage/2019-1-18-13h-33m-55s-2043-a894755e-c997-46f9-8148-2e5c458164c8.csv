@@ -1,0 +1,6 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	text	reactionTime	eventType
+mp-game-6	pilot	2043-a894755e-c997-46f9-8148-2e5c458164c8	1547847235992	explorer	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	0	"Hello. Ollers have white stripes and 3 whiskers"	10.496	chatMessage
+mp-game-6	pilot	2043-a894755e-c997-46f9-8148-2e5c458164c8	1547847248047	student	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	0	"what else do the ollers do"	7.578	chatMessage
+mp-game-6	pilot	2043-a894755e-c997-46f9-8148-2e5c458164c8	1547847261936	explorer	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	0	"That's about the only thing that distinquishes them from the rest"	8.806	chatMessage
+mp-game-6	pilot	2043-a894755e-c997-46f9-8148-2e5c458164c8	1547847269118	student	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	0	"ok thanks"	3.044	chatMessage
+mp-game-6	pilot	2043-a894755e-c997-46f9-8148-2e5c458164c8	1547847609070	explorer	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1	"Zorbs all have at least one gold feather"	10.817	chatMessage

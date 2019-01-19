@@ -1,0 +1,11 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	train	test	chat	eventType
+mp-game-6	pilot	5282-1d9ae0ed-9606-4151-845c-96897fd4d6fc	1547846902488	explorer	7	"birds with purple tails"	birds_purple_tails	0	64.91	32.773	82.521	logTimes
+mp-game-6	pilot	5282-1d9ae0ed-9606-4151-845c-96897fd4d6fc	1547846919474	student	7	"birds with purple tails"	birds_purple_tails	0	-1	46.042	82.059	logTimes
+mp-game-6	pilot	5282-1d9ae0ed-9606-4151-845c-96897fd4d6fc	1547847351385	explorer	27	"flowers with orange stems or thorns"	flowers_orange_stems_or_thorns	1	299.788	29.035	84.386	logTimes
+mp-game-6	pilot	5282-1d9ae0ed-9606-4151-845c-96897fd4d6fc	1547847374910	student	27	"flowers with orange stems or thorns"	flowers_orange_stems_or_thorns	1	-1	43.256	83.78	logTimes
+mp-game-6	pilot	5282-1d9ae0ed-9606-4151-845c-96897fd4d6fc	1547847514968	explorer	17	"trees with purple leaves and berries"	trees_purple_leaves_berries	2	43.782	27.415	50.01	logTimes
+mp-game-6	pilot	5282-1d9ae0ed-9606-4151-845c-96897fd4d6fc	1547847549117	student	17	"trees with purple leaves and berries"	trees_purple_leaves_berries	2	-1	60.956	49.586	logTimes
+mp-game-6	pilot	5282-1d9ae0ed-9606-4151-845c-96897fd4d6fc	1547847706139	explorer	37	"fish with (white bodies and orange stripes) or fangs"	fish_white_bodies_orange_stripes_or_fangs	3	59.587	46.894	37.789	logTimes
+mp-game-6	pilot	5282-1d9ae0ed-9606-4151-845c-96897fd4d6fc	1547847716505	student	37	"fish with (white bodies and orange stripes) or fangs"	fish_white_bodies_orange_stripes_or_fangs	3	-1	57.207	37.399	logTimes
+mp-game-6	pilot	5282-1d9ae0ed-9606-4151-845c-96897fd4d6fc	1547848172391	explorer	47	"bugs with (white heads or orange antennae) and purple legs"	bugs_white_heads_or_orange_antennae_purple_legs	4	324.658	34.34	70.614	logTimes
+mp-game-6	pilot	5282-1d9ae0ed-9606-4151-845c-96897fd4d6fc	1547848280907	student	47	"bugs with (white heads or orange antennae) and purple legs"	bugs_white_heads_or_orange_antennae_purple_legs	4	-1	142.009	70.213	logTimes

@@ -1,0 +1,6 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	text	reactionTime	eventType
+mp-game-6	pilot	1905-b24fec4a-2fcc-4edc-aadc-d7b9443b5b22	1547843949029	explorer	44	"fish with (orange bodies or fangs) and whiskers"	fish_orange_bodies_or_fangs_whiskers	0	"the luzaks have stripes, some have whiskers, and some are pink and white"	28.387	chatMessage
+mp-game-6	pilot	1905-b24fec4a-2fcc-4edc-aadc-d7b9443b5b22	1547844012253	student	44	"fish with (orange bodies or fangs) and whiskers"	fish_orange_bodies_or_fangs_whiskers	0	"super "	9.714	chatMessage
+mp-game-6	pilot	1905-b24fec4a-2fcc-4edc-aadc-d7b9443b5b22	1547844047005	explorer	44	"fish with (orange bodies or fangs) and whiskers"	fish_orange_bodies_or_fangs_whiskers	0	"the ones with stripes were more often than not white. the ones that were pink more often than not had whiskers"	34.382	chatMessage
+mp-game-6	pilot	1905-b24fec4a-2fcc-4edc-aadc-d7b9443b5b22	1547844086722	student	44	"fish with (orange bodies or fangs) and whiskers"	fish_orange_bodies_or_fangs_whiskers	0	"yea,somewhat agree"	26.454	chatMessage
+mp-game-6	pilot	1905-b24fec4a-2fcc-4edc-aadc-d7b9443b5b22	1547844125669	student	44	"fish with (orange bodies or fangs) and whiskers"	fish_orange_bodies_or_fangs_whiskers	0	"hello"	13.294	chatMessage

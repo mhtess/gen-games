@@ -1,0 +1,11 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	train	test	chat	eventType
+mp-game-6	pilot	8238-403f8254-4ada-417e-96bd-57f94e24e8fb	1547847290124	student	45	"fish with (white stripes or purple bodies) and whiskers"	fish_white_stripes_or_purple_bodies_whiskers	0	-1	536.431	232.652	logTimes
+mp-game-6	pilot	8238-403f8254-4ada-417e-96bd-57f94e24e8fb	1547847292509	explorer	45	"fish with (white stripes or purple bodies) and whiskers"	fish_white_stripes_or_purple_bodies_whiskers	0	75.261	531.591	233.051	logTimes
+mp-game-6	pilot	8238-403f8254-4ada-417e-96bd-57f94e24e8fb	1547847436532	student	15	"birds with orange wings and tails"	birds_orange_wings_tails	1	-1	21.581	60.841	logTimes
+mp-game-6	pilot	8238-403f8254-4ada-417e-96bd-57f94e24e8fb	1547847438346	explorer	15	"birds with orange wings and tails"	birds_orange_wings_tails	1	34.284	22.365	61.23	logTimes
+mp-game-6	pilot	8238-403f8254-4ada-417e-96bd-57f94e24e8fb	1547847514319	explorer	5	"bugs without wings"	bugs_without_wings	2	22.909	15.856	22.942	logTimes
+mp-game-6	pilot	8238-403f8254-4ada-417e-96bd-57f94e24e8fb	1547847516126	student	5	"bugs without wings"	bugs_without_wings	2	-1	16.649	22.532	logTimes
+mp-game-6	pilot	8238-403f8254-4ada-417e-96bd-57f94e24e8fb	1547847585503	explorer	35	"flowers with (thorns and purple petals) or orange stems"	flowers_thorns_purple_petals_or_orange_stems	3	21.959	15.513	21.201	logTimes
+mp-game-6	pilot	8238-403f8254-4ada-417e-96bd-57f94e24e8fb	1547847587224	student	35	"flowers with (thorns and purple petals) or orange stems"	flowers_thorns_purple_petals_or_orange_stems	3	-1	12.313	20.816	logTimes
+mp-game-6	pilot	8238-403f8254-4ada-417e-96bd-57f94e24e8fb	1547847655236	student	25	"trees with white leaves or orange berries"	trees_white_leaves_or_orange_berries	4	-1	11.031	10.265	logTimes
+mp-game-6	pilot	8238-403f8254-4ada-417e-96bd-57f94e24e8fb	1547847656937	explorer	25	"trees with white leaves or orange berries"	trees_white_leaves_or_orange_berries	4	25.474	23.126	10.654	logTimes

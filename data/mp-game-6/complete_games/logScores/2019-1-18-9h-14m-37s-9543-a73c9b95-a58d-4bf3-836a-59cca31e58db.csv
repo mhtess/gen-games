@@ -1,0 +1,11 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	hits	misses	correct_rejections	false_alarms	score	eventType
+mp-game-6	pilot	9543-a73c9b95-a58d-4bf3-836a-59cca31e58db	1547831677612	explorer	20	"bugs with orange antennae or wings"	bugs_orange_antennae_or_wings	0	9	38	2	1	8	logScores
+mp-game-6	pilot	9543-a73c9b95-a58d-4bf3-836a-59cca31e58db	1547831716909	student	20	"bugs with orange antennae or wings"	bugs_orange_antennae_or_wings	0	22	25	3	0	22	logScores
+mp-game-6	pilot	9543-a73c9b95-a58d-4bf3-836a-59cca31e58db	1547831883471	student	0	"flowers with orange stems"	flowers_orange_stems	1	12	10	16	12	0	logScores
+mp-game-6	pilot	9543-a73c9b95-a58d-4bf3-836a-59cca31e58db	1547831897894	explorer	0	"flowers with orange stems"	flowers_orange_stems	1	0	22	28	0	0	logScores
+mp-game-6	pilot	9543-a73c9b95-a58d-4bf3-836a-59cca31e58db	1547832201698	explorer	10	"fish with orange bodies and purple stripes"	fish_orange_bodies_purple_stripes	2	0	6	34	10	0	logScores
+mp-game-6	pilot	9543-a73c9b95-a58d-4bf3-836a-59cca31e58db	1547832224823	student	10	"fish with orange bodies and purple stripes"	fish_orange_bodies_purple_stripes	2	0	6	44	0	0	logScores
+mp-game-6	pilot	9543-a73c9b95-a58d-4bf3-836a-59cca31e58db	1547832336946	student	40	"trees with (purple trunks or white leaves) and orange berries"	trees_purple_trunks_or_white_leaves_orange_berries	3	1	5	37	7	0	logScores
+mp-game-6	pilot	9543-a73c9b95-a58d-4bf3-836a-59cca31e58db	1547832368300	explorer	40	"trees with (purple trunks or white leaves) and orange berries"	trees_purple_trunks_or_white_leaves_orange_berries	3	0	6	34	10	0	logScores
+mp-game-6	pilot	9543-a73c9b95-a58d-4bf3-836a-59cca31e58db	1547832531197	student	30	"birds with (purple wings and white crests) or white tails"	birds_purple_wings_white_crests_or_white_tails	4	0	10	30	10	0	logScores
+mp-game-6	pilot	9543-a73c9b95-a58d-4bf3-836a-59cca31e58db	1547832531542	explorer	30	"birds with (purple wings and white crests) or white tails"	birds_purple_wings_white_crests_or_white_tails	4	0	10	33	7	0	logScores

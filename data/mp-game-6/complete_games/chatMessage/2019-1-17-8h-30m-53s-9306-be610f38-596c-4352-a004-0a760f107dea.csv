@@ -1,0 +1,10 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	text	reactionTime	eventType
+mp-game-6	pilot	9306-be610f38-596c-4352-a004-0a760f107dea	1547742653945	explorer	13	"bugs with wings and antennae"	bugs_wings_antennae	0	"Ollers should have wings, antennae, a set of about eight legs and can be any combination of colors."	60.795	chatMessage
+mp-game-6	pilot	9306-be610f38-596c-4352-a004-0a760f107dea	1547742673468	student	13	"bugs with wings and antennae"	bugs_wings_antennae	0	"yes "	5.658	chatMessage
+mp-game-6	pilot	9306-be610f38-596c-4352-a004-0a760f107dea	1547742689092	explorer	13	"bugs with wings and antennae"	bugs_wings_antennae	0	"That's it."	5.363	chatMessage
+mp-game-6	pilot	9306-be610f38-596c-4352-a004-0a760f107dea	1547742705146	student	13	"bugs with wings and antennae"	bugs_wings_antennae	0	"ok "	10.152	chatMessage
+mp-game-6	pilot	9306-be610f38-596c-4352-a004-0a760f107dea	1547743268190	explorer	23	"birds with orange crests or purple wings"	birds_orange_crests_or_purple_wings	1	"I'm not sure at all about this. It's something about the combination of colors and one part of their bodies."	42.901	chatMessage
+mp-game-6	pilot	9306-be610f38-596c-4352-a004-0a760f107dea	1547743786775	explorer	43	"flowers with (purple stems or thorns) and white centers"	flowers_purple_stems_or_thorns_white_centers	2	"This flower should have a certain combination of white pistil and thorns (or none)"	64.14	chatMessage
+mp-game-6	pilot	9306-be610f38-596c-4352-a004-0a760f107dea	1547743820689	explorer	43	"flowers with (purple stems or thorns) and white centers"	flowers_purple_stems_or_thorns_white_centers	2	"I'm not sure about the filaments, at least they're not always present."	29.699	chatMessage
+mp-game-6	pilot	9306-be610f38-596c-4352-a004-0a760f107dea	1547744465807	explorer	33	"trees with (leaves and berries) or orange trunks"	trees_leaves_berries_or_orange_trunks	3	"Zorbs should have flowers AND fruits!"	22.901	chatMessage
+mp-game-6	pilot	9306-be610f38-596c-4352-a004-0a760f107dea	1547744774682	explorer	3	"fish with whiskers"	fish_whiskers	4	"I think this one is easy morseth should always have barbels"	33.864	chatMessage

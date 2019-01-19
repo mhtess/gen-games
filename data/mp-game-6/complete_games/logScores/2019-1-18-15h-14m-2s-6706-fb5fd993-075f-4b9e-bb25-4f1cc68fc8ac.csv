@@ -1,0 +1,11 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	hits	misses	correct_rejections	false_alarms	score	eventType
+mp-game-6	pilot	6706-fb5fd993-075f-4b9e-bb25-4f1cc68fc8ac	1547853242374	student	26	"flowers with purple petals or thorns"	flowers_purple_petals_or_thorns	0	29	9	12	0	29	logScores
+mp-game-6	pilot	6706-fb5fd993-075f-4b9e-bb25-4f1cc68fc8ac	1547853449085	explorer	26	"flowers with purple petals or thorns"	flowers_purple_petals_or_thorns	0	1	37	11	1	0	logScores
+mp-game-6	pilot	6706-fb5fd993-075f-4b9e-bb25-4f1cc68fc8ac	1547853874724	student	36	"fish with (orange bodies and purple stripes) or whiskers"	fish_orange_bodies_purple_stripes_or_whiskers	1	5	24	21	0	5	logScores
+mp-game-6	pilot	6706-fb5fd993-075f-4b9e-bb25-4f1cc68fc8ac	1547853903482	explorer	36	"fish with (orange bodies and purple stripes) or whiskers"	fish_orange_bodies_purple_stripes_or_whiskers	1	17	12	21	0	17	logScores
+mp-game-6	pilot	6706-fb5fd993-075f-4b9e-bb25-4f1cc68fc8ac	1547854267511	explorer	16	"trees with orange trunks and berries"	trees_orange_trunks_berries	2	0	8	42	0	0	logScores
+mp-game-6	pilot	6706-fb5fd993-075f-4b9e-bb25-4f1cc68fc8ac	1547854275967	student	16	"trees with orange trunks and berries"	trees_orange_trunks_berries	2	6	2	15	27	0	logScores
+mp-game-6	pilot	6706-fb5fd993-075f-4b9e-bb25-4f1cc68fc8ac	1547854691400	explorer	6	"birds with tails"	birds_tails	3	10	17	23	0	10	logScores
+mp-game-6	pilot	6706-fb5fd993-075f-4b9e-bb25-4f1cc68fc8ac	1547854699528	student	6	"birds with tails"	birds_tails	3	14	13	23	0	14	logScores
+mp-game-6	pilot	6706-fb5fd993-075f-4b9e-bb25-4f1cc68fc8ac	1547855074498	explorer	46	"bugs with (antennae or wings) and purple bodies"	bugs_antennae_or_wings_purple_bodies	4	2	22	24	2	0	logScores
+mp-game-6	pilot	6706-fb5fd993-075f-4b9e-bb25-4f1cc68fc8ac	1547855091411	student	46	"bugs with (antennae or wings) and purple bodies"	bugs_antennae_or_wings_purple_bodies	4	18	6	7	19	0	logScores

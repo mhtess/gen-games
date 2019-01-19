@@ -1,0 +1,5 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	text	reactionTime	eventType
+mp-game-6	pilot	3821-e96addfb-5727-457a-a7f2-10378fa8e4d5	1547831098893	explorer	5	"bugs without wings"	bugs_without_wings	0	"hello?"	1.891	chatMessage
+mp-game-6	pilot	3821-e96addfb-5727-457a-a7f2-10378fa8e4d5	1547831128698	explorer	5	"bugs without wings"	bugs_without_wings	0	"is anyone here?"	3.132	chatMessage
+mp-game-6	pilot	3821-e96addfb-5727-457a-a7f2-10378fa8e4d5	1547831138920	student	5	"bugs without wings"	bugs_without_wings	0	"yes"	0.331	chatMessage
+mp-game-6	pilot	3821-e96addfb-5727-457a-a7f2-10378fa8e4d5	1547831154567	student	5	"bugs without wings"	bugs_without_wings	0	"tell me about this thing"	2.239	chatMessage

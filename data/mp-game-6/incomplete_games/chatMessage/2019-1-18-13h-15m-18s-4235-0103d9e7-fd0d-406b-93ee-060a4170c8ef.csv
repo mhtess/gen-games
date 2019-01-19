@@ -1,0 +1,13 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	text	reactionTime	eventType
+mp-game-6	pilot	4235-0103d9e7-fd0d-406b-93ee-060a4170c8ef	1547846118616	student	3	"fish with whiskers"	fish_whiskers	0	"So what are the properties I need to know?"	12.44	chatMessage
+mp-game-6	pilot	4235-0103d9e7-fd0d-406b-93ee-060a4170c8ef	1547846137192	explorer	3	"fish with whiskers"	fish_whiskers	0	"I found that a Moreth has one defining feature, they all have 3 whiskers. That's the property"	27.677	chatMessage
+mp-game-6	pilot	4235-0103d9e7-fd0d-406b-93ee-060a4170c8ef	1547846171911	explorer	3	"fish with whiskers"	fish_whiskers	0	"The colors, stripes, etc doesn't matter. Just that they all have 3 long whiskers under it's chin."	18.023	chatMessage
+mp-game-6	pilot	4235-0103d9e7-fd0d-406b-93ee-060a4170c8ef	1547846199977	student	3	"fish with whiskers"	fish_whiskers	0	"Anything else I should know?"	7.024	chatMessage
+mp-game-6	pilot	4235-0103d9e7-fd0d-406b-93ee-060a4170c8ef	1547846212058	explorer	3	"fish with whiskers"	fish_whiskers	0	"That's the only thing I found that mattered."	9.66	chatMessage
+mp-game-6	pilot	4235-0103d9e7-fd0d-406b-93ee-060a4170c8ef	1547846220305	student	3	"fish with whiskers"	fish_whiskers	0	"Thanks so much!"	4.179	chatMessage
+mp-game-6	pilot	4235-0103d9e7-fd0d-406b-93ee-060a4170c8ef	1547846224382	explorer	3	"fish with whiskers"	fish_whiskers	0	"yw"	0.598	chatMessage
+mp-game-6	pilot	4235-0103d9e7-fd0d-406b-93ee-060a4170c8ef	1547846377438	explorer	33	"trees with (leaves and berries) or orange trunks"	trees_leaves_berries_or_orange_trunks	1	"The zorb had flowers and the round berry looking things on the leaves. "	16.007	chatMessage
+mp-game-6	pilot	4235-0103d9e7-fd0d-406b-93ee-060a4170c8ef	1547846397657	student	33	"trees with (leaves and berries) or orange trunks"	trees_leaves_berries_or_orange_trunks	1	"Cool.. Anything else"	6.791	chatMessage
+mp-game-6	pilot	4235-0103d9e7-fd0d-406b-93ee-060a4170c8ef	1547846402472	explorer	33	"trees with (leaves and berries) or orange trunks"	trees_leaves_berries_or_orange_trunks	1	"that's it"	2.15	chatMessage
+mp-game-6	pilot	4235-0103d9e7-fd0d-406b-93ee-060a4170c8ef	1547846408503	student	33	"trees with (leaves and berries) or orange trunks"	trees_leaves_berries_or_orange_trunks	1	"Thanks!"	2.889	chatMessage
+mp-game-6	pilot	4235-0103d9e7-fd0d-406b-93ee-060a4170c8ef	1547846411628	explorer	33	"trees with (leaves and berries) or orange trunks"	trees_leaves_berries_or_orange_trunks	1	"yw"	1.316	chatMessage
