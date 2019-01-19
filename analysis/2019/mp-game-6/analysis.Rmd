@@ -1,0 +1,826 @@
+---
+title: "MP-Game-5: Multiplayer Boolean Concept Learning (Summurization Format)"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(reshape2)
+library(purrr)
+library(jsonlite)
+library(tidyr) 
+library(dplyr)
+library(tidyboot)
+library(ggplot2)
+library(scales)
+library(stringr)
+library(digest)
+```
+
+```{r}
+#-----------------------
+# Reading Mp-Game-3 Data
+#-----------------------
+# Load Training Trial Responses
+temp <- list.files(
+  "../../../data/mp-game-3/experiment/train_trials",
+  pattern="*.csv",
+  full.names=TRUE
+)
+train_trials_rbr <- do.call(rbind, lapply(temp, read.csv))
+
+# Load Test Trial Responses
+temp <- list.files(
+  "../../../data/mp-game-3/experiment/test_trials",
+  pattern="*.csv",
+  full.names=TRUE
+)
+test_trials_rbr <- do.call(rbind, lapply(temp, read.csv))
+
+# Load Training Summary Stats
+temp <- list.files(
+  "../../../data/mp-game-3/experiment/train_summary_stats",
+  pattern="*.csv",
+  full.names=TRUE
+)
+train_stats_rbr <- do.call(rbind, lapply(temp, read.csv))
+
+# Load Test Summary Stats
+temp <- list.files(
+  "../../../data/mp-game-3/experiment/test_summary_stats",
+  pattern="*.csv",
+  full.names=TRUE
+)
+test_stats_rbr <- do.call(rbind, lapply(temp, read.csv))
+
+# Load Test Summary Stats
+temp <- list.files(
+  "../../../data/mp-game-3/experiment/test_summary_stats",
+  pattern="*.csv",
+  full.names=TRUE
+)
+test_stats_rbr <- do.call(rbind, lapply(temp, read.csv))
+```
+
+```{r}
+#-----------------------
+# Reading Mp-Game-5 Data
+#-----------------------
+# Load Training Trial Responses
+temp <- list.files(
+  "../../../data/mp-game-5/logTrain",
+  pattern="*.csv",
+  full.names=TRUE
+)
+train_trials_s <- do.call(rbind, lapply(temp, read.csv, sep=""))
+
+# Load Test Trial Responses
+temp <- list.files(
+  "../../../data/mp-game-5/logTest",
+  pattern="*.csv",
+  full.names=TRUE
+)
+test_trials_s <- do.call(rbind, lapply(temp, read.csv, sep=""))
+
+# Load Test Summary Stats
+temp <- list.files(
+    "../../../data/mp-game-5/logScores",
+  pattern="*.csv",
+  full.names=TRUE
+)
+test_stats_s <- do.call(rbind, lapply(temp, read.csv, sep=""))
+
+# Load Chat Messages
+temp <- list.files(
+    "../../../data/mp-game-5/chatMessage",
+  pattern="*.tsv",
+  full.names=TRUE
+)
+chat_messages <- do.call(rbind, lapply(temp, readr::read_tsv)) %>%
+  group_by(gameid) %>%
+  mutate(num_dialogues = n()) %>%
+  filter(num_dialogues > 10)
+```
+
+
+```{r}
+rule_indices <- c(0, 2, 4, 6, 8)
+
+#--------------------------------------
+# Accuracy Calculations Round-By-Round
+# -------------------------------------
+test_acc_teacher_rbr <- test_stats_rbr %>%
+  filter(role == "explorer") %>%
+  mutate(correct = hits + correct_rejections) %>%
+  mutate(incorrect = misses + false_alarms) %>%
+  select(rule_idx, correct, incorrect) %>%
+  filter(rule_idx %in% rule_indices) %>%
+  group_by(rule_idx) %>% 
+  summarise_all(sum) %>%
+  mutate(acc = correct/(correct + incorrect)) %>%
+  mutate(game = "round")
+test_acc_teacher_rbr$rule_idx <- as.factor(test_acc_teacher_rbr$rule_idx)
+test_acc_teacher_rbr$game <- as.factor(test_acc_teacher_rbr$game)
+
+test_acc_student_rbr <- test_stats_rbr %>%
+  filter(role == "student") %>%
+  mutate(correct = hits + correct_rejections) %>%
+  mutate(incorrect = misses + false_alarms) %>%
+  select(rule_idx, incorrect, correct) %>%
+  filter(rule_idx %in% rule_indices) %>%
+  group_by(rule_idx) %>% 
+  summarise_all(sum) %>%
+  mutate(acc = correct/(correct + incorrect)) %>%
+  mutate(game = "round")
+test_acc_student_rbr$rule_idx <- as.factor(test_acc_student_rbr$rule_idx)
+test_acc_student_rbr$game <- as.factor(test_acc_student_rbr$game)
+
+#--------------------------------------
+# Accuracy Calculations Summurization
+# -------------------------------------
+test_acc_teacher_s <- test_stats_s %>%
+  filter(role == "explorer") %>%
+  mutate(correct = hits + correct_rejections) %>%
+  mutate(incorrect = misses + false_alarms) %>%
+  select(rule_idx, correct, incorrect) %>%
+  filter(rule_idx %in% rule_indices) %>%
+  group_by(rule_idx) %>% 
+  summarise_all(sum) %>%
+  mutate(acc = correct/(correct + incorrect)) %>%
+  mutate(game = "summurization")
+test_acc_teacher_s$game <- as.factor(test_acc_teacher_s$game)
+test_acc_teacher_s$rule_idx <- as.factor(test_acc_teacher_s$rule_idx)
+
+test_acc_student_s <- test_stats_s %>%
+  filter(role == "student") %>%
+  mutate(correct = hits + correct_rejections) %>%
+  mutate(incorrect = misses + false_alarms) %>%
+  select(rule_idx, incorrect, correct) %>%
+  filter(rule_idx %in% rule_indices) %>%
+  group_by(rule_idx) %>% 
+  summarise_all(sum)%>%
+  mutate(acc = correct/(correct + incorrect)) %>%
+  mutate(game = "summurization")
+test_acc_student_s$game <- as.factor(test_acc_student_s$game)
+test_acc_student_s$rule_idx <- as.factor(test_acc_student_s$rule_idx)
+
+
+#----------------------------
+# Accuracy Calculations Joint
+# ---------------------------
+test_acc_teacher_combined = bind_cols(
+  test_acc_teacher_rbr %>%
+    select(rule_idx, acc) %>%
+    rename(round_by_round_acc = acc),
+  test_acc_teacher_s %>%
+    select(rule_idx, acc) %>%
+    rename(summurization_acc = acc)
+  ) %>%
+  select(rule_idx, round_by_round_acc, summurization_acc)
+
+test_acc_student_combined = bind_cols(
+  test_acc_student_rbr %>%
+    select(rule_idx, acc) %>%
+    rename(round_by_round_acc = acc),
+  test_acc_student_s %>%
+    select(rule_idx, acc) %>%
+    rename(summurization_acc = acc)
+  ) %>%
+  select(rule_idx, round_by_round_acc, summurization_acc)
+```
+
+## Intro
+Our goal is to ollect cheaper data for cultural ratchet experiment. In the spring, we ran a pilot experiment, with a "round-by-round" format, where players only learned a single concept. In fall, we ran a pilot experiment with a "summurization" format, where palyers played multiple concepts. For spring pilot (round-by-round), we had 5 concepts, each with two different lists of stimuli. For fall pilot (summurization), we had the same 5 concepts and selected one of two lists of stimuli, from spring.
+
+
+## Cost Comparison
+Spring Pilot Cost Per Round (Round-By-Round-Format):
+
+  $122.40 / 36 = $3.40 / round
+  
+Fall Pilot Cost Per Round (Summurization-Format):
+
+  ($(1.25 * 20 + .50 * 20) + $11.60)) / 40 = $1.165 / round
+
+If we were maximally efficient, the Fall Pilot would be $.892 / round. We had two games crash midway because of players disconnecting; so our cost for the pilot was slightly higher than expected according to the data we collected.
+
+## Experiment Details (Critters)
+* 81 total possible critters: ~50 training, ~31 test
+* 4 axes of variability:
+    + Critter Type (Bug, Fish, Bird)
+    + Primary Color (Blue, Green, Orange)
+    + Secondary Color (Red, Yellow, Purple)
+    + Size (Small, Medium, Large)
+
+
+## Experiment Details (Concepts)
+* Rule Idx 0: Primary Color == Orange ("Orange things")
+* Rule Idx 2: Critter Type == Fish && Primary Color == Blue ("Blue fish")
+* Rule Idx 4: Primary Color == Orange && Secondary Color == Purple ("Purple and orange things")
+* Rule Idx 6: Critter Type == Bug || Secondary Color == Yellow ("Bugs, or yellow things")
+* Rule Idx 8: Critter Type == Bird || Primary Color == Green ("Birds, or green things")
+
+
+# Round vs. Summurization
+
+## Teacher Performance (Round vs. Summurization Acc.)
+```{r}
+ggplot(test_acc_teacher_combined, aes(x=round_by_round_acc, y=summurization_acc, color=rule_idx)) +
+  geom_point() +
+  xlim(0, 1) +
+  ylim(0, 1)
+```
+
+
+## Student Performance (Round vs. Summurization Acc.)
+```{r}
+ggplot(test_acc_student_combined, aes(x=round_by_round_acc, y=summurization_acc, color=rule_idx)) +
+  geom_point() +
+  xlim(0, 1) +
+  ylim(0, 1)
+```
+
+```{r}
+rule_indices <- c(0, 2, 4, 6, 8)
+
+#-----------------------------------------------------------------
+# Hits, Misses, False Alarms, Correct Rejections -- Round By Round
+# ----------------------------------------------------------------
+test_stats_teacher_rbr <- test_stats_rbr %>%
+  filter(role == "explorer") %>%
+  select(rule_idx, hits, misses, correct_rejections, false_alarms) %>%
+  filter(rule_idx %in% rule_indices) %>%
+  group_by(rule_idx) %>% 
+  summarise_all(sum)
+summed <- rowSums(test_stats_teacher_rbr[, c("hits", "misses", "correct_rejections", "false_alarms")])
+test_stats_teacher_rbr_normalized <- test_stats_teacher_rbr %>%
+  mutate(hits = hits / summed) %>%
+  mutate(misses = misses / summed) %>%
+  mutate(correct_rejections = correct_rejections / summed) %>%
+  mutate(false_alarms = false_alarms / summed)
+
+test_stats_student_rbr <- test_stats_rbr %>%
+  filter(role == "student") %>%
+  select(rule_idx, hits, misses, correct_rejections, false_alarms) %>%
+  filter(rule_idx %in% rule_indices) %>%
+  group_by(rule_idx) %>% 
+  summarise_all(sum)
+summed <- rowSums(test_stats_student_rbr[, c("hits", "misses", "correct_rejections", "false_alarms")])
+test_stats_student_rbr_normalized <- test_stats_student_rbr %>%
+  mutate(hits = hits / summed) %>%
+  mutate(misses = misses / summed) %>%
+  mutate(correct_rejections = correct_rejections / summed) %>%
+  mutate(false_alarms = false_alarms / summed)
+
+#-----------------------------------------------------------------
+# Hits, Misses, False Alarms, Correct Rejections -- Summurization
+# ----------------------------------------------------------------
+test_stats_teacher_s <- test_stats_s %>%
+  filter(role == "explorer") %>%
+  select(rule_idx, hits, misses, correct_rejections, false_alarms) %>%
+  filter(rule_idx %in% rule_indices) %>%
+  group_by(rule_idx) %>% 
+  summarise_all(sum)
+summed <- rowSums(test_stats_teacher_s[, c("hits", "misses", "correct_rejections", "false_alarms")])
+test_stats_teacher_s_normalized <- test_stats_teacher_s %>%
+  mutate(hits = hits / summed) %>%
+  mutate(misses = misses / summed) %>%
+  mutate(correct_rejections = correct_rejections / summed) %>%
+  mutate(false_alarms = false_alarms / summed)
+
+test_stats_student_s <- test_stats_s %>%
+  filter(role == "student") %>%
+  select(rule_idx, hits, misses, correct_rejections, false_alarms) %>%
+  filter(rule_idx %in% rule_indices) %>%
+  group_by(rule_idx) %>% 
+  summarise_all(sum)
+summed <- rowSums(test_stats_student_s[, c("hits", "misses", "correct_rejections", "false_alarms")])
+test_stats_student_s_normalized <- test_stats_student_s %>%
+  mutate(hits = hits / summed) %>%
+  mutate(misses = misses / summed) %>%
+  mutate(correct_rejections = correct_rejections / summed) %>%
+  mutate(false_alarms = false_alarms / summed)
+
+#--------------------------------------------------------
+# Hits, Misses, False Alarms, Correct Rejections -- Joint
+# -------------------------------------------------------
+test_stats_teacher_combined_normalized = bind_rows(
+  test_stats_teacher_s_normalized %>%
+    gather(key = "stat", value = "val", -rule_idx) %>%
+    arrange(rule_idx) %>%
+    select(rule_idx, val, stat) %>%
+    mutate(game="s"),
+  test_stats_teacher_rbr_normalized %>%
+    gather(key = "stat", value = "val", -rule_idx) %>%
+    arrange(rule_idx) %>%
+    select(rule_idx, val, stat) %>%
+    mutate(game="r")
+  )
+test_stats_teacher_combined_normalized$game <- as.factor(test_stats_teacher_combined_normalized$game)
+test_stats_teacher_combined_normalized$rule_idx <- as.factor(test_stats_teacher_combined_normalized$rule_idx)
+
+test_stats_student_combined_normalized = bind_rows(
+  test_stats_student_s_normalized %>%
+    gather(key = "stat", value = "val", -rule_idx) %>%
+    arrange(rule_idx) %>%
+    select(rule_idx, val, stat) %>%
+    mutate(game="s"),
+  test_stats_student_rbr_normalized %>%
+    gather(key = "stat", value = "val", -rule_idx) %>%
+    arrange(rule_idx) %>%
+    select(rule_idx, val, stat) %>%
+    mutate(game="r")
+  )
+test_stats_student_combined_normalized$game <- as.factor(test_stats_student_combined_normalized$game)
+test_stats_student_combined_normalized$rule_idx <- as.factor(test_stats_student_combined_normalized$rule_idx)
+```
+
+
+## Teacher Performance (Round vs. Summurization)
+```{r}
+ggplot(test_stats_teacher_combined_normalized, aes(x = game, y = val, fill = stat)) + 
+  geom_bar(stat = 'identity', position = 'stack') + facet_grid(~ rule_idx)
+```
+
+
+## Student Performance (Round vs. Summurization)
+```{r}
+ggplot(test_stats_student_combined_normalized, aes(x = game, y = val, fill = stat)) + 
+  geom_bar(stat = 'identity', position = 'stack') + facet_grid(~ rule_idx)
+```
+
+```{r}
+test_stats_s_unique = test_stats_s %>%
+  mutate(role = as.character(role)) %>%
+  mutate(role = replace(role, role == "explorer", "T")) %>%
+  mutate(role = replace(role, role == "student", "S")) %>%
+  mutate(id = strtoi(str_sub(test_stats_s$gameid, 0, 4)) + rule_idx) %>%
+  select(id, role, rule_idx, hits, misses, correct_rejections, false_alarms) %>%
+  gather(key = "stat", value = "val", 4:7) %>%
+  arrange(id) %>%
+  select(id, role, val, stat)
+```
+
+# Summurization Game Analysis
+
+## Student Performance Vs. Teacher Performance
+```{r}
+rule_indices <- c(0, 2, 4, 6, 8, 10, 11, 12, 13, 14)
+
+# Accuracies
+test_teacher <- test_stats_s %>%
+  filter(role == "explorer") %>%
+  mutate(correct = hits + correct_rejections) %>%
+  mutate(incorrect = misses + false_alarms) %>%
+  select(gameid, rule_idx, correct, incorrect) %>%
+  filter(rule_idx %in% rule_indices) %>%
+  mutate(teacher_acc = correct / (correct + incorrect))
+
+test_teacher_summary <- test_teacher %>%
+  group_by(rule_idx) %>%
+  summarize(
+    avg_teacher_acc = mean(teacher_acc),
+    std_teacher_acc = sd(teacher_acc),
+  ) %>%
+  select(rule_idx, avg_teacher_acc, std_teacher_acc)
+
+test_student <- test_stats_s %>%
+  filter(role == "student") %>%
+  mutate(correct = hits + correct_rejections) %>%
+  mutate(incorrect = misses + false_alarms) %>%
+  select(gameid, rule_idx, incorrect, correct) %>%
+  mutate(student_acc = correct / (correct + incorrect))
+
+test <- bind_cols(test_teacher, test_student) %>%
+    select(rule_idx, student_acc, teacher_acc)
+test$rule_idx <- as.factor(test$rule_idx)
+
+# Summary
+test_student_summary <- test_student %>%
+  group_by(rule_idx) %>%
+  summarize(
+    avg_student_acc = mean(student_acc),
+    std_student_acc = sd(student_acc),
+  ) %>%
+  select(rule_idx, avg_student_acc, std_student_acc)
+
+test_summary <- bind_cols(test_teacher_summary, test_student_summary) %>%
+  select(rule_idx, avg_student_acc, avg_teacher_acc, std_student_acc, std_teacher_acc)
+test_summary$rule_idx <- as.factor(test_summary$rule_idx)
+
+ggplot(test_summary, aes(x=avg_student_acc, y=avg_teacher_acc, color=rule_idx, label=rule_idx)) +
+  geom_point() +
+  xlim(0, 1.1) +
+  ylim(0, 1.1) +
+  geom_text(hjust = 0.01, nudge_x = 0.03, show.legend = FALSE) +
+  geom_errorbar(test_summary, mapping=aes(x=avg_student_acc, ymin=avg_teacher_acc - std_teacher_acc, ymax=avg_teacher_acc + std_teacher_acc)) +
+  geom_errorbarh(test_summary, mapping=aes(y=avg_teacher_acc, xmin=avg_student_acc - std_student_acc, xmax=avg_student_acc + std_student_acc)) +
+  ggtitle("Avg. Student Acc vs. Avg. Teacher Acc.") +
+  xlab('Avg. Student Acc.') +
+  ylab('Avg. Teacher Acc.')
+```
+
+```{r}
+ggplot(test_summary %>%
+        rename(student_acc = avg_student_acc) %>%
+        rename(teacher_acc = avg_teacher_acc)
+       , aes(x=student_acc, y=teacher_acc, color=rule_idx, label=rule_idx)) +
+  geom_point(size = 4) +
+  theme_bw() +
+  guides(color = guide_legend("rule_idx")) +
+  geom_text(hjust = 0.01, nudge_x = 0.03, show.legend = FALSE) +
+  geom_point(data = test, size = 1) +
+  labs(
+    title = "Student Acc vs. Teacher Acc",
+    x = "Student Acc.",
+    y = "Teacher Acc."
+  ) + geom_segment(aes(x=1, y=1, xend=0.2, yend=0.2), linetype=2, color="black",arrow = arrow(length = unit(0.2, "inches")))
+```
+
+## Student versus Teacher Performance -- Pairs (Summurization)
+```{r}
+ggplot(test_stats_s_unique, aes(x = reorder(role, desc(role)), y = val, fill = stat)) + 
+  geom_bar(stat = 'identity', position = 'stack') + facet_grid(~ id)
+```
+
+```{r}
+test_stats_s_concept = test_stats_s %>%
+  mutate(role = as.character(role)) %>%
+  mutate(role = replace(role, role == "explorer", "T")) %>%
+  mutate(role = replace(role, role == "student", "S")) %>%
+  select(role, rule_idx, hits, misses, correct_rejections, false_alarms) %>%
+  group_by(rule_idx, role) %>%
+  summarize(hits = sum(hits), misses = sum(misses), correct_rejections=sum(correct_rejections), false_alarms=sum(false_alarms)) %>%
+  gather(key = "stat", value = "val", 3:6) %>%
+  arrange(rule_idx) %>%
+  select(rule_idx, role, val, stat)
+```
+## Student versus Teacher Performance -- Concepts (Summurization)
+```{r}
+ggplot(test_stats_s_concept, aes(x = reorder(role, desc(role)), y = val, fill = stat)) + 
+  geom_bar(stat = 'identity', position = 'stack') + facet_grid(~ rule_idx)  +
+  labs(
+    title = "Teacher & Student Performance Across Rules (Aggregated)",
+    x = "Student & Teachers",
+    y = "Counts"
+  )
+```
+
+```{r}
+test_stats_s_rule_type = test_stats_s %>%
+  mutate(role = as.character(role)) %>%
+  mutate(role = replace(role, role == "explorer", "T")) %>%
+  mutate(role = replace(role, role == "student", "S")) %>%
+  select(role, rule_type, hits, misses, correct_rejections, false_alarms) %>%
+  group_by(rule_type, role) %>%
+  summarize(hits = sum(hits), misses = sum(misses), correct_rejections=sum(correct_rejections), false_alarms=sum(false_alarms)) %>%
+  gather(key = "stat", value = "val", 3:6) %>%
+  select(rule_type, role, val, stat)
+```
+
+## Student versus Teacher Performance -- Concept Types (Summurization)
+```{r fig.width=7, fig.height=4, echo=FALSE}
+ggplot(test_stats_s_rule_type, aes(x = reorder(role, desc(role)), y = val, fill = stat)) + 
+  geom_bar(stat = 'identity', position = 'stack') + facet_grid(~ rule_type) +
+    labs(
+    title = "Teacher & Student Performance Across Concept Types (Aggregated)",
+    x = "Student & Teachers",
+    y = "Counts"
+  )
+```
+
+## Time Comparisons (Summarization)
+```{r}
+train_times <- train_trials_s %>%
+    select(rule_idx, total_time) %>%
+    filter(rule_idx %in% rule_indices) %>%
+    group_by(rule_idx) %>% 
+    summarise_all(mean) %>%
+    mutate(role = "T") %>%
+    rename(train_time = total_time)
+
+test_times <- bind_rows(
+  test_stats_s %>%
+    filter(role == "explorer") %>%
+    select(rule_idx, total_time) %>%
+    filter(rule_idx %in% rule_indices) %>%
+    group_by(rule_idx) %>% 
+    summarise_all(mean) %>%
+    mutate(role = "T"),
+  
+  test_stats_s %>%
+    filter(role == "student") %>%
+    select(rule_idx, total_time) %>%
+    filter(rule_idx %in% rule_indices) %>%
+    group_by(rule_idx) %>% 
+    summarise_all(mean) %>%
+    mutate(role = "S")
+) %>%
+  rename(test_time = total_time)
+
+chat_times <- chat_messages %>%
+    filter(rule_idx %in% rule_indices) %>%
+    select(rule_idx, gameid, reactionTime) %>%
+    group_by(rule_idx, gameid) %>%
+    summarize(reactionTime = sum(reactionTime)) %>%
+    group_by(rule_idx) %>%
+    summarize(reactionTime = mean(reactionTime) / 1000) %>%
+    rename(chat_time = reactionTime)
+
+train_chat_times <- bind_cols(train_times, chat_times) %>%
+  select(rule_idx, train_time, chat_time, role) %>%
+  gather(key = "stat", value = "val", 2:3) %>%
+  select(rule_idx, role, val, stat) %>%
+```
+
+
+```{r fig.width=7, fig.height=4, echo=FALSE}
+ggplot(train_chat_times, aes(x = reorder(stat, desc(stat)), y = val)) + 
+  geom_bar(stat = 'identity') + facet_grid(~ rule_idx) +
+    labs(
+    title = "Train & Chat Time Comparisons",
+    x = "Student & Teachers",
+    y = "Time (Seconds)"
+  )
+```
+
+For Simple Rules 0, 2, 4 (Single Feature & Conjunction) we see that there isn't a wide variance in terms of train time and chat time; but this rift becomes noticeable when we have Harder Rules 6, 8 (Disjunction).
+
+# Corpus Analysis
+
+## Breakdown of Dialogue Statements (Categories)
+```{r}
+chat_messages_count = chat_messages %>%
+  mutate(role = as.character(role)) %>%
+  mutate(role = replace(role, role == "explorer", "T")) %>%
+  mutate(role = replace(role, role == "student", "S")) %>%
+  select(role, messageType) %>%
+  group_by(role) %>%
+  summarize(
+    informative = sum(messageType == 'Informative'),
+    follow_up = sum(messageType == 'Follow-Up'),
+    social = sum(messageType == 'Social'),
+    misc = sum(messageType == 'Misc'),
+    confirmation = sum(messageType == 'Confirmation'),
+  ) %>%
+  select(role, informative, follow_up, social, misc, confirmation) %>%
+  gather(key = "stat", value = "val", 2:6) %>%
+  select(role, val, stat) %>%
+  group_by(role) %>%
+  mutate(val_percentage_of_role = val/sum(val))
+```
+```{r}
+ggplot(chat_messages_count, aes(x = reorder(role, desc(role)), y = val_percentage_of_role, fill = stat)) + 
+  geom_bar(stat = 'identity', position = 'stack') + ggtitle("% of dialogue messages produced by each player") + xlab('Role') + ylab('% of player\'s messages')
+```
+
+```{r}
+ggplot(chat_messages_count, aes(x = reorder(role, desc(role)), y = val, fill = stat)) + 
+  geom_bar(stat = 'identity', position = 'stack') + ggtitle("# of messages produced by each player") +
+  xlab('Role') + ylab('# of player\'s messages')
+```
+
+
+
+```{r}
+ggplot(
+    chat_messages_count %>%
+      select(val, stat) %>%
+      group_by(stat) %>%
+      summarize(val = sum(val)),
+    aes(x = stat, y = val)
+  ) + geom_bar(stat = 'identity') + ggtitle("# of Messages, Across Type") +
+    xlab('Message Type') + ylab('# of Messages Produced')
+```
+
+
+
+```{r}
+chat_messages_word_count = chat_messages %>%
+  mutate(role = as.character(role)) %>%
+  mutate(role = replace(role, role == "explorer", "T")) %>%
+  mutate(role = replace(role, role == "student", "S")) %>%
+  select(role, messageType, text) %>%
+  group_by(role, messageType) %>%
+  summarise(
+    messageWordLength = sum(sapply(strsplit(text, " "), length))
+  )
+```
+
+```{r}
+  ggplot(chat_messages_word_count, aes(x = reorder(role, desc(role)), y = messageWordLength, fill = messageType)) + 
+  geom_bar(stat = 'identity', position = 'stack') + 
+  ggtitle("# of words produced by each player, according to utterance category") + 
+  xlab('Role') + ylab('# of player\'s words')
+```
+
+
+## Informative Message Types
+```{r}
+informative_messages_count = chat_messages %>%
+  filter(messageType == 'Informative') %>%
+  select(utteranceType) %>%
+  summarize(
+    None = sum(utteranceType == 'None'),
+    Quantifier = sum(utteranceType == 'Quantifier'),
+    Conditional = sum(utteranceType == 'Conditional'),
+    Exemplar = sum(utteranceType == 'Exemplar'),
+    Generic = sum(utteranceType == 'Generic'),
+    Imperative = sum(utteranceType == 'Imperative'),
+    Affirmative = sum(utteranceType == 'Affirmative'),
+    Knowledge = sum(utteranceType == 'Knowledge'),
+    Logic = sum(utteranceType == 'Logic'),
+    Question = sum(utteranceType == 'Question'),
+    Possibility_Conditional = sum(utteranceType == 'Possibility,Conditional'),
+  ) %>%
+  select(None, Quantifier, Conditional, Exemplar, Generic, Imperative, Affirmative, Knowledge, Logic, Question, Possibility_Conditional) %>%
+  gather(key = "stat", value = "val")
+```
+
+```{r fig.width=7, fig.height=4, echo=FALSE}
+ggplot(
+    informative_messages_count,
+    aes(x = stat, y = val)
+  ) + geom_bar(stat = 'identity') + ggtitle("# of Informative Messages, Across Utterance Type") +
+    xlab('Utterance Type') + ylab('# of Messages Produced')
+```
+
+```{r}
+informative_messages_word_count = chat_messages %>%
+  filter(messageType == 'Informative') %>%
+  select(utteranceType, text) %>%
+  group_by(utteranceType) %>%
+  summarise(
+    messageWordLength = sum(sapply(strsplit(text, " "), length))
+  )
+```
+
+```{r fig.width=7, fig.height=4, echo=FALSE}
+ggplot(
+    informative_messages_word_count,
+    aes(x = utteranceType, y = messageWordLength)
+  ) + geom_bar(stat = 'identity') + ggtitle("# of Informative Words, Across Utterance Type") +
+    xlab('Utterance Type') + ylab('# of Words Produced')
+```
+
+
+## Follow-Up Message Types
+```{r}
+follow_up_messages_count = chat_messages %>%
+  filter(messageType == 'Follow-Up') %>%
+  mutate(role = as.character(role)) %>%
+  mutate(role = replace(role, role == "explorer", "T")) %>%
+  mutate(role = replace(role, role == "student", "S")) %>%
+  group_by(role) %>%
+  select(role, utteranceType) %>%
+  summarize(
+    None = sum(utteranceType == 'None'),
+    Quantifier = sum(utteranceType == 'Quantifier'),
+    Conditional = sum(utteranceType == 'Conditional'),
+    Exemplar = sum(utteranceType == 'Exemplar'),
+    Generic = sum(utteranceType == 'Generic'),
+    Imperative = sum(utteranceType == 'Imperative'),
+    Affirmative = sum(utteranceType == 'Affirmative'),
+    Knowledge = sum(utteranceType == 'Knowledge'),
+    Logic = sum(utteranceType == 'Logic'),
+    Question = sum(utteranceType == 'Question'),
+    Possibility_Conditional = sum(utteranceType == 'Possibility,Conditional'),
+  ) %>%
+  select(role, None, Quantifier, Conditional, Exemplar, Generic, Imperative, Affirmative, Knowledge, Logic, Question, Possibility_Conditional) %>%
+  gather(key = "stat", value = "val", -role)
+```
+
+
+```{r fig.width=7, fig.height=4, echo=FALSE}
+ggplot(
+    follow_up_messages_count %>%
+      select(val, stat) %>%
+      group_by(stat) %>%
+      summarize(val = sum(val)),
+    aes(x = stat, y = val)
+  ) + geom_bar(stat = 'identity') + ggtitle("# of Follow-Up Messages, Across Utterance Type") +
+    xlab('Message Type') + ylab('# of Messages Produced')
+```
+
+```{r fig.width=7, fig.height=4, echo=FALSE}
+ggplot(
+    follow_up_messages_count,
+    aes(x = reorder(role, desc(role)), y = val, fill=stat)
+  ) + geom_bar(stat = 'identity', position = 'stack') + ggtitle("# of Follow-Up Messages, Across Utterance Type") +
+    xlab('Utterance Type') + ylab('# of Messages Produced')
+```
+
+## Quantifier Specific Language
+```{r}
+quantifier_messages_count = chat_messages %>%
+  filter(
+    utteranceType == 'Quantifier' | 
+      (utteranceType == 'Question' & 
+         (grepl('any', text)  | 
+            grepl('all', text) |
+            grepl('mostly', text) | 
+            grepl('some', text)
+          )
+       )
+  ) %>%
+  mutate(utteranceTypeSignifiers=replace(utteranceTypeSignifiers, utteranceType=='Question', 'Question')) %>%
+  select(role, utteranceTypeSignifiers) %>%
+  group_by(role, utteranceTypeSignifiers) %>%
+  summarize(
+    Count = length(utteranceTypeSignifiers)
+  )
+```
+
+```{r fig.width=7, fig.height=4, echo=FALSE}
+ggplot(
+    quantifier_messages_count,
+    aes(x = utteranceTypeSignifiers, y = Count)
+  ) + geom_bar(stat = 'identity') + ggtitle("# of Messages with Quantifier Signifier (Teacher & Student Combined)") +
+    xlab('Signifier') + ylab('# of Times Utilized')
+```
+
+
+```{r fig.width=7, fig.height=4, echo=FALSE}
+ggplot(
+    quantifier_messages_count,
+    aes(x = role, y = Count, fill=utteranceTypeSignifiers)
+  ) + geom_bar(stat = 'identity', position ='stack') + ggtitle("# of Messages with Quantifier Signifier (Teacher & Student Split)") +
+    xlab('Role') + ylab('# of Times Utilized')
+```
+
+## Analysis of Langauge Across Pairs
+```{r}
+game_informative_msgs = chat_messages %>%
+  filter(messageType == 'Informative') %>%
+  group_by(gameid) %>%
+  select(gameid, utteranceType) %>%
+  summarize(
+    None = sum(utteranceType == 'None'),
+    Quantifier = sum(utteranceType == 'Quantifier'),
+    Conditional = sum(utteranceType == 'Conditional'),
+    Exemplar = sum(utteranceType == 'Exemplar'),
+    Generic = sum(utteranceType == 'Generic'),
+    Imperative = sum(utteranceType == 'Imperative'),
+    Affirmative = sum(utteranceType == 'Affirmative'),
+    Knowledge = sum(utteranceType == 'Knowledge'),
+    Logic = sum(utteranceType == 'Logic'),
+    Question = sum(utteranceType == 'Question'),
+    Possibility_Conditional = sum(utteranceType == 'Possibility,Conditional'),
+  ) %>%
+  select(gameid, None, Quantifier, Conditional, Exemplar, Generic, Imperative, Affirmative, Knowledge, Logic, Question, Possibility_Conditional) %>%
+  gather(key = "stat", value = "val", -gameid)
+```
+
+```{r fig.width=7, fig.height=4, echo=FALSE}
+ggplot(
+    game_informative_msgs,
+    aes(x='', y=val, fill=stat)
+  ) + geom_bar(stat = 'identity', position ='stack') + ggtitle("Distribution of Utterance Types (Informative) Across Teachers") +
+    xlab('Teacher') + ylab('# of Messages of Utterance Type') + facet_grid(~gameid)
+```
+
+```{r}
+pair_messages = chat_messages %>%
+  filter(messageType == 'Follow-Up' | messageType == 'Informative') %>%
+  mutate(role = as.character(role)) %>%
+  mutate(role = replace(role, role == "explorer", "T")) %>%
+  mutate(role = replace(role, role == "student", "S")) %>%
+  group_by(gameid, role) %>%
+  select(role, gameid, utteranceType) %>%
+  summarize(
+    None = sum(utteranceType == 'None'),
+    Quantifier = sum(utteranceType == 'Quantifier'),
+    Conditional = sum(utteranceType == 'Conditional'),
+    Exemplar = sum(utteranceType == 'Exemplar'),
+    Generic = sum(utteranceType == 'Generic'),
+    Imperative = sum(utteranceType == 'Imperative'),
+    Affirmative = sum(utteranceType == 'Affirmative'),
+    Knowledge = sum(utteranceType == 'Knowledge'),
+    Logic = sum(utteranceType == 'Logic'),
+    Question = sum(utteranceType == 'Question'),
+    Possibility_Conditional = sum(utteranceType == 'Possibility,Conditional'),
+  ) %>%
+  select(role, gameid, None, Quantifier, Conditional, Exemplar, Generic, Imperative, Affirmative, Knowledge, Logic, Question, Possibility_Conditional) %>%
+  gather(key = "stat", value = "val", 3:13)
+```
+
+```{r fig.width=7, fig.height=4, echo=FALSE}
+ggplot(
+    pair_messages,
+    aes(x=role, y=val, fill=stat)
+  ) + geom_bar(stat = 'identity', position ='stack') + ggtitle("Distribution of Utterance Types (Informative + Follow-Up) Across Player Pairs ") +
+    xlab('Role') + ylab('# of Messages of Utterance Type') + facet_grid(~gameid)
+```
+
+```{r}
+ggplot(y,
+    aes(x = rule_idx, y = n)
+) + geom_bar(stat = 'identity') + ggtitle("# of Games By Rule Index") +
+    xlab('Rule Index') + ylab('# Games Played')
+```
+
+## Analysis of Language Across Concepts
+
+## Analysis of Language Across Concept Types 
+
+
