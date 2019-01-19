@@ -1,0 +1,92 @@
+{
+ "production": [
+  {
+   "HIT": {
+    "HITId": "3NKW03WTLMK17639ED0CQLQB2CDWQE",
+    "HITTypeId": "385XUCFVXWX1T3OPKZUKLVZKOLDV4M",
+    "HITGroupId": "38C316EM1EDLQJX82TQD32ZDTOGJWX",
+    "CreationTime": "2019-01-19T20:54:16.000Z",
+    "Title": "Language experiment (MP-Game-6-1)",
+    "Description": "Explore a world of creatures and answer short questions with a partner (~ 15 minutes)",
+    "Question": "<ExternalQuestion xmlns=\"http://mechanicalturk.amazonaws.com/AWSMechanicalTurkDataSchemas/2006-07-14/ExternalQuestion.xsd\">\n  <ExternalURL>https://rxdhawkins.me:8884/mp-game-6/forms/consent.html</ExternalURL>\n  <FrameHeight>650</FrameHeight>\n</ExternalQuestion>",
+    "Keywords": "language research stanford fun cognitive science university teaching",
+    "HITStatus": "Assignable",
+    "MaxAssignments": 9,
+    "Reward": "1.25",
+    "AutoApprovalDelayInSeconds": 600,
+    "Expiration": "2019-01-20T01:54:16.000Z",
+    "AssignmentDurationInSeconds": 7200,
+    "QualificationRequirements": [
+     {
+      "QualificationTypeId": "00000000000000000071",
+      "Comparator": "EqualTo",
+      "LocaleValues": [
+       {
+        "Country": "US"
+       }
+      ],
+      "RequiredToPreview": false,
+      "ActionsGuarded": "Accept"
+     },
+     {
+      "QualificationTypeId": "000000000000000000L0",
+      "Comparator": "GreaterThanOrEqualTo",
+      "IntegerValues": [
+       95
+      ],
+      "RequiredToPreview": false,
+      "ActionsGuarded": "Accept"
+     }
+    ],
+    "HITReviewStatus": "NotReviewed",
+    "NumberOfAssignmentsPending": 0,
+    "NumberOfAssignmentsAvailable": 9,
+    "NumberOfAssignmentsCompleted": 0
+   }
+  },
+  {
+   "HIT": {
+    "HITId": "3VP28W7DUNX8ACI5BK9PDQGFCC8ZFD",
+    "HITTypeId": "385XUCFVXWX1T3OPKZUKLVZKOLDV4M",
+    "HITGroupId": "38C316EM1EDLQJX82TQD32ZDTOGJWX",
+    "CreationTime": "2019-01-19T20:54:17.000Z",
+    "Title": "Language experiment (MP-Game-6-1)",
+    "Description": "Explore a world of creatures and answer short questions with a partner (~ 15 minutes)",
+    "Question": "<ExternalQuestion xmlns=\"http://mechanicalturk.amazonaws.com/AWSMechanicalTurkDataSchemas/2006-07-14/ExternalQuestion.xsd\">\n  <ExternalURL>https://rxdhawkins.me:8884/mp-game-6/forms/consent.html</ExternalURL>\n  <FrameHeight>650</FrameHeight>\n</ExternalQuestion>",
+    "Keywords": "language research stanford fun cognitive science university teaching",
+    "HITStatus": "Assignable",
+    "MaxAssignments": 6,
+    "Reward": "1.25",
+    "AutoApprovalDelayInSeconds": 600,
+    "Expiration": "2019-01-20T01:54:17.000Z",
+    "AssignmentDurationInSeconds": 7200,
+    "QualificationRequirements": [
+     {
+      "QualificationTypeId": "00000000000000000071",
+      "Comparator": "EqualTo",
+      "LocaleValues": [
+       {
+        "Country": "US"
+       }
+      ],
+      "RequiredToPreview": false,
+      "ActionsGuarded": "Accept"
+     },
+     {
+      "QualificationTypeId": "000000000000000000L0",
+      "Comparator": "GreaterThanOrEqualTo",
+      "IntegerValues": [
+       95
+      ],
+      "RequiredToPreview": false,
+      "ActionsGuarded": "Accept"
+     }
+    ],
+    "HITReviewStatus": "NotReviewed",
+    "NumberOfAssignmentsPending": 0,
+    "NumberOfAssignmentsAvailable": 6,
+    "NumberOfAssignmentsCompleted": 0
+   }
+  }
+ ]
+}

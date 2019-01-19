@@ -1,0 +1,30 @@
+{
+ "_cosubSpecVersion": 2,
+ "Url": "https://rxdhawkins.me:8884/mp-game-6/forms/consent.html",
+ "Title": "Language experiment (MP-Game-6-1)",
+ "Description": "Explore a world of creatures and answer short questions with a partner (~ 15 minutes)",
+ "Keywords": "language research stanford fun cognitive science university teaching",
+ "Batch": true,
+ "FrameHeight": 650,
+ "AssignmentDuration": "2 hours",
+ "AutoApprovalDelay": "10 minutes",
+ "Reward": "1.25",
+ "QualificationRequirements": [
+  {
+   "Name": "Worker_Locale",
+   "Comparator": "EqualTo",
+   "LocaleValues": [
+    {
+     "Country": "US"
+    }
+   ]
+  },
+  {
+   "Name": "Worker_PercentAssignmentsApproved",
+   "Comparator": "GreaterThanOrEqualTo",
+   "IntegerValues": [
+    95
+   ]
+  }
+ ]
+}
