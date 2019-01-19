@@ -1,0 +1,15 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	text	reactionTime	eventType
+mp-game-6	pilot	7523-9f35bee6-f3c8-49e7-aecc-f53fdc1e1c4b	1547931757100	explorer	3	"fish with whiskers"	fish_whiskers	0	"Hi, the morseths all have very long whiskers"	6.515	chatMessage
+mp-game-6	pilot	7523-9f35bee6-f3c8-49e7-aecc-f53fdc1e1c4b	1547931769589	student	3	"fish with whiskers"	fish_whiskers	0	"Hi, what other properties did you learn about them?"	7.927	chatMessage
+mp-game-6	pilot	7523-9f35bee6-f3c8-49e7-aecc-f53fdc1e1c4b	1547931790130	explorer	3	"fish with whiskers"	fish_whiskers	0	"I think that's basically the only important property as far as I could tell, they varied in color and other traits, but they always had long whiskers"	17.4	chatMessage
+mp-game-6	pilot	7523-9f35bee6-f3c8-49e7-aecc-f53fdc1e1c4b	1547931828500	student	3	"fish with whiskers"	fish_whiskers	0	"Okay, so they can be any color.  Do you remember how many other traits there were to look for?"	24.75	chatMessage
+mp-game-6	pilot	7523-9f35bee6-f3c8-49e7-aecc-f53fdc1e1c4b	1547931846811	explorer	3	"fish with whiskers"	fish_whiskers	0	"They varied in color, stripes, some had teeth showing I believe as well"	11.141	chatMessage
+mp-game-6	pilot	7523-9f35bee6-f3c8-49e7-aecc-f53fdc1e1c4b	1547931855015	explorer	3	"fish with whiskers"	fish_whiskers	0	"That's all I can remember as of right now"	4.493	chatMessage
+mp-game-6	pilot	7523-9f35bee6-f3c8-49e7-aecc-f53fdc1e1c4b	1547931862283	student	3	"fish with whiskers"	fish_whiskers	0	"Sounds good, let's continue then"	4.503	chatMessage
+mp-game-6	pilot	7523-9f35bee6-f3c8-49e7-aecc-f53fdc1e1c4b	1547931865739	explorer	3	"fish with whiskers"	fish_whiskers	0	"Ok"	0.302	chatMessage
+mp-game-6	pilot	7523-9f35bee6-f3c8-49e7-aecc-f53fdc1e1c4b	1547932063463	explorer	13	"bugs with wings and antennae"	bugs_wings_antennae	1	"Hello, the ollers have 2 antennas and 3 legs on their right side and 5 legs on their left side, color and everything else doesn't matter"	17.314	chatMessage
+mp-game-6	pilot	7523-9f35bee6-f3c8-49e7-aecc-f53fdc1e1c4b	1547932106407	student	13	"bugs with wings and antennae"	bugs_wings_antennae	1	"Were there any other creatures that have these properties that weren't ollers?"	23.478	chatMessage
+mp-game-6	pilot	7523-9f35bee6-f3c8-49e7-aecc-f53fdc1e1c4b	1547932120404	explorer	13	"bugs with wings and antennae"	bugs_wings_antennae	1	"I don't believe so unless I missed one"	6.086	chatMessage
+mp-game-6	pilot	7523-9f35bee6-f3c8-49e7-aecc-f53fdc1e1c4b	1547932123709	explorer	13	"bugs with wings and antennae"	bugs_wings_antennae	1	"It seemed pretty consistent"	2.291	chatMessage
+mp-game-6	pilot	7523-9f35bee6-f3c8-49e7-aecc-f53fdc1e1c4b	1547932131069	student	13	"bugs with wings and antennae"	bugs_wings_antennae	1	"Sounds good, let's continue then"	6.336	chatMessage
+mp-game-6	pilot	7523-9f35bee6-f3c8-49e7-aecc-f53fdc1e1c4b	1547932135106	explorer	13	"bugs with wings and antennae"	bugs_wings_antennae	1	"Ok."	0.423	chatMessage
