@@ -1,0 +1,11 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	train	test	chat	eventType
+mp-game-6	pilot	7356-0953dc47-73a8-4cce-9bdc-81ad8cf8d5ec	1547932881357	explorer	16	"trees with orange trunks and berries"	trees_orange_trunks_berries	0	115.705	26.329	79.945	logTimes
+mp-game-6	pilot	7356-0953dc47-73a8-4cce-9bdc-81ad8cf8d5ec	1547932900834	student	16	"trees with orange trunks and berries"	trees_orange_trunks_berries	0	-1	48.804	79.511	logTimes
+mp-game-6	pilot	7356-0953dc47-73a8-4cce-9bdc-81ad8cf8d5ec	1547933200639	student	26	"flowers with purple petals or thorns"	flowers_purple_petals_or_thorns	1	-1	28.174	42.976	logTimes
+mp-game-6	pilot	7356-0953dc47-73a8-4cce-9bdc-81ad8cf8d5ec	1547933202983	explorer	26	"flowers with purple petals or thorns"	flowers_purple_petals_or_thorns	1	204.623	28.641	43.565	logTimes
+mp-game-6	pilot	7356-0953dc47-73a8-4cce-9bdc-81ad8cf8d5ec	1547933415493	explorer	36	"fish with (orange bodies and purple stripes) or whiskers"	fish_orange_bodies_purple_stripes_or_whiskers	2	51.421	27.046	101.032	logTimes
+mp-game-6	pilot	7356-0953dc47-73a8-4cce-9bdc-81ad8cf8d5ec	1547933429521	student	36	"fish with (orange bodies and purple stripes) or whiskers"	fish_orange_bodies_purple_stripes_or_whiskers	2	-1	33.895	100.631	logTimes
+mp-game-6	pilot	7356-0953dc47-73a8-4cce-9bdc-81ad8cf8d5ec	1547933698460	student	46	"bugs with (antennae or wings) and purple bodies"	bugs_antennae_or_wings_purple_bodies	3	-1	25.76	32.677	logTimes
+mp-game-6	pilot	7356-0953dc47-73a8-4cce-9bdc-81ad8cf8d5ec	1547933716643	explorer	46	"bugs with (antennae or wings) and purple bodies"	bugs_antennae_or_wings_purple_bodies	3	189.722	40.89	33.175	logTimes
+mp-game-6	pilot	7356-0953dc47-73a8-4cce-9bdc-81ad8cf8d5ec	1547933844463	student	6	"birds with tails"	birds_tails	4	-1	16.57	56.437	logTimes
+mp-game-6	pilot	7356-0953dc47-73a8-4cce-9bdc-81ad8cf8d5ec	1547933857586	explorer	6	"birds with tails"	birds_tails	4	39.213	24.302	56.85	logTimes
