@@ -15,6 +15,8 @@ library(ggplot2)
 library(scales)
 library(stringr)
 library(digest)
+library(ggthemes)
+library(forcats)
 ```
 
 ```{r}
@@ -182,71 +184,96 @@ ggplot(complete_test_summary %>%
 ```
 # Student Performance Vs. Teacher Performance (All Games)
 ```{r}
-# Accuracies
-all_test_explorer <- scores_all_games %>%
-  filter(role == "explorer") %>%
-  mutate(correct = hits + correct_rejections) %>%
-  mutate(incorrect = misses + false_alarms) %>%
-  select(gameid, rule_idx, correct, incorrect) %>%
-  mutate(explorer_acc = correct / (correct + incorrect)) %>%
+all_test <- scores_all_games %>%
+  mutate(
+    correct = hits + correct_rejections,
+    incorrect = misses + false_alarms,
+    acc = correct / (correct + incorrect),
+    rule_type = floor(rule_idx/10)
+  )
+
+all_test_summary <- all_test %>%
+  group_by(rule_idx, role) %>%
+  tidyboot_mean(column = acc) %>%
   mutate(rule_type = floor(rule_idx/10))
 
-
-all_test_student <- scores_all_games %>%
-  filter(role == "student") %>%
-  mutate(correct = hits + correct_rejections) %>%
-  mutate(incorrect = misses + false_alarms) %>%
-  select(gameid, rule_idx, incorrect, correct) %>%
-  mutate(student_acc = correct / (correct + incorrect)) %>%
-  mutate(rule_type = floor(rule_idx/10))
-
-all_test <- bind_cols(all_test_explorer, all_test_student) %>%
-    select(rule_idx, student_acc, explorer_acc, rule_type)
+all_test <- bind_cols(
+  all_test %>%
+    filter(role == "student") %>%
+    select(rule_idx, gameid, acc, rule_type) %>%
+    rename(student_acc = acc),
+  all_test %>%
+    filter(role == "explorer") %>%
+    select(acc) %>%
+    rename(explorer_acc = acc)
+)
 all_test$rule_idx <- as.factor(all_test$rule_idx)
 all_test$rule_type <- as.factor(all_test$rule_type)
-
-all_test_explorer_summary <- all_test_explorer %>%
-  group_by(rule_idx) %>%
-  tidyboot_mean(column = explorer_acc) %>%
-  rename(avg_explorer_acc = mean) %>%
-  rename(explorer_acc_ci_lower = ci_lower) %>%
-  rename(explorer_acc_ci_upper = ci_upper )%>%
-  mutate(rule_type = floor(rule_idx/10))
-
-all_test_student_summary <- all_test_student %>%
-  group_by(rule_idx) %>%
-  tidyboot_mean(column = student_acc) %>%
-  rename(avg_student_acc = mean) %>%
-  rename(student_acc_ci_lower = ci_lower) %>%
-  rename(student_acc_ci_upper = ci_upper) %>%
-  mutate(rule_type = floor(rule_idx/10))
+all_test <- all_test %>%
+  mutate(rule_type_text = fct_recode(rule_type,
+    "Single Feature" = "0",
+    "Conjunction" = "1",
+    "Disjunction" = "2",
+    "Conjunctive Disjunction" = "3",
+    "Disjunctive Conjunction" = "4",
+  ))
 
 
-all_test_summary <- bind_cols(all_test_explorer_summary, all_test_student_summary) %>%
-  bind_cols(concept_summary) %>%
-  select(rule_idx, avg_student_acc, avg_explorer_acc, student_acc_ci_lower, student_acc_ci_upper, explorer_acc_ci_lower, explorer_acc_ci_upper, rule_type, p_test_belongs_to_concept, phrase, kind, name, type) %>%
-  mutate(chance_rate= p_test_belongs_to_concept*p_test_belongs_to_concept + (1 -p_test_belongs_to_concept) * (1-p_test_belongs_to_concept))
+all_test_summary <- bind_cols(
+  all_test_summary %>%
+    filter(role == "student") %>%
+    select(rule_idx, rule_type, empirical_stat, ci_lower, ci_upper) %>%
+    rename(
+      student_acc = empirical_stat,
+      student_ci_lower = ci_lower,
+      student_ci_upper = ci_upper
+    ),
+  all_test_summary %>%
+    filter(role == "explorer") %>%
+    select(rule_idx,empirical_stat, ci_lower, ci_upper) %>%
+    rename(
+      explorer_acc = empirical_stat,
+      explorer_ci_lower = ci_lower,
+      explorer_ci_upper = ci_upper
+    ),
+  ) %>%
+  bind_cols(concept_summary)
 all_test_summary$rule_idx <- as.factor(all_test_summary$rule_idx)
 all_test_summary$rule_type <- as.factor(all_test_summary$rule_type)
+
+all_test_summary <- all_test_summary %>%
+  mutate(rule_type_text = fct_recode(rule_type,
+    "Single Feature" = "0",
+    "Conjunction" = "1",
+    "Disjunction" = "2",
+    "Conjunctive Disjunction" = "3",
+    "Disjunctive Conjunction" = "4",
+  ))
 ```
 
-```{r}
-ggplot(all_test_summary %>%
-        rename(student_acc = avg_student_acc) %>%
-        rename(explorer_acc = avg_explorer_acc)
-       , aes(x=student_acc, y=explorer_acc, color=rule_type, label=rule_idx)) +
-  geom_point(size = 2) +
-  theme_bw() +
+```{r fig.width=7, fig.height=4, echo=FALSE}
+ggplot(all_test_summary, aes(x=student_acc, y=explorer_acc, color=rule_type_text, label=rule_idx)) +
+  geom_point(size = 6) +
+  theme_few() +
   guides(color = guide_legend("Rule Type")) +
   geom_text(hjust = 0.01, nudge_x = 0.01, show.legend = FALSE) +
-  geom_point(data = all_test, size = 0.5) +
+  geom_point(data = all_test, size = 2, alpha=0.7) +
   labs(
     title = "Student Acc vs. Explorer Acc",
     x = "Student Acc.",
     y = "Explorer Acc."
-  ) + geom_segment(aes(x=1, y=1, xend=0.2, yend=0.2), linetype=2, color="black",arrow = arrow(length = unit(0.2, "inches"))) +
-  geom_errorbar(aes(ymax = explorer_acc_ci_lower, ymin = explorer_acc_ci_upper)) +
-  geom_errorbarh(aes(xmax = student_acc_ci_lower, xmin = student_acc_ci_upper))
+  ) +
+  geom_segment(
+    aes(x=1, y=1, xend=0.2, yend=0.2),
+    linetype=2,
+    color="black",
+    arrow = arrow(length = unit(0.2, "inches"))
+  ) +
+  geom_errorbar(aes(ymax = explorer_ci_lower, ymin = explorer_ci_upper), alpha=0.3) +
+  geom_errorbarh(aes(xmax = student_ci_lower, xmin = student_ci_upper), alpha=0.3) +
+  coord_fixed() +
+  scale_x_continuous(limits = c(0.10, 1.0), breaks = c(0.25, 0.5, 0.75, 1.0)) +
+  scale_y_continuous(limits = c(0.10, 1.0), breaks = c(0.25, 0.5, 0.75, 1.0) )
 ```
 ```{r}
 ggplot(all_test_summary %>%
@@ -269,11 +296,8 @@ ggplot(all_test_summary %>%
 
 ```{r}
 # Plot of base rates and performance of students and teachers
-ggplot(all_test_summary %>%
-        rename(student_acc = avg_student_acc) %>%
-        rename(explorer_acc = avg_explorer_acc)
-       , aes(x=rule_idx, y=explorer_acc)) + 
-  geom_point(col="red", size=) +   # Draw points
+ggplot(all_test_summary, aes(x=rule_idx, y=explorer_acc)) + 
+  geom_point(col="red", size=2) +   # Draw points
   geom_point(aes(y=chance_rate), col="black", size=3) +
   geom_point(aes(y=student_acc), col="blue", size=2) + 
   coord_flip() + 
@@ -313,13 +337,14 @@ ggplot(all_test_concept_type_summary, aes(rule_type, fill=role, y=empirical_stat
 ### Concept Type Bar Plot -- Normalized Accuracies 
 ```{r}
 all_test_concept_type_summary_normalized <- scores_all_games %>%
-  mutate(correct = hits + correct_rejections) %>%
-  mutate(incorrect = misses + false_alarms) %>%
-  select(gameid, rule_idx, correct, incorrect, role) %>%
-  mutate(acc = correct / (correct + incorrect)) %>%
-  mutate(rule_type = floor(rule_idx/10)) %>%
-  mutate(chance_rate = concept_summary$chance_rate[rule_idx + 1]) %>%
-  mutate(norm_acc = (acc - chance_rate)/(1 - chance_rate)) %>%
+  mutate(
+    correct = hits + correct_rejections,
+    incorrect = misses + false_alarms,
+    acc = correct / (correct + incorrect),
+    rule_type = floor(rule_idx/10),
+    chance_rate = concept_summary$chance_rate[rule_idx + 1],
+    norm_acc = (acc - chance_rate)/(1 - chance_rate)
+  ) %>%
   group_by(rule_type, role) %>%
   tidyboot_mean(column = norm_acc)
 
@@ -333,7 +358,7 @@ ggplot(all_test_concept_type_summary_normalized, aes(rule_type, fill=role, y=emp
   labs(
     title = "Concept Type Performance",
     x = "Concept Type",
-    y = "Accuracy %"
+    y = "Normalized Accuracy %"
   ) + 
   geom_errorbar(aes(x=rule_type, ymin=ci_lower, ymax=ci_upper), color="black", width=0.5, position=position_dodge(.9)) 
 ```
