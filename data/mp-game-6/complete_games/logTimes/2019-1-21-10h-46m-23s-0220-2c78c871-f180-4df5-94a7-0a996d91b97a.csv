@@ -1,0 +1,11 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	train	test	chat	eventType
+mp-game-6	pilot	0220-2c78c871-f180-4df5-94a7-0a996d91b97a	1548096383242	explorer	9	"trees without leaves"	trees_without_leaves	0	117.134	34.72	99.428	logTimes
+mp-game-6	pilot	0220-2c78c871-f180-4df5-94a7-0a996d91b97a	1548096394508	student	9	"trees without leaves"	trees_without_leaves	0	-1	49.043	98.846	logTimes
+mp-game-6	pilot	0220-2c78c871-f180-4df5-94a7-0a996d91b97a	1548096684078	student	29	"fish with white stripes or whiskers"	fish_white_stripes_or_whiskers	1	-1	42.554	134.048	logTimes
+mp-game-6	pilot	0220-2c78c871-f180-4df5-94a7-0a996d91b97a	1548096818671	explorer	29	"fish with white stripes or whiskers"	fish_white_stripes_or_whiskers	1	69.082	43.728	134.4	logTimes
+mp-game-6	pilot	0220-2c78c871-f180-4df5-94a7-0a996d91b97a	1548096938320	explorer	39	"bugs with (white legs and purple wings) or orange antennae"	bugs_white_legs_purple_wings_or_orange_antennae	2	47.49	15.008	25.088	logTimes
+mp-game-6	pilot	0220-2c78c871-f180-4df5-94a7-0a996d91b97a	1548096945622	student	39	"bugs with (white legs and purple wings) or orange antennae"	bugs_white_legs_purple_wings_or_orange_antennae	2	-1	21.421	24.738	logTimes
+mp-game-6	pilot	0220-2c78c871-f180-4df5-94a7-0a996d91b97a	1548097129496	student	49	"birds with (white crests or orange wings) and tails"	birds_white_crests_or_orange_wings_tails	3	-1	28.864	65.96	logTimes
+mp-game-6	pilot	0220-2c78c871-f180-4df5-94a7-0a996d91b97a	1548097129602	explorer	49	"birds with (white crests or orange wings) and tails"	birds_white_crests_or_orange_wings_tails	3	29.772	11.299	66.308	logTimes
+mp-game-6	pilot	0220-2c78c871-f180-4df5-94a7-0a996d91b97a	1548097283916	explorer	19	"flowers with orange petals and purple centers"	flowers_orange_petals_purple_centers	4	47.668	12.574	80.489	logTimes
+mp-game-6	pilot	0220-2c78c871-f180-4df5-94a7-0a996d91b97a	1548097285125	student	19	"flowers with orange petals and purple centers"	flowers_orange_petals_purple_centers	4	-1	11.446	80.057	logTimes

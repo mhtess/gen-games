@@ -1,0 +1,9 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	text	reactionTime	eventType
+mp-game-6	pilot	5244-d7a8ae28-0564-4807-a1cf-9d79f1d9d593	1548104001240	explorer	32	"Tree with (orange berries and purple trunks) or white leaves"	trees_orange_berries_purple_trunks_or_white_leaves	0	"hi"	1.025	chatMessage
+mp-game-6	pilot	5244-d7a8ae28-0564-4807-a1cf-9d79f1d9d593	1548104009419	student	32	"Tree with (orange berries and purple trunks) or white leaves"	trees_orange_berries_purple_trunks_or_white_leaves	0	"hello"	0.996	chatMessage
+mp-game-6	pilot	5244-d7a8ae28-0564-4807-a1cf-9d79f1d9d593	1548104038485	explorer	32	"Tree with (orange berries and purple trunks) or white leaves"	trees_orange_berries_purple_trunks_or_white_leaves	0	"your name?"	3.668	chatMessage
+mp-game-6	pilot	5244-d7a8ae28-0564-4807-a1cf-9d79f1d9d593	1548104042130	student	32	"Tree with (orange berries and purple trunks) or white leaves"	trees_orange_berries_purple_trunks_or_white_leaves	0	"Dan"	0.705	chatMessage
+mp-game-6	pilot	5244-d7a8ae28-0564-4807-a1cf-9d79f1d9d593	1548104060995	student	32	"Tree with (orange berries and purple trunks) or white leaves"	trees_orange_berries_purple_trunks_or_white_leaves	0	"What is your name?"	4.506	chatMessage
+mp-game-6	pilot	5244-d7a8ae28-0564-4807-a1cf-9d79f1d9d593	1548104070929	explorer	32	"Tree with (orange berries and purple trunks) or white leaves"	trees_orange_berries_purple_trunks_or_white_leaves	0	"Chris"	3.777	chatMessage
+mp-game-6	pilot	5244-d7a8ae28-0564-4807-a1cf-9d79f1d9d593	1548104129813	student	32	"Tree with (orange berries and purple trunks) or white leaves"	trees_orange_berries_purple_trunks_or_white_leaves	0	"So what were the properties of the species"	11.17	chatMessage
+mp-game-6	pilot	5244-d7a8ae28-0564-4807-a1cf-9d79f1d9d593	1548104258623	student	32	"Tree with (orange berries and purple trunks) or white leaves"	trees_orange_berries_purple_trunks_or_white_leaves	0	"hello?"	2.723	chatMessage

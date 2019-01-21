@@ -1,0 +1,11 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	train	test	chat	eventType
+mp-game-6	pilot	3292-849c8108-f161-4d50-9c85-6f1d4be1f645	1548102702864	explorer	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	0	120.686	71.299	344.029	logTimes
+mp-game-6	pilot	3292-849c8108-f161-4d50-9c85-6f1d4be1f645	1548102746237	student	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	0	-1	110.111	343.425	logTimes
+mp-game-6	pilot	3292-849c8108-f161-4d50-9c85-6f1d4be1f645	1548103337889	explorer	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	1	193.25	27.167	325.78	logTimes
+mp-game-6	pilot	3292-849c8108-f161-4d50-9c85-6f1d4be1f645	1548103371411	student	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	1	-1	60.344	325.32	logTimes
+mp-game-6	pilot	3292-849c8108-f161-4d50-9c85-6f1d4be1f645	1548103680675	explorer	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	2	123.718	30.224	108.349	logTimes
+mp-game-6	pilot	3292-849c8108-f161-4d50-9c85-6f1d4be1f645	1548103751838	student	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	2	-1	111.818	107.846	logTimes
+mp-game-6	pilot	3292-849c8108-f161-4d50-9c85-6f1d4be1f645	1548104098961	explorer	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	3	71.524	29.815	208.008	logTimes
+mp-game-6	pilot	3292-849c8108-f161-4d50-9c85-6f1d4be1f645	1548104098996	student	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	3	-1	38.03	207.516	logTimes
+mp-game-6	pilot	3292-849c8108-f161-4d50-9c85-6f1d4be1f645	1548104466352	explorer	8	"trees with purple berries"	trees_purple_berries	4	156.503	51.398	148.314	logTimes
+mp-game-6	pilot	3292-849c8108-f161-4d50-9c85-6f1d4be1f645	1548104485756	student	8	"trees with purple berries"	trees_purple_berries	4	-1	70.029	147.915	logTimes

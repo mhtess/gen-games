@@ -1,0 +1,8 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	text	reactionTime	eventType
+mp-game-6	pilot	0018-694e7d07-ff94-4f3d-a1dc-6d9a270d8119	1548096302305	explorer	20	"bugs with orange antennae or wings"	bugs_orange_antennae_or_wings	0	"Hi"	2.268	chatMessage
+mp-game-6	pilot	0018-694e7d07-ff94-4f3d-a1dc-6d9a270d8119	1548096309720	student	20	"bugs with orange antennae or wings"	bugs_orange_antennae_or_wings	0	"Hello"	1.741	chatMessage
+mp-game-6	pilot	0018-694e7d07-ff94-4f3d-a1dc-6d9a270d8119	1548096321209	explorer	20	"bugs with orange antennae or wings"	bugs_orange_antennae_or_wings	0	"It seems kweps are the ones that have wings"	11.806	chatMessage
+mp-game-6	pilot	0018-694e7d07-ff94-4f3d-a1dc-6d9a270d8119	1548096330438	student	20	"bugs with orange antennae or wings"	bugs_orange_antennae_or_wings	0	"What else do you know?"	3.859	chatMessage
+mp-game-6	pilot	0018-694e7d07-ff94-4f3d-a1dc-6d9a270d8119	1548096348777	explorer	20	"bugs with orange antennae or wings"	bugs_orange_antennae_or_wings	0	"That was the only pattern I could find, wings are kweps, and no wings are not kweps."	14.248	chatMessage
+mp-game-6	pilot	0018-694e7d07-ff94-4f3d-a1dc-6d9a270d8119	1548096358738	student	20	"bugs with orange antennae or wings"	bugs_orange_antennae_or_wings	0	"Ok, anything else?"	2.871	chatMessage
+mp-game-6	pilot	0018-694e7d07-ff94-4f3d-a1dc-6d9a270d8119	1548096372094	explorer	20	"bugs with orange antennae or wings"	bugs_orange_antennae_or_wings	0	"That's all I got. Good luck."	5.016	chatMessage

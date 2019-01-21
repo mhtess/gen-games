@@ -1,0 +1,11 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	train	test	chat	eventType
+mp-game-6	pilot	3074-49613d2a-ce35-44f7-b6c9-f40cf4e7b8c4	1548093340572	explorer	5	"bugs without wings"	bugs_without_wings	0	69.646	38.752	75.13	logTimes
+mp-game-6	pilot	3074-49613d2a-ce35-44f7-b6c9-f40cf4e7b8c4	1548093404791	student	5	"bugs without wings"	bugs_without_wings	0	-1	103.814	74.76	logTimes
+mp-game-6	pilot	3074-49613d2a-ce35-44f7-b6c9-f40cf4e7b8c4	1548093871723	student	25	"trees with white leaves or orange berries"	trees_white_leaves_or_orange_berries	1	-1	29.711	39.867	logTimes
+mp-game-6	pilot	3074-49613d2a-ce35-44f7-b6c9-f40cf4e7b8c4	1548093934050	explorer	25	"trees with white leaves or orange berries"	trees_white_leaves_or_orange_berries	1	357.609	92.564	40.342	logTimes
+mp-game-6	pilot	3074-49613d2a-ce35-44f7-b6c9-f40cf4e7b8c4	1548094600483	explorer	45	"fish with (white stripes or purple bodies) and whiskers"	fish_white_stripes_or_purple_bodies_whiskers	2	539.151	21.232	81.957	logTimes
+mp-game-6	pilot	3074-49613d2a-ce35-44f7-b6c9-f40cf4e7b8c4	1548095098367	student	45	"fish with (white stripes or purple bodies) and whiskers"	fish_white_stripes_or_purple_bodies_whiskers	2	-1	518.541	81.601	logTimes
+mp-game-6	pilot	3074-49613d2a-ce35-44f7-b6c9-f40cf4e7b8c4	1548095362241	explorer	35	"flowers with (thorns and purple petals) or orange stems"	flowers_thorns_purple_petals_or_orange_stems	3	114.605	40.369	79.705	logTimes
+mp-game-6	pilot	3074-49613d2a-ce35-44f7-b6c9-f40cf4e7b8c4	1548095521667	student	35	"flowers with (thorns and purple petals) or orange stems"	flowers_thorns_purple_petals_or_orange_stems	3	-1	200.495	79.158	logTimes
+mp-game-6	pilot	3074-49613d2a-ce35-44f7-b6c9-f40cf4e7b8c4	1548095730847	explorer	15	"birds with orange wings and tails"	birds_orange_wings_tails	4	123.68	28.067	43.202	logTimes
+mp-game-6	pilot	3074-49613d2a-ce35-44f7-b6c9-f40cf4e7b8c4	1548095806230	student	15	"birds with orange wings and tails"	birds_orange_wings_tails	4	-1	102.669	42.776	logTimes

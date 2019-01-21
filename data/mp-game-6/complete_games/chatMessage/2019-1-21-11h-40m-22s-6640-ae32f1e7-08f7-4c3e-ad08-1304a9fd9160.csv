@@ -1,0 +1,11 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	text	reactionTime	eventType
+mp-game-6	pilot	6640-ae32f1e7-08f7-4c3e-ad08-1304a9fd9160	1548099622512	explorer	10	"fish with orange bodies and purple stripes"	fish_orange_bodies_purple_stripes	0	"How about it"	3.901	chatMessage
+mp-game-6	pilot	6640-ae32f1e7-08f7-4c3e-ad08-1304a9fd9160	1548099640340	student	10	"fish with orange bodies and purple stripes"	fish_orange_bodies_purple_stripes	0	"ye"	1.88	chatMessage
+mp-game-6	pilot	6640-ae32f1e7-08f7-4c3e-ad08-1304a9fd9160	1548099847419	explorer	20	"bugs with orange antennae or wings"	bugs_orange_antennae_or_wings	1	"How about it"	4.24	chatMessage
+mp-game-6	pilot	6640-ae32f1e7-08f7-4c3e-ad08-1304a9fd9160	1548099850319	student	20	"bugs with orange antennae or wings"	bugs_orange_antennae_or_wings	1	"ye"	14.585	chatMessage
+mp-game-6	pilot	6640-ae32f1e7-08f7-4c3e-ad08-1304a9fd9160	1548100234214	explorer	0	"flowers with orange stems"	flowers_orange_stems	2	"How about it"	3.677	chatMessage
+mp-game-6	pilot	6640-ae32f1e7-08f7-4c3e-ad08-1304a9fd9160	1548100377616	student	0	"flowers with orange stems"	flowers_orange_stems	2	"ye"	5.412	chatMessage
+mp-game-6	pilot	6640-ae32f1e7-08f7-4c3e-ad08-1304a9fd9160	1548100742251	student	30	"birds with (purple wings and white crests) or white tails"	birds_purple_wings_white_crests_or_white_tails	3	"ye"	1.133	chatMessage
+mp-game-6	pilot	6640-ae32f1e7-08f7-4c3e-ad08-1304a9fd9160	1548100742866	explorer	30	"birds with (purple wings and white crests) or white tails"	birds_purple_wings_white_crests_or_white_tails	3	"How about this round"	8.39	chatMessage
+mp-game-6	pilot	6640-ae32f1e7-08f7-4c3e-ad08-1304a9fd9160	1548101007618	explorer	40	"trees with (purple trunks or white leaves) and orange berries"	trees_purple_trunks_or_white_leaves_orange_berries	4	"ye"	0.647	chatMessage
+mp-game-6	pilot	6640-ae32f1e7-08f7-4c3e-ad08-1304a9fd9160	1548101013910	student	40	"trees with (purple trunks or white leaves) and orange berries"	trees_purple_trunks_or_white_leaves_orange_berries	4	"aw ye"	1.929	chatMessage
