@@ -17,6 +17,7 @@ library(stringr)
 library(digest)
 library(ggthemes)
 library(forcats)
+library(ggalt)
 ```
 
 ```{r}
@@ -263,36 +264,14 @@ ggplot(all_test_summary, aes(x=student_acc, y=explorer_acc, color=rule_type_text
     x = "Student Acc.",
     y = "Explorer Acc."
   ) +
-  geom_segment(
-    aes(x=1, y=1, xend=0.2, yend=0.2),
-    linetype=2,
-    color="black",
-    arrow = arrow(length = unit(0.2, "inches"))
-  ) +
+  geom_abline(intercept = 0, slope = 1, linetype = 2) +
   geom_errorbar(aes(ymax = explorer_ci_lower, ymin = explorer_ci_upper), alpha=0.3) +
   geom_errorbarh(aes(xmax = student_ci_lower, xmin = student_ci_upper), alpha=0.3) +
   coord_fixed() +
   scale_x_continuous(limits = c(0.10, 1.0), breaks = c(0.25, 0.5, 0.75, 1.0)) +
   scale_y_continuous(limits = c(0.10, 1.0), breaks = c(0.25, 0.5, 0.75, 1.0) )
 ```
-```{r}
-ggplot(all_test_summary %>%
-        rename(student_acc = avg_student_acc) %>%
-        rename(explorer_acc = avg_explorer_acc)
-       , aes(x=student_acc, y=explorer_acc, color=rule_type, label=rule_idx)) +
-  geom_point(size = 2) +
-  theme_bw() +
-  guides(color = guide_legend("Rule Type")) +
-  geom_text(hjust = 0.01, nudge_x = 0.01, show.legend = FALSE) +
-  geom_point(data = all_test, size = 0.5) +
-  labs(
-    title = "Student Acc vs. Explorer Acc",
-    x = "Student Acc.",
-    y = "Explorer Acc."
-  ) + geom_segment(aes(x=1, y=1, xend=0.2, yend=0.2), linetype=2, color="black",arrow = arrow(length = unit(0.2, "inches"))) +
-  geom_errorbar(aes(ymax = explorer_acc_ci_lower, ymin = explorer_acc_ci_upper)) +
-  geom_errorbarh(aes(xmax = student_acc_ci_lower, xmin = student_acc_ci_upper))
-```
+
 
 ```{r}
 # Plot of base rates and performance of students and teachers
@@ -308,30 +287,127 @@ ggplot(all_test_summary, aes(x=rule_idx, y=explorer_acc)) +
     x="Rule Index")
 ```
 
+```{r fig.width=7, fig.height=4, echo=FALSE}
+ggplot(all_test_summary, aes(x=explorer_acc, xend=student_acc, y=rule_idx)) + 
+  theme_few() +
+  geom_segment(
+    aes(
+      color=rule_type_text,
+      x=explorer_acc, 
+      xend=student_acc, 
+      y=rule_idx, 
+      yend=rule_idx),
+    size=2) +
+  geom_dumbbell(
+    size=0,
+    size_x=4,
+    size_xend = 4,
+    colour_x="black",
+    colour_xend = "gray") +
+    labs(
+      x="Accuracy (Proportion Correct)",
+      y="Concept Rule",
+      title="Concept Rule Accuracies") +
+  geom_point(aes(x=chance_rate, y=rule_idx, shape=15), size=3, inherit.aes=F, show.legend = F, color="orange") +
+  scale_shape_identity() + 
+  guides(color = guide_legend("Rule Type")) +
+  scale_x_continuous(limits = c(0.10, 1.0), breaks = c(0.25, 0.5, 0.75, 1.0)) + 
+  scale_y_discrete(labels = c(
+    "flowers: orange stems",
+    "flowers: thorns present",
+    "fish: white fangs",
+    "fish: whiskers present",
+    "bugs: orange head",
+    "bugs: no wings",
+    "birds: tail present",
+    "birds: purple tail",
+    "trees: purple berries",
+    "trees: no leaves",
+
+    "flowers: purple stem AND thorn",
+    "flowers: orange petals AND purple center",
+    "fish: white stripes AND whiskers  present",
+    "fish: orange bodies AND purple stripe",
+    "bugs: purple legs AND white head",
+    "bugs: wings AND antennae present",
+    "birds: purple wings AND crest present",
+    "birds: orange wings AND tail present",
+    "trees: orange trunk AND berries present",
+    "trees: purple leaves AND berries present",
+
+    "flowers: purple petals OR thorns present",
+    "flowers: orange stems OR thorns present",
+    "fish: orange bodies OR fangs present",
+    "fish: white stripes OR whiskers present",
+    "bugs: orange antennae OR wings present",
+    "bugs: purple wings OR white legs",
+    "birds: orange tail OR white wings",
+    "birds: orange crest OR purple wings",
+    "trees: purple berries OR white trunk",
+    "trees: white leaves OR orange berries",
+
+    "flowers: (purple stem AND white petals) OR orange center",
+    "flowers: (thorns present AND purple petals) OR orange stem",
+    "fish: (orange body AND purple stripes) OR whiskers present",
+    "fish: (white body AND orange stripes) OR fangs present",
+    "bugs: (purple legs AND white head) OR orange wings",
+    "bugs: (white legs AND purple wings) OR orange antennae",
+    "birds: (purple wings AND white crest) OR white tail",
+    "birds: (purple crest AND purple tail) OR orange wings",
+    "trees: (orange berries AND purple trunks) OR white leaves",
+    "trees: (leaves present AND berries present) OR orange trunks",
+
+    "flowers: (purple center OR orange stem) AND thorns present",
+    "flowers: (purple stem OR thorns present) AND white center",
+    "fish: (orange body OR fangs present) AND whiskers present",
+    "fish: (white stripes OR purple body) AND whiskers present",
+    "bugs: (antennae present OR wings present) AND purple body",
+    "bugs: (white head OR orange antennae) AND purple legs",
+    "birds: (orange tail OR white wings) AND orange crest",
+    "birds: (white crest OR orange wings) AND tail present",
+    "trees: (purple trunks OR white leaves) AND orange berries",
+    "trees: (orange trunks OR berries present) AND white leaves"
+  )
+)
+```
+
+
 ### Concept Type Bar Plot
 ```{r}
 all_test_concept_type_summary <- scores_all_games %>%
-  mutate(correct = hits + correct_rejections) %>%
-  mutate(incorrect = misses + false_alarms) %>%
-  select(gameid, rule_idx, correct, incorrect, role) %>%
-  mutate(acc = correct / (correct + incorrect)) %>%
-  mutate(rule_type = floor(rule_idx/10))  %>%
+  mutate(
+    correct = hits + correct_rejections,
+    incorrect = misses + false_alarms,
+    acc = correct / (correct + incorrect),
+    rule_type = floor(rule_idx/10)
+  ) %>%
   group_by(rule_type, role) %>%
   tidyboot_mean(column = acc)
 
 all_test_concept_type_summary$rule_type <- as.factor(all_test_concept_type_summary$rule_type)
+
+all_test_concept_type_summary <- all_test_concept_type_summary %>%
+  mutate(rule_type_text = fct_recode(rule_type,
+    "Single Feature" = "0",
+    "Conjunction" = "1",
+    "Disjunction" = "2",
+    "Conjunctive Disjunction" = "3",
+    "Disjunctive Conjunction" = "4",
+  ))
+
+
 all_test_concept_type_summary$role <- as.factor(all_test_concept_type_summary$role)
 ```
 
 ```{r fig.width=7, fig.height=4, echo=FALSE}
-ggplot(all_test_concept_type_summary, aes(rule_type, fill=role, y=empirical_stat)) + 
+ggplot(all_test_concept_type_summary, aes(rule_type_text, fill=role, y=empirical_stat)) + 
   geom_col(position='dodge') +  
   labs(
     title = "Concept Type Performance",
     x = "Concept Type",
     y = "Accuracy %"
   ) + 
-  geom_errorbar(aes(x=rule_type, ymin=ci_lower, ymax=ci_upper), color="black", width=0.5, position=position_dodge(.9)) 
+  geom_errorbar(aes(x=rule_type_text, ymin=ci_lower, ymax=ci_upper), color="black", width=0.5, position=position_dodge(.9)) 
 ```
 
 ### Concept Type Bar Plot -- Normalized Accuracies 
@@ -349,19 +425,30 @@ all_test_concept_type_summary_normalized <- scores_all_games %>%
   tidyboot_mean(column = norm_acc)
 
 all_test_concept_type_summary_normalized$rule_type <- as.factor(all_test_concept_type_summary_normalized$rule_type)
+
+all_test_concept_type_summary_normalized <- all_test_concept_type_summary_normalized %>%
+  mutate(rule_type_text = fct_recode(rule_type,
+    "Single Feature" = "0",
+    "Conjunction" = "1",
+    "Disjunction" = "2",
+    "Conjunctive Disjunction" = "3",
+    "Disjunctive Conjunction" = "4",
+  ))
+
 all_test_concept_type_summary_normalized$role <- as.factor(all_test_concept_type_summary_normalized$role)
 ```
 
 ```{r fig.width=7, fig.height=4, echo=FALSE}
-ggplot(all_test_concept_type_summary_normalized, aes(rule_type, fill=role, y=empirical_stat)) + 
+ggplot(all_test_concept_type_summary_normalized, aes(rule_type_text, fill=role, y=empirical_stat)) + 
   geom_col(position='dodge') +  
   labs(
     title = "Concept Type Performance",
     x = "Concept Type",
     y = "Normalized Accuracy %"
   ) + 
-  geom_errorbar(aes(x=rule_type, ymin=ci_lower, ymax=ci_upper), color="black", width=0.5, position=position_dodge(.9)) 
+  geom_errorbar(aes(x=rule_type_text, ymin=ci_lower, ymax=ci_upper), color="black", width=0.5, position=position_dodge(.9)) 
 ```
+
 
 ```{r}
 #-----------------------------------------------
