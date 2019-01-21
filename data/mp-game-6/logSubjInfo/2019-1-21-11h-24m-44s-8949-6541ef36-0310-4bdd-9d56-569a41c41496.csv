@@ -1,0 +1,3 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	nativeEnglish	enjoyment	assess	age	gender	education	comments	problems	fairprice	strategy	humanPartner	likePartner	eventType
+mp-game-6	pilot	8949-6541ef36-0310-4bdd-9d56-569a41c41496	1548098684479	explorer	12	"bugs with purple legs and white heads"	bugs_purple_legs_white_heads	4	yes	2	yes	51	Male	3		no	1.25	tried to pick characteristics	no	liked	logSubjInfo
+mp-game-6	pilot	8949-6541ef36-0310-4bdd-9d56-569a41c41496	1548098690961	student	12	"bugs with purple legs and white heads"	bugs_purple_legs_white_heads	4	yes	1	yes	24	Male	2			4$	I just did what he said to do and made sure i got all the information	yes	okay	logSubjInfo

@@ -18,3 +18,9 @@ mp-game-6	pilot	6904-9b2d32a0-14e4-434a-8e3e-b8d02a9af048	1548097716692	explorer
 mp-game-6	pilot	6904-9b2d32a0-14e4-434a-8e3e-b8d02a9af048	1548097747425	student	43	"flowers with (purple stems or thorns) and white centers"	flowers_purple_stems_or_thorns_white_centers	3	"if the stem is purple with lots of white, can it have vines?"	458.966	chatMessage
 mp-game-6	pilot	6904-9b2d32a0-14e4-434a-8e3e-b8d02a9af048	1548097757786	explorer	43	"flowers with (purple stems or thorns) and white centers"	flowers_purple_stems_or_thorns_white_centers	3	"Yes"	0.565	chatMessage
 mp-game-6	pilot	6904-9b2d32a0-14e4-434a-8e3e-b8d02a9af048	1548097769821	student	43	"flowers with (purple stems or thorns) and white centers"	flowers_purple_stems_or_thorns_white_centers	3	"ok thanks"	3.664	chatMessage
+mp-game-6	pilot	6904-9b2d32a0-14e4-434a-8e3e-b8d02a9af048	1548097935535	explorer	3	"fish with whiskers"	fish_whiskers	4	"Color does not matter"	4.405	chatMessage
+mp-game-6	pilot	6904-9b2d32a0-14e4-434a-8e3e-b8d02a9af048	1548097961402	explorer	3	"fish with whiskers"	fish_whiskers	4	"It cannot be without whiskers"	24.285	chatMessage
+mp-game-6	pilot	6904-9b2d32a0-14e4-434a-8e3e-b8d02a9af048	1548097979019	explorer	3	"fish with whiskers"	fish_whiskers	4	"It is the creature, as long as it has the whiskers"	9.456	chatMessage
+mp-game-6	pilot	6904-9b2d32a0-14e4-434a-8e3e-b8d02a9af048	1548097995161	student	3	"fish with whiskers"	fish_whiskers	4	"sound clear, anything else I need to know?"	9.818	chatMessage
+mp-game-6	pilot	6904-9b2d32a0-14e4-434a-8e3e-b8d02a9af048	1548098003432	explorer	3	"fish with whiskers"	fish_whiskers	4	"No"	0.605	chatMessage
+mp-game-6	pilot	6904-9b2d32a0-14e4-434a-8e3e-b8d02a9af048	1548098007763	student	3	"fish with whiskers"	fish_whiskers	4	"thank you!"	2.262	chatMessage
