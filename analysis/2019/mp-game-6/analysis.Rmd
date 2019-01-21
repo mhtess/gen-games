@@ -454,42 +454,95 @@ ggplot(all_test_concept_type_summary_normalized, aes(rule_type_text, fill=role, 
 #-----------------------------------------------
 # Hits, Misses, False Alarms, Correct Rejections
 # ----------------------------------------------
-test_stats_teacher_s <- test_stats_s %>%
-  filter(role == "explorer") %>%
-  select(rule_idx, hits, misses, correct_rejections, false_alarms) %>%
-  filter(rule_idx %in% rule_indices) %>%
-  group_by(rule_idx) %>% 
-  summarise_all(sum)
-summed <- rowSums(test_stats_teacher_s[, c("hits", "misses", "correct_rejections", "false_alarms")])
-test_stats_teacher_s_normalized <- test_stats_teacher_s %>%
-  mutate(hits = hits / summed) %>%
-  mutate(misses = misses / summed) %>%
-  mutate(correct_rejections = correct_rejections / summed) %>%
-  mutate(false_alarms = false_alarms / summed)
+all_test_perf_breakdown <- scores_all_games %>%
+  select(role, rule_idx, hits, misses, correct_rejections, false_alarms) %>%
+  group_by(role, rule_idx) %>% 
+  summarise_all(sum) %>%
+  mutate(rule_type = floor(rule_idx/10)) 
 
-test_stats_student_s <- test_stats_s %>%
-  filter(role == "student") %>%
-  select(rule_idx, hits, misses, correct_rejections, false_alarms) %>%
-  filter(rule_idx %in% rule_indices) %>%
-  group_by(rule_idx) %>% 
-  summarise_all(sum)
-summed <- rowSums(test_stats_student_s[, c("hits", "misses", "correct_rejections", "false_alarms")])
-test_stats_student_s_normalized <- test_stats_student_s %>%
-  mutate(hits = hits / summed) %>%
-  mutate(misses = misses / summed) %>%
-  mutate(correct_rejections = correct_rejections / summed) %>%
-  mutate(false_alarms = false_alarms / summed)
+all_test_perf_breakdown$rule_idx <- as.factor(all_test_perf_breakdown$rule_idx)
+all_test_perf_breakdown$rule_type <- as.factor(all_test_perf_breakdown$rule_type)
+all_test_perf_breakdown <- all_test_perf_breakdown %>%
+  mutate(rule_type_text = 
+           fct_recode(rule_type,
+              "Single Feature" = "0",
+              "Conjunction" = "1",
+              "Disjunction" = "2",
+              "Conjunctive Disjunction" = "3",
+              "Disjunctive Conjunction" = "4",
+            ),
+        rule_idx_text = 
+          fct_recode(rule_idx,
+            "flowers: orange stems" = "0",
+            "flowers: thorns present" = "1",
+            "fish: white fangs" = "2",
+            "fish: whiskers present" = "3",
+            "bugs: orange head" = "4",
+            "bugs: no wings" = "5",
+            "birds: tail present" = "6",
+            "birds: purple tail" = "7",
+            "trees: purple berries" = "8",
+            "trees: no leaves" = "9",
+        
+            "flowers: purple stem AND thorn" = "10",
+            "flowers: orange petals AND purple center" = "11",
+            "fish: white stripes AND whiskers  present"= "12" ,
+            "fish: orange bodies AND purple stripe" = "13",
+            "bugs: purple legs AND white head" = "14",
+            "bugs: wings AND antennae present" = "15",
+            "birds: purple wings AND crest present" = "16",
+            "birds: orange wings AND tail present" = "17",
+            "trees: orange trunk AND berries present" = "18",
+            "trees: purple leaves AND berries present"= "19",
+        
+            "flowers: purple petals OR thorns present" = "20",
+            "flowers: orange stems OR thorns present" = "21",
+            "fish: orange bodies OR fangs present" = "22",
+            "fish: white stripes OR whiskers present" = "23",
+            "bugs: orange antennae OR wings present" = "24",
+            "bugs: purple wings OR white legs" = "25",
+            "birds: orange tail OR white wings" = "26",
+            "birds: orange crest OR purple wings" = "27",
+            "trees: purple berries OR white trunk" = "28",
+            "trees: white leaves OR orange berries" = "29",
+        
+            "flowers: (purple stem AND white petals) OR orange center" = "30",
+            "flowers: (thorns present AND purple petals) OR orange stem" = "31",
+            "fish: (orange body AND purple stripes) OR whiskers present" = "32",
+            "fish: (white body AND orange stripes) OR fangs present" = "33",
+            "bugs: (purple legs AND white head) OR orange wings" = "34",
+            "bugs: (white legs AND purple wings) OR orange antennae" = "35",
+            "birds: (purple wings AND white crest) OR white tail" = "36",
+            "birds: (purple crest AND purple tail) OR orange wings" = "37",
+            "trees: (orange berries AND purple trunks) OR white leaves" = "38",
+            "trees: (leaves present AND berries present) OR orange trunks" = "39",
+        
+            "flowers: (purple center OR orange stem) AND thorns present" = "40",
+            "flowers: (purple stem OR thorns present) AND white center" = "41",
+            "fish: (orange body OR fangs present) AND whiskers present" = "42",
+            "fish: (white stripes OR purple body) AND whiskers present" = "43",
+            "bugs: (antennae present OR wings present) AND purple body" = "44",
+            "bugs: (white head OR orange antennae) AND purple legs" = "45",
+            "birds: (orange tail OR white wings) AND orange crest" = "46",
+            "birds: (white crest OR orange wings) AND tail present" = "47",
+            "trees: (purple trunks OR white leaves) AND orange berries" = "48",
+            "trees: (orange trunks OR berries present) AND white leaves" = "49")
+)
+
+all_test_perf_breakdown <- all_test_perf_breakdown %>%
+  melt(measure.vars = c("hits", "misses", "correct_rejections", "false_alarms"))
+
+
 ```
 
 
 ## Student versus Teacher Performance -- Concept Types (Summurization)
-```{r fig.width=7, fig.height=4, echo=FALSE}
-ggplot(test_stats_s_rule_type, aes(x = reorder(role, desc(role)), y = val, fill = stat)) + 
-  geom_bar(stat = 'identity', position = 'stack') + facet_grid(~ rule_type) +
+```{r fig.width=10, fig.height=10, echo=FALSE}
+ggplot(all_test_perf_breakdown, aes(x = reorder(role, desc(role)), y = value, fill = variable)) + 
+  geom_bar(stat = 'identity', position = 'stack') + facet_wrap(rule_idx_text ~ rule_type_text, ncol=10,  labeller = label_wrap_gen(width=30)) +
     labs(
-    title = "Teacher & Student Performance Across Concept Types (Aggregated)",
-    x = "Student & Teachers",
-    y = "Counts"
+      title = "Teacher & Student Performance Across Concept Rules",
+      y = "Counts"
   )
 ```
 
