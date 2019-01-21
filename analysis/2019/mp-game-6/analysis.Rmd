@@ -113,6 +113,15 @@ ggplot(data=num_all_games_played, aes(x=rule_idx, y=n), ) +
   ylim(0, 10) +
   scale_y_discrete()
 ```
+```{r}
+# Compute how many games are required to hit to target
+oustanding_games <- scores_all_games %>%
+  count(rule_idx) %>%
+  mutate(n = ceiling(n/2)) %>%
+  filter(n < 10) %>%
+  mutate(num_remaining = 10 - n)
+```
+
 
 # Load Concept Summary
 ```{r}
@@ -145,43 +154,69 @@ complete_test_explorer_summary <- complete_test_explorer %>%
   group_by(rule_idx) %>%
   tidyboot_mean(column = explorer_acc) %>%
   rename(avg_explorer_acc = mean) %>%
-  rename(explorer_acc_ci_lower = ci_lower) %>%
-  rename(explorer_acc_ci_upper = ci_upper )%>%
+  rename(explorer_ci_lower = ci_lower) %>%
+  rename(explorer_ci_upper = ci_upper )%>%
   mutate(rule_type = floor(rule_idx/10))
 
 complete_test_student_summary <- complete_test_student %>%
   group_by(rule_idx) %>%
   tidyboot_mean(column = student_acc) %>%
   rename(avg_student_acc = mean) %>%
-  rename(student_acc_ci_lower = ci_lower) %>%
-  rename(student_acc_ci_upper = ci_upper) %>%
+  rename(student_ci_lower = ci_lower) %>%
+  rename(student_ci_upper = ci_upper) %>%
   mutate(rule_type = floor(rule_idx/10))
 
 complete_test <- bind_cols(complete_test_explorer, complete_test_student) %>%
     select(rule_idx, student_acc, explorer_acc, rule_type) 
 complete_test$rule_idx <- as.factor(complete_test$rule_idx)
+complete_test$rule_type <- as.factor(complete_test$rule_type)
+complete_test <- complete_test %>%
+  mutate(rule_type_text = fct_recode(rule_type,
+    "Single Feature" = "0",
+    "Conjunction" = "1",
+    "Disjunction" = "2",
+    "Conjunctive Disjunction" = "3",
+    "Disjunctive Conjunction" = "4",
+  ))
+
 
 complete_test_summary <- bind_cols(complete_test_explorer_summary, complete_test_student_summary) %>% bind_cols(concept_summary) %>%
-  select(rule_idx, avg_student_acc, avg_explorer_acc, student_acc_ci_lower, student_acc_ci_upper, explorer_acc_ci_lower,  explorer_acc_ci_upper, p_test_belongs_to_concept, phrase, kind, name, type, rule_type, chance_rate) 
+  select(rule_idx, avg_student_acc, avg_explorer_acc, student_ci_lower, student_ci_upper, explorer_ci_lower,  explorer_ci_upper, p_test_belongs_to_concept, phrase, kind, name, type, rule_type, chance_rate) 
 complete_test_summary$rule_idx <- as.factor(complete_test_summary$rule_idx)
-complete_test_summary$type <- as.factor(complete_test_summary$type)
+complete_test_summary$rule_type <- as.factor(complete_test_summary$rule_type)
+complete_test_summary <- complete_test_summary %>%
+  mutate(rule_type_text = fct_recode(rule_type,
+    "Single Feature" = "0",
+    "Conjunction" = "1",
+    "Disjunction" = "2",
+    "Conjunctive Disjunction" = "3",
+    "Disjunctive Conjunction" = "4",
+  ))
+
 ```
 
-```{r}
+```{r fig.width=7, fig.height=4, echo=FALSE}
 ggplot(complete_test_summary %>%
         rename(student_acc = avg_student_acc) %>%
-        rename(explorer_acc = avg_explorer_acc),
-       aes(x=student_acc, y=explorer_acc, color=rule_type, label=rule_idx))+
-  geom_point(size = 2) +
-  theme_bw() +
-  guides(color = guide_legend("rule_type")) +
+        rename(explorer_acc = avg_explorer_acc)         
+       , aes(x=student_acc, y=explorer_acc, color=rule_type_text, label=rule_idx)) +
+  geom_point(size = 6) +
+  theme_few() +
+  guides(color = guide_legend("Rule Type")) +
   geom_text(hjust = 0.01, nudge_x = 0.01, show.legend = FALSE) +
-  geom_point(data = complete_test, size = 1) +
+  geom_point(data = complete_test, size = 2, alpha=0.7) +
   labs(
     title = "Student Acc vs. Explorer Acc",
     x = "Student Acc.",
     y = "Explorer Acc."
-  ) + geom_segment(aes(x=1, y=1, xend=0.2, yend=0.2), linetype=2, color="black",arrow = arrow(length = unit(0.2, "inches")))
+  ) +
+  geom_abline(intercept = 0, slope = 1, linetype = 2) +
+  geom_errorbar(aes(ymax = explorer_ci_lower, ymin = explorer_ci_upper), alpha=0.3) +
+  geom_errorbarh(aes(xmax = student_ci_lower, xmin = student_ci_upper), alpha=0.3) +
+  coord_fixed() +
+  scale_x_continuous(limits = c(0.0, 1.0), breaks = c(0.25, 0.5, 0.75, 1.0)) +
+  scale_y_continuous(limits = c(0.0, 1.0), breaks = c(0.25, 0.5, 0.75, 1.0) )
+
 ```
 # Student Performance Vs. Teacher Performance (All Games)
 ```{r}
@@ -268,8 +303,8 @@ ggplot(all_test_summary, aes(x=student_acc, y=explorer_acc, color=rule_type_text
   geom_errorbar(aes(ymax = explorer_ci_lower, ymin = explorer_ci_upper), alpha=0.3) +
   geom_errorbarh(aes(xmax = student_ci_lower, xmin = student_ci_upper), alpha=0.3) +
   coord_fixed() +
-  scale_x_continuous(limits = c(0.10, 1.0), breaks = c(0.25, 0.5, 0.75, 1.0)) +
-  scale_y_continuous(limits = c(0.10, 1.0), breaks = c(0.25, 0.5, 0.75, 1.0) )
+  scale_x_continuous(limits = c(0.0, 1.0), breaks = c(0.25, 0.5, 0.75, 1.0)) +
+  scale_y_continuous(limits = c(0.0, 1.0), breaks = c(0.25, 0.5, 0.75, 1.0) )
 ```
 
 
@@ -458,7 +493,7 @@ all_test_perf_breakdown <- scores_all_games %>%
   select(role, rule_idx, hits, misses, correct_rejections, false_alarms) %>%
   group_by(role, rule_idx) %>% 
   summarise_all(sum) %>%
-  mutate(rule_type = floor(rule_idx/10)) 
+  mutate(rule_type = floor(rule_idx/10))
 
 all_test_perf_breakdown$rule_idx <- as.factor(all_test_perf_breakdown$rule_idx)
 all_test_perf_breakdown$rule_type <- as.factor(all_test_perf_breakdown$rule_type)
@@ -532,18 +567,31 @@ all_test_perf_breakdown <- all_test_perf_breakdown %>%
 all_test_perf_breakdown <- all_test_perf_breakdown %>%
   melt(measure.vars = c("hits", "misses", "correct_rejections", "false_alarms"))
 
+all_test_perf_sums <- all_test_perf_breakdown %>%
+  group_by(rule_idx, rule_type, rule_type_text, rule_idx_text, role) %>%
+  summarise(norm_constant = sum(value))
+
+all_test_perf_breakdown_normalized <- all_test_perf_breakdown %>% 
+  inner_join(., all_test_perf_sums) %>%
+  mutate(value = value/norm_constant) %>%
+  select(rule_idx, rule_type, rule_type_text, rule_idx_text, value, role, variable)
+
 
 ```
 
 
-## Student versus Teacher Performance -- Concept Types (Summurization)
+## Student vs. Teacher Performance Concepts
 ```{r fig.width=10, fig.height=10, echo=FALSE}
-ggplot(all_test_perf_breakdown, aes(x = reorder(role, desc(role)), y = value, fill = variable)) + 
+ggplot(all_test_perf_breakdown_normalized, aes(x = reorder(role, desc(role)), y = value, fill = variable)) + 
   geom_bar(stat = 'identity', position = 'stack') + facet_wrap(rule_idx_text ~ rule_type_text, ncol=10,  labeller = label_wrap_gen(width=30)) +
     labs(
       title = "Teacher & Student Performance Across Concept Rules",
-      y = "Counts"
+      y = "Proportions"
   )
+```
+
+## Hamming Distance
+```{r}
 ```
 
 ## Time Comparisons (Summarization)
