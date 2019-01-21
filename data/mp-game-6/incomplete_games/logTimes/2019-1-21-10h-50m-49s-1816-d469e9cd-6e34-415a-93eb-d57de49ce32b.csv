@@ -1,0 +1,5 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	train	test	chat	eventType
+mp-game-6	pilot	1816-d469e9cd-6e34-415a-93eb-d57de49ce32b	1548096649413	explorer	35	"flowers with (thorns and purple petals) or orange stems"	flowers_thorns_purple_petals_or_orange_stems	0	206.932	49.929	432.951	logTimes
+mp-game-6	pilot	1816-d469e9cd-6e34-415a-93eb-d57de49ce32b	1548096706375	student	35	"flowers with (thorns and purple petals) or orange stems"	flowers_thorns_purple_petals_or_orange_stems	0	-1	103.874	432.573	logTimes
+mp-game-6	pilot	1816-d469e9cd-6e34-415a-93eb-d57de49ce32b	1548096910384	student	15	"birds with orange wings and tails"	birds_orange_wings_tails	1	-1	29.122	76.332	logTimes
+mp-game-6	pilot	1816-d469e9cd-6e34-415a-93eb-d57de49ce32b	1548096936784	explorer	15	"birds with orange wings and tails"	birds_orange_wings_tails	1	70.458	56.112	76.711	logTimes

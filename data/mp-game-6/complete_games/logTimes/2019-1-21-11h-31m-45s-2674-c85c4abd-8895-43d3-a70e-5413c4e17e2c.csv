@@ -1,0 +1,11 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	train	test	chat	eventType
+mp-game-6	pilot	2674-c85c4abd-8895-43d3-a70e-5413c4e17e2c	1548099105320	explorer	27	"flowers with orange stems or thorns"	flowers_orange_stems_or_thorns	0	86.484	33.543	112.646	logTimes
+mp-game-6	pilot	2674-c85c4abd-8895-43d3-a70e-5413c4e17e2c	1548099151786	student	27	"flowers with orange stems or thorns"	flowers_orange_stems_or_thorns	0	-1	80.098	112.227	logTimes
+mp-game-6	pilot	2674-c85c4abd-8895-43d3-a70e-5413c4e17e2c	1548099615551	student	37	"fish with (white bodies and orange stripes) or fangs"	fish_white_bodies_orange_stripes_or_fangs	1	-1	52.474	286.688	logTimes
+mp-game-6	pilot	2674-c85c4abd-8895-43d3-a70e-5413c4e17e2c	1548099629931	explorer	37	"fish with (white bodies and orange stripes) or fangs"	fish_white_bodies_orange_stripes_or_fangs	1	98.629	68.066	287.025	logTimes
+mp-game-6	pilot	2674-c85c4abd-8895-43d3-a70e-5413c4e17e2c	1548099782655	explorer	17	"trees with purple leaves and berries"	trees_purple_leaves_berries	2	54.714	18.909	54.664	logTimes
+mp-game-6	pilot	2674-c85c4abd-8895-43d3-a70e-5413c4e17e2c	1548099790842	student	17	"trees with purple leaves and berries"	trees_purple_leaves_berries	2	-1	24.061	53.894	logTimes
+mp-game-6	pilot	2674-c85c4abd-8895-43d3-a70e-5413c4e17e2c	1548100006487	explorer	47	"bugs with (white heads or orange antennae) and purple legs"	bugs_white_heads_or_orange_antennae_purple_legs	3	51.331	24.372	106.279	logTimes
+mp-game-6	pilot	2674-c85c4abd-8895-43d3-a70e-5413c4e17e2c	1548100063516	student	47	"bugs with (white heads or orange antennae) and purple legs"	bugs_white_heads_or_orange_antennae_purple_legs	3	-1	77.9	105.905	logTimes
+mp-game-6	pilot	2674-c85c4abd-8895-43d3-a70e-5413c4e17e2c	1548100196488	explorer	7	"birds with purple tails"	birds_purple_tails	4	31.094	14.206	16.994	logTimes
+mp-game-6	pilot	2674-c85c4abd-8895-43d3-a70e-5413c4e17e2c	1548100198447	student	7	"birds with purple tails"	birds_purple_tails	4	-1	27.881	16.62	logTimes

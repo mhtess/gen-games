@@ -1,0 +1,48 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	text	reactionTime	eventType
+mp-game-6	pilot	4035-cb30b655-617f-4b5b-98a6-41a38ff3619e	1548097652641	explorer	19	"flowers with orange petals and purple centers"	flowers_orange_petals_purple_centers	0	"hello"	3.164	chatMessage
+mp-game-6	pilot	4035-cb30b655-617f-4b5b-98a6-41a38ff3619e	1548097690119	explorer	19	"flowers with orange petals and purple centers"	flowers_orange_petals_purple_centers	0	"are you there"	11.775	chatMessage
+mp-game-6	pilot	4035-cb30b655-617f-4b5b-98a6-41a38ff3619e	1548097713733	student	19	"flowers with orange petals and purple centers"	flowers_orange_petals_purple_centers	0	"hi"	0.801	chatMessage
+mp-game-6	pilot	4035-cb30b655-617f-4b5b-98a6-41a38ff3619e	1548097721819	student	19	"flowers with orange petals and purple centers"	flowers_orange_petals_purple_centers	0	"I am here"	4.156	chatMessage
+mp-game-6	pilot	4035-cb30b655-617f-4b5b-98a6-41a38ff3619e	1548097727154	explorer	19	"flowers with orange petals and purple centers"	flowers_orange_petals_purple_centers	0	"okay"	2.175	chatMessage
+mp-game-6	pilot	4035-cb30b655-617f-4b5b-98a6-41a38ff3619e	1548097912996	explorer	19	"flowers with orange petals and purple centers"	flowers_orange_petals_purple_centers	0	"hello"	2.03	chatMessage
+mp-game-6	pilot	4035-cb30b655-617f-4b5b-98a6-41a38ff3619e	1548097920360	student	19	"flowers with orange petals and purple centers"	flowers_orange_petals_purple_centers	0	"hi"	1.014	chatMessage
+mp-game-6	pilot	4035-cb30b655-617f-4b5b-98a6-41a38ff3619e	1548097930395	explorer	19	"flowers with orange petals and purple centers"	flowers_orange_petals_purple_centers	0	"how are you"	6.501	chatMessage
+mp-game-6	pilot	4035-cb30b655-617f-4b5b-98a6-41a38ff3619e	1548097939079	student	19	"flowers with orange petals and purple centers"	flowers_orange_petals_purple_centers	0	"I am fine"	4.451	chatMessage
+mp-game-6	pilot	4035-cb30b655-617f-4b5b-98a6-41a38ff3619e	1548097945051	explorer	19	"flowers with orange petals and purple centers"	flowers_orange_petals_purple_centers	0	"okay"	2.71	chatMessage
+mp-game-6	pilot	4035-cb30b655-617f-4b5b-98a6-41a38ff3619e	1548097957177	explorer	19	"flowers with orange petals and purple centers"	flowers_orange_petals_purple_centers	0	"what are you"	10.868	chatMessage
+mp-game-6	pilot	4035-cb30b655-617f-4b5b-98a6-41a38ff3619e	1548097967168	student	19	"flowers with orange petals and purple centers"	flowers_orange_petals_purple_centers	0	"student"	2.003	chatMessage
+mp-game-6	pilot	4035-cb30b655-617f-4b5b-98a6-41a38ff3619e	1548097982012	explorer	19	"flowers with orange petals and purple centers"	flowers_orange_petals_purple_centers	0	"okay"	2.59	chatMessage
+mp-game-6	pilot	4035-cb30b655-617f-4b5b-98a6-41a38ff3619e	1548098034684	student	19	"flowers with orange petals and purple centers"	flowers_orange_petals_purple_centers	0	"can you tell the properties of species"	8.275	chatMessage
+mp-game-6	pilot	4035-cb30b655-617f-4b5b-98a6-41a38ff3619e	1548098118279	student	19	"flowers with orange petals and purple centers"	flowers_orange_petals_purple_centers	0	"are you there"	3.092	chatMessage
+mp-game-6	pilot	4035-cb30b655-617f-4b5b-98a6-41a38ff3619e	1548098128902	explorer	19	"flowers with orange petals and purple centers"	flowers_orange_petals_purple_centers	0	"yes"	2.223	chatMessage
+mp-game-6	pilot	4035-cb30b655-617f-4b5b-98a6-41a38ff3619e	1548098164731	explorer	19	"flowers with orange petals and purple centers"	flowers_orange_petals_purple_centers	0	"How species are identified | Science | The Guardian"	1.082	chatMessage
+mp-game-6	pilot	4035-cb30b655-617f-4b5b-98a6-41a38ff3619e	1548098185899	student	19	"flowers with orange petals and purple centers"	flowers_orange_petals_purple_centers	0	"ok"	0.83	chatMessage
+mp-game-6	pilot	4035-cb30b655-617f-4b5b-98a6-41a38ff3619e	1548098376929	explorer	29	"fish with white stripes or whiskers"	fish_white_stripes_or_whiskers	1	"hai"	1.391	chatMessage
+mp-game-6	pilot	4035-cb30b655-617f-4b5b-98a6-41a38ff3619e	1548098383559	student	29	"fish with white stripes or whiskers"	fish_white_stripes_or_whiskers	1	"hi"	0.516	chatMessage
+mp-game-6	pilot	4035-cb30b655-617f-4b5b-98a6-41a38ff3619e	1548098384817	explorer	29	"fish with white stripes or whiskers"	fish_white_stripes_or_whiskers	1	"are you there"	5.334	chatMessage
+mp-game-6	pilot	4035-cb30b655-617f-4b5b-98a6-41a38ff3619e	1548098387879	student	29	"fish with white stripes or whiskers"	fish_white_stripes_or_whiskers	1	"yes"	0.561	chatMessage
+mp-game-6	pilot	4035-cb30b655-617f-4b5b-98a6-41a38ff3619e	1548098406090	explorer	29	"fish with white stripes or whiskers"	fish_white_stripes_or_whiskers	1	"okay"	2.271	chatMessage
+mp-game-6	pilot	4035-cb30b655-617f-4b5b-98a6-41a38ff3619e	1548098411984	explorer	29	"fish with white stripes or whiskers"	fish_white_stripes_or_whiskers	1	"then"	2.407	chatMessage
+mp-game-6	pilot	4035-cb30b655-617f-4b5b-98a6-41a38ff3619e	1548098416247	student	29	"fish with white stripes or whiskers"	fish_white_stripes_or_whiskers	1	"can you tell about the properties of the species."	18.723	chatMessage
+mp-game-6	pilot	4035-cb30b655-617f-4b5b-98a6-41a38ff3619e	1548098452668	explorer	29	"fish with white stripes or whiskers"	fish_white_stripes_or_whiskers	1	"Isoelectronic species are elements or ions that have the same, or equal number of electrons."	0.667	chatMessage
+mp-game-6	pilot	4035-cb30b655-617f-4b5b-98a6-41a38ff3619e	1548098472000	student	29	"fish with white stripes or whiskers"	fish_white_stripes_or_whiskers	1	"ok"	7.518	chatMessage
+mp-game-6	pilot	4035-cb30b655-617f-4b5b-98a6-41a38ff3619e	1548098595540	explorer	39	"bugs with (white legs and purple wings) or orange antennae"	bugs_white_legs_purple_wings_or_orange_antennae	2	"hai"	2.15	chatMessage
+mp-game-6	pilot	4035-cb30b655-617f-4b5b-98a6-41a38ff3619e	1548098602559	student	39	"bugs with (white legs and purple wings) or orange antennae"	bugs_white_legs_purple_wings_or_orange_antennae	2	"hi"	0.587	chatMessage
+mp-game-6	pilot	4035-cb30b655-617f-4b5b-98a6-41a38ff3619e	1548098603460	explorer	39	"bugs with (white legs and purple wings) or orange antennae"	bugs_white_legs_purple_wings_or_orange_antennae	2	"are you there"	6.664	chatMessage
+mp-game-6	pilot	4035-cb30b655-617f-4b5b-98a6-41a38ff3619e	1548098606924	student	39	"bugs with (white legs and purple wings) or orange antennae"	bugs_white_legs_purple_wings_or_orange_antennae	2	"yes"	1.089	chatMessage
+mp-game-6	pilot	4035-cb30b655-617f-4b5b-98a6-41a38ff3619e	1548098618373	explorer	39	"bugs with (white legs and purple wings) or orange antennae"	bugs_white_legs_purple_wings_or_orange_antennae	2	"okay"	1.495	chatMessage
+mp-game-6	pilot	4035-cb30b655-617f-4b5b-98a6-41a38ff3619e	1548098630035	student	39	"bugs with (white legs and purple wings) or orange antennae"	bugs_white_legs_purple_wings_or_orange_antennae	2	"can you talk about the properties of the species."	18.778	chatMessage
+mp-game-6	pilot	4035-cb30b655-617f-4b5b-98a6-41a38ff3619e	1548098630501	explorer	39	"bugs with (white legs and purple wings) or orange antennae"	bugs_white_legs_purple_wings_or_orange_antennae	2	"then"	11.326	chatMessage
+mp-game-6	pilot	4035-cb30b655-617f-4b5b-98a6-41a38ff3619e	1548098651140	explorer	39	"bugs with (white legs and purple wings) or orange antennae"	bugs_white_legs_purple_wings_or_orange_antennae	2	"How species are identified | Science | The Guardian"	0.988	chatMessage
+mp-game-6	pilot	4035-cb30b655-617f-4b5b-98a6-41a38ff3619e	1548098771243	student	9	"trees without leaves"	trees_without_leaves	3	"ok"	112.21	chatMessage
+mp-game-6	pilot	4035-cb30b655-617f-4b5b-98a6-41a38ff3619e	1548098921450	explorer	9	"trees without leaves"	trees_without_leaves	3	"hai"	3.843	chatMessage
+mp-game-6	pilot	4035-cb30b655-617f-4b5b-98a6-41a38ff3619e	1548098930027	explorer	9	"trees without leaves"	trees_without_leaves	3	"are you there"	6.464	chatMessage
+mp-game-6	pilot	4035-cb30b655-617f-4b5b-98a6-41a38ff3619e	1548098950414	student	9	"trees without leaves"	trees_without_leaves	3	"hi"	0.648	chatMessage
+mp-game-6	pilot	4035-cb30b655-617f-4b5b-98a6-41a38ff3619e	1548098955775	student	9	"trees without leaves"	trees_without_leaves	3	"are you robot"	4.166	chatMessage
+mp-game-6	pilot	4035-cb30b655-617f-4b5b-98a6-41a38ff3619e	1548098984521	explorer	9	"trees without leaves"	trees_without_leaves	3	"No"	1.095	chatMessage
+mp-game-6	pilot	4035-cb30b655-617f-4b5b-98a6-41a38ff3619e	1548099029362	student	9	"trees without leaves"	trees_without_leaves	3	"can you talk about the properties of the species?"	14.731	chatMessage
+mp-game-6	pilot	4035-cb30b655-617f-4b5b-98a6-41a38ff3619e	1548099051010	explorer	9	"trees without leaves"	trees_without_leaves	3	"How species are identified | Science | The Guardian"	0.716	chatMessage
+mp-game-6	pilot	4035-cb30b655-617f-4b5b-98a6-41a38ff3619e	1548099159436	explorer	49	"birds with (white crests or orange wings) and tails"	birds_white_crests_or_orange_wings_tails	4	"hai"	1.48	chatMessage
+mp-game-6	pilot	4035-cb30b655-617f-4b5b-98a6-41a38ff3619e	1548099164455	student	49	"birds with (white crests or orange wings) and tails"	birds_white_crests_or_orange_wings_tails	4	"hi"	0.625	chatMessage
+mp-game-6	pilot	4035-cb30b655-617f-4b5b-98a6-41a38ff3619e	1548099205859	student	49	"birds with (white crests or orange wings) and tails"	birds_white_crests_or_orange_wings_tails	4	"can you talk about the properties of the species."	25.743	chatMessage
+mp-game-6	pilot	4035-cb30b655-617f-4b5b-98a6-41a38ff3619e	1548099216754	explorer	49	"birds with (white crests or orange wings) and tails"	birds_white_crests_or_orange_wings_tails	4	"How species are identified | Science | The Guardian"	0.62	chatMessage

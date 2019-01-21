@@ -1,0 +1,32 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	text	reactionTime	eventType
+mp-game-6	pilot	5417-92f6c08e-a1fd-4f10-a822-28456c8c6e42	1548101783182	explorer	6	"birds with tails"	birds_tails	0	"Morseths have long tail feathers"	7.422	chatMessage
+mp-game-6	pilot	5417-92f6c08e-a1fd-4f10-a822-28456c8c6e42	1548101805291	student	6	"birds with tails"	birds_tails	0	"Is it like a bird type animal"	12.138	chatMessage
+mp-game-6	pilot	5417-92f6c08e-a1fd-4f10-a822-28456c8c6e42	1548101815710	explorer	6	"birds with tails"	birds_tails	0	"Yeah"	0.464	chatMessage
+mp-game-6	pilot	5417-92f6c08e-a1fd-4f10-a822-28456c8c6e42	1548101827391	explorer	6	"birds with tails"	birds_tails	0	"Color does not matter"	2.688	chatMessage
+mp-game-6	pilot	5417-92f6c08e-a1fd-4f10-a822-28456c8c6e42	1548101832239	explorer	6	"birds with tails"	birds_tails	0	"Nor do any other markings"	3.887	chatMessage
+mp-game-6	pilot	5417-92f6c08e-a1fd-4f10-a822-28456c8c6e42	1548101837439	explorer	6	"birds with tails"	birds_tails	0	"Just look for the long tail feathers"	4.865	chatMessage
+mp-game-6	pilot	5417-92f6c08e-a1fd-4f10-a822-28456c8c6e42	1548101876777	student	6	"birds with tails"	birds_tails	0	"Ok thats neat. "	10.291	chatMessage
+mp-game-6	pilot	5417-92f6c08e-a1fd-4f10-a822-28456c8c6e42	1548101894635	student	6	"birds with tails"	birds_tails	0	"Is that the only animal you see"	8.44	chatMessage
+mp-game-6	pilot	5417-92f6c08e-a1fd-4f10-a822-28456c8c6e42	1548101904942	explorer	6	"birds with tails"	birds_tails	0	"Yeah"	0.865	chatMessage
+mp-game-6	pilot	5417-92f6c08e-a1fd-4f10-a822-28456c8c6e42	1548101915102	explorer	6	"birds with tails"	birds_tails	0	"I only saw different types of birds"	5.024	chatMessage
+mp-game-6	pilot	5417-92f6c08e-a1fd-4f10-a822-28456c8c6e42	1548101922943	explorer	6	"birds with tails"	birds_tails	0	"Some had different feather lengths, etc"	6.496	chatMessage
+mp-game-6	pilot	5417-92f6c08e-a1fd-4f10-a822-28456c8c6e42	1548101931391	explorer	6	"birds with tails"	birds_tails	0	"But the morseth had long feathers on its tail"	7.713	chatMessage
+mp-game-6	pilot	5417-92f6c08e-a1fd-4f10-a822-28456c8c6e42	1548101955563	student	6	"birds with tails"	birds_tails	0	"does it have any thing else beside that"	10.055	chatMessage
+mp-game-6	pilot	5417-92f6c08e-a1fd-4f10-a822-28456c8c6e42	1548101964735	explorer	6	"birds with tails"	birds_tails	0	"nothing that I can think of"	4.383	chatMessage
+mp-game-6	pilot	5417-92f6c08e-a1fd-4f10-a822-28456c8c6e42	1548101970621	explorer	6	"birds with tails"	birds_tails	0	"as far as unique identifiers"	5.343	chatMessage
+mp-game-6	pilot	5417-92f6c08e-a1fd-4f10-a822-28456c8c6e42	1548101983395	student	6	"birds with tails"	birds_tails	0	"thats interesting"	3.519	chatMessage
+mp-game-6	pilot	5417-92f6c08e-a1fd-4f10-a822-28456c8c6e42	1548102007948	student	6	"birds with tails"	birds_tails	0	"i wish i could see it"	3.91	chatMessage
+mp-game-6	pilot	5417-92f6c08e-a1fd-4f10-a822-28456c8c6e42	1548102033774	explorer	6	"birds with tails"	birds_tails	0	"are you able to advance?"	2.623	chatMessage
+mp-game-6	pilot	5417-92f6c08e-a1fd-4f10-a822-28456c8c6e42	1548102523374	explorer	46	"bugs with (antennae or wings) and purple bodies"	bugs_antennae_or_wings_purple_bodies	1	"On god I have no idea what makes it that. Let's just advance and get this bread"	10.482	chatMessage
+mp-game-6	pilot	5417-92f6c08e-a1fd-4f10-a822-28456c8c6e42	1548102626075	explorer	26	"flowers with purple petals or thorns"	flowers_purple_petals_or_thorns	2	"Let's get it"	1.695	chatMessage
+mp-game-6	pilot	5417-92f6c08e-a1fd-4f10-a822-28456c8c6e42	1548102630684	explorer	26	"flowers with purple petals or thorns"	flowers_purple_petals_or_thorns	2	"No idea tbh"	1.68	chatMessage
+mp-game-6	pilot	5417-92f6c08e-a1fd-4f10-a822-28456c8c6e42	1548102636380	explorer	26	"flowers with purple petals or thorns"	flowers_purple_petals_or_thorns	2	"Got caught up with real work"	4.911	chatMessage
+mp-game-6	pilot	5417-92f6c08e-a1fd-4f10-a822-28456c8c6e42	1548102653127	student	26	"flowers with purple petals or thorns"	flowers_purple_petals_or_thorns	2	"ok lol  any colors or anything before we go"	10.226	chatMessage
+mp-game-6	pilot	5417-92f6c08e-a1fd-4f10-a822-28456c8c6e42	1548102662092	explorer	26	"flowers with purple petals or thorns"	flowers_purple_petals_or_thorns	2	"purple and orange lol"	2.639	chatMessage
+mp-game-6	pilot	5417-92f6c08e-a1fd-4f10-a822-28456c8c6e42	1548102666716	explorer	26	"flowers with purple petals or thorns"	flowers_purple_petals_or_thorns	2	"but can't think of what makes it"	3.825	chatMessage
+mp-game-6	pilot	5417-92f6c08e-a1fd-4f10-a822-28456c8c6e42	1548102674104	student	26	"flowers with purple petals or thorns"	flowers_purple_petals_or_thorns	2	"ok lets advance"	4.364	chatMessage
+mp-game-6	pilot	5417-92f6c08e-a1fd-4f10-a822-28456c8c6e42	1548102771787	explorer	36	"fish with (orange bodies and purple stripes) or whiskers"	fish_orange_bodies_purple_stripes_or_whiskers	3	"go for the long whisker boys"	3.759	chatMessage
+mp-game-6	pilot	5417-92f6c08e-a1fd-4f10-a822-28456c8c6e42	1548102791939	student	36	"fish with (orange bodies and purple stripes) or whiskers"	fish_orange_bodies_purple_stripes_or_whiskers	3	"haha ok ill advance then"	11.438	chatMessage
+mp-game-6	pilot	5417-92f6c08e-a1fd-4f10-a822-28456c8c6e42	1548102860955	explorer	16	"trees with orange trunks and berries"	trees_orange_trunks_berries	4	"these boys have orange trunks"	3.966	chatMessage
+mp-game-6	pilot	5417-92f6c08e-a1fd-4f10-a822-28456c8c6e42	1548102868508	explorer	16	"trees with orange trunks and berries"	trees_orange_trunks_berries	4	"tree trunks that is"	4.432	chatMessage
+mp-game-6	pilot	5417-92f6c08e-a1fd-4f10-a822-28456c8c6e42	1548102876148	student	16	"trees with orange trunks and berries"	trees_orange_trunks_berries	4	"ok im gonna advance "	9.146	chatMessage

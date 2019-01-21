@@ -1,0 +1,11 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	train	test	chat	eventType
+mp-game-6	pilot	1338-82a600af-da9d-46a0-b113-0daeaf59f451	1548095739540	explorer	0	"flowers with orange stems"	flowers_orange_stems	0	83.603	24.699	70.458	logTimes
+mp-game-6	pilot	1338-82a600af-da9d-46a0-b113-0daeaf59f451	1548095770456	student	0	"flowers with orange stems"	flowers_orange_stems	0	-1	58.217	70.149	logTimes
+mp-game-6	pilot	1338-82a600af-da9d-46a0-b113-0daeaf59f451	1548096045920	explorer	10	"fish with orange bodies and purple stripes"	fish_orange_bodies_purple_stripes	1	149.099	36.05	40.069	logTimes
+mp-game-6	pilot	1338-82a600af-da9d-46a0-b113-0daeaf59f451	1548096081106	student	10	"fish with orange bodies and purple stripes"	fish_orange_bodies_purple_stripes	1	-1	95.471	38.51	logTimes
+mp-game-6	pilot	1338-82a600af-da9d-46a0-b113-0daeaf59f451	1548096432231	explorer	40	"trees with (purple trunks or white leaves) and orange berries"	trees_purple_trunks_or_white_leaves_orange_berries	2	89.24	51.84	194.357	logTimes
+mp-game-6	pilot	1338-82a600af-da9d-46a0-b113-0daeaf59f451	1548096489510	student	40	"trees with (purple trunks or white leaves) and orange berries"	trees_purple_trunks_or_white_leaves_orange_berries	2	-1	106.547	194.076	logTimes
+mp-game-6	pilot	1338-82a600af-da9d-46a0-b113-0daeaf59f451	1548096681513	explorer	30	"birds with (purple wings and white crests) or white tails"	birds_purple_wings_white_crests_or_white_tails	3	117.785	20.818	18.851	logTimes
+mp-game-6	pilot	1338-82a600af-da9d-46a0-b113-0daeaf59f451	1548096902136	student	30	"birds with (purple wings and white crests) or white tails"	birds_purple_wings_white_crests_or_white_tails	3	-1	227.442	14.463	logTimes
+mp-game-6	pilot	1338-82a600af-da9d-46a0-b113-0daeaf59f451	1548097238353	explorer	20	"bugs with orange antennae or wings"	bugs_orange_antennae_or_wings	4	169.137	22.116	99.327	logTimes
+mp-game-6	pilot	1338-82a600af-da9d-46a0-b113-0daeaf59f451	1548097360685	student	20	"bugs with orange antennae or wings"	bugs_orange_antennae_or_wings	4	-1	143.482	99.075	logTimes
