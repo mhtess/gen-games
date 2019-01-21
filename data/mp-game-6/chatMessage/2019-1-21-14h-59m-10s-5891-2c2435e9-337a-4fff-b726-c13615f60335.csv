@@ -1,0 +1,5 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	text	reactionTime	eventType
+mp-game-6	pilot	5891-2c2435e9-337a-4fff-b726-c13615f60335	1548111550483	explorer	12	"bugs with purple legs and white heads"	bugs_purple_legs_white_heads	0	"purple legs and white face"	4.231	chatMessage
+mp-game-6	pilot	5891-2c2435e9-337a-4fff-b726-c13615f60335	1548111556274	explorer	12	"bugs with purple legs and white heads"	bugs_purple_legs_white_heads	0	"oilers"	1.094	chatMessage
+mp-game-6	pilot	5891-2c2435e9-337a-4fff-b726-c13615f60335	1548111573796	student	12	"bugs with purple legs and white heads"	bugs_purple_legs_white_heads	0	"ok I will look for that, anything else?"	18.362	chatMessage
+mp-game-6	pilot	5891-2c2435e9-337a-4fff-b726-c13615f60335	1548111580018	explorer	12	"bugs with purple legs and white heads"	bugs_purple_legs_white_heads	0	"nope"	0.632	chatMessage
