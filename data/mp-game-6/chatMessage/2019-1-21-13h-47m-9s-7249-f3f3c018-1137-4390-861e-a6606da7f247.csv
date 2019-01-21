@@ -1,0 +1,7 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	text	reactionTime	eventType
+mp-game-6	pilot	7249-f3f3c018-1137-4390-861e-a6606da7f247	1548107229153	explorer	26	"flowers with purple petals or thorns"	flowers_purple_petals_or_thorns	0	"All of the ones with thorns are kweps.  Of the ones that do not have thorns, the ones with purple flower heads are kweps."	27.641	chatMessage
+mp-game-6	pilot	7249-f3f3c018-1137-4390-861e-a6606da7f247	1548107248181	explorer	26	"flowers with purple petals or thorns"	flowers_purple_petals_or_thorns	0	"any questions?"	2.666	chatMessage
+mp-game-6	pilot	7249-f3f3c018-1137-4390-861e-a6606da7f247	1548107260031	student	26	"flowers with purple petals or thorns"	flowers_purple_petals_or_thorns	0	"Seems pretty clearly stated, thanks!"	5.992	chatMessage
+mp-game-6	pilot	7249-f3f3c018-1137-4390-861e-a6606da7f247	1548107276369	explorer	26	"flowers with purple petals or thorns"	flowers_purple_petals_or_thorns	0	"You bet!"	1.517	chatMessage
+mp-game-6	pilot	7249-f3f3c018-1137-4390-861e-a6606da7f247	1548107481841	explorer	46	"bugs with (antennae or wings) and purple bodies"	bugs_antennae_or_wings_purple_bodies	1	"The luzaks always have a purple body, underneath the wings. Look underneath the wings for the main part of the body. "	44.067	chatMessage
+mp-game-6	pilot	7249-f3f3c018-1137-4390-861e-a6606da7f247	1548107490729	explorer	46	"bugs with (antennae or wings) and purple bodies"	bugs_antennae_or_wings_purple_bodies	1	"got it? purple body."	6.469	chatMessage
