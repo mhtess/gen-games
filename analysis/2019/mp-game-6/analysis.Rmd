@@ -15,6 +15,9 @@ library(ggplot2)
 library(scales)
 library(stringr)
 library(digest)
+library(ggthemes)
+library(forcats)
+library(ggalt)
 ```
 
 ```{r}
@@ -57,7 +60,7 @@ temp <- list.files(
   pattern="*.csv",
   full.names=TRUE
 )
-test_all_games <- do.call(rbind, lapply(temp, read.csv, sep=""))
+test_complete_games <- do.call(rbind, lapply(temp, read.csv, sep=""))
 
 # Load Test Summary Stats
 temp <- list.files(
@@ -65,7 +68,7 @@ temp <- list.files(
   pattern="*.csv",
   full.names=TRUE
 )
-scores_all_games <- do.call(rbind, lapply(temp, read.csv, sep=""))
+scores_complete_games <- do.call(rbind, lapply(temp, read.csv, sep=""))
 
 # Load Chat Messages
 temp <- list.files(
@@ -73,173 +76,473 @@ temp <- list.files(
   pattern="*.csv",
   full.names=TRUE
 )
-msgs_all_games <-do.call(rbind, lapply(temp, readr::read_tsv)) %>%
+msgs_complete_games <-do.call(rbind, lapply(temp, readr::read_tsv)) %>%
   group_by(gameid)
 ```
 
 # Distribution of Complete Data
 ```{r}
-num_games_played <- scores_complete_games %>%
+num_complete_games_played <- scores_complete_games %>%
   count(rule_idx) %>%
   mutate(n = n/2)
-ggplot(data=num_games_played, aes(x=rule_idx, y=n)) +
+num_complete_games_played$n <- as.factor(num_complete_games_played$n)
+ggplot(data=num_complete_games_played, aes(x=rule_idx, y=n)) +
   geom_bar(stat="identity") +
   labs(
     title = "Data Distribution of Complete Games",
     x = "Rule Index",
     y = "Number of Samples"
-  )
+  )  +
+  ylim(0, 10) +
+  scale_y_discrete()
 ```
 
 # Distribution of All Data
 ```{r}
-num_games_played <- scores_alle_games %>%
+num_all_games_played <- scores_all_games %>%
   count(rule_idx) %>%
-  mutate(n = n/2)
-ggplot(data=num_games_played, aes(x=rule_idx, y=n)) +
-  geom_bar(stat="identity")
+  mutate(n = ceiling(n/2))
+num_all_games_played$n <- as.factor(num_all_games_played$n)
+ggplot(data=num_all_games_played, aes(x=rule_idx, y=n), ) +
+  geom_bar(stat="identity") +
+  labs(
+    title = "Data Distribution of All Games",
+    x = "Rule Index",
+    y = "Number of Samples"
+  ) +
+  ylim(0, 10) +
+  scale_y_discrete()
 ```
 
-# Student Performance Vs. Teacher Performance
+# Load Concept Summary
+```{r}
+concept_summary_fp <- c("../../../experiments/mp-game-6/stimuli/fifty_rules/concept_summary.json")
+concept_summary <- do.call(rbind.data.frame, jsonlite::fromJSON(concept_summary_fp)) %>%
+  mutate(chance_rate= p_test_belongs_to_concept*p_test_belongs_to_concept + (1 -p_test_belongs_to_concept) * (1-p_test_belongs_to_concept))
+```
+
+
+# Student Performance Vs. Teacher Performance (Complete Game)
 ```{r}
 # Accuracies
-test_explorer <- scores_complete_games %>%
+complete_test_explorer <- scores_complete_games %>%
   filter(role == "explorer") %>%
   mutate(correct = hits + correct_rejections) %>%
   mutate(incorrect = misses + false_alarms) %>%
   select(gameid, rule_idx, correct, incorrect) %>%
-  mutate(explorer_acc = correct / (correct + incorrect))
+  mutate(explorer_acc = correct / (correct + incorrect)) %>%
+  mutate(rule_type = floor(rule_idx/10))
 
-test_explorer_summary <- test_explorer %>%
-  group_by(rule_idx) %>%
-  summarize(
-    avg_explorer_acc = mean(explorer_acc),
-    std_explorer_acc = sd(explorer_acc),
-  ) %>%
-  select(rule_idx, avg_explorer_acc, std_explorer_acc)
-
-test_student <- scores_complete_games %>%
+complete_test_student <- scores_complete_games %>%
   filter(role == "student") %>%
   mutate(correct = hits + correct_rejections) %>%
   mutate(incorrect = misses + false_alarms) %>%
   select(gameid, rule_idx, incorrect, correct) %>%
-  mutate(student_acc = correct / (correct + incorrect))
+  mutate(student_acc = correct / (correct + incorrect)) %>%
+  mutate(rule_type = floor(rule_idx/10))
 
-test_student_summary <- test_student %>%
+complete_test_explorer_summary <- complete_test_explorer %>%
   group_by(rule_idx) %>%
-  summarize(
-    avg_student_acc = mean(student_acc),
-    std_student_acc = sd(student_acc),
-  ) %>%
-  select(rule_idx, avg_student_acc, std_student_acc)
+  tidyboot_mean(column = explorer_acc) %>%
+  rename(avg_explorer_acc = mean) %>%
+  rename(explorer_acc_ci_lower = ci_lower) %>%
+  rename(explorer_acc_ci_upper = ci_upper )%>%
+  mutate(rule_type = floor(rule_idx/10))
 
-test <- bind_cols(test_explorer, test_student) %>%
-    select(rule_idx, student_acc, explorer_acc)
-test$rule_idx <- as.factor(test$rule_idx)
+complete_test_student_summary <- complete_test_student %>%
+  group_by(rule_idx) %>%
+  tidyboot_mean(column = student_acc) %>%
+  rename(avg_student_acc = mean) %>%
+  rename(student_acc_ci_lower = ci_lower) %>%
+  rename(student_acc_ci_upper = ci_upper) %>%
+  mutate(rule_type = floor(rule_idx/10))
 
+complete_test <- bind_cols(complete_test_explorer, complete_test_student) %>%
+    select(rule_idx, student_acc, explorer_acc, rule_type) 
+complete_test$rule_idx <- as.factor(complete_test$rule_idx)
 
-test_summary <- bind_cols(test_explorer_summary, test_student_summary) %>%
-  select(rule_idx, avg_student_acc, avg_explorer_acc, std_student_acc, std_explorer_acc)
-test_summary$rule_idx <- as.factor(test_summary$rule_idx)
+complete_test_summary <- bind_cols(complete_test_explorer_summary, complete_test_student_summary) %>% bind_cols(concept_summary) %>%
+  select(rule_idx, avg_student_acc, avg_explorer_acc, student_acc_ci_lower, student_acc_ci_upper, explorer_acc_ci_lower,  explorer_acc_ci_upper, p_test_belongs_to_concept, phrase, kind, name, type, rule_type, chance_rate) 
+complete_test_summary$rule_idx <- as.factor(complete_test_summary$rule_idx)
+complete_test_summary$type <- as.factor(complete_test_summary$type)
 ```
 
 ```{r}
-ggplot(test_summary %>%
+ggplot(complete_test_summary %>%
         rename(student_acc = avg_student_acc) %>%
-        rename(explorer_acc = avg_explorer_acc)
-       , aes(x=student_acc, y=explorer_acc, color=rule_idx, label=rule_idx)) +
-  geom_point(size = 4) +
+        rename(explorer_acc = avg_explorer_acc),
+       aes(x=student_acc, y=explorer_acc, color=rule_type, label=rule_idx))+
+  geom_point(size = 2) +
   theme_bw() +
-  guides(color = guide_legend("rule_idx")) +
-  geom_text(hjust = 0.01, nudge_x = 0.03, show.legend = FALSE) +
-  geom_point(data = test, size = 1) +
+  guides(color = guide_legend("rule_type")) +
+  geom_text(hjust = 0.01, nudge_x = 0.01, show.legend = FALSE) +
+  geom_point(data = complete_test, size = 1) +
   labs(
     title = "Student Acc vs. Explorer Acc",
     x = "Student Acc.",
-    y = "Sexplorer Acc."
+    y = "Explorer Acc."
   ) + geom_segment(aes(x=1, y=1, xend=0.2, yend=0.2), linetype=2, color="black",arrow = arrow(length = unit(0.2, "inches")))
 ```
-
-## Student versus Teacher Performance -- Pairs (Summurization)
+# Student Performance Vs. Teacher Performance (All Games)
 ```{r}
-ggplot(test_stats_s_unique, aes(x = reorder(role, desc(role)), y = val, fill = stat)) + 
-  geom_bar(stat = 'identity', position = 'stack') + facet_grid(~ id)
-```
-
-```{r}
-test_stats_s_concept = test_stats_s %>%
-  mutate(role = as.character(role)) %>%
-  mutate(role = replace(role, role == "explorer", "T")) %>%
-  mutate(role = replace(role, role == "student", "S")) %>%
-  select(role, rule_idx, hits, misses, correct_rejections, false_alarms) %>%
-  group_by(rule_idx, role) %>%
-  summarize(hits = sum(hits), misses = sum(misses), correct_rejections=sum(correct_rejections), false_alarms=sum(false_alarms)) %>%
-  gather(key = "stat", value = "val", 3:6) %>%
-  arrange(rule_idx) %>%
-  select(rule_idx, role, val, stat)
-```
-## Student versus Teacher Performance -- Concepts (Summurization)
-```{r}
-ggplot(test_stats_s_concept, aes(x = reorder(role, desc(role)), y = val, fill = stat)) + 
-  geom_bar(stat = 'identity', position = 'stack') + facet_grid(~ rule_idx)  +
-  labs(
-    title = "Teacher & Student Performance Across Rules (Aggregated)",
-    x = "Student & Teachers",
-    y = "Counts"
+all_test <- scores_all_games %>%
+  mutate(
+    correct = hits + correct_rejections,
+    incorrect = misses + false_alarms,
+    acc = correct / (correct + incorrect),
+    rule_type = floor(rule_idx/10)
   )
+
+all_test_summary <- all_test %>%
+  group_by(rule_idx, role) %>%
+  tidyboot_mean(column = acc) %>%
+  mutate(rule_type = floor(rule_idx/10))
+
+all_test <- bind_cols(
+  all_test %>%
+    filter(role == "student") %>%
+    select(rule_idx, gameid, acc, rule_type) %>%
+    rename(student_acc = acc),
+  all_test %>%
+    filter(role == "explorer") %>%
+    select(acc) %>%
+    rename(explorer_acc = acc)
+)
+all_test$rule_idx <- as.factor(all_test$rule_idx)
+all_test$rule_type <- as.factor(all_test$rule_type)
+all_test <- all_test %>%
+  mutate(rule_type_text = fct_recode(rule_type,
+    "Single Feature" = "0",
+    "Conjunction" = "1",
+    "Disjunction" = "2",
+    "Conjunctive Disjunction" = "3",
+    "Disjunctive Conjunction" = "4",
+  ))
+
+
+all_test_summary <- bind_cols(
+  all_test_summary %>%
+    filter(role == "student") %>%
+    select(rule_idx, rule_type, empirical_stat, ci_lower, ci_upper) %>%
+    rename(
+      student_acc = empirical_stat,
+      student_ci_lower = ci_lower,
+      student_ci_upper = ci_upper
+    ),
+  all_test_summary %>%
+    filter(role == "explorer") %>%
+    select(rule_idx,empirical_stat, ci_lower, ci_upper) %>%
+    rename(
+      explorer_acc = empirical_stat,
+      explorer_ci_lower = ci_lower,
+      explorer_ci_upper = ci_upper
+    ),
+  ) %>%
+  bind_cols(concept_summary)
+all_test_summary$rule_idx <- as.factor(all_test_summary$rule_idx)
+all_test_summary$rule_type <- as.factor(all_test_summary$rule_type)
+
+all_test_summary <- all_test_summary %>%
+  mutate(rule_type_text = fct_recode(rule_type,
+    "Single Feature" = "0",
+    "Conjunction" = "1",
+    "Disjunction" = "2",
+    "Conjunctive Disjunction" = "3",
+    "Disjunctive Conjunction" = "4",
+  ))
 ```
+
+```{r fig.width=7, fig.height=4, echo=FALSE}
+ggplot(all_test_summary, aes(x=student_acc, y=explorer_acc, color=rule_type_text, label=rule_idx)) +
+  geom_point(size = 6) +
+  theme_few() +
+  guides(color = guide_legend("Rule Type")) +
+  geom_text(hjust = 0.01, nudge_x = 0.01, show.legend = FALSE) +
+  geom_point(data = all_test, size = 2, alpha=0.7) +
+  labs(
+    title = "Student Acc vs. Explorer Acc",
+    x = "Student Acc.",
+    y = "Explorer Acc."
+  ) +
+  geom_abline(intercept = 0, slope = 1, linetype = 2) +
+  geom_errorbar(aes(ymax = explorer_ci_lower, ymin = explorer_ci_upper), alpha=0.3) +
+  geom_errorbarh(aes(xmax = student_ci_lower, xmin = student_ci_upper), alpha=0.3) +
+  coord_fixed() +
+  scale_x_continuous(limits = c(0.10, 1.0), breaks = c(0.25, 0.5, 0.75, 1.0)) +
+  scale_y_continuous(limits = c(0.10, 1.0), breaks = c(0.25, 0.5, 0.75, 1.0) )
+```
+
 
 ```{r}
-test_stats_s_rule_type = test_stats_s %>%
-  mutate(role = as.character(role)) %>%
-  mutate(role = replace(role, role == "explorer", "T")) %>%
-  mutate(role = replace(role, role == "student", "S")) %>%
-  select(role, rule_type, hits, misses, correct_rejections, false_alarms) %>%
-  group_by(rule_type, role) %>%
-  summarize(hits = sum(hits), misses = sum(misses), correct_rejections=sum(correct_rejections), false_alarms=sum(false_alarms)) %>%
-  gather(key = "stat", value = "val", 3:6) %>%
-  select(rule_type, role, val, stat)
+# Plot of base rates and performance of students and teachers
+ggplot(all_test_summary, aes(x=rule_idx, y=explorer_acc)) + 
+  geom_point(col="red", size=2) +   # Draw points
+  geom_point(aes(y=chance_rate), col="black", size=3) +
+  geom_point(aes(y=student_acc), col="blue", size=2) + 
+  coord_flip() + 
+  theme_bw() +
+  labs( 
+    title="Chance Vs. Mean Participant Performance", 
+    y="Accuracy (%)", 
+    x="Rule Index")
 ```
 
+```{r fig.width=7, fig.height=4, echo=FALSE}
+ggplot(all_test_summary, aes(x=explorer_acc, xend=student_acc, y=rule_idx)) + 
+  theme_few() +
+  geom_segment(
+    aes(
+      color=rule_type_text,
+      x=explorer_acc, 
+      xend=student_acc, 
+      y=rule_idx, 
+      yend=rule_idx),
+    size=2) +
+  geom_dumbbell(
+    size=0,
+    size_x=4,
+    size_xend = 4,
+    colour_x="black",
+    colour_xend = "gray") +
+    labs(
+      x="Accuracy (Proportion Correct)",
+      y="Concept Rule",
+      title="Concept Rule Accuracies") +
+  geom_point(aes(x=chance_rate, y=rule_idx, shape=15), size=3, inherit.aes=F, show.legend = F, color="orange") +
+  scale_shape_identity() + 
+  guides(color = guide_legend("Rule Type")) +
+  scale_x_continuous(limits = c(0.10, 1.0), breaks = c(0.25, 0.5, 0.75, 1.0)) + 
+  scale_y_discrete(labels = c(
+    "flowers: orange stems",
+    "flowers: thorns present",
+    "fish: white fangs",
+    "fish: whiskers present",
+    "bugs: orange head",
+    "bugs: no wings",
+    "birds: tail present",
+    "birds: purple tail",
+    "trees: purple berries",
+    "trees: no leaves",
+
+    "flowers: purple stem AND thorn",
+    "flowers: orange petals AND purple center",
+    "fish: white stripes AND whiskers  present",
+    "fish: orange bodies AND purple stripe",
+    "bugs: purple legs AND white head",
+    "bugs: wings AND antennae present",
+    "birds: purple wings AND crest present",
+    "birds: orange wings AND tail present",
+    "trees: orange trunk AND berries present",
+    "trees: purple leaves AND berries present",
+
+    "flowers: purple petals OR thorns present",
+    "flowers: orange stems OR thorns present",
+    "fish: orange bodies OR fangs present",
+    "fish: white stripes OR whiskers present",
+    "bugs: orange antennae OR wings present",
+    "bugs: purple wings OR white legs",
+    "birds: orange tail OR white wings",
+    "birds: orange crest OR purple wings",
+    "trees: purple berries OR white trunk",
+    "trees: white leaves OR orange berries",
+
+    "flowers: (purple stem AND white petals) OR orange center",
+    "flowers: (thorns present AND purple petals) OR orange stem",
+    "fish: (orange body AND purple stripes) OR whiskers present",
+    "fish: (white body AND orange stripes) OR fangs present",
+    "bugs: (purple legs AND white head) OR orange wings",
+    "bugs: (white legs AND purple wings) OR orange antennae",
+    "birds: (purple wings AND white crest) OR white tail",
+    "birds: (purple crest AND purple tail) OR orange wings",
+    "trees: (orange berries AND purple trunks) OR white leaves",
+    "trees: (leaves present AND berries present) OR orange trunks",
+
+    "flowers: (purple center OR orange stem) AND thorns present",
+    "flowers: (purple stem OR thorns present) AND white center",
+    "fish: (orange body OR fangs present) AND whiskers present",
+    "fish: (white stripes OR purple body) AND whiskers present",
+    "bugs: (antennae present OR wings present) AND purple body",
+    "bugs: (white head OR orange antennae) AND purple legs",
+    "birds: (orange tail OR white wings) AND orange crest",
+    "birds: (white crest OR orange wings) AND tail present",
+    "trees: (purple trunks OR white leaves) AND orange berries",
+    "trees: (orange trunks OR berries present) AND white leaves"
+  )
+)
+```
+
+
+### Concept Type Bar Plot
+```{r}
+all_test_concept_type_summary <- scores_all_games %>%
+  mutate(
+    correct = hits + correct_rejections,
+    incorrect = misses + false_alarms,
+    acc = correct / (correct + incorrect),
+    rule_type = floor(rule_idx/10)
+  ) %>%
+  group_by(rule_type, role) %>%
+  tidyboot_mean(column = acc)
+
+all_test_concept_type_summary$rule_type <- as.factor(all_test_concept_type_summary$rule_type)
+
+all_test_concept_type_summary <- all_test_concept_type_summary %>%
+  mutate(rule_type_text = fct_recode(rule_type,
+    "Single Feature" = "0",
+    "Conjunction" = "1",
+    "Disjunction" = "2",
+    "Conjunctive Disjunction" = "3",
+    "Disjunctive Conjunction" = "4",
+  ))
+
+
+all_test_concept_type_summary$role <- as.factor(all_test_concept_type_summary$role)
+```
+
+```{r fig.width=7, fig.height=4, echo=FALSE}
+ggplot(all_test_concept_type_summary, aes(rule_type_text, fill=role, y=empirical_stat)) + 
+  geom_col(position='dodge') +  
+  labs(
+    title = "Concept Type Performance",
+    x = "Concept Type",
+    y = "Accuracy %"
+  ) + 
+  geom_errorbar(aes(x=rule_type_text, ymin=ci_lower, ymax=ci_upper), color="black", width=0.5, position=position_dodge(.9)) 
+```
+
+### Concept Type Bar Plot -- Normalized Accuracies 
+```{r}
+all_test_concept_type_summary_normalized <- scores_all_games %>%
+  mutate(
+    correct = hits + correct_rejections,
+    incorrect = misses + false_alarms,
+    acc = correct / (correct + incorrect),
+    rule_type = floor(rule_idx/10),
+    chance_rate = concept_summary$chance_rate[rule_idx + 1],
+    norm_acc = (acc - chance_rate)/(1 - chance_rate)
+  ) %>%
+  group_by(rule_type, role) %>%
+  tidyboot_mean(column = norm_acc)
+
+all_test_concept_type_summary_normalized$rule_type <- as.factor(all_test_concept_type_summary_normalized$rule_type)
+
+all_test_concept_type_summary_normalized <- all_test_concept_type_summary_normalized %>%
+  mutate(rule_type_text = fct_recode(rule_type,
+    "Single Feature" = "0",
+    "Conjunction" = "1",
+    "Disjunction" = "2",
+    "Conjunctive Disjunction" = "3",
+    "Disjunctive Conjunction" = "4",
+  ))
+
+all_test_concept_type_summary_normalized$role <- as.factor(all_test_concept_type_summary_normalized$role)
+```
+
+```{r fig.width=7, fig.height=4, echo=FALSE}
+ggplot(all_test_concept_type_summary_normalized, aes(rule_type_text, fill=role, y=empirical_stat)) + 
+  geom_col(position='dodge') +  
+  labs(
+    title = "Concept Type Performance",
+    x = "Concept Type",
+    y = "Normalized Accuracy %"
+  ) + 
+  geom_errorbar(aes(x=rule_type_text, ymin=ci_lower, ymax=ci_upper), color="black", width=0.5, position=position_dodge(.9)) 
+```
+
+
+```{r}
 #-----------------------------------------------
 # Hits, Misses, False Alarms, Correct Rejections
 # ----------------------------------------------
-test_stats_teacher_s <- test_stats_s %>%
-  filter(role == "explorer") %>%
-  select(rule_idx, hits, misses, correct_rejections, false_alarms) %>%
-  filter(rule_idx %in% rule_indices) %>%
-  group_by(rule_idx) %>% 
-  summarise_all(sum)
-summed <- rowSums(test_stats_teacher_s[, c("hits", "misses", "correct_rejections", "false_alarms")])
-test_stats_teacher_s_normalized <- test_stats_teacher_s %>%
-  mutate(hits = hits / summed) %>%
-  mutate(misses = misses / summed) %>%
-  mutate(correct_rejections = correct_rejections / summed) %>%
-  mutate(false_alarms = false_alarms / summed)
+all_test_perf_breakdown <- scores_all_games %>%
+  select(role, rule_idx, hits, misses, correct_rejections, false_alarms) %>%
+  group_by(role, rule_idx) %>% 
+  summarise_all(sum) %>%
+  mutate(rule_type = floor(rule_idx/10)) 
 
-test_stats_student_s <- test_stats_s %>%
-  filter(role == "student") %>%
-  select(rule_idx, hits, misses, correct_rejections, false_alarms) %>%
-  filter(rule_idx %in% rule_indices) %>%
-  group_by(rule_idx) %>% 
-  summarise_all(sum)
-summed <- rowSums(test_stats_student_s[, c("hits", "misses", "correct_rejections", "false_alarms")])
-test_stats_student_s_normalized <- test_stats_student_s %>%
-  mutate(hits = hits / summed) %>%
-  mutate(misses = misses / summed) %>%
-  mutate(correct_rejections = correct_rejections / summed) %>%
-  mutate(false_alarms = false_alarms / summed)
+all_test_perf_breakdown$rule_idx <- as.factor(all_test_perf_breakdown$rule_idx)
+all_test_perf_breakdown$rule_type <- as.factor(all_test_perf_breakdown$rule_type)
+all_test_perf_breakdown <- all_test_perf_breakdown %>%
+  mutate(rule_type_text = 
+           fct_recode(rule_type,
+              "Single Feature" = "0",
+              "Conjunction" = "1",
+              "Disjunction" = "2",
+              "Conjunctive Disjunction" = "3",
+              "Disjunctive Conjunction" = "4",
+            ),
+        rule_idx_text = 
+          fct_recode(rule_idx,
+            "flowers: orange stems" = "0",
+            "flowers: thorns present" = "1",
+            "fish: white fangs" = "2",
+            "fish: whiskers present" = "3",
+            "bugs: orange head" = "4",
+            "bugs: no wings" = "5",
+            "birds: tail present" = "6",
+            "birds: purple tail" = "7",
+            "trees: purple berries" = "8",
+            "trees: no leaves" = "9",
+        
+            "flowers: purple stem AND thorn" = "10",
+            "flowers: orange petals AND purple center" = "11",
+            "fish: white stripes AND whiskers  present"= "12" ,
+            "fish: orange bodies AND purple stripe" = "13",
+            "bugs: purple legs AND white head" = "14",
+            "bugs: wings AND antennae present" = "15",
+            "birds: purple wings AND crest present" = "16",
+            "birds: orange wings AND tail present" = "17",
+            "trees: orange trunk AND berries present" = "18",
+            "trees: purple leaves AND berries present"= "19",
+        
+            "flowers: purple petals OR thorns present" = "20",
+            "flowers: orange stems OR thorns present" = "21",
+            "fish: orange bodies OR fangs present" = "22",
+            "fish: white stripes OR whiskers present" = "23",
+            "bugs: orange antennae OR wings present" = "24",
+            "bugs: purple wings OR white legs" = "25",
+            "birds: orange tail OR white wings" = "26",
+            "birds: orange crest OR purple wings" = "27",
+            "trees: purple berries OR white trunk" = "28",
+            "trees: white leaves OR orange berries" = "29",
+        
+            "flowers: (purple stem AND white petals) OR orange center" = "30",
+            "flowers: (thorns present AND purple petals) OR orange stem" = "31",
+            "fish: (orange body AND purple stripes) OR whiskers present" = "32",
+            "fish: (white body AND orange stripes) OR fangs present" = "33",
+            "bugs: (purple legs AND white head) OR orange wings" = "34",
+            "bugs: (white legs AND purple wings) OR orange antennae" = "35",
+            "birds: (purple wings AND white crest) OR white tail" = "36",
+            "birds: (purple crest AND purple tail) OR orange wings" = "37",
+            "trees: (orange berries AND purple trunks) OR white leaves" = "38",
+            "trees: (leaves present AND berries present) OR orange trunks" = "39",
+        
+            "flowers: (purple center OR orange stem) AND thorns present" = "40",
+            "flowers: (purple stem OR thorns present) AND white center" = "41",
+            "fish: (orange body OR fangs present) AND whiskers present" = "42",
+            "fish: (white stripes OR purple body) AND whiskers present" = "43",
+            "bugs: (antennae present OR wings present) AND purple body" = "44",
+            "bugs: (white head OR orange antennae) AND purple legs" = "45",
+            "birds: (orange tail OR white wings) AND orange crest" = "46",
+            "birds: (white crest OR orange wings) AND tail present" = "47",
+            "trees: (purple trunks OR white leaves) AND orange berries" = "48",
+            "trees: (orange trunks OR berries present) AND white leaves" = "49")
+)
 
+all_test_perf_breakdown <- all_test_perf_breakdown %>%
+  melt(measure.vars = c("hits", "misses", "correct_rejections", "false_alarms"))
+
+
+```
 
 
 ## Student versus Teacher Performance -- Concept Types (Summurization)
-```{r fig.width=7, fig.height=4, echo=FALSE}
-ggplot(test_stats_s_rule_type, aes(x = reorder(role, desc(role)), y = val, fill = stat)) + 
-  geom_bar(stat = 'identity', position = 'stack') + facet_grid(~ rule_type) +
+```{r fig.width=10, fig.height=10, echo=FALSE}
+ggplot(all_test_perf_breakdown, aes(x = reorder(role, desc(role)), y = value, fill = variable)) + 
+  geom_bar(stat = 'identity', position = 'stack') + facet_wrap(rule_idx_text ~ rule_type_text, ncol=10,  labeller = label_wrap_gen(width=30)) +
     labs(
-    title = "Teacher & Student Performance Across Concept Types (Aggregated)",
-    x = "Student & Teachers",
-    y = "Counts"
+      title = "Teacher & Student Performance Across Concept Rules",
+      y = "Counts"
   )
 ```
 

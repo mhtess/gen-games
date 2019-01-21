@@ -1,0 +1,19 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	text	reactionTime	eventType
+mp-game-6	pilot	6015-c4867bc2-d5bf-4d09-90d4-56916594749c	1547931909372	student	14	"birds with purple wings and crests"	birds_purple_wings_crests	0	"hello mr explorer"	4.976	chatMessage
+mp-game-6	pilot	6015-c4867bc2-d5bf-4d09-90d4-56916594749c	1547931909660	explorer	14	"birds with purple wings and crests"	birds_purple_wings_crests	0	"hai da "	4.038	chatMessage
+mp-game-6	pilot	6015-c4867bc2-d5bf-4d09-90d4-56916594749c	1547931917352	student	14	"birds with purple wings and crests"	birds_purple_wings_crests	0	"describe these ollers"	5.054	chatMessage
+mp-game-6	pilot	6015-c4867bc2-d5bf-4d09-90d4-56916594749c	1547931930284	explorer	14	"birds with purple wings and crests"	birds_purple_wings_crests	0	"teriyadhu da punda"	7.311	chatMessage
+mp-game-6	pilot	6015-c4867bc2-d5bf-4d09-90d4-56916594749c	1547931939517	student	14	"birds with purple wings and crests"	birds_purple_wings_crests	0	"what language"	2.994	chatMessage
+mp-game-6	pilot	6015-c4867bc2-d5bf-4d09-90d4-56916594749c	1547931942899	student	14	"birds with purple wings and crests"	birds_purple_wings_crests	0	"not english"	2.386	chatMessage
+mp-game-6	pilot	6015-c4867bc2-d5bf-4d09-90d4-56916594749c	1547931974829	explorer	14	"birds with purple wings and crests"	birds_purple_wings_crests	0	"i did not ollen study before. and you?"	14.991	chatMessage
+mp-game-6	pilot	6015-c4867bc2-d5bf-4d09-90d4-56916594749c	1547931986447	student	14	"birds with purple wings and crests"	birds_purple_wings_crests	0	"i do not understand"	3.583	chatMessage
+mp-game-6	pilot	6015-c4867bc2-d5bf-4d09-90d4-56916594749c	1547932001362	student	14	"birds with purple wings and crests"	birds_purple_wings_crests	0	"I believe you have to describe characteristics of the species you saw"	13.671	chatMessage
+mp-game-6	pilot	6015-c4867bc2-d5bf-4d09-90d4-56916594749c	1547932026519	explorer	14	"birds with purple wings and crests"	birds_purple_wings_crests	0	"I think Ollen is a 17 km long river in Lower Saxony, Germany. It discharges into the Hunte through an old branch of the Hunte near Berne."	3.479	chatMessage
+mp-game-6	pilot	6015-c4867bc2-d5bf-4d09-90d4-56916594749c	1547932057636	student	14	"birds with purple wings and crests"	birds_purple_wings_crests	0	"that does not sound like a species of critter. it sounds like a description of the river"	23.332	chatMessage
+mp-game-6	pilot	6015-c4867bc2-d5bf-4d09-90d4-56916594749c	1547932071396	student	14	"birds with purple wings and crests"	birds_purple_wings_crests	0	"oller with an "r" not ollen with an "n""	12.196	chatMessage
+mp-game-6	pilot	6015-c4867bc2-d5bf-4d09-90d4-56916594749c	1547932097442	student	14	"birds with purple wings and crests"	birds_purple_wings_crests	0	"what were the creatures like that you saw on the last screen"	13.698	chatMessage
+mp-game-6	pilot	6015-c4867bc2-d5bf-4d09-90d4-56916594749c	1547932127459	explorer	14	"birds with purple wings and crests"	birds_purple_wings_crests	0	"oh sorry"	2.899	chatMessage
+mp-game-6	pilot	6015-c4867bc2-d5bf-4d09-90d4-56916594749c	1547932144575	student	14	"birds with purple wings and crests"	birds_purple_wings_crests	0	"do you speak english or another language"	6.962	chatMessage
+mp-game-6	pilot	6015-c4867bc2-d5bf-4d09-90d4-56916594749c	1547932198760	student	14	"birds with purple wings and crests"	birds_purple_wings_crests	0	"if english, describe the creatures. If another, tell me the language and i can translate it"	21.106	chatMessage
+mp-game-6	pilot	6015-c4867bc2-d5bf-4d09-90d4-56916594749c	1547932271863	student	14	"birds with purple wings and crests"	birds_purple_wings_crests	0	"hello explorer?"	4.845	chatMessage
+mp-game-6	pilot	6015-c4867bc2-d5bf-4d09-90d4-56916594749c	1547932326655	student	14	"birds with purple wings and crests"	birds_purple_wings_crests	0	"i guess i will just continue and try my best. let me know if not english please!"	21.777	chatMessage
