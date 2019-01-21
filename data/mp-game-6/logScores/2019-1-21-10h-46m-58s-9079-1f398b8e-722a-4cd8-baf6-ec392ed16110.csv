@@ -1,0 +1,11 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	hits	misses	correct_rejections	false_alarms	score	eventType
+mp-game-6	pilot	9079-1f398b8e-722a-4cd8-baf6-ec392ed16110	1548096418901	student	42	"flowers with (purple centers or orange stems) and thorns"	flowers_purple_centers_or_orange_stems_with_thorns	0	19	4	20	7	12	logScores
+mp-game-6	pilot	9079-1f398b8e-722a-4cd8-baf6-ec392ed16110	1548096429789	explorer	42	"flowers with (purple centers or orange stems) and thorns"	flowers_purple_centers_or_orange_stems_with_thorns	0	19	4	20	7	12	logScores
+mp-game-6	pilot	9079-1f398b8e-722a-4cd8-baf6-ec392ed16110	1548096697894	explorer	32	"Tree with (orange berries and purple trunks) or white leaves"	trees_orange_berries_purple_trunks_or_white_leaves	1	10	1	39	0	10	logScores
+mp-game-6	pilot	9079-1f398b8e-722a-4cd8-baf6-ec392ed16110	1548096761191	student	32	"Tree with (orange berries and purple trunks) or white leaves"	trees_orange_berries_purple_trunks_or_white_leaves	1	10	1	39	0	10	logScores
+mp-game-6	pilot	9079-1f398b8e-722a-4cd8-baf6-ec392ed16110	1548096903570	explorer	2	"fish with white fangs"	fish_fangs	2	24	0	26	0	24	logScores
+mp-game-6	pilot	9079-1f398b8e-722a-4cd8-baf6-ec392ed16110	1548096928924	student	2	"fish with white fangs"	fish_fangs	2	23	1	26	0	23	logScores
+mp-game-6	pilot	9079-1f398b8e-722a-4cd8-baf6-ec392ed16110	1548097504521	explorer	22	"birds with orange tails or white wings"	birds_orange_tails_or_white_wings	3	12	9	29	0	12	logScores
+mp-game-6	pilot	9079-1f398b8e-722a-4cd8-baf6-ec392ed16110	1548097562259	student	22	"birds with orange tails or white wings"	birds_orange_tails_or_white_wings	3	3	18	23	6	0	logScores
+mp-game-6	pilot	9079-1f398b8e-722a-4cd8-baf6-ec392ed16110	1548097754487	explorer	12	"bugs with purple legs and white heads"	bugs_purple_legs_white_heads	4	10	0	40	0	10	logScores
+mp-game-6	pilot	9079-1f398b8e-722a-4cd8-baf6-ec392ed16110	1548097840408	student	12	"bugs with purple legs and white heads"	bugs_purple_legs_white_heads	4	0	10	40	0	0	logScores

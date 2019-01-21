@@ -1,0 +1,6 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	text	reactionTime	eventType
+mp-game-6	pilot	4035-cb30b655-617f-4b5b-98a6-41a38ff3619e	1548097652641	explorer	19	"flowers with orange petals and purple centers"	flowers_orange_petals_purple_centers	0	"hello"	3.164	chatMessage
+mp-game-6	pilot	4035-cb30b655-617f-4b5b-98a6-41a38ff3619e	1548097690119	explorer	19	"flowers with orange petals and purple centers"	flowers_orange_petals_purple_centers	0	"are you there"	11.775	chatMessage
+mp-game-6	pilot	4035-cb30b655-617f-4b5b-98a6-41a38ff3619e	1548097713733	student	19	"flowers with orange petals and purple centers"	flowers_orange_petals_purple_centers	0	"hi"	0.801	chatMessage
+mp-game-6	pilot	4035-cb30b655-617f-4b5b-98a6-41a38ff3619e	1548097721819	student	19	"flowers with orange petals and purple centers"	flowers_orange_petals_purple_centers	0	"I am here"	4.156	chatMessage
+mp-game-6	pilot	4035-cb30b655-617f-4b5b-98a6-41a38ff3619e	1548097727154	explorer	19	"flowers with orange petals and purple centers"	flowers_orange_petals_purple_centers	0	"okay"	2.175	chatMessage

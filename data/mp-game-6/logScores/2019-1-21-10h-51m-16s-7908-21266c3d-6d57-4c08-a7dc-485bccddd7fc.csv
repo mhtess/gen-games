@@ -1,0 +1,11 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	hits	misses	correct_rejections	false_alarms	score	eventType
+mp-game-6	pilot	7908-21266c3d-6d57-4c08-a7dc-485bccddd7fc	1548096676376	explorer	2	"fish with white fangs"	fish_fangs	0	7	17	19	7	0	logScores
+mp-game-6	pilot	7908-21266c3d-6d57-4c08-a7dc-485bccddd7fc	1548096676769	student	2	"fish with white fangs"	fish_fangs	0	15	9	12	14	1	logScores
+mp-game-6	pilot	7908-21266c3d-6d57-4c08-a7dc-485bccddd7fc	1548096881579	explorer	32	"Tree with (orange berries and purple trunks) or white leaves"	trees_orange_berries_purple_trunks_or_white_leaves	1	2	9	33	6	0	logScores
+mp-game-6	pilot	7908-21266c3d-6d57-4c08-a7dc-485bccddd7fc	1548096961042	student	32	"Tree with (orange berries and purple trunks) or white leaves"	trees_orange_berries_purple_trunks_or_white_leaves	1	0	11	39	0	0	logScores
+mp-game-6	pilot	7908-21266c3d-6d57-4c08-a7dc-485bccddd7fc	1548097121172	explorer	22	"birds with orange tails or white wings"	birds_orange_tails_or_white_wings	2	3	18	25	4	0	logScores
+mp-game-6	pilot	7908-21266c3d-6d57-4c08-a7dc-485bccddd7fc	1548097146403	student	22	"birds with orange tails or white wings"	birds_orange_tails_or_white_wings	2	17	4	4	25	0	logScores
+mp-game-6	pilot	7908-21266c3d-6d57-4c08-a7dc-485bccddd7fc	1548097312888	explorer	42	"flowers with (purple centers or orange stems) and thorns"	flowers_purple_centers_or_orange_stems_with_thorns	3	6	17	21	6	0	logScores
+mp-game-6	pilot	7908-21266c3d-6d57-4c08-a7dc-485bccddd7fc	1548097315870	student	42	"flowers with (purple centers or orange stems) and thorns"	flowers_purple_centers_or_orange_stems_with_thorns	3	1	22	19	8	0	logScores
+mp-game-6	pilot	7908-21266c3d-6d57-4c08-a7dc-485bccddd7fc	1548097461797	explorer	12	"bugs with purple legs and white heads"	bugs_purple_legs_white_heads	4	4	6	30	10	0	logScores
+mp-game-6	pilot	7908-21266c3d-6d57-4c08-a7dc-485bccddd7fc	1548097482128	student	12	"bugs with purple legs and white heads"	bugs_purple_legs_white_heads	4	1	9	36	4	0	logScores

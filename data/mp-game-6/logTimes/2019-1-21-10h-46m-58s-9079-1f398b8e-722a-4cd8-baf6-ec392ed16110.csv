@@ -1,0 +1,11 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	train	test	chat	eventType
+mp-game-6	pilot	9079-1f398b8e-722a-4cd8-baf6-ec392ed16110	1548096418849	student	42	"flowers with (purple centers or orange stems) and thorns"	flowers_purple_centers_or_orange_stems_with_thorns	0	-1	50.964	109.73	logTimes
+mp-game-6	pilot	9079-1f398b8e-722a-4cd8-baf6-ec392ed16110	1548096429742	explorer	42	"flowers with (purple centers or orange stems) and thorns"	flowers_purple_centers_or_orange_stems_with_thorns	0	441.265	55.459	110.097	logTimes
+mp-game-6	pilot	9079-1f398b8e-722a-4cd8-baf6-ec392ed16110	1548096697840	explorer	32	"Tree with (orange berries and purple trunks) or white leaves"	trees_orange_berries_purple_trunks_or_white_leaves	1	136.902	36.017	71.556	logTimes
+mp-game-6	pilot	9079-1f398b8e-722a-4cd8-baf6-ec392ed16110	1548096761147	student	32	"Tree with (orange berries and purple trunks) or white leaves"	trees_orange_berries_purple_trunks_or_white_leaves	1	-1	98.726	71.187	logTimes
+mp-game-6	pilot	9079-1f398b8e-722a-4cd8-baf6-ec392ed16110	1548096903480	explorer	2	"fish with white fangs"	fish_fangs	2	54.344	37.684	35.092	logTimes
+mp-game-6	pilot	9079-1f398b8e-722a-4cd8-baf6-ec392ed16110	1548096928864	student	2	"fish with white fangs"	fish_fangs	2	-1	62.752	34.719	logTimes
+mp-game-6	pilot	9079-1f398b8e-722a-4cd8-baf6-ec392ed16110	1548097504474	explorer	22	"birds with orange tails or white wings"	birds_orange_tails_or_white_wings	3	368.965	91.599	100.145	logTimes
+mp-game-6	pilot	9079-1f398b8e-722a-4cd8-baf6-ec392ed16110	1548097562202	student	22	"birds with orange tails or white wings"	birds_orange_tails_or_white_wings	3	-1	149.16	99.777	logTimes
+mp-game-6	pilot	9079-1f398b8e-722a-4cd8-baf6-ec392ed16110	1548097754432	explorer	12	"bugs with purple legs and white heads"	bugs_purple_legs_white_heads	4	104.76	37.938	32.787	logTimes
+mp-game-6	pilot	9079-1f398b8e-722a-4cd8-baf6-ec392ed16110	1548097840328	student	12	"bugs with purple legs and white heads"	bugs_purple_legs_white_heads	4	-1	124.384	32.421	logTimes
