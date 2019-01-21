@@ -35,3 +35,14 @@ mp-game-6	pilot	4035-cb30b655-617f-4b5b-98a6-41a38ff3619e	1548098630035	student	
 mp-game-6	pilot	4035-cb30b655-617f-4b5b-98a6-41a38ff3619e	1548098630501	explorer	39	"bugs with (white legs and purple wings) or orange antennae"	bugs_white_legs_purple_wings_or_orange_antennae	2	"then"	11.326	chatMessage
 mp-game-6	pilot	4035-cb30b655-617f-4b5b-98a6-41a38ff3619e	1548098651140	explorer	39	"bugs with (white legs and purple wings) or orange antennae"	bugs_white_legs_purple_wings_or_orange_antennae	2	"How species are identified | Science | The Guardian"	0.988	chatMessage
 mp-game-6	pilot	4035-cb30b655-617f-4b5b-98a6-41a38ff3619e	1548098771243	student	9	"trees without leaves"	trees_without_leaves	3	"ok"	112.21	chatMessage
+mp-game-6	pilot	4035-cb30b655-617f-4b5b-98a6-41a38ff3619e	1548098921450	explorer	9	"trees without leaves"	trees_without_leaves	3	"hai"	3.843	chatMessage
+mp-game-6	pilot	4035-cb30b655-617f-4b5b-98a6-41a38ff3619e	1548098930027	explorer	9	"trees without leaves"	trees_without_leaves	3	"are you there"	6.464	chatMessage
+mp-game-6	pilot	4035-cb30b655-617f-4b5b-98a6-41a38ff3619e	1548098950414	student	9	"trees without leaves"	trees_without_leaves	3	"hi"	0.648	chatMessage
+mp-game-6	pilot	4035-cb30b655-617f-4b5b-98a6-41a38ff3619e	1548098955775	student	9	"trees without leaves"	trees_without_leaves	3	"are you robot"	4.166	chatMessage
+mp-game-6	pilot	4035-cb30b655-617f-4b5b-98a6-41a38ff3619e	1548098984521	explorer	9	"trees without leaves"	trees_without_leaves	3	"No"	1.095	chatMessage
+mp-game-6	pilot	4035-cb30b655-617f-4b5b-98a6-41a38ff3619e	1548099029362	student	9	"trees without leaves"	trees_without_leaves	3	"can you talk about the properties of the species?"	14.731	chatMessage
+mp-game-6	pilot	4035-cb30b655-617f-4b5b-98a6-41a38ff3619e	1548099051010	explorer	9	"trees without leaves"	trees_without_leaves	3	"How species are identified | Science | The Guardian"	0.716	chatMessage
+mp-game-6	pilot	4035-cb30b655-617f-4b5b-98a6-41a38ff3619e	1548099159436	explorer	49	"birds with (white crests or orange wings) and tails"	birds_white_crests_or_orange_wings_tails	4	"hai"	1.48	chatMessage
+mp-game-6	pilot	4035-cb30b655-617f-4b5b-98a6-41a38ff3619e	1548099164455	student	49	"birds with (white crests or orange wings) and tails"	birds_white_crests_or_orange_wings_tails	4	"hi"	0.625	chatMessage
+mp-game-6	pilot	4035-cb30b655-617f-4b5b-98a6-41a38ff3619e	1548099205859	student	49	"birds with (white crests or orange wings) and tails"	birds_white_crests_or_orange_wings_tails	4	"can you talk about the properties of the species."	25.743	chatMessage
+mp-game-6	pilot	4035-cb30b655-617f-4b5b-98a6-41a38ff3619e	1548099216754	explorer	49	"birds with (white crests or orange wings) and tails"	birds_white_crests_or_orange_wings_tails	4	"How species are identified | Science | The Guardian"	0.62	chatMessage

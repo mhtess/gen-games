@@ -1,0 +1,5 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	train	test	chat	eventType
+mp-game-6	pilot	3421-d5e7a1c9-5535-439f-acec-fa522a1d5bad	1548099120886	explorer	36	"fish with (orange bodies and purple stripes) or whiskers"	fish_orange_bodies_purple_stripes_or_whiskers	0	164.517	44.154	176.496	logTimes
+mp-game-6	pilot	3421-d5e7a1c9-5535-439f-acec-fa522a1d5bad	1548099198022	student	36	"fish with (orange bodies and purple stripes) or whiskers"	fish_orange_bodies_purple_stripes_or_whiskers	0	-1	117.706	176.096	logTimes
+mp-game-6	pilot	3421-d5e7a1c9-5535-439f-acec-fa522a1d5bad	1548099658952	explorer	6	"birds with tails"	birds_tails	1	210.845	50.089	148.379	logTimes
+mp-game-6	pilot	3421-d5e7a1c9-5535-439f-acec-fa522a1d5bad	1548099721003	student	6	"birds with tails"	birds_tails	1	-1	104.757	147.957	logTimes
