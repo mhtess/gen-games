@@ -1,3 +1,7 @@
 experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	train	test	chat	eventType
 mp-game-6	pilot	7249-f3f3c018-1137-4390-861e-a6606da7f247	1548107350161	explorer	26	"flowers with purple petals or thorns"	flowers_purple_petals_or_thorns	0	159.683	63.36	87.182	logTimes
 mp-game-6	pilot	7249-f3f3c018-1137-4390-861e-a6606da7f247	1548107355171	student	26	"flowers with purple petals or thorns"	flowers_purple_petals_or_thorns	0	-1	63.399	86.782	logTimes
+mp-game-6	pilot	7249-f3f3c018-1137-4390-861e-a6606da7f247	1548107562041	explorer	46	"bugs with (antennae or wings) and purple bodies"	bugs_antennae_or_wings_purple_bodies	1	62.823	31.968	92.722	logTimes
+mp-game-6	pilot	7249-f3f3c018-1137-4390-861e-a6606da7f247	1548107586410	student	46	"bugs with (antennae or wings) and purple bodies"	bugs_antennae_or_wings_purple_bodies	1	-1	56.632	92.272	logTimes
+mp-game-6	pilot	7249-f3f3c018-1137-4390-861e-a6606da7f247	1548107730094	explorer	6	"birds with tails"	birds_tails	2	44.243	27.03	58.729	logTimes
+mp-game-6	pilot	7249-f3f3c018-1137-4390-861e-a6606da7f247	1548107734784	student	6	"birds with tails"	birds_tails	2	-1	31.967	58.34	logTimes
