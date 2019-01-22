@@ -1,0 +1,4 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	text	reactionTime	eventType
+mp-game-6	pilot	9734-08a78f7f-4b23-45c7-a3ac-2e62f2b72354	1548116498939	explorer	0	"flowers with orange stems"	flowers_orange_stems	0	"morseths have orange stems"	5.939	chatMessage
+mp-game-6	pilot	9734-08a78f7f-4b23-45c7-a3ac-2e62f2b72354	1548116521198	student	0	"flowers with orange stems"	flowers_orange_stems	0	"ok"	1.445	chatMessage
+mp-game-6	pilot	9734-08a78f7f-4b23-45c7-a3ac-2e62f2b72354	1548116544249	student	0	"flowers with orange stems"	flowers_orange_stems	0	"Anything else?"	4.338	chatMessage
