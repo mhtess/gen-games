@@ -1,0 +1,11 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	train	test	chat	eventType
+mp-game-6	pilot	1153-bdad1ce5-9ccc-4636-a098-49b531950ebe	1548112880758	student	25	"trees with white leaves or orange berries"	trees_white_leaves_or_orange_berries	0	-1	84.472	134.376	logTimes
+mp-game-6	pilot	1153-bdad1ce5-9ccc-4636-a098-49b531950ebe	1548112978035	explorer	25	"trees with white leaves or orange berries"	trees_white_leaves_or_orange_berries	0	66.226	180.706	134.759	logTimes
+mp-game-6	pilot	1153-bdad1ce5-9ccc-4636-a098-49b531950ebe	1548113239721	explorer	45	"fish with (white stripes or purple bodies) and whiskers"	fish_white_stripes_or_purple_bodies_whiskers	1	49.145	44.972	114.001	logTimes
+mp-game-6	pilot	1153-bdad1ce5-9ccc-4636-a098-49b531950ebe	1548113256917	student	45	"fish with (white stripes or purple bodies) and whiskers"	fish_white_stripes_or_purple_bodies_whiskers	1	-1	63.234	87.783	logTimes
+mp-game-6	pilot	1153-bdad1ce5-9ccc-4636-a098-49b531950ebe	1548113620234	explorer	35	"flowers with (thorns and purple petals) or orange stems"	flowers_thorns_purple_petals_or_orange_stems	2	130.76	54.896	149.965	logTimes
+mp-game-6	pilot	1153-bdad1ce5-9ccc-4636-a098-49b531950ebe	1548113655893	student	35	"flowers with (thorns and purple petals) or orange stems"	flowers_thorns_purple_petals_or_orange_stems	2	-1	89.68	149.583	logTimes
+mp-game-6	pilot	1153-bdad1ce5-9ccc-4636-a098-49b531950ebe	1548113997100	student	15	"birds with orange wings and tails"	birds_orange_wings_tails	3	-1	82.095	127.472	logTimes
+mp-game-6	pilot	1153-bdad1ce5-9ccc-4636-a098-49b531950ebe	1548114022637	explorer	15	"birds with orange wings and tails"	birds_orange_wings_tails	3	111.98	108.643	127.41	logTimes
+mp-game-6	pilot	1153-bdad1ce5-9ccc-4636-a098-49b531950ebe	1548114200138	explorer	5	"bugs without wings"	bugs_without_wings	4	71.006	15.358	58.192	logTimes
+mp-game-6	pilot	1153-bdad1ce5-9ccc-4636-a098-49b531950ebe	1548114207982	student	5	"bugs without wings"	bugs_without_wings	4	-1	22.437	57.809	logTimes
