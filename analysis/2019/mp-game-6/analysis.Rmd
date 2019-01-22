@@ -481,7 +481,8 @@ ggplot(all_test_concept_type_summary_normalized, aes(rule_type_text, fill=role, 
     x = "Concept Type",
     y = "Normalized Accuracy %"
   ) + 
-  geom_errorbar(aes(x=rule_type_text, ymin=ci_lower, ymax=ci_upper), color="black", width=0.5, position=position_dodge(.9)) 
+  geom_errorbar(aes(x=rule_type_text, ymin=ci_lower, ymax=ci_upper), color="black", width=0.5, position=position_dodge(.9)) +
+  theme_few()
 ```
 
 
@@ -592,7 +593,49 @@ ggplot(all_test_perf_breakdown_normalized, aes(x = reorder(role, desc(role)), y 
 
 ## Hamming Distance
 ```{r}
+# Convert true/false to 1s and 0s
+test_all_games$turker_label <- as.logical(test_all_games$turker_label)
+test_all_games$turker_label[test_all_games$turker_label == "true"] <- 1
+test_all_games$turker_label[test_all_games$turker_label == "false"] <- 0
 ```
+
+```{r}
+# Place explorer and student values side by side
+test_all_games_split<- test_all_games %>%
+  group_by(stim_num, rule_idx, gameid) %>%
+  filter(role == "explorer") %>%
+  select(stim_num, rule_idx, gameid, turker_label) %>% 
+  rename(explorer_selection = turker_label) %>%
+  inner_join(., test_all_games %>%
+               filter(role == "student") %>%
+               select(stim_num, rule_idx, gameid, turker_label) %>%        
+               rename(student_selection = turker_label)
+  )
+
+# Compute Hamming Distances for Concepts
+gold_hamming_distances <- test_all_games_split %>%
+  group_by(rule_idx, gameid) %>%
+  summarize(d = sum(explorer_selection != student_selection))
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ## Time Comparisons (Summarization)
 ```{r}
@@ -649,7 +692,6 @@ ggplot(train_chat_times, aes(x = reorder(stat, desc(stat)), y = val)) +
   )
 ```
 
-For Simple Rules 0, 2, 4 (Single Feature & Conjunction) we see that there isn't a wide variance in terms of train time and chat time; but this rift becomes noticeable when we have Harder Rules 6, 8 (Disjunction).
 
 # Corpus Analysis
 
