@@ -1,8 +1,0 @@
-experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	text	reactionTime	eventType
-mp-game-6	pilot	0208-1de1d13c-2217-4878-8f24-2ef48d34ac84	1547835015835	student	17	"trees with purple leaves and berries"	trees_purple_leaves_berries	0	"Hello"	0.885	chatMessage
-mp-game-6	pilot	0208-1de1d13c-2217-4878-8f24-2ef48d34ac84	1547835018006	explorer	17	"trees with purple leaves and berries"	trees_purple_leaves_berries	0	"hai"	1.459	chatMessage
-mp-game-6	pilot	0208-1de1d13c-2217-4878-8f24-2ef48d34ac84	1547835035595	explorer	17	"trees with purple leaves and berries"	trees_purple_leaves_berries	0	"how are you"	3.536	chatMessage
-mp-game-6	pilot	0208-1de1d13c-2217-4878-8f24-2ef48d34ac84	1547835040926	student	17	"trees with purple leaves and berries"	trees_purple_leaves_berries	0	"fine, what did you learn?"	2.568	chatMessage
-mp-game-6	pilot	0208-1de1d13c-2217-4878-8f24-2ef48d34ac84	1547835049554	explorer	17	"trees with purple leaves and berries"	trees_purple_leaves_berries	0	"puriyala"	3.231	chatMessage
-mp-game-6	pilot	0208-1de1d13c-2217-4878-8f24-2ef48d34ac84	1547835065707	student	17	"trees with purple leaves and berries"	trees_purple_leaves_berries	0	"What does that mean?"	2.29	chatMessage
-mp-game-6	pilot	0208-1de1d13c-2217-4878-8f24-2ef48d34ac84	1547835169748	student	7	"birds with purple tails"	birds_purple_tails	1	"Do you speak En"	74.121	chatMessage
