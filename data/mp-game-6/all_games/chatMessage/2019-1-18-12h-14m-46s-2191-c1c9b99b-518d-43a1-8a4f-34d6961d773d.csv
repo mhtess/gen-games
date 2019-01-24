@@ -1,5 +1,0 @@
-experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	text	reactionTime	eventType
-mp-game-6	pilot	2191-c1c9b99b-518d-43a1-8a4f-34d6961d773d	1547842486550	explorer	16	"trees with orange trunks and berries"	trees_orange_trunks_berries	0	"hi"	0.563	chatMessage
-mp-game-6	pilot	2191-c1c9b99b-518d-43a1-8a4f-34d6961d773d	1547842494913	explorer	16	"trees with orange trunks and berries"	trees_orange_trunks_berries	0	"all of the Ollers I found have orange trunks"	7.083	chatMessage
-mp-game-6	pilot	2191-c1c9b99b-518d-43a1-8a4f-34d6961d773d	1547842508251	student	16	"trees with orange trunks and berries"	trees_orange_trunks_berries	0	"okay"	2.199	chatMessage
-mp-game-6	pilot	2191-c1c9b99b-518d-43a1-8a4f-34d6961d773d	1547842529730	student	16	"trees with orange trunks and berries"	trees_orange_trunks_berries	0	"anything else?"	6.216	chatMessage
