@@ -1,0 +1,17 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	text	reactionTime	eventType
+mp-game-6	pilot	7004-1613f172-47f3-4067-95bd-6ba598ea4b8c	1548452146007	explorer	19	"flowers with orange petals and purple centers"	flowers_orange_petals_purple_centers	0	"ok i know they all have an orange flower "	14.76	chatMessage
+mp-game-6	pilot	7004-1613f172-47f3-4067-95bd-6ba598ea4b8c	1548452155379	student	19	"flowers with orange petals and purple centers"	flowers_orange_petals_purple_centers	0	"alright"	2.422	chatMessage
+mp-game-6	pilot	7004-1613f172-47f3-4067-95bd-6ba598ea4b8c	1548452162060	student	19	"flowers with orange petals and purple centers"	flowers_orange_petals_purple_centers	0	"what else do I need to know?"	5.866	chatMessage
+mp-game-6	pilot	7004-1613f172-47f3-4067-95bd-6ba598ea4b8c	1548452169167	explorer	19	"flowers with orange petals and purple centers"	flowers_orange_petals_purple_centers	0	"but some orange flower are not nollers too"	13.597	chatMessage
+mp-game-6	pilot	7004-1613f172-47f3-4067-95bd-6ba598ea4b8c	1548452188850	student	19	"flowers with orange petals and purple centers"	flowers_orange_petals_purple_centers	0	"what is different about those ones that are not ?"	13.43	chatMessage
+mp-game-6	pilot	7004-1613f172-47f3-4067-95bd-6ba598ea4b8c	1548452210763	explorer	19	"flowers with orange petals and purple centers"	flowers_orange_petals_purple_centers	0	"well they werent very consistent other than the orange flower "	15.643	chatMessage
+mp-game-6	pilot	7004-1613f172-47f3-4067-95bd-6ba598ea4b8c	1548452246577	student	19	"flowers with orange petals and purple centers"	flowers_orange_petals_purple_centers	0	"okay"	0.958	chatMessage
+mp-game-6	pilot	7004-1613f172-47f3-4067-95bd-6ba598ea4b8c	1548452253565	student	19	"flowers with orange petals and purple centers"	flowers_orange_petals_purple_centers	0	"do you think I am ready now?"	4.934	chatMessage
+mp-game-6	pilot	7004-1613f172-47f3-4067-95bd-6ba598ea4b8c	1548452271775	explorer	19	"flowers with orange petals and purple centers"	flowers_orange_petals_purple_centers	0	"i would say give it your best shot ...good luck"	10.78	chatMessage
+mp-game-6	pilot	7004-1613f172-47f3-4067-95bd-6ba598ea4b8c	1548452276205	student	19	"flowers with orange petals and purple centers"	flowers_orange_petals_purple_centers	0	"thanks"	0.863	chatMessage
+mp-game-6	pilot	7004-1613f172-47f3-4067-95bd-6ba598ea4b8c	1548452597672	explorer	29	"fish with white stripes or whiskers"	fish_white_stripes_or_whiskers	1	"non kweps are pure white no stripes"	12.717	chatMessage
+mp-game-6	pilot	7004-1613f172-47f3-4067-95bd-6ba598ea4b8c	1548452609613	student	29	"fish with white stripes or whiskers"	fish_white_stripes_or_whiskers	1	"pure white, no stripes.. okay"	7.159	chatMessage
+mp-game-6	pilot	7004-1613f172-47f3-4067-95bd-6ba598ea4b8c	1548452620123	explorer	29	"fish with white stripes or whiskers"	fish_white_stripes_or_whiskers	1	"other than that its a crap shoot "	10.237	chatMessage
+mp-game-6	pilot	7004-1613f172-47f3-4067-95bd-6ba598ea4b8c	1548452641254	student	29	"fish with white stripes or whiskers"	fish_white_stripes_or_whiskers	1	"Alright. is that all I need to know?"	16.369	chatMessage
+mp-game-6	pilot	7004-1613f172-47f3-4067-95bd-6ba598ea4b8c	1548452648565	explorer	29	"fish with white stripes or whiskers"	fish_white_stripes_or_whiskers	1	"yes"	1.851	chatMessage
+mp-game-6	pilot	7004-1613f172-47f3-4067-95bd-6ba598ea4b8c	1548452657993	student	29	"fish with white stripes or whiskers"	fish_white_stripes_or_whiskers	1	"okay"	1.932	chatMessage

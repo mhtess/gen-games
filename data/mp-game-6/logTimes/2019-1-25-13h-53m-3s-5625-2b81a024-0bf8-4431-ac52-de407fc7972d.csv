@@ -1,0 +1,11 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	train	test	chat	eventType
+mp-game-6	pilot	5625-2b81a024-0bf8-4431-ac52-de407fc7972d	1548453183061	explorer	40	"trees with (purple trunks or white leaves) and orange berries"	trees_purple_trunks_or_white_leaves_orange_berries	0	73.706	55.658	301.791	logTimes
+mp-game-6	pilot	5625-2b81a024-0bf8-4431-ac52-de407fc7972d	1548453226487	student	40	"trees with (purple trunks or white leaves) and orange berries"	trees_purple_trunks_or_white_leaves_orange_berries	0	-1	98.526	301.111	logTimes
+mp-game-6	pilot	5625-2b81a024-0bf8-4431-ac52-de407fc7972d	1548453556702	explorer	20	"bugs with orange antennae or wings"	bugs_orange_antennae_or_wings	1	103.627	34.433	102.551	logTimes
+mp-game-6	pilot	5625-2b81a024-0bf8-4431-ac52-de407fc7972d	1548453562808	student	20	"bugs with orange antennae or wings"	bugs_orange_antennae_or_wings	1	-1	41.938	101.978	logTimes
+mp-game-6	pilot	5625-2b81a024-0bf8-4431-ac52-de407fc7972d	1548453714416	explorer	10	"fish with orange bodies and purple stripes"	fish_orange_bodies_purple_stripes	2	44.254	25.333	52.114	logTimes
+mp-game-6	pilot	5625-2b81a024-0bf8-4431-ac52-de407fc7972d	1548453741259	student	10	"fish with orange bodies and purple stripes"	fish_orange_bodies_purple_stripes	2	-1	53.063	51.278	logTimes
+mp-game-6	pilot	5625-2b81a024-0bf8-4431-ac52-de407fc7972d	1548453895410	explorer	30	"birds with (purple wings and white crests) or white tails"	birds_purple_wings_white_crests_or_white_tails	3	50.73	18.11	61.607	logTimes
+mp-game-6	pilot	5625-2b81a024-0bf8-4431-ac52-de407fc7972d	1548453896157	student	30	"birds with (purple wings and white crests) or white tails"	birds_purple_wings_white_crests_or_white_tails	3	-1	24.739	60.804	logTimes
+mp-game-6	pilot	5625-2b81a024-0bf8-4431-ac52-de407fc7972d	1548454018864	explorer	0	"flowers with orange stems"	flowers_orange_stems	4	42.963	18.681	39.44	logTimes
+mp-game-6	pilot	5625-2b81a024-0bf8-4431-ac52-de407fc7972d	1548454033305	student	0	"flowers with orange stems"	flowers_orange_stems	4	-1	34.382	38.975	logTimes
