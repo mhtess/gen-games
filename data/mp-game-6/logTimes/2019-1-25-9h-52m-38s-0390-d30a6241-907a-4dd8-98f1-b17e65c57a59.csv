@@ -1,0 +1,11 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	train	test	chat	eventType
+mp-game-6	pilot	0390-d30a6241-907a-4dd8-98f1-b17e65c57a59	1548438758589	student	35	"flowers with (thorns and purple petals) or orange stems"	flowers_thorns_purple_petals_or_orange_stems	0	-1	6.92	39.226	logTimes
+mp-game-6	pilot	0390-d30a6241-907a-4dd8-98f1-b17e65c57a59	1548438773011	explorer	35	"flowers with (thorns and purple petals) or orange stems"	flowers_thorns_purple_petals_or_orange_stems	0	86.253	18.403	39.692	logTimes
+mp-game-6	pilot	0390-d30a6241-907a-4dd8-98f1-b17e65c57a59	1548438991993	explorer	5	"bugs without wings"	bugs_without_wings	1	83.58	15.697	103.065	logTimes
+mp-game-6	pilot	0390-d30a6241-907a-4dd8-98f1-b17e65c57a59	1548439034632	student	5	"bugs without wings"	bugs_without_wings	1	-1	58.072	102.674	logTimes
+mp-game-6	pilot	0390-d30a6241-907a-4dd8-98f1-b17e65c57a59	1548439145277	explorer	15	"birds with orange wings and tails"	birds_orange_wings_tails	2	46.14	14.125	12.298	logTimes
+mp-game-6	pilot	0390-d30a6241-907a-4dd8-98f1-b17e65c57a59	1548439168269	student	15	"birds with orange wings and tails"	birds_orange_wings_tails	2	-1	45.558	11.882	logTimes
+mp-game-6	pilot	0390-d30a6241-907a-4dd8-98f1-b17e65c57a59	1548439352742	student	25	"trees with white leaves or orange berries"	trees_white_leaves_or_orange_berries	3	-1	18.205	81.746	logTimes
+mp-game-6	pilot	0390-d30a6241-907a-4dd8-98f1-b17e65c57a59	1548439383033	explorer	25	"trees with white leaves or orange berries"	trees_white_leaves_or_orange_berries	3	44.309	22.004	82.154	logTimes
+mp-game-6	pilot	0390-d30a6241-907a-4dd8-98f1-b17e65c57a59	1548439625339	student	45	"fish with (white stripes or purple bodies) and whiskers"	fish_white_stripes_or_purple_bodies_whiskers	4	-1	11.198	174.556	logTimes
+mp-game-6	pilot	0390-d30a6241-907a-4dd8-98f1-b17e65c57a59	1548439673334	explorer	45	"fish with (white stripes or purple bodies) and whiskers"	fish_white_stripes_or_purple_bodies_whiskers	4	39.155	15.703	174.953	logTimes

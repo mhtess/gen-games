@@ -1,0 +1,3 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	nativeEnglish	enjoyment	assess	age	gender	education	comments	problems	fairprice	strategy	humanPartner	likePartner	eventType
+mp-game-6	pilot	6698-dd55dc6c-a8c0-4bd1-8221-29bb1064e928	1548445999105	explorer	26	"flowers with purple petals or thorns"	flowers_purple_petals_or_thorns	4	yes	1	yes	32	Female	3		no	2.00	Try to figure out a pattern in each round	yes	okay	logSubjInfo
+mp-game-6	pilot	6698-dd55dc6c-a8c0-4bd1-8221-29bb1064e928	1548446039574	student	26	"flowers with purple petals or thorns"	flowers_purple_petals_or_thorns	4	yes	2	yes	41	Male	3	Interesting - although	no	3.00	At first	yes	okay	logSubjInfo

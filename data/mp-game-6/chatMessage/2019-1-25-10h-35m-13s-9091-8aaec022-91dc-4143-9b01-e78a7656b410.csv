@@ -1,0 +1,9 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	text	reactionTime	eventType
+mp-game-6	pilot	9091-8aaec022-91dc-4143-9b01-e78a7656b410	1548441313095	student	3	"fish with whiskers"	fish_whiskers	0	"Hi"	0.447	chatMessage
+mp-game-6	pilot	9091-8aaec022-91dc-4143-9b01-e78a7656b410	1548441315881	explorer	3	"fish with whiskers"	fish_whiskers	0	"hi"	0.535	chatMessage
+mp-game-6	pilot	9091-8aaec022-91dc-4143-9b01-e78a7656b410	1548441328325	student	3	"fish with whiskers"	fish_whiskers	0	"So, how do we identify morseths"	5.376	chatMessage
+mp-game-6	pilot	9091-8aaec022-91dc-4143-9b01-e78a7656b410	1548441364299	explorer	3	"fish with whiskers"	fish_whiskers	0	"The 3 is keyword to find that"	29.829	chatMessage
+mp-game-6	pilot	9091-8aaec022-91dc-4143-9b01-e78a7656b410	1548441406649	explorer	3	"fish with whiskers"	fish_whiskers	0	"3 line is available on the face of morseths"	36.832	chatMessage
+mp-game-6	pilot	9091-8aaec022-91dc-4143-9b01-e78a7656b410	1548441429974	student	3	"fish with whiskers"	fish_whiskers	0	"what do you mean by '3 line'?"	8.016	chatMessage
+mp-game-6	pilot	9091-8aaec022-91dc-4143-9b01-e78a7656b410	1548441448999	explorer	3	"fish with whiskers"	fish_whiskers	0	"It's start from it's mouth"	13.416	chatMessage
+mp-game-6	pilot	9091-8aaec022-91dc-4143-9b01-e78a7656b410	1548441457539	student	3	"fish with whiskers"	fish_whiskers	0	"ahh okay"	1.343	chatMessage

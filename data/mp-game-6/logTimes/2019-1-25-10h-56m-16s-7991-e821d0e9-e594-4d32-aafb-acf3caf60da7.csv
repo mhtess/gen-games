@@ -1,0 +1,11 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	train	test	chat	eventType
+mp-game-6	pilot	7991-e821d0e9-e594-4d32-aafb-acf3caf60da7	1548442576256	explorer	35	"flowers with (thorns and purple petals) or orange stems"	flowers_thorns_purple_petals_or_orange_stems	0	242.901	72.921	270.478	logTimes
+mp-game-6	pilot	7991-e821d0e9-e594-4d32-aafb-acf3caf60da7	1548442610553	student	35	"flowers with (thorns and purple petals) or orange stems"	flowers_thorns_purple_petals_or_orange_stems	0	-1	110.364	269.709	logTimes
+mp-game-6	pilot	7991-e821d0e9-e594-4d32-aafb-acf3caf60da7	1548443092567	student	45	"fish with (white stripes or purple bodies) and whiskers"	fish_white_stripes_or_purple_bodies_whiskers	1	-1	74.176	244.784	logTimes
+mp-game-6	pilot	7991-e821d0e9-e594-4d32-aafb-acf3caf60da7	1548443236763	explorer	45	"fish with (white stripes or purple bodies) and whiskers"	fish_white_stripes_or_purple_bodies_whiskers	1	104.512	71.981	245.631	logTimes
+mp-game-6	pilot	7991-e821d0e9-e594-4d32-aafb-acf3caf60da7	1548445314096	student	25	"trees with white leaves or orange berries"	trees_white_leaves_or_orange_berries	2	-1	55.332	222.983	logTimes
+mp-game-6	pilot	7991-e821d0e9-e594-4d32-aafb-acf3caf60da7	1548445318245	explorer	25	"trees with white leaves or orange berries"	trees_white_leaves_or_orange_berries	2	99.782	57.943	223.628	logTimes
+mp-game-6	pilot	7991-e821d0e9-e594-4d32-aafb-acf3caf60da7	1548445679797	explorer	5	"bugs without wings"	bugs_without_wings	3	101.685	41.812	149.195	logTimes
+mp-game-6	pilot	7991-e821d0e9-e594-4d32-aafb-acf3caf60da7	1548445695726	student	5	"bugs without wings"	bugs_without_wings	3	-1	67.254	148.423	logTimes
+mp-game-6	pilot	7991-e821d0e9-e594-4d32-aafb-acf3caf60da7	1548446240159	student	15	"birds with orange wings and tails"	birds_orange_wings_tails	4	-1	51.002	331.659	logTimes
+mp-game-6	pilot	7991-e821d0e9-e594-4d32-aafb-acf3caf60da7	1548446248988	explorer	15	"birds with orange wings and tails"	birds_orange_wings_tails	4	139.538	57.209	332.245	logTimes

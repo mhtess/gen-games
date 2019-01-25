@@ -1,0 +1,36 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	text	reactionTime	eventType
+mp-game-6	pilot	1873-48a3e23d-c76a-413d-96ac-76f485d275aa	1548444860508	explorer	15	"birds with orange wings and tails"	birds_orange_wings_tails	0	"hi"	1.894	chatMessage
+mp-game-6	pilot	1873-48a3e23d-c76a-413d-96ac-76f485d275aa	1548444865011	student	15	"birds with orange wings and tails"	birds_orange_wings_tails	0	"hi"	0.506	chatMessage
+mp-game-6	pilot	1873-48a3e23d-c76a-413d-96ac-76f485d275aa	1548444892466	explorer	15	"birds with orange wings and tails"	birds_orange_wings_tails	0	"how many ringht in yours"	20.084	chatMessage
+mp-game-6	pilot	1873-48a3e23d-c76a-413d-96ac-76f485d275aa	1548444917211	student	15	"birds with orange wings and tails"	birds_orange_wings_tails	0	"I haven't seen any. They took me straight to this chat room"	15.895	chatMessage
+mp-game-6	pilot	1873-48a3e23d-c76a-413d-96ac-76f485d275aa	1548444931647	explorer	15	"birds with orange wings and tails"	birds_orange_wings_tails	0	"okok bye"	4.852	chatMessage
+mp-game-6	pilot	1873-48a3e23d-c76a-413d-96ac-76f485d275aa	1548444938377	student	15	"birds with orange wings and tails"	birds_orange_wings_tails	0	"???"	1.061	chatMessage
+mp-game-6	pilot	1873-48a3e23d-c76a-413d-96ac-76f485d275aa	1548444970939	student	15	"birds with orange wings and tails"	birds_orange_wings_tails	0	"Are you still there?"	8.14	chatMessage
+mp-game-6	pilot	1873-48a3e23d-c76a-413d-96ac-76f485d275aa	1548444988337	explorer	15	"birds with orange wings and tails"	birds_orange_wings_tails	0	"i have to go"	7.583	chatMessage
+mp-game-6	pilot	1873-48a3e23d-c76a-413d-96ac-76f485d275aa	1548445564040	explorer	25	"trees with white leaves or orange berries"	trees_white_leaves_or_orange_berries	1	"hello"	1.543	chatMessage
+mp-game-6	pilot	1873-48a3e23d-c76a-413d-96ac-76f485d275aa	1548445629655	explorer	25	"trees with white leaves or orange berries"	trees_white_leaves_or_orange_berries	1	"?"	1.271	chatMessage
+mp-game-6	pilot	1873-48a3e23d-c76a-413d-96ac-76f485d275aa	1548445631131	explorer	25	"trees with white leaves or orange berries"	trees_white_leaves_or_orange_berries	1	"?"	0.36	chatMessage
+mp-game-6	pilot	1873-48a3e23d-c76a-413d-96ac-76f485d275aa	1548445632034	explorer	25	"trees with white leaves or orange berries"	trees_white_leaves_or_orange_berries	1	"?"	0.247	chatMessage
+mp-game-6	pilot	1873-48a3e23d-c76a-413d-96ac-76f485d275aa	1548445662435	student	25	"trees with white leaves or orange berries"	trees_white_leaves_or_orange_berries	1	"hi"	0.411	chatMessage
+mp-game-6	pilot	1873-48a3e23d-c76a-413d-96ac-76f485d275aa	1548445697637	student	25	"trees with white leaves or orange berries"	trees_white_leaves_or_orange_berries	1	"Are you there?"	5.492	chatMessage
+mp-game-6	pilot	1873-48a3e23d-c76a-413d-96ac-76f485d275aa	1548445714663	explorer	25	"trees with white leaves or orange berries"	trees_white_leaves_or_orange_berries	1	"yes "	2.735	chatMessage
+mp-game-6	pilot	1873-48a3e23d-c76a-413d-96ac-76f485d275aa	1548445733099	student	25	"trees with white leaves or orange berries"	trees_white_leaves_or_orange_berries	1	"Are you having as much with this as I am?"	14.718	chatMessage
+mp-game-6	pilot	1873-48a3e23d-c76a-413d-96ac-76f485d275aa	1548445769162	explorer	25	"trees with white leaves or orange berries"	trees_white_leaves_or_orange_berries	1	"nothing what is your name ?"	17.948	chatMessage
+mp-game-6	pilot	1873-48a3e23d-c76a-413d-96ac-76f485d275aa	1548445778406	student	25	"trees with white leaves or orange berries"	trees_white_leaves_or_orange_berries	1	"Scott"	1.737	chatMessage
+mp-game-6	pilot	1873-48a3e23d-c76a-413d-96ac-76f485d275aa	1548445796177	explorer	25	"trees with white leaves or orange berries"	trees_white_leaves_or_orange_berries	1	"very bad "	8.601	chatMessage
+mp-game-6	pilot	1873-48a3e23d-c76a-413d-96ac-76f485d275aa	1548445822405	student	25	"trees with white leaves or orange berries"	trees_white_leaves_or_orange_berries	1	"do you have a description of a creature for me?"	15.546	chatMessage
+mp-game-6	pilot	1873-48a3e23d-c76a-413d-96ac-76f485d275aa	1548445844487	explorer	25	"trees with white leaves or orange berries"	trees_white_leaves_or_orange_berries	1	"i dont no"	12.013	chatMessage
+mp-game-6	pilot	1873-48a3e23d-c76a-413d-96ac-76f485d275aa	1548445853191	student	25	"trees with white leaves or orange berries"	trees_white_leaves_or_orange_berries	1	"okay"	2.221	chatMessage
+mp-game-6	pilot	1873-48a3e23d-c76a-413d-96ac-76f485d275aa	1548446127049	explorer	5	"bugs without wings"	bugs_without_wings	2	"hai"	1.381	chatMessage
+mp-game-6	pilot	1873-48a3e23d-c76a-413d-96ac-76f485d275aa	1548446134807	student	5	"bugs without wings"	bugs_without_wings	2	"hi"	0.454	chatMessage
+mp-game-6	pilot	1873-48a3e23d-c76a-413d-96ac-76f485d275aa	1548446165477	student	5	"bugs without wings"	bugs_without_wings	2	"do you have a description of the creature"	10.943	chatMessage
+mp-game-6	pilot	1873-48a3e23d-c76a-413d-96ac-76f485d275aa	1548446172569	explorer	5	"bugs without wings"	bugs_without_wings	2	"no "	2.135	chatMessage
+mp-game-6	pilot	1873-48a3e23d-c76a-413d-96ac-76f485d275aa	1548446195607	student	5	"bugs without wings"	bugs_without_wings	2	"this hit is broken"	4.268	chatMessage
+mp-game-6	pilot	1873-48a3e23d-c76a-413d-96ac-76f485d275aa	1548446378493	explorer	35	"flowers with (thorns and purple petals) or orange stems"	flowers_thorns_purple_petals_or_orange_stems	3	"hi"	1.242	chatMessage
+mp-game-6	pilot	1873-48a3e23d-c76a-413d-96ac-76f485d275aa	1548446387241	student	35	"flowers with (thorns and purple petals) or orange stems"	flowers_thorns_purple_petals_or_orange_stems	3	"hi"	0.716	chatMessage
+mp-game-6	pilot	1873-48a3e23d-c76a-413d-96ac-76f485d275aa	1548446394713	explorer	35	"flowers with (thorns and purple petals) or orange stems"	flowers_thorns_purple_petals_or_orange_stems	3	"hi"	0.657	chatMessage
+mp-game-6	pilot	1873-48a3e23d-c76a-413d-96ac-76f485d275aa	1548446403081	student	35	"flowers with (thorns and purple petals) or orange stems"	flowers_thorns_purple_petals_or_orange_stems	3	"do you have a description for me?"	7.597	chatMessage
+mp-game-6	pilot	1873-48a3e23d-c76a-413d-96ac-76f485d275aa	1548446415065	explorer	35	"flowers with (thorns and purple petals) or orange stems"	flowers_thorns_purple_petals_or_orange_stems	3	"i love you"	6.124	chatMessage
+mp-game-6	pilot	1873-48a3e23d-c76a-413d-96ac-76f485d275aa	1548446431127	student	35	"flowers with (thorns and purple petals) or orange stems"	flowers_thorns_purple_petals_or_orange_stems	3	"Awe, I'm touched"	9.221	chatMessage
+mp-game-6	pilot	1873-48a3e23d-c76a-413d-96ac-76f485d275aa	1548446450649	student	35	"flowers with (thorns and purple petals) or orange stems"	flowers_thorns_purple_petals_or_orange_stems	3	"do you have a description?"	9.73	chatMessage
+mp-game-6	pilot	1873-48a3e23d-c76a-413d-96ac-76f485d275aa	1548446463854	explorer	35	"flowers with (thorns and purple petals) or orange stems"	flowers_thorns_purple_petals_or_orange_stems	3	"i love only men very much"	22.207	chatMessage

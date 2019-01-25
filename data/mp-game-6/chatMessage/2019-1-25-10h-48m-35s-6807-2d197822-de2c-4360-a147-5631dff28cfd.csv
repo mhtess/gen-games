@@ -1,0 +1,2 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	text	reactionTime	eventType
+mp-game-6	pilot	6807-2d197822-de2c-4360-a147-5631dff28cfd	1548442115917	explorer	16	"trees with orange trunks and berries"	trees_orange_trunks_berries	0	"Hello"	1.728	chatMessage
