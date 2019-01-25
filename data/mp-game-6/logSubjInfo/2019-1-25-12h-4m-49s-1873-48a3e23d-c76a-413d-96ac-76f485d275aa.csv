@@ -1,0 +1,2 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	nativeEnglish	enjoyment	assess	age	gender	education	comments	problems	fairprice	strategy	humanPartner	likePartner	eventType
+mp-game-6	pilot	1873-48a3e23d-c76a-413d-96ac-76f485d275aa	1548446689204	explorer	35	"flowers with (thorns and purple petals) or orange stems"	flowers_thorns_purple_petals_or_orange_stems	3	yes	1	yes	28	Male	3	npthing	no	no	some	yes	okay	logSubjInfo
