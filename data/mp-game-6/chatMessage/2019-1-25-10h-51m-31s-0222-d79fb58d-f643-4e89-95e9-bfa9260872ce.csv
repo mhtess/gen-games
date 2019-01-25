@@ -1,0 +1,2 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	text	reactionTime	eventType
+mp-game-6	pilot	0222-d79fb58d-f643-4e89-95e9-bfa9260872ce	1548442291323	explorer	7	"birds with purple tails"	birds_purple_tails	0	"Hi. Morseth have purple tails"	19.545	chatMessage
