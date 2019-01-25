@@ -54,6 +54,15 @@ temp <- list.files(
 )
 msgs_complete_games <-do.call(rbind, lapply(temp, readr::read_tsv)) %>%
   group_by(gameid)
+
+# Load Time Data
+temp <- list.files(
+    "../../../data/mp-game-6/complete_games/logTimes",
+  pattern="*.csv",
+  full.names=TRUE
+)
+time_complete_games <-do.call(rbind, lapply(temp, readr::read_tsv)) %>%
+  group_by(gameid)
 ```
 
 ## Distribution of Complete Data
@@ -163,15 +172,15 @@ ggplot(complete_test_summary
 
 ```
 ```{r fig.width=7, fig.height=4, echo=FALSE}
-ggplot(complete_test_summary, aes(x=explorer_acc, xend=student_acc, y=rule_idx)) + 
+ggplot(complete_test_summary, aes(x=explorer_acc, xend=student_acc, y=reorder(rule_idx, desc(rule_idx)))) + 
   theme_few() +
   geom_segment(
     aes(
       color=rule_type_text,
       x=explorer_acc, 
       xend=student_acc, 
-      y=rule_idx, 
-      yend=rule_idx),
+      y=reorder(rule_idx, desc(rule_idx)), 
+      yend=reorder(rule_idx, desc(rule_idx))),
     size=2) +
   geom_dumbbell(
     size=0,
@@ -183,11 +192,11 @@ ggplot(complete_test_summary, aes(x=explorer_acc, xend=student_acc, y=rule_idx))
       x="Accuracy",
       y="Concept Rule",
       title="Concept Rule Accuracies") +
-  geom_point(aes(x=chance_rate, y=rule_idx, shape=15), size=3, inherit.aes=F, show.legend = F, color="orange") +
+  geom_point(aes(x=chance_rate, y=reorder(rule_idx, desc(rule_idx)), shape=15), size=3, inherit.aes=F, show.legend = F, color="orange") +
   scale_shape_identity() + 
   guides(color = guide_legend("Rule Type")) +
   scale_x_continuous(limits = c(0.10, 1.0), breaks = c(0.25, 0.5, 0.75, 1.0)) + 
-  scale_y_discrete(labels = c(
+  scale_y_discrete(labels = rev(c(
     "flowers: orange stems",
     "flowers: thorns present",
     "fish: white fangs",
@@ -242,7 +251,7 @@ ggplot(complete_test_summary, aes(x=explorer_acc, xend=student_acc, y=rule_idx))
     "birds: (white crest OR orange wings) AND tail present",
     "trees: (purple trunks OR white leaves) AND orange berries",
     "trees: (orange trunks OR berries present) AND white leaves"
-  )
+  ))
 )
 ```
 
@@ -480,13 +489,91 @@ avg_hamming_distances$type <- as.factor(avg_hamming_distances$type)
 ggplot(avg_hamming_distances, aes(x=empirical_stat, color=type, fill=type)) +
   geom_histogram(aes(y=..density..),  position="dodge", binwidth=2)+
   theme(legend.position="right") +
- geom_density(alpha=.2) 
+  geom_density(alpha=.2) +
+  theme_few() +
+  labs(
+    title = "Distribution of Hamming Distances",
+    x = "Average Hamming Distance for Samples of a Concept Rule",
+    y = "Density"
+  )
 ```
 
 ```{r}
 ggplot(avg_hamming_distances, aes(x=empirical_stat, color=type, fill=type)) +
   geom_histogram( position="dodge", binwidth=2)+
   theme(legend.position="right")
+```
+
+## Timing Analysis -- Entire Chat Duration
+```{r}
+complete_games_avg_chat_times <- msgs_complete_games %>%
+  group_by(gameid, rule_idx) %>%
+  summarize(chatTime = sum(reactionTime)) %>%
+  mutate(rule_type = floor(rule_idx/10)) %>%
+  group_by(rule_type, rule_idx) %>%
+  tidyboot_mean(col=chatTime) %>%
+  mutate(phase="c")
+
+complete_games_avg_train_times <- time_complete_games %>%
+  filter(role == "explorer") %>%
+  group_by(rule_idx) %>%
+  tidyboot_mean(col=train) %>%
+  mutate(phase="l", rule_type = floor(rule_idx/10))
+
+complete_games_avg_times <- complete_games_avg_chat_times %>%
+  bind_rows(complete_games_avg_train_times)
+complete_games_avg_times$rule_idx <- as.factor(complete_games_avg_times$rule_idx)
+complete_games_avg_times$rule_type <- as.factor(complete_games_avg_times$rule_type)
+```
+
+```{r}
+ggplot() + 
+geom_linerange(data=complete_games_avg_times, mapping=aes(x=phase, ymin=ci_lower, ymax=ci_upper), width=0.2, size=1) + 
+geom_point(data=complete_games_avg_times, mapping=aes(x=phase, y=empirical_stat), size=4, shape=21, fill="white") +
+theme_few() + 
+facet_wrap(~rule_type, 1) +
+  labs(
+    title = "Entire Commmunication vs. Training Times Across Concept Rule Types",
+    x = "Game Phase",
+    y = "Time (Seconds)"
+  )
+```
+
+## Timing Analysis -- Informative Chat Duration
+```{r}
+complete_games_avg_chat_times <- msgs_complete_games %>%
+  filter(messageType == 'I' | messageType == 'F') %>%
+  group_by(gameid, rule_idx) %>%
+  summarize(chatTime = sum(reactionTime)) %>%
+  mutate(rule_type = floor(rule_idx/10)) %>%
+  group_by(rule_type, rule_idx) %>%
+  tidyboot_mean(col=chatTime) %>%
+  mutate(phase="c")
+
+complete_games_avg_train_times <- time_complete_games %>%
+  filter(role == "explorer") %>%
+  group_by(rule_idx) %>%
+  tidyboot_mean(col=train) %>%
+  mutate(phase="l", rule_type = floor(rule_idx/10))
+
+complete_games_avg_times <- complete_games_avg_train_times %>%
+  bind_rows(complete_games_avg_chat_times)
+complete_games_avg_times$rule_idx <- as.factor(complete_games_avg_times$rule_idx)
+complete_games_avg_times$rule_type <- as.factor(complete_games_avg_times$rule_type)
+```
+
+```{r}
+ggplot() + 
+geom_linerange(data=complete_games_avg_times, mapping=aes(x=phase, ymin=ci_lower, ymax=ci_upper), size=1, position=position_dodge()) +
+geom_point(data=complete_games_avg_times, mapping=aes(x=phase, y=empirical_stat), size=4, shape=21, fill="white") +
+geom_line(data=complete_games_avg_times, aes(x=phase, y=empirical_stat, group=rule_idx)) + 
+theme_few() + 
+facet_wrap(~rule_type, 1) +
+  labs(
+    title = "Informative & Follow Up Commmunication vs. Training Times Across Concept Rule Types",
+    x = "Game Phase",
+    y = "Time (Seconds)"
+  )
 ```
 
 # All Games
