@@ -70,7 +70,9 @@ def split_files_in_sub_dir(all_games_sub_dir, complete_games_sub_dir, incomplete
     """
     num_complete, num_incomplete = 0, 0
     for file in tqdm(os.listdir(all_games_sub_dir)):
-        src = os.path.join(all_games_sub_dir, file)
+        src = os.path.join(all_games_sub_dir, file)            
+        if 'DS_Store' in src:
+            continue
         if is_complete_game(src):
             num_complete += 1
             dst = os.path.join(complete_games_sub_dir, file)

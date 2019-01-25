@@ -46,7 +46,7 @@ scores_all_games <- do.call(rbind, lapply(temp, read.csv, sep=""))
 # Load Chat Messages
 temp <- list.files(
     "../../../data/mp-game-6/all_games/chatMessage",
-  pattern="*.csv",
+  pattern="*.tsv",
   full.names=TRUE
 )
 msgs_complete_games <-do.call(rbind, lapply(temp, readr::read_tsv)) %>%
@@ -73,7 +73,7 @@ scores_complete_games <- do.call(rbind, lapply(temp, read.csv, sep=""))
 # Load Chat Messages
 temp <- list.files(
     "../../../data/mp-game-6/complete_games/chatMessage",
-  pattern="*.csv",
+  pattern="*.tsv",
   full.names=TRUE
 )
 msgs_complete_games <-do.call(rbind, lapply(temp, readr::read_tsv)) %>%
@@ -305,21 +305,6 @@ ggplot(all_test_summary, aes(x=student_acc, y=explorer_acc, color=rule_type_text
   coord_fixed() +
   scale_x_continuous(limits = c(0.0, 1.0), breaks = c(0.25, 0.5, 0.75, 1.0)) +
   scale_y_continuous(limits = c(0.0, 1.0), breaks = c(0.25, 0.5, 0.75, 1.0) )
-```
-
-
-```{r}
-# Plot of base rates and performance of students and teachers
-ggplot(all_test_summary, aes(x=rule_idx, y=explorer_acc)) + 
-  geom_point(col="red", size=2) +   # Draw points
-  geom_point(aes(y=chance_rate), col="black", size=3) +
-  geom_point(aes(y=student_acc), col="blue", size=2) + 
-  coord_flip() + 
-  theme_bw() +
-  labs( 
-    title="Chance Vs. Mean Participant Performance", 
-    y="Accuracy (%)", 
-    x="Rule Index")
 ```
 
 ```{r fig.width=7, fig.height=4, echo=FALSE}
@@ -618,20 +603,6 @@ gold_hamming_distances <- test_all_games_split %>%
   summarize(d = sum(explorer_selection != student_selection))
 
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
