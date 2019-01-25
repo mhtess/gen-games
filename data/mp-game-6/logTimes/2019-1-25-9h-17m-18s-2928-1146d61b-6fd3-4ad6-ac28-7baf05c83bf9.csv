@@ -1,0 +1,11 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	train	test	chat	eventType
+mp-game-6	pilot	2928-1146d61b-6fd3-4ad6-ac28-7baf05c83bf9	1548436638900	explorer	49	"birds with (white crests or orange wings) and tails"	birds_white_crests_or_orange_wings_tails	0	89.776	29.532	246.384	logTimes
+mp-game-6	pilot	2928-1146d61b-6fd3-4ad6-ac28-7baf05c83bf9	1548436688035	student	49	"birds with (white crests or orange wings) and tails"	birds_white_crests_or_orange_wings_tails	0	-1	74.348	245.606	logTimes
+mp-game-6	pilot	2928-1146d61b-6fd3-4ad6-ac28-7baf05c83bf9	1548437082474	explorer	9	"trees without leaves"	trees_without_leaves	1	87.356	49.706	189.404	logTimes
+mp-game-6	pilot	2928-1146d61b-6fd3-4ad6-ac28-7baf05c83bf9	1548437215390	student	9	"trees without leaves"	trees_without_leaves	1	-1	181.809	188.759	logTimes
+mp-game-6	pilot	2928-1146d61b-6fd3-4ad6-ac28-7baf05c83bf9	1548437588762	student	29	"fish with white stripes or whiskers"	fish_white_stripes_or_whiskers	2	-1	18.158	122.695	logTimes
+mp-game-6	pilot	2928-1146d61b-6fd3-4ad6-ac28-7baf05c83bf9	1548437628891	explorer	29	"fish with white stripes or whiskers"	fish_white_stripes_or_whiskers	2	191.768	57.635	123.357	logTimes
+mp-game-6	pilot	2928-1146d61b-6fd3-4ad6-ac28-7baf05c83bf9	1548437924272	student	39	"bugs with (white legs and purple wings) or orange antennae"	bugs_white_legs_purple_wings_or_orange_antennae	3	-1	20.931	107.043	logTimes
+mp-game-6	pilot	2928-1146d61b-6fd3-4ad6-ac28-7baf05c83bf9	1548437948748	explorer	39	"bugs with (white legs and purple wings) or orange antennae"	bugs_white_legs_purple_wings_or_orange_antennae	3	137.266	46.713	107.814	logTimes
+mp-game-6	pilot	2928-1146d61b-6fd3-4ad6-ac28-7baf05c83bf9	1548438238802	student	19	"flowers with orange petals and purple centers"	flowers_orange_petals_purple_centers	4	-1	38.402	100.789	logTimes
+mp-game-6	pilot	2928-1146d61b-6fd3-4ad6-ac28-7baf05c83bf9	1548438251617	explorer	19	"flowers with orange petals and purple centers"	flowers_orange_petals_purple_centers	4	126.348	51.558	102.339	logTimes
