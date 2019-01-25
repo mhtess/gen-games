@@ -251,20 +251,4 @@ game_core.prototype.makeTrialList = function (connection, callback) {
         }
     );
 
-    // TODO: Remove this, once we have MongoDB Code working properly
-    // var rule_num = 2;
-    // var concept_summary = require("../sharedUtils/stimuli/test_dataset/concept_summary.json")[rule_num];
-    // var train_stimuli = require("../sharedUtils/stimuli/test_dataset/train/" + concept_summary.name + ".json");
-    // var test_stimuli = require("../sharedUtils/stimuli/test_dataset/test/" + concept_summary.name + ".json");
-
-    // return [
- 
-    //     {
-    //         "train": train_stimuli,
-    //         "test": test_stimuli,
-    //         "ruleIdx": rule_num,
-    //         "ruleName": concept_summary.phrase,
-    //         "ruleFileName": concept_summary.name,
-    //     }
-    // ];
 };
