@@ -1,0 +1,23 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	text	reactionTime	eventType
+mp-game-6	pilot	4014-fa3a9407-2d36-42fd-8bf0-41dc20ec080d	1548448335515	student	34	"flowers with (purple stems and white petals) or orange centers"	flowers_purple_stems_white_petals_or_orange_centers	0	"What kind of species did you encounter?"	10.641	chatMessage
+mp-game-6	pilot	4014-fa3a9407-2d36-42fd-8bf0-41dc20ec080d	1548448336133	explorer	34	"flowers with (purple stems and white petals) or orange centers"	flowers_purple_stems_white_petals_or_orange_centers	0	"hello"	2.408	chatMessage
+mp-game-6	pilot	4014-fa3a9407-2d36-42fd-8bf0-41dc20ec080d	1548448343807	explorer	34	"flowers with (purple stems and white petals) or orange centers"	flowers_purple_stems_white_petals_or_orange_centers	0	"very  good"	3.033	chatMessage
+mp-game-6	pilot	4014-fa3a9407-2d36-42fd-8bf0-41dc20ec080d	1548448372113	explorer	34	"flowers with (purple stems and white petals) or orange centers"	flowers_purple_stems_white_petals_or_orange_centers	0	"zorn"	3.124	chatMessage
+mp-game-6	pilot	4014-fa3a9407-2d36-42fd-8bf0-41dc20ec080d	1548448393208	student	34	"flowers with (purple stems and white petals) or orange centers"	flowers_purple_stems_white_petals_or_orange_centers	0	"Ok, what else?"	10.913	chatMessage
+mp-game-6	pilot	4014-fa3a9407-2d36-42fd-8bf0-41dc20ec080d	1548448423364	explorer	34	"flowers with (purple stems and white petals) or orange centers"	flowers_purple_stems_white_petals_or_orange_centers	0	"how are you"	0.894	chatMessage
+mp-game-6	pilot	4014-fa3a9407-2d36-42fd-8bf0-41dc20ec080d	1548448446200	student	34	"flowers with (purple stems and white petals) or orange centers"	flowers_purple_stems_white_petals_or_orange_centers	0	"I'm fine"	2.26	chatMessage
+mp-game-6	pilot	4014-fa3a9407-2d36-42fd-8bf0-41dc20ec080d	1548448476740	explorer	34	"flowers with (purple stems and white petals) or orange centers"	flowers_purple_stems_white_petals_or_orange_centers	0	"That's good, I'm glad"	0.972	chatMessage
+mp-game-6	pilot	4014-fa3a9407-2d36-42fd-8bf0-41dc20ec080d	1548448500367	student	34	"flowers with (purple stems and white petals) or orange centers"	flowers_purple_stems_white_petals_or_orange_centers	0	"Any other species you saw?"	7.608	chatMessage
+mp-game-6	pilot	4014-fa3a9407-2d36-42fd-8bf0-41dc20ec080d	1548448532688	explorer	34	"flowers with (purple stems and white petals) or orange centers"	flowers_purple_stems_white_petals_or_orange_centers	0	"I do not remember"	1.023	chatMessage
+mp-game-6	pilot	4014-fa3a9407-2d36-42fd-8bf0-41dc20ec080d	1548448800973	explorer	14	"birds with purple wings and crests"	birds_purple_wings_crests	1	"hello"	2.874	chatMessage
+mp-game-6	pilot	4014-fa3a9407-2d36-42fd-8bf0-41dc20ec080d	1548448824661	explorer	14	"birds with purple wings and crests"	birds_purple_wings_crests	1	"hello"	3.007	chatMessage
+mp-game-6	pilot	4014-fa3a9407-2d36-42fd-8bf0-41dc20ec080d	1548448826688	student	14	"birds with purple wings and crests"	birds_purple_wings_crests	1	"Hi"	0.473	chatMessage
+mp-game-6	pilot	4014-fa3a9407-2d36-42fd-8bf0-41dc20ec080d	1548448852015	student	14	"birds with purple wings and crests"	birds_purple_wings_crests	1	"What species did you see and what did they look like?"	14.241	chatMessage
+mp-game-6	pilot	4014-fa3a9407-2d36-42fd-8bf0-41dc20ec080d	1548448868038	explorer	14	"birds with purple wings and crests"	birds_purple_wings_crests	1	"oller"	2.509	chatMessage
+mp-game-6	pilot	4014-fa3a9407-2d36-42fd-8bf0-41dc20ec080d	1548448896206	student	14	"birds with purple wings and crests"	birds_purple_wings_crests	1	"What does it look like?"	5.657	chatMessage
+mp-game-6	pilot	4014-fa3a9407-2d36-42fd-8bf0-41dc20ec080d	1548448918661	explorer	14	"birds with purple wings and crests"	birds_purple_wings_crests	1	"very good"	2.804	chatMessage
+mp-game-6	pilot	4014-fa3a9407-2d36-42fd-8bf0-41dc20ec080d	1548448950426	student	14	"birds with purple wings and crests"	birds_purple_wings_crests	1	"Can you describe how the oller looks like?"	10.864	chatMessage
+mp-game-6	pilot	4014-fa3a9407-2d36-42fd-8bf0-41dc20ec080d	1548448985267	explorer	14	"birds with purple wings and crests"	birds_purple_wings_crests	1	"It looks very nice and nice"	0.954	chatMessage
+mp-game-6	pilot	4014-fa3a9407-2d36-42fd-8bf0-41dc20ec080d	1548449020979	explorer	14	"birds with purple wings and crests"	birds_purple_wings_crests	1	"good"	2.538	chatMessage
+mp-game-6	pilot	4014-fa3a9407-2d36-42fd-8bf0-41dc20ec080d	1548449033550	student	14	"birds with purple wings and crests"	birds_purple_wings_crests	1	"What color is it?"	4.657	chatMessage
+mp-game-6	pilot	4014-fa3a9407-2d36-42fd-8bf0-41dc20ec080d	1548449072261	explorer	14	"birds with purple wings and crests"	birds_purple_wings_crests	1	"purple and orange"	1.041	chatMessage

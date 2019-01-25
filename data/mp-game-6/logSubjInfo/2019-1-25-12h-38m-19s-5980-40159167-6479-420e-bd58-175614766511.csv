@@ -1,0 +1,3 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	nativeEnglish	enjoyment	assess	age	gender	education	comments	problems	fairprice	strategy	humanPartner	likePartner	eventType
+mp-game-6	pilot	5980-40159167-6479-420e-bd58-175614766511	1548448699809	explorer	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	4		1	yes	28	Male	3		no bug		focus on work	yes	okay	logSubjInfo
+mp-game-6	pilot	5980-40159167-6479-420e-bd58-175614766511	1548448706673	student	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	4	yes	1	yes	32	Female	2		no	2	i tried to see what was more rare	no	liked	logSubjInfo
