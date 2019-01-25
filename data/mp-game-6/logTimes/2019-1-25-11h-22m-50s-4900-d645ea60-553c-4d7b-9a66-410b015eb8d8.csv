@@ -1,0 +1,11 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	train	test	chat	eventType
+mp-game-6	pilot	4900-d645ea60-553c-4d7b-9a66-410b015eb8d8	1548444170182	explorer	2	"fish with white fangs"	fish_fangs	0	132.351	44.265	290.991	logTimes
+mp-game-6	pilot	4900-d645ea60-553c-4d7b-9a66-410b015eb8d8	1548444193251	student	2	"fish with white fangs"	fish_fangs	0	-1	67.943	292	logTimes
+mp-game-6	pilot	4900-d645ea60-553c-4d7b-9a66-410b015eb8d8	1548444581879	explorer	22	"birds with orange tails or white wings"	birds_orange_tails_or_white_wings	1	219.237	44.076	101.432	logTimes
+mp-game-6	pilot	4900-d645ea60-553c-4d7b-9a66-410b015eb8d8	1548444603767	student	22	"birds with orange tails or white wings"	birds_orange_tails_or_white_wings	1	-1	67.29	101.523	logTimes
+mp-game-6	pilot	4900-d645ea60-553c-4d7b-9a66-410b015eb8d8	1548444776892	explorer	12	"bugs with purple legs and white heads"	bugs_purple_legs_white_heads	2	57.463	45.667	56.262	logTimes
+mp-game-6	pilot	4900-d645ea60-553c-4d7b-9a66-410b015eb8d8	1548444828548	student	12	"bugs with purple legs and white heads"	bugs_purple_legs_white_heads	2	-1	96.471	57.196	logTimes
+mp-game-6	pilot	4900-d645ea60-553c-4d7b-9a66-410b015eb8d8	1548445098740	student	32	"Tree with (orange berries and purple trunks) or white leaves"	trees_orange_berries_purple_trunks_or_white_leaves	3	-1	26.139	47.836	logTimes
+mp-game-6	pilot	4900-d645ea60-553c-4d7b-9a66-410b015eb8d8	1548445115001	explorer	32	"Tree with (orange berries and purple trunks) or white leaves"	trees_orange_berries_purple_trunks_or_white_leaves	3	170.002	14.699	48.205	logTimes
+mp-game-6	pilot	4900-d645ea60-553c-4d7b-9a66-410b015eb8d8	1548445385432	explorer	42	"flowers with (purple centers or orange stems) and thorns"	flowers_purple_centers_or_orange_stems_with_thorns	4	176.337	20.761	52.055	logTimes
+mp-game-6	pilot	4900-d645ea60-553c-4d7b-9a66-410b015eb8d8	1548445413180	student	42	"flowers with (purple centers or orange stems) and thorns"	flowers_purple_centers_or_orange_stems_with_thorns	4	-1	47.305	51.795	logTimes
