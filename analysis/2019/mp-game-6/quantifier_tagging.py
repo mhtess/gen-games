@@ -35,7 +35,7 @@ def process_chat_messages(dir):
     tagger = StanfordPOSTagger(pos_model, pos_jar)
 
     print("Identifying quantifiers and numerics")
-    quantifiers, numerics = identify_supersets(dir, tagger)
+    pos_quantifiers, other_quantifiers, numerics = identify_supersets(dir, tagger)
 
     print("Analyzing chat messages")
     for file in tqdm(os.listdir(dir)):
@@ -43,17 +43,19 @@ def process_chat_messages(dir):
         if '.tsv' not in chat_message_file:
             continue
         df = pd.read_csv(chat_message_file, sep='\t')
-        add_fields(df, quantifiers, numerics, tagger)
+        add_fields(df, pos_quantifiers, other_quantifiers, numerics, tagger)
         df.to_csv(chat_message_file, sep='\t', index=False,)
 
-def add_fields(df, quantifiers, numerics, tagger):
+def add_fields(df, pos_quantifiers, other_quantifiers, numerics, tagger):
     # Add columns to the given dataframe, where we enumerate
     # the quantifiers we are interested in tagging via regular expressions
 
     # Default Values
     df["quantifier_present"] = False
     df["numerics_present"] = False
-    for q in quantifiers:
+    for q in pos_quantifiers:
+        df[q] = 0
+    for q in other_quantifiers:
         df[q] = 0
     for n in numerics:
         df[n] = 0
@@ -63,16 +65,13 @@ def add_fields(df, quantifiers, numerics, tagger):
     post_tag_msgs = tagger.tag_sents(word_tokenize(sent) for sent in msgs)
     for i, msg in enumerate(post_tag_msgs):
         for (word, tag) in msg: 
-            if tag == DT and word.lower() in quantifiers:
+            if tag == DT and word.lower() in pos_quantifiers:
                 df[word.lower()].iloc[i] += 1
                 df["quantifier_present"].iloc[i] = True
-            elif word.lower() in quantifiers:
+            elif word.lower() in other_quantifiers:
                 df[word.lower()].iloc[i] += 1
                 df["quantifier_present"].iloc[i] = True                   
             if tag == NT and word.lower() in numerics:
-                df[word.lower()].iloc[i] += 1
-                df["numerics_present"].iloc[i] = True
-            elif word.lower() in numerics:
                 df[word.lower()].iloc[i] += 1
                 df["numerics_present"].iloc[i] = True
     return df
@@ -83,8 +82,8 @@ def identify_supersets(dir, tagger):
         POS Tagger (Kristina Toutanova, Dan Klein, Christopher Manning, and Yoram Singer 2003)
         to identify tokens that are numerics and determiners. 
     """
-    quantifier_superset = set()
-    numerics_superset = set()
+    pos_quantifiers = set()
+    numerics = set()
 
     for file in tqdm(os.listdir(dir)):
         chat_message_file = os.path.join(dir, file)         
@@ -96,15 +95,15 @@ def identify_supersets(dir, tagger):
         for msg in post_tag_msgs:
             for (word, tag) in msg:
                 if tag == DT:
-                    quantifier_superset.add(word.lower())
+                    pos_quantifiers.add(word.lower())
                 elif tag == NT:
-                    numerics_superset.add(word.lower())
+                    numerics.add(word.lower())
     
     # Remove excess determiners
     determiners_to_remove = ['those', 'these', 'an', 'another', 'that', 'a', 'both', 'the', 'this']
     for d in determiners_to_remove:
-        if d in quantifier_superset:
-            quantifier_superset.remove(d)
+        if d in pos_quantifiers:
+            pos_quantifiers.remove(d)
 
     # Add additional quantifiers just in case
     extra_quantifiers = [
@@ -113,13 +112,11 @@ def identify_supersets(dir, tagger):
         "little", "not many", "not much", "small number of", "some", "any",
         "each", "every", "all", "whole", "most", "none", 
     ]
-    for q in extra_quantifiers:
-        quantifier_superset.add(q)
 
-    return quantifier_superset, numerics_superset
+    return pos_quantifiers, set(extra_quantifiers), numerics
 
 def test():
     process_chat_messages('./')
 
 if __name__ == '__main__':
-    process_chat_messages('../../../data/mp-game-6/all_games/chatMessage')
+    process_chat_messages('../../../data/mp-game-6/complete_games/chatMessage')

@@ -80,7 +80,6 @@ ggplot(data=num_complete_games_played, aes(x=rule_idx, y=n)) +
     x = "Rule Index",
     y = "Number of Samples"
   )  +
-  ylim(0, 10) +
   scale_y_discrete()
 ```
 
@@ -282,7 +281,7 @@ complete_type_summary$role <- as.factor(complete_type_summary$role)
 ggplot(complete_type_summary, aes(rule_type_text, fill=role, y=empirical_stat)) + 
   geom_col(position='dodge') +  
   labs(
-    title = "Concept Type Performance",
+    title = "Concept Type vs. Participant Accuracy",
     x = "Concept Type",
     y = "Accuracy %"
   ) + 
@@ -329,7 +328,7 @@ ggplot(complete_test_concept_type_summary_normalized, aes(rule_type_text, fill=r
   theme_few()
 ```
 
-## Hits, Misses, False Alarms, Correct Rejections Breakdown (Counts)
+## Hits, Misses, False Alarms, Correct Rejections Breakdown (Proportion)
 ```{r}
 complete_test_perf_breakdown <- scores_complete_games %>%
   select(role, rule_idx, hits, misses, correct_rejections, false_alarms) %>%
@@ -406,14 +405,14 @@ complete_test_perf_breakdown <- complete_test_perf_breakdown %>%
             "trees: (orange trunks OR berries present) AND white leaves" = "49")
 )
 
-complete_test_perf_breakdown <- complete_test_perf_breakdown %>%
+complete_test_perf_breakdown_melted <- complete_test_perf_breakdown %>%
   melt(measure.vars = c("hits", "misses", "correct_rejections", "false_alarms"))
 
-complete_test_perf_sums <- complete_test_perf_breakdown %>%
+complete_test_perf_sums <- complete_test_perf_breakdown_melted %>%
   group_by(rule_idx, rule_type, rule_type_text, rule_idx_text, role) %>%
   summarise(norm_constant = sum(value))
 
-complete_test_perf_breakdown_normalized <- complete_test_perf_breakdown %>% 
+complete_test_perf_breakdown_normalized <- complete_test_perf_breakdown_melted %>% 
   inner_join(., complete_test_perf_sums) %>%
   mutate(value = value/norm_constant) %>%
   select(rule_idx, rule_type, rule_type_text, rule_idx_text, value, role, variable)
@@ -427,6 +426,82 @@ ggplot(complete_test_perf_breakdown_normalized, aes(x = reorder(role, desc(role)
       title = "Teacher & Student Performance Across Concept Rules",
       y = "Proportions"
   )
+```
+
+## Miss Rate Across Concept Types
+```{r}
+complete_test_miss_rate <- scores_complete_games %>%
+  mutate(miss_rate = misses / (hits + misses), rule_type = floor(rule_idx/10))
+complete_test_miss_rate$rule_type <- as.factor(complete_test_miss_rate$rule_type)
+complete_test_miss_rate <- complete_test_miss_rate %>%
+    mutate(rule_type_text = 
+           fct_recode(rule_type,
+              "Single Feature" = "0",
+              "Conjunction" = "1",
+              "Disjunction" = "2",
+              "Conjunctive Disjunction" = "3",
+              "Disjunctive Conjunction" = "4"
+            )
+    )
+
+avg_complete_test_miss_rate <- complete_test_miss_rate %>%
+    select(role, gameid, rule_idx, rule_type, rule_type_text, miss_rate) %>%
+    group_by(role, rule_idx, rule_type, rule_type_text) %>%
+    summarize(avg_miss_rate = mean(miss_rate))
+
+avg_complete_test_miss_rate_concept <- avg_complete_test_miss_rate %>%
+    group_by(rule_type, role, rule_type_text) %>%
+    tidyboot_mean(avg_miss_rate)
+```
+
+```{r fig.width=7, fig.height=4, echo=FALSE}
+ggplot(avg_complete_test_miss_rate_concept, aes(rule_type_text, fill=role, y=empirical_stat)) + 
+  geom_col(position='dodge') +  
+  labs(
+    title = "Concept Type vs. Miss Rate",
+    x = "Concept Type",
+    y = "Miss Rate"
+  ) + 
+  geom_errorbar(aes(x=rule_type_text, ymin=ci_lower, ymax=ci_upper), color="black", width=0.5, position=position_dodge(.9)) +
+  theme_few()
+```
+
+## False Positive Rate Across Concept Types
+```{r}
+complete_test_false_positive_rate <- scores_complete_games %>%
+  mutate(false_positive_rate = false_alarms / (correct_rejections + false_alarms), rule_type = floor(rule_idx/10))
+complete_test_false_positive_rate$rule_type <- as.factor(complete_test_false_positive_rate$rule_type)
+complete_test_false_positive_rate <- complete_test_false_positive_rate %>%
+    mutate(rule_type_text = 
+           fct_recode(rule_type,
+              "Single Feature" = "0",
+              "Conjunction" = "1",
+              "Disjunction" = "2",
+              "Conjunctive Disjunction" = "3",
+              "Disjunctive Conjunction" = "4"
+            )
+    )
+
+avg_complete_test_false_positive_rate <- complete_test_false_positive_rate %>%
+    select(role, gameid, rule_idx, rule_type, rule_type_text, false_positive_rate) %>%
+    group_by(role, rule_idx, rule_type, rule_type_text) %>%
+    summarize(avg_false_positive_rate = mean(false_positive_rate))
+
+avg_complete_test_false_positive_concept <- avg_complete_test_false_positive_rate %>%
+    group_by(rule_type, role, rule_type_text) %>%
+    tidyboot_mean(avg_false_positive_rate)
+```
+
+```{r fig.width=7, fig.height=4, echo=FALSE}
+ggplot(avg_complete_test_false_positive_concept, aes(rule_type_text, fill=role, y=empirical_stat)) + 
+  geom_col(position='dodge') +  
+  labs(
+    title = "Concept Type vs. False Positive Rate",
+    x = "Concept Type",
+    y = "False Positive Rate"
+  ) + 
+  geom_errorbar(aes(x=rule_type_text, ymin=ci_lower, ymax=ci_upper), color="black", width=0.5, position=position_dodge(.9)) +
+  theme_few()
 ```
 
 ## Hamming Distance
@@ -445,37 +520,55 @@ gold_hamming_distances <- complete_all_games_wide %>%
   group_by(rule_idx, gameid) %>%
   summarize(d = sum(explorer != student))
 avg_gold_hamming_distances <- gold_hamming_distances %>%
+  mutate(rule_type = floor(rule_idx/10)) %>%
+  group_by(rule_type) %>%
   tidyboot_mean(col=d) %>%
   mutate(type="gold")
 
 # Compute Concept Rule Shuffled Hamming Distances
 # Here explorer selections are shuffled amongst one another
 # for stimuli of a given concept rule.
-complete_all_games_wide_shuffled <- complete_all_games_wide
-for (ri in (seq(50) - 1)) {
-  for (sn in (seq(50) - 1)) {
-    col <- filter(complete_all_games_wide_shuffled, stim_num == sn, rule_idx == ri)
-    random.explorer <- col[sample(1:nrow(col)), "explorer"]
-    complete_all_games_wide_shuffled <- complete_all_games_wide_shuffled %>%
-      mutate(explorer = replace(explorer, which(rule_idx == ri & stim_num == sn), random.explorer))
+complete_all_games_wide_shuffled <- data.frame()
+for (si in seq(1000)) {
+  for (ri in (seq(50) - 1)) {
+    for (sn in (seq(50) - 1)) {
+      col <- filter(complete_all_games_wide, stim_num == sn, rule_idx == ri)
+      col$explorer <- col[sample(1:nrow(col)), "explorer"]
+      col <- col %>%
+        mutate(shuffle_index = si)
+      complete_all_games_wide_shuffled <- bind_rows(complete_all_games_wide_shuffled, col)
+    }
   }
 }
+
 concept_rule_shuffled_hamming_distances <- complete_all_games_wide_shuffled %>%
-  group_by(rule_idx, gameid) %>%
+  group_by(rule_idx, gameid, shuffle_index) %>%
   summarize(d = sum(explorer != student))
-avg_concept_rule_shuffled_hamming_distances <- concept_rule_shuffled_hamming_distances %>%
+
+  avg_concept_rule_shuffled_hamming_distances <- concept_rule_shuffled_hamming_distances %>%
+  mutate(rule_type = floor(rule_idx/10)) %>%
+  group_by(rule_type, shuffle_index) %>%
   tidyboot_mean(col=d) %>%
   mutate(type="rule_shuffled")
 
 # Compute Null Hamming Distance Distribution
 # Here explorer selections are shuffled amongst one another
 # across the entire dataset.
-complete_all_games_wide_null <- complete_all_games_wide
-complete_all_games_wide_null <- transform(complete_all_games_wide_null, explorer = sample(explorer))
+complete_all_games_wide_null <- data.frame()
+for (si in seq(1000)) {
+  complete_all_games_wide_null <- bind_rows(complete_all_games_wide_null,
+    complete_all_games_wide %>%
+      transform(explorer = sample(explorer)) %>%
+      mutate(shuffle_index = si)
+  )
+}
 complete_all_games_wide_null_hamming_distances <- complete_all_games_wide_null %>% 
-  group_by(rule_idx, gameid) %>%
+  group_by(rule_idx, gameid, shuffle_index) %>%
   summarize(d = sum(explorer != student))
+
 avg_complete_all_games_wide_null_hamming_distances <- complete_all_games_wide_null_hamming_distances %>%
+  mutate(rule_type = floor(rule_idx/10)) %>%
+  group_by(rule_type, shufle_index) %>%
   tidyboot_mean(col=d) %>%
   mutate(type="null")
 
@@ -483,6 +576,7 @@ avg_complete_all_games_wide_null_hamming_distances <- complete_all_games_wide_nu
 avg_hamming_distances <- avg_gold_hamming_distances %>% 
   bind_rows(avg_concept_rule_shuffled_hamming_distances, avg_complete_all_games_wide_null_hamming_distances)
 avg_hamming_distances$type <- as.factor(avg_hamming_distances$type)
+avg_hamming_distances$rule_type <- as.factor(avg_hamming_distances$rule_type)
 ```
 
 ```{r}

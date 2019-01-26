@@ -1,0 +1,11 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	train	test	chat	eventType
+mp-game-6	pilot	9501-2041776c-7f93-4e4a-9122-d367e0964183	1548436261116	student	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	0	-1	22.765	68.081	logTimes
+mp-game-6	pilot	9501-2041776c-7f93-4e4a-9122-d367e0964183	1548436566358	explorer	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	0	77.615	323.797	68.475	logTimes
+mp-game-6	pilot	9501-2041776c-7f93-4e4a-9122-d367e0964183	1548436716907	student	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	1	-1	15.867	47.592	logTimes
+mp-game-6	pilot	9501-2041776c-7f93-4e4a-9122-d367e0964183	1548436802793	explorer	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	1	55.676	101.129	48.137	logTimes
+mp-game-6	pilot	9501-2041776c-7f93-4e4a-9122-d367e0964183	1548437041128	explorer	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2	94.776	35.568	80.536	logTimes
+mp-game-6	pilot	9501-2041776c-7f93-4e4a-9122-d367e0964183	1548437069084	student	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2	-1	63.491	80.159	logTimes
+mp-game-6	pilot	9501-2041776c-7f93-4e4a-9122-d367e0964183	1548437395510	student	8	"trees with purple berries"	trees_purple_berries	3	-1	39.303	179.264	logTimes
+mp-game-6	pilot	9501-2041776c-7f93-4e4a-9122-d367e0964183	1548437400724	explorer	8	"trees with purple berries"	trees_purple_berries	3	92.993	32.592	179.718	logTimes
+mp-game-6	pilot	9501-2041776c-7f93-4e4a-9122-d367e0964183	1548437540583	student	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	4	-1	12.333	51.596	logTimes
+mp-game-6	pilot	9501-2041776c-7f93-4e4a-9122-d367e0964183	1548437564874	explorer	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	4	50.184	35.935	52.012	logTimes
