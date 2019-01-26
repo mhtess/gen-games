@@ -212,9 +212,18 @@ ALOT...don't understand how to adjust that.*/
 
 
 .species-label {
-	font-weight: bold;
+    font-weight: bold;
+    font-size: 15pt;
 }
 
 #training-critters-button {
 	visibility: hidden;
+}
+
+.cell_entry {
+    text-align: center;
+}
+
+.class-member {
+    background-color: yellow;
 }
