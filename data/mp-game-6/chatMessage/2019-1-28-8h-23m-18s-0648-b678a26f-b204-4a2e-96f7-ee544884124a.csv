@@ -17,3 +17,5 @@ mp-game-6	pilot	0648-b678a26f-b204-4a2e-96f7-ee544884124a	1548692769432	explorer
 mp-game-6	pilot	0648-b678a26f-b204-4a2e-96f7-ee544884124a	1548692777152	student	17	"trees with purple leaves and berries"	trees_purple_leaves_berries	0	"anything else I should know"	7.773	chatMessage
 mp-game-6	pilot	0648-b678a26f-b204-4a2e-96f7-ee544884124a	1548692785526	explorer	17	"trees with purple leaves and berries"	trees_purple_leaves_berries	0	"no"	0.79	chatMessage
 mp-game-6	pilot	0648-b678a26f-b204-4a2e-96f7-ee544884124a	1548692798992	student	17	"trees with purple leaves and berries"	trees_purple_leaves_berries	0	"should we proceed to the next page"	10.586	chatMessage
+mp-game-6	pilot	0648-b678a26f-b204-4a2e-96f7-ee544884124a	1548692810373	explorer	17	"trees with purple leaves and berries"	trees_purple_leaves_berries	0	"i agree"	1.489	chatMessage
+mp-game-6	pilot	0648-b678a26f-b204-4a2e-96f7-ee544884124a	1548692814343	student	17	"trees with purple leaves and berries"	trees_purple_leaves_berries	0	"let's go"	1.5	chatMessage
