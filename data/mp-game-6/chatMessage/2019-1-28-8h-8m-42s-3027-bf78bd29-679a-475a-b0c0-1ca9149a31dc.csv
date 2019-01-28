@@ -1,0 +1,7 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	text	reactionTime	eventType
+mp-game-6	pilot	3027-bf78bd29-679a-475a-b0c0-1ca9149a31dc	1548691722318	explorer	23	"birds with orange crests or purple wings"	birds_orange_crests_or_purple_wings	0	"Kewp's have purple wings"	4.788	chatMessage
+mp-game-6	pilot	3027-bf78bd29-679a-475a-b0c0-1ca9149a31dc	1548691745732	student	23	"birds with orange crests or purple wings"	birds_orange_crests_or_purple_wings	0	"anything else they might have?"	5.723	chatMessage
+mp-game-6	pilot	3027-bf78bd29-679a-475a-b0c0-1ca9149a31dc	1548691763634	explorer	23	"birds with orange crests or purple wings"	birds_orange_crests_or_purple_wings	0	"No, their one common quality is purple wings"	7.242	chatMessage
+mp-game-6	pilot	3027-bf78bd29-679a-475a-b0c0-1ca9149a31dc	1548691780656	student	23	"birds with orange crests or purple wings"	birds_orange_crests_or_purple_wings	0	"ok, got it, thanks for the information!"	11.872	chatMessage
+mp-game-6	pilot	3027-bf78bd29-679a-475a-b0c0-1ca9149a31dc	1548692041648	explorer	13	"bugs with wings and antennae"	bugs_wings_antennae	1	"They have wings and have at least two different colors - and white can be one of those colors. They are not all white and not all one color."	20.087	chatMessage
+mp-game-6	pilot	3027-bf78bd29-679a-475a-b0c0-1ca9149a31dc	1548692073989	student	13	"bugs with wings and antennae"	bugs_wings_antennae	1	"I think I got it, thanks for the information."	9.316	chatMessage
