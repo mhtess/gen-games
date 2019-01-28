@@ -1,0 +1,4 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	text	reactionTime	eventType
+mp-game-6	pilot	6221-9e0615ff-8a7d-4d2d-b440-27faa07459dc	1548706998421	explorer	0	"flowers with orange stems"	flowers_orange_stems	0	"The feature that makes a morseth is the stem is always orange, regardless of other features."	26.787	chatMessage
+mp-game-6	pilot	6221-9e0615ff-8a7d-4d2d-b440-27faa07459dc	1548707180594	student	30	"birds with (purple wings and white crests) or white tails"	birds_purple_wings_white_crests_or_white_tails	1	"ok, stem is always orange. got it."	173.763	chatMessage
+mp-game-6	pilot	6221-9e0615ff-8a7d-4d2d-b440-27faa07459dc	1548707260301	explorer	30	"birds with (purple wings and white crests) or white tails"	birds_purple_wings_white_crests_or_white_tails	1	"A zorb will always have long, white tail feathers. The ones that are at his bottom and are long, will need to be white to be a zorb."	48.374	chatMessage
