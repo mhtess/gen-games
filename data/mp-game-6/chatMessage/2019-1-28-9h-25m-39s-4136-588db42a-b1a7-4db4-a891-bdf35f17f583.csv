@@ -1,0 +1,8 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	text	reactionTime	eventType
+mp-game-6	pilot	4136-588db42a-b1a7-4db4-a891-bdf35f17f583	1548696339430	explorer	36	"fish with (orange bodies and purple stripes) or whiskers"	fish_orange_bodies_purple_stripes_or_whiskers	0	"All zorb has whiskers "	11.682	chatMessage
+mp-game-6	pilot	4136-588db42a-b1a7-4db4-a891-bdf35f17f583	1548696392517	student	36	"fish with (orange bodies and purple stripes) or whiskers"	fish_orange_bodies_purple_stripes_or_whiskers	0	"ok"	0.775	chatMessage
+mp-game-6	pilot	4136-588db42a-b1a7-4db4-a891-bdf35f17f583	1548696404419	explorer	36	"fish with (orange bodies and purple stripes) or whiskers"	fish_orange_bodies_purple_stripes_or_whiskers	0	"On a rare occasion a zorb can have no whisker but have long fangs and have a body color of orange and purple stripe"	62.676	chatMessage
+mp-game-6	pilot	4136-588db42a-b1a7-4db4-a891-bdf35f17f583	1548696411050	student	36	"fish with (orange bodies and purple stripes) or whiskers"	fish_orange_bodies_purple_stripes_or_whiskers	0	"ok"	0.503	chatMessage
+mp-game-6	pilot	4136-588db42a-b1a7-4db4-a891-bdf35f17f583	1548697066415	explorer	16	"trees with orange trunks and berries"	trees_orange_trunks_berries	3	"oller all have orange base no matter what "	12.624	chatMessage
+mp-game-6	pilot	4136-588db42a-b1a7-4db4-a891-bdf35f17f583	1548697284074	explorer	26	"flowers with purple petals or thorns"	flowers_purple_petals_or_thorns	4	"kwep has thorns "	7.202	chatMessage
+mp-game-6	pilot	4136-588db42a-b1a7-4db4-a891-bdf35f17f583	1548697327037	explorer	26	"flowers with purple petals or thorns"	flowers_purple_petals_or_thorns	4	"on a rare chance they do not have thorns the stem is purple"	27.957	chatMessage

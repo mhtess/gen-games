@@ -1,0 +1,11 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	train	test	chat	eventType
+mp-game-6	pilot	2366-b0fb57b3-a37d-485d-927d-0fcf927554c0	1548695249776	explorer	2	"fish with white fangs"	fish_fangs	0	290.094	54.864	492.666	logTimes
+mp-game-6	pilot	2366-b0fb57b3-a37d-485d-927d-0fcf927554c0	1548695251768	student	2	"fish with white fangs"	fish_fangs	0	-1	57.595	492.227	logTimes
+mp-game-6	pilot	2366-b0fb57b3-a37d-485d-927d-0fcf927554c0	1548696010723	explorer	42	"flowers with (purple centers or orange stems) and thorns"	flowers_purple_centers_or_orange_stems_with_thorns	1	333.174	63.174	312.139	logTimes
+mp-game-6	pilot	2366-b0fb57b3-a37d-485d-927d-0fcf927554c0	1548696041842	student	42	"flowers with (purple centers or orange stems) and thorns"	flowers_purple_centers_or_orange_stems_with_thorns	1	-1	95.172	311.592	logTimes
+mp-game-6	pilot	2366-b0fb57b3-a37d-485d-927d-0fcf927554c0	1548696537596	student	12	"bugs with purple legs and white heads"	bugs_purple_legs_white_heads	2	-1	87.393	168.955	logTimes
+mp-game-6	pilot	2366-b0fb57b3-a37d-485d-927d-0fcf927554c0	1548696542320	explorer	12	"bugs with purple legs and white heads"	bugs_purple_legs_white_heads	2	179.38	104.652	169.501	logTimes
+mp-game-6	pilot	2366-b0fb57b3-a37d-485d-927d-0fcf927554c0	1548697066019	explorer	22	"birds with orange tails or white wings"	birds_orange_tails_or_white_wings	3	302.895	33.32	161.838	logTimes
+mp-game-6	pilot	2366-b0fb57b3-a37d-485d-927d-0fcf927554c0	1548697109708	student	22	"birds with orange tails or white wings"	birds_orange_tails_or_white_wings	3	-1	76.76	161.207	logTimes
+mp-game-6	pilot	2366-b0fb57b3-a37d-485d-927d-0fcf927554c0	1548697327897	explorer	32	"Tree with (orange berries and purple trunks) or white leaves"	trees_orange_berries_purple_trunks_or_white_leaves	4	59.424	27.192	103.863	logTimes
+mp-game-6	pilot	2366-b0fb57b3-a37d-485d-927d-0fcf927554c0	1548697392778	student	32	"Tree with (orange berries and purple trunks) or white leaves"	trees_orange_berries_purple_trunks_or_white_leaves	4	-1	91.783	103.255	logTimes

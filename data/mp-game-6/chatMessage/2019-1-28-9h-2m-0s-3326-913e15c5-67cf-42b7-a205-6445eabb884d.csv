@@ -1,0 +1,17 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	text	reactionTime	eventType
+mp-game-6	pilot	3326-913e15c5-67cf-42b7-a205-6445eabb884d	1548694920713	student	43	"flowers with (purple stems or thorns) and white centers"	flowers_purple_stems_or_thorns_white_centers	0	"hi"	1.397	chatMessage
+mp-game-6	pilot	3326-913e15c5-67cf-42b7-a205-6445eabb884d	1548694923499	explorer	43	"flowers with (purple stems or thorns) and white centers"	flowers_purple_stems_or_thorns_white_centers	0	"hii"	0.565	chatMessage
+mp-game-6	pilot	3326-913e15c5-67cf-42b7-a205-6445eabb884d	1548694929521	student	43	"flowers with (purple stems or thorns) and white centers"	flowers_purple_stems_or_thorns_white_centers	0	"you're from"	4.125	chatMessage
+mp-game-6	pilot	3326-913e15c5-67cf-42b7-a205-6445eabb884d	1548694945996	explorer	43	"flowers with (purple stems or thorns) and white centers"	flowers_purple_stems_or_thorns_white_centers	0	"ct"	2.333	chatMessage
+mp-game-6	pilot	3326-913e15c5-67cf-42b7-a205-6445eabb884d	1548694963842	student	43	"flowers with (purple stems or thorns) and white centers"	flowers_purple_stems_or_thorns_white_centers	0	"and your gender is ?"	9.294	chatMessage
+mp-game-6	pilot	3326-913e15c5-67cf-42b7-a205-6445eabb884d	1548694969603	explorer	43	"flowers with (purple stems or thorns) and white centers"	flowers_purple_stems_or_thorns_white_centers	0	"female"	1.476	chatMessage
+mp-game-6	pilot	3326-913e15c5-67cf-42b7-a205-6445eabb884d	1548694991592	explorer	43	"flowers with (purple stems or thorns) and white centers"	flowers_purple_stems_or_thorns_white_centers	0	"u"	0.776	chatMessage
+mp-game-6	pilot	3326-913e15c5-67cf-42b7-a205-6445eabb884d	1548694998326	student	43	"flowers with (purple stems or thorns) and white centers"	flowers_purple_stems_or_thorns_white_centers	0	"male"	3.243	chatMessage
+mp-game-6	pilot	3326-913e15c5-67cf-42b7-a205-6445eabb884d	1548695003323	explorer	43	"flowers with (purple stems or thorns) and white centers"	flowers_purple_stems_or_thorns_white_centers	0	"ok"	0.677	chatMessage
+mp-game-6	pilot	3326-913e15c5-67cf-42b7-a205-6445eabb884d	1548695010670	student	43	"flowers with (purple stems or thorns) and white centers"	flowers_purple_stems_or_thorns_white_centers	0	"yeah"	1.378	chatMessage
+mp-game-6	pilot	3326-913e15c5-67cf-42b7-a205-6445eabb884d	1548695272650	student	23	"birds with orange crests or purple wings"	birds_orange_crests_or_purple_wings	1	"hello"	1.51	chatMessage
+mp-game-6	pilot	3326-913e15c5-67cf-42b7-a205-6445eabb884d	1548695276807	explorer	23	"birds with orange crests or purple wings"	birds_orange_crests_or_purple_wings	1	"hii"	0.855	chatMessage
+mp-game-6	pilot	3326-913e15c5-67cf-42b7-a205-6445eabb884d	1548695299605	student	23	"birds with orange crests or purple wings"	birds_orange_crests_or_purple_wings	1	"you're from"	3.312	chatMessage
+mp-game-6	pilot	3326-913e15c5-67cf-42b7-a205-6445eabb884d	1548695546818	explorer	3	"fish with whiskers"	fish_whiskers	2	"hello"	3.288	chatMessage
+mp-game-6	pilot	3326-913e15c5-67cf-42b7-a205-6445eabb884d	1548695561747	student	3	"fish with whiskers"	fish_whiskers	2	"hi"	1.047	chatMessage
+mp-game-6	pilot	3326-913e15c5-67cf-42b7-a205-6445eabb884d	1548695758158	student	13	"bugs with wings and antennae"	bugs_wings_antennae	3	"hi"	0.951	chatMessage
