@@ -1,0 +1,501 @@
+stim_num	turker_label	true_label	is_correct	eventType	experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num
+0	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453791022	student	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+1	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453791022	student	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+2	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453791022	student	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+3	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453791022	student	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+4	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453791022	student	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+5	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453791022	student	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+6	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453791022	student	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+7	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453791022	student	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+8	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453791022	student	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+9	true	false	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453791022	student	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+10	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453791022	student	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+11	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453791022	student	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+12	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453791022	student	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+13	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453791022	student	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+14	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453791022	student	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+15	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453791022	student	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+16	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453791022	student	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+17	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453791022	student	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+18	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453791022	student	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+19	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453791022	student	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+20	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453791022	student	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+21	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453791022	student	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+22	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453791022	student	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+23	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453791022	student	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+24	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453791022	student	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+25	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453791022	student	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+26	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453791022	student	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+27	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453791022	student	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+28	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453791022	student	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+29	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453791022	student	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+30	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453791022	student	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+31	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453791022	student	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+32	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453791022	student	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+33	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453791022	student	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+34	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453791022	student	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+35	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453791022	student	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+36	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453791022	student	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+37	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453791022	student	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+38	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453791022	student	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+39	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453791022	student	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+40	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453791022	student	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+41	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453791022	student	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+42	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453791022	student	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+43	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453791022	student	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+44	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453791022	student	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+45	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453791022	student	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+46	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453791022	student	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+47	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453791022	student	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+48	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453791022	student	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+49	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453791022	student	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+0	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453818989	explorer	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+1	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453818989	explorer	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+2	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453818989	explorer	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+3	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453818989	explorer	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+4	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453818989	explorer	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+5	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453818989	explorer	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+6	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453818989	explorer	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+7	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453818989	explorer	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+8	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453818989	explorer	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+9	true	false	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453818989	explorer	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+10	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453818989	explorer	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+11	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453818989	explorer	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+12	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453818989	explorer	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+13	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453818989	explorer	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+14	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453818989	explorer	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+15	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453818989	explorer	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+16	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453818989	explorer	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+17	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453818989	explorer	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+18	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453818989	explorer	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+19	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453818989	explorer	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+20	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453818989	explorer	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+21	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453818989	explorer	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+22	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453818989	explorer	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+23	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453818989	explorer	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+24	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453818989	explorer	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+25	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453818989	explorer	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+26	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453818989	explorer	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+27	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453818989	explorer	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+28	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453818989	explorer	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+29	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453818989	explorer	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+30	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453818989	explorer	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+31	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453818989	explorer	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+32	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453818989	explorer	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+33	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453818989	explorer	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+34	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453818989	explorer	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+35	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453818989	explorer	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+36	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453818989	explorer	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+37	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453818989	explorer	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+38	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453818989	explorer	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+39	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453818989	explorer	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+40	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453818989	explorer	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+41	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453818989	explorer	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+42	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453818989	explorer	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+43	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453818989	explorer	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+44	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453818989	explorer	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+45	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453818989	explorer	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+46	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453818989	explorer	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+47	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453818989	explorer	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+48	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453818989	explorer	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+49	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548453818989	explorer	41	"trees with (orange trunks or berries) and white leaves"	trees_orange_trunks_or_berries_white_leaves	0
+0	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454135170	explorer	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+1	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454135170	explorer	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+2	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454135170	explorer	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+3	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454135170	explorer	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+4	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454135170	explorer	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+5	false	true	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454135170	explorer	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+6	true	false	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454135170	explorer	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+7	false	true	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454135170	explorer	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+8	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454135170	explorer	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+9	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454135170	explorer	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+10	false	true	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454135170	explorer	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+11	false	true	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454135170	explorer	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+12	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454135170	explorer	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+13	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454135170	explorer	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+14	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454135170	explorer	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+15	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454135170	explorer	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+16	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454135170	explorer	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+17	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454135170	explorer	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+18	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454135170	explorer	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+19	false	true	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454135170	explorer	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+20	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454135170	explorer	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+21	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454135170	explorer	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+22	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454135170	explorer	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+23	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454135170	explorer	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+24	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454135170	explorer	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+25	false	true	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454135170	explorer	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+26	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454135170	explorer	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+27	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454135170	explorer	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+28	false	true	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454135170	explorer	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+29	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454135170	explorer	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+30	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454135170	explorer	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+31	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454135170	explorer	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+32	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454135170	explorer	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+33	true	false	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454135170	explorer	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+34	false	true	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454135170	explorer	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+35	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454135170	explorer	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+36	false	true	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454135170	explorer	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+37	true	false	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454135170	explorer	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+38	false	true	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454135170	explorer	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+39	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454135170	explorer	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+40	false	true	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454135170	explorer	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+41	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454135170	explorer	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+42	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454135170	explorer	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+43	false	true	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454135170	explorer	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+44	true	false	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454135170	explorer	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+45	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454135170	explorer	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+46	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454135170	explorer	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+47	false	true	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454135170	explorer	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+48	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454135170	explorer	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+49	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454135170	explorer	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+0	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454176607	student	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+1	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454176607	student	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+2	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454176607	student	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+3	false	true	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454176607	student	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+4	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454176607	student	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+5	false	true	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454176607	student	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+6	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454176607	student	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+7	false	true	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454176607	student	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+8	false	true	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454176607	student	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+9	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454176607	student	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+10	false	true	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454176607	student	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+11	false	true	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454176607	student	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+12	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454176607	student	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+13	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454176607	student	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+14	false	true	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454176607	student	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+15	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454176607	student	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+16	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454176607	student	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+17	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454176607	student	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+18	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454176607	student	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+19	false	true	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454176607	student	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+20	false	true	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454176607	student	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+21	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454176607	student	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+22	false	true	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454176607	student	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+23	false	true	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454176607	student	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+24	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454176607	student	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+25	false	true	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454176607	student	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+26	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454176607	student	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+27	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454176607	student	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+28	false	true	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454176607	student	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+29	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454176607	student	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+30	false	true	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454176607	student	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+31	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454176607	student	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+32	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454176607	student	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+33	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454176607	student	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+34	false	true	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454176607	student	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+35	false	true	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454176607	student	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+36	false	true	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454176607	student	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+37	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454176607	student	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+38	false	true	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454176607	student	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+39	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454176607	student	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+40	false	true	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454176607	student	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+41	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454176607	student	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+42	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454176607	student	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+43	false	true	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454176607	student	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+44	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454176607	student	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+45	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454176607	student	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+46	false	true	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454176607	student	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+47	false	true	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454176607	student	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+48	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454176607	student	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+49	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454176607	student	31	"birds with (purple crests and purple tails) or orange wings"	birds_purple_crests_purple_tails_or_orange_wings	1
+0	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454667273	explorer	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+1	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454667273	explorer	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+2	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454667273	explorer	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+3	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454667273	explorer	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+4	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454667273	explorer	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+5	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454667273	explorer	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+6	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454667273	explorer	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+7	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454667273	explorer	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+8	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454667273	explorer	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+9	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454667273	explorer	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+10	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454667273	explorer	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+11	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454667273	explorer	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+12	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454667273	explorer	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+13	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454667273	explorer	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+14	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454667273	explorer	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+15	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454667273	explorer	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+16	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454667273	explorer	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+17	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454667273	explorer	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+18	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454667273	explorer	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+19	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454667273	explorer	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+20	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454667273	explorer	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+21	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454667273	explorer	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+22	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454667273	explorer	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+23	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454667273	explorer	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+24	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454667273	explorer	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+25	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454667273	explorer	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+26	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454667273	explorer	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+27	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454667273	explorer	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+28	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454667273	explorer	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+29	false	true	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454667273	explorer	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+30	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454667273	explorer	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+31	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454667273	explorer	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+32	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454667273	explorer	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+33	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454667273	explorer	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+34	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454667273	explorer	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+35	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454667273	explorer	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+36	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454667273	explorer	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+37	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454667273	explorer	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+38	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454667273	explorer	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+39	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454667273	explorer	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+40	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454667273	explorer	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+41	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454667273	explorer	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+42	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454667273	explorer	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+43	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454667273	explorer	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+44	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454667273	explorer	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+45	false	true	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454667273	explorer	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+46	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454667273	explorer	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+47	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454667273	explorer	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+48	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454667273	explorer	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+49	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454667273	explorer	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+0	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454747260	student	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+1	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454747260	student	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+2	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454747260	student	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+3	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454747260	student	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+4	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454747260	student	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+5	false	true	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454747260	student	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+6	true	false	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454747260	student	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+7	true	false	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454747260	student	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+8	true	false	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454747260	student	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+9	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454747260	student	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+10	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454747260	student	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+11	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454747260	student	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+12	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454747260	student	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+13	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454747260	student	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+14	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454747260	student	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+15	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454747260	student	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+16	true	false	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454747260	student	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+17	true	false	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454747260	student	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+18	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454747260	student	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+19	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454747260	student	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+20	true	false	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454747260	student	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+21	true	false	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454747260	student	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+22	true	false	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454747260	student	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+23	true	false	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454747260	student	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+24	true	false	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454747260	student	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+25	true	false	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454747260	student	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+26	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454747260	student	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+27	true	false	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454747260	student	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+28	true	false	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454747260	student	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+29	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454747260	student	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+30	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454747260	student	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+31	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454747260	student	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+32	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454747260	student	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+33	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454747260	student	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+34	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454747260	student	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+35	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454747260	student	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+36	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454747260	student	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+37	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454747260	student	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+38	true	false	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454747260	student	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+39	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454747260	student	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+40	true	false	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454747260	student	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+41	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454747260	student	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+42	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454747260	student	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+43	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454747260	student	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+44	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454747260	student	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+45	false	true	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454747260	student	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+46	true	false	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454747260	student	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+47	true	false	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454747260	student	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+48	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454747260	student	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+49	true	false	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548454747260	student	11	"fish with white stripes and whiskers"	fish_white_stripes_whiskers	2
+0	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455038142	explorer	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+1	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455038142	explorer	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+2	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455038142	explorer	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+3	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455038142	explorer	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+4	false	true	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455038142	explorer	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+5	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455038142	explorer	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+6	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455038142	explorer	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+7	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455038142	explorer	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+8	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455038142	explorer	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+9	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455038142	explorer	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+10	false	true	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455038142	explorer	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+11	false	true	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455038142	explorer	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+12	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455038142	explorer	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+13	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455038142	explorer	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+14	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455038142	explorer	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+15	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455038142	explorer	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+16	false	true	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455038142	explorer	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+17	false	true	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455038142	explorer	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+18	false	true	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455038142	explorer	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+19	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455038142	explorer	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+20	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455038142	explorer	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+21	true	false	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455038142	explorer	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+22	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455038142	explorer	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+23	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455038142	explorer	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+24	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455038142	explorer	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+25	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455038142	explorer	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+26	false	true	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455038142	explorer	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+27	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455038142	explorer	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+28	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455038142	explorer	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+29	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455038142	explorer	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+30	false	true	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455038142	explorer	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+31	false	true	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455038142	explorer	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+32	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455038142	explorer	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+33	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455038142	explorer	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+34	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455038142	explorer	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+35	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455038142	explorer	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+36	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455038142	explorer	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+37	false	true	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455038142	explorer	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+38	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455038142	explorer	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+39	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455038142	explorer	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+40	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455038142	explorer	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+41	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455038142	explorer	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+42	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455038142	explorer	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+43	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455038142	explorer	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+44	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455038142	explorer	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+45	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455038142	explorer	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+46	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455038142	explorer	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+47	false	true	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455038142	explorer	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+48	false	true	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455038142	explorer	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+49	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455038142	explorer	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+0	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455052037	student	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+1	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455052037	student	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+2	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455052037	student	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+3	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455052037	student	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+4	false	true	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455052037	student	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+5	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455052037	student	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+6	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455052037	student	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+7	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455052037	student	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+8	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455052037	student	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+9	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455052037	student	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+10	false	true	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455052037	student	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+11	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455052037	student	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+12	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455052037	student	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+13	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455052037	student	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+14	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455052037	student	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+15	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455052037	student	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+16	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455052037	student	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+17	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455052037	student	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+18	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455052037	student	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+19	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455052037	student	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+20	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455052037	student	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+21	true	false	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455052037	student	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+22	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455052037	student	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+23	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455052037	student	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+24	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455052037	student	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+25	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455052037	student	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+26	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455052037	student	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+27	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455052037	student	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+28	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455052037	student	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+29	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455052037	student	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+30	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455052037	student	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+31	false	true	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455052037	student	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+32	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455052037	student	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+33	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455052037	student	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+34	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455052037	student	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+35	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455052037	student	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+36	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455052037	student	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+37	false	true	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455052037	student	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+38	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455052037	student	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+39	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455052037	student	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+40	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455052037	student	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+41	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455052037	student	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+42	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455052037	student	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+43	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455052037	student	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+44	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455052037	student	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+45	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455052037	student	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+46	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455052037	student	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+47	false	true	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455052037	student	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+48	false	true	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455052037	student	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+49	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455052037	student	21	"bugs with purple wings or white legs"	bugs_purple_wings_or_white_legs	3
+0	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455251853	explorer	1	"flowers with thorns"	flowers_thorns	4
+1	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455251853	explorer	1	"flowers with thorns"	flowers_thorns	4
+2	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455251853	explorer	1	"flowers with thorns"	flowers_thorns	4
+3	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455251853	explorer	1	"flowers with thorns"	flowers_thorns	4
+4	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455251853	explorer	1	"flowers with thorns"	flowers_thorns	4
+5	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455251853	explorer	1	"flowers with thorns"	flowers_thorns	4
+6	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455251853	explorer	1	"flowers with thorns"	flowers_thorns	4
+7	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455251853	explorer	1	"flowers with thorns"	flowers_thorns	4
+8	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455251853	explorer	1	"flowers with thorns"	flowers_thorns	4
+9	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455251853	explorer	1	"flowers with thorns"	flowers_thorns	4
+10	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455251853	explorer	1	"flowers with thorns"	flowers_thorns	4
+11	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455251853	explorer	1	"flowers with thorns"	flowers_thorns	4
+12	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455251853	explorer	1	"flowers with thorns"	flowers_thorns	4
+13	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455251853	explorer	1	"flowers with thorns"	flowers_thorns	4
+14	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455251853	explorer	1	"flowers with thorns"	flowers_thorns	4
+15	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455251853	explorer	1	"flowers with thorns"	flowers_thorns	4
+16	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455251853	explorer	1	"flowers with thorns"	flowers_thorns	4
+17	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455251853	explorer	1	"flowers with thorns"	flowers_thorns	4
+18	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455251853	explorer	1	"flowers with thorns"	flowers_thorns	4
+19	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455251853	explorer	1	"flowers with thorns"	flowers_thorns	4
+20	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455251853	explorer	1	"flowers with thorns"	flowers_thorns	4
+21	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455251853	explorer	1	"flowers with thorns"	flowers_thorns	4
+22	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455251853	explorer	1	"flowers with thorns"	flowers_thorns	4
+23	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455251853	explorer	1	"flowers with thorns"	flowers_thorns	4
+24	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455251853	explorer	1	"flowers with thorns"	flowers_thorns	4
+25	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455251853	explorer	1	"flowers with thorns"	flowers_thorns	4
+26	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455251853	explorer	1	"flowers with thorns"	flowers_thorns	4
+27	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455251853	explorer	1	"flowers with thorns"	flowers_thorns	4
+28	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455251853	explorer	1	"flowers with thorns"	flowers_thorns	4
+29	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455251853	explorer	1	"flowers with thorns"	flowers_thorns	4
+30	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455251853	explorer	1	"flowers with thorns"	flowers_thorns	4
+31	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455251853	explorer	1	"flowers with thorns"	flowers_thorns	4
+32	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455251853	explorer	1	"flowers with thorns"	flowers_thorns	4
+33	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455251853	explorer	1	"flowers with thorns"	flowers_thorns	4
+34	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455251853	explorer	1	"flowers with thorns"	flowers_thorns	4
+35	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455251853	explorer	1	"flowers with thorns"	flowers_thorns	4
+36	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455251853	explorer	1	"flowers with thorns"	flowers_thorns	4
+37	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455251853	explorer	1	"flowers with thorns"	flowers_thorns	4
+38	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455251853	explorer	1	"flowers with thorns"	flowers_thorns	4
+39	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455251853	explorer	1	"flowers with thorns"	flowers_thorns	4
+40	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455251853	explorer	1	"flowers with thorns"	flowers_thorns	4
+41	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455251853	explorer	1	"flowers with thorns"	flowers_thorns	4
+42	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455251853	explorer	1	"flowers with thorns"	flowers_thorns	4
+43	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455251853	explorer	1	"flowers with thorns"	flowers_thorns	4
+44	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455251853	explorer	1	"flowers with thorns"	flowers_thorns	4
+45	false	true	false	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455251853	explorer	1	"flowers with thorns"	flowers_thorns	4
+46	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455251853	explorer	1	"flowers with thorns"	flowers_thorns	4
+47	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455251853	explorer	1	"flowers with thorns"	flowers_thorns	4
+48	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455251853	explorer	1	"flowers with thorns"	flowers_thorns	4
+49	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455251853	explorer	1	"flowers with thorns"	flowers_thorns	4
+0	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455255906	student	1	"flowers with thorns"	flowers_thorns	4
+1	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455255906	student	1	"flowers with thorns"	flowers_thorns	4
+2	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455255906	student	1	"flowers with thorns"	flowers_thorns	4
+3	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455255906	student	1	"flowers with thorns"	flowers_thorns	4
+4	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455255906	student	1	"flowers with thorns"	flowers_thorns	4
+5	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455255906	student	1	"flowers with thorns"	flowers_thorns	4
+6	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455255906	student	1	"flowers with thorns"	flowers_thorns	4
+7	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455255906	student	1	"flowers with thorns"	flowers_thorns	4
+8	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455255906	student	1	"flowers with thorns"	flowers_thorns	4
+9	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455255906	student	1	"flowers with thorns"	flowers_thorns	4
+10	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455255906	student	1	"flowers with thorns"	flowers_thorns	4
+11	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455255906	student	1	"flowers with thorns"	flowers_thorns	4
+12	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455255906	student	1	"flowers with thorns"	flowers_thorns	4
+13	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455255906	student	1	"flowers with thorns"	flowers_thorns	4
+14	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455255906	student	1	"flowers with thorns"	flowers_thorns	4
+15	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455255906	student	1	"flowers with thorns"	flowers_thorns	4
+16	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455255906	student	1	"flowers with thorns"	flowers_thorns	4
+17	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455255906	student	1	"flowers with thorns"	flowers_thorns	4
+18	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455255906	student	1	"flowers with thorns"	flowers_thorns	4
+19	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455255906	student	1	"flowers with thorns"	flowers_thorns	4
+20	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455255906	student	1	"flowers with thorns"	flowers_thorns	4
+21	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455255906	student	1	"flowers with thorns"	flowers_thorns	4
+22	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455255906	student	1	"flowers with thorns"	flowers_thorns	4
+23	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455255906	student	1	"flowers with thorns"	flowers_thorns	4
+24	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455255906	student	1	"flowers with thorns"	flowers_thorns	4
+25	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455255906	student	1	"flowers with thorns"	flowers_thorns	4
+26	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455255906	student	1	"flowers with thorns"	flowers_thorns	4
+27	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455255906	student	1	"flowers with thorns"	flowers_thorns	4
+28	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455255906	student	1	"flowers with thorns"	flowers_thorns	4
+29	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455255906	student	1	"flowers with thorns"	flowers_thorns	4
+30	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455255906	student	1	"flowers with thorns"	flowers_thorns	4
+31	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455255906	student	1	"flowers with thorns"	flowers_thorns	4
+32	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455255906	student	1	"flowers with thorns"	flowers_thorns	4
+33	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455255906	student	1	"flowers with thorns"	flowers_thorns	4
+34	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455255906	student	1	"flowers with thorns"	flowers_thorns	4
+35	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455255906	student	1	"flowers with thorns"	flowers_thorns	4
+36	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455255906	student	1	"flowers with thorns"	flowers_thorns	4
+37	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455255906	student	1	"flowers with thorns"	flowers_thorns	4
+38	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455255906	student	1	"flowers with thorns"	flowers_thorns	4
+39	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455255906	student	1	"flowers with thorns"	flowers_thorns	4
+40	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455255906	student	1	"flowers with thorns"	flowers_thorns	4
+41	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455255906	student	1	"flowers with thorns"	flowers_thorns	4
+42	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455255906	student	1	"flowers with thorns"	flowers_thorns	4
+43	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455255906	student	1	"flowers with thorns"	flowers_thorns	4
+44	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455255906	student	1	"flowers with thorns"	flowers_thorns	4
+45	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455255906	student	1	"flowers with thorns"	flowers_thorns	4
+46	true	true	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455255906	student	1	"flowers with thorns"	flowers_thorns	4
+47	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455255906	student	1	"flowers with thorns"	flowers_thorns	4
+48	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455255906	student	1	"flowers with thorns"	flowers_thorns	4
+49	false	false	true	logTest	mp-game-6	pilot	2603-f3371eba-abc4-4624-8f52-1efa06971f09	1548455255906	student	1	"flowers with thorns"	flowers_thorns	4

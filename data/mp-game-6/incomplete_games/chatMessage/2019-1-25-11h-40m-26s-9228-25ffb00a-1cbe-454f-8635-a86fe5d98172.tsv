@@ -1,0 +1,25 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	text	reactionTime	eventType
+mp-game-6	pilot	9228-25ffb00a-1cbe-454f-8635-a86fe5d98172	1548445226446	explorer	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	0	"Hello"	9.031	chatMessage
+mp-game-6	pilot	9228-25ffb00a-1cbe-454f-8635-a86fe5d98172	1548445287791	student	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	0	"you know properties of the species?"	18.41	chatMessage
+mp-game-6	pilot	9228-25ffb00a-1cbe-454f-8635-a86fe5d98172	1548445341698	explorer	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	0	"Yeah,,,somewhat know."	18.448	chatMessage
+mp-game-6	pilot	9228-25ffb00a-1cbe-454f-8635-a86fe5d98172	1548445368811	student	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	0	"okay.. its very interesting "	10.226	chatMessage
+mp-game-6	pilot	9228-25ffb00a-1cbe-454f-8635-a86fe5d98172	1548445481453	explorer	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	0	"Yes"	1.623	chatMessage
+mp-game-6	pilot	9228-25ffb00a-1cbe-454f-8635-a86fe5d98172	1548445624097	explorer	8	"trees with purple berries"	trees_purple_berries	1	"Hello"	1.551	chatMessage
+mp-game-6	pilot	9228-25ffb00a-1cbe-454f-8635-a86fe5d98172	1548445715029	explorer	8	"trees with purple berries"	trees_purple_berries	1	"Are you there?"	5.295	chatMessage
+mp-game-6	pilot	9228-25ffb00a-1cbe-454f-8635-a86fe5d98172	1548445799677	student	8	"trees with purple berries"	trees_purple_berries	1	"yes.."	10.769	chatMessage
+mp-game-6	pilot	9228-25ffb00a-1cbe-454f-8635-a86fe5d98172	1548445817587	explorer	8	"trees with purple berries"	trees_purple_berries	1	"Ok"	2.792	chatMessage
+mp-game-6	pilot	9228-25ffb00a-1cbe-454f-8635-a86fe5d98172	1548445952498	explorer	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	2	"Hello"	2.143	chatMessage
+mp-game-6	pilot	9228-25ffb00a-1cbe-454f-8635-a86fe5d98172	1548446126295	explorer	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	2	"Are you there?"	5.943	chatMessage
+mp-game-6	pilot	9228-25ffb00a-1cbe-454f-8635-a86fe5d98172	1548446137144	explorer	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	2	"   "	0.927	chatMessage
+mp-game-6	pilot	9228-25ffb00a-1cbe-454f-8635-a86fe5d98172	1548446137632	explorer	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	2	" "	0.191	chatMessage
+mp-game-6	pilot	9228-25ffb00a-1cbe-454f-8635-a86fe5d98172	1548446137983	explorer	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	2	" "	0.167	chatMessage
+mp-game-6	pilot	9228-25ffb00a-1cbe-454f-8635-a86fe5d98172	1548446138271	explorer	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	2	" "	0.136	chatMessage
+mp-game-6	pilot	9228-25ffb00a-1cbe-454f-8635-a86fe5d98172	1548446306037	student	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	2	"yeah,, sorry to late.."	11.483	chatMessage
+mp-game-6	pilot	9228-25ffb00a-1cbe-454f-8635-a86fe5d98172	1548446375470	explorer	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	2	"MM"	1.183	chatMessage
+mp-game-6	pilot	9228-25ffb00a-1cbe-454f-8635-a86fe5d98172	1548446489590	explorer	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	3	"Hello"	1.399	chatMessage
+mp-game-6	pilot	9228-25ffb00a-1cbe-454f-8635-a86fe5d98172	1548446526556	explorer	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	3	"Are you there?"	5.848	chatMessage
+mp-game-6	pilot	9228-25ffb00a-1cbe-454f-8635-a86fe5d98172	1548446537340	student	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	3	"yes.."	3.234	chatMessage
+mp-game-6	pilot	9228-25ffb00a-1cbe-454f-8635-a86fe5d98172	1548446568163	explorer	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	3	"Ok"	1.377	chatMessage
+mp-game-6	pilot	9228-25ffb00a-1cbe-454f-8635-a86fe5d98172	1548446575639	explorer	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	3	"Bye"	1.542	chatMessage
+mp-game-6	pilot	9228-25ffb00a-1cbe-454f-8635-a86fe5d98172	1548446585530	student	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	3	"why?"	3.053	chatMessage
+mp-game-6	pilot	9228-25ffb00a-1cbe-454f-8635-a86fe5d98172	1548446621025	explorer	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	3	"Time expired"	6.113	chatMessage

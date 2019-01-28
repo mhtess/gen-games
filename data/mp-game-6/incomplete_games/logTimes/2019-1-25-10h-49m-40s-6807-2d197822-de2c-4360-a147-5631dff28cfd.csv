@@ -1,0 +1,2 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	train	test	chat	eventType
+mp-game-6	pilot	6807-2d197822-de2c-4360-a147-5631dff28cfd	1548442180004	student	16	"trees with orange trunks and berries"	trees_orange_trunks_berries	0	-1	53.77	13.775	logTimes

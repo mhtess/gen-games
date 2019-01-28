@@ -1,0 +1,10 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	text	reactionTime	eventType
+mp-game-6	pilot	0390-d30a6241-907a-4dd8-98f1-b17e65c57a59	1548438740706	student	35	"flowers with (thorns and purple petals) or orange stems"	flowers_thorns_purple_petals_or_orange_stems	0	"HELLO"	1.785	chatMessage
+mp-game-6	pilot	0390-d30a6241-907a-4dd8-98f1-b17e65c57a59	1548438878401	student	5	"bugs without wings"	bugs_without_wings	1	"HI"	0.757	chatMessage
+mp-game-6	pilot	0390-d30a6241-907a-4dd8-98f1-b17e65c57a59	1548438884743	explorer	5	"bugs without wings"	bugs_without_wings	1	"HI"	2.394	chatMessage
+mp-game-6	pilot	0390-d30a6241-907a-4dd8-98f1-b17e65c57a59	1548438900849	student	5	"bugs without wings"	bugs_without_wings	1	"WYD"	1.124	chatMessage
+mp-game-6	pilot	0390-d30a6241-907a-4dd8-98f1-b17e65c57a59	1548438922654	student	5	"bugs without wings"	bugs_without_wings	1	"lol jk what are we supposed to be doing>"	16.342	chatMessage
+mp-game-6	pilot	0390-d30a6241-907a-4dd8-98f1-b17e65c57a59	1548438949531	explorer	5	"bugs without wings"	bugs_without_wings	1	"click only the orange color insect"	18.383	chatMessage
+mp-game-6	pilot	0390-d30a6241-907a-4dd8-98f1-b17e65c57a59	1548438958549	student	5	"bugs without wings"	bugs_without_wings	1	"ok got it"	4.87	chatMessage
+mp-game-6	pilot	0390-d30a6241-907a-4dd8-98f1-b17e65c57a59	1548439279932	explorer	25	"trees with white leaves or orange berries"	trees_white_leaves_or_orange_berries	3	"Click on the tree which has small amount of branches on it."	20.594	chatMessage
+mp-game-6	pilot	0390-d30a6241-907a-4dd8-98f1-b17e65c57a59	1548439326921	student	25	"trees with white leaves or orange berries"	trees_white_leaves_or_orange_berries	3	"ok"	1.036	chatMessage

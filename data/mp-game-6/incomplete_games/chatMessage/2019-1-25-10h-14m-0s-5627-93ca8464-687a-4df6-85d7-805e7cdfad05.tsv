@@ -1,0 +1,5 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	text	reactionTime	eventType
+mp-game-6	pilot	5627-93ca8464-687a-4df6-85d7-805e7cdfad05	1548440040285	explorer	29	"fish with white stripes or whiskers"	fish_white_stripes_or_whiskers	0	"Hello there! "	13.378	chatMessage
+mp-game-6	pilot	5627-93ca8464-687a-4df6-85d7-805e7cdfad05	1548440042416	student	29	"fish with white stripes or whiskers"	fish_white_stripes_or_whiskers	0	"Hello."	3.558	chatMessage
+mp-game-6	pilot	5627-93ca8464-687a-4df6-85d7-805e7cdfad05	1548440067373	explorer	29	"fish with white stripes or whiskers"	fish_white_stripes_or_whiskers	0	"I believe I have determined kweps with near 100% accurcy. Anything with white stripes is a kwep. Anything with whiskers is a kwep."	22.625	chatMessage
+mp-game-6	pilot	5627-93ca8464-687a-4df6-85d7-805e7cdfad05	1548440084340	explorer	29	"fish with white stripes or whiskers"	fish_white_stripes_or_whiskers	0	"Anything else is probably not a kwep"	4.362	chatMessage

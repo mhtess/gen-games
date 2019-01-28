@@ -1,0 +1,11 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	hits	misses	correct_rejections	false_alarms	score	eventType
+mp-game-6	pilot	2754-860ba9cb-4617-417e-9c4f-98adb44da423	1548436070709	explorer	4	"bugs with white orange head"	bugs_orange_head	0	2	21	26	1	1	logScores
+mp-game-6	pilot	2754-860ba9cb-4617-417e-9c4f-98adb44da423	1548436074478	student	4	"bugs with white orange head"	bugs_orange_head	0	0	23	25	2	0	logScores
+mp-game-6	pilot	2754-860ba9cb-4617-417e-9c4f-98adb44da423	1548436307652	student	14	"birds with purple wings and crests"	birds_purple_wings_crests	1	9	0	22	19	0	logScores
+mp-game-6	pilot	2754-860ba9cb-4617-417e-9c4f-98adb44da423	1548436332510	explorer	14	"birds with purple wings and crests"	birds_purple_wings_crests	1	0	9	40	1	0	logScores
+mp-game-6	pilot	2754-860ba9cb-4617-417e-9c4f-98adb44da423	1548436501630	explorer	44	"fish with (orange bodies or fangs) and whiskers"	fish_orange_bodies_or_fangs_whiskers	2	16	0	23	11	5	logScores
+mp-game-6	pilot	2754-860ba9cb-4617-417e-9c4f-98adb44da423	1548436507780	student	44	"fish with (orange bodies or fangs) and whiskers"	fish_orange_bodies_or_fangs_whiskers	2	16	0	22	12	4	logScores
+mp-game-6	pilot	2754-860ba9cb-4617-417e-9c4f-98adb44da423	1548436623523	explorer	34	"flowers with (purple stems and white petals) or orange centers"	flowers_purple_stems_white_petals_or_orange_centers	3	22	5	4	19	3	logScores
+mp-game-6	pilot	2754-860ba9cb-4617-417e-9c4f-98adb44da423	1548436634374	student	34	"flowers with (purple stems and white petals) or orange centers"	flowers_purple_stems_white_petals_or_orange_centers	3	20	7	9	14	6	logScores
+mp-game-6	pilot	2754-860ba9cb-4617-417e-9c4f-98adb44da423	1548436735786	student	24	"trees with purple berries or white trunks"	trees_purple_berries_or_white_trunks	4	0	18	27	5	0	logScores
+mp-game-6	pilot	2754-860ba9cb-4617-417e-9c4f-98adb44da423	1548436767367	explorer	24	"trees with purple berries or white trunks"	trees_purple_berries_or_white_trunks	4	13	5	10	22	0	logScores
