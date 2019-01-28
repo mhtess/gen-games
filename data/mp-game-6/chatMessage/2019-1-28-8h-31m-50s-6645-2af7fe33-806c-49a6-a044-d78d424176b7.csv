@@ -15,3 +15,6 @@ mp-game-6	pilot	6645-2af7fe33-806c-49a6-a044-d78d424176b7	1548694019654	explorer
 mp-game-6	pilot	6645-2af7fe33-806c-49a6-a044-d78d424176b7	1548694312214	explorer	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	3	"fully orange head sometimes full orange tail"	7.008	chatMessage
 mp-game-6	pilot	6645-2af7fe33-806c-49a6-a044-d78d424176b7	1548694341188	student	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	3	"anything else?"	2.135	chatMessage
 mp-game-6	pilot	6645-2af7fe33-806c-49a6-a044-d78d424176b7	1548694345572	explorer	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	3	"that's all"	1.781	chatMessage
+mp-game-6	pilot	6645-2af7fe33-806c-49a6-a044-d78d424176b7	1548694486549	explorer	8	"trees with purple berries"	trees_purple_berries	4	"purple berries is de wae"	11.4	chatMessage
+mp-game-6	pilot	6645-2af7fe33-806c-49a6-a044-d78d424176b7	1548694494855	student	8	"trees with purple berries"	trees_purple_berries	4	"anything else?"	1.799	chatMessage
+mp-game-6	pilot	6645-2af7fe33-806c-49a6-a044-d78d424176b7	1548694512878	explorer	8	"trees with purple berries"	trees_purple_berries	4	"none"	1.091	chatMessage
