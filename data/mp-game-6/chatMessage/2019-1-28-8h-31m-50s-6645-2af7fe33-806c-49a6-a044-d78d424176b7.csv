@@ -1,0 +1,9 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	text	reactionTime	eventType
+mp-game-6	pilot	6645-2af7fe33-806c-49a6-a044-d78d424176b7	1548693110004	explorer	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	0	"some of them have spikes with white dots and orange middle"	13.139	chatMessage
+mp-game-6	pilot	6645-2af7fe33-806c-49a6-a044-d78d424176b7	1548693142041	student	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	0	"any other special things about them?"	4.716	chatMessage
+mp-game-6	pilot	6645-2af7fe33-806c-49a6-a044-d78d424176b7	1548693194636	explorer	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	0	"some of them also are the same color dots and middle matching spikes"	23.33	chatMessage
+mp-game-6	pilot	6645-2af7fe33-806c-49a6-a044-d78d424176b7	1548693210013	student	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	0	"do they have different names?"	4.976	chatMessage
+mp-game-6	pilot	6645-2af7fe33-806c-49a6-a044-d78d424176b7	1548693229562	student	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	0	"how many different types are there?"	6.848	chatMessage
+mp-game-6	pilot	6645-2af7fe33-806c-49a6-a044-d78d424176b7	1548693248347	explorer	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	0	"it was about 8 different types with the same name"	13.642	chatMessage
+mp-game-6	pilot	6645-2af7fe33-806c-49a6-a044-d78d424176b7	1548693283248	student	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	0	"okay, so anything else I should know, or should we move on?"	10.982	chatMessage
+mp-game-6	pilot	6645-2af7fe33-806c-49a6-a044-d78d424176b7	1548693319890	explorer	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	0	"move on"	1.549	chatMessage
