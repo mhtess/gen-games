@@ -1,0 +1,5 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	text	reactionTime	eventType
+mp-game-6	pilot	0882-fa5d9dd5-8f5a-4fd1-9615-e2bee5865951	1548779150841	explorer	39	"bugs with (white legs and purple wings) or orange antennae"	bugs_white_legs_purple_wings_or_orange_antennae	0	"I hate these."	8.616	chatMessage
+mp-game-6	pilot	0882-fa5d9dd5-8f5a-4fd1-9615-e2bee5865951	1548779176977	student	39	"bugs with (white legs and purple wings) or orange antennae"	bugs_white_legs_purple_wings_or_orange_antennae	0	"can you tell me about the species? "	17.909	chatMessage
+mp-game-6	pilot	0882-fa5d9dd5-8f5a-4fd1-9615-e2bee5865951	1548779196011	explorer	39	"bugs with (white legs and purple wings) or orange antennae"	bugs_white_legs_purple_wings_or_orange_antennae	0	"So far if it has yellow antennas it's a zorb is the main one."	28.138	chatMessage
+mp-game-6	pilot	0882-fa5d9dd5-8f5a-4fd1-9615-e2bee5865951	1548779222467	student	39	"bugs with (white legs and purple wings) or orange antennae"	bugs_white_legs_purple_wings_or_orange_antennae	0	"okay, is there anything else you noticed?"	6.044	chatMessage
