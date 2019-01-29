@@ -1,0 +1,7 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	train	test	chat	eventType
+mp-game-6	pilot	0028-bedfdd18-57ea-422d-b456-09e3236ec6c7	1548777396505	student	49	"birds with (white crests or orange wings) and tails"	birds_white_crests_or_orange_wings_tails	0	-1	77.945	297.981	logTimes
+mp-game-6	pilot	0028-bedfdd18-57ea-422d-b456-09e3236ec6c7	1548777494193	explorer	49	"birds with (white crests or orange wings) and tails"	birds_white_crests_or_orange_wings_tails	0	294.336	171.617	298.437	logTimes
+mp-game-6	pilot	0028-bedfdd18-57ea-422d-b456-09e3236ec6c7	1548777902799	student	39	"bugs with (white legs and purple wings) or orange antennae"	bugs_white_legs_purple_wings_or_orange_antennae	1	-1	75.052	214.181	logTimes
+mp-game-6	pilot	0028-bedfdd18-57ea-422d-b456-09e3236ec6c7	1548777907670	explorer	39	"bugs with (white legs and purple wings) or orange antennae"	bugs_white_legs_purple_wings_or_orange_antennae	1	102.687	78.81	214.584	logTimes
+mp-game-6	pilot	0028-bedfdd18-57ea-422d-b456-09e3236ec6c7	1548778295593	explorer	19	"flowers with orange petals and purple centers"	flowers_orange_petals_purple_centers	2	64.679	81.764	216.346	logTimes
+mp-game-6	pilot	0028-bedfdd18-57ea-422d-b456-09e3236ec6c7	1548778382215	student	19	"flowers with orange petals and purple centers"	flowers_orange_petals_purple_centers	2	-1	168.195	215.866	logTimes

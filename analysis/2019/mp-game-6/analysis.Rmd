@@ -18,6 +18,8 @@ library(digest)
 library(ggthemes)
 library(forcats)
 library(ggalt)
+library(grid)
+library(cowplot)
 ```
 
 
@@ -152,23 +154,24 @@ complete_test_summary <- complete_test_summary %>%
 ```{r fig.width=7, fig.height=4, echo=FALSE}
 ggplot(complete_test_summary
        , aes(x=student_acc, y=explorer_acc, color=rule_type_text, label=rule_idx)) +
-  geom_point(size = 6) +
+  geom_point(size = 10) +
   theme_few() +
   guides(color = guide_legend("Rule Type")) +
-  geom_text(hjust = 0.01, nudge_x = 0.01, show.legend = FALSE) +
   geom_point(data = complete_test, size = 2, alpha=0.7) +
   labs(
     title = "Student Accuracy vs. Teacher Accuracy",
     x = "Student Accuracy",
-    y = "Explorer Acccuracy"
+    y = "Teacher Acccuracy"
   ) +
   geom_abline(intercept = 0, slope = 1, linetype = 2) +
   geom_errorbar(aes(ymax = explorer_ci_lower, ymin = explorer_ci_upper), alpha=0.3) +
   geom_errorbarh(aes(xmax = student_ci_lower, xmin = student_ci_upper), alpha=0.3) +
   coord_fixed() +
   scale_x_continuous(limits = c(0.0, 1.0), breaks = c(0.25, 0.5, 0.75, 1.0)) +
-  scale_y_continuous(limits = c(0.0, 1.0), breaks = c(0.25, 0.5, 0.75, 1.0) )
-
+  scale_y_continuous(limits = c(0.0, 1.0), breaks = c(0.25, 0.5, 0.75, 1.0)) +
+  theme(text = element_text(size=20))
+        
+ggsave("./analyses/accuracy_scatter_plot.png", plot = last_plot())
 ```
 ```{r fig.width=7, fig.height=4, echo=FALSE}
 ggplot(complete_test_summary, aes(x=explorer_acc, xend=student_acc, y=reorder(rule_idx, desc(rule_idx)))) + 
@@ -190,11 +193,11 @@ ggplot(complete_test_summary, aes(x=explorer_acc, xend=student_acc, y=reorder(ru
     labs(
       x="Accuracy",
       y="Concept Rule",
-      title="Concept Rule Accuracies") +
-  geom_point(aes(x=chance_rate, y=reorder(rule_idx, desc(rule_idx)), shape=15), size=3, inherit.aes=F, show.legend = F, color="orange") +
+      title="50 Concept Rules: Average Accuracy & Base Rates") +
+  geom_point(aes(x=chance_rate, y=reorder(rule_idx, desc(rule_idx)), shape=15), size=4, inherit.aes=F, show.legend = F, color="orange") +
   scale_shape_identity() + 
   guides(color = guide_legend("Rule Type")) +
-  scale_x_continuous(limits = c(0.10, 1.0), breaks = c(0.25, 0.5, 0.75, 1.0)) + 
+  scale_x_continuous(breaks = c(0.25, 0.5, 0.75, 1.0)) + 
   scale_y_discrete(labels = rev(c(
     "flowers: orange stems",
     "flowers: thorns present",
@@ -251,7 +254,11 @@ ggplot(complete_test_summary, aes(x=explorer_acc, xend=student_acc, y=reorder(ru
     "trees: (purple trunks OR white leaves) AND orange berries",
     "trees: (orange trunks OR berries present) AND white leaves"
   ))
-)
+) +
+  coord_cartesian(xlim=c(0.45, 1.0)) +
+  theme(text = element_text(size=13))
+
+ggsave("./analyses/accuracy_base_rate_plot.png", plot = last_plot(), width = 14, height = 8, dpi = 300, )
 ```
 
 ## Concept Type Accuracy Comparison
@@ -268,64 +275,34 @@ complete_type_summary <- scores_complete_games %>%
 complete_type_summary$rule_type <- as.factor(complete_type_summary$rule_type)
 complete_type_summary <- complete_type_summary %>%
   mutate(rule_type_text = fct_recode(rule_type,
-    "Single Feature" = "0",
-    "Conjunction" = "1",
-    "Disjunction" = "2",
-    "Conjunctive Disjunction" = "3",
-    "Disjunctive Conjunction" = "4"
+    "Single" = "0",
+    "Conj." = "1",
+    "Disj." = "2",
+    "Conj. Disj." = "3",
+    "Disj. Conj." = "4"
   ))
 complete_type_summary$role <- as.factor(complete_type_summary$role)
+complete_type_summary <- complete_type_summary %>%
+  mutate(role = fct_recode(role,
+    "Teacher" = "explorer",
+    "Student" = "student"
+  )) %>%
+  rename(Role = role)
+
+  
 ```
 
-```{r fig.width=7, fig.height=4, echo=FALSE}
-ggplot(complete_type_summary, aes(rule_type_text, fill=role, y=empirical_stat)) + 
+```{r}
+ggplot(complete_type_summary, aes(rule_type_text, fill=Role, y=empirical_stat)) + 
   geom_col(position='dodge') +  
   labs(
     title = "Concept Type vs. Participant Accuracy",
     x = "Concept Type",
     y = "Accuracy %"
   ) + 
-  geom_errorbar(aes(x=rule_type_text, ymin=ci_lower, ymax=ci_upper), color="black", width=0.5, position=position_dodge(.9)) 
-```
-
-## Concept Type Normalized Accuracy Comparison
-```{r}
-complete_test_concept_type_summary_normalized <- scores_complete_games %>%
-  mutate(
-    correct = hits + correct_rejections,
-    incorrect = misses + false_alarms,
-    acc = correct / (correct + incorrect),
-    rule_type = floor(rule_idx/10),
-    chance_rate = concept_summary$chance_rate[rule_idx + 1],
-    norm_acc = (acc - chance_rate)/(1 - chance_rate)
-  ) %>%
-  group_by(rule_type, role) %>%
-  tidyboot_mean(column = norm_acc)
-
-complete_test_concept_type_summary_normalized$rule_type <- as.factor(complete_test_concept_type_summary_normalized$rule_type)
-
-complete_test_concept_type_summary_normalized <- complete_test_concept_type_summary_normalized %>%
-  mutate(rule_type_text = fct_recode(rule_type,
-    "Single Feature" = "0",
-    "Conjunction" = "1",
-    "Disjunction" = "2",
-    "Conjunctive Disjunction" = "3",
-    "Disjunctive Conjunction" = "4"
-  ))
-
-complete_test_concept_type_summary_normalized$role <- as.factor(complete_test_concept_type_summary_normalized$role)
-```
-
-```{r fig.width=7, fig.height=4, echo=FALSE}
-ggplot(complete_test_concept_type_summary_normalized, aes(rule_type_text, fill=role, y=empirical_stat)) + 
-  geom_col(position='dodge') +  
-  labs(
-    title = "Concept Type Performance",
-    x = "Concept Type",
-    y = "Normalized Accuracy %"
-  ) + 
   geom_errorbar(aes(x=rule_type_text, ymin=ci_lower, ymax=ci_upper), color="black", width=0.5, position=position_dodge(.9)) +
   theme_few()
+ggsave("concept-type-accuracy.png", plot = last_plot())
 ```
 
 ## Hits, Misses, False Alarms, Correct Rejections Breakdown (Proportion)
@@ -434,15 +411,20 @@ complete_test_miss_rate <- scores_complete_games %>%
   mutate(miss_rate = misses / (hits + misses), rule_type = floor(rule_idx/10))
 complete_test_miss_rate$rule_type <- as.factor(complete_test_miss_rate$rule_type)
 complete_test_miss_rate <- complete_test_miss_rate %>%
-    mutate(rule_type_text = 
-           fct_recode(rule_type,
-              "Single Feature" = "0",
-              "Conjunction" = "1",
-              "Disjunction" = "2",
-              "Conjunctive Disjunction" = "3",
-              "Disjunctive Conjunction" = "4"
-            )
-    )
+  mutate(rule_type_text = fct_recode(rule_type,
+    "Single" = "0",
+    "Conj." = "1",
+    "Disj." = "2",
+    "Conj. Disj." = "3",
+    "Disj. Conj." = "4"
+  ))
+
+complete_test_miss_rate$role <- as.factor(complete_test_miss_rate$role)
+complete_test_miss_rate <- complete_test_miss_rate %>%
+  mutate(role = fct_recode(role,
+    "Teacher" = "explorer",
+    "Student" = "student"
+  ))
 
 avg_complete_test_miss_rate <- complete_test_miss_rate %>%
     select(role, gameid, rule_idx, rule_type, rule_type_text, miss_rate) %>%
@@ -451,36 +433,48 @@ avg_complete_test_miss_rate <- complete_test_miss_rate %>%
 
 avg_complete_test_miss_rate_concept <- avg_complete_test_miss_rate %>%
     group_by(rule_type, role, rule_type_text) %>%
-    tidyboot_mean(avg_miss_rate)
-```
+    tidyboot_mean(avg_miss_rate) %>%
+    rename(Role = role)
 
-```{r fig.width=7, fig.height=4, echo=FALSE}
-ggplot(avg_complete_test_miss_rate_concept, aes(rule_type_text, fill=role, y=empirical_stat)) + 
+plot.miss_rate <- ggplot(avg_complete_test_miss_rate_concept, aes(rule_type_text, fill=Role, y=empirical_stat)) + 
   geom_col(position='dodge') +  
   labs(
-    title = "Concept Type vs. Miss Rate",
     x = "Concept Type",
     y = "Miss Rate"
   ) + 
   geom_errorbar(aes(x=rule_type_text, ymin=ci_lower, ymax=ci_upper), color="black", width=0.5, position=position_dodge(.9)) +
-  theme_few()
+  theme_few() + 
+  scale_y_continuous(
+    breaks = c(0.0, 0.25, 0.50, 0.75),
+  ) +
+  coord_cartesian(ylim=c(0, 0.75))
 ```
 
 ## False Positive Rate Across Concept Types
 ```{r}
 complete_test_false_positive_rate <- scores_complete_games %>%
-  mutate(false_positive_rate = false_alarms / (correct_rejections + false_alarms), rule_type = floor(rule_idx/10))
+  mutate(
+    false_positive_rate = false_alarms / (correct_rejections + false_alarms),
+    rule_type = floor(rule_idx/10)
+)
+
 complete_test_false_positive_rate$rule_type <- as.factor(complete_test_false_positive_rate$rule_type)
+
 complete_test_false_positive_rate <- complete_test_false_positive_rate %>%
     mutate(rule_type_text = 
            fct_recode(rule_type,
-              "Single Feature" = "0",
-              "Conjunction" = "1",
-              "Disjunction" = "2",
-              "Conjunctive Disjunction" = "3",
-              "Disjunctive Conjunction" = "4"
+              "Single" = "0",
+              "Conj." = "1",
+              "Disj." = "2",
+              "Conj. Disj." = "3",
+              "Disj. Conj." = "4"
             )
     )
+complete_test_false_positive_rate <- complete_test_false_positive_rate %>%
+  mutate(role = fct_recode(role,
+    "Teacher" = "explorer",
+    "Student" = "student"
+  ))
 
 avg_complete_test_false_positive_rate <- complete_test_false_positive_rate %>%
     select(role, gameid, rule_idx, rule_type, rule_type_text, false_positive_rate) %>%
@@ -490,18 +484,34 @@ avg_complete_test_false_positive_rate <- complete_test_false_positive_rate %>%
 avg_complete_test_false_positive_concept <- avg_complete_test_false_positive_rate %>%
     group_by(rule_type, role, rule_type_text) %>%
     tidyboot_mean(avg_false_positive_rate)
-```
 
-```{r fig.width=7, fig.height=4, echo=FALSE}
-ggplot(avg_complete_test_false_positive_concept, aes(rule_type_text, fill=role, y=empirical_stat)) + 
+plot.fp_rate <- ggplot(avg_complete_test_false_positive_concept, aes(rule_type_text, fill=role, y=empirical_stat)) + 
   geom_col(position='dodge') +  
   labs(
-    title = "Concept Type vs. False Positive Rate",
     x = "Concept Type",
-    y = "False Positive Rate"
+    y = "FP Rate"
   ) + 
-  geom_errorbar(aes(x=rule_type_text, ymin=ci_lower, ymax=ci_upper), color="black", width=0.5, position=position_dodge(.9)) +
-  theme_few()
+  geom_errorbar(
+    aes(
+      x=rule_type_text,
+      ymin=ci_lower,
+      ymax=ci_upper),
+    color="black",
+    width=0.5,
+    position=position_dodge(.9)
+  ) +
+  theme_few() +
+  scale_y_continuous(
+    breaks = c(0.0, 0.25, 0.50, 0.75),
+  ) +
+  coord_cartesian(ylim=c(0, 0.75))
+```
+
+## Combine False Alarm and Miss Rate Plots
+```{r}
+combo_plot <- plot_grid(plot.miss_rate, plot.fp_rate, labels = c("a", "b"), nrow = 2, align = "v")
+combo_plot
+ggsave("./analyses/concept-type-mr-fpr.png", plot = combo_plot, width = 5, height = 5, dpi = 300, )
 ```
 
 ## Hamming Distance
@@ -513,89 +523,146 @@ test_complete_games$turker_label[test_complete_games$turker_label == "false"] <-
 
 complete_all_games_wide <- test_complete_games %>%
   select(role, stim_num, rule_idx, gameid, turker_label) %>%
-  spread(role, turker_label)
+  spread(role, turker_label) %>%
+  mutate(rule_type = floor(rule_idx/10))
 
 # Compute Hamming Distances for Concepts
-gold_hamming_distances <- complete_all_games_wide %>%
+hamming_distances <- complete_all_games_wide %>%
   group_by(rule_idx, gameid) %>%
   summarize(d = sum(explorer != student))
-avg_gold_hamming_distances <- gold_hamming_distances %>%
+
+bootstrap_sample_hd <- function(){
+  hamming_distances %>%
   mutate(rule_type = floor(rule_idx/10)) %>%
   group_by(rule_type) %>%
-  tidyboot_mean(col=d) %>%
-  mutate(type="gold")
-
-# Compute Concept Rule Shuffled Hamming Distances
-# Here explorer selections are shuffled amongst one another
-# for stimuli of a given concept rule.
-complete_all_games_wide_shuffled <- data.frame()
-for (si in seq(1000)) {
-  for (ri in (seq(50) - 1)) {
-    for (sn in (seq(50) - 1)) {
-      col <- filter(complete_all_games_wide, stim_num == sn, rule_idx == ri)
-      col$explorer <- col[sample(1:nrow(col)), "explorer"]
-      col <- col %>%
-        mutate(shuffle_index = si)
-      complete_all_games_wide_shuffled <- bind_rows(complete_all_games_wide_shuffled, col)
-    }
-  }
+  sample_n(103, replace = T) %>%
+  group_by(rule_type) %>%
+  summarize(mean_hd = mean(d))
 }
 
-concept_rule_shuffled_hamming_distances <- complete_all_games_wide_shuffled %>%
-  group_by(rule_idx, gameid, shuffle_index) %>%
-  summarize(d = sum(explorer != student))
+# Get 1000 Samples
+hd_samples <- data.frame()
+for (i in 1:1000) {
+  hd_samples <- hd_samples %>% bind_rows(., bootstrap_sample_hd())
+}
+hd_samples <- hd_samples %>% mutate(type='dyads')
+```
 
-  avg_concept_rule_shuffled_hamming_distances <- concept_rule_shuffled_hamming_distances %>%
-  mutate(rule_type = floor(rule_idx/10)) %>%
-  group_by(rule_type, shuffle_index) %>%
-  tidyboot_mean(col=d) %>%
-  mutate(type="rule_shuffled")
 
+```{r}
+# Here explorer selections are shuffled amongst one another
+# for stimuli of a given concept rule.
+bootstrap_concept_rule_shuffle_sample_hd <- function() {
+  x <- complete_all_games_wide %>%
+    group_by(stim_num, rule_idx, rule_type) %>%
+    summarise(mean_stim_hd = mean(sample(explorer) != student)) %>%
+    group_by(rule_idx, rule_type) %>%
+    summarise(mean_concept_hd = sum(mean_stim_hd)) %>%
+    group_by(rule_type) %>%
+    summarise(mean_hd = mean(mean_concept_hd))
+  return(x)
+}
+
+concept_rule_shuffle_hd_samples <- data.frame()
+for (i in 1:1000) {
+  concept_rule_shuffle_hd_samples <- concept_rule_shuffle_hd_samples %>% bind_rows(bootstrap_concept_rule_shuffle_sample_hd())
+}
+
+concept_rule_shuffle_hd_samples <- concept_rule_shuffle_hd_samples %>%
+mutate(type='dyads_shuffled_in_concept')
+```
+
+```{r}
 # Compute Null Hamming Distance Distribution
 # Here explorer selections are shuffled amongst one another
 # across the entire dataset.
-complete_all_games_wide_null <- data.frame()
-for (si in seq(1000)) {
-  complete_all_games_wide_null <- bind_rows(complete_all_games_wide_null,
-    complete_all_games_wide %>%
-      transform(explorer = sample(explorer)) %>%
-      mutate(shuffle_index = si)
-  )
+bootstrap_null_sample_hd <- function() {
+  x <- complete_all_games_wide %>%
+    transform(explorer = sample(explorer)) %>%
+    group_by(stim_num, rule_idx, rule_type) %>%
+    summarise(mean_stim_hd = mean(explorer != student)) %>%
+    group_by(rule_idx, rule_type) %>%
+    summarise(mean_concept_hd = sum(mean_stim_hd)) %>%
+    group_by(rule_type) %>%
+    summarise(mean_hd = mean(mean_concept_hd))  
+  return(x)
 }
-complete_all_games_wide_null_hamming_distances <- complete_all_games_wide_null %>% 
-  group_by(rule_idx, gameid, shuffle_index) %>%
-  summarize(d = sum(explorer != student))
 
-avg_complete_all_games_wide_null_hamming_distances <- complete_all_games_wide_null_hamming_distances %>%
-  mutate(rule_type = floor(rule_idx/10)) %>%
-  group_by(rule_type, shufle_index) %>%
-  tidyboot_mean(col=d) %>%
+null_hd_samples <- data.frame()
+for (i in 1:1000) {
+  null_hd_samples <- null_hd_samples %>% bind_rows(bootstrap_null_sample_hd())
+} 
+null_hd_samples <- null_hd_samples %>%
   mutate(type="null")
+```
 
+```{r}
+combined_hd_samples <- bind_rows(hd_samples, null_hd_samples, concept_rule_shuffle_hd_samples)
+  
+combined_hd_samples$rule_type <- as.factor(combined_hd_samples$rule_type) 
+combined_hd_samples <- combined_hd_samples %>%
+    mutate(rule_type_text = fct_recode(rule_type,
+    "Single" = "0",
+    "Conj." = "1",
+    "Disj." = "2",
+    "Conj. Disj." = "3",
+    "Disj. Conj" = "4"
+  )) %>%
+  rename(Distribution = type) %>%
+  mutate(Distribution = fct_recode(Distribution,
+    "Dyads" = "dyads",
+    "Dyads Shuffled (Within Concept)" = "dyads_shuffled_in_concept",
+    "Null" = "null",   
+  ))
+
+```
+
+```{r}
+ggplot(combined_hd_samples, aes(x=mean_hd, color=Distribution, fill=Distribution)) +
+  geom_histogram(position="dodge", aes(y=(..count..)/tapply(..count..,..PANEL..,sum)[..PANEL..]), bins = 40)+
+  theme(legend.position="right") +
+  #geom_density(alpha=.2) +
+  theme_few() +
+  labs(
+    title = "Distribution of Average Hamming Distances",
+    x = "Average Hamming Distance",
+    y = "Probability Mass"
+  ) +
+  facet_wrap(~rule_type_text, 1)+ 
+  theme(legend.position="bottom")
+
+ggsave("./analyses/hamming_distance_density.png", plot = last_plot(), width = 7.5, height = 3, dpi = 300,)
+```
+
+
+```{r}
 # Combine Hamming Distances
 avg_hamming_distances <- avg_gold_hamming_distances %>% 
   bind_rows(avg_concept_rule_shuffled_hamming_distances, avg_complete_all_games_wide_null_hamming_distances)
 avg_hamming_distances$type <- as.factor(avg_hamming_distances$type)
 avg_hamming_distances$rule_type <- as.factor(avg_hamming_distances$rule_type)
+avg_hamming_distances <- avg_hamming_distances %>%
+    mutate(rule_type_text = fct_recode(rule_type,
+    "Single" = "0",
+    "Conj." = "1",
+    "Disj." = "2",
+    "Conj. Disj." = "3",
+    "Disj. Conj." = "4"
+  ))
 ```
 
+
 ```{r}
-ggplot(avg_hamming_distances, aes(x=empirical_stat, color=type, fill=type)) +
-  geom_histogram(aes(y=..density..),  position="dodge", binwidth=2)+
-  theme(legend.position="right") +
-  geom_density(alpha=.2) +
-  theme_few() +
+ggplot(avg_hamming_distances, aes(rule_type_text, fill=type, y=empirical_stat)) + 
+  geom_col(position='dodge') +  
   labs(
-    title = "Distribution of Hamming Distances",
-    x = "Average Hamming Distance for Samples of a Concept Rule",
-    y = "Density"
-  )
-```
-
-```{r}
-ggplot(avg_hamming_distances, aes(x=empirical_stat, color=type, fill=type)) +
-  geom_histogram( position="dodge", binwidth=2)+
-  theme(legend.position="right")
+    title = "Concept Type vs. Average Hamming Distance",
+    x = "Concept Type",
+    y = "Hamming Distance"
+  ) + 
+  geom_errorbar(aes(x=rule_type_text, ymin=ci_lower, ymax=ci_upper), color="black", width=0.5, position=position_dodge(0.9)) +
+  theme_few()
+ggsave("./analyses/avg_hamming_distances_concept_type.png", plot = last_plot())
 ```
 
 ## Timing Analysis -- Entire Chat Duration

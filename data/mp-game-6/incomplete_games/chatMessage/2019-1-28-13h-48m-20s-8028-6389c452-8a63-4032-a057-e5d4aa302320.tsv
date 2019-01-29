@@ -1,0 +1,8 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	text	reactionTime	eventType
+mp-game-6	pilot	8028-6389c452-8a63-4032-a057-e5d4aa302320	1548712100216	explorer	24	"trees with purple berries or white trunks"	trees_purple_berries_or_white_trunks	0	"The kwep is a tree-like plant that is either lavender, light blue, or orange."	24.257	chatMessage
+mp-game-6	pilot	8028-6389c452-8a63-4032-a057-e5d4aa302320	1548712117196	explorer	24	"trees with purple berries or white trunks"	trees_purple_berries_or_white_trunks	0	"It has leaves or small circles/dots on it"	11.768	chatMessage
+mp-game-6	pilot	8028-6389c452-8a63-4032-a057-e5d4aa302320	1548712135269	student	24	"trees with purple berries or white trunks"	trees_purple_berries_or_white_trunks	0	"ok"	3.635	chatMessage
+mp-game-6	pilot	8028-6389c452-8a63-4032-a057-e5d4aa302320	1548712151837	explorer	24	"trees with purple berries or white trunks"	trees_purple_berries_or_white_trunks	0	"It can be a combination of any of those colors, or only one color."	14.245	chatMessage
+mp-game-6	pilot	8028-6389c452-8a63-4032-a057-e5d4aa302320	1548712166203	student	24	"trees with purple berries or white trunks"	trees_purple_berries_or_white_trunks	0	"all right"	1.076	chatMessage
+mp-game-6	pilot	8028-6389c452-8a63-4032-a057-e5d4aa302320	1548712169012	student	24	"trees with purple berries or white trunks"	trees_purple_berries_or_white_trunks	0	"anything else?"	1.999	chatMessage
+mp-game-6	pilot	8028-6389c452-8a63-4032-a057-e5d4aa302320	1548712172905	explorer	24	"trees with purple berries or white trunks"	trees_purple_berries_or_white_trunks	0	"no"	1.517	chatMessage

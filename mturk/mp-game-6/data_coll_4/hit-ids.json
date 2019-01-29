@@ -1,0 +1,180 @@
+{
+ "production": [
+  {
+   "HIT": {
+    "HITId": "3K3G488TR2L7UNOPICD30LDYIQZ5QI",
+    "HITTypeId": "3HSQTUGQM1UJ8C46CZRP227QNY4G9F",
+    "HITGroupId": "3VTYKUNX3XEKAHG2T8VEQNLS9K3FXJ",
+    "CreationTime": "2019-01-28T15:57:27.000Z",
+    "Title": "Language experiment (MP-Game-6-2)",
+    "Description": "Explore a world of creatures and answer short questions with a partner (~ 15 minutes)",
+    "Question": "<ExternalQuestion xmlns=\"http://mechanicalturk.amazonaws.com/AWSMechanicalTurkDataSchemas/2006-07-14/ExternalQuestion.xsd\">\n  <ExternalURL>https://rxdhawkins.me:8884/mp-game-6/forms/consent.html</ExternalURL>\n  <FrameHeight>650</FrameHeight>\n</ExternalQuestion>",
+    "Keywords": "language research stanford fun cognitive science university teaching",
+    "HITStatus": "Assignable",
+    "MaxAssignments": 9,
+    "Reward": "1.25",
+    "AutoApprovalDelayInSeconds": 600,
+    "Expiration": "2019-01-28T17:57:27.000Z",
+    "AssignmentDurationInSeconds": 7200,
+    "QualificationRequirements": [
+     {
+      "QualificationTypeId": "00000000000000000071",
+      "Comparator": "EqualTo",
+      "LocaleValues": [
+       {
+        "Country": "US"
+       }
+      ],
+      "RequiredToPreview": false,
+      "ActionsGuarded": "Accept"
+     },
+     {
+      "QualificationTypeId": "000000000000000000L0",
+      "Comparator": "GreaterThanOrEqualTo",
+      "IntegerValues": [
+       95
+      ],
+      "RequiredToPreview": false,
+      "ActionsGuarded": "Accept"
+     }
+    ],
+    "HITReviewStatus": "NotReviewed",
+    "NumberOfAssignmentsPending": 0,
+    "NumberOfAssignmentsAvailable": 9,
+    "NumberOfAssignmentsCompleted": 0
+   }
+  },
+  {
+   "HIT": {
+    "HITId": "3YZ7A3YHR56J7332AG28VLSZ0EK5S7",
+    "HITTypeId": "3HSQTUGQM1UJ8C46CZRP227QNY4G9F",
+    "HITGroupId": "3VTYKUNX3XEKAHG2T8VEQNLS9K3FXJ",
+    "CreationTime": "2019-01-28T15:57:28.000Z",
+    "Title": "Language experiment (MP-Game-6-2)",
+    "Description": "Explore a world of creatures and answer short questions with a partner (~ 15 minutes)",
+    "Question": "<ExternalQuestion xmlns=\"http://mechanicalturk.amazonaws.com/AWSMechanicalTurkDataSchemas/2006-07-14/ExternalQuestion.xsd\">\n  <ExternalURL>https://rxdhawkins.me:8884/mp-game-6/forms/consent.html</ExternalURL>\n  <FrameHeight>650</FrameHeight>\n</ExternalQuestion>",
+    "Keywords": "language research stanford fun cognitive science university teaching",
+    "HITStatus": "Assignable",
+    "MaxAssignments": 9,
+    "Reward": "1.25",
+    "AutoApprovalDelayInSeconds": 600,
+    "Expiration": "2019-01-28T17:57:28.000Z",
+    "AssignmentDurationInSeconds": 7200,
+    "QualificationRequirements": [
+     {
+      "QualificationTypeId": "00000000000000000071",
+      "Comparator": "EqualTo",
+      "LocaleValues": [
+       {
+        "Country": "US"
+       }
+      ],
+      "RequiredToPreview": false,
+      "ActionsGuarded": "Accept"
+     },
+     {
+      "QualificationTypeId": "000000000000000000L0",
+      "Comparator": "GreaterThanOrEqualTo",
+      "IntegerValues": [
+       95
+      ],
+      "RequiredToPreview": false,
+      "ActionsGuarded": "Accept"
+     }
+    ],
+    "HITReviewStatus": "NotReviewed",
+    "NumberOfAssignmentsPending": 0,
+    "NumberOfAssignmentsAvailable": 9,
+    "NumberOfAssignmentsCompleted": 0
+   }
+  },
+  {
+   "HIT": {
+    "HITId": "3UUIU9GZC5IKM3GHZG7Y5QOL2XY5TW",
+    "HITTypeId": "3HSQTUGQM1UJ8C46CZRP227QNY4G9F",
+    "HITGroupId": "3VTYKUNX3XEKAHG2T8VEQNLS9K3FXJ",
+    "CreationTime": "2019-01-28T15:57:29.000Z",
+    "Title": "Language experiment (MP-Game-6-2)",
+    "Description": "Explore a world of creatures and answer short questions with a partner (~ 15 minutes)",
+    "Question": "<ExternalQuestion xmlns=\"http://mechanicalturk.amazonaws.com/AWSMechanicalTurkDataSchemas/2006-07-14/ExternalQuestion.xsd\">\n  <ExternalURL>https://rxdhawkins.me:8884/mp-game-6/forms/consent.html</ExternalURL>\n  <FrameHeight>650</FrameHeight>\n</ExternalQuestion>",
+    "Keywords": "language research stanford fun cognitive science university teaching",
+    "HITStatus": "Assignable",
+    "MaxAssignments": 9,
+    "Reward": "1.25",
+    "AutoApprovalDelayInSeconds": 600,
+    "Expiration": "2019-01-28T17:57:29.000Z",
+    "AssignmentDurationInSeconds": 7200,
+    "QualificationRequirements": [
+     {
+      "QualificationTypeId": "00000000000000000071",
+      "Comparator": "EqualTo",
+      "LocaleValues": [
+       {
+        "Country": "US"
+       }
+      ],
+      "RequiredToPreview": false,
+      "ActionsGuarded": "Accept"
+     },
+     {
+      "QualificationTypeId": "000000000000000000L0",
+      "Comparator": "GreaterThanOrEqualTo",
+      "IntegerValues": [
+       95
+      ],
+      "RequiredToPreview": false,
+      "ActionsGuarded": "Accept"
+     }
+    ],
+    "HITReviewStatus": "NotReviewed",
+    "NumberOfAssignmentsPending": 0,
+    "NumberOfAssignmentsAvailable": 9,
+    "NumberOfAssignmentsCompleted": 0
+   }
+  },
+  {
+   "HIT": {
+    "HITId": "3XT3KXP24ZBQWT0KANIZJP0CNDV6I2",
+    "HITTypeId": "3HSQTUGQM1UJ8C46CZRP227QNY4G9F",
+    "HITGroupId": "3VTYKUNX3XEKAHG2T8VEQNLS9K3FXJ",
+    "CreationTime": "2019-01-29T16:34:43.000Z",
+    "Title": "Language experiment (MP-Game-6-2)",
+    "Description": "Explore a world of creatures and answer short questions with a partner (~ 15 minutes)",
+    "Question": "<ExternalQuestion xmlns=\"http://mechanicalturk.amazonaws.com/AWSMechanicalTurkDataSchemas/2006-07-14/ExternalQuestion.xsd\">\n  <ExternalURL>https://rxdhawkins.me:8884/mp-game-6/forms/consent.html</ExternalURL>\n  <FrameHeight>650</FrameHeight>\n</ExternalQuestion>",
+    "Keywords": "language research stanford fun cognitive science university teaching",
+    "HITStatus": "Assignable",
+    "MaxAssignments": 3,
+    "Reward": "1.25",
+    "AutoApprovalDelayInSeconds": 600,
+    "Expiration": "2019-02-02T16:34:43.000Z",
+    "AssignmentDurationInSeconds": 7200,
+    "QualificationRequirements": [
+     {
+      "QualificationTypeId": "00000000000000000071",
+      "Comparator": "EqualTo",
+      "LocaleValues": [
+       {
+        "Country": "US"
+       }
+      ],
+      "RequiredToPreview": false,
+      "ActionsGuarded": "Accept"
+     },
+     {
+      "QualificationTypeId": "000000000000000000L0",
+      "Comparator": "GreaterThanOrEqualTo",
+      "IntegerValues": [
+       95
+      ],
+      "RequiredToPreview": false,
+      "ActionsGuarded": "Accept"
+     }
+    ],
+    "HITReviewStatus": "NotReviewed",
+    "NumberOfAssignmentsPending": 0,
+    "NumberOfAssignmentsAvailable": 3,
+    "NumberOfAssignmentsCompleted": 0
+   }
+  }
+ ]
+}

@@ -1,9 +1,0 @@
-experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	train	test	chat	eventType
-mp-game-6	pilot	7691-81a6c91c-659c-4fcb-8373-bbf90614b486	1548708257463	explorer	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	0	62.929	26.115	263.439	logTimes
-mp-game-6	pilot	7691-81a6c91c-659c-4fcb-8373-bbf90614b486	1548708336109	student	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	0	-1	102.992	263.325	logTimes
-mp-game-6	pilot	7691-81a6c91c-659c-4fcb-8373-bbf90614b486	1548708740893	explorer	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	1	85.04	39.883	254.116	logTimes
-mp-game-6	pilot	7691-81a6c91c-659c-4fcb-8373-bbf90614b486	1548708781560	student	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	1	-1	80.98	253.807	logTimes
-mp-game-6	pilot	7691-81a6c91c-659c-4fcb-8373-bbf90614b486	1548709065980	explorer	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	2	85.946	57.558	120.101	logTimes
-mp-game-6	pilot	7691-81a6c91c-659c-4fcb-8373-bbf90614b486	1548709066721	student	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	2	-1	58.592	119.741	logTimes
-mp-game-6	pilot	7691-81a6c91c-659c-4fcb-8373-bbf90614b486	1548709365574	explorer	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	3	40.177	17.013	197.824	logTimes
-mp-game-6	pilot	7691-81a6c91c-659c-4fcb-8373-bbf90614b486	1548709382657	student	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	3	-1	52.903	197.511	logTimes

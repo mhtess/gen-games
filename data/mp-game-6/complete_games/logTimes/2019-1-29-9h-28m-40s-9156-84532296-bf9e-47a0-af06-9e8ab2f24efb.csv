@@ -1,0 +1,11 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	train	test	chat	eventType
+mp-game-6	pilot	9156-84532296-bf9e-47a0-af06-9e8ab2f24efb	1548782920882	explorer	19	"flowers with orange petals and purple centers"	flowers_orange_petals_purple_centers	0	407.493	30.532	83.473	logTimes
+mp-game-6	pilot	9156-84532296-bf9e-47a0-af06-9e8ab2f24efb	1548782999390	student	19	"flowers with orange petals and purple centers"	flowers_orange_petals_purple_centers	0	-1	111.765	83.081	logTimes
+mp-game-6	pilot	9156-84532296-bf9e-47a0-af06-9e8ab2f24efb	1548783378507	explorer	49	"birds with (white crests or orange wings) and tails"	birds_white_crests_or_orange_wings_tails	1	118.519	57.099	187.871	logTimes
+mp-game-6	pilot	9156-84532296-bf9e-47a0-af06-9e8ab2f24efb	1548783443726	student	49	"birds with (white crests or orange wings) and tails"	birds_white_crests_or_orange_wings_tails	1	-1	122.276	187.203	logTimes
+mp-game-6	pilot	9156-84532296-bf9e-47a0-af06-9e8ab2f24efb	1548783735311	explorer	9	"trees without leaves"	trees_without_leaves	2	113.16	35.963	105.303	logTimes
+mp-game-6	pilot	9156-84532296-bf9e-47a0-af06-9e8ab2f24efb	1548783757358	student	9	"trees without leaves"	trees_without_leaves	2	-1	59.707	104.915	logTimes
+mp-game-6	pilot	9156-84532296-bf9e-47a0-af06-9e8ab2f24efb	1548784383256	explorer	39	"bugs with (white legs and purple wings) or orange antennae"	bugs_white_legs_purple_wings_or_orange_antennae	3	469.243	55.324	86.978	logTimes
+mp-game-6	pilot	9156-84532296-bf9e-47a0-af06-9e8ab2f24efb	1548784509911	student	39	"bugs with (white legs and purple wings) or orange antennae"	bugs_white_legs_purple_wings_or_orange_antennae	3	-1	182.498	86.582	logTimes
+mp-game-6	pilot	9156-84532296-bf9e-47a0-af06-9e8ab2f24efb	1548784926193	explorer	29	"fish with white stripes or whiskers"	fish_white_stripes_or_whiskers	4	252.813	19.732	126.612	logTimes
+mp-game-6	pilot	9156-84532296-bf9e-47a0-af06-9e8ab2f24efb	1548784976710	student	29	"fish with white stripes or whiskers"	fish_white_stripes_or_whiskers	4	-1	70.24	126.217	logTimes
