@@ -1,0 +1,5 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	text	reactionTime	eventType
+mp-game-6	pilot	6698-2a7fc763-11a4-4de9-83c2-d20a5c3e72c1	1548777502108	explorer	24	"trees with purple berries or white trunks"	trees_purple_berries_or_white_trunks	0	"hello"	2.063	chatMessage
+mp-game-6	pilot	6698-2a7fc763-11a4-4de9-83c2-d20a5c3e72c1	1548777593078	student	24	"trees with purple berries or white trunks"	trees_purple_berries_or_white_trunks	0	"hello"	2.455	chatMessage
+mp-game-6	pilot	6698-2a7fc763-11a4-4de9-83c2-d20a5c3e72c1	1548777709119	explorer	24	"trees with purple berries or white trunks"	trees_purple_berries_or_white_trunks	0	"pecies-groups of Trichoderma were tested for production of non-volatile antibiotics, by an agar layer techniqu"	0.991	chatMessage
+mp-game-6	pilot	6698-2a7fc763-11a4-4de9-83c2-d20a5c3e72c1	1548777901930	explorer	24	"trees with purple berries or white trunks"	trees_purple_berries_or_white_trunks	0	"????"	0.564	chatMessage

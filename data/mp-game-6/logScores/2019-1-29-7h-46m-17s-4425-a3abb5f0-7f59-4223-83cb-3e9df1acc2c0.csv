@@ -1,0 +1,11 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	hits	misses	correct_rejections	false_alarms	score	eventType
+mp-game-6	pilot	4425-a3abb5f0-7f59-4223-83cb-3e9df1acc2c0	1548776777994	student	49	"birds with (white crests or orange wings) and tails"	birds_white_crests_or_orange_wings_tails	0	1	11	32	6	0	logScores
+mp-game-6	pilot	4425-a3abb5f0-7f59-4223-83cb-3e9df1acc2c0	1548776839459	explorer	49	"birds with (white crests or orange wings) and tails"	birds_white_crests_or_orange_wings_tails	0	2	10	38	0	2	logScores
+mp-game-6	pilot	4425-a3abb5f0-7f59-4223-83cb-3e9df1acc2c0	1548776987896	explorer	9	"trees without leaves"	trees_without_leaves	1	9	0	41	0	9	logScores
+mp-game-6	pilot	4425-a3abb5f0-7f59-4223-83cb-3e9df1acc2c0	1548777177145	student	9	"trees without leaves"	trees_without_leaves	1	1	8	32	9	0	logScores
+mp-game-6	pilot	4425-a3abb5f0-7f59-4223-83cb-3e9df1acc2c0	1548777391593	explorer	39	"bugs with (white legs and purple wings) or orange antennae"	bugs_white_legs_purple_wings_or_orange_antennae	2	3	9	34	4	0	logScores
+mp-game-6	pilot	4425-a3abb5f0-7f59-4223-83cb-3e9df1acc2c0	1548777454946	student	39	"bugs with (white legs and purple wings) or orange antennae"	bugs_white_legs_purple_wings_or_orange_antennae	2	0	12	33	5	0	logScores
+mp-game-6	pilot	4425-a3abb5f0-7f59-4223-83cb-3e9df1acc2c0	1548777638978	explorer	29	"fish with white stripes or whiskers"	fish_white_stripes_or_whiskers	3	9	21	18	2	7	logScores
+mp-game-6	pilot	4425-a3abb5f0-7f59-4223-83cb-3e9df1acc2c0	1548777683167	student	29	"fish with white stripes or whiskers"	fish_white_stripes_or_whiskers	3	5	25	18	2	3	logScores
+mp-game-6	pilot	4425-a3abb5f0-7f59-4223-83cb-3e9df1acc2c0	1548777808315	explorer	19	"flowers with orange petals and purple centers"	flowers_orange_petals_purple_centers	4	2	8	34	6	0	logScores
+mp-game-6	pilot	4425-a3abb5f0-7f59-4223-83cb-3e9df1acc2c0	1548777838972	student	19	"flowers with orange petals and purple centers"	flowers_orange_petals_purple_centers	4	2	8	30	10	0	logScores

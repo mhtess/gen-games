@@ -1,0 +1,11 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	train	test	chat	eventType
+mp-game-6	pilot	4425-a3abb5f0-7f59-4223-83cb-3e9df1acc2c0	1548776777923	student	49	"birds with (white crests or orange wings) and tails"	birds_white_crests_or_orange_wings_tails	0	-1	45.82	107.343	logTimes
+mp-game-6	pilot	4425-a3abb5f0-7f59-4223-83cb-3e9df1acc2c0	1548776839400	explorer	49	"birds with (white crests or orange wings) and tails"	birds_white_crests_or_orange_wings_tails	0	111.087	105.281	107.808	logTimes
+mp-game-6	pilot	4425-a3abb5f0-7f59-4223-83cb-3e9df1acc2c0	1548776987823	explorer	9	"trees without leaves"	trees_without_leaves	1	51.206	13.73	36.515	logTimes
+mp-game-6	pilot	4425-a3abb5f0-7f59-4223-83cb-3e9df1acc2c0	1548777177088	student	9	"trees without leaves"	trees_without_leaves	1	-1	201.698	36.182	logTimes
+mp-game-6	pilot	4425-a3abb5f0-7f59-4223-83cb-3e9df1acc2c0	1548777391542	explorer	39	"bugs with (white legs and purple wings) or orange antennae"	bugs_white_legs_purple_wings_or_orange_antennae	2	56.41	18.556	116.288	logTimes
+mp-game-6	pilot	4425-a3abb5f0-7f59-4223-83cb-3e9df1acc2c0	1548777454884	student	39	"bugs with (white legs and purple wings) or orange antennae"	bugs_white_legs_purple_wings_or_orange_antennae	2	-1	82.324	115.956	logTimes
+mp-game-6	pilot	4425-a3abb5f0-7f59-4223-83cb-3e9df1acc2c0	1548777638922	explorer	29	"fish with white stripes or whiskers"	fish_white_stripes_or_whiskers	3	27.287	13.325	126.366	logTimes
+mp-game-6	pilot	4425-a3abb5f0-7f59-4223-83cb-3e9df1acc2c0	1548777683097	student	29	"fish with white stripes or whiskers"	fish_white_stripes_or_whiskers	3	-1	58.896	126.039	logTimes
+mp-game-6	pilot	4425-a3abb5f0-7f59-4223-83cb-3e9df1acc2c0	1548777808269	explorer	19	"flowers with orange petals and purple centers"	flowers_orange_petals_purple_centers	4	36.677	7.118	69.686	logTimes
+mp-game-6	pilot	4425-a3abb5f0-7f59-4223-83cb-3e9df1acc2c0	1548777838891	student	19	"flowers with orange petals and purple centers"	flowers_orange_petals_purple_centers	4	-1	37.331	69.356	logTimes
