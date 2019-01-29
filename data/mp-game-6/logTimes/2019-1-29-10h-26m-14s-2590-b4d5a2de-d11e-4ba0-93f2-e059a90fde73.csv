@@ -1,0 +1,11 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	train	test	chat	eventType
+mp-game-6	pilot	2590-b4d5a2de-d11e-4ba0-93f2-e059a90fde73	1548786374610	explorer	8	"trees with purple berries"	trees_purple_berries	0	29.68	15.215	208.476	logTimes
+mp-game-6	pilot	2590-b4d5a2de-d11e-4ba0-93f2-e059a90fde73	1548786399538	student	8	"trees with purple berries"	trees_purple_berries	0	-1	55.873	208.062	logTimes
+mp-game-6	pilot	2590-b4d5a2de-d11e-4ba0-93f2-e059a90fde73	1548786787632	student	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	1	-1	39.857	301.582	logTimes
+mp-game-6	pilot	2590-b4d5a2de-d11e-4ba0-93f2-e059a90fde73	1548786802191	explorer	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	1	24.603	25.948	302.186	logTimes
+mp-game-6	pilot	2590-b4d5a2de-d11e-4ba0-93f2-e059a90fde73	1548787267586	explorer	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	2	39.518	12.427	168.132	logTimes
+mp-game-6	pilot	2590-b4d5a2de-d11e-4ba0-93f2-e059a90fde73	1548787320818	student	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	2	-1	85.283	167.748	logTimes
+mp-game-6	pilot	2590-b4d5a2de-d11e-4ba0-93f2-e059a90fde73	1548787733532	explorer	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	3	27.651	9.38	354.332	logTimes
+mp-game-6	pilot	2590-b4d5a2de-d11e-4ba0-93f2-e059a90fde73	1548787738218	student	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	3	-1	16.285	353.913	logTimes
+mp-game-6	pilot	2590-b4d5a2de-d11e-4ba0-93f2-e059a90fde73	1548787845318	student	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	4	-1	16.726	6.502	logTimes
+mp-game-6	pilot	2590-b4d5a2de-d11e-4ba0-93f2-e059a90fde73	1548787850354	explorer	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	4	24.966	10.384	46.417	logTimes

@@ -1,0 +1,6 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	text	reactionTime	eventType
+mp-game-6	pilot	1683-dff8f6bb-057a-4f38-94a8-d90b3cec18ce	1548784595252	student	14	"birds with purple wings and crests"	birds_purple_wings_crests	0	"please tell me about the species"	4.909	chatMessage
+mp-game-6	pilot	1683-dff8f6bb-057a-4f38-94a8-d90b3cec18ce	1548784665538	student	14	"birds with purple wings and crests"	birds_purple_wings_crests	0	"hellp?"	1.783	chatMessage
+mp-game-6	pilot	1683-dff8f6bb-057a-4f38-94a8-d90b3cec18ce	1548784669228	student	14	"birds with purple wings and crests"	birds_purple_wings_crests	0	"hello*"	2.606	chatMessage
+mp-game-6	pilot	1683-dff8f6bb-057a-4f38-94a8-d90b3cec18ce	1548784814391	student	44	"fish with (orange bodies or fangs) and whiskers"	fish_orange_bodies_or_fangs_whiskers	1	"hi"	0.611	chatMessage
+mp-game-6	pilot	1683-dff8f6bb-057a-4f38-94a8-d90b3cec18ce	1548784819928	student	44	"fish with (orange bodies or fangs) and whiskers"	fish_orange_bodies_or_fangs_whiskers	1	"tell me about the animal"	4.085	chatMessage

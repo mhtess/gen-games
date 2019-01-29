@@ -1,0 +1,11 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	text	reactionTime	eventType
+mp-game-6	pilot	2590-b4d5a2de-d11e-4ba0-93f2-e059a90fde73	1548786226723	student	8	"trees with purple berries"	trees_purple_berries	0	"Hi"	0.765	chatMessage
+mp-game-6	pilot	2590-b4d5a2de-d11e-4ba0-93f2-e059a90fde73	1548786559575	student	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	1	"hai"	1.484	chatMessage
+mp-game-6	pilot	2590-b4d5a2de-d11e-4ba0-93f2-e059a90fde73	1548786650702	student	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	1	"how r u"	3.993	chatMessage
+mp-game-6	pilot	2590-b4d5a2de-d11e-4ba0-93f2-e059a90fde73	1548786655818	student	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	1	"are u there"	3.503	chatMessage
+mp-game-6	pilot	2590-b4d5a2de-d11e-4ba0-93f2-e059a90fde73	1548786661110	student	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	1	"hello"	3.411	chatMessage
+mp-game-6	pilot	2590-b4d5a2de-d11e-4ba0-93f2-e059a90fde73	1548787097099	student	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	2	"hi"	0.55	chatMessage
+mp-game-6	pilot	2590-b4d5a2de-d11e-4ba0-93f2-e059a90fde73	1548787102011	student	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	2	"are u there"	2.159	chatMessage
+mp-game-6	pilot	2590-b4d5a2de-d11e-4ba0-93f2-e059a90fde73	1548787104712	student	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	2	"hi"	0.549	chatMessage
+mp-game-6	pilot	2590-b4d5a2de-d11e-4ba0-93f2-e059a90fde73	1548787717409	student	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	3	"hi"	0.616	chatMessage
+mp-game-6	pilot	2590-b4d5a2de-d11e-4ba0-93f2-e059a90fde73	1548787823539	student	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	4	"hi"	0.87	chatMessage

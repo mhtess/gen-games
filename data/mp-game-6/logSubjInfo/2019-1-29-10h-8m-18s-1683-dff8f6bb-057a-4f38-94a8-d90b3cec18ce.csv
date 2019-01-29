@@ -1,0 +1,3 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	nativeEnglish	enjoyment	assess	age	gender	education	comments	problems	fairprice	strategy	humanPartner	likePartner	eventType
+mp-game-6	pilot	1683-dff8f6bb-057a-4f38-94a8-d90b3cec18ce	1548785298895	explorer	24	"trees with purple berries or white trunks"	trees_purple_berries_or_white_trunks	4	yes	2	yes	26	Male	3			2.00		yes	okay	logSubjInfo
+mp-game-6	pilot	1683-dff8f6bb-057a-4f38-94a8-d90b3cec18ce	1548785348669	student	24	"trees with purple berries or white trunks"	trees_purple_berries_or_white_trunks	4	yes	1	yes	34	Male	3	no	Yes	.25	I wasn't able to talk to anyone so I couldn't use any strategy		no	not much	logSubjInfo
