@@ -153,7 +153,6 @@ var getStims = function(connection, databaseName, collectionName, gameId, callba
 
     // sort by number of times previously served up and take the first
     collection.aggregate([
-        { $addFields : { numGames: { $size: '$games'} } },
         { $sort : {numGames : 1} },
         { $limit : 1}
         ]).toArray( (err, results) => {
