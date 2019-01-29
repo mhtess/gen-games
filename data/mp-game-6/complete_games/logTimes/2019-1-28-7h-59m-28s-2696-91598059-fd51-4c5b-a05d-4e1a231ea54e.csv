@@ -1,0 +1,11 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	train	test	chat	eventType
+mp-game-6	pilot	2696-91598059-fd51-4c5b-a05d-4e1a231ea54e	1548691168871	student	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	0	-1	26.132	39.959	logTimes
+mp-game-6	pilot	2696-91598059-fd51-4c5b-a05d-4e1a231ea54e	1548691169215	explorer	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	0	40.456	27.609	40.347	logTimes
+mp-game-6	pilot	2696-91598059-fd51-4c5b-a05d-4e1a231ea54e	1548691279055	explorer	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	1	41.84	19.83	26.54	logTimes
+mp-game-6	pilot	2696-91598059-fd51-4c5b-a05d-4e1a231ea54e	1548691281267	student	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	1	-1	22.004	26.156	logTimes
+mp-game-6	pilot	2696-91598059-fd51-4c5b-a05d-4e1a231ea54e	1548691583982	explorer	8	"trees with purple berries"	trees_purple_berries	2	53.976	30.794	203.065	logTimes
+mp-game-6	pilot	2696-91598059-fd51-4c5b-a05d-4e1a231ea54e	1548691589830	student	8	"trees with purple berries"	trees_purple_berries	2	-1	37.34	202.677	logTimes
+mp-game-6	pilot	2696-91598059-fd51-4c5b-a05d-4e1a231ea54e	1548691735549	explorer	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	3	76.3	34.998	17.217	logTimes
+mp-game-6	pilot	2696-91598059-fd51-4c5b-a05d-4e1a231ea54e	1548691775753	student	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	3	-1	78.724	16.826	logTimes
+mp-game-6	pilot	2696-91598059-fd51-4c5b-a05d-4e1a231ea54e	1548691899152	explorer	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	4	72.387	14.113	24.38	logTimes
+mp-game-6	pilot	2696-91598059-fd51-4c5b-a05d-4e1a231ea54e	1548691912769	student	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	4	-1	29.509	23.999	logTimes

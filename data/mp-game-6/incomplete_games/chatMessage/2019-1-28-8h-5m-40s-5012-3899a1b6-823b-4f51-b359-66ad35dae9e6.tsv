@@ -1,0 +1,10 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	text	reactionTime	eventType
+mp-game-6	pilot	5012-3899a1b6-823b-4f51-b359-66ad35dae9e6	1548691540821	explorer	1	"flowers with thorns"	flowers_thorns	0	"Hi."	1.032	chatMessage
+mp-game-6	pilot	5012-3899a1b6-823b-4f51-b359-66ad35dae9e6	1548691609374	explorer	1	"flowers with thorns"	flowers_thorns	0	"I studied the pictures for more than 3 minutes. Unfortunately, I could not discern specific properties that uniquely pertained to the species."	60.521	chatMessage
+mp-game-6	pilot	5012-3899a1b6-823b-4f51-b359-66ad35dae9e6	1548691664255	student	1	"flowers with thorns"	flowers_thorns	0	"anyother else"	3.04	chatMessage
+mp-game-6	pilot	5012-3899a1b6-823b-4f51-b359-66ad35dae9e6	1548691707564	explorer	1	"flowers with thorns"	flowers_thorns	0	"Just that I wish I could have been more help. There's nothing I could see that stands out as definitively describing the species."	36.465	chatMessage
+mp-game-6	pilot	5012-3899a1b6-823b-4f51-b359-66ad35dae9e6	1548691729174	student	1	"flowers with thorns"	flowers_thorns	0	"what if i do"	3.056	chatMessage
+mp-game-6	pilot	5012-3899a1b6-823b-4f51-b359-66ad35dae9e6	1548691758931	explorer	1	"flowers with thorns"	flowers_thorns	0	"I tried looking for patterns to no avail."	9.897	chatMessage
+mp-game-6	pilot	5012-3899a1b6-823b-4f51-b359-66ad35dae9e6	1548691873224	explorer	1	"flowers with thorns"	flowers_thorns	0	"I am going to have to make guesses, so that's my only other advice: just try your best."	37.552	chatMessage
+mp-game-6	pilot	5012-3899a1b6-823b-4f51-b359-66ad35dae9e6	1548691892609	explorer	1	"flowers with thorns"	flowers_thorns	0	"If you make sense of these creatures then you have succeeded where I could not."	18.895	chatMessage
+mp-game-6	pilot	5012-3899a1b6-823b-4f51-b359-66ad35dae9e6	1548691895544	explorer	1	"flowers with thorns"	flowers_thorns	0	"Good luck."	1.272	chatMessage

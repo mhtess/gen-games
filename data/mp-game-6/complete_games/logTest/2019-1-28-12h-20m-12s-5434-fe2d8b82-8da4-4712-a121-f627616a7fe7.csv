@@ -1,0 +1,501 @@
+stim_num	turker_label	true_label	is_correct	eventType	experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num
+0	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548706812583	explorer	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+1	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548706812583	explorer	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+2	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548706812583	explorer	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+3	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548706812583	explorer	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+4	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548706812583	explorer	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+5	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548706812583	explorer	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+6	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548706812583	explorer	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+7	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548706812583	explorer	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+8	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548706812583	explorer	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+9	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548706812583	explorer	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+10	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548706812583	explorer	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+11	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548706812583	explorer	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+12	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548706812583	explorer	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+13	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548706812583	explorer	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+14	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548706812583	explorer	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+15	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548706812583	explorer	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+16	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548706812583	explorer	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+17	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548706812583	explorer	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+18	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548706812583	explorer	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+19	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548706812583	explorer	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+20	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548706812583	explorer	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+21	false	true	false	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548706812583	explorer	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+22	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548706812583	explorer	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+23	false	true	false	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548706812583	explorer	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+24	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548706812583	explorer	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+25	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548706812583	explorer	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+26	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548706812583	explorer	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+27	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548706812583	explorer	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+28	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548706812583	explorer	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+29	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548706812583	explorer	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+30	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548706812583	explorer	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+31	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548706812583	explorer	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+32	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548706812583	explorer	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+33	false	true	false	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548706812583	explorer	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+34	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548706812583	explorer	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+35	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548706812583	explorer	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+36	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548706812583	explorer	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+37	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548706812583	explorer	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+38	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548706812583	explorer	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+39	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548706812583	explorer	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+40	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548706812583	explorer	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+41	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548706812583	explorer	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+42	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548706812583	explorer	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+43	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548706812583	explorer	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+44	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548706812583	explorer	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+45	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548706812583	explorer	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+46	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548706812583	explorer	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+47	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548706812583	explorer	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+48	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548706812583	explorer	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+49	false	true	false	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548706812583	explorer	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+0	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707021051	student	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+1	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707021051	student	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+2	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707021051	student	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+3	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707021051	student	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+4	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707021051	student	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+5	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707021051	student	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+6	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707021051	student	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+7	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707021051	student	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+8	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707021051	student	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+9	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707021051	student	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+10	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707021051	student	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+11	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707021051	student	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+12	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707021051	student	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+13	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707021051	student	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+14	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707021051	student	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+15	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707021051	student	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+16	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707021051	student	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+17	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707021051	student	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+18	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707021051	student	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+19	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707021051	student	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+20	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707021051	student	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+21	false	true	false	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707021051	student	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+22	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707021051	student	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+23	false	true	false	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707021051	student	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+24	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707021051	student	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+25	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707021051	student	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+26	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707021051	student	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+27	false	true	false	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707021051	student	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+28	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707021051	student	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+29	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707021051	student	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+30	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707021051	student	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+31	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707021051	student	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+32	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707021051	student	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+33	false	true	false	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707021051	student	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+34	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707021051	student	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+35	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707021051	student	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+36	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707021051	student	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+37	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707021051	student	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+38	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707021051	student	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+39	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707021051	student	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+40	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707021051	student	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+41	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707021051	student	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+42	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707021051	student	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+43	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707021051	student	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+44	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707021051	student	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+45	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707021051	student	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+46	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707021051	student	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+47	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707021051	student	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+48	false	true	false	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707021051	student	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+49	false	true	false	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707021051	student	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	0
+0	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707313023	explorer	8	"trees with purple berries"	trees_purple_berries	1
+1	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707313023	explorer	8	"trees with purple berries"	trees_purple_berries	1
+2	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707313023	explorer	8	"trees with purple berries"	trees_purple_berries	1
+3	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707313023	explorer	8	"trees with purple berries"	trees_purple_berries	1
+4	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707313023	explorer	8	"trees with purple berries"	trees_purple_berries	1
+5	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707313023	explorer	8	"trees with purple berries"	trees_purple_berries	1
+6	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707313023	explorer	8	"trees with purple berries"	trees_purple_berries	1
+7	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707313023	explorer	8	"trees with purple berries"	trees_purple_berries	1
+8	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707313023	explorer	8	"trees with purple berries"	trees_purple_berries	1
+9	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707313023	explorer	8	"trees with purple berries"	trees_purple_berries	1
+10	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707313023	explorer	8	"trees with purple berries"	trees_purple_berries	1
+11	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707313023	explorer	8	"trees with purple berries"	trees_purple_berries	1
+12	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707313023	explorer	8	"trees with purple berries"	trees_purple_berries	1
+13	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707313023	explorer	8	"trees with purple berries"	trees_purple_berries	1
+14	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707313023	explorer	8	"trees with purple berries"	trees_purple_berries	1
+15	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707313023	explorer	8	"trees with purple berries"	trees_purple_berries	1
+16	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707313023	explorer	8	"trees with purple berries"	trees_purple_berries	1
+17	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707313023	explorer	8	"trees with purple berries"	trees_purple_berries	1
+18	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707313023	explorer	8	"trees with purple berries"	trees_purple_berries	1
+19	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707313023	explorer	8	"trees with purple berries"	trees_purple_berries	1
+20	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707313023	explorer	8	"trees with purple berries"	trees_purple_berries	1
+21	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707313023	explorer	8	"trees with purple berries"	trees_purple_berries	1
+22	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707313023	explorer	8	"trees with purple berries"	trees_purple_berries	1
+23	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707313023	explorer	8	"trees with purple berries"	trees_purple_berries	1
+24	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707313023	explorer	8	"trees with purple berries"	trees_purple_berries	1
+25	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707313023	explorer	8	"trees with purple berries"	trees_purple_berries	1
+26	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707313023	explorer	8	"trees with purple berries"	trees_purple_berries	1
+27	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707313023	explorer	8	"trees with purple berries"	trees_purple_berries	1
+28	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707313023	explorer	8	"trees with purple berries"	trees_purple_berries	1
+29	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707313023	explorer	8	"trees with purple berries"	trees_purple_berries	1
+30	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707313023	explorer	8	"trees with purple berries"	trees_purple_berries	1
+31	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707313023	explorer	8	"trees with purple berries"	trees_purple_berries	1
+32	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707313023	explorer	8	"trees with purple berries"	trees_purple_berries	1
+33	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707313023	explorer	8	"trees with purple berries"	trees_purple_berries	1
+34	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707313023	explorer	8	"trees with purple berries"	trees_purple_berries	1
+35	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707313023	explorer	8	"trees with purple berries"	trees_purple_berries	1
+36	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707313023	explorer	8	"trees with purple berries"	trees_purple_berries	1
+37	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707313023	explorer	8	"trees with purple berries"	trees_purple_berries	1
+38	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707313023	explorer	8	"trees with purple berries"	trees_purple_berries	1
+39	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707313023	explorer	8	"trees with purple berries"	trees_purple_berries	1
+40	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707313023	explorer	8	"trees with purple berries"	trees_purple_berries	1
+41	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707313023	explorer	8	"trees with purple berries"	trees_purple_berries	1
+42	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707313023	explorer	8	"trees with purple berries"	trees_purple_berries	1
+43	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707313023	explorer	8	"trees with purple berries"	trees_purple_berries	1
+44	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707313023	explorer	8	"trees with purple berries"	trees_purple_berries	1
+45	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707313023	explorer	8	"trees with purple berries"	trees_purple_berries	1
+46	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707313023	explorer	8	"trees with purple berries"	trees_purple_berries	1
+47	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707313023	explorer	8	"trees with purple berries"	trees_purple_berries	1
+48	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707313023	explorer	8	"trees with purple berries"	trees_purple_berries	1
+49	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707313023	explorer	8	"trees with purple berries"	trees_purple_berries	1
+0	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707332271	student	8	"trees with purple berries"	trees_purple_berries	1
+1	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707332271	student	8	"trees with purple berries"	trees_purple_berries	1
+2	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707332271	student	8	"trees with purple berries"	trees_purple_berries	1
+3	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707332271	student	8	"trees with purple berries"	trees_purple_berries	1
+4	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707332271	student	8	"trees with purple berries"	trees_purple_berries	1
+5	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707332271	student	8	"trees with purple berries"	trees_purple_berries	1
+6	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707332271	student	8	"trees with purple berries"	trees_purple_berries	1
+7	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707332271	student	8	"trees with purple berries"	trees_purple_berries	1
+8	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707332271	student	8	"trees with purple berries"	trees_purple_berries	1
+9	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707332271	student	8	"trees with purple berries"	trees_purple_berries	1
+10	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707332271	student	8	"trees with purple berries"	trees_purple_berries	1
+11	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707332271	student	8	"trees with purple berries"	trees_purple_berries	1
+12	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707332271	student	8	"trees with purple berries"	trees_purple_berries	1
+13	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707332271	student	8	"trees with purple berries"	trees_purple_berries	1
+14	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707332271	student	8	"trees with purple berries"	trees_purple_berries	1
+15	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707332271	student	8	"trees with purple berries"	trees_purple_berries	1
+16	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707332271	student	8	"trees with purple berries"	trees_purple_berries	1
+17	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707332271	student	8	"trees with purple berries"	trees_purple_berries	1
+18	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707332271	student	8	"trees with purple berries"	trees_purple_berries	1
+19	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707332271	student	8	"trees with purple berries"	trees_purple_berries	1
+20	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707332271	student	8	"trees with purple berries"	trees_purple_berries	1
+21	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707332271	student	8	"trees with purple berries"	trees_purple_berries	1
+22	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707332271	student	8	"trees with purple berries"	trees_purple_berries	1
+23	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707332271	student	8	"trees with purple berries"	trees_purple_berries	1
+24	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707332271	student	8	"trees with purple berries"	trees_purple_berries	1
+25	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707332271	student	8	"trees with purple berries"	trees_purple_berries	1
+26	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707332271	student	8	"trees with purple berries"	trees_purple_berries	1
+27	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707332271	student	8	"trees with purple berries"	trees_purple_berries	1
+28	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707332271	student	8	"trees with purple berries"	trees_purple_berries	1
+29	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707332271	student	8	"trees with purple berries"	trees_purple_berries	1
+30	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707332271	student	8	"trees with purple berries"	trees_purple_berries	1
+31	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707332271	student	8	"trees with purple berries"	trees_purple_berries	1
+32	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707332271	student	8	"trees with purple berries"	trees_purple_berries	1
+33	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707332271	student	8	"trees with purple berries"	trees_purple_berries	1
+34	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707332271	student	8	"trees with purple berries"	trees_purple_berries	1
+35	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707332271	student	8	"trees with purple berries"	trees_purple_berries	1
+36	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707332271	student	8	"trees with purple berries"	trees_purple_berries	1
+37	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707332271	student	8	"trees with purple berries"	trees_purple_berries	1
+38	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707332271	student	8	"trees with purple berries"	trees_purple_berries	1
+39	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707332271	student	8	"trees with purple berries"	trees_purple_berries	1
+40	false	true	false	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707332271	student	8	"trees with purple berries"	trees_purple_berries	1
+41	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707332271	student	8	"trees with purple berries"	trees_purple_berries	1
+42	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707332271	student	8	"trees with purple berries"	trees_purple_berries	1
+43	false	true	false	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707332271	student	8	"trees with purple berries"	trees_purple_berries	1
+44	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707332271	student	8	"trees with purple berries"	trees_purple_berries	1
+45	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707332271	student	8	"trees with purple berries"	trees_purple_berries	1
+46	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707332271	student	8	"trees with purple berries"	trees_purple_berries	1
+47	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707332271	student	8	"trees with purple berries"	trees_purple_berries	1
+48	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707332271	student	8	"trees with purple berries"	trees_purple_berries	1
+49	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707332271	student	8	"trees with purple berries"	trees_purple_berries	1
+0	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707841967	explorer	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+1	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707841967	explorer	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+2	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707841967	explorer	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+3	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707841967	explorer	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+4	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707841967	explorer	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+5	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707841967	explorer	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+6	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707841967	explorer	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+7	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707841967	explorer	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+8	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707841967	explorer	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+9	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707841967	explorer	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+10	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707841967	explorer	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+11	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707841967	explorer	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+12	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707841967	explorer	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+13	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707841967	explorer	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+14	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707841967	explorer	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+15	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707841967	explorer	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+16	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707841967	explorer	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+17	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707841967	explorer	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+18	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707841967	explorer	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+19	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707841967	explorer	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+20	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707841967	explorer	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+21	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707841967	explorer	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+22	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707841967	explorer	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+23	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707841967	explorer	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+24	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707841967	explorer	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+25	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707841967	explorer	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+26	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707841967	explorer	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+27	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707841967	explorer	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+28	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707841967	explorer	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+29	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707841967	explorer	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+30	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707841967	explorer	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+31	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707841967	explorer	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+32	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707841967	explorer	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+33	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707841967	explorer	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+34	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707841967	explorer	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+35	false	true	false	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707841967	explorer	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+36	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707841967	explorer	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+37	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707841967	explorer	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+38	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707841967	explorer	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+39	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707841967	explorer	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+40	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707841967	explorer	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+41	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707841967	explorer	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+42	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707841967	explorer	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+43	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707841967	explorer	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+44	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707841967	explorer	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+45	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707841967	explorer	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+46	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707841967	explorer	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+47	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707841967	explorer	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+48	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707841967	explorer	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+49	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707841967	explorer	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+0	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707863935	student	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+1	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707863935	student	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+2	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707863935	student	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+3	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707863935	student	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+4	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707863935	student	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+5	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707863935	student	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+6	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707863935	student	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+7	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707863935	student	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+8	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707863935	student	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+9	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707863935	student	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+10	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707863935	student	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+11	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707863935	student	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+12	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707863935	student	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+13	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707863935	student	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+14	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707863935	student	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+15	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707863935	student	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+16	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707863935	student	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+17	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707863935	student	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+18	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707863935	student	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+19	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707863935	student	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+20	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707863935	student	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+21	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707863935	student	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+22	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707863935	student	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+23	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707863935	student	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+24	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707863935	student	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+25	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707863935	student	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+26	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707863935	student	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+27	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707863935	student	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+28	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707863935	student	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+29	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707863935	student	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+30	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707863935	student	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+31	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707863935	student	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+32	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707863935	student	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+33	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707863935	student	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+34	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707863935	student	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+35	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707863935	student	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+36	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707863935	student	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+37	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707863935	student	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+38	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707863935	student	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+39	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707863935	student	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+40	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707863935	student	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+41	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707863935	student	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+42	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707863935	student	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+43	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707863935	student	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+44	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707863935	student	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+45	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707863935	student	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+46	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707863935	student	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+47	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707863935	student	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+48	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707863935	student	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+49	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548707863935	student	28	"fish with orange bodies or fangs"	fish_orange_bodies_or_fangs	2
+0	false	true	false	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708442478	explorer	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+1	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708442478	explorer	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+2	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708442478	explorer	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+3	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708442478	explorer	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+4	false	true	false	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708442478	explorer	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+5	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708442478	explorer	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+6	false	true	false	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708442478	explorer	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+7	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708442478	explorer	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+8	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708442478	explorer	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+9	false	true	false	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708442478	explorer	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+10	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708442478	explorer	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+11	false	true	false	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708442478	explorer	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+12	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708442478	explorer	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+13	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708442478	explorer	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+14	true	false	false	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708442478	explorer	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+15	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708442478	explorer	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+16	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708442478	explorer	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+17	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708442478	explorer	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+18	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708442478	explorer	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+19	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708442478	explorer	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+20	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708442478	explorer	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+21	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708442478	explorer	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+22	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708442478	explorer	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+23	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708442478	explorer	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+24	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708442478	explorer	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+25	true	false	false	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708442478	explorer	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+26	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708442478	explorer	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+27	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708442478	explorer	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+28	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708442478	explorer	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+29	false	true	false	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708442478	explorer	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+30	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708442478	explorer	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+31	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708442478	explorer	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+32	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708442478	explorer	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+33	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708442478	explorer	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+34	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708442478	explorer	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+35	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708442478	explorer	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+36	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708442478	explorer	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+37	false	true	false	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708442478	explorer	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+38	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708442478	explorer	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+39	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708442478	explorer	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+40	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708442478	explorer	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+41	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708442478	explorer	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+42	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708442478	explorer	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+43	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708442478	explorer	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+44	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708442478	explorer	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+45	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708442478	explorer	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+46	false	true	false	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708442478	explorer	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+47	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708442478	explorer	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+48	false	true	false	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708442478	explorer	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+49	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708442478	explorer	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+0	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708561398	student	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+1	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708561398	student	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+2	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708561398	student	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+3	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708561398	student	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+4	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708561398	student	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+5	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708561398	student	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+6	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708561398	student	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+7	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708561398	student	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+8	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708561398	student	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+9	false	true	false	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708561398	student	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+10	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708561398	student	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+11	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708561398	student	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+12	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708561398	student	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+13	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708561398	student	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+14	true	false	false	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708561398	student	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+15	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708561398	student	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+16	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708561398	student	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+17	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708561398	student	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+18	true	false	false	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708561398	student	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+19	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708561398	student	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+20	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708561398	student	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+21	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708561398	student	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+22	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708561398	student	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+23	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708561398	student	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+24	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708561398	student	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+25	true	false	false	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708561398	student	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+26	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708561398	student	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+27	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708561398	student	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+28	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708561398	student	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+29	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708561398	student	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+30	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708561398	student	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+31	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708561398	student	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+32	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708561398	student	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+33	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708561398	student	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+34	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708561398	student	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+35	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708561398	student	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+36	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708561398	student	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+37	false	true	false	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708561398	student	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+38	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708561398	student	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+39	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708561398	student	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+40	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708561398	student	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+41	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708561398	student	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+42	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708561398	student	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+43	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708561398	student	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+44	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708561398	student	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+45	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708561398	student	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+46	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708561398	student	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+47	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708561398	student	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+48	false	true	false	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708561398	student	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+49	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708561398	student	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	3
+0	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708870211	student	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+1	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708870211	student	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+2	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708870211	student	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+3	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708870211	student	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+4	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708870211	student	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+5	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708870211	student	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+6	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708870211	student	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+7	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708870211	student	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+8	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708870211	student	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+9	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708870211	student	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+10	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708870211	student	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+11	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708870211	student	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+12	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708870211	student	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+13	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708870211	student	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+14	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708870211	student	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+15	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708870211	student	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+16	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708870211	student	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+17	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708870211	student	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+18	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708870211	student	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+19	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708870211	student	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+20	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708870211	student	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+21	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708870211	student	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+22	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708870211	student	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+23	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708870211	student	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+24	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708870211	student	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+25	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708870211	student	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+26	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708870211	student	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+27	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708870211	student	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+28	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708870211	student	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+29	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708870211	student	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+30	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708870211	student	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+31	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708870211	student	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+32	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708870211	student	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+33	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708870211	student	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+34	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708870211	student	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+35	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708870211	student	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+36	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708870211	student	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+37	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708870211	student	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+38	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708870211	student	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+39	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708870211	student	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+40	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708870211	student	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+41	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708870211	student	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+42	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708870211	student	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+43	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708870211	student	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+44	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708870211	student	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+45	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708870211	student	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+46	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708870211	student	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+47	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708870211	student	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+48	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708870211	student	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+49	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708870211	student	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+0	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708871517	explorer	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+1	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708871517	explorer	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+2	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708871517	explorer	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+3	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708871517	explorer	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+4	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708871517	explorer	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+5	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708871517	explorer	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+6	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708871517	explorer	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+7	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708871517	explorer	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+8	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708871517	explorer	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+9	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708871517	explorer	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+10	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708871517	explorer	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+11	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708871517	explorer	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+12	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708871517	explorer	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+13	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708871517	explorer	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+14	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708871517	explorer	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+15	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708871517	explorer	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+16	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708871517	explorer	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+17	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708871517	explorer	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+18	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708871517	explorer	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+19	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708871517	explorer	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+20	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708871517	explorer	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+21	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708871517	explorer	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+22	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708871517	explorer	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+23	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708871517	explorer	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+24	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708871517	explorer	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+25	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708871517	explorer	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+26	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708871517	explorer	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+27	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708871517	explorer	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+28	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708871517	explorer	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+29	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708871517	explorer	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+30	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708871517	explorer	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+31	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708871517	explorer	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+32	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708871517	explorer	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+33	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708871517	explorer	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+34	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708871517	explorer	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+35	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708871517	explorer	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+36	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708871517	explorer	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+37	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708871517	explorer	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+38	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708871517	explorer	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+39	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708871517	explorer	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+40	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708871517	explorer	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+41	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708871517	explorer	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+42	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708871517	explorer	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+43	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708871517	explorer	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+44	true	true	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708871517	explorer	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+45	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708871517	explorer	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+46	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708871517	explorer	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+47	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708871517	explorer	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+48	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708871517	explorer	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4
+49	false	false	true	logTest	mp-game-6	pilot	5434-fe2d8b82-8da4-4712-a121-f627616a7fe7	1548708871517	explorer	18	"flowers with purple stem and thorns"	flowers_purple_stems_thorns	4

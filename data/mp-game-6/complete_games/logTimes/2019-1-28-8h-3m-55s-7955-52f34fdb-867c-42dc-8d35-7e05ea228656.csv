@@ -1,0 +1,11 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	train	test	chat	eventType
+mp-game-6	pilot	7955-52f34fdb-867c-42dc-8d35-7e05ea228656	1548691435025	explorer	19	"flowers with orange petals and purple centers"	flowers_orange_petals_purple_centers	0	146.383	52.371	48.27	logTimes
+mp-game-6	pilot	7955-52f34fdb-867c-42dc-8d35-7e05ea228656	1548691441902	student	19	"flowers with orange petals and purple centers"	flowers_orange_petals_purple_centers	0	-1	60.012	47.887	logTimes
+mp-game-6	pilot	7955-52f34fdb-867c-42dc-8d35-7e05ea228656	1548691793139	explorer	49	"birds with (white crests or orange wings) and tails"	birds_white_crests_or_orange_wings_tails	1	218.404	32.583	64.922	logTimes
+mp-game-6	pilot	7955-52f34fdb-867c-42dc-8d35-7e05ea228656	1548691802531	student	49	"birds with (white crests or orange wings) and tails"	birds_white_crests_or_orange_wings_tails	1	-1	41.51	64.56	logTimes
+mp-game-6	pilot	7955-52f34fdb-867c-42dc-8d35-7e05ea228656	1548692022599	student	9	"trees without leaves"	trees_without_leaves	2	-1	26.943	78.547	logTimes
+mp-game-6	pilot	7955-52f34fdb-867c-42dc-8d35-7e05ea228656	1548692023789	explorer	9	"trees without leaves"	trees_without_leaves	2	94.497	27.72	78.929	logTimes
+mp-game-6	pilot	7955-52f34fdb-867c-42dc-8d35-7e05ea228656	1548692250068	explorer	39	"bugs with (white legs and purple wings) or orange antennae"	bugs_white_legs_purple_wings_or_orange_antennae	3	142.578	13.944	44.371	logTimes
+mp-game-6	pilot	7955-52f34fdb-867c-42dc-8d35-7e05ea228656	1548692283945	student	39	"bugs with (white legs and purple wings) or orange antennae"	bugs_white_legs_purple_wings_or_orange_antennae	3	-1	48.822	44.002	logTimes
+mp-game-6	pilot	7955-52f34fdb-867c-42dc-8d35-7e05ea228656	1548692530987	explorer	29	"fish with white stripes or whiskers"	fish_white_stripes_or_whiskers	4	154.952	22.053	47.667	logTimes
+mp-game-6	pilot	7955-52f34fdb-867c-42dc-8d35-7e05ea228656	1548692535522	student	29	"fish with white stripes or whiskers"	fish_white_stripes_or_whiskers	4	-1	37.016	47.268	logTimes

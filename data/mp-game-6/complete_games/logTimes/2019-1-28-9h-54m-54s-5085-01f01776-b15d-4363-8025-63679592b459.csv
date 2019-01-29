@@ -1,0 +1,11 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	train	test	chat	eventType
+mp-game-6	pilot	5085-01f01776-b15d-4363-8025-63679592b459	1548698094657	explorer	20	"bugs with orange antennae or wings"	bugs_orange_antennae_or_wings	0	81.008	31.009	125.991	logTimes
+mp-game-6	pilot	5085-01f01776-b15d-4363-8025-63679592b459	1548698136465	student	20	"bugs with orange antennae or wings"	bugs_orange_antennae_or_wings	0	-1	72.561	125.582	logTimes
+mp-game-6	pilot	5085-01f01776-b15d-4363-8025-63679592b459	1548698439312	explorer	40	"trees with (purple trunks or white leaves) and orange berries"	trees_purple_trunks_or_white_leaves_orange_berries	1	81.741	39.604	146.998	logTimes
+mp-game-6	pilot	5085-01f01776-b15d-4363-8025-63679592b459	1548698505641	student	40	"trees with (purple trunks or white leaves) and orange berries"	trees_purple_trunks_or_white_leaves_orange_berries	1	-1	111.725	146.603	logTimes
+mp-game-6	pilot	5085-01f01776-b15d-4363-8025-63679592b459	1548698728905	explorer	10	"fish with orange bodies and purple stripes"	fish_orange_bodies_purple_stripes	2	71.599	24.958	99.241	logTimes
+mp-game-6	pilot	5085-01f01776-b15d-4363-8025-63679592b459	1548698750689	student	10	"fish with orange bodies and purple stripes"	fish_orange_bodies_purple_stripes	2	-1	60.399	97.373	logTimes
+mp-game-6	pilot	5085-01f01776-b15d-4363-8025-63679592b459	1548698893127	student	0	"flowers with orange stems"	flowers_orange_stems	3	-1	23.954	44.261	logTimes
+mp-game-6	pilot	5085-01f01776-b15d-4363-8025-63679592b459	1548698907488	explorer	0	"flowers with orange stems"	flowers_orange_stems	3	56.784	24.459	44.69	logTimes
+mp-game-6	pilot	5085-01f01776-b15d-4363-8025-63679592b459	1548699020180	explorer	30	"birds with (purple wings and white crests) or white tails"	birds_purple_wings_white_crests_or_white_tails	4	51.608	16.213	27.697	logTimes
+mp-game-6	pilot	5085-01f01776-b15d-4363-8025-63679592b459	1548699024482	student	30	"birds with (purple wings and white crests) or white tails"	birds_purple_wings_white_crests_or_white_tails	4	-1	20.941	27.288	logTimes

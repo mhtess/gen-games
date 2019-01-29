@@ -1,0 +1,11 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	train	test	chat	eventType
+mp-game-6	pilot	2266-cbab2734-86eb-40f9-8da3-8bc86efa29f4	1548694193103	explorer	20	"bugs with orange antennae or wings"	bugs_orange_antennae_or_wings	0	188.523	48.397	277.87	logTimes
+mp-game-6	pilot	2266-cbab2734-86eb-40f9-8da3-8bc86efa29f4	1548694337420	student	20	"bugs with orange antennae or wings"	bugs_orange_antennae_or_wings	0	-1	196.169	277.495	logTimes
+mp-game-6	pilot	2266-cbab2734-86eb-40f9-8da3-8bc86efa29f4	1548694729389	explorer	30	"birds with (purple wings and white crests) or white tails"	birds_purple_wings_white_crests_or_white_tails	1	127.678	43.669	166.528	logTimes
+mp-game-6	pilot	2266-cbab2734-86eb-40f9-8da3-8bc86efa29f4	1548694763116	student	30	"birds with (purple wings and white crests) or white tails"	birds_purple_wings_white_crests_or_white_tails	1	-1	82.907	166.143	logTimes
+mp-game-6	pilot	2266-cbab2734-86eb-40f9-8da3-8bc86efa29f4	1548694973936	explorer	0	"flowers with orange stems"	flowers_orange_stems	2	43.46	22.079	96.964	logTimes
+mp-game-6	pilot	2266-cbab2734-86eb-40f9-8da3-8bc86efa29f4	1548694981019	student	0	"flowers with orange stems"	flowers_orange_stems	2	-1	32.301	36.896	logTimes
+mp-game-6	pilot	2266-cbab2734-86eb-40f9-8da3-8bc86efa29f4	1548695166255	explorer	10	"fish with orange bodies and purple stripes"	fish_orange_bodies_purple_stripes	3	38.254	24.527	76.468	logTimes
+mp-game-6	pilot	2266-cbab2734-86eb-40f9-8da3-8bc86efa29f4	1548695170697	student	10	"fish with orange bodies and purple stripes"	fish_orange_bodies_purple_stripes	3	-1	38.222	75.504	logTimes
+mp-game-6	pilot	2266-cbab2734-86eb-40f9-8da3-8bc86efa29f4	1548695468550	explorer	40	"trees with (purple trunks or white leaves) and orange berries"	trees_purple_trunks_or_white_leaves_orange_berries	4	84.551	40.069	142.132	logTimes
+mp-game-6	pilot	2266-cbab2734-86eb-40f9-8da3-8bc86efa29f4	1548695487616	student	40	"trees with (purple trunks or white leaves) and orange berries"	trees_purple_trunks_or_white_leaves_orange_berries	4	-1	58.849	113.536	logTimes

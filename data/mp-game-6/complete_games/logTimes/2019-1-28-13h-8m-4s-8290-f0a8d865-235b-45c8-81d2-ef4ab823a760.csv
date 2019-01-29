@@ -1,0 +1,11 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	train	test	chat	eventType
+mp-game-6	pilot	8290-f0a8d865-235b-45c8-81d2-ef4ab823a760	1548709684057	explorer	20	"bugs with orange antennae or wings"	bugs_orange_antennae_or_wings	0	339.39	28.388	122.614	logTimes
+mp-game-6	pilot	8290-f0a8d865-235b-45c8-81d2-ef4ab823a760	1548709703406	student	20	"bugs with orange antennae or wings"	bugs_orange_antennae_or_wings	0	-1	46.685	122.233	logTimes
+mp-game-6	pilot	8290-f0a8d865-235b-45c8-81d2-ef4ab823a760	1548709861449	explorer	0	"flowers with orange stems"	flowers_orange_stems	1	53.525	16.902	75.422	logTimes
+mp-game-6	pilot	8290-f0a8d865-235b-45c8-81d2-ef4ab823a760	1548709868967	student	0	"flowers with orange stems"	flowers_orange_stems	1	-1	23.862	75.033	logTimes
+mp-game-6	pilot	8290-f0a8d865-235b-45c8-81d2-ef4ab823a760	1548709982027	explorer	30	"birds with (purple wings and white crests) or white tails"	birds_purple_wings_white_crests_or_white_tails	2	31.72	16.153	52.769	logTimes
+mp-game-6	pilot	8290-f0a8d865-235b-45c8-81d2-ef4ab823a760	1548709987459	student	30	"birds with (purple wings and white crests) or white tails"	birds_purple_wings_white_crests_or_white_tails	2	-1	20.428	52.379	logTimes
+mp-game-6	pilot	8290-f0a8d865-235b-45c8-81d2-ef4ab823a760	1548710192434	explorer	40	"trees with (purple trunks or white leaves) and orange berries"	trees_purple_trunks_or_white_leaves_orange_berries	3	92.561	59.26	40.34	logTimes
+mp-game-6	pilot	8290-f0a8d865-235b-45c8-81d2-ef4ab823a760	1548710218011	student	40	"trees with (purple trunks or white leaves) and orange berries"	trees_purple_trunks_or_white_leaves_orange_berries	3	-1	85.402	39.952	logTimes
+mp-game-6	pilot	8290-f0a8d865-235b-45c8-81d2-ef4ab823a760	1548710334788	explorer	10	"fish with orange bodies and purple stripes"	fish_orange_bodies_purple_stripes	4	60.73	27.928	16.036	logTimes
+mp-game-6	pilot	8290-f0a8d865-235b-45c8-81d2-ef4ab823a760	1548710336187	student	10	"fish with orange bodies and purple stripes"	fish_orange_bodies_purple_stripes	4	-1	29.243	15.493	logTimes

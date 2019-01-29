@@ -1,0 +1,6 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	text	reactionTime	eventType
+mp-game-6	pilot	2013-1c3e17c2-b4b3-413c-bf71-694066b6f505	1548697102890	explorer	7	"birds with purple tails"	birds_purple_tails	0	"Hello"	0.999	chatMessage
+mp-game-6	pilot	2013-1c3e17c2-b4b3-413c-bf71-694066b6f505	1548697107564	student	7	"birds with purple tails"	birds_purple_tails	0	"Hi, what did you learn?"	2.311	chatMessage
+mp-game-6	pilot	2013-1c3e17c2-b4b3-413c-bf71-694066b6f505	1548697132392	explorer	7	"birds with purple tails"	birds_purple_tails	0	"Only pick the birds with the purple tail feathers."	20.002	chatMessage
+mp-game-6	pilot	2013-1c3e17c2-b4b3-413c-bf71-694066b6f505	1548697148149	student	7	"birds with purple tails"	birds_purple_tails	0	"Ok.  Anything else I should know?"	8.524	chatMessage
+mp-game-6	pilot	2013-1c3e17c2-b4b3-413c-bf71-694066b6f505	1548697167674	explorer	7	"birds with purple tails"	birds_purple_tails	0	"No just pick all birds with the purple tail feathers"	12.774	chatMessage

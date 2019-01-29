@@ -1,0 +1,5 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	train	test	chat	eventType
+mp-game-6	pilot	0792-54be2ff2-654c-4819-936c-bffe6af978ef	1548697732850	explorer	9	"trees without leaves"	trees_without_leaves	0	61.459	26.401	116.863	logTimes
+mp-game-6	pilot	0792-54be2ff2-654c-4819-936c-bffe6af978ef	1548697754132	student	9	"trees without leaves"	trees_without_leaves	0	-1	46.258	116.492	logTimes
+mp-game-6	pilot	0792-54be2ff2-654c-4819-936c-bffe6af978ef	1548698010665	explorer	19	"flowers with orange petals and purple centers"	flowers_orange_petals_purple_centers	1	55.199	30.84	104.84	logTimes
+mp-game-6	pilot	0792-54be2ff2-654c-4819-936c-bffe6af978ef	1548698028713	student	19	"flowers with orange petals and purple centers"	flowers_orange_petals_purple_centers	1	-1	72.35	104.436	logTimes
