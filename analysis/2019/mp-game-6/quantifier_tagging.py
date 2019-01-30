@@ -4,8 +4,8 @@ File: quantifier_tagging.py
 Author: Sahil Chopra
 Date: January 24, 2019
 
-Regular expressions utilized to tag quantifiers within
-the Cultural Ratchet dataset.
+Automatically tag potential quantifiers
+and numerics within the Cultural Ratchet dataset.
 """
 from nltk.tag.stanford import StanfordPOSTagger
 from nltk import word_tokenize, sent_tokenize
@@ -34,7 +34,7 @@ def process_chat_messages(dir):
     pos_jar = 'stanford-postagger-full-2018-10-16/stanford-postagger-3.9.2.jar'
     tagger = StanfordPOSTagger(pos_model, pos_jar)
 
-    print("Identifying quantifiers and numerics")
+    # print("Identifying quantifiers and numerics")
     pos_quantifiers, other_quantifiers, numerics = identify_supersets(dir, tagger)
 
     print("Analyzing chat messages")
@@ -43,6 +43,7 @@ def process_chat_messages(dir):
         if '.tsv' not in chat_message_file:
             continue
         df = pd.read_csv(chat_message_file, sep='\t')
+
         add_fields(df, pos_quantifiers, other_quantifiers, numerics, tagger)
         df.to_csv(chat_message_file, sep='\t', index=False,)
 
@@ -118,5 +119,15 @@ def identify_supersets(dir, tagger):
 def test():
     process_chat_messages('./')
 
+def clear_annotations(dir):
+    for file in tqdm(os.listdir(dir)):
+        chat_message_file = os.path.join(dir, file)         
+        if '.tsv' not in chat_message_file:
+            continue
+        df = pd.read_csv(chat_message_file, sep='\t')
+        df = df.iloc[:,0:13]
+        df.to_csv(chat_message_file, sep='\t', index=False,)
+
 if __name__ == '__main__':
-    process_chat_messages('../../../data/mp-game-6/complete_games/chatMessage')
+    clear_annotations('../../../data/mp-game-6/complete_games/chatMessage')
+    # process_chat_messages('../../../data/mp-game-6/complete_games/chatMessage')
