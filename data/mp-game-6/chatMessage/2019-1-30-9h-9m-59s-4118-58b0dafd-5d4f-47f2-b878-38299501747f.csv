@@ -1,0 +1,11 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	text	reactionTime	eventType
+mp-game-6	pilot	4118-58b0dafd-5d4f-47f2-b878-38299501747f	1548868199512	student	19	"flowers with orange petals and purple centers"	flowers_orange_petals_purple_centers	0	"hello"	0.874	chatMessage
+mp-game-6	pilot	4118-58b0dafd-5d4f-47f2-b878-38299501747f	1548868214144	explorer	19	"flowers with orange petals and purple centers"	flowers_orange_petals_purple_centers	0	"Hello"	3.503	chatMessage
+mp-game-6	pilot	4118-58b0dafd-5d4f-47f2-b878-38299501747f	1548868253040	explorer	19	"flowers with orange petals and purple centers"	flowers_orange_petals_purple_centers	0	"What are you doing?"	10.32	chatMessage
+mp-game-6	pilot	4118-58b0dafd-5d4f-47f2-b878-38299501747f	1548868264535	student	19	"flowers with orange petals and purple centers"	flowers_orange_petals_purple_centers	0	"waiting for you to tell me about the species properties"	9.198	chatMessage
+mp-game-6	pilot	4118-58b0dafd-5d4f-47f2-b878-38299501747f	1548868310967	student	19	"flowers with orange petals and purple centers"	flowers_orange_petals_purple_centers	0	"do you have any information?"	3.617	chatMessage
+mp-game-6	pilot	4118-58b0dafd-5d4f-47f2-b878-38299501747f	1548868350581	explorer	19	"flowers with orange petals and purple centers"	flowers_orange_petals_purple_centers	0	"I have to  learn "	27.868	chatMessage
+mp-game-6	pilot	4118-58b0dafd-5d4f-47f2-b878-38299501747f	1548868367657	student	19	"flowers with orange petals and purple centers"	flowers_orange_petals_purple_centers	0	"what? that was supposed to have happened already right?"	9.643	chatMessage
+mp-game-6	pilot	4118-58b0dafd-5d4f-47f2-b878-38299501747f	1548868422295	student	19	"flowers with orange petals and purple centers"	flowers_orange_petals_purple_centers	0	"did you do the task?"	3.533	chatMessage
+mp-game-6	pilot	4118-58b0dafd-5d4f-47f2-b878-38299501747f	1548868682016	student	29	"fish with white stripes or whiskers"	fish_white_stripes_or_whiskers	1	"Is there anything this time to share?"	5.023	chatMessage
+mp-game-6	pilot	4118-58b0dafd-5d4f-47f2-b878-38299501747f	1548868755947	explorer	29	"fish with white stripes or whiskers"	fish_white_stripes_or_whiskers	1	"It is very good and interesting for learn "	36.121	chatMessage
