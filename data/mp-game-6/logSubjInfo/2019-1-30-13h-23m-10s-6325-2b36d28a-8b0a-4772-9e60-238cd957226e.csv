@@ -1,0 +1,2 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	nativeEnglish	enjoyment	assess	age	gender	education	comments	problems		fairprice	strategy	humanPartner	likePartner	eventType
+mp-game-6	pilot	6325-2b36d28a-8b0a-4772-9e60-238cd957226e	1548883390448	explorer	44	"fish with (orange bodies or fangs) and whiskers"	fish_orange_bodies_or_fangs_whiskers	0	yes	1	yes	25	Female	2		Partner lost connection		1.25	Partner lost connection	yes	not much	logSubjInfo

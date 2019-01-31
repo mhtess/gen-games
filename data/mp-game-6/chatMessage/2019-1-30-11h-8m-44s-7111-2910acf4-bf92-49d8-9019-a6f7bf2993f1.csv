@@ -1,0 +1,18 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	text	reactionTime	eventType
+mp-game-6	pilot	7111-2910acf4-bf92-49d8-9019-a6f7bf2993f1	1548875324088	explorer	29	"fish with white stripes or whiskers"	fish_white_stripes_or_whiskers	0	"They have whiskers or a white stripe or both."	12.35	chatMessage
+mp-game-6	pilot	7111-2910acf4-bf92-49d8-9019-a6f7bf2993f1	1548875447948	explorer	29	"fish with white stripes or whiskers"	fish_white_stripes_or_whiskers	0	"hello"	3.302	chatMessage
+mp-game-6	pilot	7111-2910acf4-bf92-49d8-9019-a6f7bf2993f1	1548875673997	student	29	"fish with white stripes or whiskers"	fish_white_stripes_or_whiskers	0	"tigers"	4.084	chatMessage
+mp-game-6	pilot	7111-2910acf4-bf92-49d8-9019-a6f7bf2993f1	1548875692428	explorer	29	"fish with white stripes or whiskers"	fish_white_stripes_or_whiskers	0	"kind of"	5.022	chatMessage
+mp-game-6	pilot	7111-2910acf4-bf92-49d8-9019-a6f7bf2993f1	1548875696315	student	29	"fish with white stripes or whiskers"	fish_white_stripes_or_whiskers	0	"cats"	1.735	chatMessage
+mp-game-6	pilot	7111-2910acf4-bf92-49d8-9019-a6f7bf2993f1	1548875712013	explorer	29	"fish with white stripes or whiskers"	fish_white_stripes_or_whiskers	0	"as long as the stripe is white on the tail"	11.203	chatMessage
+mp-game-6	pilot	7111-2910acf4-bf92-49d8-9019-a6f7bf2993f1	1548875719473	student	29	"fish with white stripes or whiskers"	fish_white_stripes_or_whiskers	0	"skunk"	2.069	chatMessage
+mp-game-6	pilot	7111-2910acf4-bf92-49d8-9019-a6f7bf2993f1	1548875741870	explorer	29	"fish with white stripes or whiskers"	fish_white_stripes_or_whiskers	0	"yes, but with whiskers"	18.418	chatMessage
+mp-game-6	pilot	7111-2910acf4-bf92-49d8-9019-a6f7bf2993f1	1548875747520	student	29	"fish with white stripes or whiskers"	fish_white_stripes_or_whiskers	0	"ok"	1.319	chatMessage
+mp-game-6	pilot	7111-2910acf4-bf92-49d8-9019-a6f7bf2993f1	1548876141761	explorer	39	"bugs with (white legs and purple wings) or orange antennae"	bugs_white_legs_purple_wings_or_orange_antennae	1	"orange antenna. White legs most times."	35.863	chatMessage
+mp-game-6	pilot	7111-2910acf4-bf92-49d8-9019-a6f7bf2993f1	1548876189904	explorer	39	"bugs with (white legs and purple wings) or orange antennae"	bugs_white_legs_purple_wings_or_orange_antennae	1	"Each does not have to have white legs and orange antenna. The orange antenna on their own seem to always be one."	29.557	chatMessage
+mp-game-6	pilot	7111-2910acf4-bf92-49d8-9019-a6f7bf2993f1	1548876379095	student	39	"bugs with (white legs and purple wings) or orange antennae"	bugs_white_legs_purple_wings_or_orange_antennae	1	"ok "	3.028	chatMessage
+mp-game-6	pilot	7111-2910acf4-bf92-49d8-9019-a6f7bf2993f1	1548876878133	explorer	9	"trees without leaves"	trees_without_leaves	2	"The ones that do not have leaves"	10.822	chatMessage
+mp-game-6	pilot	7111-2910acf4-bf92-49d8-9019-a6f7bf2993f1	1548877126839	student	9	"trees without leaves"	trees_without_leaves	2	"ok"	0.647	chatMessage
+mp-game-6	pilot	7111-2910acf4-bf92-49d8-9019-a6f7bf2993f1	1548877362800	explorer	19	"flowers with orange petals and purple centers"	flowers_orange_petals_purple_centers	3	"orange petals and purple flower center"	12.268	chatMessage
+mp-game-6	pilot	7111-2910acf4-bf92-49d8-9019-a6f7bf2993f1	1548877785427	explorer	49	"birds with (white crests or orange wings) and tails"	birds_white_crests_or_orange_wings_tails	4	"kind of vague. orange wing with a tail"	12.267	chatMessage
+mp-game-6	pilot	7111-2910acf4-bf92-49d8-9019-a6f7bf2993f1	1548877790575	student	49	"birds with (white crests or orange wings) and tails"	birds_white_crests_or_orange_wings_tails	4	"ok"	284.825	chatMessage

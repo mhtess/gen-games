@@ -1,0 +1,5 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	train	test	chat	eventType
+mp-game-6	pilot	4029-725a2463-030a-4028-ac3b-2df817c447ac	1548874272864	explorer	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	0	205.875	27.433	128.484	logTimes
+mp-game-6	pilot	4029-725a2463-030a-4028-ac3b-2df817c447ac	1548874323636	student	38	"bugs with (purple legs and white heads) or orange wings"	bugs_purple_legs_white_heads_or_orange_wings	0	-1	75.421	128.109	logTimes
+mp-game-6	pilot	4029-725a2463-030a-4028-ac3b-2df817c447ac	1548874771791	student	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	1	-1	41.07	88.427	logTimes
+mp-game-6	pilot	4029-725a2463-030a-4028-ac3b-2df817c447ac	1548874825191	explorer	48	"birds with (orange tails or white wings) and orange crests"	birds_orange_tails_or_white_wings_orange_crests	1	291.449	82.896	88.807	logTimes
