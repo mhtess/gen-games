@@ -140,22 +140,84 @@ complete_test_summary <- complete_test_summary %>%
     "Conjunctive Disjunction" = "3",
     "Disjunctive Conjunction" = "4"
   ))
-
-View(complete_test_summary)
-cor.test(complete_test_summary$explorer_acc, complete_test_summary$student_acc)
-
-
 ```
 
-```{r fig.width=7, fig.height=4, echo=FALSE}
-ggplot(complete_test_summary
-       , aes(x=student_acc, y=explorer_acc, color=rule_type_text, label=rule_idx)) +
-  geom_point(size = 10) +
-  theme_few() +
-  guides(color = guide_legend("Rule Type")) +
-  geom_point(data = complete_test, size = 2, alpha=0.7) +
+```{r}
+# Individual Dyad Correlation 
+cor.test(complete_test$student_acc, complete_test$explorer_acc)
+```
+
+
+```{r}
+# Concept Type Accuracy Comparison
+complete_type_summary <- scores_complete_games %>%
+  mutate(
+    correct = hits + correct_rejections,
+    incorrect = misses + false_alarms,
+    acc = correct / (correct + incorrect),
+    rule_type = floor(rule_idx/10)
+  ) %>%
+  group_by(rule_type, role) %>%
+  tidyboot_mean(column = acc)
+complete_type_summary$rule_type <- as.factor(complete_type_summary$rule_type)
+complete_type_summary <- complete_type_summary %>%
+  mutate(rule_type_text = fct_recode(rule_type,
+    "Single" = "0",
+    "Conj." = "1",
+    "Disj." = "2",
+    "Conj. Disj." = "3",
+    "Disj. Conj." = "4"
+  ))
+complete_type_summary$role <- as.factor(complete_type_summary$role)
+complete_type_summary <- complete_type_summary %>%
+  mutate(role = fct_recode(role,
+    "Teacher" = "explorer",
+    "Student" = "student"
+  )) %>%
+  rename(Role = role)
+
+complete_type_summary$Role = factor(complete_type_summary$Role, levels = c("Teacher", "Student"))
+```
+
+```{r}
+# Concept Type Average Accuracy
+ggplot(
+  complete_type_summary,
+  aes(rule_type_text, color="black", alpha=Role, fill=rule_type_text, y=empirical_stat)
+) + 
+  geom_col(position='dodge') +  
   labs(
-    title = "Student Accuracy vs. Teacher Accuracy",
+    x = "Rule",
+    y = "Accuracy"
+  ) + 
+  geom_errorbar(aes(x=rule_type_text, ymin=ci_lower, ymax=ci_upper), color="black", width=0.5, position=position_dodge(.9), show.legend = FALSE) +
+  theme_few() +
+  theme(
+    axis.text.x  = element_blank(),
+    axis.title.x = element_blank(),
+    axis.ticks.x = element_blank(),
+    axis.title = element_text(size=15),
+    legend.title = element_text(size=15),
+    legend.text = element_text(size=10)
+  ) +
+  guides(color=FALSE) +
+  guides(fill = guide_legend("Rule"), color=FALSE) +
+  scale_alpha_manual(values = c("Teacher" = 1.0, "Student" = 0.2)) +
+  
+
+ggsave("./analyses/concept-type-accuracy.png", plot = last_plot(), width=5, height=3)
+```
+
+
+```{r fig.width=7, fig.height=4, echo=FALSE}
+# Scatter Plot of Average Accuracies & Teacher-Student Pairs
+ggplot(complete_test_summary
+       , aes(x=student_acc, y=explorer_acc, fill=rule_type_text, color="black", label=rule_idx)) +
+  geom_point(size = 10, shape=21) +
+  theme_few() +
+  guides(fill = guide_legend("Rule"), color=FALSE) +
+  geom_point(data = complete_test, size = 2, alpha=0.7, shape=21, show.legend=FALSE) +
+  labs(
     x = "Student Accuracy",
     y = "Teacher Acccuracy"
   ) +
@@ -166,16 +228,28 @@ ggplot(complete_test_summary
   scale_x_continuous(limits = c(0.0, 1.0), breaks = c(0.25, 0.5, 0.75, 1.0)) +
   scale_y_continuous(limits = c(0.0, 1.0), breaks = c(0.25, 0.5, 0.75, 1.0)) +
   theme(
-    title = element_text(size=20),
-    axis.title = element_text(size=15),
-    
+    axis.title = element_text(size=20),
+    legend.title = element_text(size=25),
+    legend.text = element_text(size=15),
+    legend.position = c(0.7, 0.17),
+    legend.background = element_rect(fill=alpha(0.1)),
+    plot.title = element_blank()
   )
-        
-ggsave("./analyses/accuracy_scatter_plot.png", plot = last_plot())
+
+ggsave("./analyses/accuracy_scatter_plot.png", plot = last_plot(), width=9, height=9)
 ```
 ```{r fig.width=7, fig.height=4, echo=FALSE}
 ggplot(complete_test_summary, aes(x=explorer_acc, xend=student_acc, y=reorder(rule_idx, desc(rule_idx)))) + 
   theme_few() +
+  geom_dumbbell(
+    size=0,
+    size_x=4,
+    size_xend = 4,
+    colour_x="black",
+    colour_xend = "gray", show.legend = T) +
+    labs(
+      x="Accuracy"
+    ) +
   geom_segment(
     aes(
       color=rule_type_text,
@@ -184,19 +258,9 @@ ggplot(complete_test_summary, aes(x=explorer_acc, xend=student_acc, y=reorder(ru
       y=reorder(rule_idx, desc(rule_idx)), 
       yend=reorder(rule_idx, desc(rule_idx))),
     size=2) +
-  geom_dumbbell(
-    size=0,
-    size_x=4,
-    size_xend = 4,
-    colour_x="black",
-    colour_xend = "gray") +
-    labs(
-      x="Accuracy",
-      y="Concept Rule",
-      title="") +
+  guides(color = guide_legend("Rule Type")) +
   geom_point(aes(x=chance_rate, y=reorder(rule_idx, desc(rule_idx)), shape=15), size=4, inherit.aes=F, show.legend = F, color="orange") +
   scale_shape_identity() + 
-  guides(color = guide_legend("Rule Type")) +
   scale_x_continuous(breaks = c(0.25, 0.5, 0.75, 1.0)) + 
   scale_y_discrete(labels = rev(c(
     "flowers: orange stems",
@@ -256,261 +320,15 @@ ggplot(complete_test_summary, aes(x=explorer_acc, xend=student_acc, y=reorder(ru
   ))
 ) +
   coord_cartesian(xlim=c(0.45, 1.0)) +
-  theme(text = element_text(size=13))
-
-ggsave("./analyses/accuracy_base_rate_plot.png", plot = last_plot(), width = 14, height = 8, dpi = 300, )
-```
-
-## Concept Type Accuracy Comparison
-```{r}
-complete_type_summary <- scores_complete_games %>%
-  mutate(
-    correct = hits + correct_rejections,
-    incorrect = misses + false_alarms,
-    acc = correct / (correct + incorrect),
-    rule_type = floor(rule_idx/10)
-  ) %>%
-  group_by(rule_type, role) %>%
-  tidyboot_mean(column = acc)
-complete_type_summary$rule_type <- as.factor(complete_type_summary$rule_type)
-complete_type_summary <- complete_type_summary %>%
-  mutate(rule_type_text = fct_recode(rule_type,
-    "Single" = "0",
-    "Conj." = "1",
-    "Disj." = "2",
-    "Conj. Disj." = "3",
-    "Disj. Conj." = "4"
-  ))
-complete_type_summary$role <- as.factor(complete_type_summary$role)
-complete_type_summary <- complete_type_summary %>%
-  mutate(role = fct_recode(role,
-    "Teacher" = "explorer",
-    "Student" = "student"
-  )) %>%
-  rename(Role = role)
-
-  
-```
-
-```{r}
-ggplot(complete_type_summary, aes(rule_type_text, fill=Role, y=empirical_stat)) + 
-  geom_col(position='dodge') +  
-  labs(
-    title = "Concept Type vs. Participant Accuracy",
-    x = "Concept Type",
-    y = "Accuracy %"
-  ) + 
-  geom_errorbar(aes(x=rule_type_text, ymin=ci_lower, ymax=ci_upper), color="black", width=0.5, position=position_dodge(.9)) +
-  theme_few()
-ggsave("concept-type-accuracy.png", plot = last_plot())
-```
-
-## Hits, Misses, False Alarms, Correct Rejections Breakdown (Proportion)
-```{r}
-complete_test_perf_breakdown <- scores_complete_games %>%
-  select(role, rule_idx, hits, misses, correct_rejections, false_alarms) %>%
-  group_by(role, rule_idx) %>% 
-  summarise_all(sum) %>%
-  mutate(rule_type = floor(rule_idx/10))
-
-complete_test_perf_breakdown$rule_idx <- as.factor(complete_test_perf_breakdown$rule_idx)
-complete_test_perf_breakdown$rule_type <- as.factor(complete_test_perf_breakdown$rule_type)
-complete_test_perf_breakdown <- complete_test_perf_breakdown %>%
-  mutate(rule_type_text = 
-           fct_recode(rule_type,
-              "Single Feature" = "0",
-              "Conjunction" = "1",
-              "Disjunction" = "2",
-              "Conjunctive Disjunction" = "3",
-              "Disjunctive Conjunction" = "4",
-            ),
-        rule_idx_text = 
-          fct_recode(rule_idx,
-            "flowers: orange stems" = "0",
-            "flowers: thorns present" = "1",
-            "fish: white fangs" = "2",
-            "fish: whiskers present" = "3",
-            "bugs: orange head" = "4",
-            "bugs: no wings" = "5",
-            "birds: tail present" = "6",
-            "birds: purple tail" = "7",
-            "trees: purple berries" = "8",
-            "trees: no leaves" = "9",
-        
-            "flowers: purple stem AND thorn" = "10",
-            "flowers: orange petals AND purple center" = "11",
-            "fish: white stripes AND whiskers  present"= "12" ,
-            "fish: orange bodies AND purple stripe" = "13",
-            "bugs: purple legs AND white head" = "14",
-            "bugs: wings AND antennae present" = "15",
-            "birds: purple wings AND crest present" = "16",
-            "birds: orange wings AND tail present" = "17",
-            "trees: orange trunk AND berries present" = "18",
-            "trees: purple leaves AND berries present"= "19",
-        
-            "flowers: purple petals OR thorns present" = "20",
-            "flowers: orange stems OR thorns present" = "21",
-            "fish: orange bodies OR fangs present" = "22",
-            "fish: white stripes OR whiskers present" = "23",
-            "bugs: orange antennae OR wings present" = "24",
-            "bugs: purple wings OR white legs" = "25",
-            "birds: orange tail OR white wings" = "26",
-            "birds: orange crest OR purple wings" = "27",
-            "trees: purple berries OR white trunk" = "28",
-            "trees: white leaves OR orange berries" = "29",
-        
-            "flowers: (purple stem AND white petals) OR orange center" = "30",
-            "flowers: (thorns present AND purple petals) OR orange stem" = "31",
-            "fish: (orange body AND purple stripes) OR whiskers present" = "32",
-            "fish: (white body AND orange stripes) OR fangs present" = "33",
-            "bugs: (purple legs AND white head) OR orange wings" = "34",
-            "bugs: (white legs AND purple wings) OR orange antennae" = "35",
-            "birds: (purple wings AND white crest) OR white tail" = "36",
-            "birds: (purple crest AND purple tail) OR orange wings" = "37",
-            "trees: (orange berries AND purple trunks) OR white leaves" = "38",
-            "trees: (leaves present AND berries present) OR orange trunks" = "39",
-        
-            "flowers: (purple center OR orange stem) AND thorns present" = "40",
-            "flowers: (purple stem OR thorns present) AND white center" = "41",
-            "fish: (orange body OR fangs present) AND whiskers present" = "42",
-            "fish: (white stripes OR purple body) AND whiskers present" = "43",
-            "bugs: (antennae present OR wings present) AND purple body" = "44",
-            "bugs: (white head OR orange antennae) AND purple legs" = "45",
-            "birds: (orange tail OR white wings) AND orange crest" = "46",
-            "birds: (white crest OR orange wings) AND tail present" = "47",
-            "trees: (purple trunks OR white leaves) AND orange berries" = "48",
-            "trees: (orange trunks OR berries present) AND white leaves" = "49")
-)
-
-complete_test_perf_breakdown_melted <- complete_test_perf_breakdown %>%
-  melt(measure.vars = c("hits", "misses", "correct_rejections", "false_alarms"))
-
-complete_test_perf_sums <- complete_test_perf_breakdown_melted %>%
-  group_by(rule_idx, rule_type, rule_type_text, rule_idx_text, role) %>%
-  summarise(norm_constant = sum(value))
-
-complete_test_perf_breakdown_normalized <- complete_test_perf_breakdown_melted %>% 
-  inner_join(., complete_test_perf_sums) %>%
-  mutate(value = value/norm_constant) %>%
-  select(rule_idx, rule_type, rule_type_text, rule_idx_text, value, role, variable)
-```
-
-## Hits, Misses, False Alarms, Correct Rejections Breakdown (Proportions)
-```{r fig.width=10, fig.height=10, echo=FALSE}
-ggplot(complete_test_perf_breakdown_normalized, aes(x = reorder(role, desc(role)), y = value, fill = variable)) + 
-  geom_bar(stat = 'identity', position = 'stack') + facet_wrap(rule_idx_text ~ rule_type_text, ncol=10,  labeller = label_wrap_gen(width=30)) +
-    labs(
-      title = "Teacher & Student Performance Across Concept Rules",
-      y = "Proportions"
+  theme(
+    axis.title = element_text(size=20),
+    legend.title = element_text(size=25),
+    legend.text = element_text(size=15),
+    plot.title = element_blank(),
+    axis.title.y = element_blank(),
+    axis.text.x = element_text(size=15)
   )
-```
-
-## Miss Rate Across Concept Types
-```{r}
-complete_test_miss_rate <- scores_complete_games %>%
-  mutate(miss_rate = misses / (hits + misses), rule_type = floor(rule_idx/10))
-complete_test_miss_rate$rule_type <- as.factor(complete_test_miss_rate$rule_type)
-complete_test_miss_rate <- complete_test_miss_rate %>%
-  mutate(rule_type_text = fct_recode(rule_type,
-    "Single" = "0",
-    "Conj." = "1",
-    "Disj." = "2",
-    "Conj. Disj." = "3",
-    "Disj. Conj." = "4"
-  ))
-
-complete_test_miss_rate$role <- as.factor(complete_test_miss_rate$role)
-complete_test_miss_rate <- complete_test_miss_rate %>%
-  mutate(role = fct_recode(role,
-    "Teacher" = "explorer",
-    "Student" = "student"
-  ))
-
-avg_complete_test_miss_rate <- complete_test_miss_rate %>%
-    select(role, gameid, rule_idx, rule_type, rule_type_text, miss_rate) %>%
-    group_by(role, rule_idx, rule_type, rule_type_text) %>%
-    summarize(avg_miss_rate = mean(miss_rate))
-
-avg_complete_test_miss_rate_concept <- avg_complete_test_miss_rate %>%
-    group_by(rule_type, role, rule_type_text) %>%
-    tidyboot_mean(avg_miss_rate) %>%
-    rename(Role = role)
-
-plot.miss_rate <- ggplot(avg_complete_test_miss_rate_concept, aes(rule_type_text, fill=Role, y=empirical_stat)) + 
-  geom_col(position='dodge') +  
-  labs(
-    x = "Concept Type",
-    y = "Miss Rate"
-  ) + 
-  geom_errorbar(aes(x=rule_type_text, ymin=ci_lower, ymax=ci_upper), color="black", width=0.5, position=position_dodge(.9)) +
-  theme_few() + 
-  scale_y_continuous(
-    breaks = c(0.0, 0.25, 0.50, 0.75),
-  ) +
-  coord_cartesian(ylim=c(0, 0.75))
-```
-
-## False Positive Rate Across Concept Types
-```{r}
-complete_test_false_positive_rate <- scores_complete_games %>%
-  mutate(
-    false_positive_rate = false_alarms / (correct_rejections + false_alarms),
-    rule_type = floor(rule_idx/10)
-)
-
-complete_test_false_positive_rate$rule_type <- as.factor(complete_test_false_positive_rate$rule_type)
-
-complete_test_false_positive_rate <- complete_test_false_positive_rate %>%
-    mutate(rule_type_text = 
-           fct_recode(rule_type,
-              "Single" = "0",
-              "Conj." = "1",
-              "Disj." = "2",
-              "Conj. Disj." = "3",
-              "Disj. Conj." = "4"
-            )
-    )
-complete_test_false_positive_rate <- complete_test_false_positive_rate %>%
-  mutate(role = fct_recode(role,
-    "Teacher" = "explorer",
-    "Student" = "student"
-  ))
-
-avg_complete_test_false_positive_rate <- complete_test_false_positive_rate %>%
-    select(role, gameid, rule_idx, rule_type, rule_type_text, false_positive_rate) %>%
-    group_by(role, rule_idx, rule_type, rule_type_text) %>%
-    summarize(avg_false_positive_rate = mean(false_positive_rate))
-
-avg_complete_test_false_positive_concept <- avg_complete_test_false_positive_rate %>%
-    group_by(rule_type, role, rule_type_text) %>%
-    tidyboot_mean(avg_false_positive_rate)
-
-plot.fp_rate <- ggplot(avg_complete_test_false_positive_concept, aes(rule_type_text, fill=role, y=empirical_stat)) + 
-  geom_col(position='dodge') +  
-  labs(
-    x = "Concept Type",
-    y = "FP Rate"
-  ) + 
-  geom_errorbar(
-    aes(
-      x=rule_type_text,
-      ymin=ci_lower,
-      ymax=ci_upper),
-    color="black",
-    width=0.5,
-    position=position_dodge(.9)
-  ) +
-  theme_few() +
-  scale_y_continuous(
-    breaks = c(0.0, 0.25, 0.50, 0.75),
-  ) +
-  coord_cartesian(ylim=c(0, 0.75))
-```
-
-## Combine False Alarm and Miss Rate Plots
-```{r}
-combo_plot <- plot_grid(plot.miss_rate, plot.fp_rate, labels = c("a", "b"), nrow = 2, align = "v")
-ggsave("./analyses/concept-type-mr-fpr.png", plot = combo_plot, width = 5, height = 5, dpi = 300, )
+ggsave("./analyses/accuracy_base_rate_plot.png", plot = last_plot(), width = 14, height = 8, dpi = 300 )
 ```
 
 ## Hamming Distance
@@ -529,8 +347,9 @@ complete_all_games_wide <- test_complete_games %>%
 hamming_distances <- complete_all_games_wide %>%
   group_by(rule_idx, gameid) %>%
   summarize(d = sum(explorer != student)) %>%
-  mutate(rule_type = floor(rule_idx/10), Distrubution="Empirical") 
+  mutate(rule_type = floor(rule_idx/10), Distribution="Empirical") 
 
+hamming_distances$rule_idx <- as.factor(hamming_distances$rule_idx)
 hamming_distances$rule_type <- as.factor(hamming_distances$rule_type)
 hamming_distances <- hamming_distances %>%
     mutate(rule_type_text = 
@@ -542,11 +361,55 @@ hamming_distances <- hamming_distances %>%
               "Disj. Conj." = "4"
             )
     )
+
+# Mean Hamming Distance of True Pairs
+mean(hamming_distances$d)
+```
+
+
+```{r}
+# Comparing teacher average accuracy vs. average hamming distance for concepts
+comparison_acc_hd <- hamming_distances %>%
+  group_by(rule_idx) %>%
+  summarise(mean_d = mean(d)) %>%
+  inner_join(complete_test_summary)
+
+cor.test(comparison_acc_hd$explorer_acc, comparison_acc_hd$mean_d)
+
+ggplot(comparison_acc_hd
+       , aes(x=explorer_acc, y=mean_d, fill=rule_type_text, color="black")) +
+  geom_point(size = 5, shape=21) +
+  theme_few() +
+  guides(fill = guide_legend("Rule"), color=FALSE) +
+  labs(
+    x = "Average Teacher Accuracy",
+    y = "Average Hamming Distance"
+  ) +
+  theme(
+    axis.title = element_text(size=20),
+    legend.title = element_text(size=25),
+    legend.text = element_text(size=15),
+    plot.title = element_blank(),
+    legend.position = c(0.82, 0.8),
+    legend.background = element_rect(fill=alpha(0.1)),
+  )
+ggsave("./analyses/dist-by-acc.png", plot = last_plot(), width = 12, height = 4, dpi = 300 )
 ```
 
 ```{r}
-# Permute Teacher-Student Pairs Within Concepts
-compute_permutation_hd <- function() {
+# Compute 95 confidence interval and mean for dataframe of mean hamming distances
+get_hd_stats<- function(x) {
+  x <- x[order(-x$mean_d),]
+  result <- list("lower_ci" = x[94, "mean_d"], "upper_ci" = x[6, "mean_d"], "mean"=mean(x$mean_d), x)
+  return(result)
+}
+
+``` 
+
+```{r}
+# Permute teach-student pairs within a concept
+# and take the overall mean hamming distance.
+compute_average_intra_concept_shuffle_hd <- function() {
   df <- data.frame()
   for (i in 0:49) {
     x <- test_complete_games %>%
@@ -559,177 +422,113 @@ compute_permutation_hd <- function() {
       mutate(
         explorer = strsplit(x$explorer, split = ","),
         student = strsplit(x$student, split = ","),
-        hd = 0,
-        rule_idx = i,
-        rule_type = floor(rule_idx/10)
+        d = 0
       ) 
     x$explorer = lapply(x$explorer, as.numeric)
     x$student = lapply(x$student, as.numeric)
     
     for (row in 1:nrow(x)) {
-        x[row, "hd"] = sum(x$explorer[[row]] != x$student[[row]])
+        x[row, "d"] = sum(x$explorer[[row]] != x$student[[row]])
     }
     df <- bind_rows(df, x)
   }
-  return (df)
+  result <- data.frame("Distribution"= "Intra-Concept Shuffled", "mean_d"=0)
+  result$mean_d = mean(df$d)
+  return (result)
 }
 
 concept_shuffled_hd <- data.frame()
-for (i in 1:1) {
-  concept_shuffled_hd <- bind_rows(concept_shuffled_hd, compute_permutation_hd())
+for (i in 1:100) {
+  concept_shuffled_hd <- bind_rows(concept_shuffled_hd, compute_average_intra_concept_shuffle_hd())
 }
 
-concept_shuffled_hd$rule_type <- as.factor(concept_shuffled_hd$rule_type)
-concept_shuffled_hd <- concept_shuffled_hd %>%
-    mutate(rule_type_text = 
-           fct_recode(rule_type,
-              "Single " = "0",
-              "Conj." = "1",
-              "Disj." = "2",
-              "Conj. Disj." = "3",
-              "Disj. Conj." = "4"
-            ),
-           Distribution="Intra-Concept Shuffled"
-    )
+
+concept_shuffled_hd_stats <- get_hd_stats(concept_shuffled_hd)
+View(concept_shuffled_hd_stats)
 ```
 
 ```{r}
-ggplot(concept_shuffled_hd, aes(x=hd)) +
-  geom_histogram(aes(y=(..count..)/tapply(..count..,..PANEL..,sum)[..PANEL..]), bins = 40)+
-  theme_few() +
-  labs(
-    title = "Permuted Teacher & Student Pairs",
-    x = "Hamming Distance",
-    y = "Probability Mass"
-  ) +
-  facet_wrap(~rule_type_text, 1)+ 
-  theme(legend.position="bottom")
-```
-
-```{r}
-# Combined Hstogram
-ch <- bind_rows(hamming_distances, concept_shuffled_hd)
-
-```
-
-```{r}
-ggplot(concept_shuffled_hd, aes(x=hd)) +
-  geom_histogram(aes(y=(..count..)/tapply(..count..,..PANEL..,sum)[..PANEL..]), bins = 40)+
-  theme_few() +
-  labs(
-    title = "Permuted Teacher & Student Pairs",
-    x = "Hamming Distance",
-    y = "Probability Mass"
-  ) +
-  facet_wrap(~rule_type_text, 1)+ 
-  theme(legend.position="bottom")
-
-```
-
-
-
-
-
-
-
-```{r}
-bootstrap_sample_hd <- function(){
-  hamming_distances %>%
-  mutate(rule_type = floor(rule_idx/10)) %>%
-  group_by(rule_type) %>%
-  sample_n(103, replace = T) %>%
-  group_by(rule_type) %>%
-  summarize(mean_hd = mean(d))
+# Permute teacher-student pairs across entire dataset
+# and take the overall mean hamming distance.
+compute_average_random_shuffle_hd <- function() {
+  df <- data.frame()
+  for (i in 0:49) {
+    x <- test_complete_games %>%
+      group_by(role, gameid, rule_idx) %>%
+      summarise(labels = paste(turker_label, collapse=", ")) %>%
+      spread(role, labels)
+    
+    x$explorer <- sample(x$explorer)
+    x <- x %>%
+      mutate(
+        d = 0
+      )
+    x$explorer = strsplit(x$explorer, split = ",")
+    x$student = strsplit(x$student, split = ",")
+    x$explorer = lapply(x$explorer, as.numeric)
+    x$student = lapply(x$student, as.numeric)
+    
+    for (row in 1:nrow(x)) {
+        x[row, "d"] = sum(x$explorer[[row]] != x$student[[row]])
+    }
+    df <- bind_rows(df, x)
+  }
+  result <- data.frame("Distribution"= "Randomly Shuffled", "mean_d"=0)
+  result$mean_d = mean(df$d)
+  return (result)
 }
 
-# Get 1000 Samples
-hd_samples <- data.frame()
-for (i in 1:1000) {
-  hd_samples <- hd_samples %>% bind_rows(., bootstrap_sample_hd())
-}
-hd_samples <- hd_samples %>% mutate(type='True')
-```
-
-
-```{r}
-# Here explorer selections are shuffled amongst one another
-# for stimuli of a given concept rule.
-bootstrap_concept_rule_shuffle_sample_hd <- function() {
-  x <- complete_all_games_wide %>%
-    group_by(stim_num, rule_idx, rule_type) %>%
-    summarise(mean_stim_hd = mean(sample(explorer) != student)) %>%
-    group_by(rule_idx, rule_type) %>%
-    summarise(mean_concept_hd = sum(mean_stim_hd)) %>%
-    group_by(rule_type) %>%
-    summarise(mean_hd = mean(mean_concept_hd))
-  return(x)
+random_shuffle_hd <- data.frame()
+for (i in 1:100) {
+  random_shuffle_hd <- bind_rows(random_shuffle_hd, compute_average_random_shuffle_hd())
+  print(i)
 }
 
-concept_rule_shuffle_hd_samples <- data.frame()
-for (i in 1:1000) {
-  concept_rule_shuffle_hd_samples <- concept_rule_shuffle_hd_samples %>% bind_rows(bootstrap_concept_rule_shuffle_sample_hd())
-}
-
-concept_rule_shuffle_hd_samples <- concept_rule_shuffle_hd_samples %>%
-mutate(type='Intra-Concept Shuffle')
+random_shuffle_hd_stats <- get_hd_stats(random_shuffle_hd)
+View(random_shuffle_hd_stats)
 ```
 
 ```{r}
-# Compute Null Hamming Distance Distribution
-# Here explorer selections are shuffled amongst one another
-# across the entire dataset.
-bootstrap_null_sample_hd <- function() {
-  x <- complete_all_games_wide %>%
-    transform(explorer = sample(explorer)) %>%
-    group_by(stim_num, rule_idx, rule_type) %>%
-    summarise(mean_stim_hd = mean(explorer != student)) %>%
-    group_by(rule_idx, rule_type) %>%
-    summarise(mean_concept_hd = sum(mean_stim_hd)) %>%
-    group_by(rule_type) %>%
-    summarise(mean_hd = mean(mean_concept_hd))  
-  return(x)
+# Permute teacher-student pairs across rules
+# and take the overall mean hamming distance.
+compute_average_rule_shuffle_hd <- function() {
+  df <- data.frame()
+  for (i in 0:4) {
+    x <- test_complete_games %>%
+      mutate(rule_type = floor(rule_idx/10)) %>%
+      filter(rule_type == i) %>%
+      group_by(role, gameid, rule_idx) %>%
+      summarise(labels = paste(turker_label, collapse=", ")) %>%
+      spread(role, labels)
+    
+    x$explorer <- sample(x$explorer)
+    x <- x %>%
+      mutate(
+        d = 0
+      )
+    x$explorer = strsplit(x$explorer, split = ",")
+    x$student = strsplit(x$student, split = ",")
+    x$explorer = lapply(x$explorer, as.numeric)
+    x$student = lapply(x$student, as.numeric)
+    
+    for (row in 1:nrow(x)) {
+        x[row, "d"] = sum(x$explorer[[row]] != x$student[[row]])
+    }
+    df <- bind_rows(df, x)
+  }
+  result <- data.frame("Distribution"= "Intra-Rule Shuffled", "mean_d"=0)
+  result$mean_d = mean(df$d)
+  return (result)
 }
 
-null_hd_samples <- data.frame()
-for (i in 1:1000) {
-  null_hd_samples <- null_hd_samples %>% bind_rows(bootstrap_null_sample_hd())
-} 
-null_hd_samples <- null_hd_samples %>%
-  mutate(type="Random Shuffle")
-```
+rule_shuffle_hd <- data.frame()
+for (i in 1:100) {
+  rule_shuffle_hd <- bind_rows(rule_shuffle_hd, compute_average_rule_shuffle_hd())
+  print(i)
+}
 
-```{r}
-combined_hd_samples <- bind_rows(hd_samples, null_hd_samples, concept_rule_shuffle_hd_samples)
-  
-combined_hd_samples$rule_type <- as.factor(combined_hd_samples$rule_type) 
-combined_hd_samples <- combined_hd_samples %>%
-    mutate(rule_type_text = fct_recode(rule_type,
-    "Single" = "0",
-    "Conj." = "1",
-    "Disj." = "2",
-    "Conj. Disj." = "3",
-    "Disj. Conj" = "4"
-  )) %>%
-  rename(Distribution = type) %>% 
-  mutate(Distribution = 
-           factor(Distribution, levels = c("True", "Intra-Concept Shuffle", "Random Shuffle")
-  ))
-
-```
-
-```{r}
-ggplot(combined_hd_samples, aes(x=mean_hd, color=Distribution, fill=Distribution)) +
-  geom_histogram(position="dodge", aes(y=(..count..)/tapply(..count..,..PANEL..,sum)[..PANEL..]), bins = 40)+
-  theme_few() +
-  labs(
-    title = "Distribution of Average Hamming Distances",
-    x = "Average Hamming Distance",
-    y = "Probability Mass"
-  ) +
-  facet_wrap(~rule_type_text, 1)+ 
-  theme(legend.position="bottom")
-
-ggsave("./analyses/hamming_distance_density.png", plot = last_plot(), width = 7.5, height = 3, dpi = 300)
+rule_shuffle_hd_stats <- get_hd_stats(rule_shuffle_hd)
+View(rule_shuffle_hd_stats)
 ```
 
 
@@ -763,18 +562,18 @@ msgs_complete_games <- msgs_complete_games %>%
     "Social" = "S"
   )) %>%
   mutate(uttClassText = fct_recode(uttClass,
-    "Generic" = "G",
-    "Quantifier" = "Q",
-    "Adverbial Epistemic" = "P",
+    "Generics" = "G",
+    "Quantifiers" = "Q",
+    "Adverbials" = "P",
     "Y/N" = "A",
     "Logic" = "L",
     "Either-Or" = "EO",
-    "Conditional" = "C",
+    "Conditionals" = "C",
     "Other" = "O",
-    "Numeric" = "N",
-    "Exemplar" = "E",
-    "Imperative" = "I",
-    "Question" = "?")) %>%
+    "Numerics" = "N",
+    "Exemplars" = "E",
+    "Imperatives" = "I",
+    "Questions" = "?")) %>%
     mutate(rule_type_text = fct_recode(rule_type,
     "Single" = "0",
     "Conj." = "1",
@@ -797,6 +596,8 @@ ggplot(msgs_complete_games, aes(messageTypeText)) +
 explorer_msg_counts <- msgs_complete_games %>%
   filter(role == "explorer") %>% 
   subset(uttClassText != "NA")%>%
+  subset(uttClassText != "Logic") %>%
+  subset(uttClassText != "Either-Or") %>%  
   group_by(uttClassText) %>%
   tally() %>%
   transform(uttClassText = reorder(uttClassText, -n))
@@ -805,12 +606,12 @@ ggplot(explorer_msg_counts, aes(x = uttClassText, y = n)) +
   labs(
     x = "",
     y = "# of Messages", 
-    title = "Teacher: Informative & Follow-Up Messages"
+    title = ""
   ) + geom_col() +
   theme(
-    axis.text.x = element_text(angle = 45, hjust = 1, size=12),
-    axis.text.y = element_text(size=12),
-    axis.title.y = element_text(size=15)
+    axis.text.x = element_text(angle = 45, hjust = 1, size=15),
+    axis.text.y = element_text(size=15),
+    axis.title.y = element_text(size=18)
     )
 
 ggsave("./analyses/teacher-langauge.png", plot = last_plot(), dpi = 300)
@@ -951,9 +752,10 @@ complete_games_avg_times <- complete_games_avg_times %>%
 
 ```{r}
 ggplot() + 
-geom_linerange(data=complete_games_avg_times, mapping=aes(x=Learning, ymin=ci_lower, ymax=ci_upper), size=1) +
+geom_linerange(data=complete_games_avg_times, mapping=aes(x=Learning, ymin=ci_lower, ymax=ci_upper), size=1,
+               position = position_dodge(width=2, preserve = "total")) +
 geom_point(data=complete_games_avg_times, mapping=aes(x=Learning, y=empirical_stat), size=4, shape=21, fill="white") +
-geom_line(data=complete_games_avg_times, aes(x=Learning, y=empirical_stat, group=rule_idx)) + 
+geom_line(data=complete_games_avg_times, aes(x=Learning, y=empirical_stat, group=rule_idx)) +
 theme_few() + 
 facet_wrap(~rule_type_text, 1) +
   labs(
@@ -964,3 +766,4 @@ facet_wrap(~rule_type_text, 1) +
 
 ggsave("./analyses/time.png", plot = last_plot(), width = 5, height = 3, dpi = 300)
 ```
+
