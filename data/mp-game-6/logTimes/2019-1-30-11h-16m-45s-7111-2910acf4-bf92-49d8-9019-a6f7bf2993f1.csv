@@ -1,0 +1,11 @@
+experimentName	iterationName	gameid	time	role	rule_idx	rule_name	rule_file_name	round_num	train	test	chat	eventType
+mp-game-6	pilot	7111-2910acf4-bf92-49d8-9019-a6f7bf2993f1	1548875805794	explorer	29	"fish with white stripes or whiskers"	fish_white_stripes_or_whiskers	0	167.044	44.832	452.256	logTimes
+mp-game-6	pilot	7111-2910acf4-bf92-49d8-9019-a6f7bf2993f1	1548875828284	student	29	"fish with white stripes or whiskers"	fish_white_stripes_or_whiskers	0	-1	66.454	451.864	logTimes
+mp-game-6	pilot	7111-2910acf4-bf92-49d8-9019-a6f7bf2993f1	1548876406633	student	39	"bugs with (white legs and purple wings) or orange antennae"	bugs_white_legs_purple_wings_or_orange_antennae	1	-1	21.541	278.764	logTimes
+mp-game-6	pilot	7111-2910acf4-bf92-49d8-9019-a6f7bf2993f1	1548876443008	explorer	39	"bugs with (white legs and purple wings) or orange antennae"	bugs_white_legs_purple_wings_or_orange_antennae	1	252.553	55.571	279.151	logTimes
+mp-game-6	pilot	7111-2910acf4-bf92-49d8-9019-a6f7bf2993f1	1548877154574	student	9	"trees without leaves"	trees_without_leaves	2	-1	23.065	264.876	logTimes
+mp-game-6	pilot	7111-2910acf4-bf92-49d8-9019-a6f7bf2993f1	1548877162193	explorer	9	"trees without leaves"	trees_without_leaves	2	73.672	28.14	265.262	logTimes
+mp-game-6	pilot	7111-2910acf4-bf92-49d8-9019-a6f7bf2993f1	1548877546980	student	19	"flowers with orange petals and purple centers"	flowers_orange_petals_purple_centers	3	-1	36.943	159.662	logTimes
+mp-game-6	pilot	7111-2910acf4-bf92-49d8-9019-a6f7bf2993f1	1548877547648	explorer	19	"flowers with orange petals and purple centers"	flowers_orange_petals_purple_centers	3	126.853	33.528	160.046	logTimes
+mp-game-6	pilot	7111-2910acf4-bf92-49d8-9019-a6f7bf2993f1	1548877828366	explorer	49	"birds with (white crests or orange wings) and tails"	birds_white_crests_or_orange_wings_tails	4	190.481	32.876	21.874	logTimes
+mp-game-6	pilot	7111-2910acf4-bf92-49d8-9019-a6f7bf2993f1	1548877833273	student	49	"birds with (white crests or orange wings) and tails"	birds_white_crests_or_orange_wings_tails	4	-1	38.883	21.494	logTimes

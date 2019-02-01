@@ -43,6 +43,18 @@ def add_fields(df):
     return df
 
 
+def convert_c_to_m(dir):
+    for file in tqdm(os.listdir(dir)):
+        chat_message_file = os.path.join(dir, file)         
+        if ".tsv" not in chat_message_file:
+            continue
+        df = pd.read_csv(chat_message_file, sep='\t')
+        for index, row in df.iterrows(): 
+            if row["messageType"] == "C":
+                df["messageType"].iloc[index] = "M"
+        df.to_csv(chat_message_file, sep='\t', index=False,)
+
+
 def clear_annotations(dir):
     for file in tqdm(os.listdir(dir)):
         chat_message_file = os.path.join(dir, file)         
@@ -50,8 +62,10 @@ def clear_annotations(dir):
             continue
         df = pd.read_csv(chat_message_file, sep='\t')
         df = df.iloc[:,0:13]
-        df.to_csv(chat_message_file, sep='\t', index=False,)
+        df.to_csv(chat_message_file, sep='\t', index=False)
+
 
 if __name__ == '__main__':
+    convert_c_to_m('../../../data/mp-game-6/complete_games/chatMessage')
     # clear_annotations('../../../data/mp-game-6/complete_games/chatMessage')
-    process_chat_messages('../../../data/mp-game-6/complete_games/chatMessage')
+    # process_chat_messages('../../../data/mp-game-6/complete_games/chatMessage')
