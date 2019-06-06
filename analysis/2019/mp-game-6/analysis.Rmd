@@ -20,6 +20,7 @@ library(forcats)
 library(ggalt)
 library(grid)
 library(cowplot)
+library(brms)
 ```
 
 
@@ -79,6 +80,99 @@ ggplot(data=num_complete_games_played, aes(x=rule_idx, y=n)) +
 
 
 ## Student Performance Vs. Teacher Performance 
+
+Regression analysis
+
+```{r regression_accuracy, eval = F}
+scores_complete_games <- scores_complete_games %>%
+  mutate(correct = hits + correct_rejections,
+         incorrect = misses + false_alarms,
+         accuracy = correct / (correct + incorrect),
+         rule_type = floor(rule_idx/10),
+         workerid = paste(gameid, role, sep = "_"),
+         rule_fac = factor(rule_type,
+                           levels = c(0, 1, 2, 3, 4),
+                           labels = c("single","conj", "disj",
+                                      "conjDisj", "disjConj")),
+         concept_fac = factor(rule_idx),
+         role = factor(role)
+         )
+## these "center" the predictors, to look at the effect of rule at the average of the roles
+# and the effect of role at the average of the eurles
+contrasts(scores_complete_games$rule_fac) = contr.sum(5)
+contrasts(scores_complete_games$role) = contr.sum(2)
+contrasts(scores_complete_games$role)
+contrasts(scores_complete_games$rule_fac) 
+
+brm.accuracy.rs <- brm(
+  data = scores_complete_games,
+  formula = correct | trials(50) ~ rule_fac*role + 
+    (1 + rule_fac | workerid) +
+    (1 + role | concept_fac),
+  family = "binomial",
+  chains = 3, cores = 3
+)
+
+summary(brm.accuracy.rs)
+```
+```{r reg_acc_pp, eval = F}
+antilogit = function(x) 1 / (1 + exp(-x))
+newdata = expand.grid(rule_fac = factor(
+  levels(scores_complete_games$rule_fac),
+    levels = c("single","conj", "disj", "conjDisj", "disjConj")),
+  role = factor(levels(scores_complete_games$role))) 
+#coda = brms::posterior_samples(brm.accuracy.rs)
+
+contrasts(newdata$rule_fac) = contr.sum(5)
+contrasts(newdata$role) = contr.sum(2)
+fit = fitted(brm.accuracy.rs,
+             newdata = newdata,
+             re_formula = NA,
+             summary = TRUE)
+
+
+df_plot = cbind(newdata, fit)
+
+fit1 = as.data.frame(fitted( brm.accuracy.rs,
+                          newdata = newdata, re_formula = NA, 
+                          summary = FALSE # extract the full MCMC
+))
+
+colnames(fit1) = newdata %>% 
+  mutate(newcol = paste(rule_fac, role, sep = "_")) %>% 
+  pull(newcol)
+
+posterior.predictive.fit <- fit1 %>%
+  mutate(stud_minus_teach = (
+    (single_student - single_explorer) +
+           (conj_student - conj_explorer) + 
+           (disj_student - disj_explorer) + 
+           (conjDisj_student - conjDisj_explorer) + 
+           (disjConj_student - disjConj_explorer)
+           ) / 5,
+    stud_minus_teach_prob = stud_minus_teach / 50 )
+
+quantile(posterior.predictive.fit$stud_minus_teach_prob, probs = c(.5, .025, .975))
+
+posterior.predictive.fit %>%
+  ggplot(., aes( x = stud_minus_teach_prob))+
+  geom_histogram()
+```
+
+```{r}
+brm.accuracy.rs.2 <- brm(
+  data = scores_complete_games,
+  formula = correct | trials(50) ~ rule_fac*role + 
+    (1 | workerid) +
+    (1 + role | concept_fac),
+  family = "binomial",
+  chains = 3, cores = 3
+)
+
+summary(brm.accuracy.rs.2)
+contrasts(scores_complete_games$rule_fac)
+```
+
 ```{r}
 # Accuracies
 complete_test_explorer <- scores_complete_games %>%
@@ -114,7 +208,7 @@ complete_test_student_summary <- complete_test_student %>%
   mutate(rule_type = floor(rule_idx/10))
 
 complete_test <- bind_cols(complete_test_explorer, complete_test_student) %>%
-    select(rule_idx, student_acc, explorer_acc, rule_type) 
+    select(rule_idx, student_acc, explorer_acc, rule_type, gameid) 
 complete_test$rule_idx <- as.factor(complete_test$rule_idx)
 complete_test$rule_type <- as.factor(complete_test$rule_type)
 complete_test <- complete_test %>%
@@ -247,6 +341,29 @@ ggplot(
 ggsave("./analyses/concept-type-accuracy.png", plot = last_plot(), width=5, height=3)
 ```
 
+```{r regression_accuracyDiff_byConcept}
+# concept specific gaps between teacher and student
+
+complete_acc_diffs <- complete_test %>%
+  mutate(diff = explorer_acc - student_acc)
+  
+
+
+## these "center" the predictors, to look at the effect of rule at the average of the roles
+# and the effect of role at the average of the eurles
+contrasts(complete_acc_diffs$rule_idx) = contr.sum(50)
+contrasts(complete_acc_diffs$rule_idx) 
+
+brm.accuracy.diff.rs <- brm(
+  data = complete_acc_diffs,
+  formula = diff ~ rule_idx + (1 | gameid),
+  #family = "binomial",
+  chains = 3, cores = 3
+)
+
+
+```
+
 
 ```{r fig.width=7, fig.height=4, echo=FALSE}
 # Scatter Plot of Average Accuracies & Teacher-Student Pairs
@@ -266,17 +383,22 @@ ggplot(complete_test_summary
   coord_fixed() +
   scale_x_continuous(limits = c(0.0, 1.0), breaks = c(0.25, 0.5, 0.75, 1.0)) +
   scale_y_continuous(limits = c(0.0, 1.0), breaks = c(0.25, 0.5, 0.75, 1.0)) +
-  theme(
-    axis.title = element_text(size=20),
-    legend.title = element_text(size=25),
-    legend.text = element_text(size=15),
-    legend.position = c(0.7, 0.17),
-    legend.background = element_rect(fill=alpha(0.1)),
-    plot.title = element_blank()
-  )
-
-ggsave("./analyses/accuracy_scatter_plot.png", plot = last_plot(), width=9, height=9)
+  theme(text = element_text(size=20))
+        
+#ggsave("./analyses/accuracy_scatter_plot.png", plot = last_plot())
+#   theme(
+#     axis.title = element_text(size=20),
+#     legend.title = element_text(size=25),
+#     legend.text = element_text(size=15),
+#     legend.position = c(0.7, 0.17),
+#     legend.background = element_rect(fill=alpha(0.1)),
+#     plot.title = element_blank()
+#   )
+# 
+# ggsave("./analyses/accuracy_scatter_plot.png", plot = last_plot(), width=9, height=9)
 ```
+
+
 ```{r fig.width=7, fig.height=4, echo=FALSE}
 ggplot(complete_test_summary, aes(x=explorer_acc, xend=student_acc, y=reorder(id, desc(id)))) + 
   theme_few() +
@@ -359,6 +481,152 @@ ggplot(complete_test_summary, aes(x=explorer_acc, xend=student_acc, y=reorder(id
   ))
 ) +
   coord_cartesian(xlim=c(0.45, 1.0)) +
+  theme(text = element_text(size=13))
+
+#ggsave("./analyses/accuracy_base_rate_plot.png", plot = last_plot(), width = 14, height = 8, dpi = 300, )
+```
+
+## Concept Type Accuracy Comparison
+```{r}
+complete_type_summary <- scores_complete_games %>%
+  mutate(
+    correct = hits + correct_rejections,
+    incorrect = misses + false_alarms,
+    acc = correct / (correct + incorrect),
+    rule_type = floor(rule_idx/10)
+  ) %>%
+  group_by(rule_type, role) %>%
+  tidyboot_mean(column = acc)
+complete_type_summary$rule_type <- as.factor(complete_type_summary$rule_type)
+complete_type_summary <- complete_type_summary %>%
+  mutate(rule_type_text = fct_recode(rule_type,
+    "Single" = "0",
+    "Conj." = "1",
+    "Disj." = "2",
+    "Conj. Disj." = "3",
+    "Disj. Conj." = "4"
+  ))
+complete_type_summary$role <- as.factor(complete_type_summary$role)
+complete_type_summary <- complete_type_summary %>%
+  mutate(role = fct_recode(role,
+    "Teacher" = "explorer",
+    "Student" = "student"
+  )) %>%
+  rename(Role = role)
+
+  
+```
+
+```{r}
+ggplot(complete_type_summary, aes(rule_type_text, fill=Role, y=empirical_stat)) + 
+  geom_col(position='dodge') +  
+  labs(
+    title = "Concept Type vs. Participant Accuracy",
+    x = "Concept Type",
+    y = "Accuracy %"
+  ) + 
+  geom_errorbar(aes(x=rule_type_text, ymin=ci_lower, ymax=ci_upper), color="black", width=0.5, position=position_dodge(.9)) +
+  theme_few()
+#ggsave("concept-type-accuracy.png", plot = last_plot())
+```
+
+## Hits, Misses, False Alarms, Correct Rejections Breakdown (Proportion)
+```{r}
+complete_test_perf_breakdown <- scores_complete_games %>%
+  select(role, rule_idx, hits, misses, correct_rejections, false_alarms) %>%
+  group_by(role, rule_idx) %>% 
+  summarise_all(sum) %>%
+  mutate(rule_type = floor(rule_idx/10))
+
+complete_test_perf_breakdown$rule_idx <- as.factor(complete_test_perf_breakdown$rule_idx)
+complete_test_perf_breakdown$rule_type <- as.factor(complete_test_perf_breakdown$rule_type)
+complete_test_perf_breakdown <- complete_test_perf_breakdown %>%
+  mutate(rule_type_text = 
+           fct_recode(rule_type,
+              "Single Feature" = "0",
+              "Conjunction" = "1",
+              "Disjunction" = "2",
+              "Conjunctive Disjunction" = "3",
+              "Disjunctive Conjunction" = "4",
+            ),
+        rule_idx_text = 
+          fct_recode(rule_idx,
+            "flowers: orange stems" = "0",
+            "flowers: thorns present" = "1",
+            "fish: white fangs" = "2",
+            "fish: whiskers present" = "3",
+            "bugs: orange head" = "4",
+            "bugs: no wings" = "5",
+            "birds: tail present" = "6",
+            "birds: purple tail" = "7",
+            "trees: purple berries" = "8",
+            "trees: no leaves" = "9",
+        
+            "flowers: purple stem AND thorn" = "10",
+            "flowers: orange petals AND purple center" = "11",
+            "fish: white stripes AND whiskers  present"= "12" ,
+            "fish: orange bodies AND purple stripe" = "13",
+            "bugs: purple legs AND white head" = "14",
+            "bugs: wings AND antennae present" = "15",
+            "birds: purple wings AND crest present" = "16",
+            "birds: orange wings AND tail present" = "17",
+            "trees: orange trunk AND berries present" = "18",
+            "trees: purple leaves AND berries present"= "19",
+        
+            "flowers: purple petals OR thorns present" = "20",
+            "flowers: orange stems OR thorns present" = "21",
+            "fish: orange bodies OR fangs present" = "22",
+            "fish: white stripes OR whiskers present" = "23",
+            "bugs: orange antennae OR wings present" = "24",
+            "bugs: purple wings OR white legs" = "25",
+            "birds: orange tail OR white wings" = "26",
+            "birds: orange crest OR purple wings" = "27",
+            "trees: purple berries OR white trunk" = "28",
+            "trees: white leaves OR orange berries" = "29",
+        
+            "flowers: (purple stem AND white petals) OR orange center" = "30",
+            "flowers: (thorns present AND purple petals) OR orange stem" = "31",
+            "fish: (orange body AND purple stripes) OR whiskers present" = "32",
+            "fish: (white body AND orange stripes) OR fangs present" = "33",
+            "bugs: (purple legs AND white head) OR orange wings" = "34",
+            "bugs: (white legs AND purple wings) OR orange antennae" = "35",
+            "birds: (purple wings AND white crest) OR white tail" = "36",
+            "birds: (purple crest AND purple tail) OR orange wings" = "37",
+            "trees: (orange berries AND purple trunks) OR white leaves" = "38",
+            "trees: (leaves present AND berries present) OR orange trunks" = "39",
+        
+            "flowers: (purple center OR orange stem) AND thorns present" = "40",
+            "flowers: (purple stem OR thorns present) AND white center" = "41",
+            "fish: (orange body OR fangs present) AND whiskers present" = "42",
+            "fish: (white stripes OR purple body) AND whiskers present" = "43",
+            "bugs: (antennae present OR wings present) AND purple body" = "44",
+            "bugs: (white head OR orange antennae) AND purple legs" = "45",
+            "birds: (orange tail OR white wings) AND orange crest" = "46",
+            "birds: (white crest OR orange wings) AND tail present" = "47",
+            "trees: (purple trunks OR white leaves) AND orange berries" = "48",
+            "trees: (orange trunks OR berries present) AND white leaves" = "49")
+)
+
+complete_test_perf_breakdown_melted <- complete_test_perf_breakdown %>%
+  melt(measure.vars = c("hits", "misses", "correct_rejections", "false_alarms"))
+
+complete_test_perf_sums <- complete_test_perf_breakdown_melted %>%
+  group_by(rule_idx, rule_type, rule_type_text, rule_idx_text, role) %>%
+  summarise(norm_constant = sum(value))
+
+complete_test_perf_breakdown_normalized <- complete_test_perf_breakdown_melted %>% 
+  inner_join(., complete_test_perf_sums) %>%
+  mutate(value = value/norm_constant) %>%
+  select(rule_idx, rule_type, rule_type_text, rule_idx_text, value, role, variable)
+```
+
+## Hits, Misses, False Alarms, Correct Rejections Breakdown (Proportions)
+```{r fig.width=10, fig.height=10, echo=FALSE}
+ggplot(complete_test_perf_breakdown_normalized, aes(x = reorder(role, desc(role)), y = value, fill = variable)) + 
+  geom_bar(stat = 'identity', position = 'stack') + facet_wrap(rule_idx_text ~ rule_type_text, ncol=10,  labeller = label_wrap_gen(width=30)) +
+    labs(
+      title = "Teacher & Student Performance Across Concept Rules",
+      y = "Proportions"
   theme(
     axis.title = element_text(size=20),
     legend.title = element_text(size=25),
@@ -445,6 +713,10 @@ ggsave("./analyses/dist-by-acc.png", plot = last_plot(), width = 5, height = 4, 
 ```
 
 ```{r}
+combo_plot <- plot_grid(plot.miss_rate, plot.fp_rate, labels = c("a", "b"), nrow = 2, align = "v")
+combo_plot
+#ggsave("./analyses/concept-type-mr-fpr.png", plot = combo_plot, width = 5, height = 5, dpi = 300, )
+```
 # Compute 95 confidence interval and mean for dataframe of mean hamming distances
 get_hd_stats<- function(x) {
   x <- x[order(-x$mean_d),]
@@ -452,7 +724,6 @@ get_hd_stats<- function(x) {
   return(result)
 }
 
-``` 
 
 ```{r}
 # Permute teach-student pairs within a concept
@@ -711,6 +982,105 @@ ggplot(student_msg_counts, aes(x = uttClassText, y = n)) +
 ```
 
 ## Timing Analysis -- Entire Chat Duration
+
+```{r regression_time}
+df.time <- data.frame(bind_rows(
+  msgs_complete_games %>%
+    group_by(gameid, rule_idx) %>%
+    summarize(learnTime = sum(reactionTime)) %>%
+    mutate(role = 'student'),
+  time_complete_games %>%
+    filter(role == "explorer") %>%
+    select(role, gameid, rule_idx, train) %>%
+    rename(learnTime = train)
+)) %>%
+  mutate(
+    rule_type = floor(rule_idx/10),
+    workerid = paste(gameid, role, sep = "_"),
+    rule_fac = factor(rule_type,
+                     levels = c(0, 1, 2, 3, 4),
+                     labels = c("single","conj", "disj",
+                                "conjDisj", "disjConj")),
+   concept_fac = as.factor(as.character(rule_idx)),
+   role = as.factor(as.character(role))
+)
+
+
+contrasts(df.time$rule_fac) = contr.sum(5)
+#contrasts(df.time$role) = contr.sum(2) 
+contrasts(df.time$role)
+contrasts(df.time$rule_fac) 
+
+brm.time.rs <- brm(
+  data = df.time,
+  formula = learnTime  ~ rule_fac*role + 
+    (1 + rule_fac | workerid) +
+    (1 + role | concept_fac),
+  family = "shifted_lognormal",
+  chains = 3, cores = 3
+)
+
+ggplot(df.time, aes( x = log(learnTime)))+
+  geom_histogram()
+
+summary(brm.time.rs)
+```
+
+```{r reg_time_pp}
+## this is all to generate "posterior predictives" dropping out the random effects
+## this is used to estimate the size of the effect in the "data space" (e.g., seconds)
+newdata = expand.grid(rule_fac = factor(
+  levels(df.time$rule_fac),
+    levels = c("single","conj", "disj", "conjDisj", "disjConj")),
+  role = factor(levels(df.time$role))) 
+
+fit.time = as.data.frame(fitted( brm.time.rs,
+                          newdata = newdata, re_formula = NA, 
+                          summary = FALSE # extract the full MCMC
+))
+
+colnames(fit.time) = newdata %>% 
+  mutate(newcol = paste(rule_fac, role, sep = "_")) %>% 
+  pull(newcol)
+
+posterior.predictive.fit.time <- fit.time %>%
+  mutate(stud_minus_teach = (
+    (single_student - single_explorer) +
+           (conj_student - conj_explorer) + 
+           (disj_student - disj_explorer) + 
+           (conjDisj_student - conjDisj_explorer) + 
+           (disjConj_student - disjConj_explorer)
+           ) / 5,
+    stud_minus_teach_prob = stud_minus_teach )
+
+# generate 95% credible intervals
+quantile(posterior.predictive.fit.time$stud_minus_teach_prob, probs = c(.5, .025, .975))
+
+posterior.predictive.fit %>%
+  ggplot(., aes( x = stud_minus_teach_prob))+
+  geom_histogram()
+```
+```{r eval = F}
+# model variant where we "center" the role
+# so we look at the main effect of concepts  at the average value between teacher and student
+# dont think this is that interesting for this analysis
+contrasts(df.time$rule_fac) = contr.sum(5)
+contrasts(df.time$role) = contr.sum(2)
+contrasts(df.time$role)
+contrasts(df.time$rule_fac)
+
+brm.time.rs.centerBoth <- brm(
+  data = df.time,
+  formula = learnTime  ~ rule_fac*role + 
+    (1 + rule_fac | workerid) +
+    (1 + role | concept_fac),
+  family = "shifted_lognormal",
+  chains = 3, cores = 3
+)
+summary(brm.time.rs.centerBoth)
+```
+
+
 ```{r}
 complete_games_avg_chat_times <- msgs_complete_games %>%
   group_by(gameid, rule_idx) %>%
