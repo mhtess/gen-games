@@ -142,11 +142,11 @@
     "Description": "Explore a world of creatures and answer short questions with a partner (~ 15 minutes)",
     "Question": "<ExternalQuestion xmlns=\"http://mechanicalturk.amazonaws.com/AWSMechanicalTurkDataSchemas/2006-07-14/ExternalQuestion.xsd\">\n  <ExternalURL>https://rxdhawkins.me:8884/mp-game-6/forms/consent.html</ExternalURL>\n  <FrameHeight>650</FrameHeight>\n</ExternalQuestion>",
     "Keywords": "language research stanford fun cognitive science university teaching",
-    "HITStatus": "Assignable",
-    "MaxAssignments": 3,
+    "HITStatus": "Reviewable",
+    "MaxAssignments": 9,
     "Reward": "1.25",
     "AutoApprovalDelayInSeconds": 600,
-    "Expiration": "2019-02-02T16:34:43.000Z",
+    "Expiration": "2019-01-29T20:10:38.000Z",
     "AssignmentDurationInSeconds": 7200,
     "QualificationRequirements": [
      {
@@ -172,7 +172,95 @@
     ],
     "HITReviewStatus": "NotReviewed",
     "NumberOfAssignmentsPending": 0,
-    "NumberOfAssignmentsAvailable": 3,
+    "NumberOfAssignmentsAvailable": 6,
+    "NumberOfAssignmentsCompleted": 3
+   }
+  },
+  {
+   "HIT": {
+    "HITId": "3S1WOPCJFG6Q4JD5YNMX7E7PHRAEJB",
+    "HITTypeId": "3HSQTUGQM1UJ8C46CZRP227QNY4G9F",
+    "HITGroupId": "3VTYKUNX3XEKAHG2T8VEQNLS9K3FXJ",
+    "CreationTime": "2019-01-30T15:20:08.000Z",
+    "Title": "Language experiment (MP-Game-6-2)",
+    "Description": "Explore a world of creatures and answer short questions with a partner (~ 15 minutes)",
+    "Question": "<ExternalQuestion xmlns=\"http://mechanicalturk.amazonaws.com/AWSMechanicalTurkDataSchemas/2006-07-14/ExternalQuestion.xsd\">\n  <ExternalURL>https://rxdhawkins.me:8884/mp-game-6/forms/consent.html</ExternalURL>\n  <FrameHeight>650</FrameHeight>\n</ExternalQuestion>",
+    "Keywords": "language research stanford fun cognitive science university teaching",
+    "HITStatus": "Assignable",
+    "MaxAssignments": 9,
+    "Reward": "1.25",
+    "AutoApprovalDelayInSeconds": 600,
+    "Expiration": "2019-02-03T15:20:08.000Z",
+    "AssignmentDurationInSeconds": 7200,
+    "QualificationRequirements": [
+     {
+      "QualificationTypeId": "00000000000000000071",
+      "Comparator": "EqualTo",
+      "LocaleValues": [
+       {
+        "Country": "US"
+       }
+      ],
+      "RequiredToPreview": false,
+      "ActionsGuarded": "Accept"
+     },
+     {
+      "QualificationTypeId": "000000000000000000L0",
+      "Comparator": "GreaterThanOrEqualTo",
+      "IntegerValues": [
+       95
+      ],
+      "RequiredToPreview": false,
+      "ActionsGuarded": "Accept"
+     }
+    ],
+    "HITReviewStatus": "NotReviewed",
+    "NumberOfAssignmentsPending": 0,
+    "NumberOfAssignmentsAvailable": 9,
+    "NumberOfAssignmentsCompleted": 0
+   }
+  },
+  {
+   "HIT": {
+    "HITId": "375VMB7D4JWPH2FZKAQDPVA441OIDG",
+    "HITTypeId": "3HSQTUGQM1UJ8C46CZRP227QNY4G9F",
+    "HITGroupId": "3VTYKUNX3XEKAHG2T8VEQNLS9K3FXJ",
+    "CreationTime": "2019-01-31T15:08:25.000Z",
+    "Title": "Language experiment (MP-Game-6-2)",
+    "Description": "Explore a world of creatures and answer short questions with a partner (~ 15 minutes)",
+    "Question": "<ExternalQuestion xmlns=\"http://mechanicalturk.amazonaws.com/AWSMechanicalTurkDataSchemas/2006-07-14/ExternalQuestion.xsd\">\n  <ExternalURL>https://rxdhawkins.me:8884/mp-game-6/forms/consent.html</ExternalURL>\n  <FrameHeight>650</FrameHeight>\n</ExternalQuestion>",
+    "Keywords": "language research stanford fun cognitive science university teaching",
+    "HITStatus": "Assignable",
+    "MaxAssignments": 4,
+    "Reward": "1.25",
+    "AutoApprovalDelayInSeconds": 600,
+    "Expiration": "2019-02-04T15:08:25.000Z",
+    "AssignmentDurationInSeconds": 7200,
+    "QualificationRequirements": [
+     {
+      "QualificationTypeId": "00000000000000000071",
+      "Comparator": "EqualTo",
+      "LocaleValues": [
+       {
+        "Country": "US"
+       }
+      ],
+      "RequiredToPreview": false,
+      "ActionsGuarded": "Accept"
+     },
+     {
+      "QualificationTypeId": "000000000000000000L0",
+      "Comparator": "GreaterThanOrEqualTo",
+      "IntegerValues": [
+       95
+      ],
+      "RequiredToPreview": false,
+      "ActionsGuarded": "Accept"
+     }
+    ],
+    "HITReviewStatus": "NotReviewed",
+    "NumberOfAssignmentsPending": 0,
+    "NumberOfAssignmentsAvailable": 4,
     "NumberOfAssignmentsCompleted": 0
    }
   }

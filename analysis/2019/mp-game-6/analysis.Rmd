@@ -140,6 +140,44 @@ complete_test_summary <- complete_test_summary %>%
     "Conjunctive Disjunction" = "3",
     "Disjunctive Conjunction" = "4"
   ))
+
+# Swap rows to make labeling cleaner
+
+# Conjunction
+x <- complete_test_summary[11:20,]
+y <- x[1:8,]
+z <- x[9:10,]
+x[1:2,] = z
+x[3:10,] = y
+complete_test_summary[11:20,] = x
+
+# Disjunction
+x <- complete_test_summary[21:30,]
+y <- x[1:6,]
+z <- x[7:10,]
+x[1:4,] = z
+x[5:10,] = y
+complete_test_summary[21:30,] = x
+
+
+# Conjunctive Disjunction
+x <- complete_test_summary[31:40,]
+y <- x[1:4,]
+z <- x[5:10,]
+x[1:6,] = z
+x[7:10,] = y
+complete_test_summary[31:40,] = x
+
+
+# Disjunctive Conjunction
+x <- complete_test_summary[41:50,]
+y <- x[1:2,]
+z <- x[3:10,]
+x[1:8,] = z
+x[9:10,] = y
+complete_test_summary[41:50,] = x
+
+complete_test_summary <- complete_test_summary %>% mutate(id = row_number())
 ```
 
 ```{r}
@@ -177,15 +215,16 @@ complete_type_summary <- complete_type_summary %>%
   rename(Role = role)
 
 complete_type_summary$Role = factor(complete_type_summary$Role, levels = c("Teacher", "Student"))
+
 ```
 
 ```{r}
 # Concept Type Average Accuracy
 ggplot(
   complete_type_summary,
-  aes(rule_type_text, color="black", alpha=Role, fill=rule_type_text, y=empirical_stat)
+  aes(rule_type_text, alpha=Role, fill=rule_type_text, y=empirical_stat)
 ) + 
-  geom_col(position='dodge') +  
+  geom_col(position='dodge', color="black") +  
   labs(
     x = "Rule",
     y = "Accuracy"
@@ -212,18 +251,18 @@ ggsave("./analyses/concept-type-accuracy.png", plot = last_plot(), width=5, heig
 ```{r fig.width=7, fig.height=4, echo=FALSE}
 # Scatter Plot of Average Accuracies & Teacher-Student Pairs
 ggplot(complete_test_summary
-       , aes(x=student_acc, y=explorer_acc, fill=rule_type_text, color="black", label=rule_idx)) +
-  geom_point(size = 10, shape=21) +
+       , aes(x=student_acc, y=explorer_acc, fill=rule_type_text, label=rule_idx)) +
+  geom_point(data = complete_test, size = 4, alpha=0.7, shape=21, show.legend=FALSE) +
+  geom_point(size = 10, shape=21, color="black") +
   theme_few() +
   guides(fill = guide_legend("Rule"), color=FALSE) +
-  geom_point(data = complete_test, size = 2, alpha=0.7, shape=21, show.legend=FALSE) +
   labs(
     x = "Student Accuracy",
     y = "Teacher Acccuracy"
   ) +
   geom_abline(intercept = 0, slope = 1, linetype = 2) +
-  geom_errorbar(aes(ymax = explorer_ci_lower, ymin = explorer_ci_upper), alpha=0.3) +
-  geom_errorbarh(aes(xmax = student_ci_lower, xmin = student_ci_upper), alpha=0.3) +
+  geom_errorbar(aes(ymax = explorer_ci_lower, ymin = explorer_ci_upper), alpha=0.15) +
+  geom_errorbarh(aes(xmax = student_ci_lower, xmin = student_ci_upper), alpha=0.15) +
   coord_fixed() +
   scale_x_continuous(limits = c(0.0, 1.0), breaks = c(0.25, 0.5, 0.75, 1.0)) +
   scale_y_continuous(limits = c(0.0, 1.0), breaks = c(0.25, 0.5, 0.75, 1.0)) +
@@ -239,7 +278,7 @@ ggplot(complete_test_summary
 ggsave("./analyses/accuracy_scatter_plot.png", plot = last_plot(), width=9, height=9)
 ```
 ```{r fig.width=7, fig.height=4, echo=FALSE}
-ggplot(complete_test_summary, aes(x=explorer_acc, xend=student_acc, y=reorder(rule_idx, desc(rule_idx)))) + 
+ggplot(complete_test_summary, aes(x=explorer_acc, xend=student_acc, y=reorder(id, desc(id)))) + 
   theme_few() +
   geom_dumbbell(
     size=0,
@@ -255,11 +294,11 @@ ggplot(complete_test_summary, aes(x=explorer_acc, xend=student_acc, y=reorder(ru
       color=rule_type_text,
       x=explorer_acc, 
       xend=student_acc, 
-      y=reorder(rule_idx, desc(rule_idx)), 
-      yend=reorder(rule_idx, desc(rule_idx))),
+      y=reorder(id, desc(id)), 
+      yend=reorder(id, desc(id))),
     size=2) +
   guides(color = guide_legend("Rule Type")) +
-  geom_point(aes(x=chance_rate, y=reorder(rule_idx, desc(rule_idx)), shape=15), size=4, inherit.aes=F, show.legend = F, color="orange") +
+  geom_point(aes(x=chance_rate, y=reorder(id, desc(id)), shape=15), size=4, inherit.aes=F, show.legend = F, color="orange") +
   scale_shape_identity() + 
   scale_x_continuous(breaks = c(0.25, 0.5, 0.75, 1.0)) + 
   scale_y_discrete(labels = rev(c(
@@ -372,13 +411,22 @@ mean(hamming_distances$d)
 comparison_acc_hd <- hamming_distances %>%
   group_by(rule_idx) %>%
   summarise(mean_d = mean(d)) %>%
-  inner_join(complete_test_summary)
+  inner_join(complete_test_summary) %>%
+  mutate(rule_type_text = 
+           fct_recode(rule_type,
+              "Single " = "0",
+              "Conj." = "1",
+              "Disj." = "2",
+              "Conj. Disj." = "3",
+              "Disj. Conj." = "4"
+            )
+    )
 
 cor.test(comparison_acc_hd$explorer_acc, comparison_acc_hd$mean_d)
 
 ggplot(comparison_acc_hd
-       , aes(x=explorer_acc, y=mean_d, fill=rule_type_text, color="black")) +
-  geom_point(size = 5, shape=21) +
+       , aes(x=explorer_acc, y=mean_d, fill=rule_type_text)) +
+  geom_point(size = 5, shape=21, color="black") +
   theme_few() +
   guides(fill = guide_legend("Rule"), color=FALSE) +
   labs(
@@ -386,14 +434,14 @@ ggplot(comparison_acc_hd
     y = "Average Hamming Distance"
   ) +
   theme(
-    axis.title = element_text(size=20),
-    legend.title = element_text(size=25),
-    legend.text = element_text(size=15),
+    axis.title = element_text(size=15),
+    legend.title = element_text(size=15),
+    legend.text = element_text(size=10),
     plot.title = element_blank(),
-    legend.position = c(0.82, 0.8),
+    legend.position = c(0.85, 0.75),
     legend.background = element_rect(fill=alpha(0.1)),
   )
-ggsave("./analyses/dist-by-acc.png", plot = last_plot(), width = 12, height = 4, dpi = 300 )
+ggsave("./analyses/dist-by-acc.png", plot = last_plot(), width = 5, height = 4, dpi = 300 )
 ```
 
 ```{r}
@@ -752,7 +800,7 @@ complete_games_avg_times <- complete_games_avg_times %>%
 
 ```{r}
 ggplot() + 
-geom_linerange(data=complete_games_avg_times, mapping=aes(x=Learning, ymin=ci_lower, ymax=ci_upper), size=1,
+geom_errorbar(data=complete_games_avg_times, mapping=aes(x=Learning, ymin=ci_lower, ymax=ci_upper), size=0.2, width=0.2,
                position = position_dodge(width=2, preserve = "total")) +
 geom_point(data=complete_games_avg_times, mapping=aes(x=Learning, y=empirical_stat), size=4, shape=21, fill="white") +
 geom_line(data=complete_games_avg_times, aes(x=Learning, y=empirical_stat, group=rule_idx)) +
