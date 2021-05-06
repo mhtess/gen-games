@@ -20,7 +20,7 @@
     "request": "^2.81.0",
     "seedrandom": "^2.4.4",
     "socket.io": "~1.3.0",
-    "underscore": "~1.7.0",
+    "underscore": "~1.12.1",
     "xmldom": "^0.1.27"
   }
 }
